@@ -8,10 +8,11 @@ extends CharacterBody3D
 @export_range(45.0, 89.0, 1.0) var max_look_angle_degrees: float = 89.0
 
 # Step 3 interaction prototype.
-@export_range(0.5, 6.0, 0.1) var interaction_distance: float = 3.0
+@export_range(0.5, 6.0, 0.1) var interaction_distance: float = 1.5
 @export var prototype_auto_register_known_loot: bool = true
 @export var prototype_require_loot_group: bool = false
 @export var print_loot_registration: bool = true
+@export var enable_held_item_view: bool = true
 
 @onready var camera: Camera3D = $Camera3D
 @onready var carried_items: Node = $CarriedItems
@@ -41,7 +42,8 @@ func _ready() -> void:
 	_gravity = float(ProjectSettings.get_setting("physics/3d/default_gravity", 9.8))
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	_build_interaction_hud()
-	_build_held_item_view()
+	if enable_held_item_view:
+		_build_held_item_view()
 
 	if carried_items != null:
 		carried_items.contents_changed.connect(_refresh_held_item)
