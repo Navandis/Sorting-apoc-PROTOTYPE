@@ -54,6 +54,7 @@ func _apply_item(item) -> void:
 
 	_current_visual = visual_scene.instantiate()
 	_center_root.add_child(_current_visual)
+	_disable_embedded_nonvisual_nodes(_current_visual)
 
 	_bounds = AABB()
 	_bounds_valid = false
@@ -108,10 +109,22 @@ func _build_preview_world() -> void:
 	_viewport.name = "PreviewViewport"
 	_viewport.size = preview_size
 	_viewport.transparent_bg = true
-	_viewport.own_world_3d = true
 	_viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
 	_viewport.msaa_3d = Viewport.MSAA_2X
+
+	# Use an explicitly separate World3D instead of adding WorldEnvironment and
+	# Light3D nodes beneath the SubViewport. This avoids preview-world lighting
+	# participating in the parent scene's environment/light discovery.
+	_viewport.world_3d = World3D.new()
 	add_child(_viewport)
+
+	var environment: Environment = Environment.new()
+	environment.background_mode = Environment.BG_COLOR
+	environment.background_color = Color(0.0, 0.0, 0.0, 0.0)
+	environment.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
+	environment.ambient_light_color = Color(0.78, 0.80, 0.82, 1.0)
+	environment.ambient_light_energy = 0.85
+	_viewport.world_3d.environment = environment
 
 	_orientation_root = Node3D.new()
 	_orientation_root.name = "OrientationRoot"
@@ -129,30 +142,6 @@ func _build_preview_world() -> void:
 	_camera.current = true
 	_viewport.add_child(_camera)
 
-	var key_light: DirectionalLight3D = DirectionalLight3D.new()
-	key_light.name = "KeyLight"
-	key_light.light_energy = 1.35
-	key_light.rotation_degrees = Vector3(-35.0, -35.0, 0.0)
-	_viewport.add_child(key_light)
-
-	var fill_light: DirectionalLight3D = DirectionalLight3D.new()
-	fill_light.name = "FillLight"
-	fill_light.light_energy = 0.65
-	fill_light.rotation_degrees = Vector3(25.0, 145.0, 0.0)
-	_viewport.add_child(fill_light)
-
-	var environment: Environment = Environment.new()
-	environment.background_mode = Environment.BG_COLOR
-	environment.background_color = Color(0.0, 0.0, 0.0, 0.0)
-	environment.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
-	environment.ambient_light_color = Color(0.72, 0.75, 0.78, 1.0)
-	environment.ambient_light_energy = 0.55
-
-	var world_environment: WorldEnvironment = WorldEnvironment.new()
-	world_environment.name = "PreviewEnvironment"
-	world_environment.environment = environment
-	_viewport.add_child(world_environment)
-
 
 func _clear_visual() -> void:
 	if _current_visual != null and is_instance_valid(_current_visual):
@@ -162,6 +151,34 @@ func _clear_visual() -> void:
 		_center_root.position = Vector3.ZERO
 	if _orientation_root != null:
 		_orientation_root.basis = Basis.IDENTITY
+
+
+func _disable_embedded_nonvisual_nodes(node: Node) -> void:
+	# Sourced GLBs should behave as visual geometry only inside previews.
+	# Disable any cameras/lights/environments/probes that may have survived an
+	# export so an asset cannot change either preview lighting or the bunker.
+	if node is CollisionObject3D:
+		var collision_object: CollisionObject3D = node as CollisionObject3D
+		collision_object.collision_layer = 0
+		collision_object.collision_mask = 0
+	if node is Camera3D:
+		var embedded_camera: Camera3D = node as Camera3D
+		embedded_camera.current = false
+	if node is Light3D:
+		var embedded_light: Light3D = node as Light3D
+		embedded_light.visible = false
+	if node is WorldEnvironment:
+		var embedded_environment: WorldEnvironment = node as WorldEnvironment
+		embedded_environment.environment = null
+	if node is ReflectionProbe:
+		var reflection_probe: ReflectionProbe = node as ReflectionProbe
+		reflection_probe.visible = false
+	if node is VoxelGI:
+		var voxel_gi: VoxelGI = node as VoxelGI
+		voxel_gi.visible = false
+
+	for child in node.get_children():
+		_disable_embedded_nonvisual_nodes(child)
 
 
 func _scan_mesh_bounds(node: Node, accumulated_transform: Transform3D) -> void:

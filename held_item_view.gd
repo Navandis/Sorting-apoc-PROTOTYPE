@@ -123,10 +123,22 @@ func _build_viewmodel_world() -> void:
 	_viewport.name = "HeldItemViewport"
 	_viewport.size = render_size
 	_viewport.transparent_bg = true
-	_viewport.own_world_3d = true
 	_viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
 	_viewport.msaa_3d = Viewport.MSAA_2X
+
+	# Explicit World3D isolation is stronger and clearer here than relying on
+	# own_world_3d plus WorldEnvironment/Light3D child nodes. The held-item
+	# renderer gets ambient lighting directly on its private World3D resource.
+	_viewport.world_3d = World3D.new()
 	add_child(_viewport)
+
+	var environment: Environment = Environment.new()
+	environment.background_mode = Environment.BG_COLOR
+	environment.background_color = Color(0.0, 0.0, 0.0, 0.0)
+	environment.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
+	environment.ambient_light_color = Color(0.68, 0.70, 0.72, 1.0)
+	environment.ambient_light_energy = 0.72
+	_viewport.world_3d.environment = environment
 
 	_orientation_root = Node3D.new()
 	_orientation_root.name = "OrientationRoot"
@@ -144,32 +156,6 @@ func _build_viewmodel_world() -> void:
 	_camera.far = 20.0
 	_camera.position = Vector3.ZERO
 	_viewport.add_child(_camera)
-
-	# Neutral independent lighting. The world can be dark without imported held
-	# props changing the main scene's illumination or exposure.
-	var key_light: DirectionalLight3D = DirectionalLight3D.new()
-	key_light.name = "HeldKeyLight"
-	key_light.light_energy = 1.0
-	key_light.rotation_degrees = Vector3(-30.0, -35.0, 0.0)
-	_viewport.add_child(key_light)
-
-	var fill_light: DirectionalLight3D = DirectionalLight3D.new()
-	fill_light.name = "HeldFillLight"
-	fill_light.light_energy = 0.38
-	fill_light.rotation_degrees = Vector3(20.0, 145.0, 0.0)
-	_viewport.add_child(fill_light)
-
-	var environment: Environment = Environment.new()
-	environment.background_mode = Environment.BG_COLOR
-	environment.background_color = Color(0.0, 0.0, 0.0, 0.0)
-	environment.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
-	environment.ambient_light_color = Color(0.48, 0.50, 0.52, 1.0)
-	environment.ambient_light_energy = 0.32
-
-	var world_environment: WorldEnvironment = WorldEnvironment.new()
-	world_environment.name = "HeldEnvironment"
-	world_environment.environment = environment
-	_viewport.add_child(world_environment)
 
 	visible = false
 
