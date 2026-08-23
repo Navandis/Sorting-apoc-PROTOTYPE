@@ -60,6 +60,15 @@ func get_bulk() -> int:
 	return _item_instance.get_bulk() if _item_instance != null else 0
 
 
+
+func is_stored_item() -> bool:
+	return (
+		_storage_surface != null
+		and is_instance_valid(_storage_surface)
+		and not _storage_key.is_empty()
+	)
+
+
 func utility_text() -> String:
 	return _item_instance.utility_text() if _item_instance != null else "No utility"
 

@@ -218,16 +218,20 @@ func _get_looked_at_world_item() -> WorldItem:
 	if camera == null or get_world_3d() == null:
 		return null
 
-	var from: Vector3 = camera.global_position
+	var ray_from: Vector3 = camera.global_position
 	var forward: Vector3 = -camera.global_transform.basis.z.normalized()
-	var to: Vector3 = from + (forward * interaction_distance)
+
+	# Stored items deliberately share the more generous shelf interaction reach.
+	# Loose/Receiving loot remains limited to the shorter normal pickup reach.
+	var maximum_reach: float = maxf(
+		interaction_distance,
+		storage_interaction_distance
+	)
+	var ray_to: Vector3 = ray_from + (forward * maximum_reach)
 
 	var query: PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.new()
-	query.from = from
-	query.to = to
-	# Pickup selection deliberately queries only dedicated WorldItem areas.
-	# Coarse player-movement colliders on shelves/crates must not occlude loot
-	# visibly resting on those storage objects.
+	query.from = ray_from
+	query.to = ray_to
 	query.collide_with_areas = true
 	query.collide_with_bodies = false
 	query.collision_mask = WorldItemScript.PICKUP_COLLISION_LAYER
@@ -241,14 +245,31 @@ func _get_looked_at_world_item() -> WorldItem:
 	if not collider_value is Node:
 		return null
 
+	var world_item: WorldItem = null
 	var node: Node = collider_value as Node
 	while node != null:
 		if node is WorldItem:
-			return node as WorldItem
+			world_item = node as WorldItem
+			break
 		if node == get_tree().current_scene:
 			break
 		node = node.get_parent()
-	return null
+
+	if world_item == null:
+		return null
+
+	var hit_position_value: Variant = result.get("position", ray_from)
+	var hit_position: Vector3 = hit_position_value as Vector3
+	var hit_distance: float = ray_from.distance_to(hit_position)
+
+	var allowed_distance: float = interaction_distance
+	if world_item.is_stored_item():
+		allowed_distance = storage_interaction_distance
+
+	if hit_distance > allowed_distance:
+		return null
+
+	return world_item
 
 
 func _build_storage_placement_controller() -> void:
