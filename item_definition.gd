@@ -48,6 +48,11 @@ class_name ItemDefinition
 @export_range(0.10, 1.50, 0.05) var held_max_dimension: float = 0.55
 
 
+# Optional correction for shelf/world storage. The item's normal authored scale
+# is preserved. Player-controlled 90° shelf rotation is applied on top.
+@export var storage_rotation_degrees: Vector3 = Vector3.ZERO
+
+
 func get_utility_for_context(context_id: StringName) -> Dictionary:
 	if context_utility_overrides.has(context_id):
 		var override_value: Variant = context_utility_overrides[context_id]

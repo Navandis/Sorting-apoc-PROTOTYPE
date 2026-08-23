@@ -147,6 +147,83 @@ func find_first_fit(footprint: Vector2i, allow_rotate: bool = true) -> Dictionar
 	}
 
 
+func find_nearest_fit_to_local_point(
+	local_point: Vector3,
+	footprint: Vector2i
+) -> Dictionary:
+	## Finds the valid deterministic origin whose footprint center is nearest
+	## the cursor hit position.
+	var normalized: Vector2i = _normalize_footprint(footprint)
+	if normalized.x > grid_size.x or normalized.y > grid_size.y:
+		return {
+			"valid": false,
+			"origin": get_clamped_origin_for_local_point(local_point, normalized),
+			"footprint": normalized
+		}
+
+	var best_valid: bool = false
+	var best_origin: Vector2i = Vector2i.ZERO
+	var best_distance_squared: float = INF
+
+	var max_row: int = grid_size.y - normalized.y
+	var max_column: int = grid_size.x - normalized.x
+
+	for row: int in range(max_row + 1):
+		for column: int in range(max_column + 1):
+			var origin: Vector2i = Vector2i(column, row)
+			if not can_place_at(origin, normalized):
+				continue
+
+			var candidate_position: Vector3 = get_local_placement_position(origin, normalized)
+			var delta_x: float = candidate_position.x - local_point.x
+			var delta_z: float = candidate_position.z - local_point.z
+			var distance_squared: float = delta_x * delta_x + delta_z * delta_z
+
+			if not best_valid or distance_squared < best_distance_squared:
+				best_valid = true
+				best_distance_squared = distance_squared
+				best_origin = origin
+
+	return {
+		"valid": best_valid,
+		"origin": best_origin if best_valid else get_clamped_origin_for_local_point(local_point, normalized),
+		"footprint": normalized
+	}
+
+
+func get_clamped_origin_for_local_point(
+	local_point: Vector3,
+	footprint: Vector2i
+) -> Vector2i:
+	var normalized: Vector2i = _normalize_footprint(footprint)
+	var half_width: float = usable_size_m.x * 0.5
+	var half_depth: float = usable_size_m.y * 0.5
+
+	var center_column: float = (local_point.x + half_width) / cell_size_m
+	var center_row: float = (local_point.z + half_depth) / cell_size_m
+
+	var origin_x: int = int(round(center_column - float(normalized.x) * 0.5))
+	var origin_y: int = int(round(center_row - float(normalized.y) * 0.5))
+
+	var max_origin_x: int = maxi(0, grid_size.x - normalized.x)
+	var max_origin_y: int = maxi(0, grid_size.y - normalized.y)
+
+	return Vector2i(
+		clampi(origin_x, 0, max_origin_x),
+		clampi(origin_y, 0, max_origin_y)
+	)
+
+
+func get_local_candidate_transform(
+	origin: Vector2i,
+	footprint: Vector2i
+) -> Transform3D:
+	return Transform3D(
+		Basis.IDENTITY,
+		get_local_placement_position(origin, footprint)
+	)
+
+
 func reserve_first_fit(
 	item_key: String,
 	footprint: Vector2i,

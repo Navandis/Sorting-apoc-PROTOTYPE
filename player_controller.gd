@@ -13,6 +13,7 @@ extends CharacterBody3D
 @export var prototype_require_loot_group: bool = false
 @export var print_loot_registration: bool = true
 @export var enable_held_item_view: bool = true
+@export_range(0.5, 4.0, 0.1) var storage_interaction_distance: float = 1.8
 
 @onready var camera: Camera3D = $Camera3D
 @onready var carried_items: Node = $CarriedItems
@@ -20,11 +21,13 @@ extends CharacterBody3D
 const PrototypeItemCatalogScript = preload("res://prototype_item_catalog.gd")
 const WorldItemScript = preload("res://world_item.gd")
 const HeldItemViewScript = preload("res://held_item_view.gd")
+const StoragePlacementControllerScript = preload("res://storage_placement_controller.gd")
 
 var _pitch: float = 0.0
 var _gravity: float = 9.8
 var _current_world_item: WorldItem = null
 var _held_item_view: Node3D
+var _storage_placement: Node = null
 
 var _interaction_hud: CanvasLayer
 var _aim_dot: Panel
@@ -34,6 +37,7 @@ var _interaction_prompt: Label
 const DOT_IDLE := Color(0.90, 0.93, 0.90, 0.95)
 const DOT_PICKUP := Color(0.48, 1.00, 0.62, 1.0)
 const DOT_BLOCKED := Color(1.00, 0.48, 0.38, 1.0)
+const DOT_PLACE := Color(0.35, 0.84, 1.00, 1.0)
 
 
 func _ready() -> void:
@@ -44,6 +48,7 @@ func _ready() -> void:
 	_build_interaction_hud()
 	if enable_held_item_view:
 		_build_held_item_view()
+	_build_storage_placement_controller()
 
 	if carried_items != null:
 		carried_items.contents_changed.connect(_refresh_held_item)
@@ -71,14 +76,18 @@ func _unhandled_input(event: InputEvent) -> void:
 		if event.keycode == KEY_ESCAPE:
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		elif event.keycode == KEY_E and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-			_attempt_pickup()
+			_attempt_interact()
+			get_viewport().set_input_as_handled()
+		elif event.keycode == KEY_R and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+			if _storage_placement != null:
+				_storage_placement.call("toggle_rotation")
 			get_viewport().set_input_as_handled()
 
 	elif event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		if Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		else:
-			_attempt_pickup()
+			_attempt_interact()
 		get_viewport().set_input_as_handled()
 
 
@@ -149,8 +158,19 @@ func _register_prototype_world_items() -> void:
 		print("Prototype loot registered: ", registered_count, " world item(s).")
 
 
-func _attempt_pickup() -> void:
+func _attempt_interact() -> void:
 	var target: WorldItem = _get_looked_at_world_item()
+	if target != null:
+		_attempt_pickup(target)
+		return
+
+	if _storage_placement != null:
+		var placed: bool = bool(_storage_placement.call("place_selected"))
+		if placed:
+			_update_interaction_target()
+
+
+func _attempt_pickup(target: WorldItem) -> void:
 	if target == null or carried_items == null:
 		return
 	if target.pickup_into(carried_items):
@@ -161,26 +181,37 @@ func _attempt_pickup() -> void:
 func _update_interaction_target() -> void:
 	_current_world_item = _get_looked_at_world_item()
 
-	if _current_world_item == null:
-		_set_aim_dot_color(DOT_IDLE)
-		_interaction_prompt.visible = false
+	if _storage_placement != null:
+		_storage_placement.call("set_suppressed", _current_world_item != null)
+		_storage_placement.call("update_target")
+
+	if _current_world_item != null:
+		var can_pickup: bool = _current_world_item.can_pickup_into(carried_items)
+		_set_aim_dot_color(DOT_PICKUP if can_pickup else DOT_BLOCKED)
+		_interaction_prompt.visible = true
+
+		if can_pickup:
+			_interaction_prompt.text = "%s   •   %s   •   B%d\n[E / LMB] PICK UP" % [
+				_current_world_item.get_display_name(),
+				_current_world_item.utility_text(),
+				_current_world_item.get_bulk()
+			]
+		else:
+			_interaction_prompt.text = "%s   •   B%d\nNOT ENOUGH CARRY CAPACITY" % [
+				_current_world_item.get_display_name(),
+				_current_world_item.get_bulk()
+			]
 		return
 
-	var can_pickup: bool = _current_world_item.can_pickup_into(carried_items)
-	_set_aim_dot_color(DOT_PICKUP if can_pickup else DOT_BLOCKED)
-	_interaction_prompt.visible = true
+	if _storage_placement != null and bool(_storage_placement.call("is_targeting_surface")):
+		var can_place: bool = bool(_storage_placement.call("has_valid_placement"))
+		_set_aim_dot_color(DOT_PLACE if can_place else DOT_BLOCKED)
+		_interaction_prompt.visible = true
+		_interaction_prompt.text = String(_storage_placement.call("get_prompt_text"))
+		return
 
-	if can_pickup:
-		_interaction_prompt.text = "%s   •   %s   •   B%d\n[E / LMB] PICK UP" % [
-			_current_world_item.get_display_name(),
-			_current_world_item.utility_text(),
-			_current_world_item.get_bulk()
-		]
-	else:
-		_interaction_prompt.text = "%s   •   B%d\nNOT ENOUGH CARRY CAPACITY" % [
-			_current_world_item.get_display_name(),
-			_current_world_item.get_bulk()
-		]
+	_set_aim_dot_color(DOT_IDLE)
+	_interaction_prompt.visible = false
 
 
 func _get_looked_at_world_item() -> WorldItem:
@@ -220,6 +251,18 @@ func _get_looked_at_world_item() -> WorldItem:
 	return null
 
 
+func _build_storage_placement_controller() -> void:
+	_storage_placement = StoragePlacementControllerScript.new()
+	_storage_placement.name = "StoragePlacementController"
+	add_child(_storage_placement)
+	_storage_placement.call(
+		"configure",
+		camera,
+		carried_items,
+		storage_interaction_distance
+	)
+
+
 func _build_held_item_view() -> void:
 	# Step 3.6: no runtime SubViewport. The held prop is a visual-only child of
 	# the actual player camera. Its materials are cloned and configured by
@@ -237,6 +280,8 @@ func _refresh_held_item() -> void:
 
 func _on_carried_selection_changed(_selected_index: int) -> void:
 	_refresh_held_item()
+	if _storage_placement != null:
+		_storage_placement.call("reset_rotation")
 
 
 func _build_interaction_hud() -> void:

@@ -90,6 +90,11 @@ func get_held_max_dimension() -> float:
 	return definition.held_max_dimension if definition != null else 0.55
 
 
+
+func get_storage_rotation_degrees() -> Vector3:
+	return definition.storage_rotation_degrees if definition != null else Vector3.ZERO
+
+
 func utility_text() -> String:
 	var value: int = get_utility_value()
 	var utility: StringName = get_utility_id()

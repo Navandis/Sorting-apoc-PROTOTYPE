@@ -2,19 +2,10 @@ extends Node3D
 class_name WorldItem
 
 ## Runtime component attached to a prototype loot visual already placed in the
-## scene. It adds a dedicated interaction collider and owns the ItemInstance
-## that moves into the carried-item strip when picked up.
-##
-## IMPORTANT: this pickup collider is deliberately separate from environment /
-## player-movement collision. Shelves and crates use coarse movement colliders,
-## so interaction rays must be able to target an item resting inside them.
+## scene. It adds a simple interaction collider and owns the ItemInstance that
+## moves into the carried-item strip when picked up.
 
 const ItemInstanceScript = preload("res://item_instance.gd")
-
-# Dedicated prototype interaction layer (Godot layer 8 / bit 7). Player pickup
-# rays query only this layer, so coarse shelf/furniture colliders cannot mask
-# loot placed on/in storage furniture.
-const PICKUP_COLLISION_LAYER: int = 1 << 7
 
 var _host: Node3D
 var _definition: ItemDefinition
@@ -22,12 +13,29 @@ var _item_instance: ItemInstance
 var _interaction_area: Area3D
 var _bounds: AABB = AABB()
 var _bounds_valid: bool = false
+var _storage_surface: Node = null
+var _storage_key: String = ""
 
 
 func configure(host: Node3D, definition: ItemDefinition) -> void:
 	_host = host
 	_definition = definition
 	_item_instance = ItemInstanceScript.new(definition)
+	_build_interaction_area()
+
+
+func configure_existing(
+	host: Node3D,
+	item_instance: ItemInstance,
+	storage_surface: Node = null,
+	storage_key: String = ""
+) -> void:
+	## Reuses the exact carried ItemInstance when it is placed on a shelf.
+	_host = host
+	_item_instance = item_instance
+	_definition = item_instance.definition if item_instance != null else null
+	_storage_surface = storage_surface
+	_storage_key = storage_key
 	_build_interaction_area()
 
 
@@ -69,8 +77,14 @@ func pickup_into(carried_items: Node) -> bool:
 	if not added:
 		return false
 
-	# Remove the interaction target immediately so repeated clicks cannot
-	# duplicate the item while queue_free waits for the end of the frame.
+	if _storage_surface != null and is_instance_valid(_storage_surface):
+		if _storage_surface.has_method("release") and not _storage_key.is_empty():
+			_storage_surface.release(_storage_key)
+	_storage_surface = null
+	_storage_key = ""
+
+	# Remove the interaction target immediately so repeated clicks cannot duplicate
+	# the item while queue_free waits for the end of the frame.
 	if _interaction_area != null:
 		_interaction_area.collision_layer = 0
 		_interaction_area.monitorable = false
@@ -98,7 +112,9 @@ func _build_interaction_area() -> void:
 
 	_interaction_area = Area3D.new()
 	_interaction_area.name = "PickupArea"
-	_interaction_area.collision_layer = PICKUP_COLLISION_LAYER
+	# Use a dedicated layer in addition to the normal environment layers. The
+	# player's interaction ray still queries bodies too, so walls can occlude loot.
+	_interaction_area.collision_layer = 1 << 7
 	_interaction_area.collision_mask = 0
 	_interaction_area.monitoring = false
 	_interaction_area.monitorable = true
