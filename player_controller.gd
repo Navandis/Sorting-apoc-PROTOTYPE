@@ -24,8 +24,7 @@ const HeldItemViewScript = preload("res://held_item_view.gd")
 var _pitch: float = 0.0
 var _gravity: float = 9.8
 var _current_world_item: WorldItem = null
-var _held_item_layer: CanvasLayer
-var _held_item_view: Control
+var _held_item_view: Node3D
 
 var _interaction_hud: CanvasLayer
 var _aim_dot: Panel
@@ -41,6 +40,7 @@ func _ready() -> void:
 	_pitch = camera.rotation.x
 	_gravity = float(ProjectSettings.get_setting("physics/3d/default_gravity", 9.8))
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	camera.near = minf(camera.near, 0.02)
 	_build_interaction_hud()
 	if enable_held_item_view:
 		_build_held_item_view()
@@ -221,17 +221,12 @@ func _get_looked_at_world_item() -> WorldItem:
 
 
 func _build_held_item_view() -> void:
-	# Render the held prop in an isolated transparent viewmodel world. Layer 5
-	# sits above the 3D bunker but below the carried-items HUD (layer 10) and
-	# interaction HUD (layer 20).
-	_held_item_layer = CanvasLayer.new()
-	_held_item_layer.name = "HeldItemLayer"
-	_held_item_layer.layer = 5
-	add_child(_held_item_layer)
-
+	# Step 3.6: no runtime SubViewport. The held prop is a visual-only child of
+	# the actual player camera. Its materials are cloned and configured by
+	# held_item_view.gd so it cannot cast shadows or alter bunker lighting.
 	_held_item_view = HeldItemViewScript.new()
 	_held_item_view.name = "HeldItemView"
-	_held_item_layer.add_child(_held_item_view)
+	camera.add_child(_held_item_view)
 
 
 func _refresh_held_item() -> void:

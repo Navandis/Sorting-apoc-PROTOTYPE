@@ -1,47 +1,38 @@
-extends SubViewportContainer
+extends Node3D
 class_name HeldItemView
 
-## Screen-space FPS-style viewmodel for the currently selected carried item.
+## Visual-only camera-attached representation of the selected carried item.
 ##
-## Restored after the TextureRect diagnostic renderer introduced clipping.
-## The held prop is rendered in its own transparent 3D world instead of being
-## inserted into the main camera/world. This prevents imported lights,
-## environments, emissive/exposure interactions and wall clipping from
-## affecting the bunker. The viewmodel is also constrained to a right-hand
-## screen region above the carried-item strip, so additional HUD slots cannot
-## cover it.
-
-@export var render_size: Vector2i = Vector2i(640, 640)
+## IMPORTANT: this implementation intentionally uses NO SubViewport. Both the
+## HUD and held-item runtime SubViewports were independently shown to change
+## the bunker scene brightness in the current Godot build.
+##
+## The actual item PackedScene is instantiated below the player Camera3D.
+## Collision, embedded cameras/lights/environments and shadows are disabled.
+## Standard/ORM materials are duplicated and made unshaded + depth-test-free
+## so the viewmodel remains readable and does not clip into world geometry.
 
 const ELONGATED_RATIO: float = 2.0
 const FLAT_RATIO: float = 1.8
+const VIEWMODEL_RENDER_PRIORITY: int = 127
 
-var _viewport: SubViewport
 var _orientation_root: Node3D
 var _center_root: Node3D
-var _camera: Camera3D
-var _current_visual: Node
+var _current_visual: Node = null
 var _pending_item: RefCounted = null
 var _bounds: AABB = AABB()
 var _bounds_valid: bool = false
 
 
 func _ready() -> void:
-	mouse_filter = Control.MOUSE_FILTER_IGNORE
-	stretch = true
+	_orientation_root = Node3D.new()
+	_orientation_root.name = "OrientationRoot"
+	add_child(_orientation_root)
 
-	# Reserve the lower-right portion of the screen for the carried object while
-	# keeping clear of the ~150 px carried-items strip.
-	anchor_left = 0.50
-	anchor_right = 1.0
-	anchor_top = 0.30
-	anchor_bottom = 1.0
-	offset_left = 0.0
-	offset_right = -8.0
-	offset_top = 0.0
-	offset_bottom = -158.0
+	_center_root = Node3D.new()
+	_center_root.name = "CenterRoot"
+	_orientation_root.add_child(_center_root)
 
-	_build_viewmodel_world()
 	if _pending_item != null:
 		_apply_item(_pending_item)
 
@@ -65,10 +56,9 @@ func _apply_item(item) -> void:
 		visible = false
 		return
 
-	visible = true
 	_current_visual = visual_scene.instantiate()
 	_center_root.add_child(_current_visual)
-	_disable_embedded_nonvisual_nodes(_current_visual)
+	_prepare_viewmodel_tree(_current_visual)
 
 	_bounds = AABB()
 	_bounds_valid = false
@@ -112,89 +102,87 @@ func _apply_item(item) -> void:
 		scale_factor = held_max_dimension / largest_dimension
 	_orientation_root.scale = Vector3.ONE * scale_factor
 
-	# Existing per-item held offsets remain meaningful: they position the model
-	# relative to the independent viewmodel camera. Add a small universal lift so
-	# ordinary items sit naturally above the HUD safe zone.
+	# Existing per-item metadata remains the main authoring control. The
+	# universal lift reserves space above the carried-items strip.
 	_orientation_root.position = held_offset + Vector3(0.02, 0.10, 0.0)
-
-
-func _build_viewmodel_world() -> void:
-	_viewport = SubViewport.new()
-	_viewport.name = "HeldItemViewport"
-	_viewport.size = render_size
-	_viewport.transparent_bg = true
-	_viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
-	_viewport.msaa_3d = Viewport.MSAA_2X
-
-	# Explicit World3D isolation is stronger and clearer here than relying on
-	# own_world_3d plus WorldEnvironment/Light3D child nodes. The held-item
-	# renderer gets ambient lighting directly on its private World3D resource.
-	_viewport.world_3d = World3D.new()
-	add_child(_viewport)
-
-	var environment: Environment = Environment.new()
-	environment.background_mode = Environment.BG_COLOR
-	environment.background_color = Color(0.0, 0.0, 0.0, 0.0)
-	environment.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
-	environment.ambient_light_color = Color(0.68, 0.70, 0.72, 1.0)
-	environment.ambient_light_energy = 0.72
-	_viewport.world_3d.environment = environment
-
-	_orientation_root = Node3D.new()
-	_orientation_root.name = "OrientationRoot"
-	_viewport.add_child(_orientation_root)
-
-	_center_root = Node3D.new()
-	_center_root.name = "CenterRoot"
-	_orientation_root.add_child(_center_root)
-
-	_camera = Camera3D.new()
-	_camera.name = "HeldItemCamera"
-	_camera.current = true
-	_camera.fov = 64.0
-	_camera.near = 0.01
-	_camera.far = 20.0
-	_camera.position = Vector3.ZERO
-	_viewport.add_child(_camera)
-
-	visible = false
+	visible = true
 
 
 func _clear_visual() -> void:
 	if _current_visual != null and is_instance_valid(_current_visual):
 		_current_visual.queue_free()
 	_current_visual = null
+
 	if _center_root != null:
 		_center_root.position = Vector3.ZERO
+
 	if _orientation_root != null:
 		_orientation_root.position = Vector3.ZERO
 		_orientation_root.basis = Basis.IDENTITY
 		_orientation_root.scale = Vector3.ONE
 
 
-func _disable_embedded_nonvisual_nodes(node: Node) -> void:
+func _prepare_viewmodel_tree(node: Node) -> void:
+	# No gameplay physics or imported scene machinery survives in the viewmodel.
 	if node is CollisionObject3D:
 		var collision_object: CollisionObject3D = node as CollisionObject3D
 		collision_object.collision_layer = 0
 		collision_object.collision_mask = 0
+
 	if node is Camera3D:
 		var embedded_camera: Camera3D = node as Camera3D
 		embedded_camera.current = false
+
 	if node is Light3D:
 		var embedded_light: Light3D = node as Light3D
 		embedded_light.visible = false
+
 	if node is WorldEnvironment:
 		var embedded_environment: WorldEnvironment = node as WorldEnvironment
 		embedded_environment.environment = null
+
 	if node is ReflectionProbe:
 		var reflection_probe: ReflectionProbe = node as ReflectionProbe
 		reflection_probe.visible = false
+
 	if node is VoxelGI:
 		var voxel_gi: VoxelGI = node as VoxelGI
 		voxel_gi.visible = false
 
-	for child in node.get_children():
-		_disable_embedded_nonvisual_nodes(child)
+	if node is MeshInstance3D:
+		_prepare_mesh_instance(node as MeshInstance3D)
+
+	for child: Node in node.get_children():
+		_prepare_viewmodel_tree(child)
+
+
+func _prepare_mesh_instance(mesh_instance: MeshInstance3D) -> void:
+	# The held copy must never cast light/shadow information into the bunker.
+	mesh_instance.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+
+	if mesh_instance.mesh == null:
+		return
+
+	var surface_count: int = mesh_instance.mesh.get_surface_count()
+	for surface_index: int in range(surface_count):
+		var source_material: Material = mesh_instance.get_active_material(surface_index)
+		if source_material == null:
+			continue
+
+		var copied_resource: Resource = source_material.duplicate()
+		if copied_resource is BaseMaterial3D:
+			var copied_material: BaseMaterial3D = copied_resource as BaseMaterial3D
+			copied_material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+			copied_material.no_depth_test = true
+			copied_material.render_priority = VIEWMODEL_RENDER_PRIORITY
+			mesh_instance.set_surface_override_material(surface_index, copied_material)
+		elif copied_resource is ShaderMaterial:
+			# Imported GLBs used in the prototype are normally BaseMaterial3D.
+			# Preserve a custom shader if encountered rather than destroying its
+			# textures. It still has collision/lights/shadows disabled.
+			var copied_shader: ShaderMaterial = copied_resource as ShaderMaterial
+			copied_shader.render_priority = VIEWMODEL_RENDER_PRIORITY
+			mesh_instance.set_surface_override_material(surface_index, copied_shader)
 
 
 func _scan_mesh_bounds(node: Node, accumulated_transform: Transform3D) -> void:
@@ -213,15 +201,15 @@ func _scan_mesh_bounds(node: Node, accumulated_transform: Transform3D) -> void:
 				_bounds = transformed_bounds
 				_bounds_valid = true
 
-	for child in node.get_children():
-		_scan_mesh_bounds(child, next_transform)
+	for child_node: Node in node.get_children():
+		_scan_mesh_bounds(child_node, next_transform)
 
 
 func _make_auto_orientation_basis(model_size: Vector3) -> Basis:
 	var axis_order: Array[int] = [0, 1, 2]
 
-	for i in range(axis_order.size() - 1):
-		for j in range(i + 1, axis_order.size()):
+	for i: int in range(axis_order.size() - 1):
+		for j: int in range(i + 1, axis_order.size()):
 			var size_i: float = _axis_size(model_size, axis_order[i])
 			var size_j: float = _axis_size(model_size, axis_order[j])
 			if size_j > size_i:
@@ -274,6 +262,7 @@ func _basis_for_axis_mapping(horizontal_axis: int, vertical_axis: int, depth_axi
 	if result.determinant() < 0.0:
 		targets[depth_axis] = -targets[depth_axis]
 		result = Basis(targets[0], targets[1], targets[2])
+
 	return result.orthonormalized()
 
 

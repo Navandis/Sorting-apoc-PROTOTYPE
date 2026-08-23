@@ -2,7 +2,6 @@
 
 [ext_resource type="PackedScene" uid="uid://c4pb7l6u1paus" path="res://assets/furniture/SM_ventilated_locker.glb" id="1_h2yge"]
 [ext_resource type="PackedScene" uid="uid://hx4i7jen68lm" path="res://assets/floors/SM_Sewer_Floor_01a.glb" id="2_1bvp3"]
-[ext_resource type="PackedScene" uid="uid://ve7r68p14xcs" path="res://assets/furniture/SM_FuelCanister.glb" id="3_kek77"]
 [ext_resource type="PackedScene" uid="uid://b0hp02ey7g7j0" path="res://assets/walls/SM_Sewer_Wall_Arch_01a.glb" id="3_lquwl"]
 [ext_resource type="PackedScene" uid="uid://dstkpn5ipber1" path="res://assets/furniture/SM_MilitaryCrate_02_base.glb" id="4_4c57u"]
 [ext_resource type="PackedScene" uid="uid://p5umbk5l64xn" path="res://assets/lights/SM_Sewer_Light_Wall_Fixture_On.glb" id="8_ycdy4"]
@@ -18,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://c04hd1vxq2hfd" path="res://assets/lights/SM_AlarmLight.glb" id="18_cegan"]
 [ext_resource type="PackedScene" uid="uid://c0lednj481g7d" path="res://assets/walls/SM_Sewer_Wall_Brick_01a.glb" id="19_qsp4k"]
 [ext_resource type="PackedScene" uid="uid://bykpke051qnit" path="res://assets/walls/SM_Sewer_Wall_Cinder_01a.glb" id="20_kq58d"]
+[ext_resource type="PackedScene" uid="uid://d3mlmnn3nikxt" path="res://assets/furniture/SM_MetalShelves.glb" id="20_qnost"]
 [ext_resource type="PackedScene" uid="uid://cv055rw3pvq6a" path="res://assets/lights/SM_Fluoresent_Light_Tube_01b.glb" id="21_seu75"]
 [ext_resource type="PackedScene" uid="uid://cmxt82qd1nx6n" path="res://assets/building_blocks/SM_CinderBlocks_03.glb" id="22_htxhm"]
 [ext_resource type="PackedScene" uid="uid://d0lrv3irkyq28" path="res://assets/furniture/SM_ShootingRange_lane_dividers_table.glb" id="22_seu75"]
@@ -56,20 +56,17 @@ script = ExtResource("32_env")
 
 [node name="AreaLight3D" type="AreaLight3D" parent="." unique_id=443620822]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 3.6368933, 4.764, 3.4152205)
-visible = false
 light_energy = 2.081
 area_range = 20.378
 
 [node name="SpotLight3D" type="SpotLight3D" parent="." unique_id=171997309]
 transform = Transform3D(0.99934244, 0.034376513, -0.01153282, 0.012825588, -0.037625987, 0.99920964, 0.033915408, -0.99870044, -0.038042143, 4.502863, 4.7641406, 3.6291475)
-visible = false
 light_energy = 7.998
 light_size = 0.109
 spot_range = 43.7
 
 [node name="SM_Lamp_long" parent="." unique_id=539307325 instance=ExtResource("10_vivmo")]
 transform = Transform3D(0.9999619, -0.008726535, 0, 0.008726535, 0.9999619, 0, 0, 0, 1, 3.667197, 4.920672, 3.4278696)
-visible = false
 
 [node name="SM_AlarmLight" parent="." unique_id=1076681556 instance=ExtResource("18_cegan")]
 transform = Transform3D(-0.94479376, -0.32377926, 0.05031601, -0.3233211, 0.94613266, 0.017218815, -0.053180713, 0, -0.99858487, 8.271737, 1.8240396, 4.8790774)
@@ -85,7 +82,6 @@ omni_attenuation = 1.519
 
 [node name="SM_Sewer_Light_Wall_Fixture_On2" parent="." unique_id=266620814 instance=ExtResource("8_ycdy4")]
 transform = Transform3D(-3.491541e-08, 0.60163456, 0.79877144, 2.6298283e-08, 0.79877144, -0.60163456, -1, 0, -4.371139e-08, -0.12520742, 2.7406383, 3.9494853)
-visible = false
 
 [node name="OmniLight3D" type="OmniLight3D" parent="SM_Sewer_Light_Wall_Fixture_On2" unique_id=1327170441]
 transform = Transform3D(-2.442336e-08, -3.6251684e-08, -1, -0.8293419, 0.5587414, -1.3358971e-16, 0.5587414, 0.8293419, -4.371139e-08, 0, 0.07227898, -0.0544405)
@@ -93,7 +89,6 @@ light_color = Color(1, 1, 0.92156863, 1)
 
 [node name="SM_Electrical_Cabinet_03a" parent="." unique_id=845203059 instance=ExtResource("15_82xsv")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 1.7763568e-15, 8.742278e-08, 0, -1, 9.233881, 1.3490236, 1.0351748)
-visible = false
 
 [node name="SpotLight3D" type="SpotLight3D" parent="SM_Electrical_Cabinet_03a" unique_id=1199839237]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0292387, 0.34329665, 0.12938458)
@@ -121,23 +116,13 @@ spot_angle = 90.0
 
 [node name="SM_Sewer_Light_Wall_Fixture_On" parent="." unique_id=318644501 instance=ExtResource("8_ycdy4")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 8.823876, 1.4509966, 0.91487885)
-visible = false
 
 [node name="SM_Sewer_Light_Wall_Fixture_On" parent="SM_Sewer_Light_Wall_Fixture_On" unique_id=692197997 instance=ExtResource("8_ycdy4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.572529, -0.047983885, -0.0028201342)
 visible = false
 
-[node name="SM_FuelCanister" parent="." unique_id=1910864599 instance=ExtResource("3_kek77")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5170677, 0, 4.511505)
-
-[node name="SM_FuelCanister2" parent="." unique_id=1329762991 instance=ExtResource("3_kek77")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3150215, 0, 4.9882436)
-
 [node name="SM_MilitaryCrate_02_base" parent="." unique_id=1294841721 instance=ExtResource("4_4c57u")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4964833, 0.0127055645, 0.21325612)
-
-[node name="SM_MilitaryCrate_02_base2" parent="." unique_id=1368926692 instance=ExtResource("4_4c57u")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.673, 0.005, 5.56)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4964833, 0.058845818, 0.21325612)
 
 [node name="SM_ventilated_locker2" parent="." unique_id=201750303 instance=ExtResource("1_h2yge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7822938, 0.04006219, 2.0317678)
@@ -147,6 +132,7 @@ transform = Transform3D(0.655, 0, 0, 0, 0.655, 0, 0, 0, 0.655, 0.80279386, 0.074
 
 [node name="SM_Sewer_Floor_01a" parent="." unique_id=91017910 instance=ExtResource("2_1bvp3")]
 transform = Transform3D(3.225, 0, 0, 0, 3.225, 0, 0, 0, 3.225, -7.1302166, 0, -7.30389)
+visible = false
 
 [node name="SM_Sewer_Floor_01a" parent="SM_Sewer_Floor_01a" unique_id=2028638505 instance=ExtResource("2_1bvp3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00025132298, 0, 1.9996771)
@@ -171,12 +157,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00025132298, 0, 1.9996771)
 
 [node name="SM_Sewer_Floor_01a4" parent="SM_Sewer_Floor_01a" unique_id=1864365662 instance=ExtResource("2_1bvp3")]
 transform = Transform3D(1.0000002, 0, 0, 0, 1.0000002, 0, 0, 0, 1.0000002, 0, 0, 3.958)
+visible = false
 
 [node name="SM_Sewer_Floor_01a" parent="SM_Sewer_Floor_01a/SM_Sewer_Floor_01a4" unique_id=1637006532 instance=ExtResource("2_1bvp3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00025132298, 0, 1.9996771)
 
 [node name="SM_Sewer_Floor_01a2" parent="SM_Sewer_Floor_01a/SM_Sewer_Floor_01a4" unique_id=1425740979 instance=ExtResource("2_1bvp3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9997607, 0, 0.00026714802)
 
 [node name="SM_Sewer_Floor_01a" parent="SM_Sewer_Floor_01a/SM_Sewer_Floor_01a4/SM_Sewer_Floor_01a2" unique_id=1838856594 instance=ExtResource("2_1bvp3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00025132298, 0, 1.9996771)
@@ -277,6 +264,9 @@ area_size = Vector2(1.1, 1.1)
 [node name="SM_ShootingRange_lane_dividers_table" parent="SM_Sewer_Wall_Cinder_01a9/SM_Fluoresent_Light_Tube_01b" unique_id=1275697441 instance=ExtResource("22_seu75")]
 transform = Transform3D(-0.96814764, 0.25037992, 7.1054274e-15, -1.0944454e-08, -4.231907e-08, -1, -0.25037992, -0.96814764, 4.371139e-08, -4.7170744, 8.536404, 1.3107833)
 
+[node name="SM_MetalShelves" parent="SM_Sewer_Wall_Cinder_01a9/SM_Fluoresent_Light_Tube_01b" unique_id=1755856558 instance=ExtResource("20_qnost")]
+transform = Transform3D(-1, 0, -8.742278e-08, 8.742278e-08, -4.371139e-08, -1, -3.821371e-15, -1, 4.371139e-08, 2.7831845, 6.0827127, 3.0267506)
+
 [node name="SM_Sewer_Wall_Cinder_01a10" parent="." unique_id=1631719568 instance=ExtResource("20_kq58d")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 6.6849833, 1.9823987, 10.848)
 
@@ -334,7 +324,7 @@ transform = Transform3D(1, -4.3711392e-08, -4.371139e-08, -4.3711392e-08, -4.371
 transform = Transform3D(-0.31730467, 0, 0.94832367, 0, 1, 0, -0.94832367, 0, -0.31730467, 4.011934, 0, 10.370729)
 
 [node name="SM_ClothesCabinet" parent="." unique_id=1606125898 instance=ExtResource("29_come4")]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -0.2037723, 0, 5.345869)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -0.2037723, 0, 8.197172)
 
 [node name="SM_Tool_Cabinet_01a" parent="." unique_id=1066285534 instance=ExtResource("31_htxhm")]
 transform = Transform3D(-0.00872653, 0, -0.9999619, 0, 1, 0, 0.9999619, 0, -0.00872653, 8.310018, 0, 1.9895017)
@@ -343,7 +333,6 @@ transform = Transform3D(-0.00872653, 0, -0.9999619, 0, 1, 0, 0.9999619, 0, -0.00
 transform = Transform3D(-0.9987581, 0, -0.04982239, 0, 1, 0, 0.04982239, 0, -0.9987581, 3.851838, 0.047640204, 0.26027846)
 script = ExtResource("10_2cqfq")
 interaction_distance = 1.4
-enable_held_item_view = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D" unique_id=350098214]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.875, 0)

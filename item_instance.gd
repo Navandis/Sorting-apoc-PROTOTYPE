@@ -48,6 +48,11 @@ func get_visual_scene() -> PackedScene:
 	return definition.visual_scene if definition != null else null
 
 
+
+func get_icon() -> Texture2D:
+	return definition.icon if definition != null else null
+
+
 func get_preview_auto_orient() -> bool:
 	return definition.preview_auto_orient if definition != null else true
 

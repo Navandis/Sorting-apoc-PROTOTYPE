@@ -2,16 +2,12 @@ extends Control
 class_name CarriedItemsHUD
 
 ## Minimal persistent HUD for the carried-item bundle.
-## Slots use live 3D previews and preserve temporary gaps after an item leaves
-## the strip; future pickups fill the first gap.
+## Runtime 3D SubViewport previews are intentionally disabled after they were
+## shown to alter main-scene brightness in the current Godot build. Slots use
+## ItemDefinition.icon when available and a neutral fallback otherwise.
 
 @export var carried_items_path: NodePath = NodePath("../../CharacterBody3D/CarriedItems")
 @export_range(1, 20, 1) var max_visible_slots: int = 10
-## Diagnostic/runtime switch. When false, HUD slots never instantiate ItemPreview3D/SubViewport nodes.
-@export var enable_live_previews: bool = true
-
-const ItemPreview3DScript = preload("res://item_preview_3d.gd")
-
 var _carried_items: Node
 var _slot_row: HBoxContainer
 var _bulk_label: Label
@@ -139,17 +135,7 @@ func _make_slot(item, index: int, selected: bool) -> Control:
 	column.add_theme_constant_override("separation", 0)
 	panel.add_child(column)
 
-	if enable_live_previews:
-		var preview: ItemPreview3D = ItemPreview3DScript.new()
-		preview.set_item(item)
-		column.add_child(preview)
-	else:
-		# Keep slot geometry stable while ensuring absolutely no 3D preview
-		# viewport, lights, or environment are created.
-		var preview_placeholder: Control = Control.new()
-		preview_placeholder.custom_minimum_size = Vector2(106.0, 80.0)
-		preview_placeholder.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		column.add_child(preview_placeholder)
+	column.add_child(_make_icon_area(item))
 
 	var name_label: Label = Label.new()
 	var number_text: String = "0" if index == 9 else str(index + 1)
@@ -169,6 +155,58 @@ func _make_slot(item, index: int, selected: bool) -> Control:
 	column.add_child(stats_label)
 
 	return panel
+
+
+func _make_icon_area(item) -> Control:
+	var holder: CenterContainer = CenterContainer.new()
+	holder.custom_minimum_size = Vector2(106.0, 80.0)
+	holder.mouse_filter = Control.MOUSE_FILTER_IGNORE
+
+	var icon_texture: Texture2D = null
+	if item != null and item.has_method("get_icon"):
+		icon_texture = item.get_icon() as Texture2D
+
+	if icon_texture != null:
+		var icon_rect: TextureRect = TextureRect.new()
+		icon_rect.custom_minimum_size = Vector2(102.0, 76.0)
+		icon_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		icon_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		icon_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		icon_rect.texture = icon_texture
+		holder.add_child(icon_rect)
+		return holder
+
+	# Temporary fallback until the planned editor/offline thumbnail baker writes
+	# real model thumbnails into ItemDefinition.icon.
+	var fallback: PanelContainer = PanelContainer.new()
+	fallback.custom_minimum_size = Vector2(86.0, 68.0)
+	fallback.mouse_filter = Control.MOUSE_FILTER_IGNORE
+
+	var fallback_style: StyleBoxFlat = StyleBoxFlat.new()
+	fallback_style.bg_color = Color(0.085, 0.095, 0.095, 0.92)
+	fallback_style.border_color = Color(0.25, 0.29, 0.28, 0.9)
+	fallback_style.set_border_width_all(1)
+	fallback_style.corner_radius_top_left = 4
+	fallback_style.corner_radius_top_right = 4
+	fallback_style.corner_radius_bottom_left = 4
+	fallback_style.corner_radius_bottom_right = 4
+	fallback.add_theme_stylebox_override("panel", fallback_style)
+
+	var fallback_label: Label = Label.new()
+	var initial: String = "?"
+	if item != null and item.has_method("get_display_name"):
+		var display_name: String = String(item.get_display_name()).strip_edges()
+		if not display_name.is_empty():
+			initial = display_name.left(1).to_upper()
+	fallback_label.text = initial
+	fallback_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	fallback_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	fallback_label.add_theme_color_override("font_color", SECONDARY_TEXT)
+	fallback_label.add_theme_font_size_override("font_size", 28)
+	fallback.add_child(fallback_label)
+
+	holder.add_child(fallback)
+	return holder
 
 
 func _make_empty_slot(index: int) -> Control:

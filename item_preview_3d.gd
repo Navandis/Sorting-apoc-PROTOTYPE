@@ -290,8 +290,8 @@ func _frame_camera(model_size: Vector3, orientation: Basis, zoom_multiplier: flo
 		var x_sign: float = -1.0 if x_index == 0 else 1.0
 		for y_index in range(2):
 			var y_sign: float = -1.0 if y_index == 0 else 1.0
-			for z_index in range(2):
-				var z_sign: float = -1.0 if z_index == 0 else 1.0
+			for corner_z_index in range(2):
+				var z_sign: float = -1.0 if corner_z_index == 0 else 1.0
 				var corner: Vector3 = Vector3(
 					half_size.x * x_sign,
 					half_size.y * y_sign,
