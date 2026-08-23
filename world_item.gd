@@ -7,6 +7,11 @@ class_name WorldItem
 
 const ItemInstanceScript = preload("res://item_instance.gd")
 
+# Dedicated loot interaction layer (Godot layer 8 / bit 7).
+# Player pickup rays query only this layer so coarse shelf/furniture movement
+# colliders do not block interaction with loot resting on storage surfaces.
+const PICKUP_COLLISION_LAYER: int = 1 << 7
+
 var _host: Node3D
 var _definition: ItemDefinition
 var _item_instance: ItemInstance
@@ -114,7 +119,7 @@ func _build_interaction_area() -> void:
 	_interaction_area.name = "PickupArea"
 	# Use a dedicated layer in addition to the normal environment layers. The
 	# player's interaction ray still queries bodies too, so walls can occlude loot.
-	_interaction_area.collision_layer = 1 << 7
+	_interaction_area.collision_layer = PICKUP_COLLISION_LAYER
 	_interaction_area.collision_mask = 0
 	_interaction_area.monitoring = false
 	_interaction_area.monitorable = true
