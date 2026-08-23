@@ -1,14 +1,24 @@
-extends Node3D
+extends SubViewportContainer
 class_name HeldItemView
 
-## Camera-attached visual representation of the currently selected carried item.
-## This is not a physics object and has no gameplay collision.
+## Screen-space FPS-style viewmodel for the currently selected carried item.
+##
+## The held prop is rendered in its own transparent 3D world instead of being
+## inserted into the main camera/world. This prevents imported lights,
+## environments, emissive/exposure interactions and wall clipping from
+## affecting the bunker. The viewmodel is also constrained to a right-hand
+## screen region above the carried-item strip, so additional HUD slots cannot
+## cover it.
+
+@export var render_size: Vector2i = Vector2i(640, 640)
 
 const ELONGATED_RATIO: float = 2.0
 const FLAT_RATIO: float = 1.8
 
+var _viewport: SubViewport
 var _orientation_root: Node3D
 var _center_root: Node3D
+var _camera: Camera3D
 var _current_visual: Node
 var _pending_item: RefCounted = null
 var _bounds: AABB = AABB()
@@ -16,14 +26,21 @@ var _bounds_valid: bool = false
 
 
 func _ready() -> void:
-	_orientation_root = Node3D.new()
-	_orientation_root.name = "OrientationRoot"
-	add_child(_orientation_root)
+	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	stretch = true
 
-	_center_root = Node3D.new()
-	_center_root.name = "CenterRoot"
-	_orientation_root.add_child(_center_root)
+	# Reserve the lower-right portion of the screen for the carried object while
+	# keeping clear of the ~150 px carried-items strip.
+	anchor_left = 0.50
+	anchor_right = 1.0
+	anchor_top = 0.30
+	anchor_bottom = 1.0
+	offset_left = 0.0
+	offset_right = -8.0
+	offset_top = 0.0
+	offset_bottom = -158.0
 
+	_build_viewmodel_world()
 	if _pending_item != null:
 		_apply_item(_pending_item)
 
@@ -39,20 +56,24 @@ func _apply_item(item) -> void:
 	_clear_visual()
 
 	if item == null or not item.has_method("get_visual_scene"):
+		visible = false
 		return
 
 	var visual_scene: PackedScene = item.get_visual_scene() as PackedScene
 	if visual_scene == null:
+		visible = false
 		return
 
+	visible = true
 	_current_visual = visual_scene.instantiate()
 	_center_root.add_child(_current_visual)
-	_disable_embedded_gameplay_nodes(_current_visual)
+	_disable_embedded_nonvisual_nodes(_current_visual)
 
 	_bounds = AABB()
 	_bounds_valid = false
 	_scan_mesh_bounds(_current_visual, Transform3D.IDENTITY)
 	if not _bounds_valid:
+		visible = false
 		return
 
 	var center: Vector3 = _bounds.position + (_bounds.size * 0.5)
@@ -89,7 +110,67 @@ func _apply_item(item) -> void:
 	if largest_dimension > held_max_dimension and largest_dimension > 0.0001:
 		scale_factor = held_max_dimension / largest_dimension
 	_orientation_root.scale = Vector3.ONE * scale_factor
-	position = held_offset
+
+	# Existing per-item held offsets remain meaningful: they position the model
+	# relative to the independent viewmodel camera. Add a small universal lift so
+	# ordinary items sit naturally above the HUD safe zone.
+	_orientation_root.position = held_offset + Vector3(0.02, 0.10, 0.0)
+
+
+func _build_viewmodel_world() -> void:
+	_viewport = SubViewport.new()
+	_viewport.name = "HeldItemViewport"
+	_viewport.size = render_size
+	_viewport.transparent_bg = true
+	_viewport.own_world_3d = true
+	_viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
+	_viewport.msaa_3d = Viewport.MSAA_2X
+	add_child(_viewport)
+
+	_orientation_root = Node3D.new()
+	_orientation_root.name = "OrientationRoot"
+	_viewport.add_child(_orientation_root)
+
+	_center_root = Node3D.new()
+	_center_root.name = "CenterRoot"
+	_orientation_root.add_child(_center_root)
+
+	_camera = Camera3D.new()
+	_camera.name = "HeldItemCamera"
+	_camera.current = true
+	_camera.fov = 64.0
+	_camera.near = 0.01
+	_camera.far = 20.0
+	_camera.position = Vector3.ZERO
+	_viewport.add_child(_camera)
+
+	# Neutral independent lighting. The world can be dark without imported held
+	# props changing the main scene's illumination or exposure.
+	var key_light: DirectionalLight3D = DirectionalLight3D.new()
+	key_light.name = "HeldKeyLight"
+	key_light.light_energy = 1.0
+	key_light.rotation_degrees = Vector3(-30.0, -35.0, 0.0)
+	_viewport.add_child(key_light)
+
+	var fill_light: DirectionalLight3D = DirectionalLight3D.new()
+	fill_light.name = "HeldFillLight"
+	fill_light.light_energy = 0.38
+	fill_light.rotation_degrees = Vector3(20.0, 145.0, 0.0)
+	_viewport.add_child(fill_light)
+
+	var environment: Environment = Environment.new()
+	environment.background_mode = Environment.BG_COLOR
+	environment.background_color = Color(0.0, 0.0, 0.0, 0.0)
+	environment.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
+	environment.ambient_light_color = Color(0.48, 0.50, 0.52, 1.0)
+	environment.ambient_light_energy = 0.32
+
+	var world_environment: WorldEnvironment = WorldEnvironment.new()
+	world_environment.name = "HeldEnvironment"
+	world_environment.environment = environment
+	_viewport.add_child(world_environment)
+
+	visible = false
 
 
 func _clear_visual() -> void:
@@ -99,11 +180,12 @@ func _clear_visual() -> void:
 	if _center_root != null:
 		_center_root.position = Vector3.ZERO
 	if _orientation_root != null:
+		_orientation_root.position = Vector3.ZERO
 		_orientation_root.basis = Basis.IDENTITY
 		_orientation_root.scale = Vector3.ONE
 
 
-func _disable_embedded_gameplay_nodes(node: Node) -> void:
+func _disable_embedded_nonvisual_nodes(node: Node) -> void:
 	if node is CollisionObject3D:
 		var collision_object: CollisionObject3D = node as CollisionObject3D
 		collision_object.collision_layer = 0
@@ -114,9 +196,18 @@ func _disable_embedded_gameplay_nodes(node: Node) -> void:
 	if node is Light3D:
 		var embedded_light: Light3D = node as Light3D
 		embedded_light.visible = false
+	if node is WorldEnvironment:
+		var embedded_environment: WorldEnvironment = node as WorldEnvironment
+		embedded_environment.environment = null
+	if node is ReflectionProbe:
+		var reflection_probe: ReflectionProbe = node as ReflectionProbe
+		reflection_probe.visible = false
+	if node is VoxelGI:
+		var voxel_gi: VoxelGI = node as VoxelGI
+		voxel_gi.visible = false
 
 	for child in node.get_children():
-		_disable_embedded_gameplay_nodes(child)
+		_disable_embedded_nonvisual_nodes(child)
 
 
 func _scan_mesh_bounds(node: Node, accumulated_transform: Transform3D) -> void:

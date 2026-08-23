@@ -2,10 +2,19 @@ extends Node3D
 class_name WorldItem
 
 ## Runtime component attached to a prototype loot visual already placed in the
-## scene. It adds a simple interaction collider and owns the ItemInstance that
-## moves into the carried-item strip when picked up.
+## scene. It adds a dedicated interaction collider and owns the ItemInstance
+## that moves into the carried-item strip when picked up.
+##
+## IMPORTANT: this pickup collider is deliberately separate from environment /
+## player-movement collision. Shelves and crates use coarse movement colliders,
+## so interaction rays must be able to target an item resting inside them.
 
 const ItemInstanceScript = preload("res://item_instance.gd")
+
+# Dedicated prototype interaction layer (Godot layer 8 / bit 7). Player pickup
+# rays query only this layer, so coarse shelf/furniture colliders cannot mask
+# loot placed on/in storage furniture.
+const PICKUP_COLLISION_LAYER: int = 1 << 7
 
 var _host: Node3D
 var _definition: ItemDefinition
@@ -60,8 +69,8 @@ func pickup_into(carried_items: Node) -> bool:
 	if not added:
 		return false
 
-	# Remove the interaction target immediately so repeated clicks cannot duplicate
-	# the item while queue_free waits for the end of the frame.
+	# Remove the interaction target immediately so repeated clicks cannot
+	# duplicate the item while queue_free waits for the end of the frame.
 	if _interaction_area != null:
 		_interaction_area.collision_layer = 0
 		_interaction_area.monitorable = false
@@ -89,9 +98,7 @@ func _build_interaction_area() -> void:
 
 	_interaction_area = Area3D.new()
 	_interaction_area.name = "PickupArea"
-	# Use a dedicated layer in addition to the normal environment layers. The
-	# player's interaction ray still queries bodies too, so walls can occlude loot.
-	_interaction_area.collision_layer = 1 << 7
+	_interaction_area.collision_layer = PICKUP_COLLISION_LAYER
 	_interaction_area.collision_mask = 0
 	_interaction_area.monitoring = false
 	_interaction_area.monitorable = true
