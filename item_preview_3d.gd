@@ -27,6 +27,7 @@ var _pending_item: RefCounted = null
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_configure_transparent_compositing()
 	custom_minimum_size = Vector2(preview_size)
 	stretch = true
 	_build_preview_world()
@@ -90,6 +91,17 @@ func _apply_item(item) -> void:
 
 	_frame_camera(_bounds.size, _orientation_root.basis, preview_zoom)
 
+
+
+func _configure_transparent_compositing() -> void:
+	# Transparent SubViewport textures are premultiplied-alpha render targets.
+	# Godot's default CanvasItem blend mode assumes straight alpha, which can
+	# visibly alter the underlying scene as soon as the viewport becomes visible.
+	# Use the matching premultiplied-alpha blend mode for correct compositing.
+	var canvas_material: CanvasItemMaterial = CanvasItemMaterial.new()
+	canvas_material.blend_mode = CanvasItemMaterial.BLEND_MODE_PREMULT_ALPHA
+	canvas_material.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
+	material = canvas_material
 
 func _build_preview_world() -> void:
 	_viewport = SubViewport.new()

@@ -27,6 +27,7 @@ var _bounds_valid: bool = false
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_configure_transparent_compositing()
 	stretch = true
 
 	# Reserve the lower-right portion of the screen for the carried object while
@@ -116,6 +117,17 @@ func _apply_item(item) -> void:
 	# ordinary items sit naturally above the HUD safe zone.
 	_orientation_root.position = held_offset + Vector3(0.02, 0.10, 0.0)
 
+
+
+func _configure_transparent_compositing() -> void:
+	# Transparent SubViewport textures are premultiplied-alpha render targets.
+	# Godot's default CanvasItem blend mode assumes straight alpha, which can
+	# visibly alter the underlying scene as soon as the viewport becomes visible.
+	# Use the matching premultiplied-alpha blend mode for correct compositing.
+	var canvas_material: CanvasItemMaterial = CanvasItemMaterial.new()
+	canvas_material.blend_mode = CanvasItemMaterial.BLEND_MODE_PREMULT_ALPHA
+	canvas_material.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
+	material = canvas_material
 
 func _build_viewmodel_world() -> void:
 	_viewport = SubViewport.new()

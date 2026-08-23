@@ -54,6 +54,18 @@ height = 1.75
 [node name="Node3D" type="Node3D" unique_id=164234407]
 script = ExtResource("32_env")
 
+[node name="AreaLight3D" type="AreaLight3D" parent="." unique_id=443620822]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 3.6368933, 4.764, 3.4152205)
+light_energy = 2.081
+area_range = 20.378
+
+[node name="SpotLight3D" type="SpotLight3D" parent="." unique_id=171997309]
+transform = Transform3D(0.99934244, 0.034376513, -0.01153282, 0.012825588, -0.037625987, 0.99920964, 0.033915408, -0.99870044, -0.038042143, 4.502863, 4.7641406, 3.6291475)
+visible = false
+light_energy = 7.998
+light_size = 0.109
+spot_range = 43.7
+
 [node name="SM_FuelCanister" parent="." unique_id=1910864599 instance=ExtResource("3_kek77")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5170677, 0, 4.511505)
 
@@ -141,18 +153,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.572529, -0.047983885, -0.0
 
 [node name="SM_Barrel_01" parent="." unique_id=2090457068 instance=ExtResource("9_w48qg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.721101, 0, 7.619556)
-
-[node name="AreaLight3D" type="AreaLight3D" parent="." unique_id=443620822]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 3.6368933, 4.764, 3.4152205)
-light_energy = 2.081
-area_range = 20.378
-
-[node name="SpotLight3D" type="SpotLight3D" parent="." unique_id=171997309]
-transform = Transform3D(0.99934244, 0.034376513, -0.01153282, 0.012825588, -0.037625987, 0.99920964, 0.033915408, -0.99870044, -0.038042143, 4.502863, 4.7641406, 3.6291475)
-visible = false
-light_energy = 7.998
-light_size = 0.109
-spot_range = 43.7
 
 [node name="SM_Lamp_long" parent="." unique_id=539307325 instance=ExtResource("10_vivmo")]
 transform = Transform3D(0.9999619, -0.008726535, 0, 0.008726535, 0.9999619, 0, 0, 0, 1, 3.667197, 4.920672, 3.4278696)
