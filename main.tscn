@@ -61,10 +61,61 @@ area_range = 20.378
 
 [node name="SpotLight3D" type="SpotLight3D" parent="." unique_id=171997309]
 transform = Transform3D(0.99934244, 0.034376513, -0.01153282, 0.012825588, -0.037625987, 0.99920964, 0.033915408, -0.99870044, -0.038042143, 4.502863, 4.7641406, 3.6291475)
-visible = false
 light_energy = 7.998
 light_size = 0.109
 spot_range = 43.7
+
+[node name="SM_AlarmLight" parent="." unique_id=1076681556 instance=ExtResource("18_cegan")]
+transform = Transform3D(-0.94479376, -0.32377926, 0.05031601, -0.3233211, 0.94613266, 0.017218815, -0.053180713, 0, -0.99858487, 8.271737, 1.8240396, 4.8790774)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="SM_AlarmLight" unique_id=341173970]
+transform = Transform3D(0.33585453, 0.94124985, 0.0353698, -0.9412496, 0.33397076, 0.050127245, 0.03536977, -0.050127286, 0.99811655, 0.058849335, 0.02016759, -0.0031328201)
+light_color = Color(1, 0.24313726, 0.25882354, 1)
+light_energy = 1.516
+light_indirect_energy = 2.652
+light_volumetric_fog_energy = 4.716
+omni_range = 6.197
+omni_attenuation = 1.519
+
+[node name="SM_Sewer_Light_Wall_Fixture_On2" parent="." unique_id=266620814 instance=ExtResource("8_ycdy4")]
+transform = Transform3D(-3.491541e-08, 0.60163456, 0.79877144, 2.6298283e-08, 0.79877144, -0.60163456, -1, 0, -4.371139e-08, -0.12520742, 2.7406383, 3.9494853)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="SM_Sewer_Light_Wall_Fixture_On2" unique_id=1327170441]
+transform = Transform3D(-2.442336e-08, -3.6251684e-08, -1, -0.8293419, 0.5587414, -1.3358971e-16, 0.5587414, 0.8293419, -4.371139e-08, 0, 0.07227898, -0.0544405)
+light_color = Color(1, 1, 0.92156863, 1)
+
+[node name="SM_Electrical_Cabinet_03a" parent="." unique_id=845203059 instance=ExtResource("15_82xsv")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 1.7763568e-15, 8.742278e-08, 0, -1, 9.233881, 1.3490236, 1.0351748)
+
+[node name="SpotLight3D" type="SpotLight3D" parent="SM_Electrical_Cabinet_03a" unique_id=1199839237]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0292387, 0.34329665, 0.12938458)
+light_color = Color(0.99215686, 0.31764707, 0.32156864, 1)
+light_energy = 5.081
+spot_range = 0.137
+spot_attenuation = -0.22
+spot_angle = 90.0
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="SM_Electrical_Cabinet_03a" unique_id=771090266]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.343292e-05, 0.34332013, 0.12938458)
+light_color = Color(0.99215686, 0.31764707, 0.32156864, 1)
+light_energy = 5.081
+spot_range = 0.137
+spot_attenuation = -0.22
+spot_angle = 90.0
+
+[node name="SpotLight3D3" type="SpotLight3D" parent="SM_Electrical_Cabinet_03a" unique_id=833605703]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.028794289, 0.34394562, 0.12938458)
+light_color = Color(0.99215686, 0.31764707, 0.32156864, 1)
+light_energy = 5.081
+spot_range = 0.137
+spot_attenuation = -0.22
+spot_angle = 90.0
+
+[node name="SM_Sewer_Light_Wall_Fixture_On" parent="." unique_id=318644501 instance=ExtResource("8_ycdy4")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 8.823876, 1.4509966, 0.91487885)
+
+[node name="SM_Sewer_Light_Wall_Fixture_On" parent="SM_Sewer_Light_Wall_Fixture_On" unique_id=692197997 instance=ExtResource("8_ycdy4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.572529, -0.047983885, -0.0028201342)
 
 [node name="SM_FuelCanister" parent="." unique_id=1910864599 instance=ExtResource("3_kek77")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5170677, 0, 4.511505)
@@ -145,12 +196,6 @@ transform = Transform3D(2.465, 0, 0, 0, 2.465, 0, 0, 0, 2.465, -3.6650796, 0, 10
 [node name="SM_Sewer_Wall_Arch_01a" parent="SM_Sewer_Wall_Arch_01a2" unique_id=292266873 instance=ExtResource("3_lquwl")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 6, 0, -2)
 
-[node name="SM_Sewer_Light_Wall_Fixture_On" parent="." unique_id=318644501 instance=ExtResource("8_ycdy4")]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 8.823876, 1.4509966, 0.91487885)
-
-[node name="SM_Sewer_Light_Wall_Fixture_On" parent="SM_Sewer_Light_Wall_Fixture_On" unique_id=692197997 instance=ExtResource("8_ycdy4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.572529, -0.047983885, -0.0028201342)
-
 [node name="SM_Barrel_01" parent="." unique_id=2090457068 instance=ExtResource("9_w48qg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.721101, 0, 7.619556)
 
@@ -178,57 +223,11 @@ transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 7.39
 [node name="SM_Walkway" parent="." unique_id=87928802 instance=ExtResource("14_cegan")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.841, -0.005, 1.259)
 
-[node name="SM_Electrical_Cabinet_03a" parent="." unique_id=845203059 instance=ExtResource("15_82xsv")]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 9.233881, 1.3490237, 1.0351752)
-
-[node name="SpotLight3D" type="SpotLight3D" parent="SM_Electrical_Cabinet_03a" unique_id=1199839237]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0292387, 0.34329665, 0.12938458)
-light_color = Color(0.99215686, 0.31764707, 0.32156864, 1)
-light_energy = 5.081
-spot_range = 0.137
-spot_attenuation = -0.22
-spot_angle = 90.0
-
-[node name="SpotLight3D2" type="SpotLight3D" parent="SM_Electrical_Cabinet_03a" unique_id=771090266]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.343292e-05, 0.34332013, 0.12938458)
-light_color = Color(0.99215686, 0.31764707, 0.32156864, 1)
-light_energy = 5.081
-spot_range = 0.137
-spot_attenuation = -0.22
-spot_angle = 90.0
-
-[node name="SpotLight3D3" type="SpotLight3D" parent="SM_Electrical_Cabinet_03a" unique_id=833605703]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.028794289, 0.34394562, 0.12938458)
-light_color = Color(0.99215686, 0.31764707, 0.32156864, 1)
-light_energy = 5.081
-spot_range = 0.137
-spot_attenuation = -0.22
-spot_angle = 90.0
-
 [node name="SM_Table" parent="." unique_id=2048943479 instance=ExtResource("17_074og")]
 transform = Transform3D(0.017015046, 0, -0.8347139, 0, 1, 0, 0.64977723, 0, 0.02185779, 7.447469, -2.3841858e-07, 4.5659056)
 
 [node name="SM_Table2" parent="." unique_id=1715963998 instance=ExtResource("17_074og")]
 transform = Transform3D(0.0278785, 0, -0.87969846, 0, 1, 0, 1.0646352, 0, 0.023035755, 6.8850207, -2.3841858e-07, 1.7413585)
-
-[node name="SM_AlarmLight" parent="." unique_id=1076681556 instance=ExtResource("18_cegan")]
-transform = Transform3D(-0.94479376, -0.32377926, 0.05031601, -0.3233211, 0.94613266, 0.017218815, -0.053180713, 0, -0.99858487, 8.271737, 1.8240396, 4.8790774)
-
-[node name="OmniLight3D" type="OmniLight3D" parent="SM_AlarmLight" unique_id=341173970]
-transform = Transform3D(0.33585453, 0.94124985, 0.0353698, -0.9412496, 0.33397076, 0.050127245, 0.03536977, -0.050127286, 0.99811655, 0.058849335, 0.02016759, -0.0031328201)
-light_color = Color(1, 0.24313726, 0.25882354, 1)
-light_energy = 1.516
-light_indirect_energy = 2.652
-light_volumetric_fog_energy = 4.716
-omni_range = 6.197
-omni_attenuation = 1.519
-
-[node name="SM_Sewer_Light_Wall_Fixture_On2" parent="." unique_id=266620814 instance=ExtResource("8_ycdy4")]
-transform = Transform3D(-3.491541e-08, 0.60163456, 0.79877144, 2.6298283e-08, 0.79877144, -0.60163456, -1, 0, -4.371139e-08, -0.12520742, 2.7406383, 3.9494853)
-
-[node name="OmniLight3D" type="OmniLight3D" parent="SM_Sewer_Light_Wall_Fixture_On2" unique_id=1327170441]
-transform = Transform3D(-2.442336e-08, -3.6251684e-08, -1, -0.8293419, 0.5587414, -1.3358971e-16, 0.5587414, 0.8293419, -4.371139e-08, 0, 0.07227898, -0.0544405)
-light_color = Color(1, 1, 0.92156863, 1)
 
 [node name="SM_Sewer_Wall_Brick_01a" parent="." unique_id=1252563150 instance=ExtResource("19_qsp4k")]
 transform = Transform3D(-0.0029870386, -0.14259766, -0.9897762, 0.020728309, 0.9895592, -0.14262892, 0.9997806, -0.020942425, -4.326449e-08, 8.664918, 0, 1.0932792)
@@ -418,6 +417,7 @@ transform = Transform3D(0.0099256355, 0, 0.99995077, 0, 1, 0, -0.99995077, 0, 0.
 layer = 10
 
 [node name="CarriedItemsHUD" type="Control" parent="HUD" unique_id=1782798324]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
