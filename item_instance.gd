@@ -27,6 +27,15 @@ func get_bulk() -> int:
 	return definition.bulk if definition != null else 0
 
 
+
+func get_storage_footprint() -> Vector3i:
+	return definition.storage_footprint if definition != null else Vector3i.ONE
+
+
+func is_stackable() -> bool:
+	return definition.stackable if definition != null else false
+
+
 func get_utility_id() -> StringName:
 	return definition.utility_id if definition != null else &"None"
 

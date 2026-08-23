@@ -7,6 +7,9 @@ extends Node3D
 
 @export var generate_test_collisions: bool = true
 @export var print_collision_summary: bool = true
+@export var generate_storage_prototype: bool = true
+
+const StoragePrototypeManagerScript = preload("res://storage_prototype_manager.gd")
 
 const TRIMESH_ROOT_PREFIXES = [
 	"SM_Hangar_floor_",
@@ -26,7 +29,8 @@ const CONVEX_ROOT_PREFIXES = [
 	"SM_CinderBlocks_",
 	"SM_Generator_",
 	"SM_ClothesCabinet",
-	"SM_Tool_Cabinet_"
+	"SM_Tool_Cabinet_",
+	"SM_MetalShelves"
 ]
 
 var _trimesh_count := 0
@@ -55,6 +59,12 @@ func _ready() -> void:
 			_convex_count,
 			" convex mesh(es)."
 		)
+
+	if generate_storage_prototype:
+		var storage_manager: Node = StoragePrototypeManagerScript.new()
+		storage_manager.name = "StoragePrototypeManager"
+		add_child(storage_manager)
+		storage_manager.install(self)
 
 
 func _generate_for_branch(node: Node, use_trimesh: bool) -> void:
