@@ -1,9 +1,9 @@
 extends Node
 class_name CarriedItems
 
-## Bulk-limited carried-item queue. This is intentionally not a conventional
-## inventory: there are no grids, nested containers, or arbitrary hidden slots.
-## It is simply the bundle of physical items the Quartermaster is carrying.
+## Bulk-limited carried-item strip. Slots may contain gaps after items are
+## placed/removed; new pickups fill the first empty slot before extending the
+## strip to the right.
 
 signal contents_changed
 signal selection_changed(selected_index: int)
@@ -12,24 +12,22 @@ signal item_removed(item)
 
 @export_range(1, 999, 1) var max_bulk: int = 10
 
-# Prototype-only switch so Step 2 can be evaluated before pickup exists.
-# Turn this off when Step 3 world-item pickup is wired in.
-@export var debug_seed_items: bool = true
+# Retained only so older prototype scenes load cleanly. Step 3 intentionally
+# starts empty; world pickup now supplies the test items.
+@export var debug_seed_items: bool = false
 
-const ItemDefinitionScript = preload("res://item_definition.gd")
-const ItemInstanceScript = preload("res://item_instance.gd")
-
-var _items: Array[RefCounted] = []
+var _slots: Array[RefCounted] = []
 var _selected_index: int = -1
 
 
 func _ready() -> void:
-	if debug_seed_items and _items.is_empty():
-		_seed_debug_items()
+	# Step 3 disables debug seeding even if an older scene still serialized the
+	# previous property as true.
+	debug_seed_items = false
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if _items.is_empty():
+	if get_item_count() == 0:
 		return
 
 	if event is InputEventMouseButton and event.pressed:
@@ -42,13 +40,29 @@ func _unhandled_input(event: InputEvent) -> void:
 
 	elif event is InputEventKey and event.pressed and not event.echo:
 		var slot: int = _keycode_to_slot(event.keycode)
-		if slot >= 0 and slot < _items.size():
+		if slot >= 0 and slot < _slots.size() and _slots[slot] != null:
 			select_index(slot)
 			get_viewport().set_input_as_handled()
 
 
+func get_slots() -> Array[RefCounted]:
+	return _slots.duplicate()
+
+
 func get_items() -> Array[RefCounted]:
-	return _items.duplicate()
+	var items: Array[RefCounted] = []
+	for item in _slots:
+		if item != null:
+			items.append(item)
+	return items
+
+
+func get_item_count() -> int:
+	var count: int = 0
+	for item in _slots:
+		if item != null:
+			count += 1
+	return count
 
 
 func get_selected_index() -> int:
@@ -56,16 +70,16 @@ func get_selected_index() -> int:
 
 
 func get_selected_item():
-	if _selected_index < 0 or _selected_index >= _items.size():
+	if _selected_index < 0 or _selected_index >= _slots.size():
 		return null
-	return _items[_selected_index]
+	return _slots[_selected_index]
 
 
 func get_current_bulk() -> int:
 	var total: int = 0
-	for item in _items:
+	for item in _slots:
 		if item != null and item.has_method("get_bulk"):
-			total += item.get_bulk()
+			total += int(item.get_bulk())
 	return total
 
 
@@ -76,16 +90,22 @@ func get_remaining_bulk() -> int:
 func can_add(item) -> bool:
 	if item == null or not item.has_method("get_bulk"):
 		return false
-	return get_current_bulk() + item.get_bulk() <= max_bulk
+	return get_current_bulk() + int(item.get_bulk()) <= max_bulk
 
 
 func add_item(item) -> bool:
 	if not can_add(item):
 		return false
 
-	_items.append(item)
+	var target_slot: int = _first_empty_slot()
+	if target_slot == -1:
+		_slots.append(item)
+		target_slot = _slots.size() - 1
+	else:
+		_slots[target_slot] = item
+
 	if _selected_index == -1:
-		_selected_index = 0
+		_selected_index = target_slot
 
 	item_added.emit(item)
 	contents_changed.emit()
@@ -94,7 +114,7 @@ func add_item(item) -> bool:
 
 
 func remove_item(item):
-	var index: int = _items.find(item)
+	var index: int = _slots.find(item)
 	if index == -1:
 		return null
 	return remove_at(index)
@@ -107,16 +127,20 @@ func remove_selected():
 
 
 func remove_at(index: int):
-	if index < 0 or index >= _items.size():
+	if index < 0 or index >= _slots.size():
 		return null
 
-	var removed: RefCounted = _items[index]
-	_items.remove_at(index)
+	var removed: RefCounted = _slots[index]
+	if removed == null:
+		return null
 
-	if _items.is_empty():
+	_slots[index] = null
+	_trim_empty_tail()
+
+	if get_item_count() == 0:
 		_selected_index = -1
 	else:
-		_selected_index = mini(index, _items.size() - 1)
+		_selected_index = _nearest_occupied_slot(index)
 
 	item_removed.emit(removed)
 	contents_changed.emit()
@@ -125,22 +149,68 @@ func remove_at(index: int):
 
 
 func select_next() -> void:
-	if _items.is_empty():
+	if get_item_count() == 0:
 		return
-	select_index((_selected_index + 1) % _items.size())
+	var start: int = _selected_index
+	if start < 0:
+		start = 0
+	for offset in range(1, _slots.size() + 1):
+		var candidate: int = (start + offset) % _slots.size()
+		if _slots[candidate] != null:
+			select_index(candidate)
+			return
 
 
 func select_previous() -> void:
-	if _items.is_empty():
+	if get_item_count() == 0:
 		return
-	select_index((_selected_index - 1 + _items.size()) % _items.size())
+	var start: int = _selected_index
+	if start < 0:
+		start = 0
+	for offset in range(1, _slots.size() + 1):
+		var candidate: int = (start - offset + _slots.size()) % _slots.size()
+		if _slots[candidate] != null:
+			select_index(candidate)
+			return
 
 
 func select_index(index: int) -> void:
-	if index < 0 or index >= _items.size() or index == _selected_index:
+	if index < 0 or index >= _slots.size():
+		return
+	if _slots[index] == null or index == _selected_index:
 		return
 	_selected_index = index
 	selection_changed.emit(_selected_index)
+
+
+func _first_empty_slot() -> int:
+	for index in range(_slots.size()):
+		if _slots[index] == null:
+			return index
+	return -1
+
+
+func _trim_empty_tail() -> void:
+	while not _slots.is_empty() and _slots[_slots.size() - 1] == null:
+		_slots.remove_at(_slots.size() - 1)
+
+
+func _nearest_occupied_slot(preferred_index: int) -> int:
+	if _slots.is_empty():
+		return -1
+
+	if preferred_index < _slots.size() and preferred_index >= 0 and _slots[preferred_index] != null:
+		return preferred_index
+
+	for distance in range(1, _slots.size() + 1):
+		var right: int = preferred_index + distance
+		if right >= 0 and right < _slots.size() and _slots[right] != null:
+			return right
+		var left: int = preferred_index - distance
+		if left >= 0 and left < _slots.size() and _slots[left] != null:
+			return left
+
+	return -1
 
 
 func _keycode_to_slot(keycode: int) -> int:
@@ -156,53 +226,3 @@ func _keycode_to_slot(keycode: int) -> int:
 		KEY_9: return 8
 		KEY_0: return 9
 		_: return -1
-
-
-func _seed_debug_items() -> void:
-	# 9/10 Bulk on purpose: enough variety to exercise cycling/highlighting while
-	# also showing that capacity is Bulk-based rather than slot-based.
-	_add_debug_item(
-		&"cereal_box", "Cereal Box", &"Food", 6, 1, Vector3i(1, 1, 1), true,
-		"res://assets/props/from_blender/cereal_box.glb"
-	)
-	_add_debug_item(
-		&"painkillers", "Painkillers", &"Medical", 4, 1, Vector3i(1, 1, 1), true,
-		"res://assets/props/from_blender/pill_bottle.glb"
-	)
-	_add_debug_item(
-		&"hammer", "Hammer", &"Weapons", 3, 2, Vector3i(1, 3, 1), false,
-		"res://assets/props/from_blender/hammer.glb"
-	)
-	_add_debug_item(
-		&"tennis_racket", "Tennis Racket", &"Weapons", 1, 5, Vector3i(2, 5, 1), false,
-		"res://assets/props/from_blender/tennis_racket.glb"
-	)
-
-
-func _add_debug_item(
-	item_id: StringName,
-	display_name: String,
-	utility_id: StringName,
-	utility_value: int,
-	bulk: int,
-	footprint: Vector3i,
-	stackable: bool,
-	visual_scene_path: String
-) -> void:
-	var definition: ItemDefinition = ItemDefinitionScript.new()
-	definition.item_id = item_id
-	definition.display_name = display_name
-	definition.utility_id = utility_id
-	definition.utility_value = utility_value
-	definition.bulk = bulk
-	definition.storage_footprint = footprint
-	definition.stackable = stackable
-
-	var visual_resource: Resource = load(visual_scene_path)
-	if visual_resource is PackedScene:
-		definition.visual_scene = visual_resource as PackedScene
-	else:
-		push_warning("Debug item visual could not be loaded: %s" % visual_scene_path)
-
-	var item: ItemInstance = ItemInstanceScript.new(definition)
-	add_item(item)

@@ -2,7 +2,7 @@ extends RefCounted
 class_name ItemInstance
 
 ## Runtime identity/state for one physical item.
-## Multiple ItemInstances may share the same ItemDefinition.
+## Multiple ItemInstances may share one ItemDefinition.
 
 var instance_id: String
 var definition: ItemDefinition
@@ -39,8 +39,6 @@ func get_utility_value() -> int:
 	if not contaminated:
 		return value
 
-	# Deferred contamination rule from the GDD: Utility 1 -> 0; otherwise halve
-	# and round up. This is inactive until something marks an item contaminated.
 	if value <= 1:
 		return 0
 	return int(ceil(value / 2.0))
@@ -60,6 +58,22 @@ func get_preview_rotation_degrees() -> Vector3:
 
 func get_preview_zoom() -> float:
 	return definition.preview_zoom if definition != null else 1.0
+
+
+func get_held_auto_orient() -> bool:
+	return definition.held_auto_orient if definition != null else true
+
+
+func get_held_rotation_degrees() -> Vector3:
+	return definition.held_rotation_degrees if definition != null else Vector3(-10.0, -18.0, -8.0)
+
+
+func get_held_offset() -> Vector3:
+	return definition.held_offset if definition != null else Vector3(0.28, -0.24, -0.58)
+
+
+func get_held_max_dimension() -> float:
+	return definition.held_max_dimension if definition != null else 0.55
 
 
 func utility_text() -> String:
