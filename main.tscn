@@ -419,10 +419,8 @@ visible = false
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=921176166]
 layer = 10
-visible = false
 
 [node name="CarriedItemsHUD" type="Control" parent="HUD" unique_id=1782798324]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

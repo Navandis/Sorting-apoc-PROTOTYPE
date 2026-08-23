@@ -1,12 +1,15 @@
-extends Control
+extends SubViewportContainer
 class_name HeldItemView
 
 ## Screen-space FPS-style viewmodel for the currently selected carried item.
 ##
-## The held prop is rendered in an isolated SubViewport, then composited through
-## an ordinary TextureRect. Using a TextureRect instead of SubViewportContainer
-## gives us explicit control over the viewport texture's premultiplied alpha and
-## avoids the translucent/bright overlay seen when the first held item appears.
+## Restored after the TextureRect diagnostic renderer introduced clipping.
+## The held prop is rendered in its own transparent 3D world instead of being
+## inserted into the main camera/world. This prevents imported lights,
+## environments, emissive/exposure interactions and wall clipping from
+## affecting the bunker. The viewmodel is also constrained to a right-hand
+## screen region above the carried-item strip, so additional HUD slots cannot
+## cover it.
 
 @export var render_size: Vector2i = Vector2i(640, 640)
 
@@ -14,7 +17,6 @@ const ELONGATED_RATIO: float = 2.0
 const FLAT_RATIO: float = 1.8
 
 var _viewport: SubViewport
-var _display: TextureRect
 var _orientation_root: Node3D
 var _center_root: Node3D
 var _camera: Camera3D
@@ -26,9 +28,10 @@ var _bounds_valid: bool = false
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	stretch = true
 
 	# Reserve the lower-right portion of the screen for the carried object while
-	# keeping clear of the carried-items strip.
+	# keeping clear of the ~150 px carried-items strip.
 	anchor_left = 0.50
 	anchor_right = 1.0
 	anchor_top = 0.30
@@ -142,10 +145,8 @@ func _build_viewmodel_world() -> void:
 	_camera.position = Vector3.ZERO
 	_viewport.add_child(_camera)
 
-	# Two lights are enough for a readable held prop. Deliberately avoid adding a
-	# WorldEnvironment here: the transparent viewport only needs the model and
-	# its local lights, which also removes another possible source of background
-	# RGB/exposure contamination.
+	# Neutral independent lighting. The world can be dark without imported held
+	# props changing the main scene's illumination or exposure.
 	var key_light: DirectionalLight3D = DirectionalLight3D.new()
 	key_light.name = "HeldKeyLight"
 	key_light.light_energy = 1.0
@@ -158,34 +159,19 @@ func _build_viewmodel_world() -> void:
 	fill_light.rotation_degrees = Vector3(20.0, 145.0, 0.0)
 	_viewport.add_child(fill_light)
 
-	# Draw the SubViewport through a normal TextureRect so its blend mode is
-	# explicit. Godot's 3D transparent viewport texture is premultiplied-alpha.
-	_display = TextureRect.new()
-	_display.name = "HeldItemTexture"
-	_display.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_display.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	_display.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	_display.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	_display.texture = _viewport.get_texture()
-	_display.material = _make_premultiplied_alpha_material()
-	add_child(_display)
+	var environment: Environment = Environment.new()
+	environment.background_mode = Environment.BG_COLOR
+	environment.background_color = Color(0.0, 0.0, 0.0, 0.0)
+	environment.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
+	environment.ambient_light_color = Color(0.48, 0.50, 0.52, 1.0)
+	environment.ambient_light_energy = 0.32
+
+	var world_environment: WorldEnvironment = WorldEnvironment.new()
+	world_environment.name = "HeldEnvironment"
+	world_environment.environment = environment
+	_viewport.add_child(world_environment)
 
 	visible = false
-
-
-func _make_premultiplied_alpha_material() -> ShaderMaterial:
-	var shader: Shader = Shader.new()
-	shader.code = """
-shader_type canvas_item;
-render_mode unshaded, blend_premul_alpha;
-
-void fragment() {
-    COLOR = texture(TEXTURE, UV);
-}
-"""
-	var shader_material: ShaderMaterial = ShaderMaterial.new()
-	shader_material.shader = shader
-	return shader_material
 
 
 func _clear_visual() -> void:
@@ -241,8 +227,8 @@ func _scan_mesh_bounds(node: Node, accumulated_transform: Transform3D) -> void:
 				_bounds = transformed_bounds
 				_bounds_valid = true
 
-	for child_node in node.get_children():
-		_scan_mesh_bounds(child_node, next_transform)
+	for child in node.get_children():
+		_scan_mesh_bounds(child, next_transform)
 
 
 func _make_auto_orientation_basis(model_size: Vector3) -> Basis:

@@ -7,6 +7,8 @@ class_name CarriedItemsHUD
 
 @export var carried_items_path: NodePath = NodePath("../../CharacterBody3D/CarriedItems")
 @export_range(1, 20, 1) var max_visible_slots: int = 10
+## Diagnostic/runtime switch. When false, HUD slots never instantiate ItemPreview3D/SubViewport nodes.
+@export var enable_live_previews: bool = true
 
 const ItemPreview3DScript = preload("res://item_preview_3d.gd")
 
@@ -137,9 +139,17 @@ func _make_slot(item, index: int, selected: bool) -> Control:
 	column.add_theme_constant_override("separation", 0)
 	panel.add_child(column)
 
-	var preview: ItemPreview3D = ItemPreview3DScript.new()
-	preview.set_item(item)
-	column.add_child(preview)
+	if enable_live_previews:
+		var preview: ItemPreview3D = ItemPreview3DScript.new()
+		preview.set_item(item)
+		column.add_child(preview)
+	else:
+		# Keep slot geometry stable while ensuring absolutely no 3D preview
+		# viewport, lights, or environment are created.
+		var preview_placeholder: Control = Control.new()
+		preview_placeholder.custom_minimum_size = Vector2(106.0, 80.0)
+		preview_placeholder.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		column.add_child(preview_placeholder)
 
 	var name_label: Label = Label.new()
 	var number_text: String = "0" if index == 9 else str(index + 1)
