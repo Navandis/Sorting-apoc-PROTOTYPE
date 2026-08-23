@@ -35,14 +35,21 @@ class_name ItemDefinition
 @export var can_be_contaminated: bool = false
 @export var can_contaminate: bool = false
 
-# Optional visual/icon references. WorldItem will use visual_scene in Step 3.
+# The same PackedScene can later be instantiated in the world, as the selected
+# held-item viewmodel, and here in a HUD preview viewport.
 @export var visual_scene: PackedScene
 @export var icon: Texture2D
+
+# Per-item corrections for live 3D HUD previews. Defaults work for ordinary
+# upright props; irregular/source assets can override these without changing
+# the preview renderer.
+@export var preview_rotation_degrees: Vector3 = Vector3(-15.0, 35.0, 0.0)
+@export_range(0.25, 2.0, 0.05) var preview_zoom: float = 1.0
 
 
 func get_utility_for_context(context_id: StringName) -> Dictionary:
 	if context_utility_overrides.has(context_id):
-		var override_value = context_utility_overrides[context_id]
+		var override_value: Variant = context_utility_overrides[context_id]
 		if override_value is Dictionary:
 			return override_value
 	return {"utility_id": utility_id, "value": utility_value}

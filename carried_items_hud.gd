@@ -2,11 +2,12 @@ extends Control
 class_name CarriedItemsHUD
 
 ## Minimal persistent HUD for the carried-item bundle.
-## It is deliberately constructed in code for this prototype so it can be
-## dropped into the existing scene without requiring theme/font assets.
+## Step 2B uses live 3D model previews inside small isolated SubViewports.
 
 @export var carried_items_path: NodePath = NodePath("../../CharacterBody3D/CarriedItems")
 @export_range(1, 20, 1) var max_visible_slots: int = 10
+
+const ItemPreview3DScript = preload("res://item_preview_3d.gd")
 
 var _carried_items: Node
 var _slot_row: HBoxContainer
@@ -37,7 +38,7 @@ func _ready() -> void:
 
 
 func _build_ui() -> void:
-	var bottom := VBoxContainer.new()
+	var bottom: VBoxContainer = VBoxContainer.new()
 	bottom.name = "BottomStrip"
 	bottom.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	bottom.alignment = BoxContainer.ALIGNMENT_CENTER
@@ -45,9 +46,9 @@ func _build_ui() -> void:
 	bottom.anchor_right = 0.5
 	bottom.anchor_top = 1.0
 	bottom.anchor_bottom = 1.0
-	bottom.offset_left = -620.0
-	bottom.offset_right = 620.0
-	bottom.offset_top = -108.0
+	bottom.offset_left = -650.0
+	bottom.offset_right = 650.0
+	bottom.offset_top = -150.0
 	bottom.offset_bottom = -14.0
 	add_child(bottom)
 
@@ -73,20 +74,22 @@ func _refresh() -> void:
 
 	var items: Array = _carried_items.get_items()
 	var selected_index: int = _carried_items.get_selected_index()
-	var visible_count: int = mini(items.size(), max_visible_slots)
+	var visible_count: int = items.size()
+	if visible_count > max_visible_slots:
+		visible_count = max_visible_slots
 
 	for index in range(visible_count):
 		_slot_row.add_child(_make_slot(items[index], index, index == selected_index))
 
 	if items.size() > max_visible_slots:
-		var extra := Label.new()
+		var extra: Label = Label.new()
 		extra.text = "+%d" % (items.size() - max_visible_slots)
 		extra.add_theme_color_override("font_color", SECONDARY_TEXT)
 		extra.add_theme_font_size_override("font_size", 16)
 		_slot_row.add_child(extra)
 
 	if items.is_empty():
-		var empty := Label.new()
+		var empty: Label = Label.new()
 		empty.text = "CARRIED — EMPTY"
 		empty.add_theme_color_override("font_color", SECONDARY_TEXT)
 		empty.add_theme_font_size_override("font_size", 16)
@@ -103,11 +106,11 @@ func _on_selection_changed(_selected_index: int) -> void:
 
 
 func _make_slot(item, index: int, selected: bool) -> Control:
-	var panel := PanelContainer.new()
-	panel.custom_minimum_size = Vector2(124, 67)
+	var panel: PanelContainer = PanelContainer.new()
+	panel.custom_minimum_size = Vector2(118.0, 112.0)
 	panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
-	var style := StyleBoxFlat.new()
+	var style: StyleBoxFlat = StyleBoxFlat.new()
 	style.bg_color = SELECTED_BG if selected else NORMAL_BG
 	style.border_color = SELECTED_BORDER if selected else NORMAL_BORDER
 	style.set_border_width_all(3 if selected else 1)
@@ -115,36 +118,38 @@ func _make_slot(item, index: int, selected: bool) -> Control:
 	style.corner_radius_top_right = 4
 	style.corner_radius_bottom_left = 4
 	style.corner_radius_bottom_right = 4
-	style.content_margin_left = 8
-	style.content_margin_right = 8
-	style.content_margin_top = 5
-	style.content_margin_bottom = 5
+	style.content_margin_left = 6
+	style.content_margin_right = 6
+	style.content_margin_top = 4
+	style.content_margin_bottom = 4
 	panel.add_theme_stylebox_override("panel", style)
 
-	var column := VBoxContainer.new()
+	var column: VBoxContainer = VBoxContainer.new()
 	column.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	column.alignment = BoxContainer.ALIGNMENT_CENTER
 	column.add_theme_constant_override("separation", 0)
 	panel.add_child(column)
 
-	var name_label := Label.new()
-	var number_text := "0" if index == 9 else str(index + 1)
-	name_label.text = "%s  %s" % [number_text, _shorten(item.get_display_name(), 15)]
+	var preview: ItemPreview3D = ItemPreview3DScript.new()
+	preview.set_item(item)
+	column.add_child(preview)
+
+	var name_label: Label = Label.new()
+	var number_text: String = "0" if index == 9 else str(index + 1)
+	name_label.text = "%s  %s" % [number_text, _shorten(item.get_display_name(), 13)]
 	name_label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	name_label.add_theme_color_override("font_color", SELECTED_TEXT if selected else PRIMARY_TEXT)
-	name_label.add_theme_font_size_override("font_size", 14)
+	name_label.add_theme_font_size_override("font_size", 12)
 	column.add_child(name_label)
 
-	var utility_label := Label.new()
-	utility_label.text = item.utility_text()
-	utility_label.add_theme_color_override("font_color", PRIMARY_TEXT)
-	utility_label.add_theme_font_size_override("font_size", 12)
-	column.add_child(utility_label)
-
-	var bulk_label := Label.new()
-	bulk_label.text = "Bulk %d" % item.get_bulk()
-	bulk_label.add_theme_color_override("font_color", SECONDARY_TEXT)
-	bulk_label.add_theme_font_size_override("font_size", 11)
-	column.add_child(bulk_label)
+	var stats_label: Label = Label.new()
+	stats_label.text = "%s   •   B%d" % [item.utility_text(), item.get_bulk()]
+	stats_label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	stats_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	stats_label.add_theme_color_override("font_color", SECONDARY_TEXT)
+	stats_label.add_theme_font_size_override("font_size", 10)
+	column.add_child(stats_label)
 
 	return panel
 

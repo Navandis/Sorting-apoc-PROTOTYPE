@@ -35,7 +35,7 @@ func get_utility_value() -> int:
 	if definition == null:
 		return 0
 
-	var value := definition.utility_value
+	var value: int = definition.utility_value
 	if not contaminated:
 		return value
 
@@ -46,9 +46,21 @@ func get_utility_value() -> int:
 	return int(ceil(value / 2.0))
 
 
+func get_visual_scene() -> PackedScene:
+	return definition.visual_scene if definition != null else null
+
+
+func get_preview_rotation_degrees() -> Vector3:
+	return definition.preview_rotation_degrees if definition != null else Vector3(-15.0, 35.0, 0.0)
+
+
+func get_preview_zoom() -> float:
+	return definition.preview_zoom if definition != null else 1.0
+
+
 func utility_text() -> String:
-	var value := get_utility_value()
-	var utility := get_utility_id()
+	var value: int = get_utility_value()
+	var utility: StringName = get_utility_id()
 	if value <= 0 or utility == &"None":
 		return "No utility"
 	return "+%d %s" % [value, String(utility)]

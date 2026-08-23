@@ -41,7 +41,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			get_viewport().set_input_as_handled()
 
 	elif event is InputEventKey and event.pressed and not event.echo:
-		var slot := _keycode_to_slot(event.keycode)
+		var slot: int = _keycode_to_slot(event.keycode)
 		if slot >= 0 and slot < _items.size():
 			select_index(slot)
 			get_viewport().set_input_as_handled()
@@ -62,7 +62,7 @@ func get_selected_item():
 
 
 func get_current_bulk() -> int:
-	var total := 0
+	var total: int = 0
 	for item in _items:
 		if item != null and item.has_method("get_bulk"):
 			total += item.get_bulk()
@@ -70,7 +70,7 @@ func get_current_bulk() -> int:
 
 
 func get_remaining_bulk() -> int:
-	return max(0, max_bulk - get_current_bulk())
+	return maxi(0, max_bulk - get_current_bulk())
 
 
 func can_add(item) -> bool:
@@ -94,7 +94,7 @@ func add_item(item) -> bool:
 
 
 func remove_item(item):
-	var index := _items.find(item)
+	var index: int = _items.find(item)
 	if index == -1:
 		return null
 	return remove_at(index)
@@ -110,13 +110,13 @@ func remove_at(index: int):
 	if index < 0 or index >= _items.size():
 		return null
 
-	var removed = _items[index]
+	var removed: RefCounted = _items[index]
 	_items.remove_at(index)
 
 	if _items.is_empty():
 		_selected_index = -1
 	else:
-		_selected_index = min(index, _items.size() - 1)
+		_selected_index = mini(index, _items.size() - 1)
 
 	item_removed.emit(removed)
 	contents_changed.emit()
@@ -161,10 +161,22 @@ func _keycode_to_slot(keycode: int) -> int:
 func _seed_debug_items() -> void:
 	# 9/10 Bulk on purpose: enough variety to exercise cycling/highlighting while
 	# also showing that capacity is Bulk-based rather than slot-based.
-	_add_debug_item(&"canned_food", "Canned Food", &"Food", 6, 1, Vector3i(1, 1, 1), true)
-	_add_debug_item(&"painkillers", "Painkillers", &"Medical", 4, 1, Vector3i(1, 1, 1), true)
-	_add_debug_item(&"hammer", "Hammer", &"Weapons", 3, 2, Vector3i(1, 3, 1), false)
-	_add_debug_item(&"tennis_racket", "Tennis Racket", &"Weapons", 1, 5, Vector3i(2, 5, 1), false)
+	_add_debug_item(
+		&"cereal_box", "Cereal Box", &"Food", 6, 1, Vector3i(1, 1, 1), true,
+		"res://assets/props/from_blender/cereal_box.glb"
+	)
+	_add_debug_item(
+		&"painkillers", "Painkillers", &"Medical", 4, 1, Vector3i(1, 1, 1), true,
+		"res://assets/props/from_blender/pill_bottle.glb"
+	)
+	_add_debug_item(
+		&"hammer", "Hammer", &"Weapons", 3, 2, Vector3i(1, 3, 1), false,
+		"res://assets/props/from_blender/hammer.glb"
+	)
+	_add_debug_item(
+		&"tennis_racket", "Tennis Racket", &"Weapons", 1, 5, Vector3i(2, 5, 1), false,
+		"res://assets/props/from_blender/tennis_racket.glb"
+	)
 
 
 func _add_debug_item(
@@ -174,7 +186,8 @@ func _add_debug_item(
 	utility_value: int,
 	bulk: int,
 	footprint: Vector3i,
-	stackable: bool
+	stackable: bool,
+	visual_scene_path: String
 ) -> void:
 	var definition: ItemDefinition = ItemDefinitionScript.new()
 	definition.item_id = item_id
@@ -184,6 +197,12 @@ func _add_debug_item(
 	definition.bulk = bulk
 	definition.storage_footprint = footprint
 	definition.stackable = stackable
+
+	var visual_resource: Resource = load(visual_scene_path)
+	if visual_resource is PackedScene:
+		definition.visual_scene = visual_resource as PackedScene
+	else:
+		push_warning("Debug item visual could not be loaded: %s" % visual_scene_path)
 
 	var item: ItemInstance = ItemInstanceScript.new(definition)
 	add_item(item)
