@@ -50,8 +50,12 @@ func get_visual_scene() -> PackedScene:
 	return definition.visual_scene if definition != null else null
 
 
+func get_preview_auto_orient() -> bool:
+	return definition.preview_auto_orient if definition != null else true
+
+
 func get_preview_rotation_degrees() -> Vector3:
-	return definition.preview_rotation_degrees if definition != null else Vector3(-15.0, 35.0, 0.0)
+	return definition.preview_rotation_degrees if definition != null else Vector3(-8.0, 12.0, 0.0)
 
 
 func get_preview_zoom() -> float:

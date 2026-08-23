@@ -40,10 +40,14 @@ class_name ItemDefinition
 @export var visual_scene: PackedScene
 @export var icon: Texture2D
 
-# Per-item corrections for live 3D HUD previews. Defaults work for ordinary
-# upright props; irregular/source assets can override these without changing
-# the preview renderer.
-@export var preview_rotation_degrees: Vector3 = Vector3(-15.0, 35.0, 0.0)
+# Live HUD preview presentation data.
+# When auto-orient is enabled, the renderer first chooses a broad, readable
+# orientation from the model bounds and then applies preview_rotation_degrees
+# as a small correction. When disabled, preview_rotation_degrees is the exact
+# authored preview orientation. This is intended to support a later tuning tool
+# without requiring bespoke icon art.
+@export var preview_auto_orient: bool = true
+@export var preview_rotation_degrees: Vector3 = Vector3(-8.0, 12.0, 0.0)
 @export_range(0.25, 2.0, 0.05) var preview_zoom: float = 1.0
 
 

@@ -48,7 +48,7 @@ func _build_ui() -> void:
 	bottom.anchor_bottom = 1.0
 	bottom.offset_left = -650.0
 	bottom.offset_right = 650.0
-	bottom.offset_top = -150.0
+	bottom.offset_top = -166.0
 	bottom.offset_bottom = -14.0
 	add_child(bottom)
 
@@ -107,7 +107,7 @@ func _on_selection_changed(_selected_index: int) -> void:
 
 func _make_slot(item, index: int, selected: bool) -> Control:
 	var panel: PanelContainer = PanelContainer.new()
-	panel.custom_minimum_size = Vector2(118.0, 112.0)
+	panel.custom_minimum_size = Vector2(118.0, 132.0)
 	panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 	var style: StyleBoxFlat = StyleBoxFlat.new()
@@ -118,9 +118,9 @@ func _make_slot(item, index: int, selected: bool) -> Control:
 	style.corner_radius_top_right = 4
 	style.corner_radius_bottom_left = 4
 	style.corner_radius_bottom_right = 4
-	style.content_margin_left = 6
-	style.content_margin_right = 6
-	style.content_margin_top = 4
+	style.content_margin_left = 5
+	style.content_margin_right = 5
+	style.content_margin_top = 3
 	style.content_margin_bottom = 4
 	panel.add_theme_stylebox_override("panel", style)
 
@@ -130,6 +130,7 @@ func _make_slot(item, index: int, selected: bool) -> Control:
 	column.add_theme_constant_override("separation", 0)
 	panel.add_child(column)
 
+	# The model is now the primary slot identifier, so give it most of the card.
 	var preview: ItemPreview3D = ItemPreview3DScript.new()
 	preview.set_item(item)
 	column.add_child(preview)
