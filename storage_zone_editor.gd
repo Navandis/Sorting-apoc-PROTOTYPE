@@ -15,6 +15,7 @@ const MODAL_BACKDROP := Color(0.005, 0.008, 0.010, 0.70)
 var _surface: Node = null
 var _root: Control = null
 var _title: Label = null
+var _name_edit: LineEdit = null
 var _status: Label = null
 var _canvas: StorageZoneCanvas = null
 var _category_buttons: Dictionary = {}
@@ -56,11 +57,16 @@ func open_for_surface(surface: Node) -> void:
 	_canvas.set_category(_active_category)
 	_sync_category_buttons()
 
-	var surface_name: String = "STORAGE SURFACE"
-	var surface_id_value: Variant = surface.get("surface_id")
-	if surface_id_value != null:
-		surface_name = String(surface_id_value).replace("_", " ").to_upper()
-	_title.text = "STORAGE ZONES  /  %s" % surface_name
+	var surface_name: String = "Storage Surface"
+	if surface.has_method("get_display_name"):
+		surface_name = String(surface.call("get_display_name"))
+	else:
+		var surface_id_value: Variant = surface.get("surface_id")
+		if surface_id_value != null:
+			surface_name = String(surface_id_value).replace("_", " ").capitalize()
+
+	if _name_edit != null:
+		_name_edit.text = surface_name
 
 	if not was_initialized:
 		_status.text = "First use: this surface starts as GENERAL. Paint over it to specialize storage."
@@ -206,11 +212,25 @@ func _build_center_panel(main_row: HBoxContainer) -> void:
 	content.add_theme_constant_override("separation", 8)
 	main_row.add_child(content)
 
+	var title_row: HBoxContainer = HBoxContainer.new()
+	title_row.add_theme_constant_override("separation", 10)
+	content.add_child(title_row)
+
 	_title = Label.new()
-	_title.text = "STORAGE ZONES"
+	_title.text = "STORAGE ZONES /"
 	_title.add_theme_color_override("font_color", TEXT_MAIN)
 	_title.add_theme_font_size_override("font_size", 20)
-	content.add_child(_title)
+	title_row.add_child(_title)
+
+	_name_edit = LineEdit.new()
+	_name_edit.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_name_edit.custom_minimum_size = Vector2(260.0, 36.0)
+	_name_edit.placeholder_text = "Surface name"
+	_name_edit.tooltip_text = "Name this individual shelf surface."
+	_name_edit.text_submitted.connect(_on_surface_name_submitted)
+	_name_edit.focus_exited.connect(_on_surface_name_focus_exited)
+	_name_edit.add_theme_font_size_override("font_size", 18)
+	title_row.add_child(_name_edit)
 
 	_status = Label.new()
 	_status.text = "Drag a rectangle."
@@ -262,6 +282,42 @@ func _build_allocation_panel(main_row: HBoxContainer) -> void:
 	_allocation_list = VBoxContainer.new()
 	_allocation_list.add_theme_constant_override("separation", 7)
 	right.add_child(_allocation_list)
+
+	var lower_spacer: Control = Control.new()
+	lower_spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	right.add_child(lower_spacer)
+
+	var close_button: Button = Button.new()
+	close_button.text = "CLOSE"
+	close_button.custom_minimum_size = Vector2(0.0, 58.0)
+	close_button.tooltip_text = "Close zoning editor (O / Esc)"
+	close_button.pressed.connect(close_editor)
+
+	var close_normal: StyleBoxFlat = _close_button_style(
+		Color(0.20, 0.25, 0.24, 1.0),
+		Color(0.55, 0.64, 0.61, 1.0),
+		3
+	)
+	var close_hover: StyleBoxFlat = _close_button_style(
+		Color(0.27, 0.34, 0.32, 1.0),
+		Color(0.72, 0.82, 0.78, 1.0),
+		3
+	)
+	var close_pressed: StyleBoxFlat = _close_button_style(
+		Color(0.12, 0.16, 0.15, 1.0),
+		Color(0.42, 0.50, 0.47, 1.0),
+		2
+	)
+
+	close_button.add_theme_stylebox_override("normal", close_normal)
+	close_button.add_theme_stylebox_override("hover", close_hover)
+	close_button.add_theme_stylebox_override("pressed", close_pressed)
+	close_button.add_theme_stylebox_override("focus", close_hover)
+	close_button.add_theme_font_size_override("font_size", 18)
+	close_button.add_theme_color_override("font_color", TEXT_MAIN)
+	close_button.add_theme_color_override("font_hover_color", Color.WHITE)
+	close_button.add_theme_color_override("font_pressed_color", Color.WHITE)
+	right.add_child(close_button)
 
 
 func _build_clear_confirmation() -> void:
@@ -335,6 +391,26 @@ func _button_style(color: Color, alpha: float) -> StyleBoxFlat:
 	return style
 
 
+func _close_button_style(
+	background: Color,
+	border: Color,
+	border_width: int
+) -> StyleBoxFlat:
+	var style: StyleBoxFlat = StyleBoxFlat.new()
+	style.bg_color = background
+	style.border_color = border
+	style.set_border_width_all(border_width)
+	style.corner_radius_top_left = 7
+	style.corner_radius_top_right = 7
+	style.corner_radius_bottom_left = 7
+	style.corner_radius_bottom_right = 7
+	style.shadow_color = Color(0.0, 0.0, 0.0, 0.48)
+	style.shadow_size = 5
+	style.content_margin_top = 10.0
+	style.content_margin_bottom = 10.0
+	return style
+
+
 func _card_style() -> StyleBoxFlat:
 	var style: StyleBoxFlat = StyleBoxFlat.new()
 	style.bg_color = CARD_BG
@@ -343,6 +419,29 @@ func _card_style() -> StyleBoxFlat:
 	style.corner_radius_bottom_left = 6
 	style.corner_radius_bottom_right = 6
 	return style
+
+
+func _on_surface_name_submitted(value: String) -> void:
+	_apply_surface_name(value)
+	if _name_edit != null:
+		_name_edit.release_focus()
+
+
+func _on_surface_name_focus_exited() -> void:
+	if _name_edit == null:
+		return
+	_apply_surface_name(_name_edit.text)
+
+
+func _apply_surface_name(value: String) -> void:
+	if _surface == null:
+		return
+
+	if _surface.has_method("set_custom_display_name"):
+		_surface.call("set_custom_display_name", value)
+
+	if _name_edit != null and _surface.has_method("get_display_name"):
+		_name_edit.text = String(_surface.call("get_display_name"))
 
 
 func _on_category_pressed(category: String) -> void:

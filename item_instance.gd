@@ -28,6 +28,14 @@ func get_bulk() -> int:
 
 
 
+func get_storage_category() -> String:
+	if definition == null:
+		return "General"
+	var category: String = definition.storage_category.strip_edges()
+	return "General" if category.is_empty() else category
+
+
+
 func get_storage_footprint() -> Vector3i:
 	return definition.storage_footprint if definition != null else Vector3i.ONE
 

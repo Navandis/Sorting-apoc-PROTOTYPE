@@ -85,6 +85,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		elif event.keycode == KEY_O and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 			_try_open_zone_editor()
 			get_viewport().set_input_as_handled()
+		elif event.keycode == KEY_M and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+			if _storage_placement != null:
+				_storage_placement.call("toggle_manual_mode")
+				_update_interaction_target()
+			get_viewport().set_input_as_handled()
 		elif event.keycode == KEY_E and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 			_attempt_store()
 			get_viewport().set_input_as_handled()

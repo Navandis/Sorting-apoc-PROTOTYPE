@@ -28,6 +28,7 @@ const INTERACTION_THICKNESS_M: float = 0.06
 const DEBUG_Y_OFFSET_M: float = 0.012
 
 var surface_id: StringName = &"storage_surface"
+var custom_display_name: String = ""
 var cell_size_m: float = 0.10
 var grid_size: Vector2i = Vector2i.ONE
 var usable_size_m: Vector2 = Vector2(0.10, 0.10)
@@ -140,6 +141,19 @@ func get_occupancy_ratio() -> float:
 	return float(occupied_count) / float(_cells.size())
 
 
+func get_default_display_name() -> String:
+	return String(surface_id).replace("_", " ").capitalize()
+
+
+func get_display_name() -> String:
+	var cleaned: String = custom_display_name.strip_edges()
+	return get_default_display_name() if cleaned.is_empty() else cleaned
+
+
+func set_custom_display_name(value: String) -> void:
+	custom_display_name = value.strip_edges()
+
+
 func are_zones_initialized() -> bool:
 	return _zones_initialized
 
@@ -247,6 +261,133 @@ func _is_cell_valid(cell: Vector2i) -> bool:
 		and cell.x < grid_size.x
 		and cell.y < grid_size.y
 	)
+
+
+func find_zone_auto_fit(
+	storage_category: String,
+	footprint: Vector2i,
+	allow_rotate: bool = true
+) -> Dictionary:
+	## Automatic placement policy:
+	## 1. Exact matching Storage Category.
+	## 2. General.
+	## 3. Explicitly unassigned cells.
+	## Never silently enter a different specific category zone.
+	var category: String = storage_category.strip_edges()
+	if category.is_empty():
+		category = "General"
+
+	var primary: Vector2i = _normalize_footprint(footprint)
+	var orientations: Array[Dictionary] = [
+		{
+			"footprint": primary,
+			"rotated": false
+		}
+	]
+
+	if allow_rotate and primary.x != primary.y:
+		orientations.append(
+			{
+				"footprint": Vector2i(primary.y, primary.x),
+				"rotated": true
+			}
+		)
+
+	var tiers: Array[String] = []
+	if category != "General":
+		tiers.append(category)
+	tiers.append("General")
+	tiers.append("") # unassigned fallback
+
+	for zone_category: String in tiers:
+		for orientation_value: Variant in orientations:
+			if not (orientation_value is Dictionary):
+				continue
+
+			var orientation: Dictionary = orientation_value as Dictionary
+			var footprint_value: Variant = orientation.get("footprint", primary)
+			var rotated_value: Variant = orientation.get("rotated", false)
+			var candidate_footprint: Vector2i = footprint_value as Vector2i
+			var rotated: bool = bool(rotated_value)
+
+			var fit: Dictionary = _find_first_fit_inside_zone(
+				candidate_footprint,
+				zone_category
+			)
+			var valid_value: Variant = fit.get("valid", false)
+			if not bool(valid_value):
+				continue
+
+			fit["rotated"] = rotated
+			fit["requested_category"] = category
+			fit["zone_category"] = zone_category
+			fit["zone_kind"] = (
+				"unassigned"
+				if zone_category.is_empty()
+				else (
+					"matching"
+					if zone_category == category
+					else "general"
+				)
+			)
+			return fit
+
+	return {
+		"valid": false,
+		"origin": Vector2i(-1, -1),
+		"footprint": primary,
+		"rotated": false,
+		"requested_category": category,
+		"zone_category": "",
+		"zone_kind": "none"
+	}
+
+
+func _find_first_fit_inside_zone(
+	footprint: Vector2i,
+	zone_category: String
+) -> Dictionary:
+	var normalized: Vector2i = _normalize_footprint(footprint)
+	if normalized.x > grid_size.x or normalized.y > grid_size.y:
+		return {"valid": false}
+
+	# Deterministic packing. Row zero is the editor's BACK edge; fill each row
+	# left-to-right before moving toward the FRONT.
+	var max_row: int = grid_size.y - normalized.y
+	var max_column: int = grid_size.x - normalized.x
+
+	for row: int in range(max_row + 1):
+		for column: int in range(max_column + 1):
+			var origin: Vector2i = Vector2i(column, row)
+			if not can_place_at(origin, normalized):
+				continue
+			if not _footprint_is_inside_zone(
+				origin,
+				normalized,
+				zone_category
+			):
+				continue
+
+			return {
+				"valid": true,
+				"origin": origin,
+				"footprint": normalized
+			}
+
+	return {"valid": false}
+
+
+func _footprint_is_inside_zone(
+	origin: Vector2i,
+	footprint: Vector2i,
+	zone_category: String
+) -> bool:
+	for row: int in range(origin.y, origin.y + footprint.y):
+		for column: int in range(origin.x, origin.x + footprint.x):
+			var category: String = get_zone_category(Vector2i(column, row))
+			if category != zone_category:
+				return false
+	return true
 
 
 func can_place_at(origin: Vector2i, footprint: Vector2i) -> bool:

@@ -19,6 +19,8 @@ var _current_surface: Node = null
 var _current_fit: Dictionary = {}
 var _rotated: bool = false
 var _suppressed: bool = false
+var _manual_mode: bool = false
+var _manual_debug_surface: Node = null
 
 var _ghost_host: Node3D = null
 var _ghost_orientation_root: Node3D = null
@@ -57,6 +59,29 @@ func set_suppressed(value: bool) -> void:
 		_hide_ghost()
 
 
+func is_manual_mode() -> bool:
+	return _manual_mode
+
+
+func set_manual_mode(value: bool) -> void:
+	if _manual_mode == value:
+		return
+
+	_manual_mode = value
+	_rotated = false
+
+	if not _manual_mode:
+		_hide_ghost()
+		_set_manual_debug_surface(null)
+
+	update_target()
+
+
+func toggle_manual_mode() -> bool:
+	set_manual_mode(not _manual_mode)
+	return _manual_mode
+
+
 func is_targeting_surface() -> bool:
 	return _current_surface != null
 
@@ -76,25 +101,50 @@ func get_prompt_text() -> String:
 	if selected_item == null:
 		return ""
 
-	var footprint: Vector2i = _selected_footprint(selected_item)
 	var item_name: String = String(selected_item.get_display_name())
 
-	if has_valid_placement():
-		return "%s   •   %dx%d STORAGE\n[E] PLACE   •   [R] ROTATE" % [
+	if _manual_mode:
+		var footprint: Vector2i = _selected_footprint(selected_item)
+		if has_valid_placement():
+			return "%s   •   %dx%d STORAGE\n[E] PLACE   •   [R] ROTATE   •   [M] AUTO" % [
+				item_name,
+				footprint.x,
+				footprint.y
+			]
+
+		return "%s   •   %dx%d STORAGE\nNO VALID LOCAL SPACE   •   [R] ROTATE   •   [M] AUTO" % [
 			item_name,
 			footprint.x,
 			footprint.y
 		]
 
-	return "%s   •   %dx%d STORAGE\nNO VALID SPACE   •   [R] ROTATE" % [
+	var storage_category: String = "General"
+	if selected_item.has_method("get_storage_category"):
+		storage_category = String(selected_item.get_storage_category())
+
+	if has_valid_placement():
+		var zone_kind: String = String(_current_fit.get("zone_kind", "matching"))
+		var destination_text: String = storage_category.to_upper()
+
+		if zone_kind == "general":
+			destination_text = "GENERAL"
+		elif zone_kind == "unassigned":
+			destination_text = "UNASSIGNED"
+
+		return "%s   •   %s\n[E] AUTO-STORE → %s   •   [M] MANUAL" % [
+			item_name,
+			storage_category.to_upper(),
+			destination_text
+		]
+
+	return "%s   •   %s\nNO MATCHING / GENERAL SPACE   •   [M] MANUAL" % [
 		item_name,
-		footprint.x,
-		footprint.y
+		storage_category.to_upper()
 	]
 
 
 func toggle_rotation() -> void:
-	if _carried_items == null:
+	if not _manual_mode or _carried_items == null:
 		return
 
 	var selected_item: Variant = _carried_items.get_selected_item()
@@ -119,11 +169,13 @@ func update_target() -> void:
 
 	if _suppressed or _camera == null or _carried_items == null:
 		_hide_ghost()
+		_set_manual_debug_surface(null)
 		return
 
 	var selected_item: Variant = _carried_items.get_selected_item()
 	if selected_item == null or _camera.get_world_3d() == null:
 		_hide_ghost()
+		_set_manual_debug_surface(null)
 		return
 
 	var ray_from: Vector3 = _camera.global_position
@@ -140,26 +192,53 @@ func update_target() -> void:
 	var result: Dictionary = _camera.get_world_3d().direct_space_state.intersect_ray(query)
 	if result.is_empty():
 		_hide_ghost()
+		_set_manual_debug_surface(null)
 		return
 
 	var collider_value: Variant = result.get("collider")
 	if not (collider_value is Node):
 		_hide_ghost()
+		_set_manual_debug_surface(null)
 		return
 
 	var surface: Node = _find_storage_surface(collider_value as Node)
 	if surface == null:
 		_hide_ghost()
+		_set_manual_debug_surface(null)
 		return
 
-	var position_value: Variant = result.get("position", Vector3.ZERO)
-	var hit_world: Vector3 = position_value as Vector3
-	var hit_local: Vector3 = surface.to_local(hit_world)
-	var footprint: Vector2i = _selected_footprint(selected_item)
-
 	_current_surface = surface
-	_current_fit = surface.find_nearest_fit_to_local_point(hit_local, footprint)
-	_update_ghost(selected_item)
+
+	if _manual_mode:
+		_set_manual_debug_surface(surface)
+
+		var position_value: Variant = result.get("position", Vector3.ZERO)
+		var hit_world: Vector3 = position_value as Vector3
+		var hit_local: Vector3 = surface.to_local(hit_world)
+		var footprint: Vector2i = _selected_footprint(selected_item)
+
+		_current_fit = surface.find_nearest_fit_to_local_point(
+			hit_local,
+			footprint
+		)
+		_update_ghost(selected_item)
+		return
+
+	# Zone-auto mode is intentionally visually quiet: no grid, no footprint
+	# overlays and no placement ghost.
+	_hide_ghost()
+	_set_manual_debug_surface(null)
+
+	var base_footprint: Vector2i = _base_footprint(selected_item)
+	var storage_category: String = "General"
+	if selected_item.has_method("get_storage_category"):
+		storage_category = String(selected_item.get_storage_category())
+
+	_current_fit = surface.find_zone_auto_fit(
+		storage_category,
+		base_footprint,
+		true
+	)
 
 
 func place_selected() -> bool:
@@ -183,6 +262,10 @@ func place_selected() -> bool:
 		item_key = "%s-%d" % [String(selected_item.get_display_name()), Time.get_ticks_usec()]
 
 	var placement_rotated: bool = _rotated
+	if not _manual_mode:
+		var fit_rotated_value: Variant = _current_fit.get("rotated", false)
+		placement_rotated = bool(fit_rotated_value)
+
 	var reserved: bool = bool(
 		_current_surface.reserve_at(item_key, origin, footprint, placement_rotated)
 	)
@@ -495,6 +578,28 @@ func _find_storage_surface(node: Node) -> Node:
 			break
 		current = current.get_parent()
 	return null
+
+
+func _set_manual_debug_surface(surface: Node) -> void:
+	if _manual_debug_surface == surface:
+		return
+
+	if (
+		_manual_debug_surface != null
+		and is_instance_valid(_manual_debug_surface)
+		and _manual_debug_surface.has_method("set_debug_visible")
+	):
+		_manual_debug_surface.set_debug_visible(false)
+
+	_manual_debug_surface = surface
+
+	if (
+		_manual_mode
+		and _manual_debug_surface != null
+		and is_instance_valid(_manual_debug_surface)
+		and _manual_debug_surface.has_method("set_debug_visible")
+	):
+		_manual_debug_surface.set_debug_visible(true)
 
 
 func _hide_ghost() -> void:

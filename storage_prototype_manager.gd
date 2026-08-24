@@ -76,9 +76,9 @@ func _install_known_shelves() -> void:
 				shelf,
 				[
 					# bottom → top
-					_make_level_profile(0.105, 0.96, 0.92, 0.00, 0.00),
-					_make_level_profile(0.390, 0.96, 0.92, 0.00, 0.00),
-					_make_level_profile(0.685, 0.96, 0.92, 0.00, 0.00),
+					_make_level_profile(0.100, 0.96, 0.92, 0.00, 0.00),
+					_make_level_profile(0.380, 0.96, 0.92, 0.00, 0.00),
+					_make_level_profile(0.677, 0.96, 0.92, 0.00, 0.00),
 					_make_level_profile(0.980, 0.96, 0.92, 0.00, 0.00)
 				]
 			)

@@ -156,6 +156,17 @@ static func _make_definition(
 	definition.display_name = display_name
 	definition.utility_id = utility_id
 	definition.utility_value = utility_value
+
+	# Current prototype Utility IDs map directly to the intended broad storage
+	# categories. Production ItemDefinitions may override this explicitly when
+	# storage identity and destination Utility differ.
+	var utility_category: String = String(utility_id)
+	definition.storage_category = (
+		"General"
+		if utility_category.is_empty() or utility_category == "None"
+		else utility_category
+	)
+
 	definition.bulk = bulk
 	definition.storage_footprint = footprint
 	definition.stackable = stackable
