@@ -170,7 +170,18 @@ func _register_prototype_world_items() -> void:
 
 func _attempt_store() -> void:
 	## E is the left-hand logistics action: place/store/submit.
-	## In this prototype slice it only places into deterministic storage.
+	##
+	## A shelf surface must be introduced to the player's zoning workflow once.
+	## The very first E interaction with an uninitialized surface therefore
+	## opens the zoning editor and initializes it to General. Clearing every
+	## zone later does not reset that initialization state.
+	var surface: Node = _get_looked_at_storage_surface()
+	if surface != null and surface.has_method("are_zones_initialized"):
+		var initialized: bool = bool(surface.call("are_zones_initialized"))
+		if not initialized:
+			_open_zone_editor_for_surface(surface)
+			return
+
 	if _storage_placement == null:
 		return
 
@@ -319,6 +330,17 @@ func _try_open_zone_editor() -> void:
 
 	var surface: Node = _get_looked_at_storage_surface()
 	if surface == null:
+		return
+
+	_open_zone_editor_for_surface(surface)
+
+
+func _open_zone_editor_for_surface(surface: Node) -> void:
+	if (
+		surface == null
+		or _zone_editor == null
+		or _zone_editor_open
+	):
 		return
 
 	_zone_editor_open = true

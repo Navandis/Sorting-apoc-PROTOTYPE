@@ -34,6 +34,7 @@ var usable_size_m: Vector2 = Vector2(0.10, 0.10)
 
 var _cells: Array[String] = []
 var _zone_cells: Array[String] = []
+var _zones_initialized: bool = false
 var _reservations: Dictionary = {}
 
 var _interaction_area: Area3D = null
@@ -103,6 +104,7 @@ func configure(
 	_zone_cells.resize(grid_size.x * grid_size.y)
 	for zone_cell_index: int in range(_zone_cells.size()):
 		_zone_cells[zone_cell_index] = ""
+	_zones_initialized = false
 
 	_reservations.clear()
 	_rebuild_interaction_area()
@@ -138,6 +140,26 @@ func get_occupancy_ratio() -> float:
 	return float(occupied_count) / float(_cells.size())
 
 
+func are_zones_initialized() -> bool:
+	return _zones_initialized
+
+
+func initialize_zones_if_needed(default_category: String) -> bool:
+	## Returns true only when this call performed first-use initialization.
+	## Once initialized, clearing or erasing every zone does NOT reset this flag.
+	if _zones_initialized:
+		return false
+	if _zone_cells.is_empty():
+		return false
+
+	for zone_cell_index: int in range(_zone_cells.size()):
+		_zone_cells[zone_cell_index] = default_category
+
+	_zones_initialized = true
+	zones_changed.emit()
+	return true
+
+
 func get_zone_category(cell: Vector2i) -> String:
 	if not _is_cell_valid(cell):
 		return ""
@@ -157,6 +179,7 @@ func set_zone_rect(
 ) -> void:
 	if _zone_cells.is_empty():
 		return
+	_zones_initialized = true
 
 	var min_x: int = clampi(mini(first_cell.x, second_cell.x), 0, grid_size.x - 1)
 	var max_x: int = clampi(maxi(first_cell.x, second_cell.x), 0, grid_size.x - 1)
@@ -177,6 +200,7 @@ func clear_zone_rect(first_cell: Vector2i, second_cell: Vector2i) -> void:
 func clear_all_zones() -> void:
 	if _zone_cells.is_empty():
 		return
+	_zones_initialized = true
 	for zone_cell_index: int in range(_zone_cells.size()):
 		_zone_cells[zone_cell_index] = ""
 	zones_changed.emit()

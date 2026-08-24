@@ -10,6 +10,7 @@ const SURFACE_BG := Color(0.055, 0.065, 0.070, 1.0)
 const SURFACE_BORDER := Color(0.70, 0.74, 0.72, 0.92)
 const FRONT_BACK_TEXT := Color(0.68, 0.72, 0.70, 0.82)
 const PREVIEW_BORDER := Color(1.0, 1.0, 1.0, 0.95)
+const PERCENT_BADGE_BG := Color(0.015, 0.020, 0.022, 0.90)
 const MIN_MARGIN: float = 34.0
 
 var _surface: Node = null
@@ -21,7 +22,7 @@ var _drag_current: Vector2i = Vector2i.ZERO
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_STOP
-	custom_minimum_size = Vector2(900.0, 500.0)
+	custom_minimum_size = Vector2(760.0, 500.0)
 
 
 func set_surface(surface: Node) -> void:
@@ -53,46 +54,63 @@ func cancel_drag() -> void:
 
 
 func _gui_input(event: InputEvent) -> void:
+	# Starting a zone requires a click inside the actual storage rectangle.
+	# Once the drag begins, _input() below owns motion/release globally so the
+	# cursor may leave the rectangle (or even this Control) without stopping it.
 	if _surface == null:
 		return
 
 	if event is InputEventMouseButton:
 		var button_event: InputEventMouseButton = event as InputEventMouseButton
-		if button_event.button_index == MOUSE_BUTTON_LEFT:
-			if button_event.pressed:
-				var start_cell: Vector2i = _cell_from_position(button_event.position)
-				if start_cell.x < 0:
-					return
-				_drag_start = start_cell
-				_drag_current = start_cell
-				_dragging = true
-				_emit_drag_percentage()
-				queue_redraw()
-				accept_event()
-			elif _dragging:
-				var end_cell: Vector2i = _cell_from_position(button_event.position)
-				if end_cell.x >= 0:
-					_drag_current = end_cell
+		if (
+			button_event.button_index == MOUSE_BUTTON_LEFT
+			and button_event.pressed
+		):
+			var start_cell: Vector2i = _cell_from_position(button_event.position, false)
+			if start_cell.x < 0:
+				return
 
-				if _category.is_empty():
-					_surface.clear_zone_rect(_drag_start, _drag_current)
-				else:
-					_surface.set_zone_rect(_category, _drag_start, _drag_current)
+			_drag_start = start_cell
+			_drag_current = start_cell
+			_dragging = true
+			_emit_drag_percentage()
+			queue_redraw()
+			accept_event()
 
-				_dragging = false
-				drag_percentage_changed.emit(0.0)
-				zone_applied.emit()
-				queue_redraw()
-				accept_event()
 
-	elif event is InputEventMouseMotion and _dragging:
+func _input(event: InputEvent) -> void:
+	if not _dragging or _surface == null:
+		return
+
+	if event is InputEventMouseMotion:
 		var motion_event: InputEventMouseMotion = event as InputEventMouseMotion
-		var motion_cell: Vector2i = _cell_from_position(motion_event.position)
-		if motion_cell.x >= 0 and motion_cell != _drag_current:
+		var local_position: Vector2 = get_local_mouse_position()
+		var motion_cell: Vector2i = _cell_from_position(local_position, true)
+		if motion_cell != _drag_current:
 			_drag_current = motion_cell
 			_emit_drag_percentage()
 			queue_redraw()
-		accept_event()
+		get_viewport().set_input_as_handled()
+
+	elif event is InputEventMouseButton:
+		var button_event: InputEventMouseButton = event as InputEventMouseButton
+		if (
+			button_event.button_index == MOUSE_BUTTON_LEFT
+			and not button_event.pressed
+		):
+			var local_position: Vector2 = get_local_mouse_position()
+			_drag_current = _cell_from_position(local_position, true)
+
+			if _category.is_empty():
+				_surface.clear_zone_rect(_drag_start, _drag_current)
+			else:
+				_surface.set_zone_rect(_category, _drag_start, _drag_current)
+
+			_dragging = false
+			drag_percentage_changed.emit(0.0)
+			zone_applied.emit()
+			queue_redraw()
+			get_viewport().set_input_as_handled()
 
 
 func _draw() -> void:
@@ -108,9 +126,8 @@ func _draw() -> void:
 	draw_rect(surface_rect, SURFACE_BG, true)
 	draw_rect(surface_rect, SURFACE_BORDER, false, 2.0)
 
-	# Existing zones are drawn without cell borders. Adjacent cells of the same
-	# category visually merge into a continuous rectangle/shape, keeping the
-	# hidden deterministic grid out of the player's face.
+	# Existing category cells have no visible cell boundaries. Adjacent cells
+	# merge into clean zone shapes even though storage stays deterministic.
 	for row: int in range(grid.y):
 		for column: int in range(grid.x):
 			var cell: Vector2i = Vector2i(column, row)
@@ -180,20 +197,77 @@ func _draw_drag_preview(grid: Vector2i, surface_rect: Rect2) -> void:
 	draw_rect(preview_rect, preview_color, true)
 	draw_rect(preview_rect, PREVIEW_BORDER, false, 3.0)
 
-	var ratio: float = float(_surface.get_zone_rect_percentage(_drag_start, _drag_current))
+	var ratio: float = float(
+		_surface.get_zone_rect_percentage(_drag_start, _drag_current)
+	)
 	var percent: float = ratio * 100.0
-	var category_text: String = "ERASE" if _category.is_empty() else StorageCategoriesScript.short_name(_category)
-	var label_text: String = "%s  %.1f%%" % [category_text, percent]
+	var category_text: String = (
+		"ERASE"
+		if _category.is_empty()
+		else StorageCategoriesScript.short_name(_category)
+	)
 
 	var font: Font = ThemeDB.fallback_font
 	var font_size: int = 16
-	var label_position: Vector2 = preview_rect.position + Vector2(8.0, 22.0)
+
+	# Category text is secondary. Only draw it when it genuinely fits.
+	var category_size: Vector2 = font.get_string_size(
+		category_text,
+		HORIZONTAL_ALIGNMENT_LEFT,
+		-1.0,
+		font_size
+	)
+	if (
+		preview_rect.size.x >= category_size.x + 18.0
+		and preview_rect.size.y >= 30.0
+	):
+		draw_string(
+			font,
+			preview_rect.position + Vector2(8.0, 22.0),
+			category_text,
+			HORIZONTAL_ALIGNMENT_LEFT,
+			-1.0,
+			font_size,
+			Color.WHITE
+		)
+
+	# Percentage is authoritative and always visible, independent of rectangle
+	# width or category-name length.
+	var percent_text: String = "%.1f%%" % percent
+	var percent_size: Vector2 = font.get_string_size(
+		percent_text,
+		HORIZONTAL_ALIGNMENT_LEFT,
+		-1.0,
+		font_size
+	)
+	var badge_size: Vector2 = percent_size + Vector2(12.0, 8.0)
+
+	var badge_x: float = preview_rect.end.x - badge_size.x
+	var badge_y: float = preview_rect.position.y
+	badge_x = clampf(
+		badge_x,
+		surface_rect.position.x,
+		surface_rect.end.x - badge_size.x
+	)
+	badge_y = clampf(
+		badge_y,
+		surface_rect.position.y,
+		surface_rect.end.y - badge_size.y
+	)
+
+	var badge_rect: Rect2 = Rect2(
+		Vector2(badge_x, badge_y),
+		badge_size
+	)
+	draw_rect(badge_rect, PERCENT_BADGE_BG, true)
+	draw_rect(badge_rect, PREVIEW_BORDER, false, 1.0)
+
 	draw_string(
 		font,
-		label_position,
-		label_text,
+		badge_rect.position + Vector2(6.0, percent_size.y + 2.0),
+		percent_text,
 		HORIZONTAL_ALIGNMENT_LEFT,
-		maxf(80.0, preview_rect.size.x - 16.0),
+		-1.0,
 		font_size,
 		Color.WHITE
 	)
@@ -237,7 +311,10 @@ func _cell_rect(
 	)
 
 
-func _cell_from_position(position: Vector2) -> Vector2i:
+func _cell_from_position(
+	position: Vector2,
+	clamp_to_surface: bool
+) -> Vector2i:
 	if _surface == null:
 		return Vector2i(-1, -1)
 
@@ -245,12 +322,24 @@ func _cell_from_position(position: Vector2) -> Vector2i:
 	var grid: Vector2i = grid_value as Vector2i
 	var surface_rect: Rect2 = _get_surface_rect(grid)
 
-	if not surface_rect.has_point(position):
+	if not clamp_to_surface and not surface_rect.has_point(position):
 		return Vector2i(-1, -1)
 
 	var normalized: Vector2 = (position - surface_rect.position) / surface_rect.size
-	var column: int = clampi(int(floor(normalized.x * float(grid.x))), 0, grid.x - 1)
-	var row: int = clampi(int(floor(normalized.y * float(grid.y))), 0, grid.y - 1)
+	if clamp_to_surface:
+		normalized.x = clampf(normalized.x, 0.0, 0.999999)
+		normalized.y = clampf(normalized.y, 0.0, 0.999999)
+
+	var column: int = clampi(
+		int(floor(normalized.x * float(grid.x))),
+		0,
+		grid.x - 1
+	)
+	var row: int = clampi(
+		int(floor(normalized.y * float(grid.y))),
+		0,
+		grid.y - 1
+	)
 	return Vector2i(column, row)
 
 
@@ -259,7 +348,9 @@ func _emit_drag_percentage() -> void:
 		drag_percentage_changed.emit(0.0)
 		return
 
-	var ratio: float = float(_surface.get_zone_rect_percentage(_drag_start, _drag_current))
+	var ratio: float = float(
+		_surface.get_zone_rect_percentage(_drag_start, _drag_current)
+	)
 	drag_percentage_changed.emit(ratio * 100.0)
 
 

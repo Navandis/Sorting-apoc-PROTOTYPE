@@ -6,18 +6,20 @@ signal editor_closed
 const StorageCategoriesScript = preload("res://storage_categories.gd")
 const StorageZoneCanvasScript = preload("res://storage_zone_canvas.gd")
 
-const PANEL_BG := Color(0.035, 0.042, 0.045, 0.98)
-const CARD_BG := Color(0.075, 0.085, 0.088, 0.98)
+const PANEL_BG := Color(0.035, 0.042, 0.045, 0.78)
+const CARD_BG := Color(0.075, 0.085, 0.088, 0.94)
 const TEXT_MAIN := Color(0.92, 0.94, 0.92, 1.0)
 const TEXT_MUTED := Color(0.67, 0.71, 0.69, 1.0)
+const MODAL_BACKDROP := Color(0.005, 0.008, 0.010, 0.70)
 
 var _surface: Node = null
 var _root: Control = null
 var _title: Label = null
 var _status: Label = null
-var _coverage: Label = null
 var _canvas: StorageZoneCanvas = null
 var _category_buttons: Dictionary = {}
+var _allocation_list: VBoxContainer = null
+var _clear_confirmation: ConfirmationDialog = null
 var _active_category: String = StorageCategoriesScript.FOOD
 var _was_tree_paused: bool = false
 
@@ -34,7 +36,22 @@ func open_for_surface(surface: Node) -> void:
 		return
 
 	_surface = surface
-	_active_category = StorageCategoriesScript.FOOD
+
+	var was_initialized: bool = true
+	if surface.has_method("are_zones_initialized"):
+		was_initialized = bool(surface.call("are_zones_initialized"))
+
+	if surface.has_method("initialize_zones_if_needed"):
+		surface.call(
+			"initialize_zones_if_needed",
+			StorageCategoriesScript.GENERAL
+		)
+
+	# A brand-new surface opens as 100% General and has General preselected.
+	# Reopening an authored surface preserves the editor's last category.
+	if not was_initialized:
+		_active_category = StorageCategoriesScript.GENERAL
+
 	_canvas.set_surface(surface)
 	_canvas.set_category(_active_category)
 	_sync_category_buttons()
@@ -45,8 +62,12 @@ func open_for_surface(surface: Node) -> void:
 		surface_name = String(surface_id_value).replace("_", " ").to_upper()
 	_title.text = "STORAGE ZONES  /  %s" % surface_name
 
-	_status.text = "Choose a category, then drag a rectangle. New zones overwrite cells they cover."
-	_update_coverage()
+	if not was_initialized:
+		_status.text = "First use: this surface starts as GENERAL. Paint over it to specialize storage."
+	else:
+		_status.text = "Choose a category, then drag a rectangle. New zones overwrite cells they cover."
+
+	_update_allocation_list()
 
 	visible = true
 	_was_tree_paused = get_tree().paused
@@ -61,8 +82,6 @@ func close_editor() -> void:
 	_canvas.cancel_drag()
 	visible = false
 
-	# Restore simulation first so the receiving player controller can react to
-	# the close signal even though it does not process while paused.
 	get_tree().paused = _was_tree_paused
 	editor_closed.emit()
 
@@ -87,23 +106,23 @@ func _build_ui() -> void:
 	add_child(_root)
 
 	var backdrop: ColorRect = ColorRect.new()
-	backdrop.color = Color(0.005, 0.008, 0.010, 0.90)
+	backdrop.color = MODAL_BACKDROP
 	backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	backdrop.mouse_filter = Control.MOUSE_FILTER_STOP
 	_root.add_child(backdrop)
 
 	var margin: MarginContainer = MarginContainer.new()
 	margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	margin.add_theme_constant_override("margin_left", 46)
-	margin.add_theme_constant_override("margin_right", 46)
-	margin.add_theme_constant_override("margin_top", 34)
-	margin.add_theme_constant_override("margin_bottom", 34)
+	margin.add_theme_constant_override("margin_left", 42)
+	margin.add_theme_constant_override("margin_right", 42)
+	margin.add_theme_constant_override("margin_top", 30)
+	margin.add_theme_constant_override("margin_bottom", 30)
 	_root.add_child(margin)
 
 	var shell: PanelContainer = PanelContainer.new()
 	var shell_style: StyleBoxFlat = StyleBoxFlat.new()
 	shell_style.bg_color = PANEL_BG
-	shell_style.border_color = Color(0.28, 0.32, 0.31, 1.0)
+	shell_style.border_color = Color(0.28, 0.32, 0.31, 0.82)
 	shell_style.set_border_width_all(1)
 	shell_style.corner_radius_top_left = 8
 	shell_style.corner_radius_top_right = 8
@@ -113,18 +132,21 @@ func _build_ui() -> void:
 	margin.add_child(shell)
 
 	var main_row: HBoxContainer = HBoxContainer.new()
-	main_row.add_theme_constant_override("separation", 22)
+	main_row.add_theme_constant_override("separation", 18)
 	shell.add_child(main_row)
 
+	_build_category_panel(main_row)
+	_build_center_panel(main_row)
+	_build_allocation_panel(main_row)
+	_build_clear_confirmation()
+
+	_sync_category_buttons()
+
+
+func _build_category_panel(main_row: HBoxContainer) -> void:
 	var side_panel: PanelContainer = PanelContainer.new()
 	side_panel.custom_minimum_size = Vector2(220.0, 0.0)
-	var side_style: StyleBoxFlat = StyleBoxFlat.new()
-	side_style.bg_color = CARD_BG
-	side_style.corner_radius_top_left = 6
-	side_style.corner_radius_top_right = 6
-	side_style.corner_radius_bottom_left = 6
-	side_style.corner_radius_bottom_right = 6
-	side_panel.add_theme_stylebox_override("panel", side_style)
+	side_panel.add_theme_stylebox_override("panel", _card_style())
 	main_row.add_child(side_panel)
 
 	var side_margin: MarginContainer = MarginContainer.new()
@@ -147,42 +169,28 @@ func _build_ui() -> void:
 	var group: ButtonGroup = ButtonGroup.new()
 
 	for category: String in StorageCategoriesScript.EDITOR_CATEGORIES:
-		var button: Button = Button.new()
-		button.text = category.to_upper()
-		button.toggle_mode = true
-		button.button_group = group
-		button.custom_minimum_size = Vector2(0.0, 34.0)
-		button.pressed.connect(_on_category_pressed.bind(category))
+		var button: Button = _make_category_button(category, group)
 		side.add_child(button)
 		_category_buttons[category] = button
 
 	var separator_one: HSeparator = HSeparator.new()
 	side.add_child(separator_one)
 
-	var erase_button: Button = Button.new()
+	var erase_button: Button = _make_category_button("", group)
 	erase_button.text = "ERASE"
-	erase_button.toggle_mode = true
-	erase_button.button_group = group
-	erase_button.custom_minimum_size = Vector2(0.0, 34.0)
-	erase_button.pressed.connect(_on_category_pressed.bind(""))
 	side.add_child(erase_button)
 	_category_buttons[""] = erase_button
 
 	var clear_button: Button = Button.new()
 	clear_button.text = "CLEAR ALL ZONES"
-	clear_button.custom_minimum_size = Vector2(0.0, 34.0)
+	clear_button.custom_minimum_size = Vector2(0.0, 36.0)
 	clear_button.pressed.connect(_on_clear_all_pressed)
+	clear_button.add_theme_color_override("font_color", Color(1.0, 0.82, 0.82))
 	side.add_child(clear_button)
 
 	var spacer: Control = Control.new()
 	spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	side.add_child(spacer)
-
-	_coverage = Label.new()
-	_coverage.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_coverage.add_theme_color_override("font_color", TEXT_MUTED)
-	_coverage.add_theme_font_size_override("font_size", 13)
-	side.add_child(_coverage)
 
 	var close_hint: Label = Label.new()
 	close_hint.text = "[O / ESC] CLOSE"
@@ -190,6 +198,8 @@ func _build_ui() -> void:
 	close_hint.add_theme_font_size_override("font_size", 13)
 	side.add_child(close_hint)
 
+
+func _build_center_panel(main_row: HBoxContainer) -> void:
 	var content: VBoxContainer = VBoxContainer.new()
 	content.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	content.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -215,7 +225,124 @@ func _build_ui() -> void:
 	_canvas.zone_applied.connect(_on_zone_applied)
 	content.add_child(_canvas)
 
-	_sync_category_buttons()
+
+func _build_allocation_panel(main_row: HBoxContainer) -> void:
+	var right_panel: PanelContainer = PanelContainer.new()
+	right_panel.custom_minimum_size = Vector2(220.0, 0.0)
+	right_panel.add_theme_stylebox_override("panel", _card_style())
+	main_row.add_child(right_panel)
+
+	var right_margin: MarginContainer = MarginContainer.new()
+	right_margin.add_theme_constant_override("margin_left", 14)
+	right_margin.add_theme_constant_override("margin_right", 14)
+	right_margin.add_theme_constant_override("margin_top", 14)
+	right_margin.add_theme_constant_override("margin_bottom", 14)
+	right_panel.add_child(right_margin)
+
+	var right: VBoxContainer = VBoxContainer.new()
+	right.add_theme_constant_override("separation", 8)
+	right_margin.add_child(right)
+
+	var title: Label = Label.new()
+	title.text = "SURFACE ALLOCATION"
+	title.add_theme_color_override("font_color", TEXT_MAIN)
+	title.add_theme_font_size_override("font_size", 16)
+	right.add_child(title)
+
+	var hint: Label = Label.new()
+	hint.text = "Share of the whole shelf assigned to each zone type."
+	hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	hint.add_theme_color_override("font_color", TEXT_MUTED)
+	hint.add_theme_font_size_override("font_size", 12)
+	right.add_child(hint)
+
+	var separator: HSeparator = HSeparator.new()
+	right.add_child(separator)
+
+	_allocation_list = VBoxContainer.new()
+	_allocation_list.add_theme_constant_override("separation", 7)
+	right.add_child(_allocation_list)
+
+
+func _build_clear_confirmation() -> void:
+	_clear_confirmation = ConfirmationDialog.new()
+	_clear_confirmation.title = "Clear all storage zones?"
+	_clear_confirmation.dialog_text = (
+		"This removes every category zone from this shelf surface.\n" +
+		"Existing stored items will not move."
+	)
+	_clear_confirmation.ok_button_text = "CLEAR ALL"
+	_clear_confirmation.process_mode = Node.PROCESS_MODE_ALWAYS
+	_clear_confirmation.confirmed.connect(_on_clear_all_confirmed)
+	add_child(_clear_confirmation)
+
+
+func _make_category_button(
+	category: String,
+	group: ButtonGroup
+) -> Button:
+	var button: Button = Button.new()
+	button.text = (
+		"ERASE"
+		if category.is_empty()
+		else category.to_upper()
+	)
+	button.toggle_mode = true
+	button.button_group = group
+	button.custom_minimum_size = Vector2(0.0, 36.0)
+	button.pressed.connect(_on_category_pressed.bind(category))
+	button.add_theme_color_override("font_color", Color.WHITE)
+	button.add_theme_color_override("font_hover_color", Color.WHITE)
+	button.add_theme_color_override("font_pressed_color", Color.WHITE)
+
+	var base_color: Color = (
+		Color(0.46, 0.49, 0.50, 1.0)
+		if category.is_empty()
+		else StorageCategoriesScript.color_for(category)
+	)
+
+	var normal_style: StyleBoxFlat = _button_style(
+		base_color.darkened(0.45),
+		0.86
+	)
+	var hover_style: StyleBoxFlat = _button_style(
+		base_color.darkened(0.25),
+		0.94
+	)
+	var pressed_style: StyleBoxFlat = _button_style(
+		base_color.darkened(0.08),
+		1.0
+	)
+
+	button.add_theme_stylebox_override("normal", normal_style)
+	button.add_theme_stylebox_override("hover", hover_style)
+	button.add_theme_stylebox_override("pressed", pressed_style)
+	button.add_theme_stylebox_override("focus", pressed_style)
+	return button
+
+
+func _button_style(color: Color, alpha: float) -> StyleBoxFlat:
+	var style: StyleBoxFlat = StyleBoxFlat.new()
+	var styled_color: Color = color
+	styled_color.a = alpha
+	style.bg_color = styled_color
+	style.border_color = color.lightened(0.20)
+	style.set_border_width_all(1)
+	style.corner_radius_top_left = 4
+	style.corner_radius_top_right = 4
+	style.corner_radius_bottom_left = 4
+	style.corner_radius_bottom_right = 4
+	return style
+
+
+func _card_style() -> StyleBoxFlat:
+	var style: StyleBoxFlat = StyleBoxFlat.new()
+	style.bg_color = CARD_BG
+	style.corner_radius_top_left = 6
+	style.corner_radius_top_right = 6
+	style.corner_radius_bottom_left = 6
+	style.corner_radius_bottom_right = 6
+	return style
 
 
 func _on_category_pressed(category: String) -> void:
@@ -228,11 +355,17 @@ func _on_category_pressed(category: String) -> void:
 
 
 func _on_clear_all_pressed() -> void:
+	if _surface == null or _clear_confirmation == null:
+		return
+	_clear_confirmation.popup_centered(Vector2i(430, 170))
+
+
+func _on_clear_all_confirmed() -> void:
 	if _surface == null:
 		return
 	_surface.clear_all_zones()
-	_status.text = "All zones cleared."
-	_update_coverage()
+	_status.text = "All zones cleared. This surface remains initialized."
+	_update_allocation_list()
 
 
 func _on_drag_percentage_changed(percent: float) -> void:
@@ -243,18 +376,60 @@ func _on_drag_percentage_changed(percent: float) -> void:
 
 
 func _on_zone_applied() -> void:
-	_update_coverage()
+	_update_allocation_list()
 	var label: String = "ERASE" if _active_category.is_empty() else _active_category.to_upper()
 	_status.text = "%s zone updated. Draw another rectangle or choose another category." % label
 
 
-func _update_coverage() -> void:
-	if _surface == null:
-		_coverage.text = ""
+func _update_allocation_list() -> void:
+	if _allocation_list == null:
 		return
 
-	var total_ratio: float = float(_surface.get_zone_coverage_ratio())
-	_coverage.text = "ALLOCATED\n%.1f%% of surface" % (total_ratio * 100.0)
+	for child: Node in _allocation_list.get_children():
+		_allocation_list.remove_child(child)
+		child.queue_free()
+
+	if _surface == null:
+		return
+
+	var any_zone: bool = false
+	for category: String in StorageCategoriesScript.EDITOR_CATEGORIES:
+		var ratio: float = float(
+			_surface.get_zone_coverage_ratio(category)
+		)
+		if ratio <= 0.0001:
+			continue
+
+		any_zone = true
+		var row: HBoxContainer = HBoxContainer.new()
+		row.add_theme_constant_override("separation", 8)
+
+		var swatch: ColorRect = ColorRect.new()
+		swatch.custom_minimum_size = Vector2(16.0, 16.0)
+		var swatch_color: Color = StorageCategoriesScript.color_for(category)
+		swatch_color.a = 1.0
+		swatch.color = swatch_color
+		row.add_child(swatch)
+
+		var label: Label = Label.new()
+		label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		label.text = StorageCategoriesScript.short_name(category)
+		label.add_theme_color_override("font_color", TEXT_MAIN)
+		row.add_child(label)
+
+		var percent_label: Label = Label.new()
+		percent_label.text = "%.1f%%" % (ratio * 100.0)
+		percent_label.add_theme_color_override("font_color", TEXT_MAIN)
+		percent_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+		row.add_child(percent_label)
+
+		_allocation_list.add_child(row)
+
+	if not any_zone:
+		var empty_label: Label = Label.new()
+		empty_label.text = "No zones assigned."
+		empty_label.add_theme_color_override("font_color", TEXT_MUTED)
+		_allocation_list.add_child(empty_label)
 
 
 func _sync_category_buttons() -> void:
