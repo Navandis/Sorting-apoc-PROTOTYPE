@@ -76,7 +76,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		if event.keycode == KEY_ESCAPE:
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		elif event.keycode == KEY_E and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-			_attempt_interact()
+			_attempt_store()
 			get_viewport().set_input_as_handled()
 		elif event.keycode == KEY_R and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 			if _storage_placement != null:
@@ -87,7 +87,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		if Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		else:
-			_attempt_interact()
+			_attempt_pickup_click()
 		get_viewport().set_input_as_handled()
 
 
@@ -158,16 +158,24 @@ func _register_prototype_world_items() -> void:
 		print("Prototype loot registered: ", registered_count, " world item(s).")
 
 
-func _attempt_interact() -> void:
-	var target: WorldItem = _get_looked_at_world_item()
-	if target != null:
-		_attempt_pickup(target)
+func _attempt_store() -> void:
+	## E is the left-hand logistics action: place/store/submit.
+	## In this prototype slice it only places into deterministic storage.
+	if _storage_placement == null:
 		return
 
-	if _storage_placement != null:
-		var placed: bool = bool(_storage_placement.call("place_selected"))
-		if placed:
-			_update_interaction_target()
+	var placed: bool = bool(_storage_placement.call("place_selected"))
+	if placed:
+		_update_interaction_target()
+
+
+func _attempt_pickup_click() -> void:
+	## Left Mouse Button is the right-hand object-selection action: identify
+	## and retrieve the object currently under the reticle.
+	var target: WorldItem = _get_looked_at_world_item()
+	if target == null:
+		return
+	_attempt_pickup(target)
 
 
 func _attempt_pickup(target: WorldItem) -> void:
@@ -182,36 +190,59 @@ func _update_interaction_target() -> void:
 	_current_world_item = _get_looked_at_world_item()
 
 	if _storage_placement != null:
-		_storage_placement.call("set_suppressed", _current_world_item != null)
+		# Pickup and placement are now separate controls, so a visible loot item
+		# no longer suppresses the storage surface behind it.
+		_storage_placement.call("set_suppressed", false)
 		_storage_placement.call("update_target")
 
-	if _current_world_item != null:
-		var can_pickup: bool = _current_world_item.can_pickup_into(carried_items)
-		_set_aim_dot_color(DOT_PICKUP if can_pickup else DOT_BLOCKED)
-		_interaction_prompt.visible = true
+	var has_loot_target: bool = _current_world_item != null
+	var has_storage_target: bool = (
+		_storage_placement != null
+		and bool(_storage_placement.call("is_targeting_surface"))
+	)
 
-		if can_pickup:
-			_interaction_prompt.text = "%s   •   %s   •   B%d\n[E / LMB] PICK UP" % [
+	if not has_loot_target and not has_storage_target:
+		_set_aim_dot_color(DOT_IDLE)
+		_interaction_prompt.visible = false
+		return
+
+	var prompt_lines: Array[String] = []
+	var loot_pickable: bool = false
+	var storage_placeable: bool = false
+
+	if has_loot_target:
+		loot_pickable = _current_world_item.can_pickup_into(carried_items)
+		if loot_pickable:
+			prompt_lines.append("%s   •   %s   •   B%d" % [
 				_current_world_item.get_display_name(),
 				_current_world_item.utility_text(),
 				_current_world_item.get_bulk()
-			]
+			])
+			prompt_lines.append("[LMB] PICK UP")
 		else:
-			_interaction_prompt.text = "%s   •   B%d\nNOT ENOUGH CARRY CAPACITY" % [
+			prompt_lines.append("%s   •   B%d" % [
 				_current_world_item.get_display_name(),
 				_current_world_item.get_bulk()
-			]
-		return
+			])
+			prompt_lines.append("[LMB] NOT ENOUGH CARRY CAPACITY")
 
-	if _storage_placement != null and bool(_storage_placement.call("is_targeting_surface")):
-		var can_place: bool = bool(_storage_placement.call("has_valid_placement"))
-		_set_aim_dot_color(DOT_PLACE if can_place else DOT_BLOCKED)
-		_interaction_prompt.visible = true
-		_interaction_prompt.text = String(_storage_placement.call("get_prompt_text"))
-		return
+	if has_storage_target:
+		storage_placeable = bool(_storage_placement.call("has_valid_placement"))
+		var storage_prompt: String = String(_storage_placement.call("get_prompt_text"))
+		if not storage_prompt.is_empty():
+			if not prompt_lines.is_empty():
+				prompt_lines.append("")
+			prompt_lines.append(storage_prompt)
 
-	_set_aim_dot_color(DOT_IDLE)
-	_interaction_prompt.visible = false
+	if has_loot_target and loot_pickable:
+		_set_aim_dot_color(DOT_PICKUP)
+	elif has_storage_target and storage_placeable:
+		_set_aim_dot_color(DOT_PLACE)
+	else:
+		_set_aim_dot_color(DOT_BLOCKED)
+
+	_interaction_prompt.visible = true
+	_interaction_prompt.text = "\n".join(prompt_lines)
 
 
 func _get_looked_at_world_item() -> WorldItem:

@@ -7,7 +7,9 @@ class_name StoragePlacementController
 const StorageSurfaceScript = preload("res://storage_surface.gd")
 const WorldItemScript = preload("res://world_item.gd")
 
-const GHOST_VALID_COLOR := Color(0.22, 0.95, 0.58, 0.42)
+const GHOST_VALID_COLOR := Color(0.20, 1.00, 0.48, 0.68)
+const GHOST_BLOCKED_COLOR := Color(1.00, 0.22, 0.18, 0.68)
+const GHOST_PAD_ALPHA: float = 0.22
 
 var _camera: Camera3D = null
 var _carried_items: Node = null
@@ -22,7 +24,9 @@ var _ghost_host: Node3D = null
 var _ghost_orientation_root: Node3D = null
 var _ghost_visual: Node = null
 var _ghost_item: Variant = null
-var _ghost_material: StandardMaterial3D = null
+var _ghost_material_valid: StandardMaterial3D = null
+var _ghost_material_blocked: StandardMaterial3D = null
+var _ghost_footprint: MeshInstance3D = null
 
 
 func configure(camera: Camera3D, carried_items: Node, interaction_distance: float) -> void:
@@ -30,16 +34,17 @@ func configure(camera: Camera3D, carried_items: Node, interaction_distance: floa
 	_carried_items = carried_items
 	_interaction_distance = interaction_distance
 
-	_ghost_material = StandardMaterial3D.new()
-	_ghost_material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	_ghost_material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-	_ghost_material.albedo_color = GHOST_VALID_COLOR
-	_ghost_material.cull_mode = BaseMaterial3D.CULL_DISABLED
+	_ghost_material_valid = _make_ghost_material(GHOST_VALID_COLOR)
+	_ghost_material_blocked = _make_ghost_material(GHOST_BLOCKED_COLOR)
 
 	_ghost_host = Node3D.new()
 	_ghost_host.name = "PlacementGhost"
 	_ghost_host.visible = false
-	get_tree().current_scene.add_child(_ghost_host)
+
+	# Keep the preview parented from the moment it is created. `_update_ghost()`
+	# may run on the next process frame and needs a valid parent before it can
+	# move the ghost onto a StorageSurface.
+	add_child(_ghost_host)
 
 
 func set_interaction_distance(value: float) -> void:
@@ -75,7 +80,7 @@ func get_prompt_text() -> String:
 	var item_name: String = String(selected_item.get_display_name())
 
 	if has_valid_placement():
-		return "%s   •   %dx%d STORAGE\n[E / LMB] PLACE   •   [R] ROTATE" % [
+		return "%s   •   %dx%d STORAGE\n[E] PLACE   •   [R] ROTATE" % [
 			item_name,
 			footprint.x,
 			footprint.y
@@ -222,6 +227,9 @@ func _spawn_stored_world_item(
 	if visual_scene == null:
 		return false
 
+	# StorageSurface is top-level/unit-scale, so stored visuals can safely be
+	# children of it again. This restores the previously validated transform path
+	# while keeping them isolated from the visible shelf's scale.
 	var host: Node3D = Node3D.new()
 	host.name = "Stored_%s" % _safe_node_name(String(item.get_display_name()))
 	surface.add_child(host)
@@ -251,12 +259,15 @@ func _update_ghost(item) -> void:
 	if item != _ghost_item:
 		_rebuild_ghost(item)
 
-	if _ghost_visual == null or _current_surface == null or not has_valid_placement():
+	if _ghost_visual == null or _current_surface == null or _current_fit.is_empty():
 		_hide_ghost()
 		return
 
 	var origin_value: Variant = _current_fit.get("origin", Vector2i.ZERO)
-	var footprint_value: Variant = _current_fit.get("footprint", _selected_footprint(item))
+	var footprint_value: Variant = _current_fit.get(
+		"footprint",
+		_selected_footprint(item)
+	)
 	var origin: Vector2i = origin_value as Vector2i
 	var footprint: Vector2i = footprint_value as Vector2i
 
@@ -264,8 +275,33 @@ func _update_ghost(item) -> void:
 		origin,
 		footprint
 	)
-	_ghost_host.global_transform = _current_surface.global_transform * local_transform
+
+	# Keep the ghost in exactly the same coordinate system as the deterministic
+	# cells it previews. StorageSurface has unit global scale, so the actual item
+	# silhouette remains undistorted even on a squashed visual shelf.
+	var ghost_parent: Node = _ghost_host.get_parent()
+	if ghost_parent == null:
+		# Defensive fallback. This should no longer be needed because configure()
+		# parents the node immediately, but it prevents a lifecycle edge case from
+		# making the preview disappear.
+		_current_surface.add_child(_ghost_host)
+	elif ghost_parent != _current_surface:
+		_ghost_host.reparent(_current_surface, false)
+
+	_ghost_host.transform = local_transform
+
 	_apply_storage_rotation(_ghost_orientation_root, item, _rotated)
+
+	var valid: bool = has_valid_placement()
+	var ghost_material: StandardMaterial3D = (
+		_ghost_material_valid if valid else _ghost_material_blocked
+	)
+	_apply_ghost_material(_ghost_visual, ghost_material)
+	_update_ghost_footprint(footprint, ghost_material)
+
+	# The item model itself is the primary placement preview. The thin pad is
+	# only a secondary footprint cue; unlike F7 it follows the currently
+	# selected item and exists during normal manual placement.
 	_ghost_host.visible = true
 
 
@@ -274,6 +310,10 @@ func _rebuild_ghost(item) -> void:
 
 	if _ghost_orientation_root != null and is_instance_valid(_ghost_orientation_root):
 		_ghost_orientation_root.queue_free()
+
+	if _ghost_footprint != null and is_instance_valid(_ghost_footprint):
+		_ghost_footprint.queue_free()
+		_ghost_footprint = null
 
 	_ghost_orientation_root = Node3D.new()
 	_ghost_orientation_root.name = "GhostOrientation"
@@ -290,8 +330,12 @@ func _rebuild_ghost(item) -> void:
 	_ghost_visual = visual_scene.instantiate()
 	_ghost_orientation_root.add_child(_ghost_visual)
 	_disable_embedded_nodes(_ghost_visual)
-	_apply_ghost_material(_ghost_visual)
 	_align_visual_to_plane(_ghost_visual)
+
+	_ghost_footprint = MeshInstance3D.new()
+	_ghost_footprint.name = "GhostFootprint"
+	_ghost_footprint.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	_ghost_host.add_child(_ghost_footprint)
 
 
 func _apply_storage_rotation(root: Node3D, item, rotated: bool) -> void:
@@ -381,14 +425,53 @@ func _disable_embedded_nodes(node: Node) -> void:
 		_disable_embedded_nodes(child)
 
 
-func _apply_ghost_material(node: Node) -> void:
+func _apply_ghost_material(node: Node, material: Material) -> void:
 	if node is MeshInstance3D:
 		var mesh_instance: MeshInstance3D = node as MeshInstance3D
-		mesh_instance.material_override = _ghost_material
+		mesh_instance.material_override = material
 		mesh_instance.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		mesh_instance.transparency = 0.0
 
 	for child: Node in node.get_children():
-		_apply_ghost_material(child)
+		_apply_ghost_material(child, material)
+
+
+func _make_ghost_material(color: Color) -> StandardMaterial3D:
+	var material: StandardMaterial3D = StandardMaterial3D.new()
+	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	material.albedo_color = color
+	material.cull_mode = BaseMaterial3D.CULL_DISABLED
+	material.no_depth_test = true
+	material.render_priority = 120
+	return material
+
+
+func _update_ghost_footprint(
+	footprint: Vector2i,
+	source_material: StandardMaterial3D
+) -> void:
+	if _ghost_footprint == null or _current_surface == null:
+		return
+
+	var cell_size: float = float(_current_surface.get_cell_size_m())
+	var pad_mesh: BoxMesh = BoxMesh.new()
+	pad_mesh.size = Vector3(
+		float(footprint.x) * cell_size * 0.94,
+		0.008,
+		float(footprint.y) * cell_size * 0.94
+	)
+
+	var pad_material: StandardMaterial3D = source_material.duplicate() as StandardMaterial3D
+	var pad_color: Color = pad_material.albedo_color
+	pad_color.a = GHOST_PAD_ALPHA
+	pad_material.albedo_color = pad_color
+	pad_material.no_depth_test = false
+	pad_material.render_priority = 110
+	pad_mesh.material = pad_material
+
+	_ghost_footprint.mesh = pad_mesh
+	_ghost_footprint.position = Vector3(0.0, 0.004, 0.0)
 
 
 func _selected_footprint(item) -> Vector2i:

@@ -12,8 +12,8 @@ class_name StorageSurface
 ##   storage_footprint.y = depth cells
 ##   storage_footprint.z = reserved for future vertical stacking/clearance
 ##
-## Step 4 validates occupancy/reservation/release only. Step 5 will connect
-## these surfaces to carried items and placement ghosts.
+## Storage is scale-isolated from the visible furniture. A shelf may be
+## visually stretched/squashed without stretching stored item models.
 
 signal occupancy_changed
 
@@ -47,10 +47,45 @@ func configure(
 	requested_cell_size_m: float = 0.10
 ) -> void:
 	surface_id = new_surface_id
-	cell_size_m = maxf(requested_cell_size_m, MIN_CELL_SIZE_M)
 
-	var column_count: int = maxi(1, int(floor(requested_width_m / cell_size_m)))
-	var row_count: int = maxi(1, int(floor(requested_depth_m / cell_size_m)))
+	# The prototype manager positions this surface as a normal child of the
+	# shelf first. Capture that already-correct world transform while the
+	# shelf's scale still participates.
+	var captured_global: Transform3D = global_transform
+
+	var parent_scale: Vector3 = Vector3.ONE
+	var parent_node: Node = get_parent()
+	if parent_node is Node3D:
+		parent_scale = (parent_node as Node3D).global_transform.basis.get_scale()
+
+	var scale_x: float = maxf(absf(parent_scale.x), 0.0001)
+	var scale_y: float = maxf(absf(parent_scale.y), 0.0001)
+	var scale_z: float = maxf(absf(parent_scale.z), 0.0001)
+	var horizontal_scale: float = (scale_x + scale_z) * 0.5
+
+	# storage_prototype_manager.gd supplies local dimensions and currently
+	# compensates its requested cell size for the shelf's horizontal scale.
+	# Convert those values into actual world metres once.
+	var world_width_m: float = requested_width_m * scale_x
+	var world_depth_m: float = requested_depth_m * scale_z
+	var world_cell_size_m: float = requested_cell_size_m * horizontal_scale
+
+	# Crucial Step 5.4 change:
+	# remain logically parented to the shelf, but stop inheriting the shelf's
+	# transform. The surface keeps the captured world position + rotation and
+	# has unit scale. Children (ghosts, stored items, labels later) therefore
+	# cannot be squashed by a visually non-uniformly scaled shelf.
+	set_as_top_level(true)
+	global_transform = Transform3D(
+		captured_global.basis.orthonormalized(),
+		captured_global.origin
+	)
+	scale = Vector3.ONE
+
+	cell_size_m = maxf(world_cell_size_m, MIN_CELL_SIZE_M)
+
+	var column_count: int = maxi(1, int(floor(world_width_m / cell_size_m)))
+	var row_count: int = maxi(1, int(floor(world_depth_m / cell_size_m)))
 	grid_size = Vector2i(column_count, row_count)
 	usable_size_m = Vector2(
 		float(grid_size.x) * cell_size_m,
