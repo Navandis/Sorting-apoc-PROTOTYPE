@@ -16,6 +16,7 @@ class_name StorageSurface
 ## visually stretched/squashed without stretching stored item models.
 
 signal occupancy_changed
+signal zones_changed
 
 # Godot layer 9 / bit 8. Kept separate from:
 # - player/environment collision
@@ -32,6 +33,7 @@ var grid_size: Vector2i = Vector2i.ONE
 var usable_size_m: Vector2 = Vector2(0.10, 0.10)
 
 var _cells: Array[String] = []
+var _zone_cells: Array[String] = []
 var _reservations: Dictionary = {}
 
 var _interaction_area: Area3D = null
@@ -97,6 +99,11 @@ func configure(
 	for cell_index: int in range(_cells.size()):
 		_cells[cell_index] = ""
 
+	_zone_cells.clear()
+	_zone_cells.resize(grid_size.x * grid_size.y)
+	for zone_cell_index: int in range(_zone_cells.size()):
+		_zone_cells[zone_cell_index] = ""
+
 	_reservations.clear()
 	_rebuild_interaction_area()
 	_rebuild_debug_grid()
@@ -129,6 +136,93 @@ func get_occupancy_ratio() -> float:
 			occupied_count += 1
 
 	return float(occupied_count) / float(_cells.size())
+
+
+func get_zone_category(cell: Vector2i) -> String:
+	if not _is_cell_valid(cell):
+		return ""
+	if _zone_cells.is_empty():
+		return ""
+	return _zone_cells[_cell_index(cell)]
+
+
+func get_zone_cells_copy() -> Array[String]:
+	return _zone_cells.duplicate()
+
+
+func set_zone_rect(
+	category: String,
+	first_cell: Vector2i,
+	second_cell: Vector2i
+) -> void:
+	if _zone_cells.is_empty():
+		return
+
+	var min_x: int = clampi(mini(first_cell.x, second_cell.x), 0, grid_size.x - 1)
+	var max_x: int = clampi(maxi(first_cell.x, second_cell.x), 0, grid_size.x - 1)
+	var min_y: int = clampi(mini(first_cell.y, second_cell.y), 0, grid_size.y - 1)
+	var max_y: int = clampi(maxi(first_cell.y, second_cell.y), 0, grid_size.y - 1)
+
+	for row: int in range(min_y, max_y + 1):
+		for column: int in range(min_x, max_x + 1):
+			_zone_cells[_cell_index(Vector2i(column, row))] = category
+
+	zones_changed.emit()
+
+
+func clear_zone_rect(first_cell: Vector2i, second_cell: Vector2i) -> void:
+	set_zone_rect("", first_cell, second_cell)
+
+
+func clear_all_zones() -> void:
+	if _zone_cells.is_empty():
+		return
+	for zone_cell_index: int in range(_zone_cells.size()):
+		_zone_cells[zone_cell_index] = ""
+	zones_changed.emit()
+
+
+func get_zone_coverage_ratio(category: String = "") -> float:
+	if _zone_cells.is_empty():
+		return 0.0
+
+	var matching_count: int = 0
+	for stored_category: String in _zone_cells:
+		if category.is_empty():
+			if not stored_category.is_empty():
+				matching_count += 1
+		elif stored_category == category:
+			matching_count += 1
+
+	return float(matching_count) / float(_zone_cells.size())
+
+
+func get_zone_rect_percentage(
+	first_cell: Vector2i,
+	second_cell: Vector2i
+) -> float:
+	if grid_size.x <= 0 or grid_size.y <= 0:
+		return 0.0
+
+	var min_x: int = clampi(mini(first_cell.x, second_cell.x), 0, grid_size.x - 1)
+	var max_x: int = clampi(maxi(first_cell.x, second_cell.x), 0, grid_size.x - 1)
+	var min_y: int = clampi(mini(first_cell.y, second_cell.y), 0, grid_size.y - 1)
+	var max_y: int = clampi(maxi(first_cell.y, second_cell.y), 0, grid_size.y - 1)
+
+	var selected_width: int = max_x - min_x + 1
+	var selected_height: int = max_y - min_y + 1
+	var selected_cells: int = selected_width * selected_height
+	var total_cells: int = grid_size.x * grid_size.y
+	return float(selected_cells) / float(total_cells)
+
+
+func _is_cell_valid(cell: Vector2i) -> bool:
+	return (
+		cell.x >= 0
+		and cell.y >= 0
+		and cell.x < grid_size.x
+		and cell.y < grid_size.y
+	)
 
 
 func can_place_at(origin: Vector2i, footprint: Vector2i) -> bool:

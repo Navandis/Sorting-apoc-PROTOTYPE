@@ -22,12 +22,16 @@ const PrototypeItemCatalogScript = preload("res://prototype_item_catalog.gd")
 const WorldItemScript = preload("res://world_item.gd")
 const HeldItemViewScript = preload("res://held_item_view.gd")
 const StoragePlacementControllerScript = preload("res://storage_placement_controller.gd")
+const StorageSurfaceScript = preload("res://storage_surface.gd")
+const StorageZoneEditorScript = preload("res://storage_zone_editor.gd")
 
 var _pitch: float = 0.0
 var _gravity: float = 9.8
 var _current_world_item: WorldItem = null
 var _held_item_view: Node3D
 var _storage_placement: Node = null
+var _zone_editor: CanvasLayer = null
+var _zone_editor_open: bool = false
 
 var _interaction_hud: CanvasLayer
 var _aim_dot: Panel
@@ -49,6 +53,7 @@ func _ready() -> void:
 	if enable_held_item_view:
 		_build_held_item_view()
 	_build_storage_placement_controller()
+	_build_storage_zone_editor()
 
 	if carried_items != null:
 		carried_items.contents_changed.connect(_refresh_held_item)
@@ -60,6 +65,8 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
+	if _zone_editor_open:
+		return
 	_update_interaction_target()
 
 
@@ -75,6 +82,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif event is InputEventKey and event.pressed and not event.echo:
 		if event.keycode == KEY_ESCAPE:
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		elif event.keycode == KEY_O and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+			_try_open_zone_editor()
+			get_viewport().set_input_as_handled()
 		elif event.keycode == KEY_E and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 			_attempt_store()
 			get_viewport().set_input_as_handled()
@@ -301,6 +311,87 @@ func _get_looked_at_world_item() -> WorldItem:
 		return null
 
 	return world_item
+
+
+func _try_open_zone_editor() -> void:
+	if _zone_editor == null or _zone_editor_open:
+		return
+
+	var surface: Node = _get_looked_at_storage_surface()
+	if surface == null:
+		return
+
+	_zone_editor_open = true
+
+	if _interaction_hud != null:
+		_interaction_hud.visible = false
+
+	if _held_item_view != null:
+		_held_item_view.visible = false
+
+	if _storage_placement != null:
+		_storage_placement.call("set_suppressed", true)
+
+	_zone_editor.call("open_for_surface", surface)
+
+
+func _get_looked_at_storage_surface() -> Node:
+	if camera == null or get_world_3d() == null:
+		return null
+
+	var ray_from: Vector3 = camera.global_position
+	var forward: Vector3 = -camera.global_transform.basis.z.normalized()
+	var ray_to: Vector3 = ray_from + forward * storage_interaction_distance
+
+	var query: PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.new()
+	query.from = ray_from
+	query.to = ray_to
+	query.collide_with_areas = true
+	query.collide_with_bodies = false
+	query.collision_mask = StorageSurfaceScript.STORAGE_INTERACTION_LAYER
+
+	var result: Dictionary = get_world_3d().direct_space_state.intersect_ray(query)
+	if result.is_empty():
+		return null
+
+	var collider_value: Variant = result.get("collider")
+	if not (collider_value is Node):
+		return null
+
+	var current: Node = collider_value as Node
+	while current != null:
+		if current is StorageSurface:
+			return current
+		if current == get_tree().current_scene:
+			break
+		current = current.get_parent()
+
+	return null
+
+
+func _build_storage_zone_editor() -> void:
+	_zone_editor = StorageZoneEditorScript.new()
+	_zone_editor.name = "StorageZoneEditor"
+	add_child(_zone_editor)
+	_zone_editor.editor_closed.connect(_on_zone_editor_closed)
+
+
+func _on_zone_editor_closed() -> void:
+	_zone_editor_open = false
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
+	if _interaction_hud != null:
+		_interaction_hud.visible = true
+
+	if _held_item_view != null:
+		_held_item_view.visible = true
+		_refresh_held_item()
+
+	if _storage_placement != null:
+		_storage_placement.call("set_suppressed", false)
+		_storage_placement.call("update_target")
+
+	_update_interaction_target()
 
 
 func _build_storage_placement_controller() -> void:
