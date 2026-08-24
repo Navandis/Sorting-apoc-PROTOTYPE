@@ -199,16 +199,27 @@ func _nearest_occupied_slot(preferred_index: int) -> int:
 	if _slots.is_empty():
 		return -1
 
-	if preferred_index < _slots.size() and preferred_index >= 0 and _slots[preferred_index] != null:
-		return preferred_index
+	# remove_at() trims empty slots from the right before asking for the next
+	# selection. The removed slot's old index can therefore now be beyond the
+	# end of the shortened array. Clamp it back into the surviving strip first.
+	var search_index: int = clampi(preferred_index, 0, _slots.size() - 1)
 
-	for distance in range(1, _slots.size() + 1):
-		var right: int = preferred_index + distance
-		if right >= 0 and right < _slots.size() and _slots[right] != null:
-			return right
-		var left: int = preferred_index - distance
-		if left >= 0 and left < _slots.size() and _slots[left] != null:
-			return left
+	# Prefer the same surviving slot/index if it is occupied.
+	if _slots[search_index] != null:
+		return search_index
+
+	# Then prefer occupied slots to the right, which preserves the normal
+	# "continue forward through the strip" behaviour after placing an item.
+	for right_index: int in range(search_index + 1, _slots.size()):
+		if _slots[right_index] != null:
+			return right_index
+
+	# If there is nothing to the right, walk back to the nearest surviving item.
+	# This is the case that previously left the selector at -1 after the player
+	# placed all items to the right of the remaining leftmost item.
+	for left_index: int in range(search_index - 1, -1, -1):
+		if _slots[left_index] != null:
+			return left_index
 
 	return -1
 
