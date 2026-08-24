@@ -15,6 +15,11 @@ extends CharacterBody3D
 @export var enable_held_item_view: bool = true
 @export_range(0.5, 4.0, 0.1) var storage_interaction_distance: float = 1.8
 
+# Zone-auto throughput tuning. The first E press acts immediately; if the key
+# remains held, repeated storage begins after this delay.
+@export_range(0.05, 1.0, 0.05) var auto_store_hold_delay: float = 0.25
+@export_range(0.05, 0.50, 0.01) var auto_store_repeat_interval: float = 0.12
+
 @onready var camera: Camera3D = $Camera3D
 @onready var carried_items: Node = $CarriedItems
 
@@ -32,6 +37,10 @@ var _held_item_view: Node3D
 var _storage_placement: Node = null
 var _zone_editor: CanvasLayer = null
 var _zone_editor_open: bool = false
+
+var _store_hold_elapsed: float = 0.0
+var _store_repeat_elapsed: float = 0.0
+var _store_was_held: bool = false
 
 var _interaction_hud: CanvasLayer
 var _aim_dot: Panel
@@ -64,10 +73,13 @@ func _ready() -> void:
 		call_deferred("_register_prototype_world_items")
 
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	if _zone_editor_open:
+		_reset_store_hold_state()
 		return
+
 	_update_interaction_target()
+	_update_store_hold(delta)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -176,16 +188,24 @@ func _register_prototype_world_items() -> void:
 func _attempt_store() -> void:
 	## E is the left-hand logistics action: place/store/submit.
 	##
-	## A shelf surface must be introduced to the player's zoning workflow once.
-	## The very first E interaction with an uninitialized surface therefore
-	## opens the zoning editor and initializes it to General. Clearing every
-	## zone later does not reset that initialization state.
-	var surface: Node = _get_looked_at_storage_surface()
-	if surface != null and surface.has_method("are_zones_initialized"):
-		var initialized: bool = bool(surface.call("are_zones_initialized"))
-		if not initialized:
-			_open_zone_editor_for_surface(surface)
-			return
+	## AUTO MODE:
+	## The first E interaction with an uninitialized shelf introduces zoning.
+	##
+	## MANUAL MODE:
+	## The player explicitly opted out of zoning/automatic policy for this
+	## placement action, so E is allowed to place directly even if the shelf
+	## has never been initialized in the zoning editor.
+	var manual_mode: bool = false
+	if _storage_placement != null:
+		manual_mode = bool(_storage_placement.call("is_manual_mode"))
+
+	if not manual_mode:
+		var surface: Node = _get_looked_at_storage_surface()
+		if surface != null and surface.has_method("are_zones_initialized"):
+			var initialized: bool = bool(surface.call("are_zones_initialized"))
+			if not initialized:
+				_open_zone_editor_for_surface(surface)
+				return
 
 	if _storage_placement == null:
 		return
@@ -193,6 +213,58 @@ func _attempt_store() -> void:
 	var placed: bool = bool(_storage_placement.call("place_selected"))
 	if placed:
 		_update_interaction_target()
+
+
+func _update_store_hold(delta: float) -> void:
+	# Initial key-down is handled immediately by _unhandled_input().
+	# This method only generates subsequent auto-store repeats.
+	if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
+		_reset_store_hold_state()
+		return
+
+	var e_held: bool = Input.is_key_pressed(KEY_E)
+	if not e_held:
+		_reset_store_hold_state()
+		return
+
+	# Manual placement remains one-confirmation-per-press. Continuous placement
+	# is specifically a throughput feature of zone-auto mode.
+	if _storage_placement == null:
+		_reset_store_hold_state()
+		return
+
+	var manual_mode: bool = bool(_storage_placement.call("is_manual_mode"))
+	if manual_mode:
+		_reset_store_hold_state()
+		return
+
+	if not _store_was_held:
+		_store_was_held = true
+		_store_hold_elapsed = 0.0
+		_store_repeat_elapsed = 0.0
+		return
+
+	_store_hold_elapsed += delta
+	if _store_hold_elapsed < auto_store_hold_delay:
+		return
+
+	_store_repeat_elapsed += delta
+	if _store_repeat_elapsed < auto_store_repeat_interval:
+		return
+
+	# Preserve any fractional overflow instead of accumulating timing drift.
+	_store_repeat_elapsed = fmod(
+		_store_repeat_elapsed,
+		auto_store_repeat_interval
+	)
+
+	_attempt_store()
+
+
+func _reset_store_hold_state() -> void:
+	_store_was_held = false
+	_store_hold_elapsed = 0.0
+	_store_repeat_elapsed = 0.0
 
 
 func _attempt_pickup_click() -> void:
