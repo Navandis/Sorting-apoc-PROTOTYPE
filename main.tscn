@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://p5umbk5l64xn" path="res://assets/lights/SM_Sewer_Light_Wall_Fixture_On.glb" id="8_ycdy4"]
 [ext_resource type="PackedScene" uid="uid://byj7g5ysxxttr" path="res://assets/furniture/SM_Barrel_01.glb" id="9_w48qg"]
 [ext_resource type="Script" uid="uid://cgyx12l50wvxd" path="res://player_controller.gd" id="10_2cqfq"]
+[ext_resource type="PackedScene" uid="uid://bp3cjq3eibwvr" path="res://assets/props/Food/SM_Dry_Goods_01g.glb" id="10_blkrb"]
 [ext_resource type="PackedScene" uid="uid://b1wqlnmlknpfg" path="res://assets/lights/SM_Lamp_long.glb" id="10_vivmo"]
 [ext_resource type="PackedScene" uid="uid://drng5nc7f5et3" path="res://assets/floors/SM_Hangar_floor_8x8.glb" id="11_2cqfq"]
 [ext_resource type="PackedScene" uid="uid://du8u7t2t3vmvx" path="res://assets/building_blocks/SM_Hallway_Door_02b.glb" id="12_yaehf"]
@@ -41,11 +42,40 @@
 [ext_resource type="PackedScene" uid="uid://cbejw8pvg5t0r" path="res://assets/props/SM_Pill_Bottle_01a.glb" id="39_0cbny"]
 [ext_resource type="PackedScene" uid="uid://nq1svaxhq268" path="res://assets/props/SM_Pill_Bottle_01b.glb" id="40_hrvbo"]
 [ext_resource type="PackedScene" uid="uid://b33b71nvg0r57" path="res://assets/props/SM_Gun_Shotgun.glb" id="41_uypp3"]
-[ext_resource type="PackedScene" uid="uid://bvfspnhbpvmxp" path="res://assets/from_kitbash/SM_KB3D_MTM_PropChair_A.glb" id="42_gngh3"]
-[ext_resource type="PackedScene" uid="uid://dccward7n5t64" path="res://assets/from_kitbash/SM_KB3D_MTM_PropCropTomatoes_A.glb" id="43_0n3wm"]
 [ext_resource type="PackedScene" uid="uid://col1kirfqto7j" path="res://assets/from_kitbash/SM_KB3D_MTM_PropKiosk_A.glb" id="44_qnost"]
 [ext_resource type="Script" uid="uid://d3rntjdid6git" path="res://carried_items.gd" id="45_carried"]
+[ext_resource type="PackedScene" uid="uid://j66y4huec60n" path="res://assets/props/Food/SM_Dry_Goods_01a.glb" id="46_abqjc"]
 [ext_resource type="Script" uid="uid://bpxym2ey3s4mh" path="res://carried_items_hud.gd" id="46_carried_hud"]
+[ext_resource type="PackedScene" uid="uid://uge4qvuuyt8f" path="res://assets/props/Food/SM_Dry_Goods_01c.glb" id="47_6iyjs"]
+[ext_resource type="PackedScene" uid="uid://o46hr8fxwj3w" path="res://assets/props/Hydration/SM_SodaCan.glb" id="48_4w656"]
+[ext_resource type="PackedScene" uid="uid://miynjafqjixw" path="res://assets/props/Food/SM_CerealBox_2.glb" id="49_e71vb"]
+[ext_resource type="PackedScene" uid="uid://dh5ddv7dw4lut" path="res://assets/props/Hydration/SM_MilkCarton_1.glb" id="50_rnkwl"]
+[ext_resource type="PackedScene" uid="uid://dgwvxg2mlvnbj" path="res://assets/props/tools/SM_Hammer_3.glb" id="52_abqjc"]
+[ext_resource type="PackedScene" uid="uid://doyaywovvlj7e" path="res://assets/props/Hydration/SM_OrangeJuice_1.glb" id="52_uit24"]
+[ext_resource type="PackedScene" uid="uid://qwn1qp0or7hs" path="res://assets/props/Food/SM_PigCarcass_1.glb" id="53_6iyjs"]
+[ext_resource type="PackedScene" uid="uid://b14f7xk05u40g" path="res://assets/props/Food/SM_Bread_1.glb" id="54_e71vb"]
+[ext_resource type="PackedScene" uid="uid://dhb54nxp7thnb" path="res://assets/props/Food/SM_Watermelon_1.glb" id="55_rnkwl"]
+[ext_resource type="PackedScene" uid="uid://cc7btwnebcfs5" path="res://assets/props/medical/SM_MedKit_4.glb" id="56_ruth0"]
+[ext_resource type="PackedScene" uid="uid://d30pld4bfmigb" path="res://assets/props/medical/SM_Bandages_1.glb" id="57_rm4vd"]
+[ext_resource type="PackedScene" uid="uid://dmlbrfo74cr2t" path="res://assets/props/medical/SM_Syringe_1.glb" id="58_pjyto"]
+[ext_resource type="PackedScene" uid="uid://1t5y4mjf53cm" path="res://assets/props/protection/SM_Gloves_02glb.glb" id="61_pjyto"]
+[ext_resource type="PackedScene" uid="uid://biswlt5augumx" path="res://assets/props/protection/SM_Boots_01.glb" id="61_sm6fg"]
+[ext_resource type="PackedScene" uid="uid://bw673hmx2ws5g" path="res://assets/props/protection/SM_Pants_02.glb" id="62_kkkcx"]
+[ext_resource type="PackedScene" uid="uid://cyag5i6w8fjq4" path="res://assets/props/protection/SM_Armor_02.glb" id="62_sm6fg"]
+[ext_resource type="PackedScene" uid="uid://0b64gwulqcyi" path="res://assets/props/Fuel/SM_FuelCanister.glb" id="63_34ol3"]
+[ext_resource type="PackedScene" uid="uid://1pwvsst3kpkv" path="res://assets/props/Fuel/SM_GasCanister_01.glb" id="64_c2n8d"]
+[ext_resource type="PackedScene" uid="uid://b8kwe7ttomifv" path="res://assets/props/Fuel/SM_GasCylinder_01.glb" id="65_wy5fy"]
+[ext_resource type="PackedScene" uid="uid://5tmqsrcxc405" path="res://assets/props/Fuel/SM_PropaneTank_02.glb" id="66_gx4rg"]
+[ext_resource type="PackedScene" uid="uid://g7gfxcmhy3no" path="res://assets/props/protection/SM_HardHat_01.glb" id="67_5dllo"]
+[ext_resource type="PackedScene" uid="uid://cdtpk0sa4cpcp" path="res://assets/props/electronics/SM_ComputerMouse_01.glb" id="68_phcyf"]
+[ext_resource type="PackedScene" uid="uid://bnkwk3smcnutr" path="res://assets/props/electronics/SM_ComputerTower_01.glb" id="69_birbe"]
+[ext_resource type="PackedScene" uid="uid://bccl7gu0qfqi3" path="res://assets/props/electronics/SM_ElectronicDevice_01.glb" id="70_f1p13"]
+[ext_resource type="PackedScene" uid="uid://bxjf574hsfsrk" path="res://assets/props/electronics/SM_Phone_01.glb" id="71_4obbf"]
+[ext_resource type="PackedScene" uid="uid://dmkwp66fg38ct" path="res://assets/props/morale/SM_Ball_01.glb" id="72_ovcoh"]
+[ext_resource type="PackedScene" uid="uid://dqahwgcsham5a" path="res://assets/props/morale/SM_Book_01.glb" id="73_ppx11"]
+[ext_resource type="PackedScene" uid="uid://xt5xd2i71gmi" path="res://assets/props/morale/SM_CDStack_01.glb" id="74_34ol3"]
+[ext_resource type="PackedScene" uid="uid://bx0jdgvfenyoy" path="res://assets/props/Fuel/SM_FirewoodPile_01.glb" id="75_wy5fy"]
+[ext_resource type="PackedScene" uid="uid://v6yqq0xw4o56" path="res://assets/props/Fuel/SM_Firewood_01.glb" id="76_gx4rg"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_player"]
 radius = 0.34
@@ -66,7 +96,10 @@ light_size = 0.109
 spot_range = 43.7
 
 [node name="SM_Lamp_long" parent="." unique_id=539307325 instance=ExtResource("10_vivmo")]
-transform = Transform3D(0.9999619, -0.008726535, 0, 0.008726535, 0.9999619, 0, 0, 0, 1, 3.667197, 4.920672, 3.4278696)
+transform = Transform3D(0.9999619, -0.008726535, 0, 0.008726535, 0.9999619, 0, 0, 0, 1, 3.6672416, 4.923383, 3.4272304)
+
+[node name="SM_Lamp_long2" parent="." unique_id=996775048 instance=ExtResource("10_vivmo")]
+transform = Transform3D(0.9999619, -0.008726535, 0, 0.008726535, 0.9999619, 0, 0, 0, 1, 3.6672416, 4.923383, -1.0294933)
 
 [node name="SM_AlarmLight" parent="." unique_id=1076681556 instance=ExtResource("18_cegan")]
 transform = Transform3D(-0.94479376, -0.32377926, 0.05031601, -0.3233211, 0.94613266, 0.017218815, -0.053180713, 0, -0.99858487, 8.271737, 1.8240396, 4.8790774)
@@ -84,6 +117,20 @@ omni_attenuation = 1.519
 transform = Transform3D(-3.491541e-08, 0.60163456, 0.79877144, 2.6298283e-08, 0.79877144, -0.60163456, -1, 0, -4.371139e-08, -0.12520742, 2.7406383, 3.9494853)
 
 [node name="OmniLight3D" type="OmniLight3D" parent="SM_Sewer_Light_Wall_Fixture_On2" unique_id=1327170441]
+transform = Transform3D(-2.442336e-08, -3.6251684e-08, -1, -0.8293419, 0.5587414, -1.3358971e-16, 0.5587414, 0.8293419, -4.371139e-08, 0, 0.07227898, -0.0544405)
+light_color = Color(1, 1, 0.92156863, 1)
+
+[node name="SM_Sewer_Light_Wall_Fixture_On3" parent="." unique_id=1637342835 instance=ExtResource("8_ycdy4")]
+transform = Transform3D(-3.491541e-08, 0.60163456, 0.79877144, 2.6298283e-08, 0.79877144, -0.60163456, -1, 0, -4.371139e-08, -0.12520742, 2.7406383, -0.8609147)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="SM_Sewer_Light_Wall_Fixture_On3" unique_id=1022390644]
+transform = Transform3D(-2.442336e-08, -3.6251684e-08, -1, -0.8293419, 0.5587414, -1.3358971e-16, 0.5587414, 0.8293419, -4.371139e-08, 0, 0.07227898, -0.0544405)
+light_color = Color(1, 1, 0.92156863, 1)
+
+[node name="SM_Sewer_Light_Wall_Fixture_On4" parent="." unique_id=167378575 instance=ExtResource("8_ycdy4")]
+transform = Transform3D(0.10973431, -0.5743679, -0.81120896, 0, 0.81613755, -0.5778576, 0.993961, 0.0634108, 0.089558296, 7.5921774, 2.7406383, -0.8609147)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="SM_Sewer_Light_Wall_Fixture_On4" unique_id=536584146]
 transform = Transform3D(-2.442336e-08, -3.6251684e-08, -1, -0.8293419, 0.5587414, -1.3358971e-16, 0.5587414, 0.8293419, -4.371139e-08, 0, 0.07227898, -0.0544405)
 light_color = Color(1, 1, 0.92156863, 1)
 
@@ -122,7 +169,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.572529, -0.047983885, -0.0
 visible = false
 
 [node name="SM_MilitaryCrate_02_base" parent="." unique_id=1294841721 instance=ExtResource("4_4c57u")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4964833, 0.058845818, 0.21325612)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4964833, 0.058845818, -2.5673797)
 
 [node name="SM_ventilated_locker2" parent="." unique_id=201750303 instance=ExtResource("1_h2yge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.80263567, 0.04006219, 2.0317678)
@@ -186,6 +233,15 @@ transform = Transform3D(2.465, 0, 0, 0, 2.465, 0, 0, 0, 2.465, -3.6650796, 0, 6)
 [node name="SM_Sewer_Wall_Arch_01a" parent="SM_Sewer_Wall_Arch_01a" unique_id=197288745 instance=ExtResource("3_lquwl")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 6, 0, -2)
 
+[node name="SM_Dry_Goods_01g" parent="SM_Sewer_Wall_Arch_01a" unique_id=1923626718 instance=ExtResource("10_blkrb")]
+transform = Transform3D(-0.09814275, 0, 0.3936291, 0, 0.40567952, 0, -0.3936291, 0, -0.09814275, 3.694265, 0.35150024, -1.4505534)
+
+[node name="SM_Sewer_Wall_Arch_01a3" parent="." unique_id=2030190907 instance=ExtResource("3_lquwl")]
+transform = Transform3D(2.465, 0, 0, 0, 2.465, 0, 0, 0, 2.465, -3.6650796, 0, 1.0194244)
+
+[node name="SM_Sewer_Wall_Arch_01a" parent="SM_Sewer_Wall_Arch_01a3" unique_id=1062875000 instance=ExtResource("3_lquwl")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 6, 0, -2)
+
 [node name="SM_Sewer_Wall_Arch_01a2" parent="." unique_id=478239918 instance=ExtResource("3_lquwl")]
 transform = Transform3D(2.465, 0, 0, 0, 2.465, 0, 0, 0, 2.465, -3.6650796, 0, 10.866843)
 
@@ -198,8 +254,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.721101, 0, 7.619556)
 [node name="SM_Hangar_floor_8x8" parent="." unique_id=1877846328 instance=ExtResource("11_2cqfq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.6686206, -1.1920929e-07, -0.4691441)
 
-[node name="SM_Hangar_floor_8x9" parent="." unique_id=1802382786 instance=ExtResource("11_2cqfq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.298214, 0, -0.46875906)
+[node name="SM_Hangar_floor_8x12" parent="." unique_id=1231309630 instance=ExtResource("11_2cqfq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.669, 0, -8.189)
+
+[node name="SM_Hangar_floor_8x13" parent="." unique_id=176498458 instance=ExtResource("11_2cqfq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.325898, 0, -8.185097)
+
+[node name="SM_Hangar_floor_8x9" parent="." unique_id=718240052 instance=ExtResource("11_2cqfq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.320993, 0.0010528564, -0.46375665)
 
 [node name="SM_Hangar_floor_8x10" parent="." unique_id=721588516 instance=ExtResource("11_2cqfq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.6632388, 0, 7.4031835)
@@ -221,7 +283,7 @@ visible = false
 transform = Transform3D(0.017015046, 0, -0.8347139, 0, 1, 0, 0.64977723, 0, 0.02185779, 7.447469, -2.3841858e-07, 4.5659056)
 
 [node name="SM_Table2" parent="." unique_id=1715963998 instance=ExtResource("17_074og")]
-transform = Transform3D(0.0278785, 0, -0.87969846, 0, 1, 0, 1.0646352, 0, 0.023035755, 6.8850207, -2.3841858e-07, 1.7413585)
+transform = Transform3D(0.050914258, 0, -0.87969846, 0, 1, 0, 1.9443336, 0, 0.023035755, 5.958433, -3.5762787e-07, 0.9794204)
 
 [node name="SM_Sewer_Wall_Brick_01a" parent="." unique_id=1252563150 instance=ExtResource("19_qsp4k")]
 transform = Transform3D(-0.0029870386, -0.14259766, -0.9897762, 0.020728309, 0.9895592, -0.14262892, 0.9997806, -0.020942425, -4.326449e-08, 8.664918, 0, 1.0932792)
@@ -362,34 +424,34 @@ transform = Transform3D(-0.0365846, 0, -0.9993306, 0, 1, 0, 0.9993306, 0, -0.036
 transform = Transform3D(-0.8892565, 0, -0.4574088, 0, 1, 0, 0.4574088, 0, -0.8892565, 0.8889028, 1.7827967, 1.6671005)
 
 [node name="cereal_box" parent="." unique_id=1803137268 instance=ExtResource("31_4lmeg")]
-transform = Transform3D(-0.0365846, 0, -0.9993306, 0, 1, 0, 0.9993306, 0, -0.0365846, 6.362398, 0.8790555, 1.3804151)
+transform = Transform3D(-0.0365846, 0, -0.9993306, 0, 1, 0, 0.9993306, 0, -0.0365846, 7.17101, 0.8691014, 3.9676354)
 
 [node name="hammer" parent="." unique_id=768591276 instance=ExtResource("32_0cp0l")]
-transform = Transform3D(0.009869133, 0, -0.9999513, 0, 1, 0, 0.9999513, 0, 0.009869133, 6.4289904, 0.8790555, 0.9701826)
+transform = Transform3D(0.009869133, 0, -0.9999513, 0, 1, 0, 0.9999513, 0, 0.009869133, 7.234803, 0.8790555, 4.877292)
 
 [node name="pill_bottle" parent="." unique_id=981129278 instance=ExtResource("33_d2t1y")]
-transform = Transform3D(0.34271312, 0, -0.93944013, 0, 1, 0, 0.93944013, 0, 0.34271312, 6.3135533, 0.8790555, 0.7835046)
+transform = Transform3D(0.34271312, 0, -0.93944013, 0, 1, 0, 0.93944013, 0, 0.34271312, 7.119366, 0.8790555, 4.690614)
 
 [node name="soda_can" parent="." unique_id=111884405 instance=ExtResource("34_gngh3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.3009324, 0.8790555, 0.5937881)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.1067452, 0.8790555, 4.5008974)
 
 [node name="tennis_racket" parent="." unique_id=691865242 instance=ExtResource("35_0n3wm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5942717, 0.8790555, 0.7833548)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.4000845, 0.8790555, 4.6614923)
 
 [node name="SM_Gun_AssaultRifle" parent="." unique_id=181902982 instance=ExtResource("36_qnost")]
-transform = Transform3D(-4.0410622e-08, -0.9244873, 0.38121298, 0.99999994, -4.3711385e-08, 0, 1.6663348e-08, 0.38121295, 0.92448735, 6.957, 0.907, 2.204)
+transform = Transform3D(-4.0410622e-08, -0.9244873, 0.38121298, 0.99999994, -4.3711385e-08, 0, 1.6663348e-08, 0.38121295, 0.92448735, 5.6062098, 0.907, 1.5000076)
 
 [node name="SM_Gun_Pistol" parent="." unique_id=800169315 instance=ExtResource("37_wnkbs")]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 7.2921624, 0.907, 2.393)
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 5.8841343, 0.907, 1.2815175)
 
 [node name="SM_Metal_Can_01a" parent="." unique_id=91353500 instance=ExtResource("38_f6a44")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.358556, 0.8634159, 1.898995)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.404378, 0.8634159, 1.9641854)
 
 [node name="SM_Pill_Bottle_01a" parent="." unique_id=245310804 instance=ExtResource("39_0cbny")]
-transform = Transform3D(0.82790464, 0, 0.5608689, 0, 1, 0, -0.5608689, 0, 0.82790464, 6.405706, 0.8614127, 2.7089827)
+transform = Transform3D(0.82790464, 0, 0.5608689, 0, 1, 0, -0.5608689, 0, 0.82790464, 6.5006995, 0.8614127, 3.2022188)
 
 [node name="SM_Pill_Bottle_01b" parent="." unique_id=173001742 instance=ExtResource("40_hrvbo")]
-transform = Transform3D(-0.9582426, 0, 0.28595662, 0, 1, 0, -0.28595662, 0, -0.9582426, 6.387467, 0.88749546, 2.356752)
+transform = Transform3D(-0.9582426, 0, 0.28595662, 0, 1, 0, -0.28595662, 0, -0.9582426, 6.387467, 0.88749546, 2.9489253)
 
 [node name="SM_Gun_Pistol2" parent="." unique_id=1862747659 instance=ExtResource("37_wnkbs")]
 transform = Transform3D(-4.371139e-08, 1, -4.371139e-08, 0, -4.371139e-08, -1, -1, -4.371139e-08, 1.9106855e-15, 0.65045, 1.192, 2.011)
@@ -402,12 +464,6 @@ transform = Transform3D(-0.98728395, 0, 0.15896654, 0, 1, 0, -0.15896654, 0, -0.
 
 [node name="SM_Pill_Bottle_01a2" parent="." unique_id=1942616594 instance=ExtResource("39_0cbny")]
 transform = Transform3D(-0.3981415, 0, -0.917324, 0, 1, 0, 0.917324, 0, -0.3981415, 1.0153236, 1.7854469, 2.4068599)
-
-[node name="SM_KB3D_MTM_PropChair_A" parent="." unique_id=395138046 instance=ExtResource("42_gngh3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.247862, 1.1920929e-07, 4.538748)
-
-[node name="SM_KB3D_MTM_PropCropTomatoes_A" parent="." unique_id=947759903 instance=ExtResource("43_0n3wm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.232215, 0, 3.3360708)
 
 [node name="SM_KB3D_MTM_PropKiosk_A" parent="." unique_id=895499898 instance=ExtResource("44_qnost")]
 transform = Transform3D(0.0099256355, 0, 0.99995077, 0, 1, 0, -0.99995077, 0, 0.0099256355, 4.257489, 0, 4.6506963)
@@ -427,4 +483,97 @@ mouse_filter = 2
 script = ExtResource("46_carried_hud")
 
 [node name="SM_MetalShelves2" parent="." unique_id=289924625 instance=ExtResource("20_qnost")]
-transform = Transform3D(0.4, 0, 0, 0, 0.67, 0, 0, 0, 1, 3.6100612, 0, 2.9962718)
+transform = Transform3D(0.4, 0, 0, 0, 0.67, 0, 0, 0, 1, 3.6100612, 0, 4.604472)
+
+[node name="SM_Dry_Goods_01a" parent="." unique_id=2070038732 instance=ExtResource("46_abqjc")]
+transform = Transform3D(-0.9943379, 0, 0.106264174, 0, 1, 0, -0.106264174, 0, -0.9943379, 5.4487486, 0.8666032, 2.6381788)
+
+[node name="SM_Dry_Goods_01c" parent="." unique_id=306779136 instance=ExtResource("47_6iyjs")]
+transform = Transform3D(-0.9563047, 0, -0.29237178, 0, 1, 0, 0.29237178, 0, -0.9563047, 5.42175, 0.8699644, 2.5210476)
+
+[node name="SM_SodaCan" parent="." unique_id=1050444164 instance=ExtResource("48_4w656")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.391999, 0.9346968, 2.3287878)
+
+[node name="SM_CerealBox_2" parent="." unique_id=1015292279 instance=ExtResource("49_e71vb")]
+transform = Transform3D(-0.026176963, 0, -0.99965733, 0, 1, 0, 0.99965733, 0, -0.026176963, 5.472885, 0.8661421, 3.2512991)
+
+[node name="SM_MilkCarton_1" parent="." unique_id=1725149848 instance=ExtResource("50_rnkwl")]
+transform = Transform3D(0.13052624, 0, -0.9914448, 0, 1, 0, 0.9914448, 0, 0.13052624, 5.4203176, 0.8649167, 2.1753902)
+
+[node name="SM_OrangeJuice_1" parent="." unique_id=2071706734 instance=ExtResource("52_uit24")]
+transform = Transform3D(0.17364821, 0, -0.98480767, 0, 1, 0, 0.98480767, 0, 0.17364821, 5.410203, 0.86547697, 2.084813)
+
+[node name="SM_Hammer_3" parent="." unique_id=1419343728 instance=ExtResource("52_abqjc")]
+transform = Transform3D(-0.9970019, -0.06989668, 0.03319139, -0.033862833, 0.008442952, -0.99939084, 0.069573864, -0.9975185, -0.010784538, 6.065, 0.901, 1.746)
+
+[node name="SM_PigCarcass_1" parent="." unique_id=878336799 instance=ExtResource("53_6iyjs")]
+transform = Transform3D(0.09584576, 0, -0.9953962, 0, 1, 0, 0.9953962, 0, 0.09584576, 5.8417907, 0.89801097, 2.7233331)
+
+[node name="SM_Bread_1" parent="." unique_id=1877354774 instance=ExtResource("54_e71vb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.492691, 0.8547741, 2.7803633)
+
+[node name="SM_Watermelon_1" parent="." unique_id=1691765747 instance=ExtResource("55_rnkwl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.468681, 0.9489855, 3.000917)
+
+[node name="SM_MedKit_4" parent="." unique_id=103911008 instance=ExtResource("56_ruth0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.357539, 0.9183743, 2.6443987)
+
+[node name="SM_Bandages_1" parent="." unique_id=1265717970 instance=ExtResource("57_rm4vd")]
+transform = Transform3D(-0.6703862, -0.7420123, 3.243439e-08, 0, -4.371139e-08, -1, 0.7420123, -0.6703862, 2.9303513e-08, 6.2333612, 0.930642, 3.0887876)
+
+[node name="SM_Syringe_1" parent="." unique_id=1297182415 instance=ExtResource("58_pjyto")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 6.2136936, 0.8645058, 2.9055214)
+
+[node name="SM_Boots_01" parent="." unique_id=771713134 instance=ExtResource("61_sm6fg")]
+transform = Transform3D(0.06174671, 0, -0.9980919, 0, 1, 0, 0.9980919, 0, 0.06174671, 6.3313847, 0.89772666, 1.3259745)
+
+[node name="SM_Gloves_02glb" parent="." unique_id=1426791045 instance=ExtResource("61_pjyto")]
+transform = Transform3D(-0.10742575, -0.0074684517, -0.99418503, 0.01131686, 0.9998977, -0.008734256, 0.99414873, -0.012189327, -0.10733022, 6.505295, 0.90406513, 2.117067)
+
+[node name="SM_Armor_02" parent="." unique_id=169366838 instance=ExtResource("62_sm6fg")]
+transform = Transform3D(-0.040163722, 0, -0.99919313, 0, 1, 0, 0.99919313, 0, -0.040163722, 6.4325128, 0.87884796, 1.7210119)
+
+[node name="SM_Pants_02" parent="." unique_id=1157430247 instance=ExtResource("62_kkkcx")]
+transform = Transform3D(0.08196157, 0, -0.9966355, 0, 1, 0, 0.9966355, 0, 0.08196157, 6.1470814, 0.8658608, 0.95979965)
+
+[node name="SM_FuelCanister" parent="." unique_id=613471909 instance=ExtResource("63_34ol3")]
+transform = Transform3D(-0.032303598, 0, 0.9994781, 0, 1, 0, -0.9994781, 0, -0.032303598, 5.541037, 0.960721, 0.57499206)
+
+[node name="SM_GasCanister_01" parent="." unique_id=1319332853 instance=ExtResource("64_c2n8d")]
+transform = Transform3D(-0.25661612, 0, 0.9665134, 0, 1, 0, -0.9665134, 0, -0.25661612, 5.6982374, 0.85454285, 0.18881789)
+
+[node name="SM_GasCylinder_01" parent="." unique_id=1612618237 instance=ExtResource("65_wy5fy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.3886895, 0.8790159, 0.49805415)
+
+[node name="SM_PropaneTank_02" parent="." unique_id=244356371 instance=ExtResource("66_gx4rg")]
+transform = Transform3D(-0.7132504, 0, 0.7009093, 0, 1, 0, -0.7009093, 0, -0.7132504, 6.1259103, 0.88868344, 0.08416575)
+
+[node name="SM_HardHat_01" parent="." unique_id=2005404052 instance=ExtResource("67_5dllo")]
+transform = Transform3D(1, 0, 0, 0, 0.96814764, 0.25038, 0, -0.25038, 0.96814764, 5.8460107, 0.97846586, 1.7603254)
+
+[node name="SM_ComputerMouse_01" parent="." unique_id=558632912 instance=ExtResource("68_phcyf")]
+transform = Transform3D(-0.83344924, 0, -0.55259603, 0, 1, 0, 0.55259603, 0, -0.83344924, 5.879416, 0.89514303, -0.829756)
+
+[node name="SM_ComputerTower_01" parent="." unique_id=1278709336 instance=ExtResource("69_birbe")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 6.2170234, 0.8737894, -0.7390583)
+
+[node name="SM_ElectronicDevice_01" parent="." unique_id=114944423 instance=ExtResource("70_f1p13")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.240243, 0.85737, -1.118708)
+
+[node name="SM_Phone_01" parent="." unique_id=551586048 instance=ExtResource("71_4obbf")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 6.35956, 0.8846562, -0.39222965)
+
+[node name="SM_Ball_01" parent="." unique_id=2047643781 instance=ExtResource("72_ovcoh")]
+transform = Transform3D(0.17364822, 0, -0.9848077, 0, 1, 0, 0.9848077, 0, 0.17364822, 5.363573, 0.96154356, -0.9855786)
+
+[node name="SM_Book_01" parent="." unique_id=798088132 instance=ExtResource("73_ppx11")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.402781, 0.9251878, -0.76585126)
+
+[node name="SM_CDStack_01" parent="." unique_id=254711058 instance=ExtResource("74_34ol3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.584892, 0.8762828, -0.93937045)
+
+[node name="SM_FirewoodPile_01" parent="." unique_id=211903271 instance=ExtResource("75_wy5fy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.7272477, 0.86324036, -0.2910853)
+
+[node name="SM_Firewood_01" parent="." unique_id=160822239 instance=ExtResource("76_gx4rg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.399109, 0.91281724, 0.3440461)
