@@ -6,6 +6,7 @@ class_name StoragePlacementController
 
 const StorageSurfaceScript = preload("res://storage_surface.gd")
 const WorldItemScript = preload("res://world_item.gd")
+const StorageVisualPoseScript = preload("res://storage_visual_pose.gd")
 
 const GHOST_VALID_COLOR := Color(0.20, 1.00, 0.48, 0.68)
 const GHOST_BLOCKED_COLOR := Color(1.00, 0.22, 0.18, 0.68)
@@ -23,7 +24,7 @@ var _manual_mode: bool = false
 var _manual_debug_surface: Node = null
 
 var _ghost_host: Node3D = null
-var _ghost_orientation_root: Node3D = null
+var _ghost_packing_root: Node3D = null
 var _ghost_visual: Node = null
 var _ghost_item: Variant = null
 var _ghost_material_valid: StandardMaterial3D = null
@@ -323,15 +324,13 @@ func _spawn_stored_world_item(
 	surface.add_child(host)
 	host.transform = surface.get_local_candidate_transform(origin, footprint)
 
-	var orientation_root: Node3D = Node3D.new()
-	orientation_root.name = "StoredOrientation"
-	host.add_child(orientation_root)
-	_apply_storage_rotation(orientation_root, item, rotated)
+	var packing_root: Node3D = Node3D.new()
+	packing_root.name = "StoredPackingYaw"
+	host.add_child(packing_root)
 
 	var visual: Node = visual_scene.instantiate()
-	orientation_root.add_child(visual)
 	_disable_embedded_nodes(visual)
-	_align_visual_to_plane(visual)
+	build_visual_pose_for_item(packing_root, visual, item, rotated)
 
 	var component: WorldItem = WorldItemScript.new()
 	component.name = "WorldItem"
@@ -378,7 +377,7 @@ func _update_ghost(item) -> void:
 
 	_ghost_host.transform = local_transform
 
-	_apply_storage_rotation(_ghost_orientation_root, item, _rotated)
+	StorageVisualPoseScript.apply_packing_yaw(_ghost_packing_root, _rotated)
 
 	var valid: bool = has_valid_placement()
 	var ghost_material: StandardMaterial3D = (
@@ -396,16 +395,16 @@ func _update_ghost(item) -> void:
 func _rebuild_ghost(item) -> void:
 	_ghost_item = item
 
-	if _ghost_orientation_root != null and is_instance_valid(_ghost_orientation_root):
-		_ghost_orientation_root.queue_free()
+	if _ghost_packing_root != null and is_instance_valid(_ghost_packing_root):
+		_ghost_packing_root.queue_free()
 
 	if _ghost_footprint != null and is_instance_valid(_ghost_footprint):
 		_ghost_footprint.queue_free()
 		_ghost_footprint = null
 
-	_ghost_orientation_root = Node3D.new()
-	_ghost_orientation_root.name = "GhostOrientation"
-	_ghost_host.add_child(_ghost_orientation_root)
+	_ghost_packing_root = Node3D.new()
+	_ghost_packing_root.name = "GhostPackingYaw"
+	_ghost_host.add_child(_ghost_packing_root)
 	_ghost_visual = null
 
 	if item == null:
@@ -416,9 +415,13 @@ func _rebuild_ghost(item) -> void:
 		return
 
 	_ghost_visual = visual_scene.instantiate()
-	_ghost_orientation_root.add_child(_ghost_visual)
 	_disable_embedded_nodes(_ghost_visual)
-	_align_visual_to_plane(_ghost_visual)
+	build_visual_pose_for_item(
+		_ghost_packing_root,
+		_ghost_visual,
+		item,
+		_rotated
+	)
 
 	_ghost_footprint = MeshInstance3D.new()
 	_ghost_footprint.name = "GhostFootprint"
@@ -426,65 +429,21 @@ func _rebuild_ghost(item) -> void:
 	_ghost_host.add_child(_ghost_footprint)
 
 
-func _apply_storage_rotation(root: Node3D, item, rotated: bool) -> void:
+func build_visual_pose_for_item(
+	packing_root: Node3D,
+	visual: Node,
+	item,
+	packing_rotated: bool
+) -> Dictionary:
 	var correction_degrees: Vector3 = Vector3.ZERO
 	if item.has_method("get_storage_rotation_degrees"):
 		correction_degrees = item.get_storage_rotation_degrees()
-
-	root.rotation = Vector3(
-		deg_to_rad(correction_degrees.x),
-		deg_to_rad(correction_degrees.y),
-		deg_to_rad(correction_degrees.z)
+	return StorageVisualPoseScript.build_visual(
+		packing_root,
+		visual,
+		correction_degrees,
+		packing_rotated
 	)
-	if rotated:
-		root.rotate_y(deg_to_rad(90.0))
-
-
-func _align_visual_to_plane(visual: Node) -> void:
-	var state: Dictionary = {"valid": false, "bounds": AABB()}
-	_scan_bounds_recursive(visual, Transform3D.IDENTITY, state)
-
-	var valid_value: Variant = state.get("valid", false)
-	if not bool(valid_value) or not (visual is Node3D):
-		return
-
-	var bounds_value: Variant = state.get("bounds", AABB())
-	var bounds: AABB = bounds_value as AABB
-	var center: Vector3 = bounds.position + bounds.size * 0.5
-	var visual_3d: Node3D = visual as Node3D
-
-	visual_3d.position += Vector3(
-		-center.x,
-		-bounds.position.y + 0.006,
-		-center.z
-	)
-
-
-func _scan_bounds_recursive(
-	node: Node,
-	accumulated_transform: Transform3D,
-	state: Dictionary
-) -> void:
-	var next_transform: Transform3D = accumulated_transform
-	if node is Node3D:
-		var node_3d: Node3D = node as Node3D
-		next_transform = accumulated_transform * node_3d.transform
-
-	if node is MeshInstance3D:
-		var mesh_instance: MeshInstance3D = node as MeshInstance3D
-		if mesh_instance.mesh != null:
-			var transformed_bounds: AABB = next_transform * mesh_instance.get_aabb()
-			var valid_value: Variant = state.get("valid", false)
-			if bool(valid_value):
-				var current_value: Variant = state.get("bounds", AABB())
-				var current_bounds: AABB = current_value as AABB
-				state["bounds"] = current_bounds.merge(transformed_bounds)
-			else:
-				state["bounds"] = transformed_bounds
-				state["valid"] = true
-
-	for child: Node in node.get_children():
-		_scan_bounds_recursive(child, next_transform, state)
 
 
 func _disable_embedded_nodes(node: Node) -> void:
