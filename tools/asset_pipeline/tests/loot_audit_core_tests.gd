@@ -7,6 +7,8 @@ func _init() -> void:
 	_test_transformed_bounds()
 	_test_multi_mesh_aggregation()
 	_test_cell_rounding_and_orientations()
+	_test_category_mismatch_and_footprint_underflow()
+	_test_deterministic_ordering()
 	print("PASS: loot audit core geometry tests")
 	quit(0)
 
@@ -47,3 +49,34 @@ func _test_cell_rounding_and_orientations() -> void:
 	assert(result["depth_cells"] == 4)
 	assert(result["orientation_a"] == "3x4")
 	assert(result["orientation_b"] == "4x3")
+
+
+func _test_category_mismatch_and_footprint_underflow() -> void:
+	var expected_category: String = LootAuditCoreScript.expected_category(
+		"res://assets/props/Hydration/SM_Metal_Can_01a.glb"
+	)
+	assert(expected_category.to_lower() == "hydration")
+
+	var flags: PackedStringArray = LootAuditCoreScript.audit_flags({
+		"source_path": "res://assets/props/Hydration/SM_Metal_Can_01a.glb",
+		"authored_category": "Food",
+		"expected_category": "Hydration",
+		"root_scale": Vector3.ONE,
+		"instance_scales": [Vector3.ONE],
+		"mesh_count": 1,
+		"effective_bounds": AABB(Vector3.ZERO, Vector3(0.21, 0.12, 0.31)),
+		"raw_width_cells": 3,
+		"raw_depth_cells": 4,
+		"existing_footprint": Vector3i(2, 3, 1),
+		"has_item_definition": true
+	})
+	assert(flags.has("CATEGORY_MISMATCH"))
+	assert(flags.has("EXISTING_FOOTPRINT_SMALLER_THAN_RAW_BOUNDS"))
+
+
+func _test_deterministic_ordering() -> void:
+	var sorted: Array[Dictionary] = LootAuditCoreScript.sort_records([
+		{"source_path": "res://assets/props/Weapons/z.glb"},
+		{"source_path": "res://assets/props/Food/a.glb"}
+	])
+	assert(String(sorted[0]["source_path"]) == "res://assets/props/Food/a.glb")
