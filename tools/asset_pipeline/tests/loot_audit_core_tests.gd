@@ -1,6 +1,7 @@
 extends SceneTree
 
 const LootAuditCoreScript = preload("res://tools/asset_pipeline/loot_audit_core.gd")
+const MainSceneLootAdapterScript = preload("res://tools/asset_pipeline/main_scene_loot_adapter.gd")
 
 
 func _init() -> void:
@@ -9,6 +10,7 @@ func _init() -> void:
 	_test_cell_rounding_and_orientations()
 	_test_category_mismatch_and_footprint_underflow()
 	_test_deterministic_ordering()
+	_test_main_scene_adapter()
 	print("PASS: loot audit core geometry tests")
 	quit(0)
 
@@ -80,3 +82,18 @@ func _test_deterministic_ordering() -> void:
 		{"source_path": "res://assets/props/Food/a.glb"}
 	])
 	assert(String(sorted[0]["source_path"]) == "res://assets/props/Food/a.glb")
+
+
+func _test_main_scene_adapter() -> void:
+	var records: Array[Dictionary] = MainSceneLootAdapterScript.enumerate_loot_instances(
+		"res://main.tscn"
+	)
+	assert(not records.is_empty())
+	var previous_path: String = ""
+	for record: Dictionary in records:
+		var source_path: String = String(record["source_path"])
+		var scene_nodes: Array = record["scene_nodes"] as Array
+		assert(source_path.begins_with("res://assets/props/"))
+		assert(source_path.to_lower() >= previous_path.to_lower())
+		assert(int(record["instance_count"]) == scene_nodes.size())
+		previous_path = source_path
