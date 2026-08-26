@@ -19,15 +19,15 @@ packing yaw root
 
 The helper owns only visual pose/alignment math. It does not own or change reservation, cell-fit, zoning, placement-mode, or item-transfer logic.
 
-The helper applies `ItemDefinition.storage_rotation_degrees` to the authored-pose root, calculates posed bounds from actual mesh contributors, then offsets the seating root so posed bounds are centered on X/Z and posed minimum Y is 0.006 m above the shelf plane. The existing optional 90-degree Y packing rotation is applied only to the outer packing-yaw root after alignment.
+The helper applies `ItemDefinition.storage_rotation_degrees` to the authored-pose root, calculates posed bounds from actual mesh contributors, then offsets the seating root so posed bounds are centered on X/Z and posed minimum Y is 0.006 m above the shelf plane. That clearance has one source of truth owned or consumed by the helper; ghost and final-placement code do not duplicate the literal. The existing optional 90-degree Y packing rotation is applied only to the outer packing-yaw root after alignment.
 
-The stored pose is constructed solely from the canonical visual and ItemDefinition data. It never derives a delta from the source world instance transform. Manual mode exposes only the existing optional 90-degree packing rotation and cannot introduce pitch or roll.
+The stored pose is constructed solely from the canonical visual and ItemDefinition data. It never derives a delta from the source world instance transform. Manual mode exposes only the existing optional 90-degree packing rotation and cannot introduce pitch or roll. Packing yaw rotates the complete posed visual as a physical object; label-facing authored yaw is not counter-rotated when packing yaw is active.
 
 ## Candidate authoring
 
 The eight explicit yaw candidates use the human-provided Y angles. Firearm, gloves, and hammer candidates are selected by inspecting each canonical asset's actual axes and choosing a minimal explicit Euler correction that produces the requested physical pose. No heuristic auto-orientation is added. If a semantic pose remains ambiguous after inspection, it is reported for manual tuning rather than guessed.
 
-The 28 unaffected definitions retain zero authored rotation and become `DEFAULT_POSE_APPROVED`. The 13 achievable candidates become `CUSTOM_POSE_REQUIRED`; their candidate rotations are not recorded as approved snapshots. Pants remains at its current rotation and Footprint with `CUSTOM_POSE_REQUIRED` and the unresolved folded-visual note. Every Footprint review remains `UNREVIEWED`.
+The 28 unaffected definitions retain zero authored rotation and become `DEFAULT_POSE_APPROVED`, each with its current source fingerprint and a zero reviewed-rotation snapshot. The 13 achievable candidates become `CUSTOM_POSE_REQUIRED`; each stores the current source fingerprint but its candidate rotation is not treated as an approved snapshot. Pants remains at its current rotation and Footprint with `CUSTOM_POSE_REQUIRED` and the unresolved folded-visual note. Every Footprint review remains `UNREVIEWED`. Pants remains ineligible for Footprint approval while its pose decision is unresolved.
 
 ## Review freshness
 
@@ -39,7 +39,7 @@ The authoring-manifest serialized structure remains schema 1.0.
 
 Canonical geometry fields remain unchanged. Audit schema 1.3 adds current authored rotation, posed effective bounds and dimensions, and posed raw width/depth cells plus A/B orientations.
 
-Posed bounds are aggregated from the same actual mesh contributors as canonical bounds, with the authored storage-pose transform composed into each contributor transform before eight-corner expansion. The audit does not rotate an already aggregated canonical AABB and does not write posed results back to `storage_footprint`.
+Posed bounds are aggregated from the same actual mesh contributors as canonical bounds. For every contributor, the measured posed transform is explicitly `authored_pose * contributor_to_asset_root` before eight-corner expansion, preserving internal root and child transforms. The audit does not rotate an already aggregated canonical AABB and does not write posed results back to `storage_footprint`.
 
 ## Verification
 
