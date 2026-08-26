@@ -29,77 +29,77 @@ static func create_definition_for_node(node: Node) -> ItemDefinition:
 
 static func create_definition_for_scene_path(scene_path: String) -> ItemDefinition:
 	match scene_path:
-		"res://assets/props/from_blender/cereal_box.glb":
+		"res://assets/props/Food/cereal_box.glb":
 			return _make_definition(
 				&"cereal_box", "Cereal Box", &"Food", 6, 1,
 				Vector3i(1, 1, 1), true, scene_path,
 				Vector3(-8.0, 12.0, 0.0), 1.0,
 				Vector3(-10.0, -18.0, -4.0), Vector3(0.28, -0.25, -0.58), 0.55
 			)
-		"res://assets/props/from_blender/pill_bottle.glb":
+		"res://assets/props/medical/pill_bottle.glb":
 			return _make_definition(
 				&"painkillers", "Painkillers", &"Medical", 4, 1,
 				Vector3i(1, 1, 1), true, scene_path,
 				Vector3(-8.0, 12.0, 0.0), 1.0,
 				Vector3(-8.0, -15.0, -3.0), Vector3(0.24, -0.20, -0.44), 0.55
 			)
-		"res://assets/props/from_blender/hammer.glb":
+		"res://assets/props/Weapons/hammer.glb":
 			return _make_definition(
 				&"hammer", "Hammer", &"Weapons", 3, 2,
 				Vector3i(1, 3, 1), false, scene_path,
 				Vector3(-8.0, 12.0, -35.0), 1.0,
 				Vector3(-10.0, -18.0, -24.0), Vector3(0.30, -0.25, -0.58), 0.55
 			)
-		"res://assets/props/from_blender/soda_can.glb":
+		"res://assets/props/Hydration/soda_can.glb":
 			return _make_definition(
 				&"soda_can", "Soda Can", &"Hydration", 3, 1,
 				Vector3i(1, 1, 1), true, scene_path,
 				Vector3(-8.0, 12.0, 0.0), 1.0,
 				Vector3(-8.0, -15.0, -3.0), Vector3(0.24, -0.20, -0.44), 0.55
 			)
-		"res://assets/props/from_blender/tennis_racket.glb":
+		"res://assets/props/Weapons/tennis_racket.glb":
 			return _make_definition(
 				&"tennis_racket", "Tennis Racket", &"Weapons", 1, 5,
 				Vector3i(2, 5, 1), false, scene_path,
 				Vector3(-8.0, 12.0, -18.0), 0.95,
 				Vector3(-10.0, -18.0, -20.0), Vector3(0.31, -0.26, -0.66), 0.55
 			)
-		"res://assets/props/SM_Gun_AssaultRifle.glb":
+		"res://assets/props/Weapons/SM_Gun_AssaultRifle.glb":
 			return _make_definition(
 				&"assault_rifle", "Assault Rifle", &"Weapons", 12, 5,
 				Vector3i(1, 5, 1), false, scene_path,
 				Vector3(-7.0, 10.0, -8.0), 0.90,
 				Vector3(-9.0, -20.0, -15.0), Vector3(0.34, -0.25, -0.70), 0.62
 			)
-		"res://assets/props/SM_Gun_Pistol.glb":
+		"res://assets/props/Weapons/SM_Gun_Pistol.glb":
 			return _make_definition(
 				&"pistol", "Pistol", &"Weapons", 8, 2,
 				Vector3i(2, 1, 1), false, scene_path,
 				Vector3(-8.0, 12.0, -10.0), 1.0,
 				Vector3(-10.0, -18.0, -12.0), Vector3(0.28, -0.22, -0.50), 0.55
 			)
-		"res://assets/props/SM_Gun_Shotgun.glb":
+		"res://assets/props/Weapons/SM_Gun_Shotgun.glb":
 			return _make_definition(
 				&"shotgun", "Shotgun", &"Weapons", 10, 4,
 				Vector3i(1, 5, 1), false, scene_path,
 				Vector3(-7.0, 10.0, -8.0), 0.90,
 				Vector3(-9.0, -20.0, -15.0), Vector3(0.34, -0.25, -0.70), 0.62
 			)
-		"res://assets/props/SM_Metal_Can_01a.glb":
+		"res://assets/props/Hydration/SM_Metal_Can_01a.glb":
 			return _make_definition(
 				&"metal_food_can", "Food Can", &"Food", 4, 1,
 				Vector3i(1, 1, 1), true, scene_path,
 				Vector3(-8.0, 12.0, 0.0), 1.0,
 				Vector3(-8.0, -15.0, -3.0), Vector3(0.24, -0.20, -0.44), 0.55
 			)
-		"res://assets/props/SM_Pill_Bottle_01a.glb":
+		"res://assets/props/medical/SM_Pill_Bottle_01a.glb":
 			return _make_definition(
 				&"pill_bottle_a", "Medicine Bottle", &"Medical", 3, 1,
 				Vector3i(1, 1, 1), true, scene_path,
 				Vector3(-8.0, 12.0, 0.0), 1.0,
 				Vector3(-8.0, -15.0, -3.0), Vector3(0.24, -0.20, -0.44), 0.55
 			)
-		"res://assets/props/SM_Pill_Bottle_01b.glb":
+		"res://assets/props/medical/SM_Pill_Bottle_01b.glb":
 			return _make_definition(
 				&"pill_bottle_b", "Medicine Bottle", &"Medical", 5, 1,
 				Vector3i(1, 1, 1), true, scene_path,
@@ -112,27 +112,27 @@ static func create_definition_for_scene_path(scene_path: String) -> ItemDefiniti
 
 static func _scene_path_from_name(node_name: String) -> String:
 	if node_name.begins_with("cereal_box"):
-		return "res://assets/props/from_blender/cereal_box.glb"
+		return "res://assets/props/Food/cereal_box.glb"
 	if node_name.begins_with("pill_bottle"):
-		return "res://assets/props/from_blender/pill_bottle.glb"
+		return "res://assets/props/medical/pill_bottle.glb"
 	if node_name.begins_with("hammer"):
-		return "res://assets/props/from_blender/hammer.glb"
+		return "res://assets/props/Weapons/hammer.glb"
 	if node_name.begins_with("soda_can"):
-		return "res://assets/props/from_blender/soda_can.glb"
+		return "res://assets/props/Hydration/soda_can.glb"
 	if node_name.begins_with("tennis_racket"):
-		return "res://assets/props/from_blender/tennis_racket.glb"
+		return "res://assets/props/Weapons/tennis_racket.glb"
 	if node_name.begins_with("SM_Gun_AssaultRifle"):
-		return "res://assets/props/SM_Gun_AssaultRifle.glb"
+		return "res://assets/props/Weapons/SM_Gun_AssaultRifle.glb"
 	if node_name.begins_with("SM_Gun_Pistol"):
-		return "res://assets/props/SM_Gun_Pistol.glb"
+		return "res://assets/props/Weapons/SM_Gun_Pistol.glb"
 	if node_name.begins_with("SM_Gun_Shotgun"):
-		return "res://assets/props/SM_Gun_Shotgun.glb"
+		return "res://assets/props/Weapons/SM_Gun_Shotgun.glb"
 	if node_name.begins_with("SM_Metal_Can_01a"):
-		return "res://assets/props/SM_Metal_Can_01a.glb"
+		return "res://assets/props/Hydration/SM_Metal_Can_01a.glb"
 	if node_name.begins_with("SM_Pill_Bottle_01a"):
-		return "res://assets/props/SM_Pill_Bottle_01a.glb"
+		return "res://assets/props/medical/SM_Pill_Bottle_01a.glb"
 	if node_name.begins_with("SM_Pill_Bottle_01b"):
-		return "res://assets/props/SM_Pill_Bottle_01b.glb"
+		return "res://assets/props/medical/SM_Pill_Bottle_01b.glb"
 	return ""
 
 
