@@ -39,8 +39,7 @@
 [ext_resource type="PackedScene" uid="uid://ch2lfbgkqqmeo" path="res://assets/props/Weapons/SM_Gun_AssaultRifle.glb" id="36_qnost"]
 [ext_resource type="PackedScene" uid="uid://d2f5gxaaygr2h" path="res://assets/props/Weapons/SM_Gun_Pistol.glb" id="37_wnkbs"]
 [ext_resource type="PackedScene" uid="uid://8ljy0ilc1v0b" path="res://assets/props/Hydration/SM_Metal_Can_01a.glb" id="38_f6a44"]
-[ext_resource type="PackedScene" uid="uid://cpomrs7qsj73d" path="res://assets/props/medical/SM_Pill_Bottle_01a.glb" id="39_0cbny"]
-[ext_resource type="PackedScene" uid="uid://ch182sr5udr17" path="res://assets/props/medical/SM_Pill_Bottle_01b.glb" id="40_hrvbo"]
+[ext_resource type="PackedScene" uid="uid://bitn8fbqvm0su" path="res://assets/props/medical/SM_Pill_Bottle_01b.glb" id="40_hrvbo"]
 [ext_resource type="PackedScene" uid="uid://dotocyn70iqyv" path="res://assets/props/Weapons/SM_Gun_Shotgun.glb" id="41_uypp3"]
 [ext_resource type="PackedScene" uid="uid://col1kirfqto7j" path="res://assets/from_kitbash/SM_KB3D_MTM_PropKiosk_A.glb" id="44_qnost"]
 [ext_resource type="Script" uid="uid://d3rntjdid6git" path="res://carried_items.gd" id="45_carried"]
@@ -57,7 +56,6 @@
 [ext_resource type="PackedScene" uid="uid://dhb54nxp7thnb" path="res://assets/props/Food/SM_Watermelon_1.glb" id="55_rnkwl"]
 [ext_resource type="PackedScene" uid="uid://cc7btwnebcfs5" path="res://assets/props/medical/SM_MedKit_4.glb" id="56_ruth0"]
 [ext_resource type="PackedScene" uid="uid://d30pld4bfmigb" path="res://assets/props/medical/SM_Bandages_1.glb" id="57_rm4vd"]
-[ext_resource type="PackedScene" uid="uid://dmlbrfo74cr2t" path="res://assets/props/medical/SM_Syringe_1.glb" id="58_pjyto"]
 [ext_resource type="PackedScene" uid="uid://1t5y4mjf53cm" path="res://assets/props/protection/SM_Gloves_02glb.glb" id="61_pjyto"]
 [ext_resource type="PackedScene" uid="uid://biswlt5augumx" path="res://assets/props/protection/SM_Boots_01.glb" id="61_sm6fg"]
 [ext_resource type="PackedScene" uid="uid://bw673hmx2ws5g" path="res://assets/props/protection/SM_Pants_02.glb" id="62_kkkcx"]
@@ -447,9 +445,6 @@ transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 5.88
 [node name="SM_Metal_Can_01a" parent="." unique_id=91353500 instance=ExtResource("38_f6a44")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.404378, 0.8634159, 1.9641854)
 
-[node name="SM_Pill_Bottle_01a" parent="." unique_id=245310804 instance=ExtResource("39_0cbny")]
-transform = Transform3D(0.82790464, 0, 0.5608689, 0, 1, 0, -0.5608689, 0, 0.82790464, 6.5006995, 0.8614127, 3.2022188)
-
 [node name="SM_Pill_Bottle_01b" parent="." unique_id=173001742 instance=ExtResource("40_hrvbo")]
 transform = Transform3D(-0.9582426, 0, 0.28595662, 0, 1, 0, -0.28595662, 0, -0.9582426, 6.387467, 0.88749546, 2.9489253)
 
@@ -461,9 +456,6 @@ transform = Transform3D(-4.371139e-08, -1, 0, 0.9999756, -4.3710322e-08, 0.00698
 
 [node name="SM_Metal_Can_01a2" parent="." unique_id=2002396998 instance=ExtResource("38_f6a44")]
 transform = Transform3D(-0.98728395, 0, 0.15896654, 0, 1, 0, -0.15896654, 0, -0.98728395, 1.0923803, 1.7854469, 2.0675747)
-
-[node name="SM_Pill_Bottle_01a2" parent="." unique_id=1942616594 instance=ExtResource("39_0cbny")]
-transform = Transform3D(-0.3981415, 0, -0.917324, 0, 1, 0, 0.917324, 0, -0.3981415, 1.0153236, 1.7854469, 2.4068599)
 
 [node name="SM_KB3D_MTM_PropKiosk_A" parent="." unique_id=895499898 instance=ExtResource("44_qnost")]
 transform = Transform3D(0.0099256355, 0, 0.99995077, 0, 1, 0, -0.99995077, 0, 0.0099256355, 4.257489, 0, 4.6506963)
@@ -521,9 +513,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.357539, 0.9183743, 2.644398
 [node name="SM_Bandages_1" parent="." unique_id=1265717970 instance=ExtResource("57_rm4vd")]
 transform = Transform3D(-0.6703862, -0.7420123, 3.243439e-08, 0, -4.371139e-08, -1, 0.7420123, -0.6703862, 2.9303513e-08, 6.2333612, 0.930642, 3.0887876)
 
-[node name="SM_Syringe_1" parent="." unique_id=1297182415 instance=ExtResource("58_pjyto")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 6.2136936, 0.8645058, 2.9055214)
-
 [node name="SM_Boots_01" parent="." unique_id=771713134 instance=ExtResource("61_sm6fg")]
 transform = Transform3D(0.06174671, 0, -0.9980919, 0, 1, 0, 0.9980919, 0, 0.06174671, 6.3313847, 0.89772666, 1.3259745)
 
@@ -534,19 +523,19 @@ transform = Transform3D(-0.10742575, -0.0074684517, -0.99418503, 0.01131686, 0.9
 transform = Transform3D(-0.040163722, 0, -0.99919313, 0, 1, 0, 0.99919313, 0, -0.040163722, 6.4325128, 0.87884796, 1.7210119)
 
 [node name="SM_Pants_02" parent="." unique_id=1157430247 instance=ExtResource("62_kkkcx")]
-transform = Transform3D(0.08196157, 0, -0.9966355, 0, 1, 0, 0.9966355, 0, 0.08196157, 6.1470814, 0.8658608, 0.95979965)
+transform = Transform3D(0.08196157, 0, -0.9966355, 0, 1, 0, 0.9966355, 0, 0.08196157, 6.2566304, 0.8658608, 0.95979965)
 
 [node name="SM_FuelCanister" parent="." unique_id=613471909 instance=ExtResource("63_34ol3")]
-transform = Transform3D(-0.032303598, 0, 0.9994781, 0, 1, 0, -0.9994781, 0, -0.032303598, 5.541037, 0.960721, 0.7322253)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 5.711, 0.856, 0.732)
 
 [node name="SM_GasCanister_01" parent="." unique_id=1319332853 instance=ExtResource("64_c2n8d")]
 transform = Transform3D(-0.25661612, 0, 0.9665134, 0, 1, 0, -0.9665134, 0, -0.25661612, 5.6982374, 0.85454285, 0.18881789)
 
 [node name="SM_GasCylinder_01" parent="." unique_id=1612618237 instance=ExtResource("65_wy5fy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.3886895, 0.8790159, 0.49805415)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.2866173, 0.8488613, 0.49805415)
 
 [node name="SM_PropaneTank_02" parent="." unique_id=244356371 instance=ExtResource("66_gx4rg")]
-transform = Transform3D(-0.7132504, 0, 0.7009093, 0, 1, 0, -0.7009093, 0, -0.7132504, 6.1259103, 0.88868344, 0.08416575)
+transform = Transform3D(-0.7132504, 0, 0.7009093, 0, 1, 0, -0.7009093, 0, -0.7132504, 6.3083234, 0.8661052, 0.08416575)
 
 [node name="SM_HardHat_01" parent="." unique_id=2005404052 instance=ExtResource("67_5dllo")]
 transform = Transform3D(1, 0, 0, 0, 0.96814764, 0.25038, 0, -0.25038, 0.96814764, 6.068198, 0.85056084, 1.8370981)

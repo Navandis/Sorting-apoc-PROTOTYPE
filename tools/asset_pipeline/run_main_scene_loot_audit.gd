@@ -9,7 +9,7 @@ const MAIN_SCENE_PATH: String = "res://main.tscn"
 const REPORT_DIRECTORY: String = "res://reports/asset_pipeline"
 const CSV_REPORT_PATH: String = REPORT_DIRECTORY + "/main_scene_loot_audit.csv"
 const JSON_REPORT_PATH: String = REPORT_DIRECTORY + "/main_scene_loot_audit.json"
-const SCHEMA_VERSION: String = "1.0"
+const SCHEMA_VERSION: String = "1.1"
 
 
 func _init() -> void:
@@ -89,10 +89,10 @@ func _audit_asset(scene_record: Dictionary, cell_size_m: float) -> Dictionary:
 		existing_footprint = definition.storage_footprint
 		bulk = definition.bulk
 
-	var expected_category: String = LootAuditCoreScript.expected_category(source_path)
+	var folder_category_hint: String = LootAuditCoreScript.folder_category_hint(source_path)
 	var category_source: String = _category_source(
 		authored_category,
-		expected_category,
+		folder_category_hint,
 		has_item_definition
 	)
 	var instance_scales: Array = _instance_scale_vectors(scene_record)
@@ -106,7 +106,7 @@ func _audit_asset(scene_record: Dictionary, cell_size_m: float) -> Dictionary:
 	var flags: PackedStringArray = LootAuditCoreScript.audit_flags({
 		"source_path": source_path,
 		"authored_category": authored_category,
-		"expected_category": expected_category,
+		"folder_category_hint": folder_category_hint,
 		"root_scale": root_scale,
 		"instance_scales": instance_scales,
 		"mesh_count": mesh_count,
@@ -126,7 +126,7 @@ func _audit_asset(scene_record: Dictionary, cell_size_m: float) -> Dictionary:
 		"item_id": item_id,
 		"display_name": display_name,
 		"authored_category": authored_category,
-		"expected_category": expected_category,
+		"folder_category_hint": folder_category_hint,
 		"category_source": category_source,
 		"mesh_count": mesh_count,
 		"root_local_bounds": _serialize_bounds(root_local_bounds, has_mesh_bounds),
@@ -218,7 +218,7 @@ func _write_text_file(path: String, content: String) -> bool:
 func _csv_text(records: Array[Dictionary]) -> String:
 	var headers: PackedStringArray = [
 		"asset_key", "source_path", "scene_nodes", "instance_count", "item_id",
-		"display_name", "authored_category", "expected_category", "category_source",
+		"display_name", "authored_category", "folder_category_hint", "category_source",
 		"mesh_count", "root_local_bounds", "effective_canonical_bounds", "width_m",
 		"height_m", "depth_m", "origin_offset_m", "longest_dimension_m",
 		"shortest_dimension_m", "aspect_ratio", "asset_root_scale",
@@ -236,7 +236,7 @@ func _csv_text(records: Array[Dictionary]) -> String:
 			str(record["item_id"]),
 			str(record["display_name"]),
 			str(record["authored_category"]),
-			str(record["expected_category"]),
+			str(record["folder_category_hint"]),
 			str(record["category_source"]),
 			str(record["mesh_count"]),
 			_json_inline(record["root_local_bounds"]),
@@ -302,12 +302,12 @@ func _instance_scales_for_csv(instance_transforms_value: Variant) -> Array:
 
 func _category_source(
 	authored_category: String,
-	expected_category: String,
+	folder_category_hint: String,
 	has_item_definition: bool
 ) -> String:
 	if has_item_definition and not authored_category.strip_edges().is_empty():
-		return "authored_and_folder" if not expected_category.strip_edges().is_empty() else "authored"
-	if not expected_category.strip_edges().is_empty():
+		return "authored_and_folder" if not folder_category_hint.strip_edges().is_empty() else "authored"
+	if not folder_category_hint.strip_edges().is_empty():
 		return "folder"
 	return "unknown"
 

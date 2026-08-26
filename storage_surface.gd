@@ -1,6 +1,8 @@
 extends Node3D
 class_name StorageSurface
 
+const StorageCategoriesScript = preload("res://storage_categories.gd")
+
 ## Deterministic 2D storage grid attached to one physical shelf level.
 ##
 ## The rendered shelf geometry, player movement collision, and this storage
@@ -274,8 +276,6 @@ func find_zone_auto_fit(
 	## 3. Explicitly unassigned cells.
 	## Never silently enter a different specific category zone.
 	var category: String = storage_category.strip_edges()
-	if category.is_empty():
-		category = "General"
 
 	var primary: Vector2i = _normalize_footprint(footprint)
 	var orientations: Array[Dictionary] = [
@@ -294,9 +294,9 @@ func find_zone_auto_fit(
 		)
 
 	var tiers: Array[String] = []
-	if category != "General":
+	if StorageCategoriesScript.is_item_category(category):
 		tiers.append(category)
-	tiers.append("General")
+	tiers.append(StorageCategoriesScript.GENERAL)
 	tiers.append("") # unassigned fallback
 
 	for zone_category: String in tiers:
@@ -326,7 +326,7 @@ func find_zone_auto_fit(
 				if zone_category.is_empty()
 				else (
 					"matching"
-					if zone_category == category
+				if zone_category == category and StorageCategoriesScript.is_item_category(category)
 					else "general"
 				)
 			)

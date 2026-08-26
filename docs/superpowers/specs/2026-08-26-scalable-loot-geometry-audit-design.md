@@ -33,7 +33,7 @@ The report names its calculated axes explicitly: effective asset X -> storage wi
 
 ## Categories and catalogue comparison
 
-Existing definitions come from `PrototypeItemCatalog.create_definition_for_scene_path`, not copied mapping logic. Expected category is inferred case-insensitively from the first `assets/props/<category>/` directory component while preserving the path's displayed case. Reports retain authored category, expected category, and category source. Disagreement emits `CATEGORY_MISMATCH`; undefined assets emit `NO_ITEM_DEFINITION`.
+Existing definitions come from `PrototypeItemCatalog.create_definition_for_scene_path`, not copied mapping logic. The folder category hint is inferred case-insensitively from the first `assets/props/<category>/` directory component while preserving the path's displayed case. Reports retain authored category, folder category hint, and category source. Authored `ItemDefinition.storage_category` remains gameplay authority; a folder disagreement is evidence for human review and emits `CATEGORY_FOLDER_MISMATCH`. Undefined assets emit `NO_ITEM_DEFINITION`.
 
 Existing `storage_footprint` is compared directly against the raw X/Z suggestion. A smaller authored footprint produces `EXISTING_FOOTPRINT_SMALLER_THAN_RAW_BOUNDS` as a review flag only.
 
@@ -53,4 +53,4 @@ Flags include the required scale, mesh, category, definition, footprint, and irr
 
 The runner writes stable, sorted CSV and JSON to `reports/asset_pipeline/`. The report contains no volatile timestamp in per-asset records. This generated directory is ignored narrowly, so recurring audit runs do not create default commit noise.
 
-Core tests cover transformed and multi-mesh aggregation, cell rounding, both orientations, category mismatch, existing-footprint underflow, and deterministic ordering. The runner is then executed headlessly against the real main scene and reviewed against the required representative assets.
+Core tests cover transformed and multi-mesh aggregation, cell rounding, both orientations, folder-category mismatch, existing-footprint underflow, and deterministic ordering. The runner is then executed headlessly against the real main scene and reviewed against the required representative assets.

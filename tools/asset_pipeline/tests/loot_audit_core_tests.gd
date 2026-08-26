@@ -8,7 +8,8 @@ func _init() -> void:
 	_test_transformed_bounds()
 	_test_multi_mesh_aggregation()
 	_test_cell_rounding_and_orientations()
-	_test_category_mismatch_and_footprint_underflow()
+	_test_category_folder_mismatch_and_footprint_underflow()
+	_test_category_folder_hint_is_case_insensitive()
 	_test_deterministic_ordering()
 	_test_main_scene_adapter()
 	print("PASS: loot audit core geometry tests")
@@ -53,16 +54,16 @@ func _test_cell_rounding_and_orientations() -> void:
 	assert(result["orientation_b"] == "4x3")
 
 
-func _test_category_mismatch_and_footprint_underflow() -> void:
-	var expected_category: String = LootAuditCoreScript.expected_category(
+func _test_category_folder_mismatch_and_footprint_underflow() -> void:
+	var folder_category_hint: String = LootAuditCoreScript.folder_category_hint(
 		"res://assets/props/Hydration/SM_Metal_Can_01a.glb"
 	)
-	assert(expected_category.to_lower() == "hydration")
+	assert(folder_category_hint == "Hydration")
 
 	var flags: PackedStringArray = LootAuditCoreScript.audit_flags({
 		"source_path": "res://assets/props/Hydration/SM_Metal_Can_01a.glb",
 		"authored_category": "Food",
-		"expected_category": "Hydration",
+		"folder_category_hint": "Hydration",
 		"root_scale": Vector3.ONE,
 		"instance_scales": [Vector3.ONE],
 		"mesh_count": 1,
@@ -72,8 +73,18 @@ func _test_category_mismatch_and_footprint_underflow() -> void:
 		"existing_footprint": Vector3i(2, 3, 1),
 		"has_item_definition": true
 	})
-	assert(flags.has("CATEGORY_MISMATCH"))
+	assert(flags.has("CATEGORY_FOLDER_MISMATCH"))
+	assert(not flags.has("CATEGORY_MISMATCH"))
 	assert(flags.has("EXISTING_FOOTPRINT_SMALLER_THAN_RAW_BOUNDS"))
+
+
+func _test_category_folder_hint_is_case_insensitive() -> void:
+	var flags: PackedStringArray = LootAuditCoreScript.audit_flags({
+		"authored_category": "hydration",
+		"folder_category_hint": "Hydration",
+		"has_item_definition": true
+	})
+	assert(not flags.has("CATEGORY_FOLDER_MISMATCH"))
 
 
 func _test_deterministic_ordering() -> void:

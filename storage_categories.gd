@@ -17,8 +17,7 @@ const FUEL: String = "Fuel"
 const MORALE: String = "Morale"
 const ELECTRONICS: String = "Electronics"
 
-const EDITOR_CATEGORIES: Array[String] = [
-	GENERAL,
+const ITEM_CATEGORIES: Array[String] = [
 	FOOD,
 	HYDRATION,
 	MEDICAL,
@@ -28,6 +27,12 @@ const EDITOR_CATEGORIES: Array[String] = [
 	MORALE,
 	ELECTRONICS
 ]
+
+const EDITOR_CATEGORIES: Array[String] = [GENERAL] + ITEM_CATEGORIES
+
+
+static func is_item_category(category: String) -> bool:
+	return ITEM_CATEGORIES.has(category)
 
 
 static func color_for(category: String) -> Color:

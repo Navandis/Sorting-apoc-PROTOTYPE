@@ -20,7 +20,7 @@ class_name ItemDefinition
 # Primary high-level category used only for storage policy / auto-placement.
 # It is deliberately independent from destination-specific Utility. An item may
 # have several contextual uses but exactly one default Storage Category.
-@export var storage_category: String = "General"
+@export var storage_category: String = ""
 
 # Unified Bulk used for player carrying, scavenger loadouts and haul budgets.
 @export_range(1, 999, 1) var bulk: int = 1

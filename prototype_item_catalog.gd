@@ -31,77 +31,77 @@ static func create_definition_for_scene_path(scene_path: String) -> ItemDefiniti
 	match scene_path:
 		"res://assets/props/Food/cereal_box.glb":
 			return _make_definition(
-				&"cereal_box", "Cereal Box", &"Food", 6, 1,
+				&"cereal_box", "Cereal Box", &"Food", &"Food", 6, 1,
 				Vector3i(1, 1, 1), true, scene_path,
 				Vector3(-8.0, 12.0, 0.0), 1.0,
 				Vector3(-10.0, -18.0, -4.0), Vector3(0.28, -0.25, -0.58), 0.55
 			)
 		"res://assets/props/medical/pill_bottle.glb":
 			return _make_definition(
-				&"painkillers", "Painkillers", &"Medical", 4, 1,
+				&"painkillers", "Painkillers", &"Medical", &"Medical", 4, 1,
 				Vector3i(1, 1, 1), true, scene_path,
 				Vector3(-8.0, 12.0, 0.0), 1.0,
 				Vector3(-8.0, -15.0, -3.0), Vector3(0.24, -0.20, -0.44), 0.55
 			)
 		"res://assets/props/Weapons/hammer.glb":
 			return _make_definition(
-				&"hammer", "Hammer", &"Weapons", 3, 2,
+				&"hammer", "Hammer", &"Weapons", &"Weapons", 3, 2,
 				Vector3i(1, 3, 1), false, scene_path,
 				Vector3(-8.0, 12.0, -35.0), 1.0,
 				Vector3(-10.0, -18.0, -24.0), Vector3(0.30, -0.25, -0.58), 0.55
 			)
 		"res://assets/props/Hydration/soda_can.glb":
 			return _make_definition(
-				&"soda_can", "Soda Can", &"Hydration", 3, 1,
+				&"soda_can", "Soda Can", &"Hydration", &"Hydration", 3, 1,
 				Vector3i(1, 1, 1), true, scene_path,
 				Vector3(-8.0, 12.0, 0.0), 1.0,
 				Vector3(-8.0, -15.0, -3.0), Vector3(0.24, -0.20, -0.44), 0.55
 			)
 		"res://assets/props/Weapons/tennis_racket.glb":
 			return _make_definition(
-				&"tennis_racket", "Tennis Racket", &"Weapons", 1, 5,
+				&"tennis_racket", "Tennis Racket", &"Weapons", &"Weapons", 1, 5,
 				Vector3i(2, 5, 1), false, scene_path,
 				Vector3(-8.0, 12.0, -18.0), 0.95,
 				Vector3(-10.0, -18.0, -20.0), Vector3(0.31, -0.26, -0.66), 0.55
 			)
 		"res://assets/props/Weapons/SM_Gun_AssaultRifle.glb":
 			return _make_definition(
-				&"assault_rifle", "Assault Rifle", &"Weapons", 12, 5,
+				&"assault_rifle", "Assault Rifle", &"Weapons", &"Weapons", 12, 5,
 				Vector3i(1, 5, 1), false, scene_path,
 				Vector3(-7.0, 10.0, -8.0), 0.90,
 				Vector3(-9.0, -20.0, -15.0), Vector3(0.34, -0.25, -0.70), 0.62
 			)
 		"res://assets/props/Weapons/SM_Gun_Pistol.glb":
 			return _make_definition(
-				&"pistol", "Pistol", &"Weapons", 8, 2,
+				&"pistol", "Pistol", &"Weapons", &"Weapons", 8, 2,
 				Vector3i(2, 1, 1), false, scene_path,
 				Vector3(-8.0, 12.0, -10.0), 1.0,
 				Vector3(-10.0, -18.0, -12.0), Vector3(0.28, -0.22, -0.50), 0.55
 			)
 		"res://assets/props/Weapons/SM_Gun_Shotgun.glb":
 			return _make_definition(
-				&"shotgun", "Shotgun", &"Weapons", 10, 4,
+				&"shotgun", "Shotgun", &"Weapons", &"Weapons", 10, 4,
 				Vector3i(1, 5, 1), false, scene_path,
 				Vector3(-7.0, 10.0, -8.0), 0.90,
 				Vector3(-9.0, -20.0, -15.0), Vector3(0.34, -0.25, -0.70), 0.62
 			)
 		"res://assets/props/Hydration/SM_Metal_Can_01a.glb":
 			return _make_definition(
-				&"metal_food_can", "Food Can", &"Food", 4, 1,
+				&"metal_food_can", "Food Can", &"Food", &"Food", 4, 1,
 				Vector3i(1, 1, 1), true, scene_path,
 				Vector3(-8.0, 12.0, 0.0), 1.0,
 				Vector3(-8.0, -15.0, -3.0), Vector3(0.24, -0.20, -0.44), 0.55
 			)
 		"res://assets/props/medical/SM_Pill_Bottle_01a.glb":
 			return _make_definition(
-				&"pill_bottle_a", "Medicine Bottle", &"Medical", 3, 1,
+				&"pill_bottle_a", "Medicine Bottle", &"Medical", &"Medical", 3, 1,
 				Vector3i(1, 1, 1), true, scene_path,
 				Vector3(-8.0, 12.0, 0.0), 1.0,
 				Vector3(-8.0, -15.0, -3.0), Vector3(0.24, -0.20, -0.44), 0.55
 			)
 		"res://assets/props/medical/SM_Pill_Bottle_01b.glb":
 			return _make_definition(
-				&"pill_bottle_b", "Medicine Bottle", &"Medical", 5, 1,
+				&"pill_bottle_b", "Medicine Bottle", &"Medical", &"Medical", 5, 1,
 				Vector3i(1, 1, 1), true, scene_path,
 				Vector3(-8.0, 12.0, 0.0), 1.0,
 				Vector3(-8.0, -15.0, -3.0), Vector3(0.24, -0.20, -0.44), 0.55
@@ -140,6 +140,7 @@ static func _make_definition(
 	item_id: StringName,
 	display_name: String,
 	utility_id: StringName,
+	storage_category: StringName,
 	utility_value: int,
 	bulk: int,
 	footprint: Vector3i,
@@ -157,15 +158,7 @@ static func _make_definition(
 	definition.utility_id = utility_id
 	definition.utility_value = utility_value
 
-	# Current prototype Utility IDs map directly to the intended broad storage
-	# categories. Production ItemDefinitions may override this explicitly when
-	# storage identity and destination Utility differ.
-	var utility_category: String = String(utility_id)
-	definition.storage_category = (
-		"General"
-		if utility_category.is_empty() or utility_category == "None"
-		else utility_category
-	)
+	definition.storage_category = String(storage_category)
 
 	definition.bulk = bulk
 	definition.storage_footprint = footprint

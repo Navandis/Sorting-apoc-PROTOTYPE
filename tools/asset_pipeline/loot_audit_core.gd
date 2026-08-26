@@ -72,7 +72,7 @@ static func raw_footprint(effective_size: Vector3, cell_size_m: float) -> Dictio
 	}
 
 
-static func expected_category(source_path: String) -> String:
+static func folder_category_hint(source_path: String) -> String:
 	var parts: PackedStringArray = source_path.split("/", false)
 	for part_index: int in range(parts.size() - 1):
 		if parts[part_index].to_lower() == "props":
@@ -99,7 +99,7 @@ static func audit_flags(input: Dictionary) -> PackedStringArray:
 	var instance_scales: Array = instance_scales_value as Array
 	var mesh_count: int = int(input.get("mesh_count", 0))
 	var authored_category: String = String(input.get("authored_category", ""))
-	var expected: String = String(input.get("expected_category", ""))
+	var folder_category_hint: String = String(input.get("folder_category_hint", ""))
 	var has_item_definition: bool = bool(input.get("has_item_definition", false))
 
 	if _has_non_unit_scale(root_scale):
@@ -115,11 +115,11 @@ static func audit_flags(input: Dictionary) -> PackedStringArray:
 	if mesh_count <= 0:
 		flags.append("NO_MESH_FOUND")
 
-	if authored_category.strip_edges().is_empty() and expected.strip_edges().is_empty():
+	if authored_category.strip_edges().is_empty() and folder_category_hint.strip_edges().is_empty():
 		flags.append("CATEGORY_UNKNOWN")
-	elif not authored_category.strip_edges().is_empty() and not expected.strip_edges().is_empty():
-		if authored_category.to_lower() != expected.to_lower():
-			flags.append("CATEGORY_MISMATCH")
+	elif not authored_category.strip_edges().is_empty() and not folder_category_hint.strip_edges().is_empty():
+		if authored_category.to_lower() != folder_category_hint.to_lower():
+			flags.append("CATEGORY_FOLDER_MISMATCH")
 
 	if not has_item_definition:
 		flags.append("NO_ITEM_DEFINITION")

@@ -118,13 +118,13 @@ func get_prompt_text() -> String:
 			footprint.y
 		]
 
-	var storage_category: String = "General"
+	var storage_category: String = ""
 	if selected_item.has_method("get_storage_category"):
 		storage_category = String(selected_item.get_storage_category())
 
 	if has_valid_placement():
 		var zone_kind: String = String(_current_fit.get("zone_kind", "matching"))
-		var destination_text: String = storage_category.to_upper()
+		var destination_text: String = _storage_category_display_text(storage_category)
 
 		if zone_kind == "general":
 			destination_text = "GENERAL"
@@ -133,13 +133,13 @@ func get_prompt_text() -> String:
 
 		return "%s   •   %s\n[E] AUTO-STORE → %s   •   [M] MANUAL" % [
 			item_name,
-			storage_category.to_upper(),
+			_storage_category_display_text(storage_category),
 			destination_text
 		]
 
 	return "%s   •   %s\nNO MATCHING / GENERAL SPACE   •   [M] MANUAL" % [
 		item_name,
-		storage_category.to_upper()
+		_storage_category_display_text(storage_category)
 	]
 
 
@@ -230,7 +230,7 @@ func update_target() -> void:
 	_set_manual_debug_surface(null)
 
 	var base_footprint: Vector2i = _base_footprint(selected_item)
-	var storage_category: String = "General"
+	var storage_category: String = ""
 	if selected_item.has_method("get_storage_category"):
 		storage_category = String(selected_item.get_storage_category())
 
@@ -239,6 +239,11 @@ func update_target() -> void:
 		base_footprint,
 		true
 	)
+
+
+func _storage_category_display_text(category: String) -> String:
+	var cleaned: String = category.strip_edges()
+	return "UNCATEGORIZED" if cleaned.is_empty() else cleaned.to_upper()
 
 
 func place_selected() -> bool:

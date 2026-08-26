@@ -30,9 +30,9 @@ func get_bulk() -> int:
 
 func get_storage_category() -> String:
 	if definition == null:
-		return "General"
+		return ""
 	var category: String = definition.storage_category.strip_edges()
-	return "General" if category.is_empty() else category
+	return category
 
 
 
