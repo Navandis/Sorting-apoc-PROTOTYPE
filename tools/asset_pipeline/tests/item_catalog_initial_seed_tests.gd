@@ -7,6 +7,21 @@ const StorageCategoriesScript = preload("res://storage_categories.gd")
 const AUDIT_PATH: String = "res://reports/asset_pipeline/main_scene_loot_audit.json"
 const MANIFEST_PATH: String = "res://tools/asset_pipeline/item_authoring_review.json"
 const METAL_CAN_PATH: String = "res://assets/props/Hydration/SM_Metal_Can_01a.glb"
+const EXPECTED_STORAGE_ROTATIONS: Dictionary = {
+	"loot_000002": Vector3(0.0, 90.0, 0.0),
+	"loot_000003": Vector3(0.0, 90.0, 0.0),
+	"loot_000004": Vector3(0.0, 90.0, 0.0),
+	"loot_000019": Vector3(0.0, 130.0, 0.0),
+	"loot_000020": Vector3(0.0, 90.0, 0.0),
+	"loot_000021": Vector3(0.0, 90.0, 0.0),
+	"loot_000024": Vector3(0.0, 90.0, 0.0),
+	"loot_000027": Vector3(0.0, -120.0, 0.0),
+	"loot_000034": Vector3(-90.0, 0.0, 0.0),
+	"loot_000038": Vector3(0.0, 0.0, 90.0),
+	"loot_000039": Vector3(-90.0, 0.0, 0.0),
+	"loot_000040": Vector3(0.0, 0.0, 90.0),
+	"loot_000041": Vector3(0.0, 0.0, 180.0)
+}
 
 
 func _init() -> void:
@@ -16,13 +31,13 @@ func _init() -> void:
 
 
 # This intentionally temporary baseline catches mistakes in the one-time seed:
-# wrong identity, balance leakage, minimized Footprints, or review pose changes.
+# wrong identity, balance leakage, minimized Footprints, or unreviewed pose drift.
 func _test_initial_seed_matches_manifest_and_raw_audit_baseline() -> void:
 	var audit: Dictionary = _load_json(AUDIT_PATH)
 	var manifest: Dictionary = _load_json(MANIFEST_PATH)
 	var manifest_assets: Dictionary = manifest["assets"] as Dictionary
 	var definitions: Array = PersistentItemCatalog.get("definitions") as Array
-	assert(String(audit["schema_version"]) == "1.2")
+	assert(String(audit["schema_version"]) == "1.3")
 	assert(manifest_assets.size() == 42)
 	assert(definitions.size() == 42)
 
@@ -60,7 +75,11 @@ func _test_initial_seed_matches_manifest_and_raw_audit_baseline() -> void:
 		assert(definition.bulk == 1)
 		assert(definition.utility_id == &"None")
 		assert(definition.utility_value == 0)
-		assert(definition.storage_rotation_degrees == Vector3.ZERO)
+		var expected_rotation: Vector3 = EXPECTED_STORAGE_ROTATIONS.get(
+			item_id,
+			Vector3.ZERO
+		)
+		assert(definition.storage_rotation_degrees.is_equal_approx(expected_rotation))
 		assert(
 			definition.storage_footprint
 			== Vector3i(
