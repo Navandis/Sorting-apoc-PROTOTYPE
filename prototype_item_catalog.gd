@@ -92,14 +92,14 @@ static func create_definition_for_scene_path(scene_path: String) -> ItemDefiniti
 				Vector3(-8.0, 12.0, 0.0), 1.0,
 				Vector3(-8.0, -15.0, -3.0), Vector3(0.24, -0.20, -0.44), 0.55
 			)
-		"res://assets/props/medical/SM_Pill_Bottle_01a.glb":
+		"res://assets/props/medical/SM_CoughSyrup_01.glb":
 			return _make_definition(
 				&"pill_bottle_a", "Medicine Bottle", &"Medical", &"Medical", 3, 1,
 				Vector3i(1, 1, 1), true, scene_path,
 				Vector3(-8.0, 12.0, 0.0), 1.0,
 				Vector3(-8.0, -15.0, -3.0), Vector3(0.24, -0.20, -0.44), 0.55
 			)
-		"res://assets/props/medical/SM_Pill_Bottle_01b.glb":
+		"res://assets/props/medical/SM_Antibiotics_01.glb":
 			return _make_definition(
 				&"pill_bottle_b", "Medicine Bottle", &"Medical", &"Medical", 5, 1,
 				Vector3i(1, 1, 1), true, scene_path,
@@ -130,9 +130,9 @@ static func _scene_path_from_name(node_name: String) -> String:
 	if node_name.begins_with("SM_Metal_Can_01a"):
 		return "res://assets/props/Hydration/SM_Metal_Can_01a.glb"
 	if node_name.begins_with("SM_Pill_Bottle_01a"):
-		return "res://assets/props/medical/SM_Pill_Bottle_01a.glb"
+		return "res://assets/props/medical/SM_CoughSyrup_01.glb"
 	if node_name.begins_with("SM_Pill_Bottle_01b"):
-		return "res://assets/props/medical/SM_Pill_Bottle_01b.glb"
+		return "res://assets/props/medical/SM_Antibiotics_01.glb"
 	return ""
 
 

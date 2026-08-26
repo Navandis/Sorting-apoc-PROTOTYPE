@@ -39,7 +39,7 @@
 [ext_resource type="PackedScene" uid="uid://ch2lfbgkqqmeo" path="res://assets/props/Weapons/SM_Gun_AssaultRifle.glb" id="36_qnost"]
 [ext_resource type="PackedScene" uid="uid://d2f5gxaaygr2h" path="res://assets/props/Weapons/SM_Gun_Pistol.glb" id="37_wnkbs"]
 [ext_resource type="PackedScene" uid="uid://8ljy0ilc1v0b" path="res://assets/props/Hydration/SM_Metal_Can_01a.glb" id="38_f6a44"]
-[ext_resource type="PackedScene" uid="uid://bitn8fbqvm0su" path="res://assets/props/medical/SM_Pill_Bottle_01b.glb" id="40_hrvbo"]
+[ext_resource type="PackedScene" uid="uid://b5kdjjl24ncie" path="res://assets/props/medical/SM_Antibiotics_01.glb" id="40_hrvbo"]
 [ext_resource type="PackedScene" uid="uid://dotocyn70iqyv" path="res://assets/props/Weapons/SM_Gun_Shotgun.glb" id="41_uypp3"]
 [ext_resource type="PackedScene" uid="uid://col1kirfqto7j" path="res://assets/from_kitbash/SM_KB3D_MTM_PropKiosk_A.glb" id="44_qnost"]
 [ext_resource type="Script" uid="uid://d3rntjdid6git" path="res://carried_items.gd" id="45_carried"]
@@ -72,6 +72,7 @@
 [ext_resource type="PackedScene" uid="uid://dmkwp66fg38ct" path="res://assets/props/morale/SM_Ball_01.glb" id="72_ovcoh"]
 [ext_resource type="PackedScene" uid="uid://dqahwgcsham5a" path="res://assets/props/morale/SM_Book_01.glb" id="73_ppx11"]
 [ext_resource type="PackedScene" uid="uid://xt5xd2i71gmi" path="res://assets/props/morale/SM_CDStack_01.glb" id="74_34ol3"]
+[ext_resource type="PackedScene" uid="uid://1ku6jrgkqaxx" path="res://assets/props/medical/SM_CoughSyrup_01.glb" id="75_c2n8d"]
 [ext_resource type="PackedScene" uid="uid://bx0jdgvfenyoy" path="res://assets/props/Fuel/SM_FirewoodPile_01.glb" id="75_wy5fy"]
 [ext_resource type="PackedScene" uid="uid://v6yqq0xw4o56" path="res://assets/props/Fuel/SM_Firewood_01.glb" id="76_gx4rg"]
 
@@ -446,7 +447,7 @@ transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 5.88
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.404378, 0.8634159, 1.9641854)
 
 [node name="SM_Pill_Bottle_01b" parent="." unique_id=173001742 instance=ExtResource("40_hrvbo")]
-transform = Transform3D(-0.9582426, 0, 0.28595662, 0, 1, 0, -0.28595662, 0, -0.9582426, 6.387467, 0.88749546, 2.9489253)
+transform = Transform3D(-0.9582426, 0, 0.28595662, 0, 1, 0, -0.28595662, 0, -0.9582426, 6.387467, 0.8553457, 2.9489253)
 
 [node name="SM_Gun_Pistol2" parent="." unique_id=1862747659 instance=ExtResource("37_wnkbs")]
 transform = Transform3D(-4.371139e-08, 1, -4.371139e-08, 0, -4.371139e-08, -1, -1, -4.371139e-08, 1.9106855e-15, 0.65045, 1.192, 2.011)
@@ -566,3 +567,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.7272477, 0.86324036, -0.291
 
 [node name="SM_Firewood_01" parent="." unique_id=160822239 instance=ExtResource("76_gx4rg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.399109, 0.91281724, 0.3440461)
+
+[node name="SM_CoughSyrup_01" parent="." unique_id=590556541 instance=ExtResource("75_c2n8d")]
+transform = Transform3D(0.59482276, 0, 0.80385685, 0, 1, 0, -0.80385685, 0, 0.59482276, 6.390529, 0.85099405, 3.0536628)

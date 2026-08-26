@@ -2,6 +2,7 @@ extends SceneTree
 
 const LootAuditCoreScript = preload("res://tools/asset_pipeline/loot_audit_core.gd")
 const MainSceneLootAdapterScript = preload("res://tools/asset_pipeline/main_scene_loot_adapter.gd")
+const PrototypeItemCatalogScript = preload("res://prototype_item_catalog.gd")
 
 
 func _init() -> void:
@@ -12,6 +13,7 @@ func _init() -> void:
 	_test_category_folder_hint_is_case_insensitive()
 	_test_deterministic_ordering()
 	_test_main_scene_adapter()
+	_test_migrated_medicine_paths_preserve_item_identity()
 	print("PASS: loot audit core geometry tests")
 	quit(0)
 
@@ -108,3 +110,18 @@ func _test_main_scene_adapter() -> void:
 		assert(source_path.to_lower() >= previous_path.to_lower())
 		assert(int(record["instance_count"]) == scene_nodes.size())
 		previous_path = source_path
+
+
+func _test_migrated_medicine_paths_preserve_item_identity() -> void:
+	var cough_syrup: ItemDefinition = PrototypeItemCatalogScript.create_definition_for_scene_path(
+		"res://assets/props/medical/SM_CoughSyrup_01.glb"
+	)
+	var antibiotics: ItemDefinition = PrototypeItemCatalogScript.create_definition_for_scene_path(
+		"res://assets/props/medical/SM_Antibiotics_01.glb"
+	)
+	assert(cough_syrup != null)
+	assert(antibiotics != null)
+	assert(cough_syrup.item_id == &"pill_bottle_a")
+	assert(cough_syrup.display_name == "Medicine Bottle")
+	assert(antibiotics.item_id == &"pill_bottle_b")
+	assert(antibiotics.display_name == "Medicine Bottle")
