@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_m8oc2"]
+[ext_resource type="PackedScene" path="res://assets/props/protection/SM_Armor_02.glb" id="2_2q0xq"]
+
+[resource]
+script = ExtResource("1_m8oc2")
+item_id = &"loot_000032"
+display_name = "Armor 02"
+storage_category = "Protection"
+storage_footprint = Vector3i(4, 3, 1)
+visual_scene = ExtResource("2_2q0xq")

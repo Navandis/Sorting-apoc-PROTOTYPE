@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_csk4h"]
+[ext_resource type="PackedScene" path="res://assets/props/Weapons/SM_Hammer_3.glb" id="2_ijeao"]
+
+[resource]
+script = ExtResource("1_csk4h")
+item_id = &"loot_000041"
+display_name = "Hammer 3"
+storage_category = "Weapons"
+visual_scene = ExtResource("2_ijeao")

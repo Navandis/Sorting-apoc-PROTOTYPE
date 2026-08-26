@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_ewrh4"]
+[ext_resource type="PackedScene" path="res://assets/props/Food/SM_Dry_Goods_01a.glb" id="2_nnkbs"]
+
+[resource]
+script = ExtResource("1_ewrh4")
+item_id = &"loot_000008"
+display_name = "Dry Goods 01a"
+storage_category = "Food"
+visual_scene = ExtResource("2_nnkbs")

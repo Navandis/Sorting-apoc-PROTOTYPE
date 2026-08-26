@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_cvlu1"]
+[ext_resource type="PackedScene" path="res://assets/props/Fuel/SM_FuelCanister.glb" id="2_qmnta"]
+
+[resource]
+script = ExtResource("1_cvlu1")
+item_id = &"loot_000015"
+display_name = "Fuel Canister"
+storage_category = "Fuel"
+storage_footprint = Vector3i(4, 2, 1)
+visual_scene = ExtResource("2_qmnta")

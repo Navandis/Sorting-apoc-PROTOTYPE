@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_d0o8s"]
+[ext_resource type="PackedScene" path="res://assets/props/Weapons/tennis_racket.glb" id="2_erwye"]
+
+[resource]
+script = ExtResource("1_d0o8s")
+item_id = &"loot_000042"
+display_name = "Tennis Racket"
+storage_category = "Weapons"
+storage_footprint = Vector3i(3, 6, 1)
+visual_scene = ExtResource("2_erwye")

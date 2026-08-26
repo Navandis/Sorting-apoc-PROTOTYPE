@@ -13,7 +13,7 @@ func _init() -> void:
 	_test_category_folder_hint_is_case_insensitive()
 	_test_deterministic_ordering()
 	_test_main_scene_adapter()
-	_test_migrated_medicine_paths_preserve_item_identity()
+	_test_migrated_medicine_paths_use_stable_authoring_identity()
 	print("PASS: loot audit core geometry tests")
 	quit(0)
 
@@ -112,7 +112,7 @@ func _test_main_scene_adapter() -> void:
 		previous_path = source_path
 
 
-func _test_migrated_medicine_paths_preserve_item_identity() -> void:
+func _test_migrated_medicine_paths_use_stable_authoring_identity() -> void:
 	var cough_syrup: ItemDefinition = PrototypeItemCatalogScript.create_definition_for_scene_path(
 		"res://assets/props/medical/SM_CoughSyrup_01.glb"
 	)
@@ -121,7 +121,7 @@ func _test_migrated_medicine_paths_preserve_item_identity() -> void:
 	)
 	assert(cough_syrup != null)
 	assert(antibiotics != null)
-	assert(cough_syrup.item_id == &"pill_bottle_a")
+	assert(cough_syrup.item_id == &"loot_000027")
 	assert(cough_syrup.display_name == "Medicine Bottle")
-	assert(antibiotics.item_id == &"pill_bottle_b")
+	assert(antibiotics.item_id == &"loot_000025")
 	assert(antibiotics.display_name == "Medicine Bottle")

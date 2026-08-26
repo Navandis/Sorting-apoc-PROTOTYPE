@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_2umtp"]
+[ext_resource type="PackedScene" path="res://assets/props/morale/SM_CDStack_01.glb" id="2_x85nn"]
+
+[resource]
+script = ExtResource("1_2umtp")
+item_id = &"loot_000031"
+display_name = "CDStack 01"
+storage_category = "Morale"
+storage_footprint = Vector3i(2, 2, 1)
+visual_scene = ExtResource("2_x85nn")

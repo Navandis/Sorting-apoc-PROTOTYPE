@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_4unj2"]
+[ext_resource type="PackedScene" path="res://assets/props/electronics/SM_ComputerTower_01.glb" id="2_rdp2c"]
+
+[resource]
+script = ExtResource("1_4unj2")
+item_id = &"loot_000002"
+display_name = "Computer Tower 01"
+storage_category = "Electronics"
+storage_footprint = Vector3i(3, 5, 1)
+visual_scene = ExtResource("2_rdp2c")

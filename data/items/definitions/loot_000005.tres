@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_4yt26"]
+[ext_resource type="PackedScene" path="res://assets/props/Food/cereal_box.glb" id="2_ch7y2"]
+
+[resource]
+script = ExtResource("1_4yt26")
+item_id = &"loot_000005"
+display_name = "Cereal Box"
+storage_category = "Food"
+storage_footprint = Vector3i(2, 1, 1)
+visual_scene = ExtResource("2_ch7y2")

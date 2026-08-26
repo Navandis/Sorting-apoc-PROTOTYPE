@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_k5bpm"]
+[ext_resource type="PackedScene" path="res://assets/props/Hydration/soda_can.glb" id="2_e6p74"]
+
+[resource]
+script = ExtResource("1_k5bpm")
+item_id = &"loot_000023"
+display_name = "Soda Can"
+storage_category = "Hydration"
+visual_scene = ExtResource("2_e6p74")

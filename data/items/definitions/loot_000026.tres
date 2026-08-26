@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_cre0t"]
+[ext_resource type="PackedScene" path="res://assets/props/medical/SM_Bandages_1.glb" id="2_lnkr5"]
+
+[resource]
+script = ExtResource("1_cre0t")
+item_id = &"loot_000026"
+display_name = "Bandages 1"
+storage_category = "Medical"
+storage_footprint = Vector3i(2, 2, 1)
+visual_scene = ExtResource("2_lnkr5")

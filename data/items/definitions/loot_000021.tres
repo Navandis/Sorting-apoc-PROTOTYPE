@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_d6tau"]
+[ext_resource type="PackedScene" path="res://assets/props/Hydration/SM_OrangeJuice_1.glb" id="2_fn00t"]
+
+[resource]
+script = ExtResource("1_d6tau")
+item_id = &"loot_000021"
+display_name = "Orange Juice 1"
+storage_category = "Hydration"
+visual_scene = ExtResource("2_fn00t")

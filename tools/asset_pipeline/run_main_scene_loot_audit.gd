@@ -1,6 +1,7 @@
 extends SceneTree
 
 const LootAuditCoreScript = preload("res://tools/asset_pipeline/loot_audit_core.gd")
+const AuthoringReviewManifestScript = preload("res://tools/asset_pipeline/authoring_review_manifest.gd")
 const MainSceneLootAdapterScript = preload("res://tools/asset_pipeline/main_scene_loot_adapter.gd")
 const PrototypeItemCatalogScript = preload("res://prototype_item_catalog.gd")
 const StoragePrototypeManagerScript = preload("res://storage_prototype_manager.gd")
@@ -9,7 +10,8 @@ const MAIN_SCENE_PATH: String = "res://main.tscn"
 const REPORT_DIRECTORY: String = "res://reports/asset_pipeline"
 const CSV_REPORT_PATH: String = REPORT_DIRECTORY + "/main_scene_loot_audit.csv"
 const JSON_REPORT_PATH: String = REPORT_DIRECTORY + "/main_scene_loot_audit.json"
-const SCHEMA_VERSION: String = "1.1"
+const AUTHORING_REVIEW_MANIFEST_PATH: String = "res://tools/asset_pipeline/item_authoring_review.json"
+const SCHEMA_VERSION: String = "1.2"
 
 
 func _init() -> void:
@@ -21,9 +23,13 @@ func _run_audit() -> int:
 	var scene_records: Array[Dictionary] = MainSceneLootAdapterScript.enumerate_loot_instances(
 		MAIN_SCENE_PATH
 	)
+	var authoring_review_manifest: Dictionary = AuthoringReviewManifestScript.load_manifest(
+		AUTHORING_REVIEW_MANIFEST_PATH
+	)
 	var audit_records: Array[Dictionary] = []
 	for scene_record: Dictionary in scene_records:
 		audit_records.append(_audit_asset(scene_record, cell_size_m))
+	_enrich_authoring_review_evidence(audit_records, authoring_review_manifest)
 
 	var sorted_records: Array[Dictionary] = LootAuditCoreScript.sort_records(audit_records)
 	if not _write_reports(sorted_records, cell_size_m):
@@ -82,12 +88,14 @@ func _audit_asset(scene_record: Dictionary, cell_size_m: float) -> Dictionary:
 	var display_name: String = ""
 	var existing_footprint: Vector3i = Vector3i.ZERO
 	var bulk: int = 0
+	var storage_rotation_degrees: Vector3 = Vector3.ZERO
 	if has_item_definition:
 		authored_category = definition.storage_category
 		item_id = String(definition.item_id)
 		display_name = definition.display_name
 		existing_footprint = definition.storage_footprint
 		bulk = definition.bulk
+		storage_rotation_degrees = definition.storage_rotation_degrees
 
 	var folder_category_hint: String = LootAuditCoreScript.folder_category_hint(source_path)
 	var category_source: String = _category_source(
@@ -124,6 +132,8 @@ func _audit_asset(scene_record: Dictionary, cell_size_m: float) -> Dictionary:
 		"instance_count": int(scene_record.get("instance_count", 0)),
 		"instance_transforms": scene_record.get("instance_transforms", []),
 		"item_id": item_id,
+		"has_item_definition": has_item_definition,
+		"source_fingerprint": AuthoringReviewManifestScript.fingerprint_for_path(source_path),
 		"display_name": display_name,
 		"authored_category": authored_category,
 		"folder_category_hint": folder_category_hint,
@@ -151,10 +161,65 @@ func _audit_asset(scene_record: Dictionary, cell_size_m: float) -> Dictionary:
 		"raw_orientation_a": String(raw_footprint["orientation_a"]),
 		"raw_orientation_b": String(raw_footprint["orientation_b"]),
 		"existing_footprint": _serialize_vector3i(existing_footprint),
+		"storage_rotation_degrees": _vector3_array(storage_rotation_degrees) if has_item_definition else [],
+		"storage_footprint": _vector3i_array(existing_footprint) if has_item_definition else [],
+		"authoring_key": "",
+		"scale_review_status": "UNTRACKED",
+		"scale_review_current": false,
+		"storage_pose_review_status": "UNTRACKED",
+		"storage_pose_review_current": false,
+		"footprint_review_status": "UNTRACKED",
+		"footprint_review_current": false,
 		"bulk": bulk,
 		"flags": _packed_strings_to_array(flags),
 		"notes": notes
 	}
+
+
+func _enrich_authoring_review_evidence(
+	audit_records: Array[Dictionary], authoring_review_manifest: Dictionary
+) -> void:
+	var current_assets: Array[Dictionary] = []
+	for record: Dictionary in audit_records:
+		current_assets.append({
+			"source_path": record["source_path"],
+			"item_id": record["item_id"],
+			"source_fingerprint": record["source_fingerprint"],
+			"has_item_definition": record["has_item_definition"],
+			"storage_rotation_degrees": record["storage_rotation_degrees"],
+			"storage_footprint": record["storage_footprint"]
+		})
+	var matches: Array[Dictionary] = AuthoringReviewManifestScript.correlate_current_assets(
+		authoring_review_manifest,
+		current_assets
+	)
+	var manifest_assets: Dictionary = authoring_review_manifest.get("assets", {}) as Dictionary
+	for record_index: int in range(audit_records.size()):
+		var record: Dictionary = audit_records[record_index]
+		var match: Dictionary = matches[record_index]
+		var combined_flags: PackedStringArray = _array_to_packed_strings(record["flags"])
+		var authoring_key: String = String(match["authoring_key"])
+		if authoring_key.is_empty():
+			combined_flags.append(String(match["problem_flag"]))
+		else:
+			record["authoring_key"] = authoring_key
+			var correlation_problem_flag: String = String(match["problem_flag"])
+			if not correlation_problem_flag.is_empty():
+				combined_flags.append(correlation_problem_flag)
+			var evidence: Dictionary = AuthoringReviewManifestScript.review_evidence(
+				manifest_assets[authoring_key] as Dictionary,
+				match["asset"] as Dictionary
+			)
+			record["scale_review_status"] = evidence["scale_review_status"]
+			record["scale_review_current"] = evidence["scale_review_current"]
+			record["storage_pose_review_status"] = evidence["storage_pose_review_status"]
+			record["storage_pose_review_current"] = evidence["storage_pose_review_current"]
+			record["footprint_review_status"] = evidence["footprint_review_status"]
+			record["footprint_review_current"] = evidence["footprint_review_current"]
+			for flag: String in evidence["flags"] as PackedStringArray:
+				combined_flags.append(flag)
+		record["flags"] = _packed_strings_to_array(LootAuditCoreScript.ordered_flags(combined_flags))
+		audit_records[record_index] = record
 
 
 func _collect_mesh_contributors(
@@ -189,6 +254,9 @@ func _write_reports(records: Array[Dictionary], cell_size_m: float) -> bool:
 
 	var report: Dictionary = {
 		"schema_version": SCHEMA_VERSION,
+		"authoring_review_manifest_schema_version": String(
+			AuthoringReviewManifestScript.SCHEMA_VERSION
+		),
 		"audit_configuration": {
 			"cell_size_m": cell_size_m,
 			"storage_axes": {
@@ -217,20 +285,24 @@ func _write_text_file(path: String, content: String) -> bool:
 
 func _csv_text(records: Array[Dictionary]) -> String:
 	var headers: PackedStringArray = [
-		"asset_key", "source_path", "scene_nodes", "instance_count", "item_id",
+		"asset_key", "source_path", "authoring_key", "source_fingerprint", "scene_nodes", "instance_count", "item_id",
 		"display_name", "authored_category", "folder_category_hint", "category_source",
 		"mesh_count", "root_local_bounds", "effective_canonical_bounds", "width_m",
 		"height_m", "depth_m", "origin_offset_m", "longest_dimension_m",
 		"shortest_dimension_m", "aspect_ratio", "asset_root_scale",
 		"scene_instance_scales", "cell_size_m", "storage_width_axis",
 		"storage_depth_axis", "raw_width_cells", "raw_depth_cells", "raw_orientation_a",
-		"raw_orientation_b", "existing_footprint", "bulk", "flags", "notes"
+		"raw_orientation_b", "existing_footprint", "bulk", "scale_review_status", "scale_review_current",
+		"storage_pose_review_status", "storage_pose_review_current", "footprint_review_status",
+		"footprint_review_current", "flags", "notes"
 	]
 	var lines: PackedStringArray = [",".join(headers)]
 	for record: Dictionary in records:
 		var row: Array[String] = [
 			str(record["asset_key"]),
 			str(record["source_path"]),
+			str(record["authoring_key"]),
+			str(record["source_fingerprint"]),
 			_json_inline(record["scene_nodes"]),
 			str(record["instance_count"]),
 			str(record["item_id"]),
@@ -259,6 +331,12 @@ func _csv_text(records: Array[Dictionary]) -> String:
 			str(record["raw_orientation_b"]),
 			_json_inline(record["existing_footprint"]),
 			str(record["bulk"]),
+			str(record["scale_review_status"]),
+			str(record["scale_review_current"]),
+			str(record["storage_pose_review_status"]),
+			str(record["storage_pose_review_current"]),
+			str(record["footprint_review_status"]),
+			str(record["footprint_review_current"]),
 			_json_inline(record["flags"]),
 			_json_inline(record["notes"])
 		]
@@ -351,6 +429,22 @@ func _serialize_vector3(value: Vector3) -> Dictionary:
 
 func _serialize_vector3i(value: Vector3i) -> Dictionary:
 	return {"x": value.x, "y": value.y, "z": value.z}
+
+
+func _vector3_array(value: Vector3) -> Array[float]:
+	return [value.x, value.y, value.z]
+
+
+func _vector3i_array(value: Vector3i) -> Array[int]:
+	return [value.x, value.y, value.z]
+
+
+func _array_to_packed_strings(value: Variant) -> PackedStringArray:
+	var result: PackedStringArray = []
+	if value is Array:
+		for entry: Variant in value as Array:
+			result.append(String(entry))
+	return result
 
 
 func _vector3_from_dictionary(value: Dictionary) -> Vector3:

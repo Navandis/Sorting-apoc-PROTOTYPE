@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_1sxj3"]
+[ext_resource type="PackedScene" path="res://assets/props/Fuel/SM_FirewoodPile_01.glb" id="2_g0f3g"]
+
+[resource]
+script = ExtResource("1_1sxj3")
+item_id = &"loot_000014"
+display_name = "Firewood Pile 01"
+storage_category = "Fuel"
+storage_footprint = Vector3i(7, 5, 1)
+visual_scene = ExtResource("2_g0f3g")

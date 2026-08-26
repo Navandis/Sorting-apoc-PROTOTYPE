@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_tdnvf"]
+[ext_resource type="PackedScene" path="res://assets/props/Food/SM_Bread_1.glb" id="2_kvxym"]
+
+[resource]
+script = ExtResource("1_tdnvf")
+item_id = &"loot_000006"
+display_name = "Bread 1"
+storage_category = "Food"
+storage_footprint = Vector3i(2, 2, 1)
+visual_scene = ExtResource("2_kvxym")

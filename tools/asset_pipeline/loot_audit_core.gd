@@ -8,6 +8,16 @@ const EXTREME_ASPECT_RATIO: float = 8.0
 const OFF_CENTER_MIN_M: float = 0.10
 const OFF_CENTER_LONGEST_FRACTION: float = 0.25
 
+const FLAG_ORDER: PackedStringArray = [
+	"NON_UNIT_ROOT_SCALE", "NON_UNIFORM_SCALE", "NON_UNIT_INSTANCE_SCALE",
+	"INSTANCE_SCALE_VARIANCE", "MULTI_MESH", "NO_MESH_FOUND", "CATEGORY_UNKNOWN",
+	"CATEGORY_FOLDER_MISMATCH", "NO_ITEM_DEFINITION", "VERY_SMALL", "VERY_LARGE",
+	"EXTREME_ASPECT_RATIO", "OFF_CENTER_BOUNDS", "EXISTING_FOOTPRINT_SMALLER_THAN_RAW_BOUNDS",
+	"IRREGULAR_REVIEW", "AUTHORING_REVIEW_UNTRACKED", "AUTHORING_REVIEW_AMBIGUOUS",
+	"AUTHORING_REVIEW_PATH_STALE",
+	"SCALE_REVIEW_STALE", "STORAGE_POSE_REVIEW_STALE", "FOOTPRINT_REVIEW_STALE"
+]
+
 const IRREGULAR_PATH_FAMILIES: PackedStringArray = [
 	"rifle",
 	"shotgun",
@@ -169,6 +179,25 @@ static func sort_records(records: Array[Dictionary]) -> Array[Dictionary]:
 	for record: Dictionary in records:
 		ordered.append(record.duplicate(true))
 	ordered.sort_custom(_record_path_less_than)
+	return ordered
+
+
+static func ordered_flags(values: PackedStringArray) -> PackedStringArray:
+	var present: Dictionary = {}
+	for value: String in values:
+		present[value] = true
+	var ordered: PackedStringArray = []
+	for known_flag: String in FLAG_ORDER:
+		if present.has(known_flag):
+			ordered.append(known_flag)
+	var unknown_flags: Array[String] = []
+	for value: String in present.keys():
+		var flag: String = String(value)
+		if not FLAG_ORDER.has(flag):
+			unknown_flags.append(flag)
+	unknown_flags.sort()
+	for flag: String in unknown_flags:
+		ordered.append(flag)
 	return ordered
 
 

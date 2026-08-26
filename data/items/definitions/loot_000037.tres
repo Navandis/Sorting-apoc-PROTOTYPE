@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_y17jb"]
+[ext_resource type="PackedScene" path="res://assets/props/Weapons/hammer.glb" id="2_vw8dg"]
+
+[resource]
+script = ExtResource("1_y17jb")
+item_id = &"loot_000037"
+display_name = "Hammer"
+storage_category = "Weapons"
+storage_footprint = Vector3i(4, 1, 1)
+visual_scene = ExtResource("2_vw8dg")
