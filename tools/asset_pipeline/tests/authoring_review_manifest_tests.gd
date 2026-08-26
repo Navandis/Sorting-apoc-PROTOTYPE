@@ -11,7 +11,11 @@ func _init() -> void:
 	_test_item_id_matched_rename_updates_source_path()
 	_test_ambiguous_fingerprint_does_not_correlate()
 	_test_fingerprint_change_stales_completed_scale_decision()
-	_test_rotation_change_stales_completed_pose_decision()
+	_test_rotation_change_stales_default_pose_approval()
+	_test_rotation_change_stales_custom_pose_approval()
+	_test_candidate_tuning_does_not_stale_custom_pose_required()
+	_test_fingerprint_change_stales_every_completed_pose_decision()
+	_test_unresolved_pose_blocks_completed_footprint_review()
 	_test_footprint_change_stales_completed_footprint_decision()
 	_test_rotation_change_stales_completed_footprint_decision()
 	_test_unreviewed_decisions_are_not_stale()
@@ -110,14 +114,58 @@ func _test_fingerprint_change_stales_completed_scale_decision() -> void:
 	assert((evidence["flags"] as PackedStringArray).has("SCALE_REVIEW_STALE"))
 
 
-func _test_rotation_change_stales_completed_pose_decision() -> void:
+func _test_rotation_change_stales_default_pose_approval() -> void:
 	var record: Dictionary = AuthoringReviewManifestScript.new_record(_asset("res://a.glb", "", "same"))
-	(record["storage_pose_review"] as Dictionary)["status"] = "CUSTOM_POSE_REQUIRED"
+	(record["storage_pose_review"] as Dictionary)["status"] = "DEFAULT_POSE_APPROVED"
 	(record["storage_pose_review"] as Dictionary)["reviewed_source_fingerprint"] = "same"
 	(record["storage_pose_review"] as Dictionary)["reviewed_rotation_degrees"] = [0.0, 0.0, 0.0]
 	var evidence: Dictionary = AuthoringReviewManifestScript.review_evidence(record, _asset("res://a.glb", "", "same", [0.0, 90.0, 0.0]))
 	assert(not bool(evidence["storage_pose_review_current"]))
 	assert((evidence["flags"] as PackedStringArray).has("STORAGE_POSE_REVIEW_STALE"))
+
+
+func _test_rotation_change_stales_custom_pose_approval() -> void:
+	var record: Dictionary = AuthoringReviewManifestScript.new_record(_asset("res://a.glb", "", "same"))
+	(record["storage_pose_review"] as Dictionary)["status"] = "CUSTOM_POSE_APPROVED"
+	(record["storage_pose_review"] as Dictionary)["reviewed_source_fingerprint"] = "same"
+	(record["storage_pose_review"] as Dictionary)["reviewed_rotation_degrees"] = [90.0, 0.0, 0.0]
+	var evidence: Dictionary = AuthoringReviewManifestScript.review_evidence(record, _asset("res://a.glb", "", "same", [0.0, 0.0, 90.0]))
+	assert(not bool(evidence["storage_pose_review_current"]))
+	assert((evidence["flags"] as PackedStringArray).has("STORAGE_POSE_REVIEW_STALE"))
+
+
+func _test_candidate_tuning_does_not_stale_custom_pose_required() -> void:
+	var record: Dictionary = AuthoringReviewManifestScript.new_record(_asset("res://a.glb", "", "same"))
+	(record["storage_pose_review"] as Dictionary)["status"] = "CUSTOM_POSE_REQUIRED"
+	(record["storage_pose_review"] as Dictionary)["reviewed_source_fingerprint"] = "same"
+	(record["storage_pose_review"] as Dictionary)["reviewed_rotation_degrees"] = [0.0, 0.0, 0.0]
+	var evidence: Dictionary = AuthoringReviewManifestScript.review_evidence(record, _asset("res://a.glb", "", "same", [90.0, 45.0, 10.0]))
+	assert(bool(evidence["storage_pose_review_current"]))
+	assert(not (evidence["flags"] as PackedStringArray).has("STORAGE_POSE_REVIEW_STALE"))
+
+
+func _test_fingerprint_change_stales_every_completed_pose_decision() -> void:
+	for status: String in ["DEFAULT_POSE_APPROVED", "CUSTOM_POSE_REQUIRED", "CUSTOM_POSE_APPROVED"]:
+		var record: Dictionary = AuthoringReviewManifestScript.new_record(_asset("res://a.glb", "", "old"))
+		(record["storage_pose_review"] as Dictionary)["status"] = status
+		(record["storage_pose_review"] as Dictionary)["reviewed_source_fingerprint"] = "old"
+		var evidence: Dictionary = AuthoringReviewManifestScript.review_evidence(record, _asset("res://a.glb", "", "new"))
+		assert(not bool(evidence["storage_pose_review_current"]))
+		assert((evidence["flags"] as PackedStringArray).has("STORAGE_POSE_REVIEW_STALE"))
+
+
+func _test_unresolved_pose_blocks_completed_footprint_review() -> void:
+	var record: Dictionary = AuthoringReviewManifestScript.new_record(_asset("res://pants.glb", "", "same"))
+	(record["storage_pose_review"] as Dictionary)["status"] = "CUSTOM_POSE_REQUIRED"
+	(record["storage_pose_review"] as Dictionary)["reviewed_source_fingerprint"] = "same"
+	(record["footprint_review"] as Dictionary)["status"] = "GEOMETRY_APPROVED"
+	(record["footprint_review"] as Dictionary)["reviewed_source_fingerprint"] = "same"
+	(record["footprint_review"] as Dictionary)["reviewed_footprint"] = [1, 1, 1]
+	(record["footprint_review"] as Dictionary)["reviewed_rotation_degrees"] = [0.0, 0.0, 0.0]
+	var evidence: Dictionary = AuthoringReviewManifestScript.review_evidence(record, _asset("res://pants.glb", "", "same"))
+	assert(bool(evidence["storage_pose_review_current"]))
+	assert(not bool(evidence["footprint_review_current"]))
+	assert((evidence["flags"] as PackedStringArray).has("FOOTPRINT_REVIEW_STALE"))
 
 
 func _test_footprint_change_stales_completed_footprint_decision() -> void:

@@ -14,6 +14,7 @@ const SCALE_COMPLETED: PackedStringArray = ["APPROVED", "NORMALIZATION_REQUIRED"
 const POSE_COMPLETED: PackedStringArray = [
 	"DEFAULT_POSE_APPROVED", "CUSTOM_POSE_REQUIRED", "CUSTOM_POSE_APPROVED"
 ]
+const POSE_APPROVED: PackedStringArray = ["DEFAULT_POSE_APPROVED", "CUSTOM_POSE_APPROVED"]
 const FOOTPRINT_COMPLETED: PackedStringArray = ["GEOMETRY_APPROVED", "OVERRIDE_APPROVED"]
 
 
@@ -258,15 +259,29 @@ static func review_evidence(record: Dictionary, current_asset: Dictionary) -> Di
 
 	var pose_current: bool = false
 	if has_item_definition:
-		pose_current = _review_current(pose_review, POSE_COMPLETED, current_fingerprint) and _arrays_approximately_equal(
-			_array_value(pose_review.get("reviewed_rotation_degrees", [])), current_rotation
+		var pose_status: String = String(pose_review.get("status", "UNREVIEWED"))
+		var pose_fingerprint_current: bool = _review_current(
+			pose_review,
+			POSE_COMPLETED,
+			current_fingerprint
 		)
+		if pose_status == "CUSTOM_POSE_REQUIRED":
+			pose_current = pose_fingerprint_current
+		elif POSE_APPROVED.has(pose_status):
+			pose_current = pose_fingerprint_current and _arrays_approximately_equal(
+				_array_value(pose_review.get("reviewed_rotation_degrees", [])),
+				current_rotation
+			)
 		if _is_completed(pose_review, POSE_COMPLETED) and not pose_current:
 			flags.append(FLAG_POSE_STALE)
 
 	var footprint_current: bool = false
 	if has_item_definition:
-		footprint_current = _review_current(footprint_review, FOOTPRINT_COMPLETED, current_fingerprint) \
+		var pose_approved_for_footprint: bool = pose_current and POSE_APPROVED.has(
+			String(pose_review.get("status", "UNREVIEWED"))
+		)
+		footprint_current = pose_approved_for_footprint \
+			and _review_current(footprint_review, FOOTPRINT_COMPLETED, current_fingerprint) \
 			and _arrays_equal(_array_value(footprint_review.get("reviewed_footprint", [])), current_footprint) \
 			and _arrays_approximately_equal(
 				_array_value(footprint_review.get("reviewed_rotation_degrees", [])), current_rotation
