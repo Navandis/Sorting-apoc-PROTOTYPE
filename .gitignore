@@ -23,3 +23,4 @@ mono_crash.*.json
 # OS junk
 .DS_Store
 Thumbs.db
+/reports/asset_pipeline/
