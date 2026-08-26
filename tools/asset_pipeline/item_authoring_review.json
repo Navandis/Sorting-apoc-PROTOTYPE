@@ -193,9 +193,9 @@
 			},
 			"item_id": "loot_000006",
 			"scale_review": {
-				"notes": "Normalized after initial scale review; pending in-game recheck.",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"notes": "",
+				"reviewed_source_fingerprint": "3b8fd17ed3f0ef8a84d49f999266277f375a787fea0579cf4002fec0598f6dde",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "3b8fd17ed3f0ef8a84d49f999266277f375a787fea0579cf4002fec0598f6dde",
 			"source_path": "res://assets/props/Food/SM_Bread_1.glb",
@@ -403,9 +403,9 @@
 			},
 			"item_id": "loot_000012",
 			"scale_review": {
-				"notes": "Normalized after initial scale review; pending in-game recheck.",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"notes": "",
+				"reviewed_source_fingerprint": "cedc1401c90bc6bf2733ca2648ee4ab9daf5a85c1fa724cca2a70a4de3173e15",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "cedc1401c90bc6bf2733ca2648ee4ab9daf5a85c1fa724cca2a70a4de3173e15",
 			"source_path": "res://assets/props/Food/SM_Watermelon_1.glb",
@@ -753,9 +753,9 @@
 			},
 			"item_id": "loot_000022",
 			"scale_review": {
-				"notes": "Normalized after initial scale review; pending in-game recheck.",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"notes": "",
+				"reviewed_source_fingerprint": "632f4ce2e4d333fbd2417b0581c7dacc987108d24a440d62772bcc86ddf9a7fa",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "632f4ce2e4d333fbd2417b0581c7dacc987108d24a440d62772bcc86ddf9a7fa",
 			"source_path": "res://assets/props/Hydration/SM_SodaCan.glb",
@@ -998,9 +998,9 @@
 			},
 			"item_id": "loot_000029",
 			"scale_review": {
-				"notes": "Normalized after initial scale review; pending in-game recheck.",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"notes": "",
+				"reviewed_source_fingerprint": "0c39f0837ab52a56e7ae6504fa0aeeaa414d44fc25a2dd011757598cb047218f",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "0c39f0837ab52a56e7ae6504fa0aeeaa414d44fc25a2dd011757598cb047218f",
 			"source_path": "res://assets/props/morale/SM_Ball_01.glb",
@@ -1138,9 +1138,9 @@
 			},
 			"item_id": "loot_000033",
 			"scale_review": {
-				"notes": "Normalized after initial scale review; pending in-game recheck.",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"notes": "",
+				"reviewed_source_fingerprint": "280514a80eeffbee0ea34cb0f6ec7987a16ee29b087da9694f9401132e98e1a2",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "280514a80eeffbee0ea34cb0f6ec7987a16ee29b087da9694f9401132e98e1a2",
 			"source_path": "res://assets/props/protection/SM_Boots_01.glb",
@@ -1173,9 +1173,9 @@
 			},
 			"item_id": "loot_000034",
 			"scale_review": {
-				"notes": "Normalized after initial scale review; pending in-game recheck.",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"notes": "",
+				"reviewed_source_fingerprint": "5645b56b9506c5014a05930c49de6d75661c0df8498848e5d2bdc7f402e94eed",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "5645b56b9506c5014a05930c49de6d75661c0df8498848e5d2bdc7f402e94eed",
 			"source_path": "res://assets/props/protection/SM_Gloves_02.glb",
@@ -1348,9 +1348,9 @@
 			},
 			"item_id": "loot_000039",
 			"scale_review": {
-				"notes": "Normalized after initial scale review; pending in-game recheck.",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"notes": "",
+				"reviewed_source_fingerprint": "e77eed4043544e371dceb36fd99a138fed4fbd4570b8d2fe75ee6d097b568fac",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "e77eed4043544e371dceb36fd99a138fed4fbd4570b8d2fe75ee6d097b568fac",
 			"source_path": "res://assets/props/Weapons/SM_Gun_Pistol.glb",
