@@ -8,6 +8,8 @@ const PrototypeItemCatalogScript = preload("res://prototype_item_catalog.gd")
 func _init() -> void:
 	_test_transformed_bounds()
 	_test_multi_mesh_aggregation()
+	_test_posed_contributors_compose_authored_pose_before_contributor_transform()
+	_test_posed_raw_footprint_uses_posed_xz_without_changing_canonical_bounds()
 	_test_cell_rounding_and_orientations()
 	_test_category_folder_mismatch_and_footprint_underflow()
 	_test_category_folder_hint_is_case_insensitive()
@@ -43,6 +45,55 @@ func _test_multi_mesh_aggregation() -> void:
 	assert(bool(result["valid"]))
 	assert(int(result["mesh_count"]) == 2)
 	assert(is_equal_approx(bounds.size.x, 3.0))
+
+
+# Catches reversing authored_pose * contributor_to_asset_root, which loses the
+# intended asset-root pose when GLB children have their own transforms.
+func _test_posed_contributors_compose_authored_pose_before_contributor_transform() -> void:
+	var contributor_to_asset_root: Transform3D = Transform3D(
+		Basis(Vector3.UP, PI * 0.5),
+		Vector3(2.0, 0.0, 0.0)
+	)
+	var authored_pose: Transform3D = Transform3D(
+		Basis(Vector3.BACK, PI * 0.5),
+		Vector3.ZERO
+	)
+	var contributors: Array[Dictionary] = [{
+		"bounds": AABB(Vector3.ZERO, Vector3(1.0, 2.0, 1.0)),
+		"transform": contributor_to_asset_root
+	}]
+	var result: Dictionary = LootAuditCoreScript.aggregate_posed_contributors(
+		contributors,
+		authored_pose
+	)
+	var bounds: AABB = result["bounds"] as AABB
+	assert(bounds.position.is_equal_approx(Vector3(-2.0, 2.0, -1.0)))
+	assert(bounds.size.is_equal_approx(Vector3(2.0, 1.0, 1.0)))
+
+
+# Catches posed Footprint evidence accidentally reusing canonical X/Z.
+func _test_posed_raw_footprint_uses_posed_xz_without_changing_canonical_bounds() -> void:
+	var contributors: Array[Dictionary] = [{
+		"bounds": AABB(Vector3.ZERO, Vector3(1.1, 2.2, 3.3)),
+		"transform": Transform3D.IDENTITY
+	}]
+	var canonical_result: Dictionary = LootAuditCoreScript.aggregate_contributors(contributors)
+	var posed_result: Dictionary = LootAuditCoreScript.aggregate_posed_contributors(
+		contributors,
+		Transform3D(Basis(Vector3.RIGHT, PI * 0.5), Vector3.ZERO)
+	)
+	var canonical_bounds: AABB = canonical_result["bounds"] as AABB
+	var posed_bounds: AABB = posed_result["bounds"] as AABB
+	var posed_footprint: Dictionary = LootAuditCoreScript.raw_footprint(
+		posed_bounds.size,
+		0.5
+	)
+	assert(canonical_bounds.size.is_equal_approx(Vector3(1.1, 2.2, 3.3)))
+	assert(posed_bounds.size.is_equal_approx(Vector3(1.1, 3.3, 2.2)))
+	assert(int(posed_footprint["width_cells"]) == 3)
+	assert(int(posed_footprint["depth_cells"]) == 5)
+	assert(String(posed_footprint["orientation_a"]) == "3x5")
+	assert(String(posed_footprint["orientation_b"]) == "5x3")
 
 
 func _test_cell_rounding_and_orientations() -> void:

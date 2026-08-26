@@ -21,7 +21,7 @@ func _init() -> void:
 	assert(parser.parse(file.get_as_text()) == OK)
 	file.close()
 	var report: Dictionary = parser.data as Dictionary
-	assert(String(report["schema_version"]) == "1.2")
+	assert(String(report["schema_version"]) == "1.3")
 	assert(String(report["authoring_review_manifest_schema_version"]) == "1.0")
 	var assets: Array = report["assets"] as Array
 	assert(not assets.is_empty())
@@ -29,7 +29,9 @@ func _init() -> void:
 	for field: String in [
 		"authoring_key", "source_fingerprint", "scale_review_status", "scale_review_current",
 		"storage_pose_review_status", "storage_pose_review_current", "footprint_review_status",
-		"footprint_review_current"
+		"footprint_review_current", "storage_rotation_degrees", "posed_effective_bounds",
+		"posed_width_m", "posed_height_m", "posed_depth_m", "posed_raw_width_cells",
+		"posed_raw_depth_cells", "posed_raw_orientation_a", "posed_raw_orientation_b"
 	]:
 		assert(record.has(field))
 	assert(String(record["scale_review_status"]) == "APPROVED")

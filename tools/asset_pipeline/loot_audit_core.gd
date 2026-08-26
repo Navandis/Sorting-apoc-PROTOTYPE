@@ -70,6 +70,20 @@ static func aggregate_contributors(contributors: Array[Dictionary]) -> Dictionar
 	}
 
 
+static func aggregate_posed_contributors(
+	contributors: Array[Dictionary],
+	authored_pose: Transform3D
+) -> Dictionary:
+	var posed_contributors: Array[Dictionary] = []
+	for contributor: Dictionary in contributors:
+		var contributor_to_asset_root: Transform3D = contributor["transform"] as Transform3D
+		posed_contributors.append({
+			"bounds": contributor["bounds"],
+			"transform": authored_pose * contributor_to_asset_root
+		})
+	return aggregate_contributors(posed_contributors)
+
+
 static func raw_footprint(effective_size: Vector3, cell_size_m: float) -> Dictionary:
 	var safe_cell_size_m: float = maxf(cell_size_m, 0.000001)
 	var width_cells: int = maxi(1, int(ceil(effective_size.x / safe_cell_size_m)))

@@ -51,7 +51,7 @@ func _test_valid_missing_record_produces_approved_scaffold() -> void:
 func _test_wrong_audit_schema_is_rejected() -> void:
 	var path: String = "res://assets/props/Food/New_Item.glb"
 	var report: Dictionary = _report(_audit_record(path, "loot_000043", "hash-new"))
-	report["schema_version"] = "1.1"
+	report["schema_version"] = "1.2"
 	_fingerprints = {path: "hash-new"}
 	var result: Dictionary = ItemDefinitionSeederScript.plan_seed(
 		report,
@@ -60,7 +60,7 @@ func _test_wrong_audit_schema_is_rejected() -> void:
 		{},
 		_fingerprint_for_test
 	)
-	assert(_errors_contain(result["errors"] as PackedStringArray, "schema 1.2"))
+	assert(_errors_contain(result["errors"] as PackedStringArray, "schema 1.3"))
 
 
 # Catches definition creation without durable manifest identity.
@@ -235,7 +235,7 @@ func _test_apply_plan_preserves_existing_definition_bytes() -> void:
 
 
 func _report(record: Dictionary) -> Dictionary:
-	return {"schema_version": "1.2", "assets": [record]}
+	return {"schema_version": "1.3", "assets": [record]}
 
 
 func _audit_record(path: String, authoring_key: String, fingerprint: String) -> Dictionary:

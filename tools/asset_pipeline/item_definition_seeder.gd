@@ -5,7 +5,7 @@ const StorageCategoriesScript = preload("res://storage_categories.gd")
 const ItemCatalogScript = preload("res://item_catalog.gd")
 const ItemDefinitionScript = preload("res://item_definition.gd")
 
-const AUDIT_SCHEMA_VERSION: String = "1.2"
+const AUDIT_SCHEMA_VERSION: String = "1.3"
 const MANIFEST_SCHEMA_VERSION: String = "1.0"
 const DEFINITION_DIRECTORY: String = "res://data/items/definitions"
 const METAL_CAN_PATH: String = "res://assets/props/Hydration/SM_Metal_Can_01a.glb"
@@ -70,7 +70,7 @@ static func validate_inputs(
 ) -> PackedStringArray:
 	var errors: PackedStringArray = []
 	if String(report.get("schema_version", "")) != AUDIT_SCHEMA_VERSION:
-		errors.append("Item definition seed requires audit schema 1.2.")
+		errors.append("Item definition seed requires audit schema 1.3.")
 		return errors
 	if String(manifest.get("schema_version", "")) != MANIFEST_SCHEMA_VERSION:
 		errors.append("Item definition seed requires manifest schema 1.0.")

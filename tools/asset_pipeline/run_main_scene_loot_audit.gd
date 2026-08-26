@@ -11,7 +11,7 @@ const REPORT_DIRECTORY: String = "res://reports/asset_pipeline"
 const CSV_REPORT_PATH: String = REPORT_DIRECTORY + "/main_scene_loot_audit.csv"
 const JSON_REPORT_PATH: String = REPORT_DIRECTORY + "/main_scene_loot_audit.json"
 const AUTHORING_REVIEW_MANIFEST_PATH: String = "res://tools/asset_pipeline/item_authoring_review.json"
-const SCHEMA_VERSION: String = "1.2"
+const SCHEMA_VERSION: String = "1.3"
 
 
 func _init() -> void:
@@ -52,6 +52,7 @@ func _audit_asset(scene_record: Dictionary, cell_size_m: float) -> Dictionary:
 	var root_transform: Transform3D = Transform3D.IDENTITY
 	var root_scale: Vector3 = Vector3.ONE
 	var has_mesh_bounds: bool = false
+	var mesh_contributors: Array[Dictionary] = []
 
 	var resource: Resource = load(source_path)
 	if resource is PackedScene:
@@ -63,9 +64,15 @@ func _audit_asset(scene_record: Dictionary, cell_size_m: float) -> Dictionary:
 		else:
 			notes.append("ASSET_ROOT_NOT_NODE3D")
 
-		var contributors: Array[Dictionary] = []
-		_collect_mesh_contributors(asset_root, Transform3D.IDENTITY, false, contributors)
-		var aggregate_result: Dictionary = LootAuditCoreScript.aggregate_contributors(contributors)
+		_collect_mesh_contributors(
+			asset_root,
+			Transform3D.IDENTITY,
+			false,
+			mesh_contributors
+		)
+		var aggregate_result: Dictionary = LootAuditCoreScript.aggregate_contributors(
+			mesh_contributors
+		)
 		mesh_count = int(aggregate_result.get("mesh_count", 0))
 		has_mesh_bounds = bool(aggregate_result.get("valid", false))
 		if has_mesh_bounds:
@@ -105,11 +112,39 @@ func _audit_asset(scene_record: Dictionary, cell_size_m: float) -> Dictionary:
 	)
 	var instance_scales: Array = _instance_scale_vectors(scene_record)
 	var raw_footprint: Dictionary = _empty_raw_footprint()
+	var posed_effective_bounds: AABB = AABB()
+	var has_posed_bounds: bool = false
+	var posed_raw_footprint: Dictionary = _empty_raw_footprint()
 	if has_mesh_bounds:
 		raw_footprint = LootAuditCoreScript.raw_footprint(
 			effective_canonical_bounds.size.abs(),
 			cell_size_m
 		)
+		var contributor_to_asset_root: Array[Dictionary] = []
+		for contributor: Dictionary in mesh_contributors:
+			contributor_to_asset_root.append({
+				"bounds": contributor["bounds"],
+				"transform": root_transform * (contributor["transform"] as Transform3D)
+			})
+		var authored_pose: Transform3D = Transform3D(
+			Basis.from_euler(Vector3(
+				deg_to_rad(storage_rotation_degrees.x),
+				deg_to_rad(storage_rotation_degrees.y),
+				deg_to_rad(storage_rotation_degrees.z)
+			)),
+			Vector3.ZERO
+		)
+		var posed_result: Dictionary = LootAuditCoreScript.aggregate_posed_contributors(
+			contributor_to_asset_root,
+			authored_pose
+		)
+		has_posed_bounds = bool(posed_result.get("valid", false))
+		if has_posed_bounds:
+			posed_effective_bounds = posed_result["bounds"] as AABB
+			posed_raw_footprint = LootAuditCoreScript.raw_footprint(
+				posed_effective_bounds.size.abs(),
+				cell_size_m
+			)
 
 	var flags: PackedStringArray = LootAuditCoreScript.audit_flags({
 		"source_path": source_path,
@@ -162,6 +197,14 @@ func _audit_asset(scene_record: Dictionary, cell_size_m: float) -> Dictionary:
 		"raw_orientation_b": String(raw_footprint["orientation_b"]),
 		"existing_footprint": _serialize_vector3i(existing_footprint),
 		"storage_rotation_degrees": _vector3_array(storage_rotation_degrees) if has_item_definition else [],
+		"posed_effective_bounds": _serialize_bounds(posed_effective_bounds, has_posed_bounds),
+		"posed_width_m": posed_effective_bounds.size.abs().x if has_posed_bounds else 0.0,
+		"posed_height_m": posed_effective_bounds.size.abs().y if has_posed_bounds else 0.0,
+		"posed_depth_m": posed_effective_bounds.size.abs().z if has_posed_bounds else 0.0,
+		"posed_raw_width_cells": int(posed_raw_footprint["width_cells"]),
+		"posed_raw_depth_cells": int(posed_raw_footprint["depth_cells"]),
+		"posed_raw_orientation_a": String(posed_raw_footprint["orientation_a"]),
+		"posed_raw_orientation_b": String(posed_raw_footprint["orientation_b"]),
 		"storage_footprint": _vector3i_array(existing_footprint) if has_item_definition else [],
 		"authoring_key": "",
 		"scale_review_status": "UNTRACKED",
@@ -292,7 +335,10 @@ func _csv_text(records: Array[Dictionary]) -> String:
 		"shortest_dimension_m", "aspect_ratio", "asset_root_scale",
 		"scene_instance_scales", "cell_size_m", "storage_width_axis",
 		"storage_depth_axis", "raw_width_cells", "raw_depth_cells", "raw_orientation_a",
-		"raw_orientation_b", "existing_footprint", "bulk", "scale_review_status", "scale_review_current",
+		"raw_orientation_b", "storage_rotation_degrees", "posed_effective_bounds",
+		"posed_width_m", "posed_height_m", "posed_depth_m", "posed_raw_width_cells",
+		"posed_raw_depth_cells", "posed_raw_orientation_a", "posed_raw_orientation_b",
+		"existing_footprint", "bulk", "scale_review_status", "scale_review_current",
 		"storage_pose_review_status", "storage_pose_review_current", "footprint_review_status",
 		"footprint_review_current", "flags", "notes"
 	]
@@ -329,6 +375,15 @@ func _csv_text(records: Array[Dictionary]) -> String:
 			str(record["raw_depth_cells"]),
 			str(record["raw_orientation_a"]),
 			str(record["raw_orientation_b"]),
+			_json_inline(record["storage_rotation_degrees"]),
+			_json_inline(record["posed_effective_bounds"]),
+			str(record["posed_width_m"]),
+			str(record["posed_height_m"]),
+			str(record["posed_depth_m"]),
+			str(record["posed_raw_width_cells"]),
+			str(record["posed_raw_depth_cells"]),
+			str(record["posed_raw_orientation_a"]),
+			str(record["posed_raw_orientation_b"]),
 			_json_inline(record["existing_footprint"]),
 			str(record["bulk"]),
 			str(record["scale_review_status"]),
