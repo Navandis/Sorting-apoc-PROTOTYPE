@@ -8,4 +8,5 @@ script = ExtResource("1_vkxp5")
 item_id = &"loot_000022"
 display_name = "Soda Can"
 storage_category = "Hydration"
+storage_footprint = Vector3i(1, 1, 1)
 visual_scene = ExtResource("2_hbm2g")

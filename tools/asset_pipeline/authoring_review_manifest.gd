@@ -141,7 +141,7 @@ static func seed_or_sync(manifest: Dictionary, current_assets: Array[Dictionary]
 		var current_path: String = String(asset.get("source_path", ""))
 		var current_fingerprint: String = String(asset.get("source_fingerprint", ""))
 		var current_item_id: String = String(asset.get("item_id", ""))
-		if String(match["correlation"]) == "fingerprint" and String(record.get("source_path", "")) != current_path:
+		if String(record.get("source_path", "")) != current_path:
 			record["source_path"] = current_path
 			changed = true
 		if String(record.get("source_fingerprint", "")) != current_fingerprint:
@@ -191,6 +191,54 @@ static func sync_item_id_associations(
 		"manifest": updated_manifest,
 		"updated_keys": updated_keys,
 		"unknown_keys": unknown_keys
+	}
+
+
+static func apply_scale_review_reconciliation(
+	manifest: Dictionary,
+	current_assets: Array[Dictionary],
+	normalized_item_ids: PackedStringArray
+) -> Dictionary:
+	var sync_result: Dictionary = seed_or_sync(manifest, current_assets)
+	var updated_manifest: Dictionary = sync_result["manifest"] as Dictionary
+	var errors: PackedStringArray = []
+	var approved_keys: PackedStringArray = []
+	var unreviewed_keys: PackedStringArray = []
+	var matches: Array[Dictionary] = correlate_current_assets(updated_manifest, current_assets)
+	var found_normalized_ids: Dictionary = {}
+
+	for match: Dictionary in matches:
+		var authoring_key: String = String(match.get("authoring_key", ""))
+		var problem_flag: String = String(match.get("problem_flag", ""))
+		var asset: Dictionary = match.get("asset", {}) as Dictionary
+		var item_id: String = String(asset.get("item_id", ""))
+		if authoring_key.is_empty() or not problem_flag.is_empty() or item_id.is_empty():
+			errors.append("Unable to reconcile review state for %s." % String(asset.get("source_path", "")))
+			continue
+		var record: Dictionary = (updated_manifest["assets"] as Dictionary)[authoring_key] as Dictionary
+		var scale_review: Dictionary = record["scale_review"] as Dictionary
+		if normalized_item_ids.has(item_id):
+			found_normalized_ids[item_id] = true
+			scale_review["status"] = "UNREVIEWED"
+			scale_review["reviewed_source_fingerprint"] = ""
+			scale_review["notes"] = "Normalized after initial scale review; pending in-game recheck."
+			unreviewed_keys.append(authoring_key)
+		else:
+			scale_review["status"] = "APPROVED"
+			scale_review["reviewed_source_fingerprint"] = String(asset.get("source_fingerprint", ""))
+			approved_keys.append(authoring_key)
+		record["scale_review"] = scale_review
+		(updated_manifest["assets"] as Dictionary)[authoring_key] = record
+
+	for item_id: String in normalized_item_ids:
+		if not found_normalized_ids.has(item_id):
+			errors.append("Normalized item ID not found in current main-scene assets: %s" % item_id)
+
+	return {
+		"manifest": _normalized_manifest(updated_manifest),
+		"approved_keys": approved_keys,
+		"unreviewed_keys": unreviewed_keys,
+		"errors": errors
 	}
 
 

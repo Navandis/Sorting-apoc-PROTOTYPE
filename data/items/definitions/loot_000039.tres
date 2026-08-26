@@ -8,5 +8,5 @@ script = ExtResource("1_usql6")
 item_id = &"loot_000039"
 display_name = "Pistol"
 storage_category = "Weapons"
-storage_footprint = Vector3i(2, 1, 1)
+storage_footprint = Vector3i(3, 1, 1)
 visual_scene = ExtResource("2_khl6m")

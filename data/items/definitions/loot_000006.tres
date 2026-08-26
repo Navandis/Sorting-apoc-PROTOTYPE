@@ -8,5 +8,5 @@ script = ExtResource("1_tdnvf")
 item_id = &"loot_000006"
 display_name = "Bread 1"
 storage_category = "Food"
-storage_footprint = Vector3i(2, 2, 1)
+storage_footprint = Vector3i(3, 2, 1)
 visual_scene = ExtResource("2_kvxym")

@@ -8,5 +8,5 @@ script = ExtResource("1_ui6bt")
 item_id = &"loot_000033"
 display_name = "Boots 01"
 storage_category = "Protection"
-storage_footprint = Vector3i(3, 4, 1)
+storage_footprint = Vector3i(3, 3, 1)
 visual_scene = ExtResource("2_13l62")

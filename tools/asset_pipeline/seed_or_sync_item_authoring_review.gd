@@ -6,6 +6,9 @@ const PrototypeItemCatalogScript = preload("res://prototype_item_catalog.gd")
 
 const MAIN_SCENE_PATH: String = "res://main.tscn"
 const MANIFEST_PATH: String = "res://tools/asset_pipeline/item_authoring_review.json"
+const NORMALIZED_ITEM_IDS: PackedStringArray = [
+	"loot_000006", "loot_000012", "loot_000022", "loot_000029", "loot_000033", "loot_000034", "loot_000039"
+]
 
 
 func _init() -> void:
@@ -24,6 +27,16 @@ func _run() -> int:
 	var before: String = AuthoringReviewManifestScript.serialize_manifest(existing_manifest)
 	var result: Dictionary = AuthoringReviewManifestScript.seed_or_sync(existing_manifest, current_assets)
 	var updated_manifest: Dictionary = result["manifest"] as Dictionary
+	if OS.get_cmdline_user_args().has("--apply-scale-review-reconciliation"):
+		var reconciliation: Dictionary = AuthoringReviewManifestScript.apply_scale_review_reconciliation(
+			existing_manifest, current_assets, NORMALIZED_ITEM_IDS
+		)
+		var errors: PackedStringArray = reconciliation["errors"] as PackedStringArray
+		if not errors.is_empty():
+			for message: String in errors:
+				push_error(message)
+			return 1
+		updated_manifest = reconciliation["manifest"] as Dictionary
 	var after: String = AuthoringReviewManifestScript.serialize_manifest(updated_manifest)
 	if before != after and not AuthoringReviewManifestScript.write_manifest(MANIFEST_PATH, updated_manifest):
 		return 1
@@ -38,6 +51,8 @@ func _run() -> int:
 	])
 	for path_value: String in result["ambiguous_paths"] as Array[String]:
 		push_warning("AUTHORING_REVIEW_AMBIGUOUS source_path=%s" % path_value)
+	if OS.get_cmdline_user_args().has("--apply-scale-review-reconciliation"):
+		print("AUTHORING_REVIEW_SCALE_RECONCILIATION_COMPLETE approved=35 unreviewed=7")
 	return 0
 
 

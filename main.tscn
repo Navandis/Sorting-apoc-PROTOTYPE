@@ -56,7 +56,7 @@
 [ext_resource type="PackedScene" uid="uid://dhb54nxp7thnb" path="res://assets/props/Food/SM_Watermelon_1.glb" id="55_rnkwl"]
 [ext_resource type="PackedScene" uid="uid://cc7btwnebcfs5" path="res://assets/props/medical/SM_MedKit_4.glb" id="56_ruth0"]
 [ext_resource type="PackedScene" uid="uid://d30pld4bfmigb" path="res://assets/props/medical/SM_Bandages_1.glb" id="57_rm4vd"]
-[ext_resource type="PackedScene" uid="uid://1t5y4mjf53cm" path="res://assets/props/protection/SM_Gloves_02glb.glb" id="61_pjyto"]
+[ext_resource type="PackedScene" path="res://assets/props/protection/SM_Gloves_02.glb" id="61_pjyto"]
 [ext_resource type="PackedScene" uid="uid://biswlt5augumx" path="res://assets/props/protection/SM_Boots_01.glb" id="61_sm6fg"]
 [ext_resource type="PackedScene" uid="uid://bw673hmx2ws5g" path="res://assets/props/protection/SM_Pants_02.glb" id="62_kkkcx"]
 [ext_resource type="PackedScene" uid="uid://cyag5i6w8fjq4" path="res://assets/props/protection/SM_Armor_02.glb" id="62_sm6fg"]

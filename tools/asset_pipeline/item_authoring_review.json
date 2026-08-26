@@ -19,8 +19,8 @@
 			"item_id": "loot_000001",
 			"scale_review": {
 				"notes": "",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "93b21de28ec54c132f4cffe2bec4d867b533193216c076f19a51c34433083439",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "93b21de28ec54c132f4cffe2bec4d867b533193216c076f19a51c34433083439",
 			"source_path": "res://assets/props/electronics/SM_ComputerMouse_01.glb",
@@ -54,8 +54,8 @@
 			"item_id": "loot_000002",
 			"scale_review": {
 				"notes": "",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "ac0ebcf72372516de0771fd2b9e82739476bc1123c34af927028d96bde1df211",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "ac0ebcf72372516de0771fd2b9e82739476bc1123c34af927028d96bde1df211",
 			"source_path": "res://assets/props/electronics/SM_ComputerTower_01.glb",
@@ -89,8 +89,8 @@
 			"item_id": "loot_000003",
 			"scale_review": {
 				"notes": "",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "61929a0e30280bedd792f0af49ef16fc7bccdff11cab8f5800563eae3b945503",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "61929a0e30280bedd792f0af49ef16fc7bccdff11cab8f5800563eae3b945503",
 			"source_path": "res://assets/props/electronics/SM_ElectronicDevice_01.glb",
@@ -124,8 +124,8 @@
 			"item_id": "loot_000004",
 			"scale_review": {
 				"notes": "",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "4d2312e22b298995e88a4eb23135ddcb6bb7158dd01f4553cba521302a918993",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "4d2312e22b298995e88a4eb23135ddcb6bb7158dd01f4553cba521302a918993",
 			"source_path": "res://assets/props/electronics/SM_Phone_01.glb",
@@ -159,8 +159,8 @@
 			"item_id": "loot_000005",
 			"scale_review": {
 				"notes": "",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "755a15a5e996d84bfa4ebc78e0aaafda64fa57eea61471182d6d8a1d1753d7ad",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "755a15a5e996d84bfa4ebc78e0aaafda64fa57eea61471182d6d8a1d1753d7ad",
 			"source_path": "res://assets/props/Food/cereal_box.glb",
@@ -193,11 +193,11 @@
 			},
 			"item_id": "loot_000006",
 			"scale_review": {
-				"notes": "",
+				"notes": "Normalized after initial scale review; pending in-game recheck.",
 				"reviewed_source_fingerprint": "",
 				"status": "UNREVIEWED"
 			},
-			"source_fingerprint": "1c63a608db60a0370e91f3adeb71bc8246e1083a05d24af068ddaa048f650b5b",
+			"source_fingerprint": "3b8fd17ed3f0ef8a84d49f999266277f375a787fea0579cf4002fec0598f6dde",
 			"source_path": "res://assets/props/Food/SM_Bread_1.glb",
 			"storage_pose_review": {
 				"notes": "",
@@ -229,8 +229,8 @@
 			"item_id": "loot_000007",
 			"scale_review": {
 				"notes": "",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "9b02e0a19892a539208c02a6098345c3cacb26cf0f2bafcd6995b14c184e576e",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "9b02e0a19892a539208c02a6098345c3cacb26cf0f2bafcd6995b14c184e576e",
 			"source_path": "res://assets/props/Food/SM_CerealBox_2.glb",
@@ -264,8 +264,8 @@
 			"item_id": "loot_000008",
 			"scale_review": {
 				"notes": "",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "73876bc2b02dfd931b227d5148c96a15196e9b6e7cfaeb0e317a3ed2bd330c1a",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "73876bc2b02dfd931b227d5148c96a15196e9b6e7cfaeb0e317a3ed2bd330c1a",
 			"source_path": "res://assets/props/Food/SM_Dry_Goods_01a.glb",
@@ -299,8 +299,8 @@
 			"item_id": "loot_000009",
 			"scale_review": {
 				"notes": "",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "cb3f25b1e4746391b94d2d6151c2adf07d378a43f529d26d3ce4aef0338a8a2e",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "cb3f25b1e4746391b94d2d6151c2adf07d378a43f529d26d3ce4aef0338a8a2e",
 			"source_path": "res://assets/props/Food/SM_Dry_Goods_01c.glb",
@@ -334,8 +334,8 @@
 			"item_id": "loot_000010",
 			"scale_review": {
 				"notes": "",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "6c57f9e480bc9c9160da0d61ef75986e72384e330bbcf99a31218e895a61b7aa",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "6c57f9e480bc9c9160da0d61ef75986e72384e330bbcf99a31218e895a61b7aa",
 			"source_path": "res://assets/props/Food/SM_Dry_Goods_01g.glb",
@@ -369,8 +369,8 @@
 			"item_id": "loot_000011",
 			"scale_review": {
 				"notes": "",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "0903d0a48de2af72b6eb814ef654569c60e0a73bdaf4270fb10d3755c8a088a6",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "0903d0a48de2af72b6eb814ef654569c60e0a73bdaf4270fb10d3755c8a088a6",
 			"source_path": "res://assets/props/Food/SM_PigCarcass_1.glb",
@@ -403,11 +403,11 @@
 			},
 			"item_id": "loot_000012",
 			"scale_review": {
-				"notes": "",
+				"notes": "Normalized after initial scale review; pending in-game recheck.",
 				"reviewed_source_fingerprint": "",
 				"status": "UNREVIEWED"
 			},
-			"source_fingerprint": "4849fd25b65e45a2c4160ccb7bbc6ad8c71200b4890b27b78e108a23b0b4fb04",
+			"source_fingerprint": "cedc1401c90bc6bf2733ca2648ee4ab9daf5a85c1fa724cca2a70a4de3173e15",
 			"source_path": "res://assets/props/Food/SM_Watermelon_1.glb",
 			"storage_pose_review": {
 				"notes": "",
@@ -439,8 +439,8 @@
 			"item_id": "loot_000013",
 			"scale_review": {
 				"notes": "",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "58ec440f4d8a9b89d4ae6f30a0d7384cb6c9e584e25bdf8e2c6d99874ce6d658",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "58ec440f4d8a9b89d4ae6f30a0d7384cb6c9e584e25bdf8e2c6d99874ce6d658",
 			"source_path": "res://assets/props/Fuel/SM_Firewood_01.glb",
@@ -474,8 +474,8 @@
 			"item_id": "loot_000014",
 			"scale_review": {
 				"notes": "",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "e0d55a6a3fb0548e9bafb082d80aa7e29d4875c92f47b33df666e5de3ab35729",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "e0d55a6a3fb0548e9bafb082d80aa7e29d4875c92f47b33df666e5de3ab35729",
 			"source_path": "res://assets/props/Fuel/SM_FirewoodPile_01.glb",
@@ -509,8 +509,8 @@
 			"item_id": "loot_000015",
 			"scale_review": {
 				"notes": "",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "e3cbd7d3dd60c9fde76fe92df640aaf62091c9e6c9b6491ee548b0ac1cf10698",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "e3cbd7d3dd60c9fde76fe92df640aaf62091c9e6c9b6491ee548b0ac1cf10698",
 			"source_path": "res://assets/props/Fuel/SM_FuelCanister.glb",
@@ -544,8 +544,8 @@
 			"item_id": "loot_000016",
 			"scale_review": {
 				"notes": "",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "c057b5d534a7b5c2d443c9d89ab62bb3cfcb6efa725f7acd2f5a20fd2270c952",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "c057b5d534a7b5c2d443c9d89ab62bb3cfcb6efa725f7acd2f5a20fd2270c952",
 			"source_path": "res://assets/props/Fuel/SM_GasCanister_01.glb",
@@ -579,8 +579,8 @@
 			"item_id": "loot_000017",
 			"scale_review": {
 				"notes": "",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "3ef3c398222ed18752ab1fb54d1e83aec579a5a215fdd4376f193a75f21de9f4",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "3ef3c398222ed18752ab1fb54d1e83aec579a5a215fdd4376f193a75f21de9f4",
 			"source_path": "res://assets/props/Fuel/SM_GasCylinder_01.glb",
@@ -614,8 +614,8 @@
 			"item_id": "loot_000018",
 			"scale_review": {
 				"notes": "",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "5c6a25e519c6e0e2544ad1a7e325c77be9ad79500c0466952fc9c35b1ffe3b61",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "5c6a25e519c6e0e2544ad1a7e325c77be9ad79500c0466952fc9c35b1ffe3b61",
 			"source_path": "res://assets/props/Fuel/SM_PropaneTank_02.glb",
@@ -649,8 +649,8 @@
 			"item_id": "loot_000019",
 			"scale_review": {
 				"notes": "",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "4e7776b9816a8a74dedeebfd940ac578dc41fc49bb87b901359eb550d749fc6f",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "4e7776b9816a8a74dedeebfd940ac578dc41fc49bb87b901359eb550d749fc6f",
 			"source_path": "res://assets/props/Hydration/SM_Metal_Can_01a.glb",
@@ -684,8 +684,8 @@
 			"item_id": "loot_000020",
 			"scale_review": {
 				"notes": "",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "08407b1d661f88250b2ab1687a7f4b9bd74d1863046e818828a44e89a849481f",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "08407b1d661f88250b2ab1687a7f4b9bd74d1863046e818828a44e89a849481f",
 			"source_path": "res://assets/props/Hydration/SM_MilkCarton_1.glb",
@@ -719,8 +719,8 @@
 			"item_id": "loot_000021",
 			"scale_review": {
 				"notes": "",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "d31b3993c3dfa7de7de871386090d11edcfc7394d1b0ff9dac0b1d332092bb6d",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "d31b3993c3dfa7de7de871386090d11edcfc7394d1b0ff9dac0b1d332092bb6d",
 			"source_path": "res://assets/props/Hydration/SM_OrangeJuice_1.glb",
@@ -753,11 +753,11 @@
 			},
 			"item_id": "loot_000022",
 			"scale_review": {
-				"notes": "",
+				"notes": "Normalized after initial scale review; pending in-game recheck.",
 				"reviewed_source_fingerprint": "",
 				"status": "UNREVIEWED"
 			},
-			"source_fingerprint": "70c6ded03e5ced2e25ddfaf0b5495666dcf4af8b88c5110688d3365ced96ce51",
+			"source_fingerprint": "632f4ce2e4d333fbd2417b0581c7dacc987108d24a440d62772bcc86ddf9a7fa",
 			"source_path": "res://assets/props/Hydration/SM_SodaCan.glb",
 			"storage_pose_review": {
 				"notes": "",
@@ -789,8 +789,8 @@
 			"item_id": "loot_000023",
 			"scale_review": {
 				"notes": "",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "0863285b857c56deb2473a35e8511700751c56fcedb0cb8f212ec6a8ea1b17d1",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "0863285b857c56deb2473a35e8511700751c56fcedb0cb8f212ec6a8ea1b17d1",
 			"source_path": "res://assets/props/Hydration/soda_can.glb",
@@ -824,8 +824,8 @@
 			"item_id": "loot_000024",
 			"scale_review": {
 				"notes": "",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "062b7b317fbf97b664a07c1ddc10b36aac362cb7fa6ec81b542486dfcbcc2fa1",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "062b7b317fbf97b664a07c1ddc10b36aac362cb7fa6ec81b542486dfcbcc2fa1",
 			"source_path": "res://assets/props/medical/pill_bottle.glb",
@@ -859,8 +859,8 @@
 			"item_id": "loot_000025",
 			"scale_review": {
 				"notes": "",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "7a921edc40b390590fd9f36bf5eada1bb4f3575a8c49b18350ba7826c0c9434d",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "7a921edc40b390590fd9f36bf5eada1bb4f3575a8c49b18350ba7826c0c9434d",
 			"source_path": "res://assets/props/medical/SM_Antibiotics_01.glb",
@@ -894,8 +894,8 @@
 			"item_id": "loot_000026",
 			"scale_review": {
 				"notes": "",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "4853eae6d79f9ddd5c619c5bdd4201a333955da009786d2a62f749c585bbe44c",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "4853eae6d79f9ddd5c619c5bdd4201a333955da009786d2a62f749c585bbe44c",
 			"source_path": "res://assets/props/medical/SM_Bandages_1.glb",
@@ -929,8 +929,8 @@
 			"item_id": "loot_000027",
 			"scale_review": {
 				"notes": "",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "df65c2a162cba24514f8ca4d4491da16abb918f79f1204dd6fb111750354c1ea",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "df65c2a162cba24514f8ca4d4491da16abb918f79f1204dd6fb111750354c1ea",
 			"source_path": "res://assets/props/medical/SM_CoughSyrup_01.glb",
@@ -964,8 +964,8 @@
 			"item_id": "loot_000028",
 			"scale_review": {
 				"notes": "",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "b9f552d3cb74cf631e2a9f5bdcc5bce7082e72ad46d5734e66f2d2bf8b166fbd",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "b9f552d3cb74cf631e2a9f5bdcc5bce7082e72ad46d5734e66f2d2bf8b166fbd",
 			"source_path": "res://assets/props/medical/SM_MedKit_4.glb",
@@ -998,11 +998,11 @@
 			},
 			"item_id": "loot_000029",
 			"scale_review": {
-				"notes": "",
+				"notes": "Normalized after initial scale review; pending in-game recheck.",
 				"reviewed_source_fingerprint": "",
 				"status": "UNREVIEWED"
 			},
-			"source_fingerprint": "bc1a2ba6460aa7160de7e7ae7a38e5373f422520a31328f61cbdc8a38c548d3b",
+			"source_fingerprint": "0c39f0837ab52a56e7ae6504fa0aeeaa414d44fc25a2dd011757598cb047218f",
 			"source_path": "res://assets/props/morale/SM_Ball_01.glb",
 			"storage_pose_review": {
 				"notes": "",
@@ -1034,8 +1034,8 @@
 			"item_id": "loot_000030",
 			"scale_review": {
 				"notes": "",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "a4e66269ee59b6912d6e8f5cd5ea2fc309a4629d12d1f5a62d25d465a1a529e8",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "a4e66269ee59b6912d6e8f5cd5ea2fc309a4629d12d1f5a62d25d465a1a529e8",
 			"source_path": "res://assets/props/morale/SM_Book_01.glb",
@@ -1069,8 +1069,8 @@
 			"item_id": "loot_000031",
 			"scale_review": {
 				"notes": "",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "4ec59a02d5cd0b7a5a6e9fdd426795d9e14a32811f1d627ff0922cbe41fae6da",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "4ec59a02d5cd0b7a5a6e9fdd426795d9e14a32811f1d627ff0922cbe41fae6da",
 			"source_path": "res://assets/props/morale/SM_CDStack_01.glb",
@@ -1104,8 +1104,8 @@
 			"item_id": "loot_000032",
 			"scale_review": {
 				"notes": "",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "8fa1fa14942a2bd8dd60514d23c393784fa6d2612dcd719bf1bb871f5ca70194",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "8fa1fa14942a2bd8dd60514d23c393784fa6d2612dcd719bf1bb871f5ca70194",
 			"source_path": "res://assets/props/protection/SM_Armor_02.glb",
@@ -1138,11 +1138,11 @@
 			},
 			"item_id": "loot_000033",
 			"scale_review": {
-				"notes": "",
+				"notes": "Normalized after initial scale review; pending in-game recheck.",
 				"reviewed_source_fingerprint": "",
 				"status": "UNREVIEWED"
 			},
-			"source_fingerprint": "0b2912ecd9d1faed1eeed92ebbdf1e57bd03a65bd769fd15e4533ec59323e850",
+			"source_fingerprint": "280514a80eeffbee0ea34cb0f6ec7987a16ee29b087da9694f9401132e98e1a2",
 			"source_path": "res://assets/props/protection/SM_Boots_01.glb",
 			"storage_pose_review": {
 				"notes": "",
@@ -1173,12 +1173,12 @@
 			},
 			"item_id": "loot_000034",
 			"scale_review": {
-				"notes": "",
+				"notes": "Normalized after initial scale review; pending in-game recheck.",
 				"reviewed_source_fingerprint": "",
 				"status": "UNREVIEWED"
 			},
-			"source_fingerprint": "faeac83ea8686705d4b06ab9462b145fede34591a4e540e31a69b1d6a988e648",
-			"source_path": "res://assets/props/protection/SM_Gloves_02glb.glb",
+			"source_fingerprint": "5645b56b9506c5014a05930c49de6d75661c0df8498848e5d2bdc7f402e94eed",
+			"source_path": "res://assets/props/protection/SM_Gloves_02.glb",
 			"storage_pose_review": {
 				"notes": "",
 				"reviewed_rotation_degrees": [
@@ -1209,8 +1209,8 @@
 			"item_id": "loot_000035",
 			"scale_review": {
 				"notes": "",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "93d6e0e5b9df34b5d0cf9b27275f1895e7cf85879bc60eac5a12dd66d0e9e0b3",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "93d6e0e5b9df34b5d0cf9b27275f1895e7cf85879bc60eac5a12dd66d0e9e0b3",
 			"source_path": "res://assets/props/protection/SM_HardHat_01.glb",
@@ -1244,8 +1244,8 @@
 			"item_id": "loot_000036",
 			"scale_review": {
 				"notes": "",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "c41e17628b65793eb938e3be02b0b399573c625093bdd8e816c7dcb464ec7c78",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "c41e17628b65793eb938e3be02b0b399573c625093bdd8e816c7dcb464ec7c78",
 			"source_path": "res://assets/props/protection/SM_Pants_02.glb",
@@ -1279,8 +1279,8 @@
 			"item_id": "loot_000037",
 			"scale_review": {
 				"notes": "",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "4ac5a2d4e8d8a170b7a6abeeb095fd51172097d991798e6ef1ece1bcc74a40c8",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "4ac5a2d4e8d8a170b7a6abeeb095fd51172097d991798e6ef1ece1bcc74a40c8",
 			"source_path": "res://assets/props/Weapons/hammer.glb",
@@ -1314,8 +1314,8 @@
 			"item_id": "loot_000038",
 			"scale_review": {
 				"notes": "",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "38598f0566dcb6bd0d338cc3a844ec9f9b68c4903a3ed6360c39ccf6f1dd4bb1",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "38598f0566dcb6bd0d338cc3a844ec9f9b68c4903a3ed6360c39ccf6f1dd4bb1",
 			"source_path": "res://assets/props/Weapons/SM_Gun_AssaultRifle.glb",
@@ -1348,11 +1348,11 @@
 			},
 			"item_id": "loot_000039",
 			"scale_review": {
-				"notes": "",
+				"notes": "Normalized after initial scale review; pending in-game recheck.",
 				"reviewed_source_fingerprint": "",
 				"status": "UNREVIEWED"
 			},
-			"source_fingerprint": "de2886f8c3651634b9f24268fc6a41a711fd3690b23615adeeeff33cabcf95d9",
+			"source_fingerprint": "e77eed4043544e371dceb36fd99a138fed4fbd4570b8d2fe75ee6d097b568fac",
 			"source_path": "res://assets/props/Weapons/SM_Gun_Pistol.glb",
 			"storage_pose_review": {
 				"notes": "",
@@ -1384,8 +1384,8 @@
 			"item_id": "loot_000040",
 			"scale_review": {
 				"notes": "",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "6c39da4730013101fa22348c90e8ce04d5be6fff5487f45255a8d0f37ffab352",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "6c39da4730013101fa22348c90e8ce04d5be6fff5487f45255a8d0f37ffab352",
 			"source_path": "res://assets/props/Weapons/SM_Gun_Shotgun.glb",
@@ -1419,8 +1419,8 @@
 			"item_id": "loot_000041",
 			"scale_review": {
 				"notes": "",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "0239435c9e3eccaec42d61f323878f64a08432f79ec47f412ef62d6338eb2517",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "0239435c9e3eccaec42d61f323878f64a08432f79ec47f412ef62d6338eb2517",
 			"source_path": "res://assets/props/Weapons/SM_Hammer_3.glb",
@@ -1454,8 +1454,8 @@
 			"item_id": "loot_000042",
 			"scale_review": {
 				"notes": "",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "65b52da2eee3f955d39fe045fbf2924364eae2291576899dded783d72b78fe69",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "65b52da2eee3f955d39fe045fbf2924364eae2291576899dded783d72b78fe69",
 			"source_path": "res://assets/props/Weapons/tennis_racket.glb",

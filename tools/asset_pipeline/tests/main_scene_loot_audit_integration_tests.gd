@@ -32,8 +32,8 @@ func _init() -> void:
 		"footprint_review_current"
 	]:
 		assert(record.has(field))
-	assert(String(record["scale_review_status"]) == "UNREVIEWED")
-	assert(not bool(record["scale_review_current"]))
+	assert(String(record["scale_review_status"]) == "APPROVED")
+	assert(bool(record["scale_review_current"]))
 	assert(not (record["flags"] as Array).has("SCALE_REVIEW_STALE"))
 	print("PASS: main scene loot audit integration tests")
 	quit(0)

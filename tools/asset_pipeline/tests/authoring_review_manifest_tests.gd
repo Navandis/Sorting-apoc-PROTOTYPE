@@ -8,6 +8,7 @@ func _init() -> void:
 	_test_repeated_seed_does_not_duplicate_records()
 	_test_new_asset_uses_highest_existing_suffix_plus_one()
 	_test_unique_fingerprint_rename_correlates()
+	_test_item_id_matched_rename_updates_source_path()
 	_test_ambiguous_fingerprint_does_not_correlate()
 	_test_fingerprint_change_stales_completed_scale_decision()
 	_test_rotation_change_stales_completed_pose_decision()
@@ -15,6 +16,7 @@ func _init() -> void:
 	_test_rotation_change_stales_completed_footprint_decision()
 	_test_unreviewed_decisions_are_not_stale()
 	_test_item_id_association_sync_preserves_all_review_evidence()
+	_test_scale_reconciliation_approves_unchanged_and_leaves_normalized_unreviewed()
 	_test_manifest_schema_is_one_zero()
 	_test_serialization_is_deterministic()
 	print("PASS: authoring review manifest tests")
@@ -68,6 +70,21 @@ func _test_unique_fingerprint_rename_correlates() -> void:
 	assert(String(matches[0]["authoring_key"]) == "loot_000001")
 	assert(String(matches[0]["correlation"]) == "fingerprint")
 	assert(String(matches[0]["problem_flag"]) == "AUTHORING_REVIEW_PATH_STALE")
+
+
+# Ensures the stable ItemDefinition association also migrates an authored
+# source path when a re-export changes both the GLB bytes and its filename.
+func _test_item_id_matched_rename_updates_source_path() -> void:
+	var manifest: Dictionary = _manifest_with_record(
+		"loot_000001", _asset("res://old.glb", "loot_000001", "old")
+	)
+	var result: Dictionary = AuthoringReviewManifestScript.seed_or_sync(
+		manifest,
+		[_asset("res://new.glb", "loot_000001", "new")]
+	)
+	var record: Dictionary = (result["manifest"] as Dictionary)["assets"]["loot_000001"] as Dictionary
+	assert(String(record["source_path"]) == "res://new.glb")
+	assert(String(record["source_fingerprint"]) == "new")
 
 
 func _test_ambiguous_fingerprint_does_not_correlate() -> void:
@@ -169,6 +186,41 @@ func _test_item_id_association_sync_preserves_all_review_evidence() -> void:
 	assert(not (updated_manifest["assets"] as Dictionary).has("loot_999999"))
 	assert((result["updated_keys"] as PackedStringArray) == PackedStringArray(["loot_000001"]))
 	assert((result["unknown_keys"] as PackedStringArray) == PackedStringArray(["loot_999999"]))
+
+
+func _test_scale_reconciliation_approves_unchanged_and_leaves_normalized_unreviewed() -> void:
+	var approved_record: Dictionary = AuthoringReviewManifestScript.new_record(
+		_asset("res://approved.glb", "loot_000001", "old-approved")
+	)
+	var normalized_record: Dictionary = AuthoringReviewManifestScript.new_record(
+		_asset("res://normalized.glb", "loot_000002", "old-normalized")
+	)
+	(normalized_record["storage_pose_review"] as Dictionary)["notes"] = "preserve pose"
+	(normalized_record["footprint_review"] as Dictionary)["notes"] = "preserve footprint"
+	var manifest: Dictionary = AuthoringReviewManifestScript.empty_manifest()
+	manifest["assets"] = {
+		"loot_000001": approved_record,
+		"loot_000002": normalized_record
+	}
+	var result: Variant = AuthoringReviewManifestScript.apply_scale_review_reconciliation(
+		manifest,
+		[
+			_asset("res://approved.glb", "loot_000001", "new-approved"),
+			_asset("res://normalized.glb", "loot_000002", "new-normalized")
+		],
+		PackedStringArray(["loot_000002"])
+	)
+	assert(result is Dictionary)
+	var records: Dictionary = (result as Dictionary)["manifest"]["assets"] as Dictionary
+	var approved_scale: Dictionary = (records["loot_000001"] as Dictionary)["scale_review"] as Dictionary
+	var normalized_scale: Dictionary = (records["loot_000002"] as Dictionary)["scale_review"] as Dictionary
+	assert(String(approved_scale["status"]) == "APPROVED")
+	assert(String(approved_scale["reviewed_source_fingerprint"]) == "new-approved")
+	assert(String(normalized_scale["status"]) == "UNREVIEWED")
+	assert(String(normalized_scale["reviewed_source_fingerprint"]).is_empty())
+	assert(String(normalized_scale["notes"]) == "Normalized after initial scale review; pending in-game recheck.")
+	assert(String(((records["loot_000002"] as Dictionary)["storage_pose_review"] as Dictionary)["notes"]) == "preserve pose")
+	assert(String(((records["loot_000002"] as Dictionary)["footprint_review"] as Dictionary)["notes"]) == "preserve footprint")
 
 
 func _test_manifest_schema_is_one_zero() -> void:
