@@ -25,14 +25,14 @@
 			"source_fingerprint": "93b21de28ec54c132f4cffe2bec4d867b533193216c076f19a51c34433083439",
 			"source_path": "res://assets/props/electronics/SM_ComputerMouse_01.glb",
 			"storage_pose_review": {
-				"notes": "",
+				"notes": "Default zero authored storage pose approved.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "93b21de28ec54c132f4cffe2bec4d867b533193216c076f19a51c34433083439",
+				"status": "DEFAULT_POSE_APPROVED"
 			}
 		},
 		"loot_000002": {
@@ -60,14 +60,14 @@
 			"source_fingerprint": "ac0ebcf72372516de0771fd2b9e82739476bc1123c34af927028d96bde1df211",
 			"source_path": "res://assets/props/electronics/SM_ComputerTower_01.glb",
 			"storage_pose_review": {
-				"notes": "",
+				"notes": "Default pose unsuitable; candidate Y +90 degrees faces the computer drive panel toward the player.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "ac0ebcf72372516de0771fd2b9e82739476bc1123c34af927028d96bde1df211",
+				"status": "CUSTOM_POSE_REQUIRED"
 			}
 		},
 		"loot_000003": {
@@ -95,14 +95,14 @@
 			"source_fingerprint": "61929a0e30280bedd792f0af49ef16fc7bccdff11cab8f5800563eae3b945503",
 			"source_path": "res://assets/props/electronics/SM_ElectronicDevice_01.glb",
 			"storage_pose_review": {
-				"notes": "",
+				"notes": "Default pose unsuitable; candidate Y +90 degrees faces the controls and dials toward the player.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "61929a0e30280bedd792f0af49ef16fc7bccdff11cab8f5800563eae3b945503",
+				"status": "CUSTOM_POSE_REQUIRED"
 			}
 		},
 		"loot_000004": {
@@ -130,14 +130,14 @@
 			"source_fingerprint": "4d2312e22b298995e88a4eb23135ddcb6bb7158dd01f4553cba521302a918993",
 			"source_path": "res://assets/props/electronics/SM_Phone_01.glb",
 			"storage_pose_review": {
-				"notes": "",
+				"notes": "Default pose unsuitable; candidate Y +90 degrees faces the keypad toward the player.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "4d2312e22b298995e88a4eb23135ddcb6bb7158dd01f4553cba521302a918993",
+				"status": "CUSTOM_POSE_REQUIRED"
 			}
 		},
 		"loot_000005": {
@@ -165,14 +165,14 @@
 			"source_fingerprint": "755a15a5e996d84bfa4ebc78e0aaafda64fa57eea61471182d6d8a1d1753d7ad",
 			"source_path": "res://assets/props/Food/cereal_box.glb",
 			"storage_pose_review": {
-				"notes": "",
+				"notes": "Default zero authored storage pose approved.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "755a15a5e996d84bfa4ebc78e0aaafda64fa57eea61471182d6d8a1d1753d7ad",
+				"status": "DEFAULT_POSE_APPROVED"
 			}
 		},
 		"loot_000006": {
@@ -200,14 +200,14 @@
 			"source_fingerprint": "3b8fd17ed3f0ef8a84d49f999266277f375a787fea0579cf4002fec0598f6dde",
 			"source_path": "res://assets/props/Food/SM_Bread_1.glb",
 			"storage_pose_review": {
-				"notes": "",
+				"notes": "Default zero authored storage pose approved.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "3b8fd17ed3f0ef8a84d49f999266277f375a787fea0579cf4002fec0598f6dde",
+				"status": "DEFAULT_POSE_APPROVED"
 			}
 		},
 		"loot_000007": {
@@ -235,14 +235,14 @@
 			"source_fingerprint": "9b02e0a19892a539208c02a6098345c3cacb26cf0f2bafcd6995b14c184e576e",
 			"source_path": "res://assets/props/Food/SM_CerealBox_2.glb",
 			"storage_pose_review": {
-				"notes": "",
+				"notes": "Default zero authored storage pose approved.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "9b02e0a19892a539208c02a6098345c3cacb26cf0f2bafcd6995b14c184e576e",
+				"status": "DEFAULT_POSE_APPROVED"
 			}
 		},
 		"loot_000008": {
@@ -270,14 +270,14 @@
 			"source_fingerprint": "73876bc2b02dfd931b227d5148c96a15196e9b6e7cfaeb0e317a3ed2bd330c1a",
 			"source_path": "res://assets/props/Food/SM_Dry_Goods_01a.glb",
 			"storage_pose_review": {
-				"notes": "",
+				"notes": "Default zero authored storage pose approved.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "73876bc2b02dfd931b227d5148c96a15196e9b6e7cfaeb0e317a3ed2bd330c1a",
+				"status": "DEFAULT_POSE_APPROVED"
 			}
 		},
 		"loot_000009": {
@@ -305,14 +305,14 @@
 			"source_fingerprint": "cb3f25b1e4746391b94d2d6151c2adf07d378a43f529d26d3ce4aef0338a8a2e",
 			"source_path": "res://assets/props/Food/SM_Dry_Goods_01c.glb",
 			"storage_pose_review": {
-				"notes": "",
+				"notes": "Default zero authored storage pose approved.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "cb3f25b1e4746391b94d2d6151c2adf07d378a43f529d26d3ce4aef0338a8a2e",
+				"status": "DEFAULT_POSE_APPROVED"
 			}
 		},
 		"loot_000010": {
@@ -340,14 +340,14 @@
 			"source_fingerprint": "6c57f9e480bc9c9160da0d61ef75986e72384e330bbcf99a31218e895a61b7aa",
 			"source_path": "res://assets/props/Food/SM_Dry_Goods_01g.glb",
 			"storage_pose_review": {
-				"notes": "",
+				"notes": "Default zero authored storage pose approved.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "6c57f9e480bc9c9160da0d61ef75986e72384e330bbcf99a31218e895a61b7aa",
+				"status": "DEFAULT_POSE_APPROVED"
 			}
 		},
 		"loot_000011": {
@@ -375,14 +375,14 @@
 			"source_fingerprint": "0903d0a48de2af72b6eb814ef654569c60e0a73bdaf4270fb10d3755c8a088a6",
 			"source_path": "res://assets/props/Food/SM_PigCarcass_1.glb",
 			"storage_pose_review": {
-				"notes": "",
+				"notes": "Default zero authored storage pose approved.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "0903d0a48de2af72b6eb814ef654569c60e0a73bdaf4270fb10d3755c8a088a6",
+				"status": "DEFAULT_POSE_APPROVED"
 			}
 		},
 		"loot_000012": {
@@ -410,14 +410,14 @@
 			"source_fingerprint": "cedc1401c90bc6bf2733ca2648ee4ab9daf5a85c1fa724cca2a70a4de3173e15",
 			"source_path": "res://assets/props/Food/SM_Watermelon_1.glb",
 			"storage_pose_review": {
-				"notes": "",
+				"notes": "Default zero authored storage pose approved.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "cedc1401c90bc6bf2733ca2648ee4ab9daf5a85c1fa724cca2a70a4de3173e15",
+				"status": "DEFAULT_POSE_APPROVED"
 			}
 		},
 		"loot_000013": {
@@ -445,14 +445,14 @@
 			"source_fingerprint": "58ec440f4d8a9b89d4ae6f30a0d7384cb6c9e584e25bdf8e2c6d99874ce6d658",
 			"source_path": "res://assets/props/Fuel/SM_Firewood_01.glb",
 			"storage_pose_review": {
-				"notes": "",
+				"notes": "Default zero authored storage pose approved.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "58ec440f4d8a9b89d4ae6f30a0d7384cb6c9e584e25bdf8e2c6d99874ce6d658",
+				"status": "DEFAULT_POSE_APPROVED"
 			}
 		},
 		"loot_000014": {
@@ -480,14 +480,14 @@
 			"source_fingerprint": "e0d55a6a3fb0548e9bafb082d80aa7e29d4875c92f47b33df666e5de3ab35729",
 			"source_path": "res://assets/props/Fuel/SM_FirewoodPile_01.glb",
 			"storage_pose_review": {
-				"notes": "",
+				"notes": "Default zero authored storage pose approved.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "e0d55a6a3fb0548e9bafb082d80aa7e29d4875c92f47b33df666e5de3ab35729",
+				"status": "DEFAULT_POSE_APPROVED"
 			}
 		},
 		"loot_000015": {
@@ -515,14 +515,14 @@
 			"source_fingerprint": "e3cbd7d3dd60c9fde76fe92df640aaf62091c9e6c9b6491ee548b0ac1cf10698",
 			"source_path": "res://assets/props/Fuel/SM_FuelCanister.glb",
 			"storage_pose_review": {
-				"notes": "",
+				"notes": "Default zero authored storage pose approved.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "e3cbd7d3dd60c9fde76fe92df640aaf62091c9e6c9b6491ee548b0ac1cf10698",
+				"status": "DEFAULT_POSE_APPROVED"
 			}
 		},
 		"loot_000016": {
@@ -550,14 +550,14 @@
 			"source_fingerprint": "c057b5d534a7b5c2d443c9d89ab62bb3cfcb6efa725f7acd2f5a20fd2270c952",
 			"source_path": "res://assets/props/Fuel/SM_GasCanister_01.glb",
 			"storage_pose_review": {
-				"notes": "",
+				"notes": "Default zero authored storage pose approved.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "c057b5d534a7b5c2d443c9d89ab62bb3cfcb6efa725f7acd2f5a20fd2270c952",
+				"status": "DEFAULT_POSE_APPROVED"
 			}
 		},
 		"loot_000017": {
@@ -585,14 +585,14 @@
 			"source_fingerprint": "3ef3c398222ed18752ab1fb54d1e83aec579a5a215fdd4376f193a75f21de9f4",
 			"source_path": "res://assets/props/Fuel/SM_GasCylinder_01.glb",
 			"storage_pose_review": {
-				"notes": "",
+				"notes": "Default zero authored storage pose approved.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "3ef3c398222ed18752ab1fb54d1e83aec579a5a215fdd4376f193a75f21de9f4",
+				"status": "DEFAULT_POSE_APPROVED"
 			}
 		},
 		"loot_000018": {
@@ -620,14 +620,14 @@
 			"source_fingerprint": "5c6a25e519c6e0e2544ad1a7e325c77be9ad79500c0466952fc9c35b1ffe3b61",
 			"source_path": "res://assets/props/Fuel/SM_PropaneTank_02.glb",
 			"storage_pose_review": {
-				"notes": "",
+				"notes": "Default zero authored storage pose approved.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "5c6a25e519c6e0e2544ad1a7e325c77be9ad79500c0466952fc9c35b1ffe3b61",
+				"status": "DEFAULT_POSE_APPROVED"
 			}
 		},
 		"loot_000019": {
@@ -655,14 +655,14 @@
 			"source_fingerprint": "4e7776b9816a8a74dedeebfd940ac578dc41fc49bb87b901359eb550d749fc6f",
 			"source_path": "res://assets/props/Hydration/SM_Metal_Can_01a.glb",
 			"storage_pose_review": {
-				"notes": "",
+				"notes": "Default pose unsuitable; candidate Y +130 degrees faces the label toward the player.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "4e7776b9816a8a74dedeebfd940ac578dc41fc49bb87b901359eb550d749fc6f",
+				"status": "CUSTOM_POSE_REQUIRED"
 			}
 		},
 		"loot_000020": {
@@ -690,14 +690,14 @@
 			"source_fingerprint": "08407b1d661f88250b2ab1687a7f4b9bd74d1863046e818828a44e89a849481f",
 			"source_path": "res://assets/props/Hydration/SM_MilkCarton_1.glb",
 			"storage_pose_review": {
-				"notes": "",
+				"notes": "Default pose unsuitable; candidate Y +90 degrees faces the front label toward the player.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "08407b1d661f88250b2ab1687a7f4b9bd74d1863046e818828a44e89a849481f",
+				"status": "CUSTOM_POSE_REQUIRED"
 			}
 		},
 		"loot_000021": {
@@ -725,14 +725,14 @@
 			"source_fingerprint": "d31b3993c3dfa7de7de871386090d11edcfc7394d1b0ff9dac0b1d332092bb6d",
 			"source_path": "res://assets/props/Hydration/SM_OrangeJuice_1.glb",
 			"storage_pose_review": {
-				"notes": "",
+				"notes": "Default pose unsuitable; candidate Y +90 degrees faces the front label toward the player.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "d31b3993c3dfa7de7de871386090d11edcfc7394d1b0ff9dac0b1d332092bb6d",
+				"status": "CUSTOM_POSE_REQUIRED"
 			}
 		},
 		"loot_000022": {
@@ -760,14 +760,14 @@
 			"source_fingerprint": "632f4ce2e4d333fbd2417b0581c7dacc987108d24a440d62772bcc86ddf9a7fa",
 			"source_path": "res://assets/props/Hydration/SM_SodaCan.glb",
 			"storage_pose_review": {
-				"notes": "",
+				"notes": "Default zero authored storage pose approved.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "632f4ce2e4d333fbd2417b0581c7dacc987108d24a440d62772bcc86ddf9a7fa",
+				"status": "DEFAULT_POSE_APPROVED"
 			}
 		},
 		"loot_000023": {
@@ -795,14 +795,14 @@
 			"source_fingerprint": "0863285b857c56deb2473a35e8511700751c56fcedb0cb8f212ec6a8ea1b17d1",
 			"source_path": "res://assets/props/Hydration/soda_can.glb",
 			"storage_pose_review": {
-				"notes": "",
+				"notes": "Default zero authored storage pose approved.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "0863285b857c56deb2473a35e8511700751c56fcedb0cb8f212ec6a8ea1b17d1",
+				"status": "DEFAULT_POSE_APPROVED"
 			}
 		},
 		"loot_000024": {
@@ -830,14 +830,14 @@
 			"source_fingerprint": "062b7b317fbf97b664a07c1ddc10b36aac362cb7fa6ec81b542486dfcbcc2fa1",
 			"source_path": "res://assets/props/medical/pill_bottle.glb",
 			"storage_pose_review": {
-				"notes": "",
+				"notes": "Default pose unsuitable; candidate Y +90 degrees faces the label toward the player.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "062b7b317fbf97b664a07c1ddc10b36aac362cb7fa6ec81b542486dfcbcc2fa1",
+				"status": "CUSTOM_POSE_REQUIRED"
 			}
 		},
 		"loot_000025": {
@@ -865,14 +865,14 @@
 			"source_fingerprint": "7a921edc40b390590fd9f36bf5eada1bb4f3575a8c49b18350ba7826c0c9434d",
 			"source_path": "res://assets/props/medical/SM_Antibiotics_01.glb",
 			"storage_pose_review": {
-				"notes": "",
+				"notes": "Default zero authored storage pose approved.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "7a921edc40b390590fd9f36bf5eada1bb4f3575a8c49b18350ba7826c0c9434d",
+				"status": "DEFAULT_POSE_APPROVED"
 			}
 		},
 		"loot_000026": {
@@ -900,14 +900,14 @@
 			"source_fingerprint": "4853eae6d79f9ddd5c619c5bdd4201a333955da009786d2a62f749c585bbe44c",
 			"source_path": "res://assets/props/medical/SM_Bandages_1.glb",
 			"storage_pose_review": {
-				"notes": "",
+				"notes": "Default zero authored storage pose approved.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "4853eae6d79f9ddd5c619c5bdd4201a333955da009786d2a62f749c585bbe44c",
+				"status": "DEFAULT_POSE_APPROVED"
 			}
 		},
 		"loot_000027": {
@@ -935,14 +935,14 @@
 			"source_fingerprint": "df65c2a162cba24514f8ca4d4491da16abb918f79f1204dd6fb111750354c1ea",
 			"source_path": "res://assets/props/medical/SM_CoughSyrup_01.glb",
 			"storage_pose_review": {
-				"notes": "",
+				"notes": "Default pose unsuitable; candidate Y -120 degrees faces the label toward the player.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "df65c2a162cba24514f8ca4d4491da16abb918f79f1204dd6fb111750354c1ea",
+				"status": "CUSTOM_POSE_REQUIRED"
 			}
 		},
 		"loot_000028": {
@@ -970,14 +970,14 @@
 			"source_fingerprint": "b9f552d3cb74cf631e2a9f5bdcc5bce7082e72ad46d5734e66f2d2bf8b166fbd",
 			"source_path": "res://assets/props/medical/SM_MedKit_4.glb",
 			"storage_pose_review": {
-				"notes": "",
+				"notes": "Default zero authored storage pose approved.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "b9f552d3cb74cf631e2a9f5bdcc5bce7082e72ad46d5734e66f2d2bf8b166fbd",
+				"status": "DEFAULT_POSE_APPROVED"
 			}
 		},
 		"loot_000029": {
@@ -1005,14 +1005,14 @@
 			"source_fingerprint": "0c39f0837ab52a56e7ae6504fa0aeeaa414d44fc25a2dd011757598cb047218f",
 			"source_path": "res://assets/props/morale/SM_Ball_01.glb",
 			"storage_pose_review": {
-				"notes": "",
+				"notes": "Default zero authored storage pose approved.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "0c39f0837ab52a56e7ae6504fa0aeeaa414d44fc25a2dd011757598cb047218f",
+				"status": "DEFAULT_POSE_APPROVED"
 			}
 		},
 		"loot_000030": {
@@ -1040,14 +1040,14 @@
 			"source_fingerprint": "a4e66269ee59b6912d6e8f5cd5ea2fc309a4629d12d1f5a62d25d465a1a529e8",
 			"source_path": "res://assets/props/morale/SM_Book_01.glb",
 			"storage_pose_review": {
-				"notes": "",
+				"notes": "Default zero authored storage pose approved.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "a4e66269ee59b6912d6e8f5cd5ea2fc309a4629d12d1f5a62d25d465a1a529e8",
+				"status": "DEFAULT_POSE_APPROVED"
 			}
 		},
 		"loot_000031": {
@@ -1075,14 +1075,14 @@
 			"source_fingerprint": "4ec59a02d5cd0b7a5a6e9fdd426795d9e14a32811f1d627ff0922cbe41fae6da",
 			"source_path": "res://assets/props/morale/SM_CDStack_01.glb",
 			"storage_pose_review": {
-				"notes": "",
+				"notes": "Default zero authored storage pose approved.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "4ec59a02d5cd0b7a5a6e9fdd426795d9e14a32811f1d627ff0922cbe41fae6da",
+				"status": "DEFAULT_POSE_APPROVED"
 			}
 		},
 		"loot_000032": {
@@ -1110,14 +1110,14 @@
 			"source_fingerprint": "8fa1fa14942a2bd8dd60514d23c393784fa6d2612dcd719bf1bb871f5ca70194",
 			"source_path": "res://assets/props/protection/SM_Armor_02.glb",
 			"storage_pose_review": {
-				"notes": "",
+				"notes": "Default zero authored storage pose approved.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "8fa1fa14942a2bd8dd60514d23c393784fa6d2612dcd719bf1bb871f5ca70194",
+				"status": "DEFAULT_POSE_APPROVED"
 			}
 		},
 		"loot_000033": {
@@ -1145,14 +1145,14 @@
 			"source_fingerprint": "280514a80eeffbee0ea34cb0f6ec7987a16ee29b087da9694f9401132e98e1a2",
 			"source_path": "res://assets/props/protection/SM_Boots_01.glb",
 			"storage_pose_review": {
-				"notes": "",
+				"notes": "Default zero authored storage pose approved.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "280514a80eeffbee0ea34cb0f6ec7987a16ee29b087da9694f9401132e98e1a2",
+				"status": "DEFAULT_POSE_APPROVED"
 			}
 		},
 		"loot_000034": {
@@ -1180,14 +1180,14 @@
 			"source_fingerprint": "5645b56b9506c5014a05930c49de6d75661c0df8498848e5d2bdc7f402e94eed",
 			"source_path": "res://assets/props/protection/SM_Gloves_02.glb",
 			"storage_pose_review": {
-				"notes": "",
+				"notes": "Default pose unsuitable; candidate X -90 degrees lays the gloves flat with their backs upward.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "5645b56b9506c5014a05930c49de6d75661c0df8498848e5d2bdc7f402e94eed",
+				"status": "CUSTOM_POSE_REQUIRED"
 			}
 		},
 		"loot_000035": {
@@ -1215,14 +1215,14 @@
 			"source_fingerprint": "93d6e0e5b9df34b5d0cf9b27275f1895e7cf85879bc60eac5a12dd66d0e9e0b3",
 			"source_path": "res://assets/props/protection/SM_HardHat_01.glb",
 			"storage_pose_review": {
-				"notes": "",
+				"notes": "Default zero authored storage pose approved.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "93d6e0e5b9df34b5d0cf9b27275f1895e7cf85879bc60eac5a12dd66d0e9e0b3",
+				"status": "DEFAULT_POSE_APPROVED"
 			}
 		},
 		"loot_000036": {
@@ -1250,14 +1250,14 @@
 			"source_fingerprint": "c41e17628b65793eb938e3be02b0b399573c625093bdd8e816c7dcb464ec7c78",
 			"source_path": "res://assets/props/protection/SM_Pants_02.glb",
 			"storage_pose_review": {
-				"notes": "",
+				"notes": "No acceptable current single-mesh ordinary-shelf pose; folded stored visual remains a future candidate.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "c41e17628b65793eb938e3be02b0b399573c625093bdd8e816c7dcb464ec7c78",
+				"status": "CUSTOM_POSE_REQUIRED"
 			}
 		},
 		"loot_000037": {
@@ -1285,14 +1285,14 @@
 			"source_fingerprint": "4ac5a2d4e8d8a170b7a6abeeb095fd51172097d991798e6ef1ece1bcc74a40c8",
 			"source_path": "res://assets/props/Weapons/hammer.glb",
 			"storage_pose_review": {
-				"notes": "",
+				"notes": "Default zero authored storage pose approved.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "4ac5a2d4e8d8a170b7a6abeeb095fd51172097d991798e6ef1ece1bcc74a40c8",
+				"status": "DEFAULT_POSE_APPROVED"
 			}
 		},
 		"loot_000038": {
@@ -1320,14 +1320,14 @@
 			"source_fingerprint": "38598f0566dcb6bd0d338cc3a844ec9f9b68c4903a3ed6360c39ccf6f1dd4bb1",
 			"source_path": "res://assets/props/Weapons/SM_Gun_AssaultRifle.glb",
 			"storage_pose_review": {
-				"notes": "",
+				"notes": "Default pose unsuitable; candidate Z +90 degrees lays the rifle on its side with the barrel horizontal.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "38598f0566dcb6bd0d338cc3a844ec9f9b68c4903a3ed6360c39ccf6f1dd4bb1",
+				"status": "CUSTOM_POSE_REQUIRED"
 			}
 		},
 		"loot_000039": {
@@ -1355,14 +1355,14 @@
 			"source_fingerprint": "e77eed4043544e371dceb36fd99a138fed4fbd4570b8d2fe75ee6d097b568fac",
 			"source_path": "res://assets/props/Weapons/SM_Gun_Pistol.glb",
 			"storage_pose_review": {
-				"notes": "",
+				"notes": "Default pose unsuitable; candidate X -90 degrees lays the pistol naturally on its side.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "e77eed4043544e371dceb36fd99a138fed4fbd4570b8d2fe75ee6d097b568fac",
+				"status": "CUSTOM_POSE_REQUIRED"
 			}
 		},
 		"loot_000040": {
@@ -1390,14 +1390,14 @@
 			"source_fingerprint": "6c39da4730013101fa22348c90e8ce04d5be6fff5487f45255a8d0f37ffab352",
 			"source_path": "res://assets/props/Weapons/SM_Gun_Shotgun.glb",
 			"storage_pose_review": {
-				"notes": "",
+				"notes": "Default pose unsuitable; candidate Z +90 degrees lays the shotgun on its side with the barrel horizontal.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "6c39da4730013101fa22348c90e8ce04d5be6fff5487f45255a8d0f37ffab352",
+				"status": "CUSTOM_POSE_REQUIRED"
 			}
 		},
 		"loot_000041": {
@@ -1425,14 +1425,14 @@
 			"source_fingerprint": "0239435c9e3eccaec42d61f323878f64a08432f79ec47f412ef62d6338eb2517",
 			"source_path": "res://assets/props/Weapons/SM_Hammer_3.glb",
 			"storage_pose_review": {
-				"notes": "",
+				"notes": "Default pose unsuitable; candidate Z +180 degrees keeps the hammer upright with its metal head on the shelf.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "0239435c9e3eccaec42d61f323878f64a08432f79ec47f412ef62d6338eb2517",
+				"status": "CUSTOM_POSE_REQUIRED"
 			}
 		},
 		"loot_000042": {
@@ -1460,14 +1460,14 @@
 			"source_fingerprint": "65b52da2eee3f955d39fe045fbf2924364eae2291576899dded783d72b78fe69",
 			"source_path": "res://assets/props/Weapons/tennis_racket.glb",
 			"storage_pose_review": {
-				"notes": "",
+				"notes": "Default zero authored storage pose approved.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "65b52da2eee3f955d39fe045fbf2924364eae2291576899dded783d72b78fe69",
+				"status": "DEFAULT_POSE_APPROVED"
 			}
 		}
 	},

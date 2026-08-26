@@ -8,4 +8,5 @@ script = ExtResource("1_dj76h")
 item_id = &"loot_000020"
 display_name = "Milk Carton 1"
 storage_category = "Hydration"
+storage_rotation_degrees = Vector3(0, 90, 0)
 visual_scene = ExtResource("2_8py41")

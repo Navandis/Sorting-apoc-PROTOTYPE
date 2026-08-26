@@ -9,4 +9,5 @@ item_id = &"loot_000034"
 display_name = "Gloves 02glb"
 storage_category = "Protection"
 storage_footprint = Vector3i(3, 2, 1)
+storage_rotation_degrees = Vector3(-90, 0, 0)
 visual_scene = ExtResource("2_7bpi2")

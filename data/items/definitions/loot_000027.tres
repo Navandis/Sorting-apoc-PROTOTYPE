@@ -8,4 +8,5 @@ script = ExtResource("1_udr6d")
 item_id = &"loot_000027"
 display_name = "Medicine Bottle"
 storage_category = "Medical"
+storage_rotation_degrees = Vector3(0, -120, 0)
 visual_scene = ExtResource("2_ts674")

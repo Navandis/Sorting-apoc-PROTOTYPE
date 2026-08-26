@@ -8,4 +8,5 @@ script = ExtResource("1_ggv6r")
 item_id = &"loot_000019"
 display_name = "Food Can"
 storage_category = "Hydration"
+storage_rotation_degrees = Vector3(0, 130, 0)
 visual_scene = ExtResource("2_5e3kt")

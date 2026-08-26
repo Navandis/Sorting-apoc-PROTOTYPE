@@ -8,4 +8,5 @@ script = ExtResource("1_jdotd")
 item_id = &"loot_000024"
 display_name = "Painkillers"
 storage_category = "Medical"
+storage_rotation_degrees = Vector3(0, 90, 0)
 visual_scene = ExtResource("2_oaiy6")

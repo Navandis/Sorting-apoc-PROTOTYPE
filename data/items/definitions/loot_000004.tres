@@ -9,4 +9,5 @@ item_id = &"loot_000004"
 display_name = "Phone 01"
 storage_category = "Electronics"
 storage_footprint = Vector3i(4, 3, 1)
+storage_rotation_degrees = Vector3(0, 90, 0)
 visual_scene = ExtResource("2_jj6q2")
