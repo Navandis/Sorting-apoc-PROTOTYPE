@@ -2,6 +2,7 @@ extends SceneTree
 
 const CarriedItemsScript = preload("res://carried_items.gd")
 const ItemInstanceScript = preload("res://item_instance.gd")
+const PlayerControllerScript = preload("res://player_controller.gd")
 const StorageCategoriesScript = preload("res://storage_categories.gd")
 const StoragePlacementControllerScript = preload("res://storage_placement_controller.gd")
 const StorageSurfaceScript = preload("res://storage_surface.gd")
@@ -135,11 +136,13 @@ func _test_removed_base_manual_empty_placement_on_same_surface() -> void:
 	controller.set("_rotated", false)
 	controller.set("_current_surface", surface)
 	controller.set("_current_fit", _manual_empty_fit(controller, base, surface, Vector2i(5, 2), false))
-	_check(controller.place_selected(), "single carried removed base places into empty same-surface cells")
+	var player: Node = _player_for_storage_dispatch(carried, controller)
+	player.call("_attempt_store")
 	_check(carried.get_item_count() == 0, "single carried placement removes the stored item rather than rotating it")
 	_check(surface.get_stack_id_for_item(base.instance_id) == base.instance_id, "removed base owns a new ordinary one-entry stack")
 	var placed_stack: StorageStack = surface.get_storage_stack(base.instance_id)
 	_check(placed_stack != null and not placed_stack.entries[0].packing_rotated, "same-surface return preserves effective unrotated placement")
+	player.free()
 	_free_context(context)
 
 
@@ -188,10 +191,12 @@ func _test_removed_base_placement_with_multiple_carried_items() -> void:
 	controller.set_manual_mode(true)
 	controller.set("_current_surface", surface)
 	controller.set("_current_fit", _manual_empty_fit(controller, base, surface, Vector2i(5, 2), false))
-	_check(controller.place_selected(), "multi-carried removed base is placed rather than skipped")
+	var player: Node = _player_for_storage_dispatch(carried, controller)
+	player.call("_attempt_store")
 	_check(not carried.get_items().has(base), "placed base leaves carried ownership")
 	_check(carried.get_selected_item() == other, "selection advances only after successful placement to the remaining item")
 	_check(surface.get_stack_id_for_item(base.instance_id) == base.instance_id, "multi-carried base has active same-surface placement")
+	player.free()
 	_free_context(context)
 
 
@@ -327,6 +332,19 @@ func _manual_empty_fit(
 		"zone_category": "",
 		"host_y_m": surface.get_local_placement_position(origin, entry.footprint).y
 	}
+
+
+func _player_for_storage_dispatch(
+	carried: CarriedItems,
+	controller: StoragePlacementController
+) -> Node:
+	var player: Node = PlayerControllerScript.new()
+	var prompt: Label = Label.new()
+	player.add_child(prompt)
+	player.set("carried_items", carried)
+	player.set("_storage_placement", controller)
+	player.set("_interaction_prompt", prompt)
+	return player
 
 
 func _place_manual_empty(
