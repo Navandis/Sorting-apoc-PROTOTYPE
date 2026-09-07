@@ -188,13 +188,10 @@ func update_target() -> void:
 			if stack_surface != null:
 				_current_surface = stack_surface
 				_set_manual_debug_surface(stack_surface)
-				var stack_entry: StorageStack.Entry = _entry_for_item(
-					selected_item,
-					_rotated
-				)
-				_current_fit = stack_surface.find_manual_stack_fit(
+				_current_fit = _find_manual_stack_target_fit(
+					stack_surface,
 					stack_target.get_storage_stack_id(),
-					stack_entry
+					selected_item
 				)
 				_update_ghost(selected_item)
 				return
@@ -563,6 +560,27 @@ func _entry_orientations_for_item(item) -> Array[StorageStack.Entry]:
 		if rotated_entry != null:
 			orientations.append(rotated_entry)
 	return orientations
+
+
+func _find_manual_stack_target_fit(
+	surface: Node,
+	stack_id: String,
+	item
+) -> Dictionary:
+	if surface == null or not surface.has_method("find_manual_stack_fit"):
+		return {}
+	var preferred_entry: StorageStack.Entry = _entry_for_item(item, _rotated)
+	if preferred_entry == null:
+		return {}
+	var alternate_entry: StorageStack.Entry = null
+	var footprint: Vector2i = _base_footprint(item)
+	if footprint.x != footprint.y:
+		alternate_entry = _entry_for_item(item, not _rotated)
+	return surface.find_manual_stack_fit(
+		stack_id,
+		preferred_entry,
+		alternate_entry
+	)
 
 
 func _pose_metrics_for_item(item, packing_rotated: bool) -> Dictionary:

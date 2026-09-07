@@ -28,6 +28,10 @@ func _run() -> void:
 	_definitions = _definitions_by_id()
 	_test_flat_media_and_pose_cache()
 	_test_general_round_cans_and_visible_middle_retrieval()
+	_test_removed_base_manual_empty_placement_on_same_surface()
+	_test_removed_base_auto_empty_placement_on_same_surface()
+	_test_removed_base_placement_with_multiple_carried_items()
+	_test_contextual_manual_orientation_preserves_preference()
 	_test_manual_terminal_and_ghost_final_parity(&"loot_000039")
 	_test_manual_terminal_and_ghost_final_parity(&"loot_000006")
 	if _failed:
@@ -113,6 +117,127 @@ func _test_general_round_cans_and_visible_middle_retrieval() -> void:
 	_free_context(context)
 
 
+func _test_removed_base_manual_empty_placement_on_same_surface() -> void:
+	var context: Dictionary = _context(Vector2i(10, 6), 1.0)
+	var surface: StorageSurface = context["surface"] as StorageSurface
+	var controller: StoragePlacementController = context["controller"] as StoragePlacementController
+	var carried: CarriedItems = context["carried"] as CarriedItems
+	surface.set_zone_rect(StorageCategoriesScript.GENERAL, Vector2i.ZERO, Vector2i(9, 5))
+	var base: ItemInstance = _build_book_cd_stack(controller, carried, surface)
+	var original_stack_id: String = base.instance_id
+	var original_stack: StorageStack = surface.get_storage_stack(original_stack_id)
+	var base_world: WorldItem = original_stack.entries[0].world_item as WorldItem
+	_check(base_world.pickup_into(carried), "removed base enters carried strip")
+	_check(surface.get_stack_id_for_item(original_stack.entries[0].item_key) == original_stack.entries[0].item_key, "survivor is authoritative before removed-base placement")
+	_check(not (surface.get("_stacks") as Dictionary).has(original_stack_id), "removed base ID is absent before placement dispatch")
+
+	controller.set_manual_mode(true)
+	controller.set("_rotated", false)
+	controller.set("_current_surface", surface)
+	controller.set("_current_fit", _manual_empty_fit(controller, base, surface, Vector2i(5, 2), false))
+	_check(controller.place_selected(), "single carried removed base places into empty same-surface cells")
+	_check(carried.get_item_count() == 0, "single carried placement removes the stored item rather than rotating it")
+	_check(surface.get_stack_id_for_item(base.instance_id) == base.instance_id, "removed base owns a new ordinary one-entry stack")
+	var placed_stack: StorageStack = surface.get_storage_stack(base.instance_id)
+	_check(placed_stack != null and not placed_stack.entries[0].packing_rotated, "same-surface return preserves effective unrotated placement")
+	_free_context(context)
+
+
+func _test_removed_base_auto_empty_placement_on_same_surface() -> void:
+	var context: Dictionary = _context(Vector2i(10, 6), 1.0)
+	var surface: StorageSurface = context["surface"] as StorageSurface
+	var controller: StoragePlacementController = context["controller"] as StoragePlacementController
+	var carried: CarriedItems = context["carried"] as CarriedItems
+	surface.set_zone_rect(StorageCategoriesScript.GENERAL, Vector2i.ZERO, Vector2i(9, 5))
+	var base: ItemInstance = _build_book_cd_stack(controller, carried, surface)
+	var original_stack: StorageStack = surface.get_storage_stack(base.instance_id)
+	var base_world: WorldItem = original_stack.entries[0].world_item as WorldItem
+	_check(base_world.pickup_into(carried), "auto regression removed base enters carried strip")
+	var orientations: Array = controller.call("_entry_orientations_for_item", base)
+	var fit: Dictionary = surface.find_zone_stack_or_empty_fit(
+		base.get_storage_category(),
+		orientations[0],
+		orientations[1] if orientations.size() > 1 else null
+	)
+	_check(fit.get("placement_kind", "") == "empty", "larger removed base remains an empty-placement candidate, not base insertion")
+	controller.set("_current_surface", surface)
+	controller.set("_current_fit", fit)
+	controller.set("_manual_mode", false)
+	_check(controller.place_selected(), "removed base auto-places normally while promoted stack survives")
+	_check(carried.get_item_count() == 0, "auto placement consumes exactly the removed base")
+	_check(surface.get_stack_count() == 2, "auto placement creates an ordinary separate stack without base promotion")
+	_free_context(context)
+
+
+func _test_removed_base_placement_with_multiple_carried_items() -> void:
+	var context: Dictionary = _context(Vector2i(10, 6), 1.0)
+	var surface: StorageSurface = context["surface"] as StorageSurface
+	var controller: StoragePlacementController = context["controller"] as StoragePlacementController
+	var carried: CarriedItems = context["carried"] as CarriedItems
+	surface.set_zone_rect(StorageCategoriesScript.GENERAL, Vector2i.ZERO, Vector2i(9, 5))
+	var base: ItemInstance = _build_book_cd_stack(controller, carried, surface)
+	var other: ItemInstance = _item(&"loot_000022")
+	_check(carried.add_item(other), "additional carried item enters first slot")
+	var original_stack: StorageStack = surface.get_storage_stack(base.instance_id)
+	var base_world: WorldItem = original_stack.entries[0].world_item as WorldItem
+	_check(base_world.pickup_into(carried), "multi-carried removed base enters carried strip")
+	var base_slot: int = carried.get_slots().find(base)
+	carried.select_index(base_slot)
+	_check(carried.get_selected_item() == base, "removed base selected before placement dispatch")
+
+	controller.set_manual_mode(true)
+	controller.set("_current_surface", surface)
+	controller.set("_current_fit", _manual_empty_fit(controller, base, surface, Vector2i(5, 2), false))
+	_check(controller.place_selected(), "multi-carried removed base is placed rather than skipped")
+	_check(not carried.get_items().has(base), "placed base leaves carried ownership")
+	_check(carried.get_selected_item() == other, "selection advances only after successful placement to the remaining item")
+	_check(surface.get_stack_id_for_item(base.instance_id) == base.instance_id, "multi-carried base has active same-surface placement")
+	_free_context(context)
+
+
+func _test_contextual_manual_orientation_preserves_preference() -> void:
+	var context: Dictionary = _context(Vector2i(10, 8), 1.0)
+	var surface: StorageSurface = context["surface"] as StorageSurface
+	var controller: StoragePlacementController = context["controller"] as StoragePlacementController
+	var carried: CarriedItems = context["carried"] as CarriedItems
+	surface.set_zone_rect(StorageCategoriesScript.GENERAL, Vector2i.ZERO, Vector2i(9, 7))
+	var base: ItemInstance = _item(&"loot_000028")
+	_check(_place_manual_empty(controller, carried, surface, base, Vector2i(1, 1)), "contextual orientation MedKit base placement")
+	var incoming: ItemInstance = _item(&"loot_000028")
+	_check(carried.add_item(incoming), "contextual orientation incoming MedKit carried")
+	controller.set_manual_mode(true)
+	controller.set("_rotated", true)
+
+	var stack_id: String = surface.get_stack_id_for_item(base.instance_id)
+	var fit: Dictionary = controller.call(
+		"_find_manual_stack_target_fit",
+		surface,
+		stack_id,
+		incoming
+	) as Dictionary
+	_check(bool(fit.get("valid", false)), "invalid preferred MedKit orientation uses valid 90-degree alternative")
+	_check(not bool(fit.get("rotated", true)), "effective targeted orientation is separate from rotated preference")
+	_check(bool(controller.get("_rotated")), "contextual fit does not mutate player R preference")
+	var normal_preferred = controller.call("_entry_for_item", incoming, bool(controller.get("_rotated")))
+	_check(normal_preferred.packing_rotated, "leaving target resumes the unchanged manual orientation preference")
+
+	controller.set("_current_surface", surface)
+	controller.set("_current_fit", fit)
+	controller.call("_update_ghost", incoming)
+	var ghost_host: Node3D = controller.get("_ghost_host") as Node3D
+	var ghost_packing: Node3D = controller.get("_ghost_packing_root") as Node3D
+	var ghost_transform: Transform3D = ghost_host.transform
+	var ghost_packing_basis: Basis = ghost_packing.basis
+	_check(controller.place_selected(), "contextual orientation placement commits")
+	var stack: StorageStack = surface.get_storage_stack(stack_id)
+	var committed = stack.entries[stack.entries.size() - 1]
+	var final_packing: Node3D = committed.host.get_node("StoredPackingYaw") as Node3D
+	_check(committed.host.transform.is_equal_approx(ghost_transform), "contextual orientation ghost and final host match")
+	_check(final_packing.basis.is_equal_approx(ghost_packing_basis), "contextual effective packing yaw matches ghost and final")
+	_check(not committed.packing_rotated, "committed entry records contextual effective orientation")
+	_free_context(context)
+
+
 func _test_manual_terminal_and_ghost_final_parity(terminal_id: StringName) -> void:
 	var context: Dictionary = _context(Vector2i(12, 8), 1.0)
 	var surface: StorageSurface = context["surface"] as StorageSurface
@@ -165,6 +290,43 @@ func _place_auto(controller: StoragePlacementController, carried: CarriedItems, 
 	controller.set("_current_fit", fit)
 	controller.set("_manual_mode", false)
 	return controller.place_selected()
+
+
+func _build_book_cd_stack(
+	controller: StoragePlacementController,
+	carried: CarriedItems,
+	surface: StorageSurface
+) -> ItemInstance:
+	var base: ItemInstance = _item(&"loot_000030")
+	var middle: ItemInstance = _item(&"loot_000031")
+	var top: ItemInstance = _item(&"loot_000031")
+	_check(_place_auto(controller, carried, surface, base), "removed-base fixture Book placed")
+	_check(_place_auto(controller, carried, surface, middle), "removed-base fixture middle CD stacked")
+	_check(_place_auto(controller, carried, surface, top), "removed-base fixture top CD stacked")
+	return base
+
+
+func _manual_empty_fit(
+	controller: StoragePlacementController,
+	item: ItemInstance,
+	surface: StorageSurface,
+	origin: Vector2i,
+	rotated: bool
+) -> Dictionary:
+	var entry = controller.call("_entry_for_item", item, rotated)
+	return {
+		"valid": surface.can_place_at(origin, entry.footprint),
+		"placement_kind": "empty",
+		"stack_id": item.instance_id,
+		"insertion_index": 0,
+		"origin": origin,
+		"footprint": entry.footprint,
+		"base_footprint": entry.footprint,
+		"rotated": rotated,
+		"zone_kind": "manual",
+		"zone_category": "",
+		"host_y_m": surface.get_local_placement_position(origin, entry.footprint).y
+	}
 
 
 func _place_manual_empty(

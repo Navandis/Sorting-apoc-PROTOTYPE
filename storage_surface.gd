@@ -347,21 +347,35 @@ func find_zone_stack_or_empty_fit(
 
 func find_manual_stack_fit(
 	stack_id: String,
-	entry: StorageStack.Entry
+	preferred_entry: StorageStack.Entry,
+	alternate_entry: StorageStack.Entry = null
 ) -> Dictionary:
 	var stack: StorageStack = get_storage_stack(stack_id)
-	if stack == null or entry == null:
+	if stack == null or preferred_entry == null:
+		return _invalid_stack_placement()
+	if not _footprint_is_storage_enabled(
+		stack.surface_origin,
+		stack.base_footprint
+	):
 		return _invalid_stack_placement()
 	var base_host_y_m: float = get_local_placement_position(
 		stack.surface_origin,
 		stack.base_footprint
 	).y
+	var selected_entry: StorageStack.Entry = preferred_entry
 	var fit: Dictionary = stack.find_manual_append(
-		entry,
+		selected_entry,
 		get_maximum_stack_top_y_m(),
 		base_host_y_m
 	)
-	return _decorate_stack_fit(stack, entry, fit, "manual", "")
+	if not bool(fit.get("valid", false)) and alternate_entry != null:
+		selected_entry = alternate_entry
+		fit = stack.find_manual_append(
+			selected_entry,
+			get_maximum_stack_top_y_m(),
+			base_host_y_m
+		)
+	return _decorate_stack_fit(stack, selected_entry, fit, "manual", "")
 
 
 func commit_stack_entry(entry: StorageStack.Entry, fit: Dictionary) -> bool:
@@ -415,29 +429,42 @@ func remove_stack_entry(stack_id: String, item_key: String) -> bool:
 	if removal_index < 0:
 		return false
 
+	if removal_index == 0 and stack.entries.size() > 1:
+		var promoted: StorageStack.Entry = stack.entries[1]
+		var new_origin: Vector2i = StorageStackScript.centered_shrink_origin(
+			stack.surface_origin,
+			stack.base_footprint,
+			promoted.footprint
+		)
+		if not _can_rekey_promoted_base(
+			stack,
+			stack_id,
+			item_key,
+			promoted.item_key,
+			new_origin,
+			promoted.footprint
+		):
+			return false
+
+		stack.entries.remove_at(0)
+		_commit_promoted_base_rekey(
+			stack,
+			stack_id,
+			item_key,
+			promoted.item_key,
+			new_origin,
+			promoted.footprint,
+			promoted.packing_rotated
+		)
+		_position_stack_entries(stack)
+		return true
+
 	stack.entries.remove_at(removal_index)
 	_item_to_stack.erase(item_key)
 	if stack.entries.is_empty():
 		_stacks.erase(stack_id)
 		_release_reservation_only(stack_id)
 		return true
-
-	if removal_index == 0:
-		var promoted: StorageStack.Entry = stack.entries[0]
-		var new_origin: Vector2i = StorageStackScript.centered_shrink_origin(
-			stack.surface_origin,
-			stack.base_footprint,
-			promoted.footprint
-		)
-		if not _replace_reservation_inside_old(
-			stack_id,
-			new_origin,
-			promoted.footprint,
-			promoted.packing_rotated
-		):
-			return false
-		stack.surface_origin = new_origin
-		stack.base_footprint = promoted.footprint
 
 	_position_stack_entries(stack)
 	return true
@@ -541,7 +568,6 @@ func _auto_zone_tiers(category: String) -> Array[String]:
 	if StorageCategoriesScript.is_item_category(category):
 		tiers.append(category)
 	tiers.append(StorageCategoriesScript.GENERAL)
-	tiers.append("")
 	return tiers
 
 
@@ -582,14 +608,40 @@ func _position_stack_entries(stack: StorageStack) -> void:
 		)
 
 
-func _replace_reservation_inside_old(
-	stack_id: String,
+func _can_rekey_promoted_base(
+	stack: StorageStack,
+	old_stack_id: String,
+	removed_item_key: String,
+	new_stack_id: String,
 	new_origin: Vector2i,
-	new_footprint: Vector2i,
-	rotated: bool
+	new_footprint: Vector2i
 ) -> bool:
-	if not _reservations.has(stack_id):
+	if (
+		stack == null
+		or old_stack_id.is_empty()
+		or removed_item_key != old_stack_id
+		or new_stack_id.is_empty()
+		or new_stack_id == old_stack_id
+		or _stacks.get(old_stack_id) != stack
+		or _stacks.has(new_stack_id)
+		or not _reservations.has(old_stack_id)
+		or get_stack_id_for_item(removed_item_key) != old_stack_id
+		or get_stack_id_for_item(new_stack_id) != old_stack_id
+	):
 		return false
+	var old_reservation_value: Variant = _reservations[old_stack_id]
+	if not (old_reservation_value is Dictionary):
+		return false
+	var old_reservation: Dictionary = old_reservation_value as Dictionary
+	if (
+		not bool(old_reservation.get("valid", false))
+		or String(old_reservation.get("item_key", "")) != old_stack_id
+		or _reservations.has(new_stack_id)
+	):
+		return false
+	for entry: StorageStack.Entry in stack.entries:
+		if entry.item_key.is_empty() or get_stack_id_for_item(entry.item_key) != old_stack_id:
+			return false
 	var normalized: Vector2i = _normalize_footprint(new_footprint)
 	if (
 		new_origin.x < 0
@@ -601,25 +653,59 @@ func _replace_reservation_inside_old(
 	for row: int in range(new_origin.y, new_origin.y + normalized.y):
 		for column: int in range(new_origin.x, new_origin.x + normalized.x):
 			var owner: String = _cells[_cell_index(Vector2i(column, row))]
-			if not owner.is_empty() and owner != stack_id:
+			if owner != old_stack_id:
 				return false
+	return true
+
+
+func _commit_promoted_base_rekey(
+	stack: StorageStack,
+	old_stack_id: String,
+	removed_item_key: String,
+	new_stack_id: String,
+	new_origin: Vector2i,
+	new_footprint: Vector2i,
+	rotated: bool
+) -> void:
+	## Every possible rejection is handled by `_can_rekey_promoted_base()`.
+	## From here onward the transition contains only infallible in-memory
+	## assignments, so no observer can receive a half-promoted stack.
+	var normalized: Vector2i = _normalize_footprint(new_footprint)
 
 	for cell_index: int in range(_cells.size()):
-		if _cells[cell_index] == stack_id:
+		if _cells[cell_index] == old_stack_id:
 			_cells[cell_index] = ""
 	for row: int in range(new_origin.y, new_origin.y + normalized.y):
 		for column: int in range(new_origin.x, new_origin.x + normalized.x):
-			_cells[_cell_index(Vector2i(column, row))] = stack_id
-	_reservations[stack_id] = {
+			_cells[_cell_index(Vector2i(column, row))] = new_stack_id
+
+	_reservations.erase(old_stack_id)
+	_reservations[new_stack_id] = {
 		"valid": true,
-		"item_key": stack_id,
+		"item_key": new_stack_id,
 		"origin": new_origin,
 		"footprint": normalized,
 		"rotated": rotated
 	}
+
+	_stacks.erase(old_stack_id)
+	stack.stack_id = new_stack_id
+	stack.surface_origin = new_origin
+	stack.base_footprint = normalized
+	_stacks[new_stack_id] = stack
+
+	_item_to_stack.erase(removed_item_key)
+	for entry: StorageStack.Entry in stack.entries:
+		_item_to_stack[entry.item_key] = new_stack_id
+		if (
+			entry.world_item != null
+			and is_instance_valid(entry.world_item)
+			and entry.world_item.has_method("rebind_storage_stack")
+		):
+			entry.world_item.call("rebind_storage_stack", new_stack_id)
+
 	_refresh_debug_occupancy()
 	occupancy_changed.emit()
-	return true
 
 
 func find_zone_auto_fit(
@@ -630,8 +716,7 @@ func find_zone_auto_fit(
 	## Automatic placement policy:
 	## 1. Exact matching Storage Category.
 	## 2. General.
-	## 3. Explicitly unassigned cells.
-	## Never silently enter a different specific category zone.
+	## Deliberately erased cells and different specific categories are disabled.
 	var category: String = storage_category.strip_edges()
 
 	var primary: Vector2i = _normalize_footprint(footprint)
@@ -654,7 +739,6 @@ func find_zone_auto_fit(
 	if StorageCategoriesScript.is_item_category(category):
 		tiers.append(category)
 	tiers.append(StorageCategoriesScript.GENERAL)
-	tiers.append("") # unassigned fallback
 
 	for zone_category: String in tiers:
 		for orientation_value: Variant in orientations:
@@ -717,6 +801,8 @@ func _find_first_fit_inside_zone(
 		for column: int in range(max_column + 1):
 			var origin: Vector2i = Vector2i(column, row)
 			if not can_place_at(origin, normalized):
+				continue
+			if not _footprint_is_storage_enabled(origin, normalized):
 				continue
 			if not _footprint_is_inside_zone(
 				origin,
@@ -824,6 +910,8 @@ func find_nearest_fit_to_local_point(
 			var origin: Vector2i = Vector2i(column, row)
 			if not can_place_at(origin, normalized):
 				continue
+			if not _footprint_is_storage_enabled(origin, normalized):
+				continue
 
 			var candidate_position: Vector3 = get_local_placement_position(origin, normalized)
 			var delta_x: float = candidate_position.x - local_point.x
@@ -840,6 +928,24 @@ func find_nearest_fit_to_local_point(
 		"origin": best_origin if best_valid else get_clamped_origin_for_local_point(local_point, normalized),
 		"footprint": normalized
 	}
+
+
+func _footprint_is_storage_enabled(
+	origin: Vector2i,
+	footprint: Vector2i
+) -> bool:
+	## Before first zoning use, manual placement retains the original prototype
+	## behavior. Once initialized, an empty category is an authored disabled cell.
+	if not _zones_initialized:
+		return true
+	var normalized: Vector2i = _normalize_footprint(footprint)
+	for row: int in range(origin.y, origin.y + normalized.y):
+		for column: int in range(origin.x, origin.x + normalized.x):
+			if not _is_cell_valid(Vector2i(column, row)):
+				return false
+			if get_zone_category(Vector2i(column, row)).is_empty():
+				return false
+	return true
 
 
 func get_clamped_origin_for_local_point(

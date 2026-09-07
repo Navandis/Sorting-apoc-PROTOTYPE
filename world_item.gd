@@ -89,6 +89,15 @@ func get_storage_item_key() -> String:
 	return _storage_item_key if is_stored_item() else ""
 
 
+func rebind_storage_stack(new_stack_id: String) -> void:
+	## StorageSurface calls this after it has validated an atomic base-promotion
+	## rekey. The assignment itself is deliberately infallible so survivor
+	## metadata cannot leave the owning surface transition half-applied.
+	if new_stack_id.is_empty():
+		return
+	_storage_stack_id = new_stack_id
+
+
 func utility_text() -> String:
 	return _item_instance.utility_text() if _item_instance != null else "No utility"
 
