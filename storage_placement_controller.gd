@@ -5,6 +5,7 @@ class_name StoragePlacementController
 ## CarriedItems -> deterministic StorageSurface reservation -> WorldItem.
 
 const StorageSurfaceScript = preload("res://storage_surface.gd")
+const StorageStackScript = preload("res://storage_stack.gd")
 const WorldItemScript = preload("res://world_item.gd")
 const StorageVisualPoseScript = preload("res://storage_visual_pose.gd")
 
@@ -30,6 +31,7 @@ var _ghost_item: Variant = null
 var _ghost_material_valid: StandardMaterial3D = null
 var _ghost_material_blocked: StandardMaterial3D = null
 var _ghost_footprint: MeshInstance3D = null
+var _pose_metrics_cache: Dictionary = {}
 
 
 func configure(camera: Camera3D, carried_items: Node, interaction_distance: float) -> void:
@@ -179,6 +181,24 @@ func update_target() -> void:
 		_set_manual_debug_surface(null)
 		return
 
+	if _manual_mode:
+		var stack_target: WorldItem = _get_looked_at_stored_world_item()
+		if stack_target != null:
+			var stack_surface: Node = stack_target.get_storage_surface()
+			if stack_surface != null:
+				_current_surface = stack_surface
+				_set_manual_debug_surface(stack_surface)
+				var stack_entry: StorageStack.Entry = _entry_for_item(
+					selected_item,
+					_rotated
+				)
+				_current_fit = stack_surface.find_manual_stack_fit(
+					stack_target.get_storage_stack_id(),
+					stack_entry
+				)
+				_update_ghost(selected_item)
+				return
+
 	var ray_from: Vector3 = _camera.global_position
 	var forward: Vector3 = -_camera.global_transform.basis.z.normalized()
 	var ray_to: Vector3 = ray_from + forward * _interaction_distance
@@ -222,6 +242,18 @@ func update_target() -> void:
 			hit_local,
 			footprint
 		)
+		_current_fit["placement_kind"] = "empty"
+		_current_fit["stack_id"] = _item_key(selected_item)
+		_current_fit["insertion_index"] = 0
+		_current_fit["base_footprint"] = footprint
+		_current_fit["rotated"] = _rotated
+		_current_fit["zone_kind"] = "manual"
+		_current_fit["zone_category"] = ""
+		var manual_origin: Vector2i = _current_fit.get("origin", Vector2i.ZERO) as Vector2i
+		_current_fit["host_y_m"] = surface.get_local_placement_position(
+			manual_origin,
+			footprint
+		).y
 		_update_ghost(selected_item)
 		return
 
@@ -230,15 +262,20 @@ func update_target() -> void:
 	_hide_ghost()
 	_set_manual_debug_surface(null)
 
-	var base_footprint: Vector2i = _base_footprint(selected_item)
 	var storage_category: String = ""
 	if selected_item.has_method("get_storage_category"):
 		storage_category = String(selected_item.get_storage_category())
 
-	_current_fit = surface.find_zone_auto_fit(
+	var orientations: Array[StorageStack.Entry] = _entry_orientations_for_item(
+		selected_item
+	)
+	var rotated_entry: StorageStack.Entry = null
+	if orientations.size() > 1:
+		rotated_entry = orientations[1]
+	_current_fit = surface.find_zone_stack_or_empty_fit(
 		storage_category,
-		base_footprint,
-		true
+		orientations[0],
+		rotated_entry
 	)
 
 
@@ -255,35 +292,15 @@ func place_selected() -> bool:
 	if selected_item == null:
 		return false
 
-	var origin_value: Variant = _current_fit.get("origin", Vector2i.ZERO)
-	var footprint_value: Variant = _current_fit.get("footprint", Vector2i.ONE)
-	var origin: Vector2i = origin_value as Vector2i
-	var footprint: Vector2i = footprint_value as Vector2i
-
-	var item_key: String = ""
-	if selected_item is ItemInstance:
-		var typed_item: ItemInstance = selected_item as ItemInstance
-		item_key = typed_item.instance_id
-	if item_key.is_empty():
-		item_key = "%s-%d" % [String(selected_item.get_display_name()), Time.get_ticks_usec()]
-
-	var placement_rotated: bool = _rotated
-	if not _manual_mode:
-		var fit_rotated_value: Variant = _current_fit.get("rotated", false)
-		placement_rotated = bool(fit_rotated_value)
-
-	var reserved: bool = bool(
-		_current_surface.reserve_at(item_key, origin, footprint, placement_rotated)
-	)
-	if not reserved:
-		update_target()
-		return false
-
 	var removed_item: Variant = _carried_items.remove_selected()
 	if removed_item == null:
-		_current_surface.release(item_key)
 		update_target()
 		return false
+
+	var item_key: String = _item_key(removed_item)
+	var origin: Vector2i = _current_fit.get("origin", Vector2i.ZERO) as Vector2i
+	var footprint: Vector2i = _current_fit.get("footprint", Vector2i.ONE) as Vector2i
+	var placement_rotated: bool = bool(_current_fit.get("rotated", _rotated))
 
 	var spawned: bool = _spawn_stored_world_item(
 		removed_item,
@@ -291,10 +308,10 @@ func place_selected() -> bool:
 		item_key,
 		origin,
 		footprint,
-		placement_rotated
+		placement_rotated,
+		_current_fit
 	)
 	if not spawned:
-		_current_surface.release(item_key)
 		_carried_items.add_item(removed_item)
 		update_target()
 		return false
@@ -310,11 +327,34 @@ func _spawn_stored_world_item(
 	item_key: String,
 	origin: Vector2i,
 	footprint: Vector2i,
-	rotated: bool
+	rotated: bool,
+	placement_fit: Dictionary = {}
 ) -> bool:
 	var visual_scene: PackedScene = item.get_visual_scene() as PackedScene
 	if visual_scene == null:
 		return false
+	if surface == null or not surface.has_method("commit_stack_entry"):
+		return false
+
+	var effective_fit: Dictionary = placement_fit.duplicate(true)
+	var previous_reservation: Dictionary = {}
+	if effective_fit.is_empty():
+		previous_reservation = surface.get_reservation(item_key)
+		if bool(previous_reservation.get("valid", false)):
+			surface.release(item_key)
+		effective_fit = {
+			"valid": true,
+			"placement_kind": "empty",
+			"stack_id": item_key,
+			"insertion_index": 0,
+			"origin": origin,
+			"footprint": footprint,
+			"base_footprint": footprint,
+			"rotated": rotated,
+			"zone_kind": "legacy",
+			"zone_category": "",
+			"host_y_m": surface.get_local_placement_position(origin, footprint).y
+		}
 
 	# StorageSurface is top-level/unit-scale, so stored visuals can safely be
 	# children of it again. This restores the previously validated transform path
@@ -322,7 +362,7 @@ func _spawn_stored_world_item(
 	var host: Node3D = Node3D.new()
 	host.name = "Stored_%s" % _safe_node_name(String(item.get_display_name()))
 	surface.add_child(host)
-	host.transform = surface.get_local_candidate_transform(origin, footprint)
+	host.transform = surface.get_stack_candidate_transform(effective_fit)
 
 	var packing_root: Node3D = Node3D.new()
 	packing_root.name = "StoredPackingYaw"
@@ -330,12 +370,53 @@ func _spawn_stored_world_item(
 
 	var visual: Node = visual_scene.instantiate()
 	_disable_embedded_nodes(visual)
-	build_visual_pose_for_item(packing_root, visual, item, rotated)
+	var pose_result: Dictionary = build_visual_pose_for_item(
+		packing_root,
+		visual,
+		item,
+		rotated
+	)
+	if not bool(pose_result.get("valid", false)):
+		host.free()
+		_restore_reservation(surface, previous_reservation)
+		return false
+
+	var aligned_bounds: AABB = pose_result.get("aligned_bounds", AABB()) as AABB
+	var expected_pose: Dictionary = _pose_metrics_for_item(item, rotated)
+	var expected_bounds: AABB = expected_pose.get("aligned_bounds", AABB()) as AABB
+	if (
+		not bool(expected_pose.get("valid", false))
+		or not aligned_bounds.position.is_equal_approx(expected_bounds.position)
+		or not aligned_bounds.size.is_equal_approx(expected_bounds.size)
+	):
+		host.free()
+		_restore_reservation(surface, previous_reservation)
+		return false
+
+	var entry: StorageStack.Entry = StorageStackScript.create_entry(
+		item,
+		footprint,
+		rotated,
+		aligned_bounds
+	)
+	entry.item_key = item_key
+	entry.host = host
 
 	var component: WorldItem = WorldItemScript.new()
 	component.name = "WorldItem"
 	host.add_child(component)
-	component.configure_existing(host, item, surface, item_key)
+	component.configure_existing(
+		host,
+		item,
+		surface,
+		String(effective_fit.get("stack_id", item_key)),
+		item_key
+	)
+	entry.world_item = component
+	if not bool(surface.commit_stack_entry(entry, effective_fit)):
+		host.free()
+		_restore_reservation(surface, previous_reservation)
+		return false
 	return true
 
 
@@ -358,9 +439,10 @@ func _update_ghost(item) -> void:
 	var origin: Vector2i = origin_value as Vector2i
 	var footprint: Vector2i = footprint_value as Vector2i
 
-	var local_transform: Transform3D = _current_surface.get_local_candidate_transform(
-		origin,
-		footprint
+	var local_transform: Transform3D = (
+		_current_surface.get_stack_candidate_transform(_current_fit)
+		if _current_surface.has_method("get_stack_candidate_transform")
+		else _current_surface.get_local_candidate_transform(origin, footprint)
 	)
 
 	# Keep the ghost in exactly the same coordinate system as the deterministic
@@ -377,7 +459,11 @@ func _update_ghost(item) -> void:
 
 	_ghost_host.transform = local_transform
 
-	StorageVisualPoseScript.apply_packing_yaw(_ghost_packing_root, _rotated)
+	var preview_rotated: bool = bool(_current_fit.get("rotated", _rotated))
+	StorageVisualPoseScript.apply_packing_yaw(
+		_ghost_packing_root,
+		preview_rotated
+	)
 
 	var valid: bool = has_valid_placement()
 	var ghost_material: StandardMaterial3D = (
@@ -444,6 +530,105 @@ func build_visual_pose_for_item(
 		correction_degrees,
 		packing_rotated
 	)
+
+
+func _entry_for_item(item, packing_rotated: bool) -> StorageStack.Entry:
+	if not (item is ItemInstance):
+		return null
+	var typed_item: ItemInstance = item as ItemInstance
+	var pose_result: Dictionary = _pose_metrics_for_item(typed_item, packing_rotated)
+	if not bool(pose_result.get("valid", false)):
+		return null
+	var footprint: Vector2i = _base_footprint(typed_item)
+	if packing_rotated:
+		footprint = Vector2i(footprint.y, footprint.x)
+	var aligned_bounds: AABB = pose_result.get("aligned_bounds", AABB()) as AABB
+	return StorageStackScript.create_entry(
+		typed_item,
+		footprint,
+		packing_rotated,
+		aligned_bounds
+	)
+
+
+func _entry_orientations_for_item(item) -> Array[StorageStack.Entry]:
+	var orientations: Array[StorageStack.Entry] = []
+	var native_entry: StorageStack.Entry = _entry_for_item(item, false)
+	if native_entry == null:
+		return orientations
+	orientations.append(native_entry)
+	var footprint: Vector2i = _base_footprint(item)
+	if footprint.x != footprint.y:
+		var rotated_entry: StorageStack.Entry = _entry_for_item(item, true)
+		if rotated_entry != null:
+			orientations.append(rotated_entry)
+	return orientations
+
+
+func _pose_metrics_for_item(item, packing_rotated: bool) -> Dictionary:
+	if not (item is ItemInstance):
+		return {"valid": false}
+	var typed_item: ItemInstance = item as ItemInstance
+	var definition_id: String = (
+		String(typed_item.definition.item_id)
+		if typed_item.definition != null
+		else typed_item.instance_id
+	)
+	var cache_key: String = "%s:%s" % [definition_id, packing_rotated]
+	if not _pose_metrics_cache.has(cache_key):
+		_pose_metrics_cache[cache_key] = StorageVisualPoseScript.measure_item(
+			typed_item,
+			packing_rotated
+		)
+	var value: Variant = _pose_metrics_cache[cache_key]
+	return (value as Dictionary).duplicate(true) if value is Dictionary else {"valid": false}
+
+
+func _item_key(item) -> String:
+	if item is ItemInstance:
+		return (item as ItemInstance).instance_id
+	return "%s-%d" % [String(item.get_display_name()), Time.get_ticks_usec()]
+
+
+func _restore_reservation(surface: Node, reservation: Dictionary) -> void:
+	if surface == null or not bool(reservation.get("valid", false)):
+		return
+	surface.reserve_at(
+		String(reservation.get("item_key", "")),
+		reservation.get("origin", Vector2i.ZERO) as Vector2i,
+		reservation.get("footprint", Vector2i.ONE) as Vector2i,
+		bool(reservation.get("rotated", false))
+	)
+
+
+func _get_looked_at_stored_world_item() -> WorldItem:
+	if _camera == null or _camera.get_world_3d() == null:
+		return null
+	var ray_from: Vector3 = _camera.global_position
+	var ray_to: Vector3 = ray_from + (
+		-_camera.global_transform.basis.z.normalized() * _interaction_distance
+	)
+	var query: PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.new()
+	query.from = ray_from
+	query.to = ray_to
+	query.collide_with_areas = true
+	query.collide_with_bodies = false
+	query.collision_mask = WorldItemScript.PICKUP_COLLISION_LAYER
+	var result: Dictionary = _camera.get_world_3d().direct_space_state.intersect_ray(query)
+	if result.is_empty():
+		return null
+	var collider_value: Variant = result.get("collider")
+	if not (collider_value is Node):
+		return null
+	var current: Node = collider_value as Node
+	while current != null:
+		if current is WorldItem:
+			var world_item: WorldItem = current as WorldItem
+			return world_item if world_item.is_stored_item() else null
+		if current == get_tree().current_scene:
+			break
+		current = current.get_parent()
+	return null
 
 
 func _disable_embedded_nodes(node: Node) -> void:

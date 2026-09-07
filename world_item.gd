@@ -19,7 +19,8 @@ var _interaction_area: Area3D
 var _bounds: AABB = AABB()
 var _bounds_valid: bool = false
 var _storage_surface: Node = null
-var _storage_key: String = ""
+var _storage_stack_id: String = ""
+var _storage_item_key: String = ""
 
 
 func configure(host: Node3D, definition: ItemDefinition) -> void:
@@ -33,14 +34,20 @@ func configure_existing(
 	host: Node3D,
 	item_instance: ItemInstance,
 	storage_surface: Node = null,
-	storage_key: String = ""
+	storage_stack_id: String = "",
+	storage_item_key: String = ""
 ) -> void:
 	## Reuses the exact carried ItemInstance when it is placed on a shelf.
 	_host = host
 	_item_instance = item_instance
 	_definition = item_instance.definition if item_instance != null else null
 	_storage_surface = storage_surface
-	_storage_key = storage_key
+	_storage_item_key = storage_item_key
+	if _storage_item_key.is_empty() and item_instance != null:
+		_storage_item_key = item_instance.instance_id
+	_storage_stack_id = storage_stack_id
+	if _storage_stack_id.is_empty():
+		_storage_stack_id = _storage_item_key
 	_build_interaction_area()
 
 
@@ -65,8 +72,21 @@ func is_stored_item() -> bool:
 	return (
 		_storage_surface != null
 		and is_instance_valid(_storage_surface)
-		and not _storage_key.is_empty()
+		and not _storage_stack_id.is_empty()
+		and not _storage_item_key.is_empty()
 	)
+
+
+func get_storage_surface() -> Node:
+	return _storage_surface if is_stored_item() else null
+
+
+func get_storage_stack_id() -> String:
+	return _storage_stack_id if is_stored_item() else ""
+
+
+func get_storage_item_key() -> String:
+	return _storage_item_key if is_stored_item() else ""
 
 
 func utility_text() -> String:
@@ -91,11 +111,26 @@ func pickup_into(carried_items: Node) -> bool:
 	if not added:
 		return false
 
-	if _storage_surface != null and is_instance_valid(_storage_surface):
-		if _storage_surface.has_method("release") and not _storage_key.is_empty():
-			_storage_surface.release(_storage_key)
+	if is_stored_item():
+		var removed_from_storage: bool = false
+		if _storage_surface.has_method("remove_stack_entry"):
+			removed_from_storage = bool(_storage_surface.call(
+				"remove_stack_entry",
+				_storage_stack_id,
+				_storage_item_key
+			))
+		elif _storage_surface.has_method("release"):
+			removed_from_storage = bool(_storage_surface.call(
+				"release",
+				_storage_stack_id
+			))
+		if not removed_from_storage:
+			if carried_items.has_method("remove_item"):
+				carried_items.remove_item(_item_instance)
+			return false
 	_storage_surface = null
-	_storage_key = ""
+	_storage_stack_id = ""
+	_storage_item_key = ""
 
 	# Remove the interaction target immediately so repeated clicks cannot duplicate
 	# the item while queue_free waits for the end of the frame.
