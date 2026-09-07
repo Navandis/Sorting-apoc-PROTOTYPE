@@ -9,4 +9,7 @@ item_id = &"loot_000031"
 display_name = "CDStack 01"
 storage_category = "Morale"
 storage_footprint = Vector3i(2, 2, 1)
+can_be_stacked = true
+can_support_stack = true
+auto_stack_group = &"flat_media"
 visual_scene = ExtResource("2_x85nn")

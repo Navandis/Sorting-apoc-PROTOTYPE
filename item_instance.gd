@@ -44,6 +44,18 @@ func is_stackable() -> bool:
 	return definition.stackable if definition != null else false
 
 
+func can_be_stacked() -> bool:
+	return definition.can_be_stacked if definition != null else false
+
+
+func can_support_stack() -> bool:
+	return definition.can_support_stack if definition != null else false
+
+
+func get_auto_stack_group() -> StringName:
+	return definition.auto_stack_group if definition != null else &""
+
+
 func get_utility_id() -> StringName:
 	return definition.utility_id if definition != null else &"None"
 

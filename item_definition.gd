@@ -29,6 +29,12 @@ class_name ItemDefinition
 @export var storage_footprint: Vector3i = Vector3i.ONE
 @export var stackable: bool = false
 
+# Deliberately constrained support-stacking spike metadata. These authored
+# facts are independent from mesh geometry and the legacy `stackable` field.
+@export var can_be_stacked: bool = false
+@export var can_support_stack: bool = false
+@export var auto_stack_group: StringName = &""
+
 @export_range(0, 999, 1) var salvage_yield: int = 0
 
 # Deferred contamination-system data.

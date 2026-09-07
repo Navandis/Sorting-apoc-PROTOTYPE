@@ -9,4 +9,7 @@ item_id = &"loot_000028"
 display_name = "Med Kit 4"
 storage_category = "Medical"
 storage_footprint = Vector3i(5, 4, 1)
+can_be_stacked = true
+can_support_stack = true
+auto_stack_group = &"medical_boxes"
 visual_scene = ExtResource("2_g3rao")
