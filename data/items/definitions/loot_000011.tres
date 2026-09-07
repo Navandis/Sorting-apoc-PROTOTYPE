@@ -8,5 +8,5 @@ script = ExtResource("1_711mt")
 item_id = &"loot_000011"
 display_name = "Pig Carcass 1"
 storage_category = "Food"
-storage_footprint = Vector3i(10, 6, 1)
+storage_footprint = Vector3i(10, 5, 1)
 visual_scene = ExtResource("2_vwoue")

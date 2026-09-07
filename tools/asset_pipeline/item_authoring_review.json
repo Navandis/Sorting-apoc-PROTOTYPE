@@ -2,19 +2,7 @@
 	"assets": {
 		"loot_000001": {
 			"footprint_review": {
-				"notes": "",
-				"reviewed_footprint": [
-					0,
-					0,
-					0
-				],
-				"reviewed_rotation_degrees": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+			  "notes": "Current Footprint approved against posed geometry.", 			  "reviewed_footprint": [ 			    1, 			    2, 			    1 			  ], 			  "reviewed_rotation_degrees": [ 			    0.0, 			    0.0, 			    0.0 			  ], 			  "reviewed_source_fingerprint": "93b21de28ec54c132f4cffe2bec4d867b533193216c076f19a51c34433083439", 			  "status": "GEOMETRY_APPROVED"
 			},
 			"item_id": "loot_000001",
 			"scale_review": {
@@ -37,19 +25,7 @@
 		},
 		"loot_000002": {
 			"footprint_review": {
-				"notes": "",
-				"reviewed_footprint": [
-					0,
-					0,
-					0
-				],
-				"reviewed_rotation_degrees": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+			  "notes": "Current Footprint approved against posed geometry.", 			  "reviewed_footprint": [ 			    5, 			    3, 			    1 			  ], 			  "reviewed_rotation_degrees": [ 			    0.0, 			    90.0, 			    0.0 			  ], 			  "reviewed_source_fingerprint": "ac0ebcf72372516de0771fd2b9e82739476bc1123c34af927028d96bde1df211", 			  "status": "GEOMETRY_APPROVED"
 			},
 			"item_id": "loot_000002",
 			"scale_review": {
@@ -72,19 +48,7 @@
 		},
 		"loot_000003": {
 			"footprint_review": {
-				"notes": "",
-				"reviewed_footprint": [
-					0,
-					0,
-					0
-				],
-				"reviewed_rotation_degrees": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+			  "notes": "Current Footprint approved against posed geometry.", 			  "reviewed_footprint": [ 			    3, 			    5, 			    1 			  ], 			  "reviewed_rotation_degrees": [ 			    0.0, 			    90.0, 			    0.0 			  ], 			  "reviewed_source_fingerprint": "61929a0e30280bedd792f0af49ef16fc7bccdff11cab8f5800563eae3b945503", 			  "status": "GEOMETRY_APPROVED"
 			},
 			"item_id": "loot_000003",
 			"scale_review": {
@@ -107,19 +71,7 @@
 		},
 		"loot_000004": {
 			"footprint_review": {
-				"notes": "",
-				"reviewed_footprint": [
-					0,
-					0,
-					0
-				],
-				"reviewed_rotation_degrees": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+			  "notes": "Current Footprint approved as a deliberate authored override.", 			  "reviewed_footprint": [ 			    3, 			    3, 			    1 			  ], 			  "reviewed_rotation_degrees": [ 			    0.0, 			    90.0, 			    0.0 			  ], 			  "reviewed_source_fingerprint": "4d2312e22b298995e88a4eb23135ddcb6bb7158dd01f4553cba521302a918993", 			  "status": "OVERRIDE_APPROVED"
 			},
 			"item_id": "loot_000004",
 			"scale_review": {
@@ -142,19 +94,7 @@
 		},
 		"loot_000005": {
 			"footprint_review": {
-				"notes": "",
-				"reviewed_footprint": [
-					0,
-					0,
-					0
-				],
-				"reviewed_rotation_degrees": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+			  "notes": "Current Footprint approved as a deliberate authored override.", 			  "reviewed_footprint": [ 			    3, 			    1, 			    1 			  ], 			  "reviewed_rotation_degrees": [ 			    0.0, 			    0.0, 			    0.0 			  ], 			  "reviewed_source_fingerprint": "755a15a5e996d84bfa4ebc78e0aaafda64fa57eea61471182d6d8a1d1753d7ad", 			  "status": "OVERRIDE_APPROVED"
 			},
 			"item_id": "loot_000005",
 			"scale_review": {
@@ -177,19 +117,7 @@
 		},
 		"loot_000006": {
 			"footprint_review": {
-				"notes": "",
-				"reviewed_footprint": [
-					0,
-					0,
-					0
-				],
-				"reviewed_rotation_degrees": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+			  "notes": "Current Footprint approved against posed geometry.", 			  "reviewed_footprint": [ 			    3, 			    2, 			    1 			  ], 			  "reviewed_rotation_degrees": [ 			    0.0, 			    0.0, 			    0.0 			  ], 			  "reviewed_source_fingerprint": "3b8fd17ed3f0ef8a84d49f999266277f375a787fea0579cf4002fec0598f6dde", 			  "status": "GEOMETRY_APPROVED"
 			},
 			"item_id": "loot_000006",
 			"scale_review": {
@@ -212,19 +140,7 @@
 		},
 		"loot_000007": {
 			"footprint_review": {
-				"notes": "",
-				"reviewed_footprint": [
-					0,
-					0,
-					0
-				],
-				"reviewed_rotation_degrees": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+			  "notes": "Current Footprint approved against posed geometry.", 			  "reviewed_footprint": [ 			    3, 			    1, 			    1 			  ], 			  "reviewed_rotation_degrees": [ 			    0.0, 			    0.0, 			    0.0 			  ], 			  "reviewed_source_fingerprint": "9b02e0a19892a539208c02a6098345c3cacb26cf0f2bafcd6995b14c184e576e", 			  "status": "GEOMETRY_APPROVED"
 			},
 			"item_id": "loot_000007",
 			"scale_review": {
@@ -247,19 +163,7 @@
 		},
 		"loot_000008": {
 			"footprint_review": {
-				"notes": "",
-				"reviewed_footprint": [
-					0,
-					0,
-					0
-				],
-				"reviewed_rotation_degrees": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+			  "notes": "Current Footprint approved against posed geometry.", 			  "reviewed_footprint": [ 			    1, 			    1, 			    1 			  ], 			  "reviewed_rotation_degrees": [ 			    0.0, 			    0.0, 			    0.0 			  ], 			  "reviewed_source_fingerprint": "73876bc2b02dfd931b227d5148c96a15196e9b6e7cfaeb0e317a3ed2bd330c1a", 			  "status": "GEOMETRY_APPROVED"
 			},
 			"item_id": "loot_000008",
 			"scale_review": {
@@ -282,19 +186,7 @@
 		},
 		"loot_000009": {
 			"footprint_review": {
-				"notes": "",
-				"reviewed_footprint": [
-					0,
-					0,
-					0
-				],
-				"reviewed_rotation_degrees": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+			  "notes": "Current Footprint approved against posed geometry.", 			  "reviewed_footprint": [ 			    1, 			    1, 			    1 			  ], 			  "reviewed_rotation_degrees": [ 			    0.0, 			    0.0, 			    0.0 			  ], 			  "reviewed_source_fingerprint": "cb3f25b1e4746391b94d2d6151c2adf07d378a43f529d26d3ce4aef0338a8a2e", 			  "status": "GEOMETRY_APPROVED"
 			},
 			"item_id": "loot_000009",
 			"scale_review": {
@@ -317,19 +209,7 @@
 		},
 		"loot_000010": {
 			"footprint_review": {
-				"notes": "",
-				"reviewed_footprint": [
-					0,
-					0,
-					0
-				],
-				"reviewed_rotation_degrees": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+			  "notes": "Current Footprint approved against posed geometry.", 			  "reviewed_footprint": [ 			    1, 			    1, 			    1 			  ], 			  "reviewed_rotation_degrees": [ 			    0.0, 			    0.0, 			    0.0 			  ], 			  "reviewed_source_fingerprint": "6c57f9e480bc9c9160da0d61ef75986e72384e330bbcf99a31218e895a61b7aa", 			  "status": "GEOMETRY_APPROVED"
 			},
 			"item_id": "loot_000010",
 			"scale_review": {
@@ -352,19 +232,7 @@
 		},
 		"loot_000011": {
 			"footprint_review": {
-				"notes": "",
-				"reviewed_footprint": [
-					0,
-					0,
-					0
-				],
-				"reviewed_rotation_degrees": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+			  "notes": "Current Footprint approved as a deliberate authored override.", 			  "reviewed_footprint": [ 			    10, 			    5, 			    1 			  ], 			  "reviewed_rotation_degrees": [ 			    0.0, 			    0.0, 			    0.0 			  ], 			  "reviewed_source_fingerprint": "0903d0a48de2af72b6eb814ef654569c60e0a73bdaf4270fb10d3755c8a088a6", 			  "status": "OVERRIDE_APPROVED"
 			},
 			"item_id": "loot_000011",
 			"scale_review": {
@@ -387,19 +255,7 @@
 		},
 		"loot_000012": {
 			"footprint_review": {
-				"notes": "",
-				"reviewed_footprint": [
-					0,
-					0,
-					0
-				],
-				"reviewed_rotation_degrees": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+			  "notes": "Current Footprint approved against posed geometry.", 			  "reviewed_footprint": [ 			    3, 			    3, 			    1 			  ], 			  "reviewed_rotation_degrees": [ 			    0.0, 			    0.0, 			    0.0 			  ], 			  "reviewed_source_fingerprint": "cedc1401c90bc6bf2733ca2648ee4ab9daf5a85c1fa724cca2a70a4de3173e15", 			  "status": "GEOMETRY_APPROVED"
 			},
 			"item_id": "loot_000012",
 			"scale_review": {
@@ -422,19 +278,7 @@
 		},
 		"loot_000013": {
 			"footprint_review": {
-				"notes": "",
-				"reviewed_footprint": [
-					0,
-					0,
-					0
-				],
-				"reviewed_rotation_degrees": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+			  "notes": "Current Footprint approved as a deliberate authored override.", 			  "reviewed_footprint": [ 			    2, 			    4, 			    1 			  ], 			  "reviewed_rotation_degrees": [ 			    0.0, 			    0.0, 			    0.0 			  ], 			  "reviewed_source_fingerprint": "58ec440f4d8a9b89d4ae6f30a0d7384cb6c9e584e25bdf8e2c6d99874ce6d658", 			  "status": "OVERRIDE_APPROVED"
 			},
 			"item_id": "loot_000013",
 			"scale_review": {
@@ -457,19 +301,7 @@
 		},
 		"loot_000014": {
 			"footprint_review": {
-				"notes": "",
-				"reviewed_footprint": [
-					0,
-					0,
-					0
-				],
-				"reviewed_rotation_degrees": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+			  "notes": "Current Footprint approved as a deliberate authored override.", 			  "reviewed_footprint": [ 			    6, 			    4, 			    1 			  ], 			  "reviewed_rotation_degrees": [ 			    0.0, 			    0.0, 			    0.0 			  ], 			  "reviewed_source_fingerprint": "e0d55a6a3fb0548e9bafb082d80aa7e29d4875c92f47b33df666e5de3ab35729", 			  "status": "OVERRIDE_APPROVED"
 			},
 			"item_id": "loot_000014",
 			"scale_review": {
@@ -492,19 +324,7 @@
 		},
 		"loot_000015": {
 			"footprint_review": {
-				"notes": "",
-				"reviewed_footprint": [
-					0,
-					0,
-					0
-				],
-				"reviewed_rotation_degrees": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+			  "notes": "Current Footprint approved against posed geometry.", 			  "reviewed_footprint": [ 			    4, 			    2, 			    1 			  ], 			  "reviewed_rotation_degrees": [ 			    0.0, 			    0.0, 			    0.0 			  ], 			  "reviewed_source_fingerprint": "e3cbd7d3dd60c9fde76fe92df640aaf62091c9e6c9b6491ee548b0ac1cf10698", 			  "status": "GEOMETRY_APPROVED"
 			},
 			"item_id": "loot_000015",
 			"scale_review": {
@@ -527,19 +347,7 @@
 		},
 		"loot_000016": {
 			"footprint_review": {
-				"notes": "",
-				"reviewed_footprint": [
-					0,
-					0,
-					0
-				],
-				"reviewed_rotation_degrees": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+			  "notes": "Current Footprint approved as a deliberate authored override.", 			  "reviewed_footprint": [ 			    3, 			    2, 			    1 			  ], 			  "reviewed_rotation_degrees": [ 			    0.0, 			    0.0, 			    0.0 			  ], 			  "reviewed_source_fingerprint": "c057b5d534a7b5c2d443c9d89ab62bb3cfcb6efa725f7acd2f5a20fd2270c952", 			  "status": "OVERRIDE_APPROVED"
 			},
 			"item_id": "loot_000016",
 			"scale_review": {
@@ -562,19 +370,7 @@
 		},
 		"loot_000017": {
 			"footprint_review": {
-				"notes": "",
-				"reviewed_footprint": [
-					0,
-					0,
-					0
-				],
-				"reviewed_rotation_degrees": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+			  "notes": "Current Footprint approved as a deliberate authored override.", 			  "reviewed_footprint": [ 			    4, 			    3, 			    1 			  ], 			  "reviewed_rotation_degrees": [ 			    0.0, 			    0.0, 			    0.0 			  ], 			  "reviewed_source_fingerprint": "3ef3c398222ed18752ab1fb54d1e83aec579a5a215fdd4376f193a75f21de9f4", 			  "status": "OVERRIDE_APPROVED"
 			},
 			"item_id": "loot_000017",
 			"scale_review": {
@@ -597,19 +393,7 @@
 		},
 		"loot_000018": {
 			"footprint_review": {
-				"notes": "",
-				"reviewed_footprint": [
-					0,
-					0,
-					0
-				],
-				"reviewed_rotation_degrees": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+			  "notes": "Current Footprint approved against posed geometry.", 			  "reviewed_footprint": [ 			    3, 			    3, 			    1 			  ], 			  "reviewed_rotation_degrees": [ 			    0.0, 			    0.0, 			    0.0 			  ], 			  "reviewed_source_fingerprint": "5c6a25e519c6e0e2544ad1a7e325c77be9ad79500c0466952fc9c35b1ffe3b61", 			  "status": "GEOMETRY_APPROVED"
 			},
 			"item_id": "loot_000018",
 			"scale_review": {
@@ -632,19 +416,7 @@
 		},
 		"loot_000019": {
 			"footprint_review": {
-				"notes": "",
-				"reviewed_footprint": [
-					0,
-					0,
-					0
-				],
-				"reviewed_rotation_degrees": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+			  "notes": "Current Footprint approved against posed geometry.", 			  "reviewed_footprint": [ 			    1, 			    1, 			    1 			  ], 			  "reviewed_rotation_degrees": [ 			    0.0, 			    130.0, 			    0.0 			  ], 			  "reviewed_source_fingerprint": "4e7776b9816a8a74dedeebfd940ac578dc41fc49bb87b901359eb550d749fc6f", 			  "status": "GEOMETRY_APPROVED"
 			},
 			"item_id": "loot_000019",
 			"scale_review": {
@@ -667,19 +439,7 @@
 		},
 		"loot_000020": {
 			"footprint_review": {
-				"notes": "",
-				"reviewed_footprint": [
-					0,
-					0,
-					0
-				],
-				"reviewed_rotation_degrees": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+			  "notes": "Current Footprint approved against posed geometry.", 			  "reviewed_footprint": [ 			    1, 			    1, 			    1 			  ], 			  "reviewed_rotation_degrees": [ 			    0.0, 			    90.0, 			    0.0 			  ], 			  "reviewed_source_fingerprint": "08407b1d661f88250b2ab1687a7f4b9bd74d1863046e818828a44e89a849481f", 			  "status": "GEOMETRY_APPROVED"
 			},
 			"item_id": "loot_000020",
 			"scale_review": {
@@ -702,19 +462,7 @@
 		},
 		"loot_000021": {
 			"footprint_review": {
-				"notes": "",
-				"reviewed_footprint": [
-					0,
-					0,
-					0
-				],
-				"reviewed_rotation_degrees": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+			  "notes": "Current Footprint approved against posed geometry.", 			  "reviewed_footprint": [ 			    1, 			    1, 			    1 			  ], 			  "reviewed_rotation_degrees": [ 			    0.0, 			    90.0, 			    0.0 			  ], 			  "reviewed_source_fingerprint": "d31b3993c3dfa7de7de871386090d11edcfc7394d1b0ff9dac0b1d332092bb6d", 			  "status": "GEOMETRY_APPROVED"
 			},
 			"item_id": "loot_000021",
 			"scale_review": {
@@ -737,19 +485,7 @@
 		},
 		"loot_000022": {
 			"footprint_review": {
-				"notes": "",
-				"reviewed_footprint": [
-					0,
-					0,
-					0
-				],
-				"reviewed_rotation_degrees": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+			  "notes": "Current Footprint approved against posed geometry.", 			  "reviewed_footprint": [ 			    1, 			    1, 			    1 			  ], 			  "reviewed_rotation_degrees": [ 			    0.0, 			    0.0, 			    0.0 			  ], 			  "reviewed_source_fingerprint": "632f4ce2e4d333fbd2417b0581c7dacc987108d24a440d62772bcc86ddf9a7fa", 			  "status": "GEOMETRY_APPROVED"
 			},
 			"item_id": "loot_000022",
 			"scale_review": {
@@ -772,19 +508,7 @@
 		},
 		"loot_000023": {
 			"footprint_review": {
-				"notes": "",
-				"reviewed_footprint": [
-					0,
-					0,
-					0
-				],
-				"reviewed_rotation_degrees": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+			  "notes": "Current Footprint approved against posed geometry.", 			  "reviewed_footprint": [ 			    1, 			    1, 			    1 			  ], 			  "reviewed_rotation_degrees": [ 			    0.0, 			    0.0, 			    0.0 			  ], 			  "reviewed_source_fingerprint": "0863285b857c56deb2473a35e8511700751c56fcedb0cb8f212ec6a8ea1b17d1", 			  "status": "GEOMETRY_APPROVED"
 			},
 			"item_id": "loot_000023",
 			"scale_review": {
@@ -807,19 +531,7 @@
 		},
 		"loot_000024": {
 			"footprint_review": {
-				"notes": "",
-				"reviewed_footprint": [
-					0,
-					0,
-					0
-				],
-				"reviewed_rotation_degrees": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+			  "notes": "Current Footprint approved against posed geometry.", 			  "reviewed_footprint": [ 			    1, 			    1, 			    1 			  ], 			  "reviewed_rotation_degrees": [ 			    0.0, 			    90.0, 			    0.0 			  ], 			  "reviewed_source_fingerprint": "062b7b317fbf97b664a07c1ddc10b36aac362cb7fa6ec81b542486dfcbcc2fa1", 			  "status": "GEOMETRY_APPROVED"
 			},
 			"item_id": "loot_000024",
 			"scale_review": {
@@ -842,19 +554,7 @@
 		},
 		"loot_000025": {
 			"footprint_review": {
-				"notes": "",
-				"reviewed_footprint": [
-					0,
-					0,
-					0
-				],
-				"reviewed_rotation_degrees": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+			  "notes": "Current Footprint approved against posed geometry.", 			  "reviewed_footprint": [ 			    1, 			    1, 			    1 			  ], 			  "reviewed_rotation_degrees": [ 			    0.0, 			    0.0, 			    0.0 			  ], 			  "reviewed_source_fingerprint": "7a921edc40b390590fd9f36bf5eada1bb4f3575a8c49b18350ba7826c0c9434d", 			  "status": "GEOMETRY_APPROVED"
 			},
 			"item_id": "loot_000025",
 			"scale_review": {
@@ -877,19 +577,7 @@
 		},
 		"loot_000026": {
 			"footprint_review": {
-				"notes": "",
-				"reviewed_footprint": [
-					0,
-					0,
-					0
-				],
-				"reviewed_rotation_degrees": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+			  "notes": "Current Footprint approved as a deliberate authored override.", 			  "reviewed_footprint": [ 			    1, 			    2, 			    1 			  ], 			  "reviewed_rotation_degrees": [ 			    0.0, 			    0.0, 			    0.0 			  ], 			  "reviewed_source_fingerprint": "4853eae6d79f9ddd5c619c5bdd4201a333955da009786d2a62f749c585bbe44c", 			  "status": "OVERRIDE_APPROVED"
 			},
 			"item_id": "loot_000026",
 			"scale_review": {
@@ -912,19 +600,7 @@
 		},
 		"loot_000027": {
 			"footprint_review": {
-				"notes": "",
-				"reviewed_footprint": [
-					0,
-					0,
-					0
-				],
-				"reviewed_rotation_degrees": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+			  "notes": "Current Footprint approved against posed geometry.", 			  "reviewed_footprint": [ 			    1, 			    1, 			    1 			  ], 			  "reviewed_rotation_degrees": [ 			    0.0, 			    -120.0, 			    0.0 			  ], 			  "reviewed_source_fingerprint": "df65c2a162cba24514f8ca4d4491da16abb918f79f1204dd6fb111750354c1ea", 			  "status": "GEOMETRY_APPROVED"
 			},
 			"item_id": "loot_000027",
 			"scale_review": {
@@ -947,19 +623,7 @@
 		},
 		"loot_000028": {
 			"footprint_review": {
-				"notes": "",
-				"reviewed_footprint": [
-					0,
-					0,
-					0
-				],
-				"reviewed_rotation_degrees": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+			  "notes": "Current Footprint approved against posed geometry.", 			  "reviewed_footprint": [ 			    5, 			    4, 			    1 			  ], 			  "reviewed_rotation_degrees": [ 			    0.0, 			    0.0, 			    0.0 			  ], 			  "reviewed_source_fingerprint": "b9f552d3cb74cf631e2a9f5bdcc5bce7082e72ad46d5734e66f2d2bf8b166fbd", 			  "status": "GEOMETRY_APPROVED"
 			},
 			"item_id": "loot_000028",
 			"scale_review": {
@@ -982,19 +646,7 @@
 		},
 		"loot_000029": {
 			"footprint_review": {
-				"notes": "",
-				"reviewed_footprint": [
-					0,
-					0,
-					0
-				],
-				"reviewed_rotation_degrees": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+			  "notes": "Current Footprint approved against posed geometry.", 			  "reviewed_footprint": [ 			    2, 			    2, 			    1 			  ], 			  "reviewed_rotation_degrees": [ 			    0.0, 			    0.0, 			    0.0 			  ], 			  "reviewed_source_fingerprint": "0c39f0837ab52a56e7ae6504fa0aeeaa414d44fc25a2dd011757598cb047218f", 			  "status": "GEOMETRY_APPROVED"
 			},
 			"item_id": "loot_000029",
 			"scale_review": {
@@ -1017,19 +669,7 @@
 		},
 		"loot_000030": {
 			"footprint_review": {
-				"notes": "",
-				"reviewed_footprint": [
-					0,
-					0,
-					0
-				],
-				"reviewed_rotation_degrees": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+			  "notes": "Current Footprint approved against posed geometry.", 			  "reviewed_footprint": [ 			    3, 			    2, 			    1 			  ], 			  "reviewed_rotation_degrees": [ 			    0.0, 			    0.0, 			    0.0 			  ], 			  "reviewed_source_fingerprint": "a4e66269ee59b6912d6e8f5cd5ea2fc309a4629d12d1f5a62d25d465a1a529e8", 			  "status": "GEOMETRY_APPROVED"
 			},
 			"item_id": "loot_000030",
 			"scale_review": {
@@ -1052,19 +692,7 @@
 		},
 		"loot_000031": {
 			"footprint_review": {
-				"notes": "",
-				"reviewed_footprint": [
-					0,
-					0,
-					0
-				],
-				"reviewed_rotation_degrees": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+			  "notes": "Current Footprint approved against posed geometry.", 			  "reviewed_footprint": [ 			    2, 			    2, 			    1 			  ], 			  "reviewed_rotation_degrees": [ 			    0.0, 			    0.0, 			    0.0 			  ], 			  "reviewed_source_fingerprint": "4ec59a02d5cd0b7a5a6e9fdd426795d9e14a32811f1d627ff0922cbe41fae6da", 			  "status": "GEOMETRY_APPROVED"
 			},
 			"item_id": "loot_000031",
 			"scale_review": {
@@ -1087,19 +715,7 @@
 		},
 		"loot_000032": {
 			"footprint_review": {
-				"notes": "",
-				"reviewed_footprint": [
-					0,
-					0,
-					0
-				],
-				"reviewed_rotation_degrees": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+			  "notes": "Current Footprint approved as a deliberate authored override.", 			  "reviewed_footprint": [ 			    3, 			    3, 			    1 			  ], 			  "reviewed_rotation_degrees": [ 			    0.0, 			    0.0, 			    0.0 			  ], 			  "reviewed_source_fingerprint": "8fa1fa14942a2bd8dd60514d23c393784fa6d2612dcd719bf1bb871f5ca70194", 			  "status": "OVERRIDE_APPROVED"
 			},
 			"item_id": "loot_000032",
 			"scale_review": {
@@ -1122,19 +738,7 @@
 		},
 		"loot_000033": {
 			"footprint_review": {
-				"notes": "",
-				"reviewed_footprint": [
-					0,
-					0,
-					0
-				],
-				"reviewed_rotation_degrees": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+			  "notes": "Current Footprint approved against posed geometry.", 			  "reviewed_footprint": [ 			    3, 			    3, 			    1 			  ], 			  "reviewed_rotation_degrees": [ 			    0.0, 			    0.0, 			    0.0 			  ], 			  "reviewed_source_fingerprint": "280514a80eeffbee0ea34cb0f6ec7987a16ee29b087da9694f9401132e98e1a2", 			  "status": "GEOMETRY_APPROVED"
 			},
 			"item_id": "loot_000033",
 			"scale_review": {
@@ -1192,19 +796,7 @@
 		},
 		"loot_000035": {
 			"footprint_review": {
-				"notes": "",
-				"reviewed_footprint": [
-					0,
-					0,
-					0
-				],
-				"reviewed_rotation_degrees": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+			  "notes": "Current Footprint approved against posed geometry.", 			  "reviewed_footprint": [ 			    3, 			    3, 			    1 			  ], 			  "reviewed_rotation_degrees": [ 			    0.0, 			    0.0, 			    0.0 			  ], 			  "reviewed_source_fingerprint": "93d6e0e5b9df34b5d0cf9b27275f1895e7cf85879bc60eac5a12dd66d0e9e0b3", 			  "status": "GEOMETRY_APPROVED"
 			},
 			"item_id": "loot_000035",
 			"scale_review": {
@@ -1262,19 +854,7 @@
 		},
 		"loot_000037": {
 			"footprint_review": {
-				"notes": "",
-				"reviewed_footprint": [
-					0,
-					0,
-					0
-				],
-				"reviewed_rotation_degrees": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+			  "notes": "Current Footprint approved against posed geometry.", 			  "reviewed_footprint": [ 			    4, 			    1, 			    1 			  ], 			  "reviewed_rotation_degrees": [ 			    0.0, 			    0.0, 			    0.0 			  ], 			  "reviewed_source_fingerprint": "4ac5a2d4e8d8a170b7a6abeeb095fd51172097d991798e6ef1ece1bcc74a40c8", 			  "status": "GEOMETRY_APPROVED"
 			},
 			"item_id": "loot_000037",
 			"scale_review": {
@@ -1297,19 +877,7 @@
 		},
 		"loot_000038": {
 			"footprint_review": {
-				"notes": "",
-				"reviewed_footprint": [
-					0,
-					0,
-					0
-				],
-				"reviewed_rotation_degrees": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+			  "notes": "Current Footprint approved as a deliberate authored override.", 			  "reviewed_footprint": [ 			    3, 			    12, 			    1 			  ], 			  "reviewed_rotation_degrees": [ 			    0.0, 			    0.0, 			    90.0 			  ], 			  "reviewed_source_fingerprint": "38598f0566dcb6bd0d338cc3a844ec9f9b68c4903a3ed6360c39ccf6f1dd4bb1", 			  "status": "OVERRIDE_APPROVED"
 			},
 			"item_id": "loot_000038",
 			"scale_review": {
@@ -1332,19 +900,7 @@
 		},
 		"loot_000039": {
 			"footprint_review": {
-				"notes": "",
-				"reviewed_footprint": [
-					0,
-					0,
-					0
-				],
-				"reviewed_rotation_degrees": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+			  "notes": "Current Footprint approved against posed geometry.", 			  "reviewed_footprint": [ 			    3, 			    2, 			    1 			  ], 			  "reviewed_rotation_degrees": [ 			    -90.0, 			    0.0, 			    0.0 			  ], 			  "reviewed_source_fingerprint": "e77eed4043544e371dceb36fd99a138fed4fbd4570b8d2fe75ee6d097b568fac", 			  "status": "GEOMETRY_APPROVED"
 			},
 			"item_id": "loot_000039",
 			"scale_review": {
@@ -1367,19 +923,7 @@
 		},
 		"loot_000040": {
 			"footprint_review": {
-				"notes": "",
-				"reviewed_footprint": [
-					0,
-					0,
-					0
-				],
-				"reviewed_rotation_degrees": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+			  "notes": "Current Footprint approved as a deliberate authored override.", 			  "reviewed_footprint": [ 			    2, 			    10, 			    1 			  ], 			  "reviewed_rotation_degrees": [ 			    0.0, 			    0.0, 			    90.0 			  ], 			  "reviewed_source_fingerprint": "6c39da4730013101fa22348c90e8ce04d5be6fff5487f45255a8d0f37ffab352", 			  "status": "OVERRIDE_APPROVED"
 			},
 			"item_id": "loot_000040",
 			"scale_review": {
@@ -1402,19 +946,7 @@
 		},
 		"loot_000041": {
 			"footprint_review": {
-				"notes": "",
-				"reviewed_footprint": [
-					0,
-					0,
-					0
-				],
-				"reviewed_rotation_degrees": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+			  "notes": "Current Footprint approved against posed geometry.", 			  "reviewed_footprint": [ 			    1, 			    1, 			    1 			  ], 			  "reviewed_rotation_degrees": [ 			    0.0, 			    0.0, 			    180.0 			  ], 			  "reviewed_source_fingerprint": "0239435c9e3eccaec42d61f323878f64a08432f79ec47f412ef62d6338eb2517", 			  "status": "GEOMETRY_APPROVED"
 			},
 			"item_id": "loot_000041",
 			"scale_review": {
@@ -1437,19 +969,7 @@
 		},
 		"loot_000042": {
 			"footprint_review": {
-				"notes": "",
-				"reviewed_footprint": [
-					0,
-					0,
-					0
-				],
-				"reviewed_rotation_degrees": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+			  "notes": "Current Footprint approved as a deliberate authored override.", 			  "reviewed_footprint": [ 			    3, 			    5, 			    1 			  ], 			  "reviewed_rotation_degrees": [ 			    0.0, 			    0.0, 			    0.0 			  ], 			  "reviewed_source_fingerprint": "65b52da2eee3f955d39fe045fbf2924364eae2291576899dded783d72b78fe69", 			  "status": "OVERRIDE_APPROVED"
 			},
 			"item_id": "loot_000042",
 			"scale_review": {

@@ -25,14 +25,14 @@ const EXPECTED_STORAGE_ROTATIONS: Dictionary = {
 
 
 func _init() -> void:
-	_test_initial_seed_matches_manifest_and_raw_audit_baseline()
+	_test_initial_seed_matches_manifest_and_current_audit()
 	print("PASS: item catalog initial seed tests")
 	quit(0)
 
 
-# This intentionally temporary baseline catches mistakes in the one-time seed:
-# wrong identity, balance leakage, minimized Footprints, or unreviewed pose drift.
-func _test_initial_seed_matches_manifest_and_raw_audit_baseline() -> void:
+# This permanent catalogue-correlation check intentionally does not assert raw
+# audit Footprints: later human Footprint authoring is authoritative.
+func _test_initial_seed_matches_manifest_and_current_audit() -> void:
 	var audit: Dictionary = _load_json(AUDIT_PATH)
 	var manifest: Dictionary = _load_json(MANIFEST_PATH)
 	var manifest_assets: Dictionary = manifest["assets"] as Dictionary
@@ -80,14 +80,10 @@ func _test_initial_seed_matches_manifest_and_raw_audit_baseline() -> void:
 			Vector3.ZERO
 		)
 		assert(definition.storage_rotation_degrees.is_equal_approx(expected_rotation))
-		assert(
-			definition.storage_footprint
-			== Vector3i(
-				int(audit_record["raw_width_cells"]),
-				int(audit_record["raw_depth_cells"]),
-				1
-			)
-		)
+		var audited_footprint: Array = audit_record["storage_footprint"] as Array
+		assert(definition.storage_footprint == Vector3i(
+			int(audited_footprint[0]), int(audited_footprint[1]), int(audited_footprint[2])
+		))
 		if visual_path == METAL_CAN_PATH:
 			assert(definition.storage_category == StorageCategoriesScript.HYDRATION)
 

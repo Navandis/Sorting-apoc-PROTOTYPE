@@ -8,5 +8,5 @@ script = ExtResource("1_1sxj3")
 item_id = &"loot_000014"
 display_name = "Firewood Pile 01"
 storage_category = "Fuel"
-storage_footprint = Vector3i(7, 5, 1)
+storage_footprint = Vector3i(6, 4, 1)
 visual_scene = ExtResource("2_g0f3g")

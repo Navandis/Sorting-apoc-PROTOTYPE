@@ -8,5 +8,5 @@ script = ExtResource("1_m8oc2")
 item_id = &"loot_000032"
 display_name = "Armor 02"
 storage_category = "Protection"
-storage_footprint = Vector3i(4, 3, 1)
+storage_footprint = Vector3i(3, 3, 1)
 visual_scene = ExtResource("2_2q0xq")

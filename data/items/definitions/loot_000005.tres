@@ -8,5 +8,5 @@ script = ExtResource("1_4yt26")
 item_id = &"loot_000005"
 display_name = "Cereal Box"
 storage_category = "Food"
-storage_footprint = Vector3i(2, 1, 1)
+storage_footprint = Vector3i(3, 1, 1)
 visual_scene = ExtResource("2_ch7y2")

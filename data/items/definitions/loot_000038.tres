@@ -8,6 +8,6 @@ script = ExtResource("1_tjjpb")
 item_id = &"loot_000038"
 display_name = "Assault Rifle"
 storage_category = "Weapons"
-storage_footprint = Vector3i(1, 12, 1)
+storage_footprint = Vector3i(3, 12, 1)
 storage_rotation_degrees = Vector3(0, 0, 90)
 visual_scene = ExtResource("2_fpvtb")

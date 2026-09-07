@@ -1,6 +1,8 @@
 extends SceneTree
 
 const REPORT_PATH: String = "res://reports/asset_pipeline/main_scene_loot_audit.json"
+const CANDIDATE_FOOTPRINT_ITEM_IDS: PackedStringArray = []
+const INELIGIBLE_FOOTPRINT_ITEM_IDS: PackedStringArray = ["loot_000034", "loot_000036"]
 
 
 func _init() -> void:
@@ -30,6 +32,7 @@ func _init() -> void:
 	var custom_pose_required_count: int = 0
 	var scale_current_count: int = 0
 	var footprint_approved_count: int = 0
+	var footprint_unreviewed_count: int = 0
 	var stale_pose_approval_count: int = 0
 	var unresolved_item_ids: PackedStringArray = []
 	for asset_value: Variant in assets:
@@ -46,8 +49,22 @@ func _init() -> void:
 			assert(not bool(asset["footprint_review_current"]))
 		if bool(asset["scale_review_current"]):
 			scale_current_count += 1
-		if String(asset["footprint_review_status"]) in ["GEOMETRY_APPROVED", "OVERRIDE_APPROVED"]:
+		var item_id: String = String(asset["item_id"])
+		var footprint_status: String = String(asset["footprint_review_status"])
+		if CANDIDATE_FOOTPRINT_ITEM_IDS.has(item_id) or INELIGIBLE_FOOTPRINT_ITEM_IDS.has(item_id):
+			assert(footprint_status == "UNREVIEWED")
+			assert(not bool(asset["footprint_review_current"]))
+		else:
+			var footprint: Array = asset["storage_footprint"] as Array
+			var current_orientation: String = "%dx%d" % [int(footprint[0]), int(footprint[1])]
+			var matches_posed_geometry: bool = current_orientation == String(asset["posed_raw_orientation_a"]) \
+				or current_orientation == String(asset["posed_raw_orientation_b"])
+			assert(footprint_status == ("GEOMETRY_APPROVED" if matches_posed_geometry else "OVERRIDE_APPROVED"))
+			assert(bool(asset["footprint_review_current"]))
+		if footprint_status in ["GEOMETRY_APPROVED", "OVERRIDE_APPROVED"]:
 			footprint_approved_count += 1
+		elif footprint_status == "UNREVIEWED":
+			footprint_unreviewed_count += 1
 		if pose_status in ["DEFAULT_POSE_APPROVED", "CUSTOM_POSE_APPROVED"] \
 			and not bool(asset["storage_pose_review_current"]):
 			stale_pose_approval_count += 1
@@ -57,7 +74,8 @@ func _init() -> void:
 	assert(custom_pose_required_count == 2)
 	assert(default_pose_count + custom_pose_approved_count == 40)
 	assert(scale_current_count == 42)
-	assert(footprint_approved_count == 0)
+	assert(footprint_approved_count == 40)
+	assert(footprint_unreviewed_count == 2)
 	assert(stale_pose_approval_count == 0)
 	assert(unresolved_item_ids == PackedStringArray(["loot_000034", "loot_000036"]))
 	var record: Dictionary = assets[0] as Dictionary

@@ -8,6 +8,6 @@ script = ExtResource("1_4unj2")
 item_id = &"loot_000002"
 display_name = "Computer Tower 01"
 storage_category = "Electronics"
-storage_footprint = Vector3i(3, 5, 1)
+storage_footprint = Vector3i(5, 3, 1)
 storage_rotation_degrees = Vector3(0, 90, 0)
 visual_scene = ExtResource("2_rdp2c")
