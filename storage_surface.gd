@@ -2,6 +2,7 @@ extends Node3D
 class_name StorageSurface
 
 const StorageCategoriesScript = preload("res://storage_categories.gd")
+const StorageStackScript = preload("res://storage_stack.gd")
 
 ## Deterministic 2D storage grid attached to one physical shelf level.
 ##
@@ -39,6 +40,8 @@ var _cells: Array[String] = []
 var _zone_cells: Array[String] = []
 var _zones_initialized: bool = false
 var _reservations: Dictionary = {}
+var _stacks: Dictionary = {}
+var _item_to_stack: Dictionary = {}
 
 var _interaction_area: Area3D = null
 var _debug_grid: MeshInstance3D = null
@@ -110,6 +113,8 @@ func configure(
 	_zones_initialized = false
 
 	_reservations.clear()
+	_stacks.clear()
+	_item_to_stack.clear()
 	_rebuild_interaction_area()
 	_rebuild_debug_grid()
 	_refresh_debug_occupancy()
@@ -129,6 +134,19 @@ func get_usable_size_m() -> Vector2:
 
 func get_reservation_count() -> int:
 	return _reservations.size()
+
+
+func get_stack_count() -> int:
+	return _stacks.size()
+
+
+func get_storage_stack(stack_id: String) -> StorageStack:
+	var value: Variant = _stacks.get(stack_id)
+	return value as StorageStack if value is StorageStack else null
+
+
+func get_stack_id_for_item(item_key: String) -> String:
+	return String(_item_to_stack.get(item_key, ""))
 
 
 func get_occupancy_ratio() -> float:
@@ -263,6 +281,329 @@ func _is_cell_valid(cell: Vector2i) -> bool:
 		and cell.x < grid_size.x
 		and cell.y < grid_size.y
 	)
+
+
+func find_zone_stack_or_empty_fit(
+	storage_category: String,
+	native_entry: StorageStack.Entry,
+	rotated_entry: StorageStack.Entry = null
+) -> Dictionary:
+	if native_entry == null:
+		return _invalid_stack_placement()
+
+	var orientations: Array[StorageStack.Entry] = [native_entry]
+	if rotated_entry != null:
+		orientations.append(rotated_entry)
+
+	var category: String = storage_category.strip_edges()
+	for zone_category: String in _auto_zone_tiers(category):
+		var stack_fit: Dictionary = _find_auto_stack_fit_in_zone(
+			zone_category,
+			category,
+			orientations
+		)
+		if bool(stack_fit.get("valid", false)):
+			return stack_fit
+
+		for entry: StorageStack.Entry in orientations:
+			var empty_fit: Dictionary = _find_first_fit_inside_zone(
+				entry.footprint,
+				zone_category
+			)
+			if not bool(empty_fit.get("valid", false)):
+				continue
+			var origin: Vector2i = empty_fit.get("origin", Vector2i.ZERO) as Vector2i
+			return {
+				"valid": true,
+				"placement_kind": "empty",
+				"stack_id": entry.item_key,
+				"insertion_index": 0,
+				"origin": origin,
+				"footprint": entry.footprint,
+				"base_footprint": entry.footprint,
+				"rotated": entry.packing_rotated,
+				"zone_kind": _zone_kind(category, zone_category),
+				"zone_category": zone_category,
+				"host_y_m": get_local_placement_position(
+					origin,
+					entry.footprint
+				).y
+			}
+
+	return _invalid_stack_placement()
+
+
+func find_manual_stack_fit(
+	stack_id: String,
+	entry: StorageStack.Entry
+) -> Dictionary:
+	var stack: StorageStack = get_storage_stack(stack_id)
+	if stack == null or entry == null:
+		return _invalid_stack_placement()
+	var base_host_y_m: float = get_local_placement_position(
+		stack.surface_origin,
+		stack.base_footprint
+	).y
+	var fit: Dictionary = stack.find_manual_append(entry, INF, base_host_y_m)
+	return _decorate_stack_fit(stack, entry, fit, "manual", "")
+
+
+func commit_stack_entry(entry: StorageStack.Entry, fit: Dictionary) -> bool:
+	if entry == null or entry.item_key.is_empty():
+		return false
+	if not bool(fit.get("valid", false)) or _item_to_stack.has(entry.item_key):
+		return false
+
+	var placement_kind: String = String(fit.get("placement_kind", ""))
+	if placement_kind == "empty":
+		var stack_id: String = String(fit.get("stack_id", entry.item_key))
+		if stack_id.is_empty() or _stacks.has(stack_id):
+			return false
+		var origin: Vector2i = fit.get("origin", Vector2i.ZERO) as Vector2i
+		var footprint: Vector2i = fit.get("footprint", entry.footprint) as Vector2i
+		if not reserve_at(stack_id, origin, footprint, entry.packing_rotated):
+			return false
+		var stack: StorageStack = StorageStackScript.new()
+		stack.stack_id = stack_id
+		stack.surface = self
+		stack.surface_origin = origin
+		stack.base_footprint = footprint
+		stack.entries.append(entry)
+		_stacks[stack_id] = stack
+		_item_to_stack[entry.item_key] = stack_id
+		_adopt_entry_host(entry)
+		_position_stack_entries(stack)
+		return true
+
+	if placement_kind != "stack":
+		return false
+	var existing_stack_id: String = String(fit.get("stack_id", ""))
+	var existing_stack: StorageStack = get_storage_stack(existing_stack_id)
+	if existing_stack == null:
+		return false
+	var insertion_index: int = int(fit.get("insertion_index", -1))
+	if insertion_index <= 0 or insertion_index > existing_stack.entries.size():
+		return false
+	existing_stack.entries.insert(insertion_index, entry)
+	_item_to_stack[entry.item_key] = existing_stack_id
+	_adopt_entry_host(entry)
+	_position_stack_entries(existing_stack)
+	return true
+
+
+func remove_stack_entry(stack_id: String, item_key: String) -> bool:
+	var stack: StorageStack = get_storage_stack(stack_id)
+	if stack == null or get_stack_id_for_item(item_key) != stack_id:
+		return false
+	var removal_index: int = stack.get_entry_index(item_key)
+	if removal_index < 0:
+		return false
+
+	stack.entries.remove_at(removal_index)
+	_item_to_stack.erase(item_key)
+	if stack.entries.is_empty():
+		_stacks.erase(stack_id)
+		_release_reservation_only(stack_id)
+		return true
+
+	if removal_index == 0:
+		var promoted: StorageStack.Entry = stack.entries[0]
+		var new_origin: Vector2i = StorageStackScript.centered_shrink_origin(
+			stack.surface_origin,
+			stack.base_footprint,
+			promoted.footprint
+		)
+		if not _replace_reservation_inside_old(
+			stack_id,
+			new_origin,
+			promoted.footprint,
+			promoted.packing_rotated
+		):
+			return false
+		stack.surface_origin = new_origin
+		stack.base_footprint = promoted.footprint
+
+	_position_stack_entries(stack)
+	return true
+
+
+func get_stack_candidate_transform(fit: Dictionary) -> Transform3D:
+	var origin: Vector2i = fit.get("origin", Vector2i.ZERO) as Vector2i
+	var base_footprint: Vector2i = fit.get(
+		"base_footprint",
+		fit.get("footprint", Vector2i.ONE)
+	) as Vector2i
+	var position: Vector3 = get_local_placement_position(origin, base_footprint)
+	position.y = float(fit.get("host_y_m", position.y))
+	return Transform3D(Basis.IDENTITY, position)
+
+
+func _find_auto_stack_fit_in_zone(
+	zone_category: String,
+	requested_category: String,
+	orientations: Array[StorageStack.Entry]
+) -> Dictionary:
+	var candidates: Array[StorageStack] = []
+	for value: Variant in _stacks.values():
+		if not (value is StorageStack):
+			continue
+		var stack: StorageStack = value as StorageStack
+		if not _footprint_is_inside_zone(
+			stack.surface_origin,
+			stack.base_footprint,
+			zone_category
+		):
+			continue
+		candidates.append(stack)
+	candidates.sort_custom(
+		func(a: StorageStack, b: StorageStack) -> bool:
+			if a.surface_origin.y == b.surface_origin.y:
+				return a.surface_origin.x < b.surface_origin.x
+			return a.surface_origin.y < b.surface_origin.y
+	)
+
+	for stack: StorageStack in candidates:
+		var base_host_y_m: float = get_local_placement_position(
+			stack.surface_origin,
+			stack.base_footprint
+		).y
+		var fit: Dictionary = stack.find_auto_insertion(
+			orientations,
+			INF,
+			base_host_y_m
+		)
+		if not bool(fit.get("valid", false)):
+			continue
+		var selected_entry: StorageStack.Entry = fit.get("entry") as StorageStack.Entry
+		return _decorate_stack_fit(
+			stack,
+			selected_entry,
+			fit,
+			_zone_kind(requested_category, zone_category),
+			zone_category
+		)
+	return _invalid_stack_placement()
+
+
+func _decorate_stack_fit(
+	stack: StorageStack,
+	entry: StorageStack.Entry,
+	fit: Dictionary,
+	zone_kind: String,
+	zone_category: String
+) -> Dictionary:
+	var result: Dictionary = fit.duplicate(true)
+	result["placement_kind"] = "stack"
+	result["stack_id"] = stack.stack_id
+	result["origin"] = stack.surface_origin
+	result["footprint"] = entry.footprint
+	result["base_footprint"] = stack.base_footprint
+	result["rotated"] = entry.packing_rotated
+	result["zone_kind"] = zone_kind
+	result["zone_category"] = zone_category
+	return result
+
+
+func _invalid_stack_placement() -> Dictionary:
+	return {
+		"valid": false,
+		"placement_kind": "none",
+		"stack_id": "",
+		"insertion_index": -1,
+		"origin": Vector2i(-1, -1),
+		"footprint": Vector2i.ONE,
+		"base_footprint": Vector2i.ONE,
+		"rotated": false,
+		"zone_kind": "none",
+		"zone_category": "",
+		"host_y_m": 0.0
+	}
+
+
+func _auto_zone_tiers(category: String) -> Array[String]:
+	var tiers: Array[String] = []
+	if StorageCategoriesScript.is_item_category(category):
+		tiers.append(category)
+	tiers.append(StorageCategoriesScript.GENERAL)
+	tiers.append("")
+	return tiers
+
+
+func _zone_kind(requested_category: String, zone_category: String) -> String:
+	if zone_category.is_empty():
+		return "unassigned"
+	if (
+		zone_category == requested_category
+		and StorageCategoriesScript.is_item_category(requested_category)
+	):
+		return "matching"
+	return "general"
+
+
+func _adopt_entry_host(entry: StorageStack.Entry) -> void:
+	if entry.host == null or not is_instance_valid(entry.host):
+		return
+	var current_parent: Node = entry.host.get_parent()
+	if current_parent == null:
+		add_child(entry.host)
+	elif current_parent != self:
+		entry.host.reparent(self, false)
+
+
+func _position_stack_entries(stack: StorageStack) -> void:
+	var base_position: Vector3 = get_local_placement_position(
+		stack.surface_origin,
+		stack.base_footprint
+	)
+	for index: int in range(stack.entries.size()):
+		var entry: StorageStack.Entry = stack.entries[index]
+		if entry.host == null or not is_instance_valid(entry.host):
+			continue
+		entry.host.position = Vector3(
+			base_position.x,
+			stack.entry_host_y(index, base_position.y),
+			base_position.z
+		)
+
+
+func _replace_reservation_inside_old(
+	stack_id: String,
+	new_origin: Vector2i,
+	new_footprint: Vector2i,
+	rotated: bool
+) -> bool:
+	if not _reservations.has(stack_id):
+		return false
+	var normalized: Vector2i = _normalize_footprint(new_footprint)
+	if (
+		new_origin.x < 0
+		or new_origin.y < 0
+		or new_origin.x + normalized.x > grid_size.x
+		or new_origin.y + normalized.y > grid_size.y
+	):
+		return false
+	for row: int in range(new_origin.y, new_origin.y + normalized.y):
+		for column: int in range(new_origin.x, new_origin.x + normalized.x):
+			var owner: String = _cells[_cell_index(Vector2i(column, row))]
+			if not owner.is_empty() and owner != stack_id:
+				return false
+
+	for cell_index: int in range(_cells.size()):
+		if _cells[cell_index] == stack_id:
+			_cells[cell_index] = ""
+	for row: int in range(new_origin.y, new_origin.y + normalized.y):
+		for column: int in range(new_origin.x, new_origin.x + normalized.x):
+			_cells[_cell_index(Vector2i(column, row))] = stack_id
+	_reservations[stack_id] = {
+		"valid": true,
+		"item_key": stack_id,
+		"origin": new_origin,
+		"footprint": normalized,
+		"rotated": rotated
+	}
+	_refresh_debug_occupancy()
+	occupancy_changed.emit()
+	return true
 
 
 func find_zone_auto_fit(
@@ -586,13 +927,21 @@ func reserve_at(
 
 
 func release(item_key: String) -> bool:
+	if _stacks.has(item_key):
+		var stack: StorageStack = get_storage_stack(item_key)
+		if stack != null:
+			for entry: StorageStack.Entry in stack.entries:
+				_item_to_stack.erase(entry.item_key)
+		_stacks.erase(item_key)
+	return _release_reservation_only(item_key)
+
+
+func _release_reservation_only(item_key: String) -> bool:
 	if not _reservations.has(item_key):
 		return false
-
 	for cell_index: int in range(_cells.size()):
 		if _cells[cell_index] == item_key:
 			_cells[cell_index] = ""
-
 	_reservations.erase(item_key)
 	_refresh_debug_occupancy()
 	occupancy_changed.emit()
@@ -603,6 +952,8 @@ func clear_all() -> void:
 	for cell_index: int in range(_cells.size()):
 		_cells[cell_index] = ""
 	_reservations.clear()
+	_stacks.clear()
+	_item_to_stack.clear()
 	_refresh_debug_occupancy()
 	occupancy_changed.emit()
 

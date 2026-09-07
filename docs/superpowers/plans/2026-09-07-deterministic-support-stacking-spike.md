@@ -160,7 +160,7 @@ git commit -m "feat: add deterministic linear stack rules"
 **Interfaces:**
 - Consumes: Task 2 `StorageStack` and `StorageStack.Entry`.
 - Produces: `StorageSurface.get_stack_count() -> int`
-- Produces: `StorageSurface.get_stack(stack_id: String) -> StorageStack`
+- Produces: `StorageSurface.get_storage_stack(stack_id: String) -> StorageStack` (`get_stack` is a Godot built-in stack-trace function.)
 - Produces: `StorageSurface.get_stack_id_for_item(item_key: String) -> String`
 - Produces: `StorageSurface.find_zone_stack_or_empty_fit(storage_category: String, native_entry: StorageStack.Entry, rotated_entry: StorageStack.Entry = null) -> Dictionary`
 - Produces: `StorageSurface.find_manual_stack_fit(stack_id: String, entry: StorageStack.Entry) -> Dictionary`
