@@ -8,6 +8,32 @@ class_name StorageVisualPose
 const SHELF_CLEARANCE_M: float = 0.006
 
 
+static func measure_item(item: ItemInstance, packing_rotated: bool) -> Dictionary:
+	if item == null:
+		return _invalid_result()
+	var visual_scene: PackedScene = item.get_visual_scene()
+	if visual_scene == null:
+		return _invalid_result()
+
+	var packing_root: Node3D = Node3D.new()
+	var visual: Node = visual_scene.instantiate()
+	var result: Dictionary = build_visual(
+		packing_root,
+		visual,
+		item.get_storage_rotation_degrees(),
+		packing_rotated
+	)
+	var snapshot: Dictionary = {
+		"valid": bool(result.get("valid", false)),
+		"posed_bounds": result.get("posed_bounds", AABB()),
+		"aligned_bounds": result.get("aligned_bounds", AABB()),
+		"seating_offset": result.get("seating_offset", Vector3.ZERO),
+		"packing_basis": result.get("packing_basis", Basis.IDENTITY)
+	}
+	packing_root.free()
+	return snapshot
+
+
 static func build_visual(
 	packing_root: Node3D,
 	visual: Node,

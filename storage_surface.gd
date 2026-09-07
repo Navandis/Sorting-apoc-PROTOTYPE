@@ -29,12 +29,14 @@ const STORAGE_INTERACTION_LAYER: int = 1 << 8
 const MIN_CELL_SIZE_M: float = 0.025
 const INTERACTION_THICKNESS_M: float = 0.06
 const DEBUG_Y_OFFSET_M: float = 0.012
+const MAX_USED_STACK_FRACTION: float = 0.95
 
 var surface_id: StringName = &"storage_surface"
 var custom_display_name: String = ""
 var cell_size_m: float = 0.10
 var grid_size: Vector2i = Vector2i.ONE
 var usable_size_m: Vector2 = Vector2(0.10, 0.10)
+var stack_clearance_m: float = INF
 
 var _cells: Array[String] = []
 var _zone_cells: Array[String] = []
@@ -53,7 +55,8 @@ func configure(
 	new_surface_id: StringName,
 	requested_width_m: float,
 	requested_depth_m: float,
-	requested_cell_size_m: float = 0.10
+	requested_cell_size_m: float = 0.10,
+	requested_stack_clearance_m: float = INF
 ) -> void:
 	surface_id = new_surface_id
 
@@ -92,6 +95,11 @@ func configure(
 	scale = Vector3.ONE
 
 	cell_size_m = maxf(world_cell_size_m, MIN_CELL_SIZE_M)
+	stack_clearance_m = (
+		INF
+		if requested_stack_clearance_m == INF
+		else maxf(requested_stack_clearance_m, 0.0) * scale_y
+	)
 
 	var column_count: int = maxi(1, int(floor(world_width_m / cell_size_m)))
 	var row_count: int = maxi(1, int(floor(world_depth_m / cell_size_m)))
@@ -147,6 +155,10 @@ func get_storage_stack(stack_id: String) -> StorageStack:
 
 func get_stack_id_for_item(item_key: String) -> String:
 	return String(_item_to_stack.get(item_key, ""))
+
+
+func get_maximum_stack_top_y_m() -> float:
+	return stack_clearance_m * MAX_USED_STACK_FRACTION
 
 
 func get_occupancy_ratio() -> float:
@@ -344,7 +356,11 @@ func find_manual_stack_fit(
 		stack.surface_origin,
 		stack.base_footprint
 	).y
-	var fit: Dictionary = stack.find_manual_append(entry, INF, base_host_y_m)
+	var fit: Dictionary = stack.find_manual_append(
+		entry,
+		get_maximum_stack_top_y_m(),
+		base_host_y_m
+	)
 	return _decorate_stack_fit(stack, entry, fit, "manual", "")
 
 
@@ -469,7 +485,7 @@ func _find_auto_stack_fit_in_zone(
 		).y
 		var fit: Dictionary = stack.find_auto_insertion(
 			orientations,
-			INF,
+			get_maximum_stack_top_y_m(),
 			base_host_y_m
 		)
 		if not bool(fit.get("valid", false)):

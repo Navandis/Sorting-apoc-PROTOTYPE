@@ -76,10 +76,12 @@ func _install_known_shelves() -> void:
 				shelf,
 				[
 					# bottom → top
-					_make_level_profile(0.100, 0.96, 0.92, 0.00, 0.00),
-					_make_level_profile(0.380, 0.96, 0.92, 0.00, 0.00),
-					_make_level_profile(0.667, 0.96, 0.92, 0.00, 0.00),
-					_make_level_profile(0.980, 0.96, 0.92, 0.00, 0.00)
+					_make_level_profile(0.100, 0.96, 0.92, 0.00, 0.00, 0.822),
+					_make_level_profile(0.380, 0.96, 0.92, 0.00, 0.00, 0.843),
+					_make_level_profile(0.667, 0.96, 0.92, 0.00, 0.00, 0.919),
+					# The open top repeats the last representative bay height as
+					# an explicit prototype cap; human playtest must validate it.
+					_make_level_profile(0.980, 0.96, 0.92, 0.00, 0.00, 0.919)
 				]
 			)
 
@@ -89,10 +91,11 @@ func _install_known_shelves() -> void:
 				[
 					# Bottom and top shelf geometry is shallower/differently
 					# centered than the two middle levels.
-					_make_level_profile(0.045, 0.94, 0.92, 0.00, 0.00),
-					_make_level_profile(0.390, 0.94, 0.92, -0.10, -0.03),
-					_make_level_profile(0.622, 0.94, 0.92, 0.00, -0.03),
-					_make_level_profile(0.810, 0.94, 0.92, 0.00, 0.00)
+					_make_level_profile(0.045, 0.94, 0.92, 0.00, 0.00, 0.952),
+					_make_level_profile(0.390, 0.94, 0.92, -0.10, -0.03, 0.640),
+					_make_level_profile(0.622, 0.94, 0.92, 0.00, -0.03, 0.519),
+					# Same provisional open-top convention as the metal shelf.
+					_make_level_profile(0.810, 0.94, 0.92, 0.00, 0.00, 0.519)
 				]
 			)
 
@@ -106,14 +109,16 @@ func _make_level_profile(
 	width_fraction: float,
 	depth_fraction: float,
 	x_offset_fraction: float,
-	z_offset_fraction: float
+	z_offset_fraction: float,
+	stack_clearance_m: float
 ) -> Dictionary:
 	return {
 		"y_ratio": y_ratio,
 		"width_fraction": width_fraction,
 		"depth_fraction": depth_fraction,
 		"x_offset_fraction": x_offset_fraction,
-		"z_offset_fraction": z_offset_fraction
+		"z_offset_fraction": z_offset_fraction,
+		"stack_clearance_m": stack_clearance_m
 	}
 
 
@@ -155,6 +160,7 @@ func _install_authored_profile(
 		var depth_fraction: float = float(profile.get("depth_fraction", 0.80))
 		var x_offset_fraction: float = float(profile.get("x_offset_fraction", 0.0))
 		var z_offset_fraction: float = float(profile.get("z_offset_fraction", 0.0))
+		var stack_clearance_m: float = float(profile.get("stack_clearance_m", INF))
 
 		var local_width: float = maxf(bounds.size.x * width_fraction, 0.10)
 		var local_depth: float = maxf(bounds.size.z * depth_fraction, 0.10)
@@ -179,7 +185,8 @@ func _install_authored_profile(
 			surface_identifier,
 			local_width,
 			local_depth,
-			local_cell_size
+			local_cell_size,
+			stack_clearance_m
 		)
 		surface.set_debug_visible(_debug_visible)
 		_surfaces.append(surface)
