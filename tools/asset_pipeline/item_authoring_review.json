@@ -63,11 +63,11 @@
 				"notes": "Default pose unsuitable; candidate Y +90 degrees faces the computer drive panel toward the player.",
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					90.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "ac0ebcf72372516de0771fd2b9e82739476bc1123c34af927028d96bde1df211",
-				"status": "CUSTOM_POSE_REQUIRED"
+				"status": "CUSTOM_POSE_APPROVED"
 			}
 		},
 		"loot_000003": {
@@ -98,11 +98,11 @@
 				"notes": "Default pose unsuitable; candidate Y +90 degrees faces the controls and dials toward the player.",
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					90.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "61929a0e30280bedd792f0af49ef16fc7bccdff11cab8f5800563eae3b945503",
-				"status": "CUSTOM_POSE_REQUIRED"
+				"status": "CUSTOM_POSE_APPROVED"
 			}
 		},
 		"loot_000004": {
@@ -133,11 +133,11 @@
 				"notes": "Default pose unsuitable; candidate Y +90 degrees faces the keypad toward the player.",
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					90.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "4d2312e22b298995e88a4eb23135ddcb6bb7158dd01f4553cba521302a918993",
-				"status": "CUSTOM_POSE_REQUIRED"
+				"status": "CUSTOM_POSE_APPROVED"
 			}
 		},
 		"loot_000005": {
@@ -658,11 +658,11 @@
 				"notes": "Default pose unsuitable; candidate Y +130 degrees faces the label toward the player.",
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					130.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "4e7776b9816a8a74dedeebfd940ac578dc41fc49bb87b901359eb550d749fc6f",
-				"status": "CUSTOM_POSE_REQUIRED"
+				"status": "CUSTOM_POSE_APPROVED"
 			}
 		},
 		"loot_000020": {
@@ -693,11 +693,11 @@
 				"notes": "Default pose unsuitable; candidate Y +90 degrees faces the front label toward the player.",
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					90.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "08407b1d661f88250b2ab1687a7f4b9bd74d1863046e818828a44e89a849481f",
-				"status": "CUSTOM_POSE_REQUIRED"
+				"status": "CUSTOM_POSE_APPROVED"
 			}
 		},
 		"loot_000021": {
@@ -728,11 +728,11 @@
 				"notes": "Default pose unsuitable; candidate Y +90 degrees faces the front label toward the player.",
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					90.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "d31b3993c3dfa7de7de871386090d11edcfc7394d1b0ff9dac0b1d332092bb6d",
-				"status": "CUSTOM_POSE_REQUIRED"
+				"status": "CUSTOM_POSE_APPROVED"
 			}
 		},
 		"loot_000022": {
@@ -833,11 +833,11 @@
 				"notes": "Default pose unsuitable; candidate Y +90 degrees faces the label toward the player.",
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					90.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "062b7b317fbf97b664a07c1ddc10b36aac362cb7fa6ec81b542486dfcbcc2fa1",
-				"status": "CUSTOM_POSE_REQUIRED"
+				"status": "CUSTOM_POSE_APPROVED"
 			}
 		},
 		"loot_000025": {
@@ -938,11 +938,11 @@
 				"notes": "Default pose unsuitable; candidate Y -120 degrees faces the label toward the player.",
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					-120.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "df65c2a162cba24514f8ca4d4491da16abb918f79f1204dd6fb111750354c1ea",
-				"status": "CUSTOM_POSE_REQUIRED"
+				"status": "CUSTOM_POSE_APPROVED"
 			}
 		},
 		"loot_000028": {
@@ -1180,7 +1180,7 @@
 			"source_fingerprint": "5645b56b9506c5014a05930c49de6d75661c0df8498848e5d2bdc7f402e94eed",
 			"source_path": "res://assets/props/protection/SM_Gloves_02.glb",
 			"storage_pose_review": {
-				"notes": "Default pose unsuitable; candidate X -90 degrees lays the gloves flat with their backs upward.",
+				"notes": "The two gloves in the current source mesh are poorly aligned and no authored rotation produces an acceptable shelf presentation. The source asset will be rebuilt later.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
@@ -1324,10 +1324,10 @@
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
-					0.0
+					90.0
 				],
 				"reviewed_source_fingerprint": "38598f0566dcb6bd0d338cc3a844ec9f9b68c4903a3ed6360c39ccf6f1dd4bb1",
-				"status": "CUSTOM_POSE_REQUIRED"
+				"status": "CUSTOM_POSE_APPROVED"
 			}
 		},
 		"loot_000039": {
@@ -1357,12 +1357,12 @@
 			"storage_pose_review": {
 				"notes": "Default pose unsuitable; candidate X -90 degrees lays the pistol naturally on its side.",
 				"reviewed_rotation_degrees": [
-					0.0,
+					-90.0,
 					0.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "e77eed4043544e371dceb36fd99a138fed4fbd4570b8d2fe75ee6d097b568fac",
-				"status": "CUSTOM_POSE_REQUIRED"
+				"status": "CUSTOM_POSE_APPROVED"
 			}
 		},
 		"loot_000040": {
@@ -1394,10 +1394,10 @@
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
-					0.0
+					90.0
 				],
 				"reviewed_source_fingerprint": "6c39da4730013101fa22348c90e8ce04d5be6fff5487f45255a8d0f37ffab352",
-				"status": "CUSTOM_POSE_REQUIRED"
+				"status": "CUSTOM_POSE_APPROVED"
 			}
 		},
 		"loot_000041": {
@@ -1429,10 +1429,10 @@
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
-					0.0
+					180.0
 				],
 				"reviewed_source_fingerprint": "0239435c9e3eccaec42d61f323878f64a08432f79ec47f412ef62d6338eb2517",
-				"status": "CUSTOM_POSE_REQUIRED"
+				"status": "CUSTOM_POSE_APPROVED"
 			}
 		},
 		"loot_000042": {

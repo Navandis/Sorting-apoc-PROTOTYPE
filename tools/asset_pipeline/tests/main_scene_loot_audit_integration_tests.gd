@@ -24,7 +24,42 @@ func _init() -> void:
 	assert(String(report["schema_version"]) == "1.3")
 	assert(String(report["authoring_review_manifest_schema_version"]) == "1.0")
 	var assets: Array = report["assets"] as Array
-	assert(not assets.is_empty())
+	assert(assets.size() == 42)
+	var default_pose_count: int = 0
+	var custom_pose_approved_count: int = 0
+	var custom_pose_required_count: int = 0
+	var scale_current_count: int = 0
+	var footprint_approved_count: int = 0
+	var stale_pose_approval_count: int = 0
+	var unresolved_item_ids: PackedStringArray = []
+	for asset_value: Variant in assets:
+		var asset: Dictionary = asset_value as Dictionary
+		var pose_status: String = String(asset["storage_pose_review_status"])
+		if pose_status == "DEFAULT_POSE_APPROVED":
+			default_pose_count += 1
+		elif pose_status == "CUSTOM_POSE_APPROVED":
+			custom_pose_approved_count += 1
+		elif pose_status == "CUSTOM_POSE_REQUIRED":
+			custom_pose_required_count += 1
+			unresolved_item_ids.append(String(asset["item_id"]))
+			assert(bool(asset["storage_pose_review_current"]))
+			assert(not bool(asset["footprint_review_current"]))
+		if bool(asset["scale_review_current"]):
+			scale_current_count += 1
+		if String(asset["footprint_review_status"]) in ["GEOMETRY_APPROVED", "OVERRIDE_APPROVED"]:
+			footprint_approved_count += 1
+		if pose_status in ["DEFAULT_POSE_APPROVED", "CUSTOM_POSE_APPROVED"] \
+			and not bool(asset["storage_pose_review_current"]):
+			stale_pose_approval_count += 1
+	unresolved_item_ids.sort()
+	assert(default_pose_count == 28)
+	assert(custom_pose_approved_count == 12)
+	assert(custom_pose_required_count == 2)
+	assert(default_pose_count + custom_pose_approved_count == 40)
+	assert(scale_current_count == 42)
+	assert(footprint_approved_count == 0)
+	assert(stale_pose_approval_count == 0)
+	assert(unresolved_item_ids == PackedStringArray(["loot_000034", "loot_000036"]))
 	var record: Dictionary = assets[0] as Dictionary
 	for field: String in [
 		"authoring_key", "source_fingerprint", "scale_review_status", "scale_review_current",
