@@ -115,6 +115,11 @@ func _test_stable_stack_scan_and_fallback() -> void:
 	var incoming = _entry("incoming", Vector2i(2, 2), 0.10, true, true, &"shape")
 	var fit: Dictionary = surface.find_zone_stack_or_empty_fit("", incoming)
 	_check(fit.get("stack_id", "") == "later", "invalid first stack falls through to next compatible stack")
+	var empty_fallback: StorageSurface = _surface(Vector2i(4, 2))
+	empty_fallback.set_zone_rect(StorageCategoriesScript.GENERAL, Vector2i.ZERO, Vector2i(3, 1))
+	_commit_base(empty_fallback, _entry("too_small", Vector2i.ONE, 0.10, true, true, &"shape"), Vector2i.ZERO)
+	fit = empty_fallback.find_zone_stack_or_empty_fit("", incoming)
+	_check(fit.get("placement_kind", "") == "empty", "invalid insertion falls back to empty placement in same tier")
 
 	var equal_surface: StorageSurface = _surface(Vector2i(4, 1))
 	equal_surface.set_zone_rect(StorageCategoriesScript.GENERAL, Vector2i.ZERO, Vector2i(3, 0))
@@ -123,6 +128,7 @@ func _test_stable_stack_scan_and_fallback() -> void:
 	fit = equal_surface.find_zone_stack_or_empty_fit("", _entry("small", Vector2i.ONE, 0.10, true, true, &"shape"))
 	_check(fit.get("stack_id", "") == "left", "row-column scan order is stable")
 	surface.free()
+	empty_fallback.free()
 	equal_surface.free()
 
 

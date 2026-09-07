@@ -66,7 +66,7 @@ func _test_flat_media_and_pose_cache() -> void:
 
 
 func _test_general_round_cans_and_visible_middle_retrieval() -> void:
-	var context: Dictionary = _context(Vector2i(5, 5), 1.0)
+	var context: Dictionary = _context(Vector2i(5, 5), 0.40)
 	var surface: StorageSurface = context["surface"] as StorageSurface
 	var controller: StoragePlacementController = context["controller"] as StoragePlacementController
 	var carried: CarriedItems = context["carried"] as CarriedItems
@@ -86,6 +86,22 @@ func _test_general_round_cans_and_visible_middle_retrieval() -> void:
 		_check(is_equal_approx(entry.host.position.z, stack.entries[0].host.position.z), "can centers share Z")
 	_check(stack.entries[1].host.position.y > stack.entries[0].host.position.y, "can height accumulates after base")
 	_check(stack.entries[2].host.position.y > stack.entries[1].host.position.y, "can height accumulates repeatedly")
+	for index: int in range(1, stack.entries.size()):
+		var lower = stack.entries[index - 1]
+		var upper = stack.entries[index]
+		var lower_top_y: float = lower.host.position.y + lower.aligned_bounds.end.y
+		var upper_bottom_y: float = upper.host.position.y + upper.aligned_bounds.position.y
+		_check(is_equal_approx(lower_top_y, upper_bottom_y), "round cans use posed contact with no gameplay air gap")
+	var fourth_can: ItemInstance = _item(&"loot_000009")
+	var fourth_entry = controller.call("_entry_for_item", fourth_can, false)
+	var base_host_y_m: float = surface.get_local_placement_position(stack.surface_origin, stack.base_footprint).y
+	var over_clearance: Dictionary = stack.find_auto_insertion(
+		[fourth_entry],
+		surface.get_maximum_stack_top_y_m(),
+		base_host_y_m
+	)
+	_check(not bool(over_clearance.get("valid", true)), "repeated real can stacking stops at 95-percent clearance")
+	_check(not bool(over_clearance.get("clearance_ok", true)), "real can rejection reports clearance cause")
 
 	var middle_world_item: WorldItem = stack.entries[1].world_item as WorldItem
 	var top_y_before: float = stack.entries[2].host.position.y
