@@ -17,6 +17,15 @@ const BATCH_TWO_ADJUSTED_ROLES: Dictionary = {
 	"loot_000025": [true, false],
 	"loot_000027": [true, false]
 }
+const BATCH_THREE_IDS: PackedStringArray = [
+	"loot_000001", "loot_000004", "loot_000012", "loot_000014", "loot_000029",
+	"loot_000033", "loot_000035"
+]
+const BATCH_THREE_ADJUSTED_ROLES: Dictionary = {
+	"loot_000012": [true, false],
+	"loot_000014": [false, false],
+	"loot_000029": [true, false]
+}
 const GRANDFATHERED: Dictionary = {
 	"loot_000002": [false, true, ""],
 	"loot_000005": [true, true, "boxed_food"],
@@ -68,6 +77,7 @@ func _init() -> void:
 	_test_phase_one_migration_approves_only_exact_nine()
 	_test_batch_one_apply_approves_only_human_decisions()
 	_test_batch_two_apply_snapshots_human_adjustments_without_auto_groups()
+	_test_batch_three_apply_snapshots_human_adjustments_without_auto_groups()
 	_test_gloves_and_pants_remain_blocked_without_candidates()
 	_test_catalogue_set_mismatch_aborts_without_writes()
 	_test_invalid_manifest_aborts_without_writes()
@@ -219,6 +229,45 @@ func _test_batch_two_apply_snapshots_human_adjustments_without_auto_groups() -> 
 	assert(remaining_unreviewed == 16)
 	for item_id: String in BLOCKED_IDS:
 		assert(String((records[item_id] as Dictionary)["stack_role_review"]["status"]) == "UNREVIEWED")
+
+
+func _test_batch_three_apply_snapshots_human_adjustments_without_auto_groups() -> void:
+	var fixture: Dictionary = _fixture()
+	_apply_candidate_roles(fixture["current_assets"] as Array[Dictionary])
+	var seeded: Dictionary = StackRoleAuthoringScript.apply_phase_1(fixture["manifest"] as Dictionary, fixture["current_assets"] as Array[Dictionary], _registry())
+	var batch_one: Dictionary = StackRoleAuthoringScript.apply_stack_role_batch_1(seeded["manifest"] as Dictionary, fixture["current_assets"] as Array[Dictionary], _registry())
+	for asset: Dictionary in fixture["current_assets"] as Array[Dictionary]:
+		var batch_two_adjusted: Array = BATCH_TWO_ADJUSTED_ROLES.get(String(asset["item_id"]), []) as Array
+		if not batch_two_adjusted.is_empty():
+			asset["can_be_stacked"] = bool(batch_two_adjusted[0])
+			asset["can_support_stack"] = bool(batch_two_adjusted[1])
+	var batch_two: Dictionary = StackRoleAuthoringScript.apply_stack_role_batch_2(batch_one["manifest"] as Dictionary, fixture["current_assets"] as Array[Dictionary], _registry())
+	for asset: Dictionary in fixture["current_assets"] as Array[Dictionary]:
+		var batch_three_adjusted: Array = BATCH_THREE_ADJUSTED_ROLES.get(String(asset["item_id"]), []) as Array
+		if not batch_three_adjusted.is_empty():
+			asset["can_be_stacked"] = bool(batch_three_adjusted[0])
+			asset["can_support_stack"] = bool(batch_three_adjusted[1])
+	var result: Dictionary = StackRoleAuthoringScript.apply_stack_role_batch_3(batch_two["manifest"] as Dictionary, fixture["current_assets"] as Array[Dictionary], _registry())
+	assert((result["errors"] as PackedStringArray).is_empty())
+	assert(result["approved_item_ids"] == BATCH_THREE_IDS)
+	var records: Dictionary = (result["manifest"] as Dictionary)["assets"] as Dictionary
+	for item_id: String in BATCH_THREE_IDS:
+		var record: Dictionary = records[item_id] as Dictionary
+		assert(String((record["stack_role_review"] as Dictionary)["status"]) == "APPROVED")
+		assert(((record["stack_role_review"] as Dictionary)["flags"] as Array).is_empty())
+		assert(String((record["auto_group_review"] as Dictionary)["status"]) == "UNREVIEWED")
+	for item_id: String in BATCH_THREE_ADJUSTED_ROLES:
+		var expected: Array = BATCH_THREE_ADJUSTED_ROLES[item_id] as Array
+		var role_review: Dictionary = (records[item_id] as Dictionary)["stack_role_review"] as Dictionary
+		assert(bool(role_review["reviewed_can_be_stacked"]) == bool(expected[0]))
+		assert(bool(role_review["reviewed_can_support_stack"]) == bool(expected[1]))
+	var remaining_unreviewed: int = 0
+	for item_id: String in StackRoleAuthoringScript.candidate_ids():
+		if BATCH_ONE_IDS.has(item_id) or BATCH_TWO_IDS.has(item_id) or BATCH_THREE_IDS.has(item_id):
+			continue
+		assert(String((records[item_id] as Dictionary)["stack_role_review"]["status"]) == "UNREVIEWED")
+		remaining_unreviewed += 1
+	assert(remaining_unreviewed == 9)
 
 
 func _test_gloves_and_pants_remain_blocked_without_candidates() -> void:

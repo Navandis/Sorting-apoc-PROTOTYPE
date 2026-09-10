@@ -33,25 +33,22 @@
 			"source_fingerprint": "93b21de28ec54c132f4cffe2bec4d867b533193216c076f19a51c34433083439",
 			"source_path": "res://assets/props/electronics/SM_ComputerMouse_01.glb",
 			"stack_role_review": {
-				"flags": [
-					"IRREGULAR_SHAPE",
-					"SUPPORT_SURFACE_AMBIGUOUS"
-				],
-				"notes": "The mouse can rest on a broad support, but its curved shell is not a credible upper support surface.",
-				"reviewed_can_be_stacked": false,
+				"flags": [],
+				"notes": "",
+				"reviewed_can_be_stacked": true,
 				"reviewed_can_support_stack": false,
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					1,
+					2,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "93b21de28ec54c132f4cffe2bec4d867b533193216c076f19a51c34433083439",
+				"status": "APPROVED"
 			},
 			"storage_pose_review": {
 				"notes": "Default zero authored storage pose approved.",
@@ -233,25 +230,22 @@
 			"source_fingerprint": "4d2312e22b298995e88a4eb23135ddcb6bb7158dd01f4553cba521302a918993",
 			"source_path": "res://assets/props/electronics/SM_Phone_01.glb",
 			"stack_role_review": {
-				"flags": [
-					"IRREGULAR_SHAPE",
-					"SUPPORT_SURFACE_AMBIGUOUS"
-				],
-				"notes": "The desk phone can rest on a broad support, but the sloped handset assembly cannot credibly support another item.",
-				"reviewed_can_be_stacked": false,
+				"flags": [],
+				"notes": "",
+				"reviewed_can_be_stacked": true,
 				"reviewed_can_support_stack": false,
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					3,
+					3,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					90.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "4d2312e22b298995e88a4eb23135ddcb6bb7158dd01f4553cba521302a918993",
+				"status": "APPROVED"
 			},
 			"storage_pose_review": {
 				"notes": "Default pose unsuitable; candidate Y +90 degrees faces the keypad toward the player.",
@@ -771,25 +765,22 @@
 			"source_fingerprint": "cedc1401c90bc6bf2733ca2648ee4ab9daf5a85c1fa724cca2a70a4de3173e15",
 			"source_path": "res://assets/props/Food/SM_Watermelon_1.glb",
 			"stack_role_review": {
-				"flags": [
-					"IRREGULAR_SHAPE",
-					"RESTING_STABILITY_AMBIGUOUS"
-				],
-				"notes": "The round watermelon lacks a stable resting interface for deterministic centered stacking.",
-				"reviewed_can_be_stacked": false,
+				"flags": [],
+				"notes": "Credible deterministic resting relationship on a sufficiently large flat support; rounded upper form is not support-capable.",
+				"reviewed_can_be_stacked": true,
 				"reviewed_can_support_stack": false,
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					3,
+					3,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "cedc1401c90bc6bf2733ca2648ee4ab9daf5a85c1fa724cca2a70a4de3173e15",
+				"status": "APPROVED"
 			},
 			"storage_pose_review": {
 				"notes": "Default zero authored storage pose approved.",
@@ -900,26 +891,22 @@
 			"source_fingerprint": "e0d55a6a3fb0548e9bafb082d80aa7e29d4875c92f47b33df666e5de3ab35729",
 			"source_path": "res://assets/props/Fuel/SM_FirewoodPile_01.glb",
 			"stack_role_review": {
-				"flags": [
-					"IRREGULAR_SHAPE",
-					"SUPPORT_SURFACE_AMBIGUOUS",
-					"VISUAL_REVIEW_RECOMMENDED"
-				],
-				"notes": "The firewood pile can rest as a unit, but its uneven logs do not provide a reliable centered upper surface.",
+				"flags": [],
+				"notes": "Loose firewood pile is not a rigid form-retaining stack member.",
 				"reviewed_can_be_stacked": false,
 				"reviewed_can_support_stack": false,
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					6,
+					4,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "e0d55a6a3fb0548e9bafb082d80aa7e29d4875c92f47b33df666e5de3ab35729",
+				"status": "APPROVED"
 			},
 			"storage_pose_review": {
 				"notes": "Default zero authored storage pose approved.",
@@ -1850,25 +1837,22 @@
 			"source_fingerprint": "0c39f0837ab52a56e7ae6504fa0aeeaa414d44fc25a2dd011757598cb047218f",
 			"source_path": "res://assets/props/morale/SM_Ball_01.glb",
 			"stack_role_review": {
-				"flags": [
-					"IRREGULAR_SHAPE",
-					"RESTING_STABILITY_AMBIGUOUS"
-				],
-				"notes": "The ball has no stable resting interface for deterministic centered stacking.",
-				"reviewed_can_be_stacked": false,
+				"flags": [],
+				"notes": "Credible deterministic resting relationship on a sufficiently large flat support; curved upper form is not support-capable.",
+				"reviewed_can_be_stacked": true,
 				"reviewed_can_support_stack": false,
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					2,
+					2,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "0c39f0837ab52a56e7ae6504fa0aeeaa414d44fc25a2dd011757598cb047218f",
+				"status": "APPROVED"
 			},
 			"storage_pose_review": {
 				"notes": "Default zero authored storage pose approved.",
@@ -2131,25 +2115,22 @@
 			"source_fingerprint": "280514a80eeffbee0ea34cb0f6ec7987a16ee29b087da9694f9401132e98e1a2",
 			"source_path": "res://assets/props/protection/SM_Boots_01.glb",
 			"stack_role_review": {
-				"flags": [
-					"IRREGULAR_SHAPE",
-					"SUPPORT_SURFACE_AMBIGUOUS"
-				],
-				"notes": "The boot pair can rest on a broad support, but its uneven uppers cannot support another item.",
-				"reviewed_can_be_stacked": false,
+				"flags": [],
+				"notes": "",
+				"reviewed_can_be_stacked": true,
 				"reviewed_can_support_stack": false,
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					3,
+					3,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "280514a80eeffbee0ea34cb0f6ec7987a16ee29b087da9694f9401132e98e1a2",
+				"status": "APPROVED"
 			},
 			"storage_pose_review": {
 				"notes": "Default zero authored storage pose approved.",
@@ -2256,25 +2237,22 @@
 			"source_fingerprint": "93d6e0e5b9df34b5d0cf9b27275f1895e7cf85879bc60eac5a12dd66d0e9e0b3",
 			"source_path": "res://assets/props/protection/SM_HardHat_01.glb",
 			"stack_role_review": {
-				"flags": [
-					"IRREGULAR_SHAPE",
-					"SUPPORT_SURFACE_AMBIGUOUS"
-				],
-				"notes": "The hard hat can rest rim-down on a broad support, but its curved crown is not support-capable.",
-				"reviewed_can_be_stacked": false,
+				"flags": [],
+				"notes": "",
+				"reviewed_can_be_stacked": true,
 				"reviewed_can_support_stack": false,
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					3,
+					3,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "93d6e0e5b9df34b5d0cf9b27275f1895e7cf85879bc60eac5a12dd66d0e9e0b3",
+				"status": "APPROVED"
 			},
 			"storage_pose_review": {
 				"notes": "Default zero authored storage pose approved.",

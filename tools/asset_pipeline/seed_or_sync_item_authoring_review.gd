@@ -30,6 +30,8 @@ func _run() -> int:
 		return _apply_stack_role_batch_1(existing_manifest, current_assets)
 	if OS.get_cmdline_user_args().has("--apply-stack-role-batch-2"):
 		return _apply_stack_role_batch_2(existing_manifest, current_assets)
+	if OS.get_cmdline_user_args().has("--apply-stack-role-batch-3"):
+		return _apply_stack_role_batch_3(existing_manifest, current_assets)
 	if OS.get_cmdline_user_args().has("--item-ids-only"):
 		return _sync_item_ids_only(existing_manifest, current_assets)
 
@@ -278,6 +280,46 @@ func _apply_stack_role_batch_2(
 		"STACK_ROLE_BATCH_2_APPLY_COMPLETE approved=%d resources_updated=%d manifest_written=%s item_ids=%s"
 		% [approved_item_ids.size(), updated_resource_count, str(wrote_manifest), ",".join(approved_item_ids)]
 	)
+	return 0
+
+
+func _apply_stack_role_batch_3(
+	existing_manifest: Dictionary,
+	current_assets: Array[Dictionary]
+) -> int:
+	var updated_resource_count: int = 0
+	for item_id: String in ["loot_000012", "loot_000014", "loot_000029"]:
+		var role: Array = StackRoleAuthoringScript.batch_three_reviewed_role(item_id)
+		var definition_path: String = "res://data/items/definitions/%s.tres" % item_id
+		var definition: ItemDefinition = load(definition_path) as ItemDefinition
+		if definition == null:
+			push_error("Unable to load Batch 3 ItemDefinition: %s" % definition_path)
+			return 1
+		if definition.can_be_stacked == bool(role[0]) and definition.can_support_stack == bool(role[1]):
+			continue
+		definition.can_be_stacked = bool(role[0])
+		definition.can_support_stack = bool(role[1])
+		if ResourceSaver.save(definition, definition_path) != OK:
+			push_error("Unable to save Batch 3 ItemDefinition: %s" % definition_path)
+			return 1
+		updated_resource_count += 1
+	var updated_assets: Array[Dictionary] = []
+	for scene_record: Dictionary in MainSceneLootAdapterScript.enumerate_loot_instances(MAIN_SCENE_PATH):
+		updated_assets.append(_manifest_asset(scene_record))
+	var registry: Dictionary = AutoStackGroupRegistryScript.load_registry(AUTO_STACK_GROUP_REGISTRY_PATH)
+	var result: Dictionary = StackRoleAuthoringScript.apply_stack_role_batch_3(existing_manifest, updated_assets, registry)
+	var errors: PackedStringArray = result["errors"] as PackedStringArray
+	if not errors.is_empty():
+		for message: String in errors:
+			push_error(message)
+		return 1
+	var updated_manifest: Dictionary = result["manifest"] as Dictionary
+	var serialized_manifest: String = AuthoringReviewManifestScript.serialize_manifest(updated_manifest)
+	var wrote_manifest: bool = _file_text(MANIFEST_PATH) != serialized_manifest
+	if wrote_manifest and not AuthoringReviewManifestScript.write_manifest(MANIFEST_PATH, updated_manifest):
+		return 1
+	var approved_item_ids: PackedStringArray = result["approved_item_ids"] as PackedStringArray
+	print("STACK_ROLE_BATCH_3_APPLY_COMPLETE approved=%d resources_updated=%d manifest_written=%s item_ids=%s" % [approved_item_ids.size(), updated_resource_count, str(wrote_manifest), ",".join(approved_item_ids)])
 	return 0
 
 

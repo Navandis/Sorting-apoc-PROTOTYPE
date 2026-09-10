@@ -6,7 +6,7 @@ const StoragePlacementControllerScript = preload("res://storage_placement_contro
 const StorageSurfaceScript = preload("res://storage_surface.gd")
 
 const CATALOG_PATH: String = "res://data/items/item_catalog.tres"
-const ORDINARY_ITEM_ID: StringName = &"loot_000012"
+const ORDINARY_ITEM_ID: StringName = &"loot_000011"
 
 var _failed: bool = false
 

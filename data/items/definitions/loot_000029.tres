@@ -9,6 +9,5 @@ item_id = &"loot_000029"
 display_name = "Ball 01"
 storage_category = "Morale"
 storage_footprint = Vector3i(2, 2, 1)
-can_be_stacked = false
-can_support_stack = false
+can_be_stacked = true
 visual_scene = ExtResource("2_3br23")

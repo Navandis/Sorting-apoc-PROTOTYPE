@@ -7,3 +7,15 @@ small object could geometrically fit on it.
 
 This is an authoring-review principle. It does not add minimum-support-size
 runtime logic.
+
+`can_be_stacked` does not require a geometrically flat base. An item may be
+stackable when its approved stored pose has a visually credible, deterministic
+resting relationship on a sufficiently large flat support; the Watermelon and
+Ball are reference cases. This is an authored credibility judgment, not a
+geometry inference rule.
+
+Form integrity also matters. A loose, deformable, or assembled pile is not a
+rigid stack member merely because its import has one mesh or root. If credible
+support requires its contents to shift, collapse, roll apart, or substantially
+deform, use a conservative role. The Firewood Pile is the reference case:
+`false / false`. These principles do not add runtime physics or geometry logic.
