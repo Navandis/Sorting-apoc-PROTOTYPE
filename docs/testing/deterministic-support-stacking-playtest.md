@@ -40,7 +40,7 @@ Run the Pistol and Bread cases separately so each begins with an uncapped MedKit
 
 ## C. PC Tower support and compact-shelf headroom
 
-Use level 1 of `SM_MetalShelves2`, the narrow metal shelf whose world Y scale is `0.67`. Its authored clearance is approximately `0.55074 m`, and the 95% permitted top is approximately `0.52320 m`.
+Use level 1 of `SM_MetalShelves2`, the narrow metal shelf whose world Y scale is `0.67`. Its adjacent-plane-derived clearance is approximately `0.55077 m`, and the 95% permitted top is approximately `0.52323 m`.
 
 1. In manual mode, rotate `SM_ComputerTower_01` to its `3x5` packing orientation and place it on the compact shelf.
 2. Aim at the Tower, preview `SM_Book_01`, and place it.
@@ -90,6 +90,25 @@ The headless observational regression is:
 ```powershell
 & 'D:\AI Tools\Godot-4.7-Codex\Godot_v4.7-stable_win64_console.exe' --headless --path 'D:\Godot Projects\Sorting-apoc-PROTOTYPE' --script 'res://tools/asset_pipeline/tests/storage_unstacked_equivalence_tests.gd'
 ```
+
+## H. Automatic base promotion
+
+1. Begin with a `SM_CDStack_01` as the base of an otherwise auto-coherent flat-media stack.
+2. In automatic mode, place the larger `SM_Book_01` on the same zoned surface.
+3. Confirm the Book becomes the new base, the former CD base moves to entry one, and all prior members retain their relative order and packing yaw.
+4. Confirm the highlighted reservation expands to the Book footprint, still contains the old CD reservation, and is owned by the Book ID.
+5. Repeat near a shelf edge. Confirm the stack shifts only enough to keep the expanded reservation inside the surface.
+6. Place another reservation or erase/category-mismatch one of the only expansion cells and repeat. Confirm promotion is rejected without moving the existing stack or changing the carried selection.
+7. Construct a case where another coherent stack accepts the incoming item normally above its base. Confirm normal insertion is chosen before base promotion.
+8. Switch to manual mode and target a smaller current base with the larger item. Confirm the preview remains invalid rather than moving the existing stack beneath the carried item.
+
+## I. Authored clearance contexts
+
+1. Inspect the top level of each placed metal shelf and ventilated locker. Confirm each instance has an explicit `StorageShelfClearanceContext` value rather than relying on its family fallback.
+2. Compare `SM_MetalShelves` (`0.919 m`) with `SM_MetalShelves2` (`0.615730 m`) and the two lockers (`0.519 m` and `0.339945 m`). Confirm each open top stops stacking at its own placed-world cap.
+3. Resize only X or Z on a disposable shelf instance and confirm its closed-level vertical clearance does not change.
+4. Resize Y and confirm closed-level clearance follows the scaled adjacent shelf spacing while the explicit open-top world-metre cap is not multiplied.
+5. Confirm successful and rejected can, media, and Tower fixtures retain the same practical meaning as before this refactor.
 
 ## Developer success questions
 

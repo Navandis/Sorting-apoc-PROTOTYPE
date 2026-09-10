@@ -35,6 +35,10 @@ func _run() -> void:
 	_test_top_middle_base_and_final_removal()
 	_test_base_promotion_rekeys_every_owner()
 	_test_failed_base_promotion_is_atomic()
+	_test_stray_lookup_rejects_auto_promotion_atomically()
+	_test_auto_base_promotion_expands_and_rekeys()
+	_test_auto_base_promotion_origin_policy()
+	_test_auto_base_promotion_blockers_and_precedence()
 	_test_manual_stack_orientation_resolution()
 	_test_erased_cells_reject_auto_and_manual_stacking()
 	if _failed:
@@ -118,7 +122,7 @@ func _test_stable_stack_scan_and_fallback() -> void:
 	_check(fit.get("stack_id", "") == "later", "invalid first stack falls through to next compatible stack")
 	var empty_fallback: StorageSurface = _surface(Vector2i(4, 2))
 	empty_fallback.set_zone_rect(StorageCategoriesScript.GENERAL, Vector2i.ZERO, Vector2i(3, 1))
-	_commit_base(empty_fallback, _entry("too_small", Vector2i.ONE, 0.10, true, true, &"shape"), Vector2i.ZERO)
+	_commit_base(empty_fallback, _entry("too_small", Vector2i.ONE, 0.10, false, true, &"shape"), Vector2i.ZERO)
 	fit = empty_fallback.find_zone_stack_or_empty_fit("", incoming)
 	_check(fit.get("placement_kind", "") == "empty", "invalid insertion falls back to empty placement in same tier")
 
@@ -263,6 +267,133 @@ func _test_failed_base_promotion_is_atomic() -> void:
 	_check(owner_surface.get_stack_id_for_item("owner_promoted") == "owner_base", "owner validation failure preserves survivor lookup")
 	_check((owner_surface.get("_cells") as Array[String]).has("owner_base"), "owner validation failure preserves cell ownership")
 	owner_surface.free()
+
+
+func _test_stray_lookup_rejects_auto_promotion_atomically() -> void:
+	var surface: StorageSurface = _surface(Vector2i(6, 6))
+	surface.set_zone_rect(StorageCategoriesScript.GENERAL, Vector2i.ZERO, Vector2i(5, 5))
+	var base = _entry("lookup_base", Vector2i(2, 2), 0.10, true, true, &"shape")
+	_commit_base(surface, base, Vector2i(2, 2))
+	var incoming = _entry("lookup_incoming", Vector2i(4, 4), 0.10, false, true, &"shape")
+	var fit: Dictionary = surface.find_zone_stack_or_empty_fit("", incoming)
+	_check(fit.get("placement_kind", "") == "base_promotion", "lookup fixture produces a promotion fit")
+	var lookups: Dictionary = surface.get("_item_to_stack") as Dictionary
+	lookups["stray_member"] = "lookup_base"
+	var cells_before: Array[String] = (surface.get("_cells") as Array[String]).duplicate()
+	var reservation_before: Dictionary = surface.get_reservation("lookup_base").duplicate(true)
+
+	_check(not surface.commit_stack_entry(incoming, fit), "stray old-stack lookup rejects promotion before mutation")
+	var stack: StorageStack = surface.get_storage_stack("lookup_base")
+	_check(stack != null and _entry_keys(stack) == ["lookup_base"], "lookup validation failure preserves entry order")
+	_check(surface.get_storage_stack("lookup_incoming") == null, "lookup validation failure does not rekey stack registry")
+	_check(surface.get_reservation("lookup_base") == reservation_before, "lookup validation failure preserves reservation")
+	_check((surface.get("_cells") as Array[String]) == cells_before, "lookup validation failure preserves every cell owner")
+	_check(surface.get_stack_id_for_item("stray_member") == "lookup_base", "lookup validation failure preserves corrupt evidence")
+	surface.free()
+
+
+func _test_auto_base_promotion_expands_and_rekeys() -> void:
+	var surface: StorageSurface = _surface(Vector2i(8, 8))
+	surface.set_zone_rect(StorageCategoriesScript.GENERAL, Vector2i.ZERO, Vector2i(7, 7))
+	var old_base = _entry("old_base", Vector2i(2, 2), 0.20, true, true, &"shape")
+	var old_top = _entry("old_top", Vector2i.ONE, 0.10, true, true, &"shape")
+	old_top.packing_rotated = true
+	_commit_base(surface, old_base, Vector2i(3, 3))
+	old_top.host = Node3D.new()
+	surface.add_child(old_top.host)
+	_check(surface.commit_stack_entry(old_top, surface.find_manual_stack_fit("old_base", old_top)), "promotion fixture top commits")
+	var old_base_world: WorldItem = _attach_stored_world_item(surface, old_base, "old_base")
+	var old_top_world: WorldItem = _attach_stored_world_item(surface, old_top, "old_base")
+	var incoming = _entry("incoming_base", Vector2i(4, 4), 0.30, false, true, &"shape")
+	incoming.host = Node3D.new()
+	surface.add_child(incoming.host)
+	var incoming_world: WorldItem = _attach_stored_world_item(surface, incoming, "old_base")
+	var fit: Dictionary = surface.find_zone_stack_or_empty_fit(StorageCategoriesScript.FOOD, incoming)
+	_check(fit.get("placement_kind", "") == "base_promotion", "larger incoming item selects automatic base promotion")
+	_check(fit.get("origin", Vector2i.ZERO) == Vector2i(2, 2), "promotion centers expanded reservation around old reservation")
+	_check(fit.get("base_footprint", Vector2i.ZERO) == Vector2i(4, 4), "promotion fit exposes expanded base footprint")
+	_check(surface.commit_stack_entry(incoming, fit), "automatic base promotion commits")
+	var stack: StorageStack = surface.get_storage_stack("incoming_base")
+	_check(stack != null, "incoming ID becomes stack registry key")
+	_check(stack != null and _entry_keys(stack) == ["incoming_base", "old_base", "old_top"], "incoming becomes base and old order is preserved")
+	_check(stack != null and stack.entries[2].packing_rotated, "existing packing rotation survives promotion")
+	_check(surface.get_storage_stack("old_base") == null, "old base ID no longer owns stack")
+	_check(not bool(surface.get_reservation("old_base").get("valid", false)), "old base ID no longer owns reservation")
+	var reservation: Dictionary = surface.get_reservation("incoming_base")
+	_check(reservation.get("origin", Vector2i.ZERO) == Vector2i(2, 2), "incoming owns expanded origin")
+	_check(reservation.get("footprint", Vector2i.ZERO) == Vector2i(4, 4), "incoming owns expanded footprint")
+	_check(not (surface.get("_cells") as Array[String]).has("old_base"), "old base ID is absent from occupied cells")
+	_check((surface.get("_cells") as Array[String]).count("incoming_base") == 16, "incoming ID owns every expanded cell")
+	for key: String in ["incoming_base", "old_base", "old_top"]:
+		_check(surface.get_stack_id_for_item(key) == "incoming_base", "%s maps to incoming authoritative ID" % key)
+	_check(old_base_world.get_storage_stack_id() == "incoming_base", "old base WorldItem is rebound")
+	_check(old_top_world.get_storage_stack_id() == "incoming_base", "old top WorldItem is rebound")
+	_check(incoming_world.get_storage_stack_id() == "incoming_base", "incoming WorldItem is authoritative")
+	surface.free()
+
+
+func _test_auto_base_promotion_origin_policy() -> void:
+	var tie_surface: StorageSurface = _surface(Vector2i(8, 8))
+	tie_surface.set_zone_rect(StorageCategoriesScript.GENERAL, Vector2i.ZERO, Vector2i(7, 7))
+	var tie_base = _entry("tie_base", Vector2i(2, 2), 0.10, true, true, &"shape")
+	_commit_base(tie_surface, tie_base, Vector2i(3, 3))
+	var tie_incoming = _entry("tie_incoming", Vector2i(3, 3), 0.10, false, true, &"shape")
+	var tie_fit: Dictionary = tie_surface.find_zone_stack_or_empty_fit("", tie_incoming)
+	_check(tie_fit.get("placement_kind", "") == "base_promotion", "odd expansion produces a promotion fit")
+	_check(tie_fit.get("origin", Vector2i.ZERO) == Vector2i(2, 2), "equal center offsets use lower row then column")
+	tie_surface.free()
+
+	var edge_surface: StorageSurface = _surface(Vector2i(8, 8))
+	edge_surface.set_zone_rect(StorageCategoriesScript.GENERAL, Vector2i.ZERO, Vector2i(7, 7))
+	var edge_base = _entry("edge_base", Vector2i(2, 2), 0.10, true, true, &"shape")
+	_commit_base(edge_surface, edge_base, Vector2i(6, 6))
+	var edge_incoming = _entry("edge_incoming", Vector2i(4, 4), 0.10, false, true, &"shape")
+	var edge_fit: Dictionary = edge_surface.find_zone_stack_or_empty_fit("", edge_incoming)
+	_check(edge_fit.get("placement_kind", "") == "base_promotion", "edge expansion finds an offset origin")
+	_check(edge_fit.get("origin", Vector2i.ZERO) == Vector2i(4, 4), "edge expansion stays inside surface while containing old rectangle")
+	edge_surface.free()
+
+
+func _test_auto_base_promotion_blockers_and_precedence() -> void:
+	var precedence: StorageSurface = _surface(Vector2i(7, 3))
+	precedence.set_zone_rect(StorageCategoriesScript.GENERAL, Vector2i.ZERO, Vector2i(6, 2))
+	var promotable = _entry("promotable", Vector2i.ONE, 0.10, true, true, &"shape")
+	var normal = _entry("normal", Vector2i(2, 2), 0.10, true, true, &"shape")
+	_commit_base(precedence, promotable, Vector2i.ZERO)
+	_commit_base(precedence, normal, Vector2i(4, 0))
+	var incoming = _entry("precedence_incoming", Vector2i(2, 2), 0.10, false, true, &"shape")
+	incoming.can_be_stacked = true
+	var precedence_fit: Dictionary = precedence.find_zone_stack_or_empty_fit("", incoming)
+	_check(precedence_fit.get("placement_kind", "") == "stack", "ordinary insertion is preferred over base promotion")
+	_check(precedence_fit.get("stack_id", "") == "normal", "later normal stack beats earlier promotion candidate")
+	precedence.free()
+
+	var occupied: StorageSurface = _surface(Vector2i(5, 5))
+	occupied.set_zone_rect(StorageCategoriesScript.GENERAL, Vector2i.ZERO, Vector2i(4, 4))
+	var occupied_base = _entry("occupied_base", Vector2i(2, 2), 0.10, true, true, &"shape")
+	_commit_base(occupied, occupied_base, Vector2i(2, 2))
+	_commit_base(occupied, _entry("blocker", Vector2i.ONE, 0.10, false, false, &""), Vector2i.ZERO)
+	var occupied_fit: Dictionary = occupied.find_zone_stack_or_empty_fit("", _entry("occupied_incoming", Vector2i(5, 5), 0.10, false, true, &"shape"))
+	_check(not bool(occupied_fit.get("valid", true)), "unrelated reservation blocks the only containing expansion")
+	occupied.free()
+
+	var zoned: StorageSurface = _surface(Vector2i(4, 4))
+	zoned.set_zone_rect(StorageCategoriesScript.FOOD, Vector2i(1, 1), Vector2i(2, 2))
+	zoned.set_zone_rect(StorageCategoriesScript.GENERAL, Vector2i.ZERO, Vector2i(0, 0))
+	var zoned_base = _entry("zoned_base", Vector2i(2, 2), 0.10, true, true, &"shape")
+	_commit_base(zoned, zoned_base, Vector2i(1, 1))
+	var zoned_fit: Dictionary = zoned.find_zone_stack_or_empty_fit(StorageCategoriesScript.FOOD, _entry("zoned_incoming", Vector2i(4, 4), 0.10, false, true, &"shape"))
+	_check(not bool(zoned_fit.get("valid", true)), "wrong specific and erased cells block expanded reservation")
+	zoned.free()
+
+	var clearance: StorageSurface = _surface(Vector2i(5, 5))
+	clearance.stack_clearance_m = 0.30
+	clearance.set_zone_rect(StorageCategoriesScript.GENERAL, Vector2i.ZERO, Vector2i(4, 4))
+	var clearance_base = _entry("clearance_base", Vector2i(2, 2), 0.20, true, true, &"shape")
+	_commit_base(clearance, clearance_base, Vector2i(1, 1))
+	var clearance_fit: Dictionary = clearance.find_zone_stack_or_empty_fit("", _entry("clearance_incoming", Vector2i(4, 4), 0.20, false, true, &"shape"))
+	_check(clearance_fit.get("placement_kind", "") != "base_promotion", "clearance failure rejects promotion and continues ordinary placement search")
+	clearance.free()
 
 
 func _test_manual_stack_orientation_resolution() -> void:

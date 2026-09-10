@@ -108,6 +108,32 @@ func find_auto_insertion(
 	return best
 
 
+func find_auto_base_promotion(
+	orientation_entries: Array,
+	maximum_top_y_m: float,
+	base_host_y_m: float
+) -> Dictionary:
+	if not is_auto_coherent() or not _existing_chain_is_valid():
+		return _invalid_result(null, 0)
+
+	var coherent_group: StringName = entries[0].auto_stack_group
+	for value: Variant in orientation_entries:
+		if not (value is Entry):
+			continue
+		var entry: Entry = value as Entry
+		if entry.auto_stack_group.is_empty() or entry.auto_stack_group != coherent_group:
+			continue
+		var fit: Dictionary = _evaluate_base_promotion(
+			entry,
+			maximum_top_y_m,
+			base_host_y_m
+		)
+		fit["group_ok"] = true
+		if bool(fit.get("valid", false)):
+			return fit
+	return _invalid_result(null, 0)
+
+
 func is_auto_coherent() -> bool:
 	if entries.is_empty():
 		return false
@@ -192,6 +218,21 @@ func get_entry_index(item_key: String) -> int:
 	return -1
 
 
+func _existing_chain_is_valid() -> bool:
+	if entries.is_empty():
+		return false
+	for index: int in range(1, entries.size()):
+		var below: Entry = entries[index - 1]
+		var above: Entry = entries[index]
+		if (
+			not above.can_be_stacked
+			or not below.can_support_stack
+			or not footprint_fits(above.footprint, below.footprint)
+		):
+			return false
+	return true
+
+
 static func centered_shrink_origin(
 	old_origin: Vector2i,
 	old_size: Vector2i,
@@ -258,6 +299,46 @@ func _evaluate_insertion(
 		"clearance_ok": clearance_ok,
 		"resulting_top_y_m": resulting_top_y_m,
 		"host_y_m": insertion_host_y(entry, insertion_index, base_host_y_m)
+	}
+
+
+func _evaluate_base_promotion(
+	entry: Entry,
+	maximum_top_y_m: float,
+	base_host_y_m: float
+) -> Dictionary:
+	if entry == null or entries.is_empty():
+		return _invalid_result(entry, 0)
+
+	var old_base: Entry = entries[0]
+	var below_supports: bool = entry.can_support_stack
+	var above_stackable: bool = old_base.can_be_stacked
+	var footprint_ok: bool = footprint_fits(old_base.footprint, entry.footprint)
+	var total_height_m: float = entry.posed_height_m
+	for existing: Entry in entries:
+		total_height_m += existing.posed_height_m
+	var resulting_top_y_m: float = (
+		base_host_y_m
+		+ entry.aligned_bounds.position.y
+		+ total_height_m
+		+ float(entries.size()) * STACK_CONTACT_GAP_M
+	)
+	var clearance_ok: bool = resulting_top_y_m <= maximum_top_y_m + HEIGHT_EPSILON_M
+	var valid: bool = below_supports and above_stackable and footprint_ok and clearance_ok
+	return {
+		"valid": valid,
+		"entry": entry,
+		"insertion_index": 0,
+		"rotated": entry.packing_rotated,
+		"stackable_ok": above_stackable,
+		"below_supports": below_supports,
+		"footprint_ok": footprint_ok,
+		"above_support_ok": true,
+		"above_footprint_ok": footprint_ok,
+		"clearance_ok": clearance_ok,
+		"group_ok": true,
+		"resulting_top_y_m": resulting_top_y_m,
+		"host_y_m": base_host_y_m
 	}
 
 

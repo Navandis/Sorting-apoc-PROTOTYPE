@@ -16,6 +16,8 @@ func _run() -> void:
 	_test_auto_coherence()
 	_test_smart_insertion_cone()
 	_test_highest_position_beats_orientation_preference()
+	_test_auto_base_promotion_rules()
+	_test_auto_base_promotion_orientation_and_clearance()
 	_test_deterministic_parity_bias()
 	if _failed:
 		quit(1)
@@ -103,6 +105,56 @@ func _test_highest_position_beats_orientation_preference() -> void:
 	var equivalent_rotated = _entry("equal", Vector2i(2, 2), 0.10, true, true, &"shape", true)
 	var tie: Dictionary = stack.find_auto_insertion([equivalent_native, equivalent_rotated], 1.0, 0.0)
 	_check(not bool(tie.get("rotated", true)), "native orientation wins equivalent position tie")
+
+
+func _test_auto_base_promotion_rules() -> void:
+	var base = _entry("old_base", Vector2i(2, 2), 0.20, true, true, &"shape")
+	var stack = _stack_with_base(base)
+	var old_top = _entry("old_top", Vector2i.ONE, 0.10, true, true, &"shape", true)
+	stack.entries.append(old_top)
+	var incoming = _entry("incoming", Vector2i(4, 4), 0.30, false, true, &"shape")
+	var fit: Dictionary = stack.find_auto_base_promotion([incoming], 1.0, 0.0)
+	_check(bool(fit.get("valid", false)), "larger supporting incoming item can become the automatic base")
+	_check(int(fit.get("insertion_index", -1)) == 0, "automatic base promotion reports index zero")
+	_check(fit.get("entry") == incoming, "automatic base promotion returns the selected incoming entry")
+	var old_keys: Array[String] = _keys(stack)
+	var old_rotations: Array[bool] = _rotations(stack)
+	stack.entries.insert(int(fit.get("insertion_index", -1)), incoming)
+	_check(_keys(stack) == ["incoming", "old_base", "old_top"], "incoming becomes entry zero and old base becomes entry one")
+	_check(_keys(stack).slice(1) == old_keys, "base promotion preserves existing member order")
+	_check(_rotations(stack).slice(1) == old_rotations, "base promotion preserves existing member packing rotation")
+
+	var non_stackable_base = _stack_with_base(_entry("not_stackable", Vector2i(2, 2), 0.20, false, true, &"shape"))
+	_check(not bool(non_stackable_base.find_auto_base_promotion([incoming], 1.0, 0.0).get("valid", true)), "existing base must be stackable during promotion")
+	var cannot_support = _entry("cannot_support", Vector2i(4, 4), 0.30, true, false, &"shape")
+	_check(not bool(_stack_with_base(base).find_auto_base_promotion([cannot_support], 1.0, 0.0).get("valid", true)), "incoming base must support the existing base")
+	var wrong_group = _entry("wrong_group", Vector2i(4, 4), 0.30, true, true, &"other")
+	_check(not bool(_stack_with_base(base).find_auto_base_promotion([wrong_group], 1.0, 0.0).get("valid", true)), "incoming group must match coherent stack group")
+	var mixed = _stack_with_base(base)
+	mixed.entries.append(_entry("mixed", Vector2i.ONE, 0.10, true, true, &"other"))
+	_check(not bool(mixed.find_auto_base_promotion([incoming], 1.0, 0.0).get("valid", true)), "mixed stack cannot promote automatically")
+
+
+func _test_auto_base_promotion_orientation_and_clearance() -> void:
+	var base = _entry("base", Vector2i(2, 2), 0.20, true, true, &"shape")
+	var stack = _stack_with_base(base)
+	var native = _entry("incoming", Vector2i(3, 4), 0.30, false, true, &"shape", false)
+	var rotated = _entry("incoming", Vector2i(4, 3), 0.30, false, true, &"shape", true)
+	var native_tie: Dictionary = stack.find_auto_base_promotion([native, rotated], 1.0, 0.0)
+	_check(bool(native_tie.get("valid", false)), "base promotion finds a valid incoming orientation")
+	_check(not bool(native_tie.get("rotated", true)), "native orientation wins when both base orientations are valid")
+
+	var asymmetric = _stack_with_base(_entry("wide_base", Vector2i(3, 2), 0.20, true, true, &"shape"))
+	var native_invalid = _entry("turned", Vector2i(2, 4), 0.30, false, true, &"shape", false)
+	var rotated_valid = _entry("turned", Vector2i(4, 2), 0.30, false, true, &"shape", true)
+	var turned_fit: Dictionary = asymmetric.find_auto_base_promotion([native_invalid, rotated_valid], 1.0, 0.0)
+	_check(bool(turned_fit.get("valid", false)), "allowed 90-degree orientation can promote when native cannot")
+	_check(bool(turned_fit.get("rotated", false)), "base promotion reports effective rotated orientation")
+
+	var too_tall = _entry("too_tall", Vector2i(4, 4), 0.80, false, true, &"shape")
+	var clearance_fit: Dictionary = stack.find_auto_base_promotion([too_tall], 0.95, 0.0)
+	_check(not bool(clearance_fit.get("valid", true)), "base promotion rejects a stack above clearance")
+	_check(not bool(clearance_fit.get("clearance_ok", true)), "base promotion reports clearance rejection")
 
 
 func _test_deterministic_parity_bias() -> void:

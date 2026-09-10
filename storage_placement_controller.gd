@@ -288,6 +288,9 @@ func place_selected() -> bool:
 	var selected_item: Variant = _carried_items.get_selected_item()
 	if selected_item == null:
 		return false
+	var original_selected_index: int = -1
+	if _carried_items.has_method("get_selected_index"):
+		original_selected_index = int(_carried_items.get_selected_index())
 
 	var removed_item: Variant = _carried_items.remove_selected()
 	if removed_item == null:
@@ -309,7 +312,15 @@ func place_selected() -> bool:
 		_current_fit
 	)
 	if not spawned:
-		_carried_items.add_item(removed_item)
+		var restored: bool = false
+		if _carried_items.has_method("restore_removed_item"):
+			restored = bool(_carried_items.restore_removed_item(
+				removed_item,
+				original_selected_index,
+				original_selected_index
+			))
+		if not restored:
+			_carried_items.add_item(removed_item)
 		update_target()
 		return false
 

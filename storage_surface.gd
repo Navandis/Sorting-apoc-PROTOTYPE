@@ -29,7 +29,12 @@ const STORAGE_INTERACTION_LAYER: int = 1 << 8
 const MIN_CELL_SIZE_M: float = 0.025
 const INTERACTION_THICKNESS_M: float = 0.06
 const DEBUG_Y_OFFSET_M: float = 0.012
-const MAX_USED_STACK_FRACTION: float = 0.95
+const MAX_STACK_USED_FRACTION: float = 0.95
+
+enum BaseTransitionKind {
+	REMOVE_BASE,
+	INSERT_NEW_BASE,
+}
 
 var surface_id: StringName = &"storage_surface"
 var custom_display_name: String = ""
@@ -56,7 +61,7 @@ func configure(
 	requested_width_m: float,
 	requested_depth_m: float,
 	requested_cell_size_m: float = 0.10,
-	requested_stack_clearance_m: float = INF
+	requested_stack_clearance_world_m: float = INF
 ) -> void:
 	surface_id = new_surface_id
 
@@ -71,7 +76,6 @@ func configure(
 		parent_scale = (parent_node as Node3D).global_transform.basis.get_scale()
 
 	var scale_x: float = maxf(absf(parent_scale.x), 0.0001)
-	var scale_y: float = maxf(absf(parent_scale.y), 0.0001)
 	var scale_z: float = maxf(absf(parent_scale.z), 0.0001)
 	var horizontal_scale: float = (scale_x + scale_z) * 0.5
 
@@ -97,8 +101,8 @@ func configure(
 	cell_size_m = maxf(world_cell_size_m, MIN_CELL_SIZE_M)
 	stack_clearance_m = (
 		INF
-		if requested_stack_clearance_m == INF
-		else maxf(requested_stack_clearance_m, 0.0) * scale_y
+		if requested_stack_clearance_world_m == INF
+		else maxf(requested_stack_clearance_world_m, 0.0)
 	)
 
 	var column_count: int = maxi(1, int(floor(world_width_m / cell_size_m)))
@@ -158,7 +162,7 @@ func get_stack_id_for_item(item_key: String) -> String:
 
 
 func get_maximum_stack_top_y_m() -> float:
-	return stack_clearance_m * MAX_USED_STACK_FRACTION
+	return stack_clearance_m * MAX_STACK_USED_FRACTION
 
 
 func get_occupancy_ratio() -> float:
@@ -405,6 +409,9 @@ func commit_stack_entry(entry: StorageStack.Entry, fit: Dictionary) -> bool:
 		_position_stack_entries(stack)
 		return true
 
+	if placement_kind == "base_promotion":
+		return _commit_auto_base_promotion(entry, fit)
+
 	if placement_kind != "stack":
 		return false
 	var existing_stack_id: String = String(fit.get("stack_id", ""))
@@ -436,27 +443,31 @@ func remove_stack_entry(stack_id: String, item_key: String) -> bool:
 			stack.base_footprint,
 			promoted.footprint
 		)
-		if not _can_rekey_promoted_base(
+		var surviving_entries: Array[StorageStack.Entry] = []
+		for index: int in range(1, stack.entries.size()):
+			surviving_entries.append(stack.entries[index])
+		if not _can_transition_stack_base(
 			stack,
 			stack_id,
-			item_key,
 			promoted.item_key,
+			surviving_entries,
 			new_origin,
-			promoted.footprint
+			promoted.footprint,
+			promoted.packing_rotated,
+			BaseTransitionKind.REMOVE_BASE,
+			""
 		):
 			return false
 
-		stack.entries.remove_at(0)
-		_commit_promoted_base_rekey(
+		_commit_stack_base_transition(
 			stack,
 			stack_id,
-			item_key,
 			promoted.item_key,
+			surviving_entries,
 			new_origin,
 			promoted.footprint,
 			promoted.packing_rotated
 		)
-		_position_stack_entries(stack)
 		return true
 
 	stack.entries.remove_at(removal_index)
@@ -525,7 +536,137 @@ func _find_auto_stack_fit_in_zone(
 			_zone_kind(requested_category, zone_category),
 			zone_category
 		)
+
+	# Base promotion is intentionally a second pass across all stacks. A normal
+	# insertion in a later stack is less disruptive than promoting an earlier
+	# stack's base.
+	for stack: StorageStack in candidates:
+		var promotion_fit: Dictionary = _find_auto_base_promotion_fit(
+			stack,
+			zone_category,
+			requested_category,
+			orientations
+		)
+		if bool(promotion_fit.get("valid", false)):
+			return promotion_fit
 	return _invalid_stack_placement()
+
+
+func _find_auto_base_promotion_fit(
+	stack: StorageStack,
+	zone_category: String,
+	requested_category: String,
+	orientations: Array[StorageStack.Entry]
+) -> Dictionary:
+	var base_host_y_m: float = get_local_placement_position(
+		stack.surface_origin,
+		stack.base_footprint
+	).y
+	for entry: StorageStack.Entry in orientations:
+		if (
+			entry == null
+			or entry.item_key.is_empty()
+			or _item_to_stack.has(entry.item_key)
+			or _stacks.has(entry.item_key)
+			or _reservations.has(entry.item_key)
+		):
+			continue
+		var physical_fit: Dictionary = stack.find_auto_base_promotion(
+			[entry],
+			get_maximum_stack_top_y_m(),
+			base_host_y_m
+		)
+		if not bool(physical_fit.get("valid", false)):
+			continue
+		var origin_fit: Dictionary = _find_best_expanded_origin(
+			stack.stack_id,
+			stack.surface_origin,
+			stack.base_footprint,
+			entry.footprint,
+			zone_category
+		)
+		if not bool(origin_fit.get("valid", false)):
+			continue
+		var result: Dictionary = physical_fit.duplicate(true)
+		result["placement_kind"] = "base_promotion"
+		result["stack_id"] = stack.stack_id
+		result["result_stack_id"] = entry.item_key
+		result["origin"] = origin_fit.get("origin", Vector2i.ZERO)
+		result["footprint"] = entry.footprint
+		result["base_footprint"] = entry.footprint
+		result["rotated"] = entry.packing_rotated
+		result["zone_kind"] = _zone_kind(requested_category, zone_category)
+		result["zone_category"] = zone_category
+		result["host_y_m"] = base_host_y_m
+		return result
+	return _invalid_stack_placement()
+
+
+func _find_best_expanded_origin(
+	old_stack_id: String,
+	old_origin: Vector2i,
+	old_footprint: Vector2i,
+	new_footprint: Vector2i,
+	zone_category: String
+) -> Dictionary:
+	var old_size: Vector2i = _normalize_footprint(old_footprint)
+	var new_size: Vector2i = _normalize_footprint(new_footprint)
+	if new_size.x < old_size.x or new_size.y < old_size.y:
+		return {"valid": false}
+	var min_column: int = maxi(0, old_origin.x + old_size.x - new_size.x)
+	var max_column: int = mini(old_origin.x, grid_size.x - new_size.x)
+	var min_row: int = maxi(0, old_origin.y + old_size.y - new_size.y)
+	var max_row: int = mini(old_origin.y, grid_size.y - new_size.y)
+	if min_column > max_column or min_row > max_row:
+		return {"valid": false}
+
+	var found: bool = false
+	var best_origin: Vector2i = Vector2i.ZERO
+	var best_distance: int = 0
+	var old_center_x2: int = old_origin.x * 2 + old_size.x
+	var old_center_y2: int = old_origin.y * 2 + old_size.y
+	for row: int in range(min_row, max_row + 1):
+		for column: int in range(min_column, max_column + 1):
+			var origin: Vector2i = Vector2i(column, row)
+			if not _expanded_origin_is_valid(
+				old_stack_id,
+				origin,
+				new_size,
+				zone_category
+			):
+				continue
+			var delta_x2: int = column * 2 + new_size.x - old_center_x2
+			var delta_y2: int = row * 2 + new_size.y - old_center_y2
+			var distance: int = delta_x2 * delta_x2 + delta_y2 * delta_y2
+			if not found or distance < best_distance:
+				found = true
+				best_origin = origin
+				best_distance = distance
+	return {
+		"valid": found,
+		"origin": best_origin if found else Vector2i(-1, -1),
+	}
+
+
+func _expanded_origin_is_valid(
+	old_stack_id: String,
+	origin: Vector2i,
+	footprint: Vector2i,
+	zone_category: String
+) -> bool:
+	if origin.x < 0 or origin.y < 0:
+		return false
+	if origin.x + footprint.x > grid_size.x or origin.y + footprint.y > grid_size.y:
+		return false
+	for row: int in range(origin.y, origin.y + footprint.y):
+		for column: int in range(origin.x, origin.x + footprint.x):
+			var cell: Vector2i = Vector2i(column, row)
+			var owner: String = _cells[_cell_index(cell)]
+			if not owner.is_empty() and owner != old_stack_id:
+				return false
+			if get_zone_category(cell) != zone_category:
+				return false
+	return true
 
 
 func _decorate_stack_fit(
@@ -608,25 +749,96 @@ func _position_stack_entries(stack: StorageStack) -> void:
 		)
 
 
-func _can_rekey_promoted_base(
+func _commit_auto_base_promotion(
+	entry: StorageStack.Entry,
+	fit: Dictionary
+) -> bool:
+	var old_stack_id: String = String(fit.get("stack_id", ""))
+	var stack: StorageStack = get_storage_stack(old_stack_id)
+	if stack == null or String(fit.get("result_stack_id", "")) != entry.item_key:
+		return false
+	if (
+		fit.get("footprint", Vector2i.ZERO) != entry.footprint
+		or bool(fit.get("rotated", not entry.packing_rotated)) != entry.packing_rotated
+	):
+		return false
+	var base_host_y_m: float = get_local_placement_position(
+		stack.surface_origin,
+		stack.base_footprint
+	).y
+	var physical_fit: Dictionary = stack.find_auto_base_promotion(
+		[entry],
+		get_maximum_stack_top_y_m(),
+		base_host_y_m
+	)
+	if not bool(physical_fit.get("valid", false)):
+		return false
+	var zone_category: String = String(fit.get("zone_category", ""))
+	var current_origin_fit: Dictionary = _find_best_expanded_origin(
+		old_stack_id,
+		stack.surface_origin,
+		stack.base_footprint,
+		entry.footprint,
+		zone_category
+	)
+	var new_origin: Vector2i = fit.get("origin", Vector2i(-1, -1)) as Vector2i
+	if (
+		not bool(current_origin_fit.get("valid", false))
+		or current_origin_fit.get("origin", Vector2i(-1, -1)) != new_origin
+	):
+		return false
+	var new_entries: Array[StorageStack.Entry] = [entry]
+	for existing: StorageStack.Entry in stack.entries:
+		new_entries.append(existing)
+	if not _can_transition_stack_base(
+		stack,
+		old_stack_id,
+		entry.item_key,
+		new_entries,
+		new_origin,
+		entry.footprint,
+		entry.packing_rotated,
+		BaseTransitionKind.INSERT_NEW_BASE,
+		zone_category
+	):
+		return false
+	_commit_stack_base_transition(
+		stack,
+		old_stack_id,
+		entry.item_key,
+		new_entries,
+		new_origin,
+		entry.footprint,
+		entry.packing_rotated
+	)
+	return true
+
+
+func _can_transition_stack_base(
 	stack: StorageStack,
 	old_stack_id: String,
-	removed_item_key: String,
 	new_stack_id: String,
+	new_entries: Array[StorageStack.Entry],
 	new_origin: Vector2i,
-	new_footprint: Vector2i
+	new_footprint: Vector2i,
+	rotated: bool,
+	transition_kind: int,
+	required_zone_category: String
 ) -> bool:
 	if (
 		stack == null
 		or old_stack_id.is_empty()
-		or removed_item_key != old_stack_id
 		or new_stack_id.is_empty()
 		or new_stack_id == old_stack_id
+		or stack.stack_id != old_stack_id
 		or _stacks.get(old_stack_id) != stack
 		or _stacks.has(new_stack_id)
 		or not _reservations.has(old_stack_id)
-		or get_stack_id_for_item(removed_item_key) != old_stack_id
-		or get_stack_id_for_item(new_stack_id) != old_stack_id
+		or _reservations.has(new_stack_id)
+		or new_entries.is_empty()
+		or new_entries[0].item_key != new_stack_id
+		or new_entries[0].footprint != _normalize_footprint(new_footprint)
+		or new_entries[0].packing_rotated != rotated
 	):
 		return false
 	var old_reservation_value: Variant = _reservations[old_stack_id]
@@ -636,12 +848,54 @@ func _can_rekey_promoted_base(
 	if (
 		not bool(old_reservation.get("valid", false))
 		or String(old_reservation.get("item_key", "")) != old_stack_id
-		or _reservations.has(new_stack_id)
+		or old_reservation.get("origin", Vector2i(-1, -1)) != stack.surface_origin
+		or old_reservation.get("footprint", Vector2i.ZERO) != stack.base_footprint
 	):
 		return false
+
+	var current_member_keys: Dictionary = {}
 	for entry: StorageStack.Entry in stack.entries:
-		if entry.item_key.is_empty() or get_stack_id_for_item(entry.item_key) != old_stack_id:
+		if (
+			entry == null
+			or entry.item_key.is_empty()
+			or current_member_keys.has(entry.item_key)
+			or get_stack_id_for_item(entry.item_key) != old_stack_id
+		):
 			return false
+		current_member_keys[entry.item_key] = true
+	for lookup_key: Variant in _item_to_stack.keys():
+		if (
+			String(_item_to_stack.get(lookup_key, "")) == old_stack_id
+			and not current_member_keys.has(String(lookup_key))
+		):
+			return false
+	var seen_keys: Dictionary = {}
+	for entry: StorageStack.Entry in new_entries:
+		if entry == null or entry.item_key.is_empty() or seen_keys.has(entry.item_key):
+			return false
+		seen_keys[entry.item_key] = true
+
+	if transition_kind == BaseTransitionKind.REMOVE_BASE:
+		if (
+			stack.entries.size() < 2
+			or stack.entries[0].item_key != old_stack_id
+			or get_stack_id_for_item(new_stack_id) != old_stack_id
+			or new_entries.size() != stack.entries.size() - 1
+		):
+			return false
+		for index: int in range(new_entries.size()):
+			if new_entries[index] != stack.entries[index + 1]:
+				return false
+	else:
+		if (
+			get_stack_id_for_item(new_stack_id) != ""
+			or new_entries.size() != stack.entries.size() + 1
+		):
+			return false
+		for index: int in range(stack.entries.size()):
+			if new_entries[index + 1] != stack.entries[index]:
+				return false
+
 	var normalized: Vector2i = _normalize_footprint(new_footprint)
 	if (
 		new_origin.x < 0
@@ -650,24 +904,65 @@ func _can_rekey_promoted_base(
 		or new_origin.y + normalized.y > grid_size.y
 	):
 		return false
+	var old_origin: Vector2i = stack.surface_origin
+	var old_size: Vector2i = _normalize_footprint(stack.base_footprint)
+	if transition_kind == BaseTransitionKind.REMOVE_BASE:
+		if not _rect_contains(old_origin, old_size, new_origin, normalized):
+			return false
+	else:
+		if not _rect_contains(new_origin, normalized, old_origin, old_size):
+			return false
+
+	for row: int in range(grid_size.y):
+		for column: int in range(grid_size.x):
+			var cell: Vector2i = Vector2i(column, row)
+			var owner: String = _cells[_cell_index(cell)]
+			var inside_old: bool = (
+				column >= old_origin.x
+				and row >= old_origin.y
+				and column < old_origin.x + old_size.x
+				and row < old_origin.y + old_size.y
+			)
+			if inside_old and owner != old_stack_id:
+				return false
+			if not inside_old and owner == old_stack_id:
+				return false
+
 	for row: int in range(new_origin.y, new_origin.y + normalized.y):
 		for column: int in range(new_origin.x, new_origin.x + normalized.x):
-			var owner: String = _cells[_cell_index(Vector2i(column, row))]
-			if owner != old_stack_id:
+			var cell: Vector2i = Vector2i(column, row)
+			var owner: String = _cells[_cell_index(cell)]
+			if not owner.is_empty() and owner != old_stack_id:
+				return false
+			if not required_zone_category.is_empty() and get_zone_category(cell) != required_zone_category:
 				return false
 	return true
 
 
-func _commit_promoted_base_rekey(
+func _rect_contains(
+	outer_origin: Vector2i,
+	outer_size: Vector2i,
+	inner_origin: Vector2i,
+	inner_size: Vector2i
+) -> bool:
+	return (
+		inner_origin.x >= outer_origin.x
+		and inner_origin.y >= outer_origin.y
+		and inner_origin.x + inner_size.x <= outer_origin.x + outer_size.x
+		and inner_origin.y + inner_size.y <= outer_origin.y + outer_size.y
+	)
+
+
+func _commit_stack_base_transition(
 	stack: StorageStack,
 	old_stack_id: String,
-	removed_item_key: String,
 	new_stack_id: String,
+	new_entries: Array[StorageStack.Entry],
 	new_origin: Vector2i,
 	new_footprint: Vector2i,
 	rotated: bool
 ) -> void:
-	## Every possible rejection is handled by `_can_rekey_promoted_base()`.
+	## Every possible rejection is handled by `_can_transition_stack_base()`.
 	## From here onward the transition contains only infallible in-memory
 	## assignments, so no observer can receive a half-promoted stack.
 	var normalized: Vector2i = _normalize_footprint(new_footprint)
@@ -689,14 +984,19 @@ func _commit_promoted_base_rekey(
 	}
 
 	_stacks.erase(old_stack_id)
+	stack.entries = new_entries
 	stack.stack_id = new_stack_id
 	stack.surface_origin = new_origin
 	stack.base_footprint = normalized
 	_stacks[new_stack_id] = stack
 
-	_item_to_stack.erase(removed_item_key)
+	var lookup_keys: Array = _item_to_stack.keys()
+	for lookup_key: Variant in lookup_keys:
+		if String(_item_to_stack.get(lookup_key, "")) == old_stack_id:
+			_item_to_stack.erase(lookup_key)
 	for entry: StorageStack.Entry in stack.entries:
 		_item_to_stack[entry.item_key] = new_stack_id
+		_adopt_entry_host(entry)
 		if (
 			entry.world_item != null
 			and is_instance_valid(entry.world_item)
@@ -704,6 +1004,7 @@ func _commit_promoted_base_rekey(
 		):
 			entry.world_item.call("rebind_storage_stack", new_stack_id)
 
+	_position_stack_entries(stack)
 	_refresh_debug_occupancy()
 	occupancy_changed.emit()
 

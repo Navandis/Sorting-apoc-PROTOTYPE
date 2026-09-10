@@ -28,9 +28,12 @@ func _run() -> void:
 	probe.free()
 	_definitions = _definitions_by_id()
 	_test_flat_media_and_pose_cache()
+	_test_real_flat_media_base_promotion()
+	_test_failed_base_promotion_restores_exact_carry_state()
+	_test_manual_larger_item_never_promotes_base()
 	_test_general_round_cans_and_visible_middle_retrieval()
 	_test_removed_base_manual_empty_placement_on_same_surface()
-	_test_removed_base_auto_empty_placement_on_same_surface()
+	_test_removed_base_auto_promotes_back_on_same_surface()
 	_test_removed_base_placement_with_multiple_carried_items()
 	_test_contextual_manual_orientation_preserves_preference()
 	_test_manual_terminal_and_ghost_final_parity(&"loot_000039")
@@ -67,6 +70,91 @@ func _test_flat_media_and_pose_cache() -> void:
 	_check(stack.is_auto_coherent(), "Book/CD stack remains auto coherent")
 	_check(surface.get_reservation_count() == 1, "flat-media upper item owns no cells")
 	_check(_targetable(stack.entries[0]) and _targetable(stack.entries[1]), "both flat-media members are individually targetable")
+	_free_context(context)
+
+
+func _test_real_flat_media_base_promotion() -> void:
+	var context: Dictionary = _context(Vector2i(8, 8), 1.0)
+	var surface: StorageSurface = context["surface"] as StorageSurface
+	var controller: StoragePlacementController = context["controller"] as StoragePlacementController
+	var carried: CarriedItems = context["carried"] as CarriedItems
+	surface.set_zone_rect(StorageCategoriesScript.MORALE, Vector2i.ZERO, Vector2i(7, 7))
+	var cd: ItemInstance = _item(&"loot_000031")
+	_check(_place_manual_empty(controller, carried, surface, cd, Vector2i(3, 3)), "CD base placed for real promotion")
+	var book: ItemInstance = _item(&"loot_000030")
+	_check(_place_auto(controller, carried, surface, book), "larger Book automatically promotes beneath CD")
+	var stack: StorageStack = surface.get_storage_stack(book.instance_id)
+	_check(stack != null, "incoming Book ID owns promoted flat-media stack")
+	_check(stack != null and stack.entries.size() == 2, "real promoted stack has two members")
+	_check(stack != null and stack.entries[0].item == book and stack.entries[1].item == cd, "real promoted order is Book then prior CD base")
+	_check(surface.get_storage_stack(cd.instance_id) == null, "prior CD ID is not an ownership key")
+	_check(surface.get_reservation(book.instance_id).get("footprint", Vector2i.ZERO) == Vector2i(3, 2), "real promotion expands reservation to Book footprint")
+	_check(carried.get_item_count() == 0, "successful promotion consumes selected Book")
+	_free_context(context)
+
+
+func _test_failed_base_promotion_restores_exact_carry_state() -> void:
+	var context: Dictionary = _context(Vector2i(8, 8), 1.0)
+	var surface: StorageSurface = context["surface"] as StorageSurface
+	var controller: StoragePlacementController = context["controller"] as StoragePlacementController
+	var carried: CarriedItems = context["carried"] as CarriedItems
+	surface.set_zone_rect(StorageCategoriesScript.MORALE, Vector2i.ZERO, Vector2i(7, 7))
+	var cd: ItemInstance = _item(&"loot_000031")
+	_check(_place_manual_empty(controller, carried, surface, cd, Vector2i(3, 3)), "rollback fixture CD base placed")
+	var filler_left: ItemInstance = _item(&"loot_000022")
+	var filler_middle: ItemInstance = _item(&"loot_000023")
+	var book: ItemInstance = _item(&"loot_000030")
+	_check(carried.add_item(filler_left), "rollback filler left added")
+	_check(carried.add_item(filler_middle), "rollback filler middle added")
+	_check(carried.add_item(book), "rollback incoming Book added")
+	_check(carried.remove_item(filler_left) == filler_left, "rollback fixture creates earlier empty slot")
+	var book_slot: int = carried.get_slots().find(book)
+	carried.select_index(book_slot)
+	var orientations: Array = controller.call("_entry_orientations_for_item", book)
+	var fit: Dictionary = surface.find_zone_stack_or_empty_fit(
+		book.get_storage_category(),
+		orientations[0],
+		orientations[1] if orientations.size() > 1 else null
+	)
+	_check(fit.get("placement_kind", "") == "base_promotion", "rollback fixture initially resolves promotion")
+	var slots_before: Array[RefCounted] = carried.get_slots()
+	var selected_before: int = carried.get_selected_index()
+	var stack_before: StorageStack = surface.get_storage_stack(cd.instance_id)
+	var keys_before: Array[String] = []
+	for entry in stack_before.entries:
+		keys_before.append(entry.item_key)
+	_check(surface.reserve_at("late_blocker", Vector2i(2, 3), Vector2i.ONE), "late blocker invalidates selected expansion")
+	controller.set("_current_surface", surface)
+	controller.set("_current_fit", fit)
+	controller.set("_manual_mode", false)
+	_check(not controller.place_selected(), "stale promotion commit rejects")
+	_check(carried.get_slots() == slots_before, "failed promotion restores exact carried slots")
+	_check(carried.get_selected_index() == selected_before, "failed promotion restores exact selected slot")
+	_check(carried.get_selected_item() == book, "failed promotion keeps incoming item selected")
+	var stack_after: StorageStack = surface.get_storage_stack(cd.instance_id)
+	var keys_after: Array[String] = []
+	for entry in stack_after.entries:
+		keys_after.append(entry.item_key)
+	_check(keys_after == keys_before, "failed promotion preserves original stack order")
+	_check(surface.get_stack_id_for_item(cd.instance_id) == cd.instance_id, "failed promotion preserves original owner")
+	_free_context(context)
+
+
+func _test_manual_larger_item_never_promotes_base() -> void:
+	var context: Dictionary = _context(Vector2i(8, 8), 1.0)
+	var surface: StorageSurface = context["surface"] as StorageSurface
+	var controller: StoragePlacementController = context["controller"] as StoragePlacementController
+	var carried: CarriedItems = context["carried"] as CarriedItems
+	surface.set_zone_rect(StorageCategoriesScript.MORALE, Vector2i.ZERO, Vector2i(7, 7))
+	var cd: ItemInstance = _item(&"loot_000031")
+	_check(_place_manual_empty(controller, carried, surface, cd, Vector2i(3, 3)), "manual non-promotion CD base placed")
+	var book: ItemInstance = _item(&"loot_000030")
+	var preferred = controller.call("_entry_for_item", book, false)
+	var alternate = controller.call("_entry_for_item", book, true)
+	var fit: Dictionary = surface.find_manual_stack_fit(cd.instance_id, preferred, alternate)
+	_check(not bool(fit.get("valid", true)), "manual larger item cannot insert beneath current base")
+	_check(fit.get("placement_kind", "") != "base_promotion", "manual fit never returns promotion kind")
+	_check(surface.get_storage_stack(cd.instance_id).entries[0].item == cd, "manual attempt leaves current base unchanged")
 	_free_context(context)
 
 
@@ -146,7 +234,7 @@ func _test_removed_base_manual_empty_placement_on_same_surface() -> void:
 	_free_context(context)
 
 
-func _test_removed_base_auto_empty_placement_on_same_surface() -> void:
+func _test_removed_base_auto_promotes_back_on_same_surface() -> void:
 	var context: Dictionary = _context(Vector2i(10, 6), 1.0)
 	var surface: StorageSurface = context["surface"] as StorageSurface
 	var controller: StoragePlacementController = context["controller"] as StoragePlacementController
@@ -162,13 +250,15 @@ func _test_removed_base_auto_empty_placement_on_same_surface() -> void:
 		orientations[0],
 		orientations[1] if orientations.size() > 1 else null
 	)
-	_check(fit.get("placement_kind", "") == "empty", "larger removed base remains an empty-placement candidate, not base insertion")
+	_check(fit.get("placement_kind", "") == "base_promotion", "larger removed base intentionally promotes back beneath coherent survivors")
 	controller.set("_current_surface", surface)
 	controller.set("_current_fit", fit)
 	controller.set("_manual_mode", false)
 	_check(controller.place_selected(), "removed base auto-places normally while promoted stack survives")
 	_check(carried.get_item_count() == 0, "auto placement consumes exactly the removed base")
-	_check(surface.get_stack_count() == 2, "auto placement creates an ordinary separate stack without base promotion")
+	_check(surface.get_stack_count() == 1, "auto promotion keeps one stack after same-surface return")
+	var restored_stack: StorageStack = surface.get_storage_stack(base.instance_id)
+	_check(restored_stack != null and restored_stack.entries[0].item == base, "returned original base becomes authoritative again")
 	_free_context(context)
 
 

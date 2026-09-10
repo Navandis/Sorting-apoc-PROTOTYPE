@@ -11,6 +11,7 @@ class_name StoragePrototypeManager
 ## F7: cycle an occupancy/release demonstration on the lowest available shelf.
 
 const StorageSurfaceScript = preload("res://storage_surface.gd")
+const StorageShelfClearanceContextScript = preload("res://storage_shelf_clearance_context.gd")
 
 const DEFAULT_WORLD_CELL_SIZE_M: float = 0.10
 const SURFACE_VERTICAL_NUDGE_M: float = 0.018
@@ -20,6 +21,7 @@ var _surfaces: Array[Node] = []
 var _debug_visible: bool = true
 var _demo_state: int = 0
 var _demo_surface: Node = null
+var _missing_top_clearance_contexts: Array[String] = []
 
 
 func install(scene_root: Node) -> void:
@@ -76,13 +78,12 @@ func _install_known_shelves() -> void:
 				shelf,
 				[
 					# bottom → top
-					_make_level_profile(0.100, 0.96, 0.92, 0.00, 0.00, 0.822),
-					_make_level_profile(0.380, 0.96, 0.92, 0.00, 0.00, 0.843),
-					_make_level_profile(0.667, 0.96, 0.92, 0.00, 0.00, 0.919),
-					# The open top repeats the last representative bay height as
-					# an explicit prototype cap; human playtest must validate it.
-					_make_level_profile(0.980, 0.96, 0.92, 0.00, 0.00, 0.919)
-				]
+					_make_level_profile(0.100, 0.96, 0.92, 0.00, 0.00),
+					_make_level_profile(0.380, 0.96, 0.92, 0.00, 0.00),
+					_make_level_profile(0.667, 0.96, 0.92, 0.00, 0.00),
+					_make_level_profile(0.965, 0.96, 0.92, 0.00, 0.00)
+				],
+				0.919
 			)
 
 		elif shelf_name.begins_with("SM_ventilated_locker"):
@@ -91,12 +92,12 @@ func _install_known_shelves() -> void:
 				[
 					# Bottom and top shelf geometry is shallower/differently
 					# centered than the two middle levels.
-					_make_level_profile(0.045, 0.94, 0.92, 0.00, 0.00, 0.952),
-					_make_level_profile(0.390, 0.94, 0.92, -0.10, -0.03, 0.640),
-					_make_level_profile(0.622, 0.94, 0.92, 0.00, -0.03, 0.519),
-					# Same provisional open-top convention as the metal shelf.
-					_make_level_profile(0.810, 0.94, 0.92, 0.00, 0.00, 0.519)
-				]
+					_make_level_profile(0.045, 0.94, 0.92, 0.00, 0.00),
+					_make_level_profile(0.390, 0.94, 0.92, -0.10, -0.03),
+					_make_level_profile(0.622, 0.94, 0.92, 0.00, -0.03),
+					_make_level_profile(0.800, 0.94, 0.92, 0.00, 0.00)
+				],
+				0.519
 			)
 
 	# SM_ClothesCabinet remains intentionally deferred. Its vertical dividers
@@ -109,22 +110,21 @@ func _make_level_profile(
 	width_fraction: float,
 	depth_fraction: float,
 	x_offset_fraction: float,
-	z_offset_fraction: float,
-	stack_clearance_m: float
+	z_offset_fraction: float
 ) -> Dictionary:
 	return {
 		"y_ratio": y_ratio,
 		"width_fraction": width_fraction,
 		"depth_fraction": depth_fraction,
 		"x_offset_fraction": x_offset_fraction,
-		"z_offset_fraction": z_offset_fraction,
-		"stack_clearance_m": stack_clearance_m
+		"z_offset_fraction": z_offset_fraction
 	}
 
 
 func _install_authored_profile(
 	shelf: Node3D,
-	level_profiles: Array
+	level_profiles: Array,
+	open_top_fallback_world_m: float
 ) -> void:
 	var bounds_result: Dictionary = _calculate_branch_local_bounds(shelf)
 	var valid_value: Variant = bounds_result.get("valid", false)
@@ -160,7 +160,20 @@ func _install_authored_profile(
 		var depth_fraction: float = float(profile.get("depth_fraction", 0.80))
 		var x_offset_fraction: float = float(profile.get("x_offset_fraction", 0.0))
 		var z_offset_fraction: float = float(profile.get("z_offset_fraction", 0.0))
-		var stack_clearance_m: float = float(profile.get("stack_clearance_m", INF))
+		var stack_clearance_world_m: float = INF
+		if level_index + 1 < level_profiles.size():
+			var next_profile: Dictionary = level_profiles[level_index + 1] as Dictionary
+			stack_clearance_world_m = _derive_closed_level_clearance_world_m(
+				bounds.size.y,
+				y_ratio,
+				float(next_profile.get("y_ratio", y_ratio)),
+				root_scale
+			)
+		else:
+			stack_clearance_world_m = _resolve_open_top_clearance_world_m(
+				shelf,
+				open_top_fallback_world_m
+			)
 
 		var local_width: float = maxf(bounds.size.x * width_fraction, 0.10)
 		var local_depth: float = maxf(bounds.size.z * depth_fraction, 0.10)
@@ -186,10 +199,45 @@ func _install_authored_profile(
 			local_width,
 			local_depth,
 			local_cell_size,
-			stack_clearance_m
+			stack_clearance_world_m
 		)
 		surface.set_debug_visible(_debug_visible)
 		_surfaces.append(surface)
+
+
+func _derive_closed_level_clearance_world_m(
+	local_bounds_height_m: float,
+	lower_y_ratio: float,
+	upper_y_ratio: float,
+	root_scale: Vector3
+) -> float:
+	var local_clearance_m: float = maxf(
+		0.0,
+		local_bounds_height_m * (upper_y_ratio - lower_y_ratio)
+	)
+	return local_clearance_m * maxf(absf(root_scale.y), 0.001)
+
+
+func _resolve_open_top_clearance_world_m(
+	shelf: Node3D,
+	fallback_world_m: float
+) -> float:
+	var context: Node = shelf.get_node_or_null("StorageShelfClearanceContext")
+	if context != null and context.get_script() == StorageShelfClearanceContextScript:
+		var explicit_world_m: float = float(context.get("open_top_clearance_world_m"))
+		if is_finite(explicit_world_m) and explicit_world_m > 0.0:
+			return explicit_world_m
+	var shelf_name: String = String(shelf.name)
+	_missing_top_clearance_contexts.append(shelf_name)
+	push_warning(
+		"%s has no valid explicit StorageShelfClearanceContext; using %.3f m family fallback"
+		% [shelf_name, fallback_world_m]
+	)
+	return maxf(fallback_world_m, 0.0)
+
+
+func get_missing_top_clearance_contexts() -> Array[String]:
+	return _missing_top_clearance_contexts.duplicate()
 
 
 func _calculate_branch_local_bounds(root: Node3D) -> Dictionary:

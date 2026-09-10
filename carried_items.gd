@@ -126,6 +126,36 @@ func remove_selected():
 	return remove_at(_selected_index)
 
 
+func restore_removed_item(item, slot_index: int, selected_index: int) -> bool:
+	## Narrow transaction rollback used when storage placement fails after a
+	## selected item was removed. Restore the exact slot and selection rather
+	## than letting normal first-empty insertion reorder the carried strip.
+	if (
+		item == null
+		or slot_index < 0
+		or _slots.has(item)
+		or not can_add(item)
+	):
+		return false
+	while _slots.size() <= slot_index:
+		_slots.append(null)
+	if _slots[slot_index] != null:
+		return false
+	_slots[slot_index] = item
+	if (
+		selected_index >= 0
+		and selected_index < _slots.size()
+		and _slots[selected_index] != null
+	):
+		_selected_index = selected_index
+	else:
+		_selected_index = slot_index
+	item_added.emit(item)
+	contents_changed.emit()
+	selection_changed.emit(_selected_index)
+	return true
+
+
 func remove_at(index: int):
 	if index < 0 or index >= _slots.size():
 		return null
