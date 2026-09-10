@@ -18,6 +18,8 @@ The implementation extends the existing manifest and audit seams instead of crea
 
 This keeps the manifest helper focused on reusable review semantics, the registry independently testable, and catalogue-specific candidate judgment outside generic schema code.
 
+`stack_role_authoring.gd` is explicitly one-time Phase 1 seed/evidence scaffolding. The reusable path for future catalogue growth is `ItemDefinition` candidate values plus the generic manifest, registry, audit, validation, and later explicit review-apply operations. Future items are not added to the Phase 1 table, and no reusable pipeline code depends on that table after migration.
+
 ## Durable manifest schema 2.0
 
 `tools/asset_pipeline/item_authoring_review.json` advances from schema `1.0` to `2.0`. Existing opaque `loot_NNNNNN` keys and all existing record fields remain unchanged. Each asset record adds the following dimensions:
@@ -155,6 +157,12 @@ No absent response is interpreted as approval. If local visual inspection leaves
 The main-scene audit advances from schema `1.3` to `1.4` and records manifest schema `2.0` and registry schema `1.0`. Per-item output adds current runtime role values, both review dimensions and flags, registry reference validity, and dependency evidence. Summary output adds Stack Role and Auto Group counts for eligible, approved/current, unreviewed, stale, and dependency-blocked, plus registry approved class count, unknown references, invalid/multiple references, compatibility-revision issues, and zero pending candidate-group proposals.
 
 Normal audit loads and validates data without invoking any writer. A focused test hashes or compares manifest and registry bytes before and after audit execution.
+
+The production Phase 1 summary is asserted exactly:
+
+- Stack Role: 42 total, 40 currently eligible, 9 approved/current, 31 unreviewed, 0 stale, and 2 dependency-blocked.
+- Auto Group: 42 total, 9 currently eligible, 9 approved/current, 0 unreviewed, 0 stale, and 33 dependency-blocked.
+- Registry: 4 approved classes and 0 unknown references.
 
 ## Error handling and validation
 
