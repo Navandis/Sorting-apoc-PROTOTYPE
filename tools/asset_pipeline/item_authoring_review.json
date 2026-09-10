@@ -509,21 +509,21 @@
 			"source_path": "res://assets/props/Food/SM_Dry_Goods_01a.glb",
 			"stack_role_review": {
 				"flags": [],
-				"notes": "The small rigid dry-goods can has a stable base and flat lid.",
-				"reviewed_can_be_stacked": false,
-				"reviewed_can_support_stack": false,
+				"notes": "",
+				"reviewed_can_be_stacked": true,
+				"reviewed_can_support_stack": true,
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					1,
+					1,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "73876bc2b02dfd931b227d5148c96a15196e9b6e7cfaeb0e317a3ed2bd330c1a",
+				"status": "APPROVED"
 			},
 			"storage_pose_review": {
 				"notes": "Default zero authored storage pose approved.",
@@ -645,21 +645,21 @@
 			"source_path": "res://assets/props/Food/SM_Dry_Goods_01g.glb",
 			"stack_role_review": {
 				"flags": [],
-				"notes": "The taller rigid dry-goods can has a stable base and flat lid.",
-				"reviewed_can_be_stacked": false,
-				"reviewed_can_support_stack": false,
+				"notes": "",
+				"reviewed_can_be_stacked": true,
+				"reviewed_can_support_stack": true,
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					1,
+					1,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "6c57f9e480bc9c9160da0d61ef75986e72384e330bbcf99a31218e895a61b7aa",
+				"status": "APPROVED"
 			},
 			"storage_pose_review": {
 				"notes": "Default zero authored storage pose approved.",
@@ -965,24 +965,22 @@
 			"source_fingerprint": "e3cbd7d3dd60c9fde76fe92df640aaf62091c9e6c9b6491ee548b0ac1cf10698",
 			"source_path": "res://assets/props/Fuel/SM_FuelCanister.glb",
 			"stack_role_review": {
-				"flags": [
-					"SUPPORT_SURFACE_AMBIGUOUS"
-				],
-				"notes": "The fuel canister has a stable base, while its handle and cap interrupt the upper surface.",
-				"reviewed_can_be_stacked": false,
+				"flags": [],
+				"notes": "",
+				"reviewed_can_be_stacked": true,
 				"reviewed_can_support_stack": false,
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					4,
+					2,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "e3cbd7d3dd60c9fde76fe92df640aaf62091c9e6c9b6491ee548b0ac1cf10698",
+				"status": "APPROVED"
 			},
 			"storage_pose_review": {
 				"notes": "Default zero authored storage pose approved.",
@@ -1028,25 +1026,22 @@
 			"source_fingerprint": "c057b5d534a7b5c2d443c9d89ab62bb3cfcb6efa725f7acd2f5a20fd2270c952",
 			"source_path": "res://assets/props/Fuel/SM_GasCanister_01.glb",
 			"stack_role_review": {
-				"flags": [
-					"SUPPORT_SURFACE_AMBIGUOUS",
-					"VISUAL_REVIEW_RECOMMENDED"
-				],
-				"notes": "The gas canister can stand on a broad support, but its top geometry is not safely support-capable.",
-				"reviewed_can_be_stacked": false,
+				"flags": [],
+				"notes": "",
+				"reviewed_can_be_stacked": true,
 				"reviewed_can_support_stack": false,
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					3,
+					2,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "c057b5d534a7b5c2d443c9d89ab62bb3cfcb6efa725f7acd2f5a20fd2270c952",
+				"status": "APPROVED"
 			},
 			"storage_pose_review": {
 				"notes": "Default zero authored storage pose approved.",
@@ -1092,24 +1087,22 @@
 			"source_fingerprint": "3ef3c398222ed18752ab1fb54d1e83aec579a5a215fdd4376f193a75f21de9f4",
 			"source_path": "res://assets/props/Fuel/SM_GasCylinder_01.glb",
 			"stack_role_review": {
-				"flags": [
-					"SUPPORT_SURFACE_AMBIGUOUS"
-				],
-				"notes": "The cylinder has a stable base ring and a rounded valve top unsuitable for another item.",
-				"reviewed_can_be_stacked": false,
+				"flags": [],
+				"notes": "",
+				"reviewed_can_be_stacked": true,
 				"reviewed_can_support_stack": false,
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					4,
+					3,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "3ef3c398222ed18752ab1fb54d1e83aec579a5a215fdd4376f193a75f21de9f4",
+				"status": "APPROVED"
 			},
 			"storage_pose_review": {
 				"notes": "Default zero authored storage pose approved.",
@@ -1155,24 +1148,22 @@
 			"source_fingerprint": "5c6a25e519c6e0e2544ad1a7e325c77be9ad79500c0466952fc9c35b1ffe3b61",
 			"source_path": "res://assets/props/Fuel/SM_PropaneTank_02.glb",
 			"stack_role_review": {
-				"flags": [
-					"SUPPORT_SURFACE_AMBIGUOUS"
-				],
-				"notes": "The propane tank has a stable base but no broad usable upper support surface.",
-				"reviewed_can_be_stacked": false,
+				"flags": [],
+				"notes": "",
+				"reviewed_can_be_stacked": true,
 				"reviewed_can_support_stack": false,
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					3,
+					3,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "5c6a25e519c6e0e2544ad1a7e325c77be9ad79500c0466952fc9c35b1ffe3b61",
+				"status": "APPROVED"
 			},
 			"storage_pose_review": {
 				"notes": "Default zero authored storage pose approved.",
@@ -1416,21 +1407,21 @@
 			"source_path": "res://assets/props/Hydration/SM_SodaCan.glb",
 			"stack_role_review": {
 				"flags": [],
-				"notes": "The standard soda can has a stable base and flat rimmed top.",
-				"reviewed_can_be_stacked": false,
-				"reviewed_can_support_stack": false,
+				"notes": "",
+				"reviewed_can_be_stacked": true,
+				"reviewed_can_support_stack": true,
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					1,
+					1,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "632f4ce2e4d333fbd2417b0581c7dacc987108d24a440d62772bcc86ddf9a7fa",
+				"status": "APPROVED"
 			},
 			"storage_pose_review": {
 				"notes": "Default zero authored storage pose approved.",
@@ -1477,21 +1468,21 @@
 			"source_path": "res://assets/props/Hydration/soda_can.glb",
 			"stack_role_review": {
 				"flags": [],
-				"notes": "The alternate standard soda can has a stable base and flat rimmed top.",
-				"reviewed_can_be_stacked": false,
-				"reviewed_can_support_stack": false,
+				"notes": "",
+				"reviewed_can_be_stacked": true,
+				"reviewed_can_support_stack": true,
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					1,
+					1,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "0863285b857c56deb2473a35e8511700751c56fcedb0cb8f212ec6a8ea1b17d1",
+				"status": "APPROVED"
 			},
 			"storage_pose_review": {
 				"notes": "Default zero authored storage pose approved.",
@@ -1538,21 +1529,21 @@
 			"source_path": "res://assets/props/medical/pill_bottle.glb",
 			"stack_role_review": {
 				"flags": [],
-				"notes": "The pill bottle has a stable base and broad flat cap suitable for a smaller centered item.",
-				"reviewed_can_be_stacked": false,
+				"notes": "Credible resting base; top is too small to be a meaningful generic centered support surface.",
+				"reviewed_can_be_stacked": true,
 				"reviewed_can_support_stack": false,
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					1,
+					1,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					90.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "062b7b317fbf97b664a07c1ddc10b36aac362cb7fa6ec81b542486dfcbcc2fa1",
+				"status": "APPROVED"
 			},
 			"storage_pose_review": {
 				"notes": "Default pose unsuitable; candidate Y +90 degrees faces the label toward the player.",
@@ -1599,21 +1590,21 @@
 			"source_path": "res://assets/props/medical/SM_Antibiotics_01.glb",
 			"stack_role_review": {
 				"flags": [],
-				"notes": "The medicine bottle has a stable base and flat cap.",
-				"reviewed_can_be_stacked": false,
+				"notes": "Credible resting base; top is too small to be a meaningful generic centered support surface.",
+				"reviewed_can_be_stacked": true,
 				"reviewed_can_support_stack": false,
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					1,
+					1,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "7a921edc40b390590fd9f36bf5eada1bb4f3575a8c49b18350ba7826c0c9434d",
+				"status": "APPROVED"
 			},
 			"storage_pose_review": {
 				"notes": "Default zero authored storage pose approved.",
@@ -1723,24 +1714,22 @@
 			"source_fingerprint": "df65c2a162cba24514f8ca4d4491da16abb918f79f1204dd6fb111750354c1ea",
 			"source_path": "res://assets/props/medical/SM_CoughSyrup_01.glb",
 			"stack_role_review": {
-				"flags": [
-					"VISUAL_REVIEW_RECOMMENDED"
-				],
-				"notes": "The rigid medicine bottle appears to have a stable base and flat cap, pending human confirmation.",
-				"reviewed_can_be_stacked": false,
+				"flags": [],
+				"notes": "Credible resting base; upper form is not a credible generic support surface.",
+				"reviewed_can_be_stacked": true,
 				"reviewed_can_support_stack": false,
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					1,
+					1,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					-120.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "df65c2a162cba24514f8ca4d4491da16abb918f79f1204dd6fb111750354c1ea",
+				"status": "APPROVED"
 			},
 			"storage_pose_review": {
 				"notes": "Default pose unsuitable; candidate Y -120 degrees faces the label toward the player.",
