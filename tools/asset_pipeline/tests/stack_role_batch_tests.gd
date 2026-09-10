@@ -16,6 +16,7 @@ const EXPECTED_BATCH_THREE_IDS: PackedStringArray = [
 const EXPECTED_BATCH_FOUR_IDS: PackedStringArray = [
 	"loot_000011", "loot_000026", "loot_000032"
 ]
+const EXPECTED_BATCH_FIVE_IDS: PackedStringArray = ["loot_000013", "loot_000037", "loot_000038", "loot_000040", "loot_000041", "loot_000042"]
 
 
 func _init() -> void:
@@ -83,6 +84,16 @@ func _init() -> void:
 	assert("# Stack Role Authoring Review — Batch 4" in batch_four_markdown)
 	assert("soft / apparel-like" in batch_four_markdown)
 	assert("VISUAL_REVIEW_RECOMMENDED" in batch_four_markdown)
+	var batch_five_records: Array[Dictionary] = []
+	for item_id: String in ["loot_000041", "loot_000013", "loot_000042", "loot_000099", "loot_000037", "loot_000040", "loot_000038"]:
+		batch_five_records.append(_record(item_id))
+	var batch_five_rows: Array[Dictionary] = StackRoleAuthoringScript.batch_five_rows(batch_five_records)
+	var batch_five_ids: PackedStringArray = []
+	for row: Dictionary in batch_five_rows: batch_five_ids.append(String(row["item_id"]))
+	assert(batch_five_ids == EXPECTED_BATCH_FIVE_IDS)
+	var batch_five_markdown: String = StackRoleAuthoringScript.batch_five_markdown(batch_five_records)
+	assert(batch_five_markdown == StackRoleAuthoringScript.batch_five_markdown(batch_five_records.duplicate(true)))
+	assert("long / narrow" in batch_five_markdown)
 	print("PASS: stack role batch tests")
 	quit(0)
 

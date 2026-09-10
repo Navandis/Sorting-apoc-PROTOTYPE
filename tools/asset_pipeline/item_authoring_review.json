@@ -699,27 +699,22 @@
 			"source_fingerprint": "0903d0a48de2af72b6eb814ef654569c60e0a73bdaf4270fb10d3755c8a088a6",
 			"source_path": "res://assets/props/Food/SM_PigCarcass_1.glb",
 			"stack_role_review": {
-				"flags": [
-					"IRREGULAR_SHAPE",
-					"RESTING_STABILITY_AMBIGUOUS",
-					"SOFT_OR_DEFORMABLE_FORM",
-					"VISUAL_REVIEW_RECOMMENDED"
-				],
-				"notes": "The skewered carcass is irregular and deformable enough that centered support placement is not provisionally credible.",
+				"flags": [],
+				"notes": "",
 				"reviewed_can_be_stacked": false,
 				"reviewed_can_support_stack": false,
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					10,
+					5,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "0903d0a48de2af72b6eb814ef654569c60e0a73bdaf4270fb10d3755c8a088a6",
+				"status": "APPROVED"
 			},
 			"storage_pose_review": {
 				"notes": "Default zero authored storage pose approved.",
@@ -1637,25 +1632,22 @@
 			"source_fingerprint": "4853eae6d79f9ddd5c619c5bdd4201a333955da009786d2a62f749c585bbe44c",
 			"source_path": "res://assets/props/medical/SM_Bandages_1.glb",
 			"stack_role_review": {
-				"flags": [
-					"SUPPORT_SURFACE_AMBIGUOUS",
-					"SOFT_OR_DEFORMABLE_FORM"
-				],
-				"notes": "The bandage package can rest on a broad support, but its soft form is not support-capable.",
-				"reviewed_can_be_stacked": false,
+				"flags": [],
+				"notes": "",
+				"reviewed_can_be_stacked": true,
 				"reviewed_can_support_stack": false,
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					1,
+					2,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "4853eae6d79f9ddd5c619c5bdd4201a333955da009786d2a62f749c585bbe44c",
+				"status": "APPROVED"
 			},
 			"storage_pose_review": {
 				"notes": "Default zero authored storage pose approved.",
@@ -2048,28 +2040,22 @@
 			"source_fingerprint": "8fa1fa14942a2bd8dd60514d23c393784fa6d2612dcd719bf1bb871f5ca70194",
 			"source_path": "res://assets/props/protection/SM_Armor_02.glb",
 			"stack_role_review": {
-				"flags": [
-					"IRREGULAR_SHAPE",
-					"RESTING_STABILITY_AMBIGUOUS",
-					"SOFT_OR_DEFORMABLE_FORM",
-					"POSE_DEPENDENT",
-					"VISUAL_REVIEW_RECOMMENDED"
-				],
-				"notes": "Upright body armor is irregular and deformable, so neither centered resting nor upper support is provisionally credible.",
-				"reviewed_can_be_stacked": false,
+				"flags": [],
+				"notes": "Semi-rigid upright form is physically credible; display practicality resolves the borderline resting judgment, not support capability.",
+				"reviewed_can_be_stacked": true,
 				"reviewed_can_support_stack": false,
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					3,
+					3,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "8fa1fa14942a2bd8dd60514d23c393784fa6d2612dcd719bf1bb871f5ca70194",
+				"status": "APPROVED"
 			},
 			"storage_pose_review": {
 				"notes": "Default zero authored storage pose approved.",

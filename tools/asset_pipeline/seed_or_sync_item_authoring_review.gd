@@ -32,6 +32,8 @@ func _run() -> int:
 		return _apply_stack_role_batch_2(existing_manifest, current_assets)
 	if OS.get_cmdline_user_args().has("--apply-stack-role-batch-3"):
 		return _apply_stack_role_batch_3(existing_manifest, current_assets)
+	if OS.get_cmdline_user_args().has("--apply-stack-role-batch-4"):
+		return _apply_stack_role_batch_4(existing_manifest, current_assets)
 	if OS.get_cmdline_user_args().has("--item-ids-only"):
 		return _sync_item_ids_only(existing_manifest, current_assets)
 
@@ -320,6 +322,28 @@ func _apply_stack_role_batch_3(
 		return 1
 	var approved_item_ids: PackedStringArray = result["approved_item_ids"] as PackedStringArray
 	print("STACK_ROLE_BATCH_3_APPLY_COMPLETE approved=%d resources_updated=%d manifest_written=%s item_ids=%s" % [approved_item_ids.size(), updated_resource_count, str(wrote_manifest), ",".join(approved_item_ids)])
+	return 0
+
+func _apply_stack_role_batch_4(existing_manifest: Dictionary, current_assets: Array[Dictionary]) -> int:
+	var definition: ItemDefinition = load("res://data/items/definitions/loot_000032.tres") as ItemDefinition
+	if definition == null: return 1
+	var updated_resource_count: int = 0
+	if not definition.can_be_stacked or definition.can_support_stack:
+		definition.can_be_stacked = true
+		definition.can_support_stack = false
+		if ResourceSaver.save(definition, "res://data/items/definitions/loot_000032.tres") != OK: return 1
+		updated_resource_count = 1
+	var updated_assets: Array[Dictionary] = []
+	for scene_record: Dictionary in MainSceneLootAdapterScript.enumerate_loot_instances(MAIN_SCENE_PATH): updated_assets.append(_manifest_asset(scene_record))
+	var result: Dictionary = StackRoleAuthoringScript.apply_stack_role_batch_4(existing_manifest, updated_assets, AutoStackGroupRegistryScript.load_registry(AUTO_STACK_GROUP_REGISTRY_PATH))
+	var errors: PackedStringArray = result["errors"] as PackedStringArray
+	if not errors.is_empty():
+		for message: String in errors: push_error(message)
+		return 1
+	var updated_manifest: Dictionary = result["manifest"] as Dictionary
+	var wrote_manifest: bool = _file_text(MANIFEST_PATH) != AuthoringReviewManifestScript.serialize_manifest(updated_manifest)
+	if wrote_manifest and not AuthoringReviewManifestScript.write_manifest(MANIFEST_PATH, updated_manifest): return 1
+	print("STACK_ROLE_BATCH_4_APPLY_COMPLETE approved=%d resources_updated=%d manifest_written=%s" % [(result["approved_item_ids"] as PackedStringArray).size(), updated_resource_count, str(wrote_manifest)])
 	return 0
 
 

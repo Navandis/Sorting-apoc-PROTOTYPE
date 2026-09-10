@@ -27,7 +27,7 @@ const CANDIDATE_EXPECTED: Dictionary = {
 	"loot_000022": [true, true], "loot_000023": [true, true],
 	"loot_000024": [true, false], "loot_000025": [true, false],
 	"loot_000026": [true, false], "loot_000027": [true, false],
-	"loot_000029": [true, false], "loot_000032": [false, false],
+	"loot_000029": [true, false], "loot_000032": [true, false],
 	"loot_000033": [true, false], "loot_000035": [true, false],
 	"loot_000037": [true, false], "loot_000038": [true, false],
 	"loot_000040": [true, false], "loot_000041": [false, false],

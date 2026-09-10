@@ -24,6 +24,7 @@ const BATCH_THREE_ITEM_IDS: PackedStringArray = [
 const BATCH_FOUR_ITEM_IDS: PackedStringArray = [
 	"loot_000011", "loot_000026", "loot_000032"
 ]
+const BATCH_FIVE_ITEM_IDS: PackedStringArray = ["loot_000013", "loot_000037", "loot_000038", "loot_000040", "loot_000041", "loot_000042"]
 const BATCH_ONE_APPROVAL_NOTES: Dictionary = {
 	"loot_000003": "Flat stable base; irregular exposed-electronics top is not a credible support surface."
 }
@@ -51,6 +52,8 @@ const BATCH_THREE_APPROVAL_NOTES: Dictionary = {
 	"loot_000014": "Loose firewood pile is not a rigid form-retaining stack member.",
 	"loot_000029": "Credible deterministic resting relationship on a sufficiently large flat support; curved upper form is not support-capable."
 }
+const BATCH_FOUR_REVIEWED_ROLES: Dictionary = {"loot_000011": [false, false], "loot_000026": [true, false], "loot_000032": [true, false]}
+const BATCH_FOUR_APPROVAL_NOTES: Dictionary = {"loot_000032": "Semi-rigid upright form is physically credible; display practicality resolves the borderline resting judgment, not support capability."}
 const GRANDFATHERED: Dictionary = {
 	"loot_000002": [false, true, ""],
 	"loot_000005": [true, true, "boxed_food"],
@@ -126,6 +129,9 @@ static func batch_three_rows(records: Array[Dictionary]) -> Array[Dictionary]:
 static func batch_four_rows(records: Array[Dictionary]) -> Array[Dictionary]:
 	return _batch_rows(records, BATCH_FOUR_ITEM_IDS)
 
+static func batch_five_rows(records: Array[Dictionary]) -> Array[Dictionary]:
+	return _batch_rows(records, BATCH_FIVE_ITEM_IDS)
+
 
 static func _batch_rows(
 	records: Array[Dictionary], item_ids: PackedStringArray
@@ -184,6 +190,9 @@ static func batch_four_markdown(records: Array[Dictionary]) -> String:
 		"soft / apparel-like items.",
 		batch_four_rows(records)
 	)
+
+static func batch_five_markdown(records: Array[Dictionary]) -> String:
+	return _batch_markdown("Batch 5", "long / narrow items.", batch_five_rows(records))
 
 
 static func _batch_markdown(
@@ -416,6 +425,27 @@ static func apply_stack_role_batch_3(
 		records[authoring_key] = record
 	return {"manifest": AuthoringReviewManifestScript.migrate_manifest(updated_manifest), "approved_item_ids": BATCH_THREE_ITEM_IDS.duplicate(), "errors": errors}
 
+static func batch_four_reviewed_role(item_id: String) -> Array:
+	return (BATCH_FOUR_REVIEWED_ROLES.get(item_id, []) as Array).duplicate()
+
+static func apply_stack_role_batch_4(manifest: Dictionary, current_assets: Array[Dictionary], registry: Dictionary) -> Dictionary:
+	var errors: PackedStringArray = _batch_four_preflight_errors(manifest, current_assets, registry)
+	if not errors.is_empty(): return {"manifest": manifest.duplicate(true), "approved_item_ids": PackedStringArray(), "errors": errors}
+	var updated: Dictionary = AuthoringReviewManifestScript.migrate_manifest(manifest)
+	var records: Dictionary = updated["assets"] as Dictionary
+	var assets: Dictionary = _assets_by_id(current_assets)
+	var keys: Dictionary = _authoring_keys_by_item_id(updated, current_assets)
+	for item_id: String in BATCH_FOUR_ITEM_IDS:
+		var record: Dictionary = records[String(keys[item_id])] as Dictionary
+		var review: Dictionary = record["stack_role_review"] as Dictionary
+		if String(review["status"]) == "UNREVIEWED":
+			review["status"] = "APPROVED"
+			_copy_snapshot_into_review(review, AuthoringReviewManifestScript.stack_role_snapshot(assets[item_id] as Dictionary))
+			review["flags"] = []
+			review["notes"] = String(BATCH_FOUR_APPROVAL_NOTES.get(item_id, ""))
+		records[String(keys[item_id])] = record
+	return {"manifest": AuthoringReviewManifestScript.migrate_manifest(updated), "approved_item_ids": BATCH_FOUR_ITEM_IDS.duplicate(), "errors": errors}
+
 
 static func _preflight_errors(
 	manifest: Dictionary,
@@ -645,6 +675,35 @@ static func _batch_three_preflight_errors(
 		var candidate_record: Dictionary = records[String(authoring_keys_by_id[item_id])] as Dictionary
 		if String((candidate_record["stack_role_review"] as Dictionary)["status"]) != "UNREVIEWED":
 			errors.append("Batch 3 requires later candidates to remain unreviewed: %s" % item_id)
+	return errors
+
+static func _batch_four_preflight_errors(manifest: Dictionary, current_assets: Array[Dictionary], registry: Dictionary) -> PackedStringArray:
+	var errors: PackedStringArray = []
+	errors.append_array(AutoStackGroupRegistryScript.validate_registry(registry))
+	errors.append_array(AuthoringReviewManifestScript.validate_manifest(manifest))
+	if not errors.is_empty(): return errors
+	var assets: Dictionary = _assets_by_id(current_assets)
+	var expected_ids: PackedStringArray = []
+	for number: int in range(1, 43): expected_ids.append("loot_%06d" % number)
+	if _sorted_keys(assets) != expected_ids:
+		errors.append("Batch 4 approval requires the exact 42-item prototype catalogue set.")
+		return errors
+	var migrated: Dictionary = AuthoringReviewManifestScript.migrate_manifest(manifest)
+	var records: Dictionary = migrated["assets"] as Dictionary
+	var keys: Dictionary = _authoring_keys_by_item_id(migrated, current_assets)
+	for item_id: String in BATCH_THREE_ITEM_IDS:
+		var prior: Dictionary = records[String(keys[item_id])] as Dictionary
+		if String((prior["stack_role_review"] as Dictionary)["status"]) != "APPROVED": errors.append("Batch 4 requires Batch 3 approval: %s" % item_id)
+	for item_id: String in BATCH_FOUR_ITEM_IDS:
+		var record: Dictionary = records[String(keys[item_id])] as Dictionary
+		var evidence: Dictionary = AuthoringReviewManifestScript.review_evidence(record, assets[item_id] as Dictionary, registry)
+		var role: Array = batch_four_reviewed_role(item_id)
+		if not bool(evidence["stack_role_review_eligible"]): errors.append("Batch 4 item is dependency-blocked: %s" % item_id)
+		if bool((assets[item_id] as Dictionary)["can_be_stacked"]) != bool(role[0]) or bool((assets[item_id] as Dictionary)["can_support_stack"]) != bool(role[1]): errors.append("Batch 4 runtime role values do not match human decision: %s" % item_id)
+		if String((record["auto_group_review"] as Dictionary)["status"]) != "UNREVIEWED": errors.append("Batch 4 must not alter an Auto Group decision: %s" % item_id)
+	for item_id: String in candidate_ids():
+		if BATCH_ONE_ITEM_IDS.has(item_id) or BATCH_TWO_ITEM_IDS.has(item_id) or BATCH_THREE_ITEM_IDS.has(item_id) or BATCH_FOUR_ITEM_IDS.has(item_id): continue
+		if String(((records[String(keys[item_id])] as Dictionary)["stack_role_review"] as Dictionary)["status"]) != "UNREVIEWED": errors.append("Batch 4 requires later candidates to remain unreviewed: %s" % item_id)
 	return errors
 
 

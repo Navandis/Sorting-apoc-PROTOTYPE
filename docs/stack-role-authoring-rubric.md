@@ -19,3 +19,9 @@ rigid stack member merely because its import has one mesh or root. If credible
 support requires its contents to shift, collapse, roll apart, or substantially
 deform, use a conservative role. The Firewood Pile is the reference case:
 `false / false`. These principles do not add runtime physics or geometry logic.
+
+Physical plausibility remains the gate. Gameplay or display practicality may
+break a genuinely borderline but physically credible judgment; it never
+justifies an unstable, impossible, or nonsensical relationship. `SM_Armor_02`
+is the reference case: its semi-rigid upright form is plausible, and display
+practicality resolves the borderline resting judgment as `true / false`.

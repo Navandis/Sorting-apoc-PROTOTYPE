@@ -25,6 +25,7 @@ const BATCH_THREE_STACK_ROLES: Dictionary = {
 	"loot_000029": [true, false], "loot_000033": [true, false],
 	"loot_000035": [true, false]
 }
+const BATCH_FOUR_STACK_ROLES: Dictionary = {"loot_000011": [false, false], "loot_000026": [true, false], "loot_000032": [true, false]}
 const PRINTER_BATCH_ONE_NOTE: String = "Flat stable base; irregular exposed-electronics top is not a credible support surface."
 
 
@@ -54,8 +55,8 @@ func _init() -> void:
 	assert(String(report["authoring_review_manifest_schema_version"]) == "2.0")
 	assert(String(report["auto_stack_group_registry_schema_version"]) == "1.0")
 	var review_summary: Dictionary = report["review_summary"] as Dictionary
-	_assert_summary(review_summary["stack_role"] as Dictionary, [42, 40, 31, 9, 0, 2])
-	_assert_summary(review_summary["auto_group"] as Dictionary, [42, 31, 9, 22, 0, 11])
+	_assert_summary(review_summary["stack_role"] as Dictionary, [42, 40, 34, 6, 0, 2])
+	_assert_summary(review_summary["auto_group"] as Dictionary, [42, 34, 9, 25, 0, 8])
 	var registry_summary: Dictionary = report["registry_summary"] as Dictionary
 	assert(int(registry_summary["approved_class_count"]) == 4)
 	assert((registry_summary["unknown_references"] as Array).is_empty())
@@ -72,8 +73,8 @@ func _init() -> void:
 	for asset_value: Variant in assets:
 		var asset: Dictionary = asset_value as Dictionary
 		var item_id: String = String(asset["item_id"])
-		if BATCH_ONE_STACK_ROLES.has(item_id) or BATCH_TWO_STACK_ROLES.has(item_id) or BATCH_THREE_STACK_ROLES.has(item_id):
-			var expected_role: Array = (BATCH_ONE_STACK_ROLES.get(item_id, BATCH_TWO_STACK_ROLES.get(item_id, BATCH_THREE_STACK_ROLES.get(item_id))) as Array)
+		if BATCH_ONE_STACK_ROLES.has(item_id) or BATCH_TWO_STACK_ROLES.has(item_id) or BATCH_THREE_STACK_ROLES.has(item_id) or BATCH_FOUR_STACK_ROLES.has(item_id):
+			var expected_role: Array = (BATCH_ONE_STACK_ROLES.get(item_id, BATCH_TWO_STACK_ROLES.get(item_id, BATCH_THREE_STACK_ROLES.get(item_id, BATCH_FOUR_STACK_ROLES.get(item_id)))) as Array)
 			assert(bool(asset["can_be_stacked"]) == bool(expected_role[0]))
 			assert(bool(asset["can_support_stack"]) == bool(expected_role[1]))
 			assert(String(asset["stack_role_review_status"]) == "APPROVED")
