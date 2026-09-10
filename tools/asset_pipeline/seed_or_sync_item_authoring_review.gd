@@ -26,6 +26,8 @@ func _run() -> int:
 	var existing_manifest: Dictionary = AuthoringReviewManifestScript.load_manifest(MANIFEST_PATH)
 	if OS.get_cmdline_user_args().has("--apply-stack-metadata-phase-1"):
 		return _apply_stack_metadata_phase_1(existing_manifest, current_assets)
+	if OS.get_cmdline_user_args().has("--apply-stack-role-batch-1"):
+		return _apply_stack_role_batch_1(existing_manifest, current_assets)
 	if OS.get_cmdline_user_args().has("--item-ids-only"):
 		return _sync_item_ids_only(existing_manifest, current_assets)
 
@@ -193,6 +195,39 @@ func _apply_stack_metadata_phase_1(
 			updated_resource_count,
 			str(wrote_manifest)
 		]
+	)
+	return 0
+
+
+func _apply_stack_role_batch_1(
+	existing_manifest: Dictionary,
+	current_assets: Array[Dictionary]
+) -> int:
+	var registry: Dictionary = AutoStackGroupRegistryScript.load_registry(
+		AUTO_STACK_GROUP_REGISTRY_PATH
+	)
+	var result: Dictionary = StackRoleAuthoringScript.apply_stack_role_batch_1(
+		existing_manifest,
+		current_assets,
+		registry
+	)
+	var errors: PackedStringArray = result["errors"] as PackedStringArray
+	if not errors.is_empty():
+		for message: String in errors:
+			push_error(message)
+		return 1
+	var updated_manifest: Dictionary = result["manifest"] as Dictionary
+	var serialized_manifest: String = AuthoringReviewManifestScript.serialize_manifest(updated_manifest)
+	var existing_text: String = _file_text(MANIFEST_PATH)
+	var wrote_manifest: bool = existing_text != serialized_manifest
+	if wrote_manifest and not AuthoringReviewManifestScript.write_manifest(
+		MANIFEST_PATH, updated_manifest
+	):
+		return 1
+	var approved_item_ids: PackedStringArray = result["approved_item_ids"] as PackedStringArray
+	print(
+		"STACK_ROLE_BATCH_1_APPLY_COMPLETE approved=%d manifest_written=%s item_ids=%s"
+		% [approved_item_ids.size(), str(wrote_manifest), ",".join(approved_item_ids)]
 	)
 	return 0
 

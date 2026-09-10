@@ -5,6 +5,13 @@ const MANIFEST_PATH: String = "res://tools/asset_pipeline/item_authoring_review.
 const REGISTRY_PATH: String = "res://tools/asset_pipeline/auto_stack_group_registry.json"
 const CANDIDATE_FOOTPRINT_ITEM_IDS: PackedStringArray = []
 const INELIGIBLE_FOOTPRINT_ITEM_IDS: PackedStringArray = ["loot_000034", "loot_000036"]
+const BATCH_ONE_STACK_ROLES: Dictionary = {
+	"loot_000003": [true, false],
+	"loot_000007": [true, true],
+	"loot_000020": [true, false],
+	"loot_000021": [true, false]
+}
+const PRINTER_BATCH_ONE_NOTE: String = "Flat stable base; irregular exposed-electronics top is not a credible support surface."
 
 
 func _init() -> void:
@@ -33,8 +40,8 @@ func _init() -> void:
 	assert(String(report["authoring_review_manifest_schema_version"]) == "2.0")
 	assert(String(report["auto_stack_group_registry_schema_version"]) == "1.0")
 	var review_summary: Dictionary = report["review_summary"] as Dictionary
-	_assert_summary(review_summary["stack_role"] as Dictionary, [42, 40, 9, 31, 0, 2])
-	_assert_summary(review_summary["auto_group"] as Dictionary, [42, 9, 9, 0, 0, 33])
+	_assert_summary(review_summary["stack_role"] as Dictionary, [42, 40, 13, 27, 0, 2])
+	_assert_summary(review_summary["auto_group"] as Dictionary, [42, 13, 9, 4, 0, 29])
 	var registry_summary: Dictionary = report["registry_summary"] as Dictionary
 	assert(int(registry_summary["approved_class_count"]) == 4)
 	assert((registry_summary["unknown_references"] as Array).is_empty())
@@ -50,6 +57,24 @@ func _init() -> void:
 	var unresolved_item_ids: PackedStringArray = []
 	for asset_value: Variant in assets:
 		var asset: Dictionary = asset_value as Dictionary
+		var item_id: String = String(asset["item_id"])
+		if BATCH_ONE_STACK_ROLES.has(item_id):
+			var expected_role: Array = BATCH_ONE_STACK_ROLES[item_id] as Array
+			assert(bool(asset["can_be_stacked"]) == bool(expected_role[0]))
+			assert(bool(asset["can_support_stack"]) == bool(expected_role[1]))
+			assert(String(asset["stack_role_review_status"]) == "APPROVED")
+			assert(bool(asset["stack_role_review_eligible"]))
+			assert(bool(asset["stack_role_review_current"]))
+			assert(not bool(asset["stack_role_review_stale"]))
+			assert(not bool(asset["stack_role_review_dependency_blocked"]))
+			assert((asset["stack_role_review_flags"] as Array).is_empty())
+			assert(String(asset["auto_group_review_status"]) == "UNREVIEWED")
+			assert(bool(asset["auto_group_review_eligible"]))
+			assert(not bool(asset["auto_group_review_current"]))
+			assert(not bool(asset["auto_group_review_stale"]))
+			assert(not bool(asset["auto_group_review_dependency_blocked"]))
+			if item_id == "loot_000003":
+				assert(String(asset["stack_role_review_notes"]) == PRINTER_BATCH_ONE_NOTE)
 		var pose_status: String = String(asset["storage_pose_review_status"])
 		if pose_status == "DEFAULT_POSE_APPROVED":
 			default_pose_count += 1
@@ -62,7 +87,6 @@ func _init() -> void:
 			assert(not bool(asset["footprint_review_current"]))
 		if bool(asset["scale_review_current"]):
 			scale_current_count += 1
-		var item_id: String = String(asset["item_id"])
 		var footprint_status: String = String(asset["footprint_review_status"])
 		if CANDIDATE_FOOTPRINT_ITEM_IDS.has(item_id) or INELIGIBLE_FOOTPRINT_ITEM_IDS.has(item_id):
 			assert(footprint_status == "UNREVIEWED")

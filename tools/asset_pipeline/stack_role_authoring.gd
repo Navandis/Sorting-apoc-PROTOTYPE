@@ -12,6 +12,14 @@ const BLOCKED_ITEM_IDS: PackedStringArray = ["loot_000034", "loot_000036"]
 const BATCH_ONE_ITEM_IDS: PackedStringArray = [
 	"loot_000003", "loot_000007", "loot_000020", "loot_000021"
 ]
+const BATCH_TWO_ITEM_IDS: PackedStringArray = [
+	"loot_000008", "loot_000010", "loot_000015", "loot_000016", "loot_000017",
+	"loot_000018", "loot_000022", "loot_000023", "loot_000024", "loot_000025",
+	"loot_000027"
+]
+const BATCH_ONE_APPROVAL_NOTES: Dictionary = {
+	"loot_000003": "Flat stable base; irregular exposed-electronics top is not a credible support surface."
+}
 const GRANDFATHERED: Dictionary = {
 	"loot_000002": [false, true, ""],
 	"loot_000005": [true, true, "boxed_food"],
@@ -73,11 +81,21 @@ static func candidate_for(item_id: String) -> Dictionary:
 
 
 static func batch_one_rows(records: Array[Dictionary]) -> Array[Dictionary]:
+	return _batch_rows(records, BATCH_ONE_ITEM_IDS)
+
+
+static func batch_two_rows(records: Array[Dictionary]) -> Array[Dictionary]:
+	return _batch_rows(records, BATCH_TWO_ITEM_IDS)
+
+
+static func _batch_rows(
+	records: Array[Dictionary], item_ids: PackedStringArray
+) -> Array[Dictionary]:
 	var by_id: Dictionary = {}
 	for record: Dictionary in records:
 		by_id[String(record.get("item_id", ""))] = record
 	var rows: Array[Dictionary] = []
-	for item_id: String in BATCH_ONE_ITEM_IDS:
+	for item_id: String in item_ids:
 		if not by_id.has(item_id):
 			continue
 		var record: Dictionary = by_id[item_id] as Dictionary
@@ -98,15 +116,33 @@ static func batch_one_rows(records: Array[Dictionary]) -> Array[Dictionary]:
 
 
 static func batch_one_markdown(records: Array[Dictionary]) -> String:
+	return _batch_markdown(
+		"Batch 1",
+		"rigid flat / box-like packages and appliances.",
+		batch_one_rows(records)
+	)
+
+
+static func batch_two_markdown(records: Array[Dictionary]) -> String:
+	return _batch_markdown(
+		"Batch 2",
+		"cylindrical / container-like items.",
+		batch_two_rows(records)
+	)
+
+
+static func _batch_markdown(
+	batch_label: String, physical_form: String, rows: Array[Dictionary]
+) -> String:
 	var lines: PackedStringArray = [
-		"# Stack Role Authoring Review — Batch 1",
+		"# Stack Role Authoring Review — %s" % batch_label,
 		"",
-		"Physical form: rigid flat / box-like packages and appliances.",
+		"Physical form: %s" % physical_form,
 		"",
 		"| Stable ID | Display / asset | Storage Category | Approved Footprint | Approved rotation | Stackable | Supports | Flags | Rationale |",
 		"|---|---|---|---|---|---:|---:|---|---|"
 	]
-	for row: Dictionary in batch_one_rows(records):
+	for row: Dictionary in rows:
 		var asset_name: String = String(row["source_path"]).get_file()
 		lines.append("| `%s` | %s / `%s` | %s | `%s` | `%s` | %s | %s | %s | %s |" % [
 			String(row["item_id"]),
@@ -209,6 +245,48 @@ static func apply_phase_1(
 	}
 
 
+static func apply_stack_role_batch_1(
+	manifest: Dictionary,
+	current_assets: Array[Dictionary],
+	registry: Dictionary
+) -> Dictionary:
+	var errors: PackedStringArray = _batch_one_preflight_errors(
+		manifest, current_assets, registry
+	)
+	if not errors.is_empty():
+		return {
+			"manifest": manifest.duplicate(true),
+			"approved_item_ids": PackedStringArray(),
+			"errors": errors
+		}
+	var updated_manifest: Dictionary = AuthoringReviewManifestScript.migrate_manifest(manifest)
+	var records: Dictionary = updated_manifest["assets"] as Dictionary
+	var assets_by_id: Dictionary = _assets_by_id(current_assets)
+	var authoring_keys_by_id: Dictionary = _authoring_keys_by_item_id(
+		updated_manifest, current_assets
+	)
+	for item_id: String in BATCH_ONE_ITEM_IDS:
+		var authoring_key: String = String(authoring_keys_by_id[item_id])
+		var record: Dictionary = records[authoring_key] as Dictionary
+		var role_review: Dictionary = record["stack_role_review"] as Dictionary
+		if String(role_review["status"]) == "UNREVIEWED":
+			role_review["status"] = "APPROVED"
+			_copy_snapshot_into_review(
+				role_review,
+				AuthoringReviewManifestScript.stack_role_snapshot(
+					assets_by_id[item_id] as Dictionary
+				)
+			)
+			role_review["flags"] = []
+			role_review["notes"] = String(BATCH_ONE_APPROVAL_NOTES.get(item_id, ""))
+		records[authoring_key] = record
+	return {
+		"manifest": AuthoringReviewManifestScript.migrate_manifest(updated_manifest),
+		"approved_item_ids": BATCH_ONE_ITEM_IDS.duplicate(),
+		"errors": errors
+	}
+
+
 static func _preflight_errors(
 	manifest: Dictionary,
 	current_assets: Array[Dictionary],
@@ -265,6 +343,60 @@ static func _preflight_errors(
 				errors.append("Phase 1 candidate is already reviewed: %s" % item_id)
 			if not String(asset.get("auto_stack_group", "")).is_empty():
 				errors.append("Phase 1 candidate already has an Auto Group: %s" % item_id)
+	return errors
+
+
+static func _batch_one_preflight_errors(
+	manifest: Dictionary,
+	current_assets: Array[Dictionary],
+	registry: Dictionary
+) -> PackedStringArray:
+	var errors: PackedStringArray = []
+	errors.append_array(AutoStackGroupRegistryScript.validate_registry(registry))
+	errors.append_array(AuthoringReviewManifestScript.validate_manifest(manifest))
+	if not errors.is_empty():
+		return errors
+	var assets_by_id: Dictionary = _assets_by_id(current_assets)
+	var expected_ids: PackedStringArray = []
+	for number: int in range(1, 43):
+		expected_ids.append("loot_%06d" % number)
+	if _sorted_keys(assets_by_id) != expected_ids:
+		errors.append("Batch 1 approval requires the exact 42-item prototype catalogue set.")
+		return errors
+	var migrated: Dictionary = AuthoringReviewManifestScript.migrate_manifest(manifest)
+	var records: Dictionary = migrated["assets"] as Dictionary
+	var authoring_keys_by_id: Dictionary = _authoring_keys_by_item_id(
+		migrated, current_assets
+	)
+	for item_id: String in expected_ids:
+		if not authoring_keys_by_id.has(item_id):
+			errors.append("Batch 1 manifest record is missing: %s" % item_id)
+	if not errors.is_empty():
+		return errors
+	for item_id: String in BATCH_ONE_ITEM_IDS:
+		var asset: Dictionary = assets_by_id[item_id] as Dictionary
+		var record: Dictionary = records[String(authoring_keys_by_id[item_id])] as Dictionary
+		var evidence: Dictionary = AuthoringReviewManifestScript.review_evidence(
+			record, asset, registry
+		)
+		if not bool(evidence["stack_role_review_eligible"]):
+			errors.append("Batch 1 item is dependency-blocked: %s" % item_id)
+		if bool(asset.get("can_be_stacked", false)) != bool(candidate_for(item_id)["can_be_stacked"]) \
+			or bool(asset.get("can_support_stack", false)) != bool(candidate_for(item_id)["can_support_stack"]):
+			errors.append("Batch 1 runtime role values do not match candidate: %s" % item_id)
+		var role_status: String = String((record["stack_role_review"] as Dictionary)["status"])
+		if role_status == "APPROVED" and not bool(evidence["stack_role_review_current"]):
+			errors.append("Refusing to rewrite stale Batch 1 approval: %s" % item_id)
+		elif role_status != "UNREVIEWED" and role_status != "APPROVED":
+			errors.append("Batch 1 item has unsupported Stack Role status: %s" % item_id)
+		if String((record["auto_group_review"] as Dictionary)["status"]) != "UNREVIEWED":
+			errors.append("Batch 1 must not alter an Auto Group decision: %s" % item_id)
+	for item_id: String in candidate_ids():
+		if BATCH_ONE_ITEM_IDS.has(item_id):
+			continue
+		var candidate_record: Dictionary = records[String(authoring_keys_by_id[item_id])] as Dictionary
+		if String((candidate_record["stack_role_review"] as Dictionary)["status"]) != "UNREVIEWED":
+			errors.append("Batch 1 requires later candidates to remain unreviewed: %s" % item_id)
 	return errors
 
 

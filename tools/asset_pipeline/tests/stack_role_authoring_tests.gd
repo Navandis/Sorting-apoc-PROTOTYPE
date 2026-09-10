@@ -4,6 +4,9 @@ const AuthoringReviewManifestScript = preload("res://tools/asset_pipeline/author
 const StackRoleAuthoringScript = preload("res://tools/asset_pipeline/stack_role_authoring.gd")
 
 const BLOCKED_IDS: PackedStringArray = ["loot_000034", "loot_000036"]
+const BATCH_ONE_IDS: PackedStringArray = [
+	"loot_000003", "loot_000007", "loot_000020", "loot_000021"
+]
 const GRANDFATHERED: Dictionary = {
 	"loot_000002": [false, true, ""],
 	"loot_000005": [true, true, "boxed_food"],
@@ -53,6 +56,7 @@ const EXPECTED_CANDIDATES: Dictionary = {
 func _init() -> void:
 	_test_exact_candidate_table()
 	_test_phase_one_migration_approves_only_exact_nine()
+	_test_batch_one_apply_approves_only_human_decisions()
 	_test_gloves_and_pants_remain_blocked_without_candidates()
 	_test_catalogue_set_mismatch_aborts_without_writes()
 	_test_invalid_manifest_aborts_without_writes()
@@ -98,6 +102,52 @@ func _test_phase_one_migration_approves_only_exact_nine() -> void:
 			approved_group_ids.append(item_id)
 	assert(approved_stack_ids == _sorted_keys(GRANDFATHERED))
 	assert(approved_group_ids == _sorted_keys(GRANDFATHERED))
+
+
+func _test_batch_one_apply_approves_only_human_decisions() -> void:
+	var fixture: Dictionary = _fixture()
+	_apply_candidate_roles(fixture["current_assets"] as Array[Dictionary])
+	var seeded: Dictionary = StackRoleAuthoringScript.apply_phase_1(
+		fixture["manifest"] as Dictionary,
+		fixture["current_assets"] as Array[Dictionary],
+		_registry()
+	)
+	var result: Dictionary = StackRoleAuthoringScript.apply_stack_role_batch_1(
+		seeded["manifest"] as Dictionary,
+		fixture["current_assets"] as Array[Dictionary],
+		_registry()
+	)
+	assert((result["errors"] as PackedStringArray).is_empty())
+	assert(result["approved_item_ids"] == BATCH_ONE_IDS)
+	var records: Dictionary = (result["manifest"] as Dictionary)["assets"] as Dictionary
+	var assets_by_id: Dictionary = {}
+	for asset: Dictionary in fixture["current_assets"] as Array[Dictionary]:
+		assets_by_id[String(asset["item_id"])] = asset
+	for item_id: String in BATCH_ONE_IDS:
+		var record: Dictionary = records[item_id] as Dictionary
+		var role_review: Dictionary = record["stack_role_review"] as Dictionary
+		assert(String(role_review["status"]) == "APPROVED")
+		assert(role_review["flags"] == [])
+		assert(AuthoringReviewManifestScript.stack_role_snapshot(
+			assets_by_id[item_id] as Dictionary
+		) == {
+			"reviewed_source_fingerprint": role_review["reviewed_source_fingerprint"],
+			"reviewed_rotation_degrees": role_review["reviewed_rotation_degrees"],
+			"reviewed_footprint": role_review["reviewed_footprint"],
+			"reviewed_can_be_stacked": role_review["reviewed_can_be_stacked"],
+			"reviewed_can_support_stack": role_review["reviewed_can_support_stack"]
+		})
+		assert(String((record["auto_group_review"] as Dictionary)["status"]) == "UNREVIEWED")
+	assert(String((records["loot_000003"] as Dictionary)["stack_role_review"]["notes"]) == "Flat stable base; irregular exposed-electronics top is not a credible support surface.")
+	var remaining_unreviewed: int = 0
+	for item_id: String in StackRoleAuthoringScript.candidate_ids():
+		if BATCH_ONE_IDS.has(item_id):
+			continue
+		assert(String((records[item_id] as Dictionary)["stack_role_review"]["status"]) == "UNREVIEWED")
+		remaining_unreviewed += 1
+	assert(remaining_unreviewed == 27)
+	for item_id: String in BLOCKED_IDS:
+		assert(String((records[item_id] as Dictionary)["stack_role_review"]["status"]) == "UNREVIEWED")
 
 
 func _test_gloves_and_pants_remain_blocked_without_candidates() -> void:
@@ -219,6 +269,17 @@ func _approve_geometry(record: Dictionary, asset: Dictionary) -> void:
 	footprint_review["reviewed_source_fingerprint"] = asset["source_fingerprint"]
 	footprint_review["reviewed_rotation_degrees"] = [0.0, 0.0, 0.0]
 	footprint_review["reviewed_footprint"] = [1, 1, 1]
+
+
+func _apply_candidate_roles(current_assets: Array[Dictionary]) -> void:
+	for asset: Dictionary in current_assets:
+		var candidate: Dictionary = StackRoleAuthoringScript.candidate_for(
+			String(asset["item_id"])
+		)
+		if candidate.is_empty():
+			continue
+		asset["can_be_stacked"] = bool(candidate["can_be_stacked"])
+		asset["can_support_stack"] = bool(candidate["can_support_stack"])
 
 
 func _registry() -> Dictionary:

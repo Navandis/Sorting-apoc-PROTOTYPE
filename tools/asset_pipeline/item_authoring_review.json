@@ -172,25 +172,22 @@
 			"source_fingerprint": "61929a0e30280bedd792f0af49ef16fc7bccdff11cab8f5800563eae3b945503",
 			"source_path": "res://assets/props/electronics/SM_ElectronicDevice_01.glb",
 			"stack_role_review": {
-				"flags": [
-					"SUPPORT_SURFACE_AMBIGUOUS",
-					"VISUAL_REVIEW_RECOMMENDED"
-				],
-				"notes": "The printer has a stable base, while its output and top geometry are too interrupted to approve support provisionally.",
-				"reviewed_can_be_stacked": false,
+				"flags": [],
+				"notes": "Flat stable base; irregular exposed-electronics top is not a credible support surface.",
+				"reviewed_can_be_stacked": true,
 				"reviewed_can_support_stack": false,
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					3,
+					5,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					90.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "61929a0e30280bedd792f0af49ef16fc7bccdff11cab8f5800563eae3b945503",
+				"status": "APPROVED"
 			},
 			"storage_pose_review": {
 				"notes": "Default pose unsuitable; candidate Y +90 degrees faces the controls and dials toward the player.",
@@ -451,21 +448,21 @@
 			"source_path": "res://assets/props/Food/SM_CerealBox_2.glb",
 			"stack_role_review": {
 				"flags": [],
-				"notes": "The rigid cereal carton has a stable base and a broad flat top suitable for a smaller centered item.",
-				"reviewed_can_be_stacked": false,
-				"reviewed_can_support_stack": false,
+				"notes": "",
+				"reviewed_can_be_stacked": true,
+				"reviewed_can_support_stack": true,
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					3,
+					1,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "9b02e0a19892a539208c02a6098345c3cacb26cf0f2bafcd6995b14c184e576e",
+				"status": "APPROVED"
 			},
 			"storage_pose_review": {
 				"notes": "Default zero authored storage pose approved.",
@@ -1296,24 +1293,22 @@
 			"source_fingerprint": "08407b1d661f88250b2ab1687a7f4b9bd74d1863046e818828a44e89a849481f",
 			"source_path": "res://assets/props/Hydration/SM_MilkCarton_1.glb",
 			"stack_role_review": {
-				"flags": [
-					"SUPPORT_SURFACE_AMBIGUOUS"
-				],
-				"notes": "The milk carton has a stable box-like base, but its folded top is not a credible support.",
-				"reviewed_can_be_stacked": false,
+				"flags": [],
+				"notes": "",
+				"reviewed_can_be_stacked": true,
 				"reviewed_can_support_stack": false,
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					1,
+					1,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					90.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "08407b1d661f88250b2ab1687a7f4b9bd74d1863046e818828a44e89a849481f",
+				"status": "APPROVED"
 			},
 			"storage_pose_review": {
 				"notes": "Default pose unsuitable; candidate Y +90 degrees faces the front label toward the player.",
@@ -1359,24 +1354,22 @@
 			"source_fingerprint": "d31b3993c3dfa7de7de871386090d11edcfc7394d1b0ff9dac0b1d332092bb6d",
 			"source_path": "res://assets/props/Hydration/SM_OrangeJuice_1.glb",
 			"stack_role_review": {
-				"flags": [
-					"SUPPORT_SURFACE_AMBIGUOUS"
-				],
-				"notes": "The juice carton has a stable box-like base, but its folded top is not a credible support.",
-				"reviewed_can_be_stacked": false,
+				"flags": [],
+				"notes": "",
+				"reviewed_can_be_stacked": true,
 				"reviewed_can_support_stack": false,
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					1,
+					1,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					90.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "d31b3993c3dfa7de7de871386090d11edcfc7394d1b0ff9dac0b1d332092bb6d",
+				"status": "APPROVED"
 			},
 			"storage_pose_review": {
 				"notes": "Default pose unsuitable; candidate Y +90 degrees faces the front label toward the player.",

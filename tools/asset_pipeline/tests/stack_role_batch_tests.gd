@@ -4,6 +4,11 @@ const StackRoleAuthoringScript = preload("res://tools/asset_pipeline/stack_role_
 const EXPECTED_IDS: PackedStringArray = [
 	"loot_000003", "loot_000007", "loot_000020", "loot_000021"
 ]
+const EXPECTED_BATCH_TWO_IDS: PackedStringArray = [
+	"loot_000008", "loot_000010", "loot_000015", "loot_000016", "loot_000017",
+	"loot_000018", "loot_000022", "loot_000023", "loot_000024", "loot_000025",
+	"loot_000027"
+]
 
 
 func _init() -> void:
@@ -30,6 +35,20 @@ func _init() -> void:
 	assert("loot_XXXXXX — APPROVE" in first)
 	assert("loot_XXXXXX — ADJUST: true / false" in first)
 	assert("loot_XXXXXX — HOLD" in first)
+	var batch_two_records: Array[Dictionary] = []
+	for item_id: String in ["loot_000027", "loot_000015", "loot_000099", "loot_000024", "loot_000008", "loot_000025", "loot_000018", "loot_000016", "loot_000022", "loot_000017", "loot_000010", "loot_000023"]:
+		batch_two_records.append(_record(item_id))
+	var batch_two_rows: Array[Dictionary] = StackRoleAuthoringScript.batch_two_rows(batch_two_records)
+	var batch_two_ids: PackedStringArray = []
+	for row: Dictionary in batch_two_rows:
+		batch_two_ids.append(String(row["item_id"]))
+	assert(batch_two_ids == EXPECTED_BATCH_TWO_IDS)
+	var batch_two_markdown: String = StackRoleAuthoringScript.batch_two_markdown(batch_two_records)
+	assert(batch_two_markdown == StackRoleAuthoringScript.batch_two_markdown(batch_two_records.duplicate(true)))
+	assert("# Stack Role Authoring Review — Batch 2" in batch_two_markdown)
+	assert("cylindrical / container-like" in batch_two_markdown)
+	assert("loot_000016" in batch_two_markdown)
+	assert("VISUAL_REVIEW_RECOMMENDED" in batch_two_markdown)
 	print("PASS: stack role batch tests")
 	quit(0)
 
