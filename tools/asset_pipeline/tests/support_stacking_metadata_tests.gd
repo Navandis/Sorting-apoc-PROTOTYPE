@@ -15,6 +15,24 @@ const EXPECTED: Dictionary = {
 	"loot_000031": [true, true, &"flat_media"],
 	"loot_000039": [true, false, &""]
 }
+const CANDIDATE_EXPECTED: Dictionary = {
+	"loot_000001": [true, false], "loot_000003": [true, false],
+	"loot_000004": [true, false], "loot_000007": [true, true],
+	"loot_000008": [true, true], "loot_000010": [true, true],
+	"loot_000011": [false, false], "loot_000012": [false, false],
+	"loot_000013": [true, false], "loot_000014": [true, false],
+	"loot_000015": [true, false], "loot_000016": [true, false],
+	"loot_000017": [true, false], "loot_000018": [true, false],
+	"loot_000020": [true, false], "loot_000021": [true, false],
+	"loot_000022": [true, true], "loot_000023": [true, true],
+	"loot_000024": [true, true], "loot_000025": [true, true],
+	"loot_000026": [true, false], "loot_000027": [true, true],
+	"loot_000029": [false, false], "loot_000032": [false, false],
+	"loot_000033": [true, false], "loot_000035": [true, false],
+	"loot_000037": [true, false], "loot_000038": [true, false],
+	"loot_000040": [true, false], "loot_000041": [false, false],
+	"loot_000042": [true, false]
+}
 
 var _failed: bool = false
 
@@ -46,7 +64,7 @@ func _run() -> void:
 			quit(1)
 			return
 	_test_role_combinations_through_item_instance()
-	_test_exact_spike_content_and_ordinary_defaults()
+	_test_exact_phase_one_runtime_content()
 	if _failed:
 		quit(1)
 		return
@@ -77,7 +95,7 @@ func _test_role_combinations_through_item_instance() -> void:
 	_check(missing_definition.get_auto_stack_group().is_empty(), "null definition group default")
 
 
-func _test_exact_spike_content_and_ordinary_defaults() -> void:
+func _test_exact_phase_one_runtime_content() -> void:
 	var catalogue: Resource = load(CATALOG_PATH)
 	_check(catalogue != null, "catalogue loads")
 	if catalogue == null:
@@ -85,6 +103,7 @@ func _test_exact_spike_content_and_ordinary_defaults() -> void:
 	var definitions: Array = catalogue.get("definitions") as Array
 	_check(definitions.size() == 42, "catalogue remains 42 items")
 	var spike_count: int = 0
+	var candidate_count: int = 0
 	for value: Variant in definitions:
 		var definition: ItemDefinition = value as ItemDefinition
 		_check(definition != null, "catalogue entry is ItemDefinition")
@@ -98,11 +117,18 @@ func _test_exact_spike_content_and_ordinary_defaults() -> void:
 			_check(item.can_be_stacked() == bool(expected[0]), "%s stackable role" % item_id)
 			_check(item.can_support_stack() == bool(expected[1]), "%s support role" % item_id)
 			_check(item.get_auto_stack_group() == StringName(expected[2]), "%s group" % item_id)
+		elif CANDIDATE_EXPECTED.has(item_id):
+			candidate_count += 1
+			var candidate_expected: Array = CANDIDATE_EXPECTED[item_id] as Array
+			_check(item.can_be_stacked() == bool(candidate_expected[0]), "%s candidate stackable role" % item_id)
+			_check(item.can_support_stack() == bool(candidate_expected[1]), "%s candidate support role" % item_id)
+			_check(item.get_auto_stack_group().is_empty(), "%s candidate retains empty group" % item_id)
 		else:
-			_check(not item.can_be_stacked(), "%s ordinary stackable default" % item_id)
-			_check(not item.can_support_stack(), "%s ordinary support default" % item_id)
-			_check(item.get_auto_stack_group().is_empty(), "%s ordinary group default" % item_id)
+			_check(not item.can_be_stacked(), "%s blocked stackable default" % item_id)
+			_check(not item.can_support_stack(), "%s blocked support default" % item_id)
+			_check(item.get_auto_stack_group().is_empty(), "%s blocked group default" % item_id)
 	_check(spike_count == 9, "exactly nine spike definitions")
+	_check(candidate_count == 31, "exactly 31 Phase 1 candidates")
 
 
 func _has_property(object: Object, property_name: StringName) -> bool:

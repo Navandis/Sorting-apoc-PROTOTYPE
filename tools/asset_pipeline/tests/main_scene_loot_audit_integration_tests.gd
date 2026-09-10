@@ -1,11 +1,15 @@
 extends SceneTree
 
 const REPORT_PATH: String = "res://reports/asset_pipeline/main_scene_loot_audit.json"
+const MANIFEST_PATH: String = "res://tools/asset_pipeline/item_authoring_review.json"
+const REGISTRY_PATH: String = "res://tools/asset_pipeline/auto_stack_group_registry.json"
 const CANDIDATE_FOOTPRINT_ITEM_IDS: PackedStringArray = []
 const INELIGIBLE_FOOTPRINT_ITEM_IDS: PackedStringArray = ["loot_000034", "loot_000036"]
 
 
 func _init() -> void:
+	var manifest_before: PackedByteArray = FileAccess.get_file_as_bytes(MANIFEST_PATH)
+	var registry_before: PackedByteArray = FileAccess.get_file_as_bytes(REGISTRY_PATH)
 	var output: Array[String] = []
 	var exit_code: int = OS.execute(
 		OS.get_executable_path(),
@@ -17,14 +21,23 @@ func _init() -> void:
 		true
 	)
 	assert(exit_code == 0)
+	assert(FileAccess.get_file_as_bytes(MANIFEST_PATH) == manifest_before)
+	assert(FileAccess.get_file_as_bytes(REGISTRY_PATH) == registry_before)
 	var file: FileAccess = FileAccess.open(REPORT_PATH, FileAccess.READ)
 	assert(file != null)
 	var parser: JSON = JSON.new()
 	assert(parser.parse(file.get_as_text()) == OK)
 	file.close()
 	var report: Dictionary = parser.data as Dictionary
-	assert(String(report["schema_version"]) == "1.3")
-	assert(String(report["authoring_review_manifest_schema_version"]) == "1.0")
+	assert(String(report["schema_version"]) == "1.4")
+	assert(String(report["authoring_review_manifest_schema_version"]) == "2.0")
+	assert(String(report["auto_stack_group_registry_schema_version"]) == "1.0")
+	var review_summary: Dictionary = report["review_summary"] as Dictionary
+	_assert_summary(review_summary["stack_role"] as Dictionary, [42, 40, 9, 31, 0, 2])
+	_assert_summary(review_summary["auto_group"] as Dictionary, [42, 9, 9, 0, 0, 33])
+	var registry_summary: Dictionary = report["registry_summary"] as Dictionary
+	assert(int(registry_summary["approved_class_count"]) == 4)
+	assert((registry_summary["unknown_references"] as Array).is_empty())
 	var assets: Array = report["assets"] as Array
 	assert(assets.size() == 42)
 	var default_pose_count: int = 0
@@ -84,7 +97,13 @@ func _init() -> void:
 		"storage_pose_review_status", "storage_pose_review_current", "footprint_review_status",
 		"footprint_review_current", "storage_rotation_degrees", "posed_effective_bounds",
 		"posed_width_m", "posed_height_m", "posed_depth_m", "posed_raw_width_cells",
-		"posed_raw_depth_cells", "posed_raw_orientation_a", "posed_raw_orientation_b"
+		"posed_raw_depth_cells", "posed_raw_orientation_a", "posed_raw_orientation_b",
+		"can_be_stacked", "can_support_stack", "auto_stack_group",
+		"stack_role_review_status", "stack_role_review_eligible", "stack_role_review_current",
+		"stack_role_review_stale", "stack_role_review_dependency_blocked",
+		"auto_group_review_status", "auto_group_review_eligible", "auto_group_review_current",
+		"auto_group_review_stale", "auto_group_review_dependency_blocked",
+		"auto_group_reference_valid", "auto_group_registry_compatibility_revision"
 	]:
 		assert(record.has(field))
 	assert(String(record["scale_review_status"]) == "APPROVED")
@@ -92,3 +111,12 @@ func _init() -> void:
 	assert(not (record["flags"] as Array).has("SCALE_REVIEW_STALE"))
 	print("PASS: main scene loot audit integration tests")
 	quit(0)
+
+
+func _assert_summary(summary: Dictionary, values: Array) -> void:
+	assert(int(summary["total"]) == int(values[0]))
+	assert(int(summary["currently_eligible"]) == int(values[1]))
+	assert(int(summary["approved_current"]) == int(values[2]))
+	assert(int(summary["unreviewed"]) == int(values[3]))
+	assert(int(summary["stale"]) == int(values[4]))
+	assert(int(summary["dependency_blocked"]) == int(values[5]))

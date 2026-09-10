@@ -8,5 +8,7 @@ script = ExtResource("1_csk4h")
 item_id = &"loot_000041"
 display_name = "Hammer 3"
 storage_category = "Weapons"
+can_be_stacked = false
+can_support_stack = false
 storage_rotation_degrees = Vector3(0, 0, 180)
 visual_scene = ExtResource("2_ijeao")

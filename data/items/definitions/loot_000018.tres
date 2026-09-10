@@ -9,4 +9,5 @@ item_id = &"loot_000018"
 display_name = "Propane Tank 02"
 storage_category = "Fuel"
 storage_footprint = Vector3i(3, 3, 1)
+can_be_stacked = true
 visual_scene = ExtResource("2_dn5bs")

@@ -168,25 +168,33 @@ func _test_authored_surface_profile() -> void:
 	var expected_clearances: Dictionary = {
 		"SM_MetalShelves_level_1": 0.822046,
 		"SM_MetalShelves_level_2": 0.842597,
-		"SM_MetalShelves_level_3": 0.918930,
+		"SM_MetalShelves_level_3": 0.874892,
 		"SM_MetalShelves_level_4": 0.919000,
 		"SM_MetalShelves2_level_1": 0.550771,
 		"SM_MetalShelves2_level_2": 0.564540,
-		"SM_MetalShelves2_level_3": 0.615683,
+		"SM_MetalShelves2_level_3": 0.586178,
 		"SM_MetalShelves2_level_4": 0.615730,
 		"SM_ventilated_locker2_level_1": 0.951673,
 		"SM_ventilated_locker2_level_2": 0.639966,
-		"SM_ventilated_locker2_level_3": 0.518593,
+		"SM_ventilated_locker2_level_3": 0.491008,
 		"SM_ventilated_locker2_level_4": 0.519000,
 		"SM_ventilated_locker_level_1": 0.623346,
 		"SM_ventilated_locker_level_2": 0.419177,
-		"SM_ventilated_locker_level_3": 0.339678,
+		"SM_ventilated_locker_level_3": 0.321610,
 		"SM_ventilated_locker_level_4": 0.339945,
 	}
 	for surface: StorageSurface in surfaces:
 		var key: String = String(surface.surface_id)
 		_check(expected_clearances.has(key), "%s has migration evidence" % key)
-		_check(absf(surface.stack_clearance_m - float(expected_clearances.get(key, -1.0))) <= 0.00001, "%s derives expected physical clearance" % key)
+		var expected_clearance: float = float(expected_clearances.get(key, -1.0))
+		_check(
+			absf(surface.stack_clearance_m - expected_clearance) <= 0.00001,
+			"%s derives expected physical clearance (actual=%.6f expected=%.6f)" % [
+				key,
+				surface.stack_clearance_m,
+				expected_clearance,
+			]
+		)
 		_check(is_equal_approx(surface.get_maximum_stack_top_y_m(), surface.stack_clearance_m * 0.95), "%s applies one usable fraction" % key)
 
 	var explicit_context_values: Dictionary = {

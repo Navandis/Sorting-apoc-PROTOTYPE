@@ -1,6 +1,7 @@
 extends SceneTree
 
 const AuthoringReviewManifestScript = preload("res://tools/asset_pipeline/authoring_review_manifest.gd")
+const AutoStackGroupRegistryScript = preload("res://tools/asset_pipeline/auto_stack_group_registry.gd")
 
 
 func _init() -> void:
@@ -21,8 +22,21 @@ func _init() -> void:
 	_test_unreviewed_decisions_are_not_stale()
 	_test_item_id_association_sync_preserves_all_review_evidence()
 	_test_scale_reconciliation_approves_unchanged_and_leaves_normalized_unreviewed()
-	_test_manifest_schema_is_one_zero()
+	_test_manifest_schema_is_two_zero()
+	_test_legacy_migration_preserves_previous_review_data()
+	_test_manifest_migration_is_idempotent()
+	_test_unknown_new_review_status_fails_validation()
+	_test_unknown_review_flags_fail_validation()
+	_test_malformed_review_evidence_fails_validation()
+	_test_malformed_review_snapshots_fail_validation()
+	_test_stack_role_dependencies_block_currentness()
+	_test_stack_role_snapshot_staleness_inputs()
+	_test_unrelated_metadata_does_not_stale_stack_role()
+	_test_auto_group_requires_current_stack_role()
+	_test_auto_group_registry_revision_and_description_semantics()
+	_test_approved_empty_auto_group_is_current()
 	_test_serialization_is_deterministic()
+	_test_serialized_manifest_validates_after_json_parse()
 	print("PASS: authoring review manifest tests")
 	quit(0)
 
@@ -271,8 +285,219 @@ func _test_scale_reconciliation_approves_unchanged_and_leaves_normalized_unrevie
 	assert(String(((records["loot_000002"] as Dictionary)["footprint_review"] as Dictionary)["notes"]) == "preserve footprint")
 
 
-func _test_manifest_schema_is_one_zero() -> void:
-	assert(String(AuthoringReviewManifestScript.empty_manifest()["schema_version"]) == "1.0")
+func _test_manifest_schema_is_two_zero() -> void:
+	assert(String(AuthoringReviewManifestScript.empty_manifest()["schema_version"]) == "2.0")
+
+
+func _test_legacy_migration_preserves_previous_review_data() -> void:
+	var legacy_record: Dictionary = AuthoringReviewManifestScript.new_record(
+		_asset("res://a.glb", "loot_000001", "hash", [1.0, 2.0, 3.0], [4, 5, 1])
+	)
+	legacy_record.erase("stack_role_review")
+	legacy_record.erase("auto_group_review")
+	(legacy_record["scale_review"] as Dictionary)["status"] = "NORMALIZATION_REQUIRED"
+	(legacy_record["scale_review"] as Dictionary)["notes"] = "scale evidence"
+	(legacy_record["storage_pose_review"] as Dictionary)["status"] = "CUSTOM_POSE_APPROVED"
+	(legacy_record["storage_pose_review"] as Dictionary)["reviewed_rotation_degrees"] = [1.0, 2.0, 3.0]
+	(legacy_record["storage_pose_review"] as Dictionary)["notes"] = "pose evidence"
+	(legacy_record["footprint_review"] as Dictionary)["status"] = "OVERRIDE_APPROVED"
+	(legacy_record["footprint_review"] as Dictionary)["reviewed_footprint"] = [4, 5, 1]
+	(legacy_record["footprint_review"] as Dictionary)["notes"] = "footprint evidence"
+	var expected_scale: Dictionary = (legacy_record["scale_review"] as Dictionary).duplicate(true)
+	var expected_pose: Dictionary = (legacy_record["storage_pose_review"] as Dictionary).duplicate(true)
+	var expected_footprint: Dictionary = (legacy_record["footprint_review"] as Dictionary).duplicate(true)
+	var legacy: Dictionary = {"schema_version": "1.0", "assets": {"loot_000001": legacy_record}}
+
+	var migrated: Dictionary = AuthoringReviewManifestScript.migrate_manifest(legacy)
+	var migrated_record: Dictionary = (migrated["assets"] as Dictionary)["loot_000001"] as Dictionary
+	assert(String(migrated["schema_version"]) == "2.0")
+	assert(migrated_record["scale_review"] == expected_scale)
+	assert(migrated_record["storage_pose_review"] == expected_pose)
+	assert(migrated_record["footprint_review"] == expected_footprint)
+	assert(migrated_record["stack_role_review"] == {
+		"status": "UNREVIEWED",
+		"reviewed_source_fingerprint": "",
+		"reviewed_rotation_degrees": [0.0, 0.0, 0.0],
+		"reviewed_footprint": [0, 0, 0],
+		"reviewed_can_be_stacked": false,
+		"reviewed_can_support_stack": false,
+		"flags": [],
+		"notes": ""
+	})
+	assert(migrated_record["auto_group_review"] == {
+		"status": "UNREVIEWED",
+		"reviewed_stack_role_snapshot": {},
+		"reviewed_auto_stack_group": "",
+		"reviewed_registry_compatibility_revision": 0,
+		"flags": [],
+		"notes": ""
+	})
+
+
+func _test_manifest_migration_is_idempotent() -> void:
+	var legacy: Dictionary = {
+		"schema_version": "1.0",
+		"assets": {
+			"loot_000002": AuthoringReviewManifestScript.new_record(_asset("res://b.glb", "loot_000002", "b")),
+			"loot_000001": AuthoringReviewManifestScript.new_record(_asset("res://a.glb", "loot_000001", "a"))
+		}
+	}
+	for record_value: Variant in (legacy["assets"] as Dictionary).values():
+		var record: Dictionary = record_value as Dictionary
+		record.erase("stack_role_review")
+		record.erase("auto_group_review")
+	var once: Dictionary = AuthoringReviewManifestScript.migrate_manifest(legacy)
+	var twice: Dictionary = AuthoringReviewManifestScript.migrate_manifest(once)
+	assert(AuthoringReviewManifestScript.serialize_manifest(once) == AuthoringReviewManifestScript.serialize_manifest(twice))
+
+
+func _test_unknown_new_review_status_fails_validation() -> void:
+	var record: Dictionary = AuthoringReviewManifestScript.new_record(_asset("res://a.glb", "loot_000001", "a"))
+	(record["stack_role_review"] as Dictionary)["status"] = "HEURISTICALLY_APPROVED"
+	var manifest: Dictionary = AuthoringReviewManifestScript.empty_manifest()
+	manifest["assets"] = {"loot_000001": record}
+	assert(_errors_contain(AuthoringReviewManifestScript.validate_manifest(manifest), "stack_role_review.status"))
+	(record["stack_role_review"] as Dictionary)["status"] = "UNREVIEWED"
+	(record["auto_group_review"] as Dictionary)["status"] = "MISSING"
+	assert(_errors_contain(AuthoringReviewManifestScript.validate_manifest(manifest), "auto_group_review.status"))
+
+
+func _test_unknown_review_flags_fail_validation() -> void:
+	var record: Dictionary = AuthoringReviewManifestScript.new_record(_asset("res://a.glb", "loot_000001", "a"))
+	var manifest: Dictionary = AuthoringReviewManifestScript.empty_manifest()
+	manifest["assets"] = {"loot_000001": record}
+	(record["stack_role_review"] as Dictionary)["flags"] = ["FLAT_AABB_AUTO_APPROVAL"]
+	assert(_errors_contain(AuthoringReviewManifestScript.validate_manifest(manifest), "Unknown Stack Role flag"))
+	(record["stack_role_review"] as Dictionary)["flags"] = []
+	(record["auto_group_review"] as Dictionary)["flags"] = ["SILENT_NEW_GROUP"]
+	assert(_errors_contain(AuthoringReviewManifestScript.validate_manifest(manifest), "Unknown Auto Group flag"))
+
+
+func _test_malformed_review_evidence_fails_validation() -> void:
+	var record: Dictionary = AuthoringReviewManifestScript.new_record(_asset("res://a.glb", "loot_000001", "a"))
+	var manifest: Dictionary = AuthoringReviewManifestScript.empty_manifest()
+	manifest["assets"] = {"loot_000001": record}
+	(record["stack_role_review"] as Dictionary)["flags"] = "IRREGULAR_SHAPE"
+	assert(_errors_contain(AuthoringReviewManifestScript.validate_manifest(manifest), "stack_role_review.flags"))
+	(record["stack_role_review"] as Dictionary)["flags"] = []
+	(record["auto_group_review"] as Dictionary)["notes"] = 42
+	assert(_errors_contain(AuthoringReviewManifestScript.validate_manifest(manifest), "auto_group_review.notes"))
+
+
+func _test_malformed_review_snapshots_fail_validation() -> void:
+	var record: Dictionary = AuthoringReviewManifestScript.new_record(
+		_asset("res://a.glb", "loot_000001", "a")
+	)
+	var manifest: Dictionary = AuthoringReviewManifestScript.empty_manifest()
+	manifest["assets"] = {"loot_000001": record}
+	(record["stack_role_review"] as Dictionary)["reviewed_rotation_degrees"] = [0.0, "bad", 0.0]
+	assert(_errors_contain(
+		AuthoringReviewManifestScript.validate_manifest(manifest),
+		"stack_role_review.reviewed_rotation_degrees"
+	))
+	(record["stack_role_review"] as Dictionary)["reviewed_rotation_degrees"] = [0.0, 0.0, 0.0]
+	(record["stack_role_review"] as Dictionary)["reviewed_can_be_stacked"] = "true"
+	assert(_errors_contain(
+		AuthoringReviewManifestScript.validate_manifest(manifest),
+		"stack_role_review.reviewed_can_be_stacked"
+	))
+	(record["stack_role_review"] as Dictionary)["reviewed_can_be_stacked"] = false
+	(record["auto_group_review"] as Dictionary)["reviewed_stack_role_snapshot"] = []
+	assert(_errors_contain(
+		AuthoringReviewManifestScript.validate_manifest(manifest),
+		"auto_group_review.reviewed_stack_role_snapshot"
+	))
+	(record["auto_group_review"] as Dictionary)["reviewed_stack_role_snapshot"] = {}
+	(record["auto_group_review"] as Dictionary)["reviewed_registry_compatibility_revision"] = 1.5
+	assert(_errors_contain(
+		AuthoringReviewManifestScript.validate_manifest(manifest),
+		"auto_group_review.reviewed_registry_compatibility_revision"
+	))
+
+
+func _test_stack_role_dependencies_block_currentness() -> void:
+	var asset: Dictionary = _stack_asset("hash", [0.0, 0.0, 0.0], [2, 3, 1], true, false, "")
+	var unresolved_pose: Dictionary = AuthoringReviewManifestScript.new_record(asset)
+	var evidence: Dictionary = AuthoringReviewManifestScript.review_evidence(unresolved_pose, asset, _registry())
+	assert(not bool(evidence["stack_role_review_eligible"]))
+	assert(bool(evidence["stack_role_review_dependency_blocked"]))
+	assert(not bool(evidence["stack_role_review_stale"]))
+
+	var stale_footprint: Dictionary = AuthoringReviewManifestScript.new_record(asset)
+	_approve_geometry(stale_footprint, asset)
+	(stale_footprint["footprint_review"] as Dictionary)["reviewed_footprint"] = [9, 9, 1]
+	evidence = AuthoringReviewManifestScript.review_evidence(stale_footprint, asset, _registry())
+	assert(not bool(evidence["stack_role_review_eligible"]))
+	assert(bool(evidence["stack_role_review_dependency_blocked"]))
+
+
+func _test_stack_role_snapshot_staleness_inputs() -> void:
+	var asset: Dictionary = _stack_asset("hash", [0.0, 90.0, 0.0], [2, 3, 1], true, false, "")
+	var mutations: Array[Dictionary] = [
+		_stack_asset("changed", [0.0, 90.0, 0.0], [2, 3, 1], true, false, ""),
+		_stack_asset("hash", [0.0, 0.0, 0.0], [2, 3, 1], true, false, ""),
+		_stack_asset("hash", [0.0, 90.0, 0.0], [3, 3, 1], true, false, ""),
+		_stack_asset("hash", [0.0, 90.0, 0.0], [2, 3, 1], false, false, ""),
+		_stack_asset("hash", [0.0, 90.0, 0.0], [2, 3, 1], true, true, "")
+	]
+	for mutation: Dictionary in mutations:
+		var record: Dictionary = _approved_stack_role_record(asset)
+		var evidence: Dictionary = AuthoringReviewManifestScript.review_evidence(record, mutation, _registry())
+		assert(not bool(evidence["stack_role_review_current"]))
+		assert(bool(evidence["stack_role_review_stale"]))
+
+
+func _test_unrelated_metadata_does_not_stale_stack_role() -> void:
+	var asset: Dictionary = _stack_asset("hash", [0.0, 90.0, 0.0], [2, 3, 1], true, false, "")
+	var record: Dictionary = _approved_stack_role_record(asset)
+	var renamed: Dictionary = asset.duplicate(true)
+	renamed["display_name"] = "Renamed"
+	renamed["storage_category"] = "Medical"
+	renamed["bulk"] = 999
+	renamed["utility_id"] = "Fuel"
+	var evidence: Dictionary = AuthoringReviewManifestScript.review_evidence(record, renamed, _registry())
+	assert(bool(evidence["stack_role_review_current"]))
+	assert(not bool(evidence["stack_role_review_stale"]))
+
+
+func _test_auto_group_requires_current_stack_role() -> void:
+	var asset: Dictionary = _stack_asset("hash", [0.0, 0.0, 0.0], [2, 2, 1], true, true, "flat_media")
+	var record: Dictionary = AuthoringReviewManifestScript.new_record(asset)
+	_approve_geometry(record, asset)
+	var auto_review: Dictionary = record["auto_group_review"] as Dictionary
+	auto_review["status"] = "APPROVED"
+	auto_review["reviewed_auto_stack_group"] = "flat_media"
+	auto_review["reviewed_registry_compatibility_revision"] = 1
+	var evidence: Dictionary = AuthoringReviewManifestScript.review_evidence(record, asset, _registry())
+	assert(not bool(evidence["auto_group_review_eligible"]))
+	assert(bool(evidence["auto_group_review_dependency_blocked"]))
+	assert(not bool(evidence["auto_group_review_current"]))
+	assert(bool(evidence["auto_group_review_stale"]))
+
+
+func _test_auto_group_registry_revision_and_description_semantics() -> void:
+	var asset: Dictionary = _stack_asset("hash", [0.0, 0.0, 0.0], [2, 2, 1], true, true, "flat_media")
+	var record: Dictionary = _approved_stack_role_record(asset)
+	_approve_auto_group(record, asset, 1)
+	var editorial_registry: Dictionary = _registry()
+	((editorial_registry["classes"] as Dictionary)["flat_media"] as Dictionary)["description"] = "Editorial wording only."
+	var evidence: Dictionary = AuthoringReviewManifestScript.review_evidence(record, asset, editorial_registry)
+	assert(bool(evidence["auto_group_review_current"]))
+	var semantic_registry: Dictionary = _registry()
+	((semantic_registry["classes"] as Dictionary)["flat_media"] as Dictionary)["compatibility_revision"] = 2
+	evidence = AuthoringReviewManifestScript.review_evidence(record, asset, semantic_registry)
+	assert(not bool(evidence["auto_group_review_current"]))
+	assert(bool(evidence["auto_group_review_stale"]))
+
+
+func _test_approved_empty_auto_group_is_current() -> void:
+	var asset: Dictionary = _stack_asset("hash", [0.0, 0.0, 0.0], [2, 2, 1], true, false, "")
+	var record: Dictionary = _approved_stack_role_record(asset)
+	_approve_auto_group(record, asset, 0)
+	var evidence: Dictionary = AuthoringReviewManifestScript.review_evidence(record, asset, _registry())
+	assert(bool(evidence["auto_group_review_eligible"]))
+	assert(bool(evidence["auto_group_review_current"]))
+	assert(not bool(evidence["auto_group_review_stale"]))
 
 
 func _test_serialization_is_deterministic() -> void:
@@ -285,6 +510,20 @@ func _test_serialization_is_deterministic() -> void:
 		AuthoringReviewManifestScript.serialize_manifest(manifest)
 		== AuthoringReviewManifestScript.serialize_manifest(manifest.duplicate(true))
 	)
+
+
+func _test_serialized_manifest_validates_after_json_parse() -> void:
+	var manifest: Dictionary = AuthoringReviewManifestScript.empty_manifest()
+	manifest["assets"] = {
+		"loot_000001": AuthoringReviewManifestScript.new_record(
+			_asset("res://a.glb", "loot_000001", "a")
+		)
+	}
+	var parsed: Variant = JSON.parse_string(
+		AuthoringReviewManifestScript.serialize_manifest(manifest)
+	)
+	assert(parsed is Dictionary)
+	assert(AuthoringReviewManifestScript.validate_manifest(parsed as Dictionary).is_empty())
 
 
 func _asset(
@@ -307,3 +546,70 @@ func _manifest_with_record(authoring_key: String, asset: Dictionary) -> Dictiona
 	var manifest: Dictionary = AuthoringReviewManifestScript.empty_manifest()
 	manifest["assets"] = {authoring_key: AuthoringReviewManifestScript.new_record(asset)}
 	return manifest
+
+
+func _errors_contain(errors: PackedStringArray, fragment: String) -> bool:
+	for message: String in errors:
+		if fragment in message:
+			return true
+	return false
+
+
+func _stack_asset(
+	fingerprint: String,
+	rotation: Array,
+	footprint: Array,
+	can_be_stacked: bool,
+	can_support_stack: bool,
+	group_id: String
+) -> Dictionary:
+	var asset: Dictionary = _asset("res://a.glb", "loot_000001", fingerprint, rotation, footprint)
+	asset["has_item_definition"] = true
+	asset["can_be_stacked"] = can_be_stacked
+	asset["can_support_stack"] = can_support_stack
+	asset["auto_stack_group"] = group_id
+	return asset
+
+
+func _approve_geometry(record: Dictionary, asset: Dictionary) -> void:
+	var pose_review: Dictionary = record["storage_pose_review"] as Dictionary
+	pose_review["status"] = "CUSTOM_POSE_APPROVED"
+	pose_review["reviewed_source_fingerprint"] = asset["source_fingerprint"]
+	pose_review["reviewed_rotation_degrees"] = (asset["storage_rotation_degrees"] as Array).duplicate()
+	var footprint_review: Dictionary = record["footprint_review"] as Dictionary
+	footprint_review["status"] = "GEOMETRY_APPROVED"
+	footprint_review["reviewed_source_fingerprint"] = asset["source_fingerprint"]
+	footprint_review["reviewed_rotation_degrees"] = (asset["storage_rotation_degrees"] as Array).duplicate()
+	footprint_review["reviewed_footprint"] = (asset["storage_footprint"] as Array).duplicate()
+
+
+func _approved_stack_role_record(asset: Dictionary) -> Dictionary:
+	var record: Dictionary = AuthoringReviewManifestScript.new_record(asset)
+	_approve_geometry(record, asset)
+	var review: Dictionary = record["stack_role_review"] as Dictionary
+	review["status"] = "APPROVED"
+	var snapshot: Dictionary = AuthoringReviewManifestScript.stack_role_snapshot(asset)
+	for key_value: Variant in snapshot.keys():
+		review[key_value] = snapshot[key_value]
+	return record
+
+
+func _approve_auto_group(record: Dictionary, asset: Dictionary, revision: int) -> void:
+	var auto_review: Dictionary = record["auto_group_review"] as Dictionary
+	auto_review["status"] = "APPROVED"
+	auto_review["reviewed_stack_role_snapshot"] = AuthoringReviewManifestScript.stack_role_snapshot(asset)
+	auto_review["reviewed_auto_stack_group"] = String(asset["auto_stack_group"])
+	auto_review["reviewed_registry_compatibility_revision"] = revision
+
+
+func _registry() -> Dictionary:
+	return {
+		"schema_version": "1.0",
+		"classes": {
+			"flat_media": {
+				"approval_status": "APPROVED",
+				"compatibility_revision": 1,
+				"description": "Compatible flat media."
+			}
+		}
+	}

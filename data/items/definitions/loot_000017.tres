@@ -9,4 +9,5 @@ item_id = &"loot_000017"
 display_name = "Gas Cylinder 01"
 storage_category = "Fuel"
 storage_footprint = Vector3i(4, 3, 1)
+can_be_stacked = true
 visual_scene = ExtResource("2_hmwjr")

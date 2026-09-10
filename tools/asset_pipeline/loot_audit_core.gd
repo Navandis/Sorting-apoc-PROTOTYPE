@@ -215,6 +215,48 @@ static func ordered_flags(values: PackedStringArray) -> PackedStringArray:
 	return ordered
 
 
+static func review_summary(records: Array[Dictionary]) -> Dictionary:
+	var stack_role: Dictionary = _empty_review_summary(records.size())
+	var auto_group: Dictionary = _empty_review_summary(records.size())
+	for record: Dictionary in records:
+		_accumulate_review_summary(record, "stack_role", stack_role)
+		_accumulate_review_summary(record, "auto_group", auto_group)
+	return {"stack_role": stack_role, "auto_group": auto_group}
+
+
+static func _empty_review_summary(total: int) -> Dictionary:
+	return {
+		"total": total,
+		"currently_eligible": 0,
+		"approved_current": 0,
+		"unreviewed": 0,
+		"stale": 0,
+		"dependency_blocked": 0
+	}
+
+
+static func _accumulate_review_summary(
+	record: Dictionary,
+	prefix: String,
+	summary: Dictionary
+) -> void:
+	var eligible: bool = bool(record.get("%s_review_eligible" % prefix, false))
+	var current: bool = bool(record.get("%s_review_current" % prefix, false))
+	var stale: bool = bool(record.get("%s_review_stale" % prefix, false))
+	var blocked: bool = bool(record.get("%s_review_dependency_blocked" % prefix, false))
+	var status: String = String(record.get("%s_review_status" % prefix, "UNREVIEWED"))
+	if eligible:
+		summary["currently_eligible"] = int(summary["currently_eligible"]) + 1
+	if current:
+		summary["approved_current"] = int(summary["approved_current"]) + 1
+	if eligible and status == "UNREVIEWED":
+		summary["unreviewed"] = int(summary["unreviewed"]) + 1
+	if stale:
+		summary["stale"] = int(summary["stale"]) + 1
+	if blocked:
+		summary["dependency_blocked"] = int(summary["dependency_blocked"]) + 1
+
+
 static func _bounds_from_points(points: Array[Vector3]) -> AABB:
 	if points.is_empty():
 		return AABB()

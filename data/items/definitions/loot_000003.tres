@@ -10,4 +10,5 @@ display_name = "Electronic Device 01"
 storage_category = "Electronics"
 storage_footprint = Vector3i(3, 5, 1)
 storage_rotation_degrees = Vector3(0, 90, 0)
+can_be_stacked = true
 visual_scene = ExtResource("2_48dqb")

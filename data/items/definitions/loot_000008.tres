@@ -8,4 +8,6 @@ script = ExtResource("1_ewrh4")
 item_id = &"loot_000008"
 display_name = "Dry Goods 01a"
 storage_category = "Food"
+can_be_stacked = true
+can_support_stack = true
 visual_scene = ExtResource("2_nnkbs")

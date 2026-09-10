@@ -9,4 +9,5 @@ item_id = &"loot_000035"
 display_name = "Hard Hat 01"
 storage_category = "Protection"
 storage_footprint = Vector3i(3, 3, 1)
+can_be_stacked = true
 visual_scene = ExtResource("2_umnxq")

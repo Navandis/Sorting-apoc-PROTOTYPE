@@ -1,0 +1,25 @@
+{
+	"schema_version": "1.0",
+	"classes": {
+		"boxed_food": {
+			"approval_status": "APPROVED",
+			"compatibility_revision": 1,
+			"description": "Compatible rigid boxed-food packages intended to auto-stack."
+		},
+		"flat_media": {
+			"approval_status": "APPROVED",
+			"compatibility_revision": 1,
+			"description": "Compatible flat media intended to form predictable narrowing automatic stacks."
+		},
+		"medical_boxes": {
+			"approval_status": "APPROVED",
+			"compatibility_revision": 1,
+			"description": "Compatible rigid medical packages intended to auto-stack."
+		},
+		"round_cans": {
+			"approval_status": "APPROVED",
+			"compatibility_revision": 1,
+			"description": "Standard cylindrical canned goods intended to stack vertically even across Storage Categories where zone policy permits."
+		}
+	}
+}

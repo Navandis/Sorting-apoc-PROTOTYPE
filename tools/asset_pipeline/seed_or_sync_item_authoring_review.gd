@@ -1,11 +1,14 @@
 extends SceneTree
 
 const AuthoringReviewManifestScript = preload("res://tools/asset_pipeline/authoring_review_manifest.gd")
+const AutoStackGroupRegistryScript = preload("res://tools/asset_pipeline/auto_stack_group_registry.gd")
 const MainSceneLootAdapterScript = preload("res://tools/asset_pipeline/main_scene_loot_adapter.gd")
 const PrototypeItemCatalogScript = preload("res://prototype_item_catalog.gd")
+const StackRoleAuthoringScript = preload("res://tools/asset_pipeline/stack_role_authoring.gd")
 
 const MAIN_SCENE_PATH: String = "res://main.tscn"
 const MANIFEST_PATH: String = "res://tools/asset_pipeline/item_authoring_review.json"
+const AUTO_STACK_GROUP_REGISTRY_PATH: String = "res://tools/asset_pipeline/auto_stack_group_registry.json"
 const NORMALIZED_ITEM_IDS: PackedStringArray = [
 	"loot_000006", "loot_000012", "loot_000022", "loot_000029", "loot_000033", "loot_000034", "loot_000039"
 ]
@@ -21,6 +24,8 @@ func _run() -> int:
 		current_assets.append(_manifest_asset(scene_record))
 
 	var existing_manifest: Dictionary = AuthoringReviewManifestScript.load_manifest(MANIFEST_PATH)
+	if OS.get_cmdline_user_args().has("--apply-stack-metadata-phase-1"):
+		return _apply_stack_metadata_phase_1(existing_manifest, current_assets)
 	if OS.get_cmdline_user_args().has("--item-ids-only"):
 		return _sync_item_ids_only(existing_manifest, current_assets)
 
@@ -117,9 +122,88 @@ func _manifest_asset(scene_record: Dictionary) -> Dictionary:
 		"item_id": String(definition.item_id) if definition != null else "",
 		"source_fingerprint": AuthoringReviewManifestScript.fingerprint_for_path(source_path),
 		"has_item_definition": definition != null,
+		"definition_path": definition.resource_path if definition != null else "",
+		"display_name": definition.display_name if definition != null else "",
+		"storage_category": definition.storage_category if definition != null else "",
 		"storage_rotation_degrees": _vector3_array(definition.storage_rotation_degrees) if definition != null else [],
-		"storage_footprint": _vector3i_array(definition.storage_footprint) if definition != null else []
+		"storage_footprint": _vector3i_array(definition.storage_footprint) if definition != null else [],
+		"can_be_stacked": definition.can_be_stacked if definition != null else false,
+		"can_support_stack": definition.can_support_stack if definition != null else false,
+		"auto_stack_group": String(definition.auto_stack_group) if definition != null else ""
 	}
+
+
+func _apply_stack_metadata_phase_1(
+	existing_manifest: Dictionary,
+	current_assets: Array[Dictionary]
+) -> int:
+	var registry: Dictionary = AutoStackGroupRegistryScript.load_registry(
+		AUTO_STACK_GROUP_REGISTRY_PATH
+	)
+	var result: Dictionary = StackRoleAuthoringScript.apply_phase_1(
+		existing_manifest,
+		current_assets,
+		registry
+	)
+	var errors: PackedStringArray = result["errors"] as PackedStringArray
+	if not errors.is_empty():
+		for message: String in errors:
+			push_error(message)
+		return 1
+
+	var updated_resource_count: int = 0
+	var candidate_values: Dictionary = result["candidate_values"] as Dictionary
+	for item_id: String in StackRoleAuthoringScript.candidate_ids():
+		var values: Dictionary = candidate_values[item_id] as Dictionary
+		var definition_path: String = String(values["definition_path"])
+		var definition: ItemDefinition = load(definition_path) as ItemDefinition
+		if definition == null:
+			push_error("Unable to load Phase 1 candidate ItemDefinition: %s" % definition_path)
+			return 1
+		var changed: bool = (
+			definition.can_be_stacked != bool(values["can_be_stacked"])
+			or definition.can_support_stack != bool(values["can_support_stack"])
+		)
+		if not changed:
+			continue
+		definition.can_be_stacked = bool(values["can_be_stacked"])
+		definition.can_support_stack = bool(values["can_support_stack"])
+		var save_error: Error = ResourceSaver.save(definition, definition_path)
+		if save_error != OK:
+			push_error("Unable to save Phase 1 candidate ItemDefinition: %s" % definition_path)
+			return 1
+		updated_resource_count += 1
+
+	var updated_manifest: Dictionary = result["manifest"] as Dictionary
+	var serialized_manifest: String = AuthoringReviewManifestScript.serialize_manifest(updated_manifest)
+	var existing_text: String = _file_text(MANIFEST_PATH)
+	var wrote_manifest: bool = existing_text != serialized_manifest
+	if wrote_manifest and not AuthoringReviewManifestScript.write_manifest(
+		MANIFEST_PATH, updated_manifest
+	):
+		return 1
+
+	var counts: Dictionary = result["counts"] as Dictionary
+	print(
+		"STACK_METADATA_PHASE_1_COMPLETE grandfathered=%d candidates=%d blocked=%d resources_updated=%d manifest_written=%s"
+		% [
+			int(counts["grandfathered"]),
+			int(counts["candidates"]),
+			int(counts["blocked"]),
+			updated_resource_count,
+			str(wrote_manifest)
+		]
+	)
+	return 0
+
+
+func _file_text(path: String) -> String:
+	var file: FileAccess = FileAccess.open(path, FileAccess.READ)
+	if file == null:
+		return ""
+	var result: String = file.get_as_text()
+	file.close()
+	return result
 
 
 func _vector3_array(value: Vector3) -> Array[float]:

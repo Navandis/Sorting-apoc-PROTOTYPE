@@ -1,7 +1,10 @@
 extends RefCounted
 class_name AuthoringReviewManifest
 
-const SCHEMA_VERSION: String = "1.0"
+const AutoStackGroupRegistryScript = preload("res://tools/asset_pipeline/auto_stack_group_registry.gd")
+
+const SCHEMA_VERSION: String = "2.0"
+const LEGACY_SCHEMA_VERSION: String = "1.0"
 const FLOAT_TOLERANCE: float = 0.001
 const FLAG_UNTRACKED: String = "AUTHORING_REVIEW_UNTRACKED"
 const FLAG_AMBIGUOUS: String = "AUTHORING_REVIEW_AMBIGUOUS"
@@ -16,6 +19,22 @@ const POSE_COMPLETED: PackedStringArray = [
 ]
 const POSE_APPROVED: PackedStringArray = ["DEFAULT_POSE_APPROVED", "CUSTOM_POSE_APPROVED"]
 const FOOTPRINT_COMPLETED: PackedStringArray = ["GEOMETRY_APPROVED", "OVERRIDE_APPROVED"]
+const STACK_REVIEW_STATUSES: PackedStringArray = ["UNREVIEWED", "APPROVED"]
+const STACK_ROLE_REVIEW_FLAGS: PackedStringArray = [
+	"IRREGULAR_SHAPE",
+	"SUPPORT_SURFACE_AMBIGUOUS",
+	"RESTING_STABILITY_AMBIGUOUS",
+	"SOFT_OR_DEFORMABLE_FORM",
+	"POSE_DEPENDENT",
+	"VISUAL_REVIEW_RECOMMENDED"
+]
+const AUTO_GROUP_REVIEW_FLAGS: PackedStringArray = [
+	"NEW_GROUP_CANDIDATE",
+	"GROUP_MEMBERSHIP_AMBIGUOUS",
+	"PLAYER_EXPECTATION_AMBIGUOUS",
+	"CROSS_CATEGORY_REVIEW",
+	"VISUAL_REVIEW_RECOMMENDED"
+]
 
 
 static func empty_manifest() -> Dictionary:
@@ -44,8 +63,71 @@ static func new_record(asset: Dictionary) -> Dictionary:
 			"reviewed_footprint": [0, 0, 0],
 			"reviewed_rotation_degrees": [0.0, 0.0, 0.0],
 			"notes": ""
-		}
+		},
+		"stack_role_review": _new_stack_role_review(),
+		"auto_group_review": _new_auto_group_review()
 	}
+
+
+static func migrate_manifest(manifest: Dictionary) -> Dictionary:
+	var schema_version: String = String(manifest.get("schema_version", ""))
+	if schema_version != LEGACY_SCHEMA_VERSION and schema_version != SCHEMA_VERSION:
+		push_error("Unsupported authoring review manifest schema: %s" % schema_version)
+		return empty_manifest()
+	return _normalized_manifest(manifest)
+
+
+static func validate_manifest(manifest: Dictionary) -> PackedStringArray:
+	var errors: PackedStringArray = []
+	var schema_version: String = String(manifest.get("schema_version", ""))
+	if schema_version != LEGACY_SCHEMA_VERSION and schema_version != SCHEMA_VERSION:
+		errors.append("Unsupported manifest schema_version: %s" % schema_version)
+		return errors
+	var assets_value: Variant = manifest.get("assets", {})
+	if not (assets_value is Dictionary):
+		errors.append("Manifest assets must be a Dictionary.")
+		return errors
+	if schema_version == LEGACY_SCHEMA_VERSION:
+		return errors
+	var assets: Dictionary = assets_value as Dictionary
+	for key_value: Variant in assets.keys():
+		var key: String = String(key_value)
+		var record_value: Variant = assets[key_value]
+		if not (record_value is Dictionary):
+			errors.append("%s record must be a Dictionary." % key)
+			continue
+		var record: Dictionary = record_value as Dictionary
+		var stack_role_value: Variant = record.get("stack_role_review", {})
+		_validate_new_review(
+			key,
+			"stack_role_review",
+			stack_role_value,
+			STACK_ROLE_REVIEW_FLAGS,
+			"Stack Role",
+			errors
+		)
+		if stack_role_value is Dictionary:
+			_validate_stack_role_snapshot_fields(
+				"%s.stack_role_review" % key,
+				stack_role_value as Dictionary,
+				errors
+			)
+		var auto_group_value: Variant = record.get("auto_group_review", {})
+		_validate_new_review(
+			key,
+			"auto_group_review",
+			auto_group_value,
+			AUTO_GROUP_REVIEW_FLAGS,
+			"Auto Group",
+			errors
+		)
+		if auto_group_value is Dictionary:
+			_validate_auto_group_snapshot_fields(
+				"%s.auto_group_review" % key,
+				auto_group_value as Dictionary,
+				errors
+			)
+	return errors
 
 
 static func load_manifest(path: String) -> Dictionary:
@@ -62,12 +144,13 @@ static func load_manifest(path: String) -> Dictionary:
 		push_error("Invalid authoring review manifest JSON: %s" % path)
 		return empty_manifest()
 	var manifest: Dictionary = parser.data as Dictionary
-	if String(manifest.get("schema_version", "")) != SCHEMA_VERSION:
+	var schema_version: String = String(manifest.get("schema_version", ""))
+	if schema_version != LEGACY_SCHEMA_VERSION and schema_version != SCHEMA_VERSION:
 		push_error("Unsupported authoring review manifest schema: %s" % path)
 		return empty_manifest()
 	if not (manifest.get("assets", {}) is Dictionary):
 		manifest["assets"] = {}
-	return manifest
+	return migrate_manifest(manifest)
 
 
 static func write_manifest(path: String, manifest: Dictionary) -> bool:
@@ -243,10 +326,16 @@ static func apply_scale_review_reconciliation(
 	}
 
 
-static func review_evidence(record: Dictionary, current_asset: Dictionary) -> Dictionary:
+static func review_evidence(
+	record: Dictionary,
+	current_asset: Dictionary,
+	registry: Dictionary = {}
+) -> Dictionary:
 	var scale_review: Dictionary = record.get("scale_review", {}) as Dictionary
 	var pose_review: Dictionary = record.get("storage_pose_review", {}) as Dictionary
 	var footprint_review: Dictionary = record.get("footprint_review", {}) as Dictionary
+	var stack_role_review: Dictionary = record.get("stack_role_review", {}) as Dictionary
+	var auto_group_review: Dictionary = record.get("auto_group_review", {}) as Dictionary
 	var has_item_definition: bool = bool(current_asset.get("has_item_definition", true))
 	var current_fingerprint: String = String(current_asset.get("source_fingerprint", ""))
 	var current_rotation: Array = _array_value(current_asset.get("storage_rotation_degrees", []))
@@ -289,6 +378,45 @@ static func review_evidence(record: Dictionary, current_asset: Dictionary) -> Di
 		if _is_completed(footprint_review, FOOTPRINT_COMPLETED) and not footprint_current:
 			flags.append(FLAG_FOOTPRINT_STALE)
 
+	var stack_role_status: String = String(stack_role_review.get("status", "UNREVIEWED"))
+	var stack_role_eligible: bool = (
+		pose_current
+		and POSE_APPROVED.has(String(pose_review.get("status", "UNREVIEWED")))
+		and footprint_current
+	)
+	var current_stack_role_snapshot: Dictionary = stack_role_snapshot(current_asset)
+	var stack_role_current: bool = (
+		stack_role_status == "APPROVED"
+		and stack_role_eligible
+		and _stack_role_review_matches_snapshot(stack_role_review, current_stack_role_snapshot)
+	)
+	var stack_role_stale: bool = stack_role_status == "APPROVED" and not stack_role_current
+
+	var auto_group_status: String = String(auto_group_review.get("status", "UNREVIEWED"))
+	var auto_group_eligible: bool = stack_role_current
+	var current_group: String = String(current_asset.get("auto_stack_group", ""))
+	var reference_errors: PackedStringArray = AutoStackGroupRegistryScript.validate_reference(
+		current_group,
+		registry
+	)
+	var reference_valid: bool = reference_errors.is_empty()
+	var current_revision: int = (
+		0 if current_group.is_empty()
+		else AutoStackGroupRegistryScript.compatibility_revision(current_group, registry)
+	)
+	var reviewed_stack_snapshot: Dictionary = _normalized_stack_role_snapshot(
+		auto_group_review.get("reviewed_stack_role_snapshot", {})
+	)
+	var auto_group_current: bool = (
+		auto_group_status == "APPROVED"
+		and auto_group_eligible
+		and reference_valid
+		and String(auto_group_review.get("reviewed_auto_stack_group", "")) == current_group
+		and reviewed_stack_snapshot == current_stack_role_snapshot
+		and int(auto_group_review.get("reviewed_registry_compatibility_revision", 0)) == current_revision
+	)
+	var auto_group_stale: bool = auto_group_status == "APPROVED" and not auto_group_current
+
 	return {
 		"scale_review_status": String(scale_review.get("status", "UNREVIEWED")),
 		"scale_review_current": scale_current,
@@ -296,8 +424,64 @@ static func review_evidence(record: Dictionary, current_asset: Dictionary) -> Di
 		"storage_pose_review_current": pose_current,
 		"footprint_review_status": String(footprint_review.get("status", "UNREVIEWED")),
 		"footprint_review_current": footprint_current,
+		"stack_role_review_status": stack_role_status,
+		"stack_role_review_eligible": stack_role_eligible,
+		"stack_role_review_current": stack_role_current,
+		"stack_role_review_stale": stack_role_stale,
+		"stack_role_review_dependency_blocked": not stack_role_eligible,
+		"stack_role_review_flags": _ordered_known_flags(
+			stack_role_review.get("flags", []), STACK_ROLE_REVIEW_FLAGS
+		),
+		"stack_role_review_notes": String(stack_role_review.get("notes", "")),
+		"auto_group_review_status": auto_group_status,
+		"auto_group_review_eligible": auto_group_eligible,
+		"auto_group_review_current": auto_group_current,
+		"auto_group_review_stale": auto_group_stale,
+		"auto_group_review_dependency_blocked": not auto_group_eligible,
+		"auto_group_review_flags": _ordered_known_flags(
+			auto_group_review.get("flags", []), AUTO_GROUP_REVIEW_FLAGS
+		),
+		"auto_group_review_notes": String(auto_group_review.get("notes", "")),
+		"auto_group_reference_valid": reference_valid,
+		"auto_group_reference_errors": reference_errors,
+		"auto_group_registry_compatibility_revision": current_revision,
+		"auto_group_reviewed_registry_compatibility_revision": int(
+			auto_group_review.get("reviewed_registry_compatibility_revision", 0)
+		),
 		"flags": flags
 	}
+
+
+static func stack_role_snapshot(current_asset: Dictionary) -> Dictionary:
+	return {
+		"reviewed_source_fingerprint": String(current_asset.get("source_fingerprint", "")),
+		"reviewed_rotation_degrees": _rotation_array(current_asset.get("storage_rotation_degrees", [])),
+		"reviewed_footprint": _footprint_array(current_asset.get("storage_footprint", [])),
+		"reviewed_can_be_stacked": bool(current_asset.get("can_be_stacked", false)),
+		"reviewed_can_support_stack": bool(current_asset.get("can_support_stack", false))
+	}
+
+
+static func _stack_role_review_matches_snapshot(
+	review: Dictionary,
+	snapshot: Dictionary
+) -> bool:
+	return (
+		String(review.get("reviewed_source_fingerprint", ""))
+			== String(snapshot.get("reviewed_source_fingerprint", ""))
+		and _arrays_approximately_equal(
+			_array_value(review.get("reviewed_rotation_degrees", [])),
+			_array_value(snapshot.get("reviewed_rotation_degrees", []))
+		)
+		and _arrays_equal(
+			_array_value(review.get("reviewed_footprint", [])),
+			_array_value(snapshot.get("reviewed_footprint", []))
+		)
+		and bool(review.get("reviewed_can_be_stacked", false))
+			== bool(snapshot.get("reviewed_can_be_stacked", false))
+		and bool(review.get("reviewed_can_support_stack", false))
+			== bool(snapshot.get("reviewed_can_support_stack", false))
+	)
 
 
 static func _match_current_asset(
@@ -427,6 +611,14 @@ static func _normalized_record(record: Dictionary) -> Dictionary:
 	var scale_review: Dictionary = record.get("scale_review", {}) as Dictionary
 	var pose_review: Dictionary = record.get("storage_pose_review", {}) as Dictionary
 	var footprint_review: Dictionary = record.get("footprint_review", {}) as Dictionary
+	var stack_role_value: Variant = record.get("stack_role_review", {})
+	var stack_role_review: Dictionary = (
+		stack_role_value as Dictionary if stack_role_value is Dictionary else {}
+	)
+	var auto_group_value: Variant = record.get("auto_group_review", {})
+	var auto_group_review: Dictionary = (
+		auto_group_value as Dictionary if auto_group_value is Dictionary else {}
+	)
 	return {
 		"source_path": String(record.get("source_path", "")),
 		"item_id": String(record.get("item_id", "")),
@@ -448,8 +640,178 @@ static func _normalized_record(record: Dictionary) -> Dictionary:
 			"reviewed_footprint": _footprint_array(footprint_review.get("reviewed_footprint", [])),
 			"reviewed_rotation_degrees": _rotation_array(footprint_review.get("reviewed_rotation_degrees", [])),
 			"notes": String(footprint_review.get("notes", ""))
+		},
+		"stack_role_review": {
+			"status": String(stack_role_review.get("status", "UNREVIEWED")),
+			"reviewed_source_fingerprint": String(stack_role_review.get("reviewed_source_fingerprint", "")),
+			"reviewed_rotation_degrees": _rotation_array(stack_role_review.get("reviewed_rotation_degrees", [])),
+			"reviewed_footprint": _footprint_array(stack_role_review.get("reviewed_footprint", [])),
+			"reviewed_can_be_stacked": bool(stack_role_review.get("reviewed_can_be_stacked", false)),
+			"reviewed_can_support_stack": bool(stack_role_review.get("reviewed_can_support_stack", false)),
+			"flags": _ordered_known_flags(stack_role_review.get("flags", []), STACK_ROLE_REVIEW_FLAGS),
+			"notes": String(stack_role_review.get("notes", ""))
+		},
+		"auto_group_review": {
+			"status": String(auto_group_review.get("status", "UNREVIEWED")),
+			"reviewed_stack_role_snapshot": _normalized_stack_role_snapshot(
+				auto_group_review.get("reviewed_stack_role_snapshot", {})
+			),
+			"reviewed_auto_stack_group": String(auto_group_review.get("reviewed_auto_stack_group", "")),
+			"reviewed_registry_compatibility_revision": int(auto_group_review.get("reviewed_registry_compatibility_revision", 0)),
+			"flags": _ordered_known_flags(auto_group_review.get("flags", []), AUTO_GROUP_REVIEW_FLAGS),
+			"notes": String(auto_group_review.get("notes", ""))
 		}
 	}
+
+
+static func _new_stack_role_review() -> Dictionary:
+	return {
+		"status": "UNREVIEWED",
+		"reviewed_source_fingerprint": "",
+		"reviewed_rotation_degrees": [0.0, 0.0, 0.0],
+		"reviewed_footprint": [0, 0, 0],
+		"reviewed_can_be_stacked": false,
+		"reviewed_can_support_stack": false,
+		"flags": [],
+		"notes": ""
+	}
+
+
+static func _new_auto_group_review() -> Dictionary:
+	return {
+		"status": "UNREVIEWED",
+		"reviewed_stack_role_snapshot": {},
+		"reviewed_auto_stack_group": "",
+		"reviewed_registry_compatibility_revision": 0,
+		"flags": [],
+		"notes": ""
+	}
+
+
+static func _normalized_stack_role_snapshot(value: Variant) -> Dictionary:
+	if not (value is Dictionary) or (value as Dictionary).is_empty():
+		return {}
+	var snapshot: Dictionary = value as Dictionary
+	return {
+		"reviewed_source_fingerprint": String(snapshot.get("reviewed_source_fingerprint", "")),
+		"reviewed_rotation_degrees": _rotation_array(snapshot.get("reviewed_rotation_degrees", [])),
+		"reviewed_footprint": _footprint_array(snapshot.get("reviewed_footprint", [])),
+		"reviewed_can_be_stacked": bool(snapshot.get("reviewed_can_be_stacked", false)),
+		"reviewed_can_support_stack": bool(snapshot.get("reviewed_can_support_stack", false))
+	}
+
+
+static func _ordered_known_flags(value: Variant, vocabulary: PackedStringArray) -> Array[String]:
+	var present: Dictionary = {}
+	if value is Array:
+		for flag_value: Variant in value as Array:
+			if flag_value is String:
+				present[String(flag_value)] = true
+	var result: Array[String] = []
+	for flag: String in vocabulary:
+		if present.has(flag):
+			result.append(flag)
+	return result
+
+
+static func _validate_new_review(
+	key: String,
+	field: String,
+	value: Variant,
+	vocabulary: PackedStringArray,
+	label: String,
+	errors: PackedStringArray
+) -> void:
+	if not (value is Dictionary):
+		errors.append("%s.%s must be a Dictionary." % [key, field])
+		return
+	var review: Dictionary = value as Dictionary
+	var status: String = String(review.get("status", ""))
+	if not STACK_REVIEW_STATUSES.has(status):
+		errors.append("%s.%s.status is unknown: %s" % [key, field, status])
+	var flags_value: Variant = review.get("flags", [])
+	if not (flags_value is Array):
+		errors.append("%s.%s.flags must be an Array." % [key, field])
+	else:
+		for flag_value: Variant in flags_value as Array:
+			if not (flag_value is String) or not vocabulary.has(String(flag_value)):
+				errors.append("Unknown %s flag for %s: %s" % [label, key, str(flag_value)])
+	var notes_value: Variant = review.get("notes", "")
+	if not (notes_value is String):
+		errors.append("%s.%s.notes must be a String." % [key, field])
+
+
+static func _validate_stack_role_snapshot_fields(
+	path: String, snapshot: Dictionary, errors: PackedStringArray
+) -> void:
+	if not (snapshot.get("reviewed_source_fingerprint", "") is String):
+		errors.append("%s.reviewed_source_fingerprint must be a String." % path)
+	_validate_three_value_array(
+		"%s.reviewed_rotation_degrees" % path,
+		snapshot.get("reviewed_rotation_degrees", []),
+		false,
+		errors
+	)
+	_validate_three_value_array(
+		"%s.reviewed_footprint" % path,
+		snapshot.get("reviewed_footprint", []),
+		true,
+		errors
+	)
+	if not (snapshot.get("reviewed_can_be_stacked", false) is bool):
+		errors.append("%s.reviewed_can_be_stacked must be a bool." % path)
+	if not (snapshot.get("reviewed_can_support_stack", false) is bool):
+		errors.append("%s.reviewed_can_support_stack must be a bool." % path)
+
+
+static func _validate_auto_group_snapshot_fields(
+	path: String, review: Dictionary, errors: PackedStringArray
+) -> void:
+	var snapshot_value: Variant = review.get("reviewed_stack_role_snapshot", {})
+	if not (snapshot_value is Dictionary):
+		errors.append("%s.reviewed_stack_role_snapshot must be a Dictionary." % path)
+	elif not (snapshot_value as Dictionary).is_empty():
+		_validate_stack_role_snapshot_fields(
+			"%s.reviewed_stack_role_snapshot" % path,
+			snapshot_value as Dictionary,
+			errors
+		)
+	if not (review.get("reviewed_auto_stack_group", "") is String):
+		errors.append("%s.reviewed_auto_stack_group must be a String." % path)
+	var revision_value: Variant = review.get("reviewed_registry_compatibility_revision", 0)
+	var revision_number: float = (
+		float(revision_value)
+		if revision_value is int or revision_value is float
+		else -1.0
+	)
+	if revision_number < 0.0 or revision_number != floorf(revision_number):
+		errors.append(
+			"%s.reviewed_registry_compatibility_revision must be a non-negative integer."
+			% path
+		)
+
+
+static func _validate_three_value_array(
+	path: String,
+	value: Variant,
+	integers_only: bool,
+	errors: PackedStringArray
+) -> void:
+	if not (value is Array) or (value as Array).size() != 3:
+		errors.append("%s must be a three-value Array." % path)
+		return
+	for component: Variant in value as Array:
+		if integers_only:
+			if not (component is int) and not (component is float):
+				errors.append("%s must contain integers." % path)
+				return
+			var component_number: float = float(component)
+			if component_number != floorf(component_number):
+				errors.append("%s must contain integers." % path)
+				return
+		elif not (component is int) and not (component is float):
+			errors.append("%s must contain numbers." % path)
+			return
 
 
 static func _rotation_array(value: Variant) -> Array:

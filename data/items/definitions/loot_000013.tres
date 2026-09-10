@@ -9,4 +9,5 @@ item_id = &"loot_000013"
 display_name = "Firewood 01"
 storage_category = "Fuel"
 storage_footprint = Vector3i(2, 4, 1)
+can_be_stacked = true
 visual_scene = ExtResource("2_tn0it")

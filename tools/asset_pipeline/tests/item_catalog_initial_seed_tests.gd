@@ -37,7 +37,8 @@ func _test_initial_seed_matches_manifest_and_current_audit() -> void:
 	var manifest: Dictionary = _load_json(MANIFEST_PATH)
 	var manifest_assets: Dictionary = manifest["assets"] as Dictionary
 	var definitions: Array = PersistentItemCatalog.get("definitions") as Array
-	assert(String(audit["schema_version"]) == "1.3")
+	assert(String(audit["schema_version"]) == "1.4")
+	assert(String(manifest["schema_version"]) == "2.0")
 	assert(manifest_assets.size() == 42)
 	assert(definitions.size() == 42)
 

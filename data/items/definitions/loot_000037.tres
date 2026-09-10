@@ -9,4 +9,5 @@ item_id = &"loot_000037"
 display_name = "Hammer"
 storage_category = "Weapons"
 storage_footprint = Vector3i(4, 1, 1)
+can_be_stacked = true
 visual_scene = ExtResource("2_vw8dg")

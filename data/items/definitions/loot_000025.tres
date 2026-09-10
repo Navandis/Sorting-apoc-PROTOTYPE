@@ -8,4 +8,6 @@ script = ExtResource("1_11h2o")
 item_id = &"loot_000025"
 display_name = "Medicine Bottle"
 storage_category = "Medical"
+can_be_stacked = true
+can_support_stack = true
 visual_scene = ExtResource("2_lg0hq")

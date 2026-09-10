@@ -16,6 +16,7 @@ func _init() -> void:
 	_test_deterministic_ordering()
 	_test_main_scene_adapter()
 	_test_migrated_medicine_paths_use_stable_authoring_identity()
+	_test_review_summary_uses_explicit_non_overlapping_unreviewed_counts()
 	print("PASS: loot audit core geometry tests")
 	quit(0)
 
@@ -176,3 +177,53 @@ func _test_migrated_medicine_paths_use_stable_authoring_identity() -> void:
 	assert(cough_syrup.display_name == "Medicine Bottle")
 	assert(antibiotics.item_id == &"loot_000025")
 	assert(antibiotics.display_name == "Medicine Bottle")
+
+
+func _test_review_summary_uses_explicit_non_overlapping_unreviewed_counts() -> void:
+	var records: Array[Dictionary] = [
+		_review_record(true, true, false, false, true, true, false, false),
+		_review_record(true, false, false, false, false, false, false, true),
+		_review_record(false, false, false, true, false, false, false, true),
+		_review_record(false, false, true, true, false, false, true, true)
+	]
+	var summary: Dictionary = LootAuditCoreScript.review_summary(records)
+	assert(summary["stack_role"] == {
+		"total": 4,
+		"currently_eligible": 2,
+		"approved_current": 1,
+		"unreviewed": 1,
+		"stale": 1,
+		"dependency_blocked": 2
+	})
+	assert(summary["auto_group"] == {
+		"total": 4,
+		"currently_eligible": 1,
+		"approved_current": 1,
+		"unreviewed": 0,
+		"stale": 1,
+		"dependency_blocked": 3
+	})
+
+
+func _review_record(
+	stack_eligible: bool,
+	stack_current: bool,
+	stack_stale: bool,
+	stack_blocked: bool,
+	auto_eligible: bool,
+	auto_current: bool,
+	auto_stale: bool,
+	auto_blocked: bool
+) -> Dictionary:
+	return {
+		"stack_role_review_status": "APPROVED" if stack_current or stack_stale else "UNREVIEWED",
+		"stack_role_review_eligible": stack_eligible,
+		"stack_role_review_current": stack_current,
+		"stack_role_review_stale": stack_stale,
+		"stack_role_review_dependency_blocked": stack_blocked,
+		"auto_group_review_status": "APPROVED" if auto_current or auto_stale else "UNREVIEWED",
+		"auto_group_review_eligible": auto_eligible,
+		"auto_group_review_current": auto_current,
+		"auto_group_review_stale": auto_stale,
+		"auto_group_review_dependency_blocked": auto_blocked
+	}

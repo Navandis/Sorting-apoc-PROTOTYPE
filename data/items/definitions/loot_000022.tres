@@ -9,4 +9,6 @@ item_id = &"loot_000022"
 display_name = "Soda Can"
 storage_category = "Hydration"
 storage_footprint = Vector3i(1, 1, 1)
+can_be_stacked = true
+can_support_stack = true
 visual_scene = ExtResource("2_hbm2g")

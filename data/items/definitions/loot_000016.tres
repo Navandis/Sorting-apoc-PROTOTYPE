@@ -9,4 +9,5 @@ item_id = &"loot_000016"
 display_name = "Gas Canister 01"
 storage_category = "Fuel"
 storage_footprint = Vector3i(3, 2, 1)
+can_be_stacked = true
 visual_scene = ExtResource("2_5eas7")

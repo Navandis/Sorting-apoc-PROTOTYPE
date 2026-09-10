@@ -2,6 +2,7 @@ extends SceneTree
 
 const LootAuditCoreScript = preload("res://tools/asset_pipeline/loot_audit_core.gd")
 const AuthoringReviewManifestScript = preload("res://tools/asset_pipeline/authoring_review_manifest.gd")
+const AutoStackGroupRegistryScript = preload("res://tools/asset_pipeline/auto_stack_group_registry.gd")
 const MainSceneLootAdapterScript = preload("res://tools/asset_pipeline/main_scene_loot_adapter.gd")
 const PrototypeItemCatalogScript = preload("res://prototype_item_catalog.gd")
 const StoragePrototypeManagerScript = preload("res://storage_prototype_manager.gd")
@@ -11,7 +12,8 @@ const REPORT_DIRECTORY: String = "res://reports/asset_pipeline"
 const CSV_REPORT_PATH: String = REPORT_DIRECTORY + "/main_scene_loot_audit.csv"
 const JSON_REPORT_PATH: String = REPORT_DIRECTORY + "/main_scene_loot_audit.json"
 const AUTHORING_REVIEW_MANIFEST_PATH: String = "res://tools/asset_pipeline/item_authoring_review.json"
-const SCHEMA_VERSION: String = "1.3"
+const AUTO_STACK_GROUP_REGISTRY_PATH: String = "res://tools/asset_pipeline/auto_stack_group_registry.json"
+const SCHEMA_VERSION: String = "1.4"
 
 
 func _init() -> void:
@@ -26,13 +28,18 @@ func _run_audit() -> int:
 	var authoring_review_manifest: Dictionary = AuthoringReviewManifestScript.load_manifest(
 		AUTHORING_REVIEW_MANIFEST_PATH
 	)
+	var auto_stack_group_registry: Dictionary = AutoStackGroupRegistryScript.load_registry(
+		AUTO_STACK_GROUP_REGISTRY_PATH
+	)
 	var audit_records: Array[Dictionary] = []
 	for scene_record: Dictionary in scene_records:
 		audit_records.append(_audit_asset(scene_record, cell_size_m))
-	_enrich_authoring_review_evidence(audit_records, authoring_review_manifest)
+	_enrich_authoring_review_evidence(
+		audit_records, authoring_review_manifest, auto_stack_group_registry
+	)
 
 	var sorted_records: Array[Dictionary] = LootAuditCoreScript.sort_records(audit_records)
-	if not _write_reports(sorted_records, cell_size_m):
+	if not _write_reports(sorted_records, cell_size_m, auto_stack_group_registry):
 		return 1
 
 	print("LOOT_AUDIT_COMPLETE assets=%d csv=%s json=%s" % [
@@ -96,6 +103,9 @@ func _audit_asset(scene_record: Dictionary, cell_size_m: float) -> Dictionary:
 	var existing_footprint: Vector3i = Vector3i.ZERO
 	var bulk: int = 0
 	var storage_rotation_degrees: Vector3 = Vector3.ZERO
+	var can_be_stacked: bool = false
+	var can_support_stack: bool = false
+	var auto_stack_group: String = ""
 	if has_item_definition:
 		authored_category = definition.storage_category
 		item_id = String(definition.item_id)
@@ -103,6 +113,9 @@ func _audit_asset(scene_record: Dictionary, cell_size_m: float) -> Dictionary:
 		existing_footprint = definition.storage_footprint
 		bulk = definition.bulk
 		storage_rotation_degrees = definition.storage_rotation_degrees
+		can_be_stacked = definition.can_be_stacked
+		can_support_stack = definition.can_support_stack
+		auto_stack_group = String(definition.auto_stack_group)
 
 	var folder_category_hint: String = LootAuditCoreScript.folder_category_hint(source_path)
 	var category_source: String = _category_source(
@@ -213,6 +226,27 @@ func _audit_asset(scene_record: Dictionary, cell_size_m: float) -> Dictionary:
 		"storage_pose_review_current": false,
 		"footprint_review_status": "UNTRACKED",
 		"footprint_review_current": false,
+		"can_be_stacked": can_be_stacked,
+		"can_support_stack": can_support_stack,
+		"auto_stack_group": auto_stack_group,
+		"stack_role_review_status": "UNTRACKED",
+		"stack_role_review_eligible": false,
+		"stack_role_review_current": false,
+		"stack_role_review_stale": false,
+		"stack_role_review_dependency_blocked": true,
+		"stack_role_review_flags": [],
+		"stack_role_review_notes": "",
+		"auto_group_review_status": "UNTRACKED",
+		"auto_group_review_eligible": false,
+		"auto_group_review_current": false,
+		"auto_group_review_stale": false,
+		"auto_group_review_dependency_blocked": true,
+		"auto_group_review_flags": [],
+		"auto_group_review_notes": "",
+		"auto_group_reference_valid": auto_stack_group.is_empty(),
+		"auto_group_reference_errors": [],
+		"auto_group_registry_compatibility_revision": 0,
+		"auto_group_reviewed_registry_compatibility_revision": 0,
 		"bulk": bulk,
 		"flags": _packed_strings_to_array(flags),
 		"notes": notes
@@ -220,7 +254,9 @@ func _audit_asset(scene_record: Dictionary, cell_size_m: float) -> Dictionary:
 
 
 func _enrich_authoring_review_evidence(
-	audit_records: Array[Dictionary], authoring_review_manifest: Dictionary
+	audit_records: Array[Dictionary],
+	authoring_review_manifest: Dictionary,
+	auto_stack_group_registry: Dictionary
 ) -> void:
 	var current_assets: Array[Dictionary] = []
 	for record: Dictionary in audit_records:
@@ -230,7 +266,10 @@ func _enrich_authoring_review_evidence(
 			"source_fingerprint": record["source_fingerprint"],
 			"has_item_definition": record["has_item_definition"],
 			"storage_rotation_degrees": record["storage_rotation_degrees"],
-			"storage_footprint": record["storage_footprint"]
+			"storage_footprint": record["storage_footprint"],
+			"can_be_stacked": record["can_be_stacked"],
+			"can_support_stack": record["can_support_stack"],
+			"auto_stack_group": record["auto_stack_group"]
 		})
 	var matches: Array[Dictionary] = AuthoringReviewManifestScript.correlate_current_assets(
 		authoring_review_manifest,
@@ -251,7 +290,8 @@ func _enrich_authoring_review_evidence(
 				combined_flags.append(correlation_problem_flag)
 			var evidence: Dictionary = AuthoringReviewManifestScript.review_evidence(
 				manifest_assets[authoring_key] as Dictionary,
-				match["asset"] as Dictionary
+				match["asset"] as Dictionary,
+				auto_stack_group_registry
 			)
 			record["scale_review_status"] = evidence["scale_review_status"]
 			record["scale_review_current"] = evidence["scale_review_current"]
@@ -259,6 +299,19 @@ func _enrich_authoring_review_evidence(
 			record["storage_pose_review_current"] = evidence["storage_pose_review_current"]
 			record["footprint_review_status"] = evidence["footprint_review_status"]
 			record["footprint_review_current"] = evidence["footprint_review_current"]
+			for field: String in [
+				"stack_role_review_status", "stack_role_review_eligible",
+				"stack_role_review_current", "stack_role_review_stale",
+				"stack_role_review_dependency_blocked", "stack_role_review_flags",
+				"stack_role_review_notes", "auto_group_review_status",
+				"auto_group_review_eligible", "auto_group_review_current",
+				"auto_group_review_stale", "auto_group_review_dependency_blocked",
+				"auto_group_review_flags", "auto_group_review_notes",
+				"auto_group_reference_valid", "auto_group_reference_errors",
+				"auto_group_registry_compatibility_revision",
+				"auto_group_reviewed_registry_compatibility_revision"
+			]:
+				record[field] = evidence[field]
 			for flag: String in evidence["flags"] as PackedStringArray:
 				combined_flags.append(flag)
 		record["flags"] = _packed_strings_to_array(LootAuditCoreScript.ordered_flags(combined_flags))
@@ -287,7 +340,11 @@ func _collect_mesh_contributors(
 		_collect_mesh_contributors(child, next_transform, true, contributors)
 
 
-func _write_reports(records: Array[Dictionary], cell_size_m: float) -> bool:
+func _write_reports(
+	records: Array[Dictionary],
+	cell_size_m: float,
+	auto_stack_group_registry: Dictionary
+) -> bool:
 	var directory_error: Error = DirAccess.make_dir_recursive_absolute(
 		ProjectSettings.globalize_path(REPORT_DIRECTORY)
 	)
@@ -300,6 +357,11 @@ func _write_reports(records: Array[Dictionary], cell_size_m: float) -> bool:
 		"authoring_review_manifest_schema_version": String(
 			AuthoringReviewManifestScript.SCHEMA_VERSION
 		),
+		"auto_stack_group_registry_schema_version": String(
+			AutoStackGroupRegistryScript.SCHEMA_VERSION
+		),
+		"review_summary": LootAuditCoreScript.review_summary(records),
+		"registry_summary": _registry_summary(records, auto_stack_group_registry),
 		"audit_configuration": {
 			"cell_size_m": cell_size_m,
 			"storage_axes": {
@@ -340,7 +402,13 @@ func _csv_text(records: Array[Dictionary]) -> String:
 		"posed_raw_depth_cells", "posed_raw_orientation_a", "posed_raw_orientation_b",
 		"existing_footprint", "bulk", "scale_review_status", "scale_review_current",
 		"storage_pose_review_status", "storage_pose_review_current", "footprint_review_status",
-		"footprint_review_current", "flags", "notes"
+		"footprint_review_current", "can_be_stacked", "can_support_stack", "auto_stack_group",
+		"stack_role_review_status", "stack_role_review_eligible", "stack_role_review_current",
+		"stack_role_review_stale", "stack_role_review_dependency_blocked", "stack_role_review_flags",
+		"stack_role_review_notes", "auto_group_review_status", "auto_group_review_eligible",
+		"auto_group_review_current", "auto_group_review_stale", "auto_group_review_dependency_blocked",
+		"auto_group_review_flags", "auto_group_review_notes", "auto_group_reference_valid",
+		"auto_group_registry_compatibility_revision", "flags", "notes"
 	]
 	var lines: PackedStringArray = [",".join(headers)]
 	for record: Dictionary in records:
@@ -392,6 +460,25 @@ func _csv_text(records: Array[Dictionary]) -> String:
 			str(record["storage_pose_review_current"]),
 			str(record["footprint_review_status"]),
 			str(record["footprint_review_current"]),
+			str(record["can_be_stacked"]),
+			str(record["can_support_stack"]),
+			str(record["auto_stack_group"]),
+			str(record["stack_role_review_status"]),
+			str(record["stack_role_review_eligible"]),
+			str(record["stack_role_review_current"]),
+			str(record["stack_role_review_stale"]),
+			str(record["stack_role_review_dependency_blocked"]),
+			_json_inline(record["stack_role_review_flags"]),
+			str(record["stack_role_review_notes"]),
+			str(record["auto_group_review_status"]),
+			str(record["auto_group_review_eligible"]),
+			str(record["auto_group_review_current"]),
+			str(record["auto_group_review_stale"]),
+			str(record["auto_group_review_dependency_blocked"]),
+			_json_inline(record["auto_group_review_flags"]),
+			str(record["auto_group_review_notes"]),
+			str(record["auto_group_reference_valid"]),
+			str(record["auto_group_registry_compatibility_revision"]),
 			_json_inline(record["flags"]),
 			_json_inline(record["notes"])
 		]
@@ -400,6 +487,47 @@ func _csv_text(records: Array[Dictionary]) -> String:
 			escaped.append(_csv_escape(value))
 		lines.append(",".join(escaped))
 	return "\n".join(lines) + "\n"
+
+
+func _registry_summary(records: Array[Dictionary], registry: Dictionary) -> Dictionary:
+	var approved_class_count: int = 0
+	var classes_value: Variant = registry.get("classes", {})
+	if classes_value is Dictionary:
+		for class_value: Variant in (classes_value as Dictionary).values():
+			if class_value is Dictionary \
+				and String((class_value as Dictionary).get("approval_status", "")) == "APPROVED":
+				approved_class_count += 1
+	var unknown_references: Array[String] = []
+	var invalid_or_multiple_references: Array[String] = []
+	var compatibility_revision_issues: Array[String] = []
+	for record: Dictionary in records:
+		var item_id: String = String(record.get("item_id", ""))
+		var reference_errors_value: Variant = record.get("auto_group_reference_errors", [])
+		if reference_errors_value is Array:
+			for error_value: Variant in reference_errors_value as Array:
+				var message: String = String(error_value)
+				if message.begins_with("Unknown auto stack group"):
+					unknown_references.append(item_id)
+				elif not message.is_empty():
+					invalid_or_multiple_references.append(item_id)
+		if String(record.get("auto_stack_group", "")).is_empty():
+			continue
+		if String(record.get("auto_group_review_status", "")) == "APPROVED" \
+			and bool(record.get("auto_group_review_eligible", false)) \
+			and bool(record.get("auto_group_reference_valid", false)) \
+			and int(record.get("auto_group_reviewed_registry_compatibility_revision", 0)) \
+				!= int(record.get("auto_group_registry_compatibility_revision", 0)):
+			compatibility_revision_issues.append(item_id)
+	unknown_references.sort()
+	invalid_or_multiple_references.sort()
+	compatibility_revision_issues.sort()
+	return {
+		"approved_class_count": approved_class_count,
+		"unknown_references": unknown_references,
+		"invalid_or_multiple_references": invalid_or_multiple_references,
+		"compatibility_revision_issues": compatibility_revision_issues,
+		"pending_candidate_group_proposals": 0
+	}
 
 
 func _csv_escape(value: String) -> String:

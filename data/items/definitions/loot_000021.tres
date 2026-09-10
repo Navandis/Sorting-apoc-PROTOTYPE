@@ -9,4 +9,5 @@ item_id = &"loot_000021"
 display_name = "Orange Juice 1"
 storage_category = "Hydration"
 storage_rotation_degrees = Vector3(0, 90, 0)
+can_be_stacked = true
 visual_scene = ExtResource("2_fn00t")

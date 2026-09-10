@@ -9,4 +9,5 @@ item_id = &"loot_000042"
 display_name = "Tennis Racket"
 storage_category = "Weapons"
 storage_footprint = Vector3i(3, 5, 1)
+can_be_stacked = true
 visual_scene = ExtResource("2_erwye")
