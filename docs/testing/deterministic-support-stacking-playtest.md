@@ -1,5 +1,7 @@
 # Deterministic Support Stacking Playtest
 
+For the formal 40-item authored-catalogue gate that follows this focused prototype playtest, use `docs/testing/catalogue-scale-deterministic-stacking-stress-test.md`. Keep its mechanical results separate from its human authoring/playability observations.
+
 ## Gate status
 
 This is a prototype-evidence playtest. Passing the automated checks and completing these scenarios does not confirm the design. Record observations against the ten questions at the end, then decide separately whether to promote, revise, or reject stacking.
