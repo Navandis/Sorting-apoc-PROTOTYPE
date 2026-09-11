@@ -821,26 +821,22 @@
 			"source_fingerprint": "58ec440f4d8a9b89d4ae6f30a0d7384cb6c9e584e25bdf8e2c6d99874ce6d658",
 			"source_path": "res://assets/props/Fuel/SM_Firewood_01.glb",
 			"stack_role_review": {
-				"flags": [
-					"IRREGULAR_SHAPE",
-					"SUPPORT_SURFACE_AMBIGUOUS",
-					"RESTING_STABILITY_AMBIGUOUS"
-				],
-				"notes": "The stored log can lie on a broad support, but rolling risk and its uneven top rule out support capability.",
-				"reviewed_can_be_stacked": false,
+				"flags": [],
+				"notes": "",
+				"reviewed_can_be_stacked": true,
 				"reviewed_can_support_stack": false,
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					2,
+					4,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "58ec440f4d8a9b89d4ae6f30a0d7384cb6c9e584e25bdf8e2c6d99874ce6d658",
+				"status": "APPROVED"
 			},
 			"storage_pose_review": {
 				"notes": "Default zero authored storage pose approved.",
@@ -2345,25 +2341,22 @@
 			"source_fingerprint": "4ac5a2d4e8d8a170b7a6abeeb095fd51172097d991798e6ef1ece1bcc74a40c8",
 			"source_path": "res://assets/props/Weapons/hammer.glb",
 			"stack_role_review": {
-				"flags": [
-					"IRREGULAR_SHAPE",
-					"SUPPORT_SURFACE_AMBIGUOUS"
-				],
-				"notes": "The stored claw hammer can lie on a broad support, but its narrow uneven profile cannot support another item.",
-				"reviewed_can_be_stacked": false,
+				"flags": [],
+				"notes": "",
+				"reviewed_can_be_stacked": true,
 				"reviewed_can_support_stack": false,
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					4,
+					1,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "4ac5a2d4e8d8a170b7a6abeeb095fd51172097d991798e6ef1ece1bcc74a40c8",
+				"status": "APPROVED"
 			},
 			"storage_pose_review": {
 				"notes": "Default zero authored storage pose approved.",
@@ -2409,25 +2402,22 @@
 			"source_fingerprint": "38598f0566dcb6bd0d338cc3a844ec9f9b68c4903a3ed6360c39ccf6f1dd4bb1",
 			"source_path": "res://assets/props/Weapons/SM_Gun_AssaultRifle.glb",
 			"stack_role_review": {
-				"flags": [
-					"IRREGULAR_SHAPE",
-					"SUPPORT_SURFACE_AMBIGUOUS"
-				],
-				"notes": "The approved flat rifle pose can rest on a broad support, but the weapon has no usable upper surface.",
-				"reviewed_can_be_stacked": false,
+				"flags": [],
+				"notes": "",
+				"reviewed_can_be_stacked": true,
 				"reviewed_can_support_stack": false,
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					3,
+					12,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
-					0.0
+					90.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "38598f0566dcb6bd0d338cc3a844ec9f9b68c4903a3ed6360c39ccf6f1dd4bb1",
+				"status": "APPROVED"
 			},
 			"storage_pose_review": {
 				"notes": "Default pose unsuitable; candidate Z +90 degrees lays the rifle on its side with the barrel horizontal.",
@@ -2548,25 +2538,22 @@
 			"source_fingerprint": "6c39da4730013101fa22348c90e8ce04d5be6fff5487f45255a8d0f37ffab352",
 			"source_path": "res://assets/props/Weapons/SM_Gun_Shotgun.glb",
 			"stack_role_review": {
-				"flags": [
-					"IRREGULAR_SHAPE",
-					"SUPPORT_SURFACE_AMBIGUOUS"
-				],
-				"notes": "The approved flat shotgun pose can rest on a broad support, but the weapon has no usable upper surface.",
-				"reviewed_can_be_stacked": false,
+				"flags": [],
+				"notes": "",
+				"reviewed_can_be_stacked": true,
 				"reviewed_can_support_stack": false,
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					2,
+					10,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
-					0.0
+					90.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "6c39da4730013101fa22348c90e8ce04d5be6fff5487f45255a8d0f37ffab352",
+				"status": "APPROVED"
 			},
 			"storage_pose_review": {
 				"notes": "Default pose unsuitable; candidate Z +90 degrees lays the shotgun on its side with the barrel horizontal.",
@@ -2612,27 +2599,22 @@
 			"source_fingerprint": "0239435c9e3eccaec42d61f323878f64a08432f79ec47f412ef62d6338eb2517",
 			"source_path": "res://assets/props/Weapons/SM_Hammer_3.glb",
 			"stack_role_review": {
-				"flags": [
-					"IRREGULAR_SHAPE",
-					"RESTING_STABILITY_AMBIGUOUS",
-					"POSE_DEPENDENT",
-					"VISUAL_REVIEW_RECOMMENDED"
-				],
-				"notes": "The upright flipped hammer pose has too little stable base area for conservative centered stacking.",
-				"reviewed_can_be_stacked": false,
+				"flags": [],
+				"notes": "Irregular form; current approved pose places the heavy iron head in a credible resting configuration. Stackability is strongly pose-dependent.",
+				"reviewed_can_be_stacked": true,
 				"reviewed_can_support_stack": false,
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					1,
+					1,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
-					0.0
+					180.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "0239435c9e3eccaec42d61f323878f64a08432f79ec47f412ef62d6338eb2517",
+				"status": "APPROVED"
 			},
 			"storage_pose_review": {
 				"notes": "Default pose unsuitable; candidate Z +180 degrees keeps the hammer upright with its metal head on the shelf.",
@@ -2678,26 +2660,22 @@
 			"source_fingerprint": "65b52da2eee3f955d39fe045fbf2924364eae2291576899dded783d72b78fe69",
 			"source_path": "res://assets/props/Weapons/tennis_racket.glb",
 			"stack_role_review": {
-				"flags": [
-					"IRREGULAR_SHAPE",
-					"SUPPORT_SURFACE_AMBIGUOUS",
-					"SOFT_OR_DEFORMABLE_FORM"
-				],
-				"notes": "The flat racket can rest on a broad support, but its string bed is not treated as a rigid support surface.",
-				"reviewed_can_be_stacked": false,
+				"flags": [],
+				"notes": "",
+				"reviewed_can_be_stacked": true,
 				"reviewed_can_support_stack": false,
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					3,
+					5,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "65b52da2eee3f955d39fe045fbf2924364eae2291576899dded783d72b78fe69",
+				"status": "APPROVED"
 			},
 			"storage_pose_review": {
 				"notes": "Default zero authored storage pose approved.",

@@ -54,6 +54,8 @@ const BATCH_THREE_APPROVAL_NOTES: Dictionary = {
 }
 const BATCH_FOUR_REVIEWED_ROLES: Dictionary = {"loot_000011": [false, false], "loot_000026": [true, false], "loot_000032": [true, false]}
 const BATCH_FOUR_APPROVAL_NOTES: Dictionary = {"loot_000032": "Semi-rigid upright form is physically credible; display practicality resolves the borderline resting judgment, not support capability."}
+const BATCH_FIVE_REVIEWED_ROLES: Dictionary = {"loot_000013": [true, false], "loot_000037": [true, false], "loot_000038": [true, false], "loot_000040": [true, false], "loot_000041": [true, false], "loot_000042": [true, false]}
+const BATCH_FIVE_APPROVAL_NOTES: Dictionary = {"loot_000041": "Irregular form; current approved pose places the heavy iron head in a credible resting configuration. Stackability is strongly pose-dependent."}
 const GRANDFATHERED: Dictionary = {
 	"loot_000002": [false, true, ""],
 	"loot_000005": [true, true, "boxed_food"],
@@ -445,6 +447,30 @@ static func apply_stack_role_batch_4(manifest: Dictionary, current_assets: Array
 			review["notes"] = String(BATCH_FOUR_APPROVAL_NOTES.get(item_id, ""))
 		records[String(keys[item_id])] = record
 	return {"manifest": AuthoringReviewManifestScript.migrate_manifest(updated), "approved_item_ids": BATCH_FOUR_ITEM_IDS.duplicate(), "errors": errors}
+
+static func apply_stack_role_batch_5(manifest: Dictionary, current_assets: Array[Dictionary], registry: Dictionary) -> Dictionary:
+	var updated: Dictionary = AuthoringReviewManifestScript.migrate_manifest(manifest)
+	var records: Dictionary = updated["assets"] as Dictionary
+	var assets: Dictionary = _assets_by_id(current_assets)
+	var keys: Dictionary = _authoring_keys_by_item_id(updated, current_assets)
+	var errors: PackedStringArray = []
+	for item_id: String in BATCH_FIVE_ITEM_IDS:
+		if not assets.has(item_id) or not keys.has(item_id): errors.append("Batch 5 record missing: %s" % item_id); continue
+		var asset: Dictionary = assets[item_id] as Dictionary
+		var role: Array = BATCH_FIVE_REVIEWED_ROLES[item_id] as Array
+		if bool(asset["can_be_stacked"]) != bool(role[0]) or bool(asset["can_support_stack"]) != bool(role[1]): errors.append("Batch 5 runtime role mismatch: %s" % item_id)
+		var record: Dictionary = records[String(keys[item_id])] as Dictionary
+		if String((record["auto_group_review"] as Dictionary)["status"]) != "UNREVIEWED": errors.append("Batch 5 must not alter Auto Group: %s" % item_id)
+	if not errors.is_empty(): return {"manifest": manifest.duplicate(true), "approved_item_ids": PackedStringArray(), "errors": errors}
+	for item_id: String in BATCH_FIVE_ITEM_IDS:
+		var record: Dictionary = records[String(keys[item_id])] as Dictionary
+		var review: Dictionary = record["stack_role_review"] as Dictionary
+		review["status"] = "APPROVED"
+		_copy_snapshot_into_review(review, AuthoringReviewManifestScript.stack_role_snapshot(assets[item_id] as Dictionary))
+		review["flags"] = []
+		review["notes"] = String(BATCH_FIVE_APPROVAL_NOTES.get(item_id, ""))
+		records[String(keys[item_id])] = record
+	return {"manifest": AuthoringReviewManifestScript.migrate_manifest(updated), "approved_item_ids": BATCH_FIVE_ITEM_IDS.duplicate(), "errors": errors}
 
 
 static func _preflight_errors(

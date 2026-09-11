@@ -25,3 +25,9 @@ break a genuinely borderline but physically credible judgment; it never
 justifies an unstable, impossible, or nonsensical relationship. `SM_Armor_02`
 is the reference case: its semi-rigid upright form is plausible, and display
 practicality resolves the borderline resting judgment as `true / false`.
+
+Stack Role is always judged against the current approved storage pose. Pose
+must be approved/current before assessment; Stack Role snapshots it, and a
+later pose change stales the approval. Stack metadata never alters runtime
+pose. `SM_Hammer_3` is pose-dependent: its current approved pose presents the
+heavy iron head as a credible resting configuration (`true / false`).

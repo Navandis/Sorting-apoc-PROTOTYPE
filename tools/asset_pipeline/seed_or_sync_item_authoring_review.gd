@@ -34,6 +34,8 @@ func _run() -> int:
 		return _apply_stack_role_batch_3(existing_manifest, current_assets)
 	if OS.get_cmdline_user_args().has("--apply-stack-role-batch-4"):
 		return _apply_stack_role_batch_4(existing_manifest, current_assets)
+	if OS.get_cmdline_user_args().has("--apply-stack-role-batch-5"):
+		return _apply_stack_role_batch_5(existing_manifest, current_assets)
 	if OS.get_cmdline_user_args().has("--item-ids-only"):
 		return _sync_item_ids_only(existing_manifest, current_assets)
 
@@ -344,6 +346,22 @@ func _apply_stack_role_batch_4(existing_manifest: Dictionary, current_assets: Ar
 	var wrote_manifest: bool = _file_text(MANIFEST_PATH) != AuthoringReviewManifestScript.serialize_manifest(updated_manifest)
 	if wrote_manifest and not AuthoringReviewManifestScript.write_manifest(MANIFEST_PATH, updated_manifest): return 1
 	print("STACK_ROLE_BATCH_4_APPLY_COMPLETE approved=%d resources_updated=%d manifest_written=%s" % [(result["approved_item_ids"] as PackedStringArray).size(), updated_resource_count, str(wrote_manifest)])
+	return 0
+
+func _apply_stack_role_batch_5(existing_manifest: Dictionary, current_assets: Array[Dictionary]) -> int:
+	var path := "res://data/items/definitions/loot_000041.tres"
+	var definition: ItemDefinition = load(path) as ItemDefinition
+	if definition == null: return 1
+	if not definition.can_be_stacked or definition.can_support_stack:
+		definition.can_be_stacked = true; definition.can_support_stack = false
+		if ResourceSaver.save(definition, path) != OK: return 1
+	var assets: Array[Dictionary] = []
+	for scene_record: Dictionary in MainSceneLootAdapterScript.enumerate_loot_instances(MAIN_SCENE_PATH): assets.append(_manifest_asset(scene_record))
+	var result := StackRoleAuthoringScript.apply_stack_role_batch_5(existing_manifest, assets, AutoStackGroupRegistryScript.load_registry(AUTO_STACK_GROUP_REGISTRY_PATH))
+	if not (result["errors"] as PackedStringArray).is_empty(): return 1
+	var updated: Dictionary = result["manifest"] as Dictionary
+	if not AuthoringReviewManifestScript.write_manifest(MANIFEST_PATH, updated): return 1
+	print("STACK_ROLE_BATCH_5_APPLY_COMPLETE approved=6")
 	return 0
 
 
