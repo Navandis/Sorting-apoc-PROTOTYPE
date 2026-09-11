@@ -326,6 +326,130 @@ static func apply_scale_review_reconciliation(
 	}
 
 
+static func apply_auto_group_approvals(
+	manifest: Dictionary,
+	current_assets: Array[Dictionary],
+	registry: Dictionary,
+	decisions: Dictionary
+) -> Dictionary:
+	var errors: PackedStringArray = validate_manifest(manifest)
+	errors.append_array(AutoStackGroupRegistryScript.validate_registry(registry))
+	if not errors.is_empty():
+		return {
+			"manifest": manifest.duplicate(true),
+			"approved_item_ids": PackedStringArray(),
+			"errors": errors
+		}
+	var updated_manifest: Dictionary = migrate_manifest(manifest)
+	var records: Dictionary = updated_manifest["assets"] as Dictionary
+	var assets_by_id: Dictionary = {}
+	for asset: Dictionary in current_assets:
+		var item_id: String = String(asset.get("item_id", ""))
+		if assets_by_id.has(item_id):
+			errors.append("Duplicate current Auto Group asset item ID: %s" % item_id)
+		assets_by_id[item_id] = asset
+	var record_keys_by_id: Dictionary = {}
+	for key_value: Variant in records.keys():
+		var authoring_key: String = String(key_value)
+		var record: Dictionary = records[authoring_key] as Dictionary
+		var item_id: String = String(record.get("item_id", ""))
+		if record_keys_by_id.has(item_id):
+			errors.append("Duplicate manifest Auto Group item ID: %s" % item_id)
+		record_keys_by_id[item_id] = authoring_key
+
+	var ordered_item_ids: PackedStringArray = []
+	for item_id_value: Variant in decisions.keys():
+		ordered_item_ids.append(String(item_id_value))
+	ordered_item_ids.sort()
+	var newly_approved_item_ids: PackedStringArray = []
+	var approval_assets_by_id: Dictionary = {}
+	for item_id: String in ordered_item_ids:
+		var group_id: String = String(decisions[item_id])
+		for message: String in AutoStackGroupRegistryScript.validate_reference(group_id, registry):
+			errors.append("%s: %s" % [item_id, message])
+		if not assets_by_id.has(item_id) or not record_keys_by_id.has(item_id):
+			errors.append("Auto Group approval target is missing: %s" % item_id)
+			continue
+		var asset: Dictionary = assets_by_id[item_id] as Dictionary
+		var record_key: String = String(record_keys_by_id[item_id])
+		var record: Dictionary = records[record_key] as Dictionary
+		var evidence: Dictionary = review_evidence(record, asset, registry)
+		if not bool(evidence["stack_role_review_current"]):
+			errors.append("Auto Group approval target lacks a current Stack Role: %s" % item_id)
+			continue
+		var review: Dictionary = record["auto_group_review"] as Dictionary
+		var status: String = String(review.get("status", "UNREVIEWED"))
+		if status == "APPROVED":
+			if String(review.get("reviewed_auto_stack_group", "")) != group_id:
+				errors.append("Existing Auto Group approval conflicts with the decision for %s." % item_id)
+			elif String(asset.get("auto_stack_group", "")) != group_id:
+				errors.append("Current Auto Group does not match the approved decision for %s." % item_id)
+			elif not bool(evidence["auto_group_review_current"]):
+				errors.append("Auto Group existing approval is stale for %s." % item_id)
+			continue
+		if status != "UNREVIEWED":
+			errors.append("Unsupported Auto Group review status for %s: %s" % [item_id, status])
+			continue
+		var current_group: String = String(asset.get("auto_stack_group", ""))
+		if not current_group.is_empty() and current_group != group_id:
+			errors.append("Current Auto Group does not match the approved decision for %s." % item_id)
+			continue
+		var approval_asset: Dictionary = asset.duplicate(true)
+		approval_asset["auto_stack_group"] = group_id
+		approval_assets_by_id[item_id] = approval_asset
+		newly_approved_item_ids.append(item_id)
+
+	if not errors.is_empty():
+		return {
+			"manifest": manifest.duplicate(true),
+			"approved_item_ids": PackedStringArray(),
+			"errors": errors
+		}
+
+	for item_id: String in newly_approved_item_ids:
+		var group_id: String = String(decisions[item_id])
+		var record_key: String = String(record_keys_by_id[item_id])
+		var record: Dictionary = records[record_key] as Dictionary
+		var review: Dictionary = record["auto_group_review"] as Dictionary
+		review["status"] = "APPROVED"
+		review["reviewed_stack_role_snapshot"] = stack_role_snapshot(
+			approval_assets_by_id[item_id] as Dictionary
+		)
+		review["reviewed_auto_stack_group"] = group_id
+		review["reviewed_registry_compatibility_revision"] = (
+			0 if group_id.is_empty()
+			else AutoStackGroupRegistryScript.compatibility_revision(group_id, registry)
+		)
+		review["flags"] = []
+		review["notes"] = (
+			"Human-approved explicit None."
+			if group_id.is_empty()
+			else "Human-approved existing Auto Stack Group."
+		)
+		record["auto_group_review"] = review
+		records[record_key] = record
+	updated_manifest["assets"] = records
+
+	for item_id: String in newly_approved_item_ids:
+		var record: Dictionary = records[String(record_keys_by_id[item_id])] as Dictionary
+		if not bool(review_evidence(
+			record, approval_assets_by_id[item_id] as Dictionary, registry
+		)["auto_group_review_current"]):
+			errors.append("Auto Group approval did not become current: %s" % item_id)
+	errors.append_array(validate_manifest(updated_manifest))
+	if not errors.is_empty():
+		return {
+			"manifest": manifest.duplicate(true),
+			"approved_item_ids": PackedStringArray(),
+			"errors": errors
+		}
+	return {
+		"manifest": _normalized_manifest(updated_manifest),
+		"approved_item_ids": ordered_item_ids,
+		"errors": errors
+	}
+
+
 static func review_evidence(
 	record: Dictionary,
 	current_asset: Dictionary,

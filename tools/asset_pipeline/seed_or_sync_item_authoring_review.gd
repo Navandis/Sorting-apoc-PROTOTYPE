@@ -12,6 +12,22 @@ const AUTO_STACK_GROUP_REGISTRY_PATH: String = "res://tools/asset_pipeline/auto_
 const NORMALIZED_ITEM_IDS: PackedStringArray = [
 	"loot_000006", "loot_000012", "loot_000022", "loot_000029", "loot_000033", "loot_000034", "loot_000039"
 ]
+## Closed human-review result for the initial 31-item Auto Group gate. Future
+## catalogue additions continue through the reusable manifest review pipeline;
+## they must not be added to this completed apply set.
+const AUTO_GROUP_PHASE_1_APPROVALS: Dictionary = {
+	"loot_000001": "", "loot_000003": "", "loot_000004": "",
+	"loot_000007": "boxed_food", "loot_000008": "round_cans",
+	"loot_000010": "round_cans", "loot_000011": "", "loot_000012": "",
+	"loot_000013": "", "loot_000014": "", "loot_000015": "",
+	"loot_000016": "", "loot_000017": "", "loot_000018": "",
+	"loot_000020": "", "loot_000021": "", "loot_000022": "round_cans",
+	"loot_000023": "round_cans", "loot_000024": "", "loot_000025": "",
+	"loot_000026": "", "loot_000027": "", "loot_000029": "",
+	"loot_000032": "", "loot_000033": "", "loot_000035": "",
+	"loot_000037": "", "loot_000038": "", "loot_000040": "",
+	"loot_000041": "", "loot_000042": ""
+}
 
 
 func _init() -> void:
@@ -36,6 +52,8 @@ func _run() -> int:
 		return _apply_stack_role_batch_4(existing_manifest, current_assets)
 	if OS.get_cmdline_user_args().has("--apply-stack-role-batch-5"):
 		return _apply_stack_role_batch_5(existing_manifest, current_assets)
+	if OS.get_cmdline_user_args().has("--apply-auto-group-phase-1-approvals"):
+		return _apply_auto_group_phase_1_approvals(existing_manifest, current_assets)
 	if OS.get_cmdline_user_args().has("--item-ids-only"):
 		return _sync_item_ids_only(existing_manifest, current_assets)
 
@@ -362,6 +380,104 @@ func _apply_stack_role_batch_5(existing_manifest: Dictionary, current_assets: Ar
 	var updated: Dictionary = result["manifest"] as Dictionary
 	if not AuthoringReviewManifestScript.write_manifest(MANIFEST_PATH, updated): return 1
 	print("STACK_ROLE_BATCH_5_APPLY_COMPLETE approved=6")
+	return 0
+
+
+func _apply_auto_group_phase_1_approvals(
+	existing_manifest: Dictionary, current_assets: Array[Dictionary]
+) -> int:
+	var registry: Dictionary = AutoStackGroupRegistryScript.load_registry(
+		AUTO_STACK_GROUP_REGISTRY_PATH
+	)
+	var errors: PackedStringArray = AutoStackGroupRegistryScript.validate_registry(registry)
+	var updated_manifest: Dictionary = AuthoringReviewManifestScript.migrate_manifest(
+		existing_manifest
+	)
+	var records: Dictionary = updated_manifest["assets"] as Dictionary
+	var assets_by_id: Dictionary = {}
+	for asset: Dictionary in current_assets:
+		assets_by_id[String(asset.get("item_id", ""))] = asset
+	var record_keys_by_id: Dictionary = {}
+	for key_value: Variant in records.keys():
+		var authoring_key: String = String(key_value)
+		var record: Dictionary = records[authoring_key] as Dictionary
+		record_keys_by_id[String(record.get("item_id", ""))] = authoring_key
+
+	var ordered_item_ids: PackedStringArray = []
+	for item_id_value: Variant in AUTO_GROUP_PHASE_1_APPROVALS.keys():
+		ordered_item_ids.append(String(item_id_value))
+	ordered_item_ids.sort()
+	var definitions: Dictionary = {}
+	var approval_assets: Array[Dictionary] = []
+	for item_id: String in ordered_item_ids:
+		var group_id: String = String(AUTO_GROUP_PHASE_1_APPROVALS[item_id])
+		for message: String in AutoStackGroupRegistryScript.validate_reference(group_id, registry):
+			errors.append("%s: %s" % [item_id, message])
+		if not assets_by_id.has(item_id) or not record_keys_by_id.has(item_id):
+			errors.append("Auto Group approval target is missing from the current catalogue: %s" % item_id)
+			continue
+		var asset: Dictionary = assets_by_id[item_id] as Dictionary
+		var record_key: String = String(record_keys_by_id[item_id])
+		var record: Dictionary = records[record_key] as Dictionary
+		var evidence: Dictionary = AuthoringReviewManifestScript.review_evidence(
+			record, asset, registry
+		)
+		if not bool(evidence["stack_role_review_current"]):
+			errors.append("Auto Group approval target lacks a current Stack Role: %s" % item_id)
+		var current_group: String = String(asset.get("auto_stack_group", ""))
+		if not current_group.is_empty() and current_group != group_id:
+			errors.append(
+				"Auto Group approval would overwrite '%s' with '%s' for %s."
+				% [current_group, group_id, item_id]
+			)
+		var definition_path: String = "res://data/items/definitions/%s.tres" % item_id
+		var definition: ItemDefinition = load(definition_path) as ItemDefinition
+		if definition == null:
+			errors.append("Unable to load Auto Group ItemDefinition: %s" % definition_path)
+			continue
+		definitions[item_id] = definition
+		approval_assets.append(asset)
+
+	if not errors.is_empty():
+		for message: String in errors:
+			push_error(message)
+		return 1
+
+	var approval_result: Dictionary = AuthoringReviewManifestScript.apply_auto_group_approvals(
+		updated_manifest, approval_assets, registry, AUTO_GROUP_PHASE_1_APPROVALS
+	)
+	errors = approval_result["errors"] as PackedStringArray
+	if not errors.is_empty():
+		for message: String in errors:
+			push_error(message)
+		return 1
+	updated_manifest = approval_result["manifest"] as Dictionary
+
+	var updated_resource_count: int = 0
+	for item_id: String in ordered_item_ids:
+		var definition: ItemDefinition = definitions[item_id] as ItemDefinition
+		var group_id: String = String(AUTO_GROUP_PHASE_1_APPROVALS[item_id])
+		if String(definition.auto_stack_group) == group_id:
+			continue
+		definition.auto_stack_group = StringName(group_id)
+		var definition_path: String = "res://data/items/definitions/%s.tres" % item_id
+		if ResourceSaver.save(definition, definition_path) != OK:
+			push_error("Unable to save Auto Group ItemDefinition: %s" % definition_path)
+			return 1
+		updated_resource_count += 1
+
+	var serialized_manifest: String = AuthoringReviewManifestScript.serialize_manifest(
+		updated_manifest
+	)
+	var wrote_manifest: bool = _file_text(MANIFEST_PATH) != serialized_manifest
+	if wrote_manifest and not AuthoringReviewManifestScript.write_manifest(
+		MANIFEST_PATH, updated_manifest
+	):
+		return 1
+	print(
+		"AUTO_GROUP_PHASE_1_APPLY_COMPLETE approved=%d explicit_none=26 existing_group=5 resources_updated=%d manifest_written=%s"
+		% [ordered_item_ids.size(), updated_resource_count, str(wrote_manifest)]
+	)
 	return 0
 
 

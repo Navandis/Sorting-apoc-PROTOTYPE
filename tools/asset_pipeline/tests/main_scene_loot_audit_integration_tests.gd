@@ -27,6 +27,19 @@ const BATCH_THREE_STACK_ROLES: Dictionary = {
 }
 const BATCH_FOUR_STACK_ROLES: Dictionary = {"loot_000011": [false, false], "loot_000026": [true, false], "loot_000032": [true, false]}
 const BATCH_FIVE_STACK_ROLES: Dictionary = {"loot_000013": [true, false], "loot_000037": [true, false], "loot_000038": [true, false], "loot_000040": [true, false], "loot_000041": [true, false], "loot_000042": [true, false]}
+const HUMAN_APPROVED_AUTO_GROUP_DECISIONS: Dictionary = {
+	"loot_000001": "", "loot_000003": "", "loot_000004": "",
+	"loot_000007": "boxed_food", "loot_000008": "round_cans",
+	"loot_000010": "round_cans", "loot_000011": "", "loot_000012": "",
+	"loot_000013": "", "loot_000014": "", "loot_000015": "",
+	"loot_000016": "", "loot_000017": "", "loot_000018": "",
+	"loot_000020": "", "loot_000021": "", "loot_000022": "round_cans",
+	"loot_000023": "round_cans", "loot_000024": "", "loot_000025": "",
+	"loot_000026": "", "loot_000027": "", "loot_000029": "",
+	"loot_000032": "", "loot_000033": "", "loot_000035": "",
+	"loot_000037": "", "loot_000038": "", "loot_000040": "",
+	"loot_000041": "", "loot_000042": ""
+}
 const PRINTER_BATCH_ONE_NOTE: String = "Flat stable base; irregular exposed-electronics top is not a credible support surface."
 
 
@@ -57,7 +70,7 @@ func _init() -> void:
 	assert(String(report["auto_stack_group_registry_schema_version"]) == "1.0")
 	var review_summary: Dictionary = report["review_summary"] as Dictionary
 	_assert_summary(review_summary["stack_role"] as Dictionary, [42, 40, 40, 0, 0, 2])
-	_assert_summary(review_summary["auto_group"] as Dictionary, [42, 40, 9, 31, 0, 2])
+	_assert_summary(review_summary["auto_group"] as Dictionary, [42, 40, 40, 0, 0, 2])
 	var registry_summary: Dictionary = report["registry_summary"] as Dictionary
 	assert(int(registry_summary["approved_class_count"]) == 4)
 	assert((registry_summary["unknown_references"] as Array).is_empty())
@@ -84,13 +97,21 @@ func _init() -> void:
 			assert(not bool(asset["stack_role_review_stale"]))
 			assert(not bool(asset["stack_role_review_dependency_blocked"]))
 			assert((asset["stack_role_review_flags"] as Array).is_empty())
-			assert(String(asset["auto_group_review_status"]) == "UNREVIEWED")
-			assert(bool(asset["auto_group_review_eligible"]))
-			assert(not bool(asset["auto_group_review_current"]))
-			assert(not bool(asset["auto_group_review_stale"]))
-			assert(not bool(asset["auto_group_review_dependency_blocked"]))
 			if item_id == "loot_000003":
 				assert(String(asset["stack_role_review_notes"]) == PRINTER_BATCH_ONE_NOTE)
+		if HUMAN_APPROVED_AUTO_GROUP_DECISIONS.has(item_id):
+			assert(String(asset["auto_stack_group"]) == String(HUMAN_APPROVED_AUTO_GROUP_DECISIONS[item_id]))
+			assert(String(asset["auto_group_review_status"]) == "APPROVED")
+			assert(bool(asset["auto_group_review_eligible"]))
+			assert(bool(asset["auto_group_review_current"]))
+			assert(not bool(asset["auto_group_review_stale"]))
+			assert(not bool(asset["auto_group_review_dependency_blocked"]))
+		elif INELIGIBLE_FOOTPRINT_ITEM_IDS.has(item_id):
+			assert(String(asset["auto_group_review_status"]) == "UNREVIEWED")
+			assert(not bool(asset["auto_group_review_eligible"]))
+			assert(not bool(asset["auto_group_review_current"]))
+			assert(not bool(asset["auto_group_review_stale"]))
+			assert(bool(asset["auto_group_review_dependency_blocked"]))
 		var pose_status: String = String(asset["storage_pose_review_status"])
 		if pose_status == "DEFAULT_POSE_APPROVED":
 			default_pose_count += 1

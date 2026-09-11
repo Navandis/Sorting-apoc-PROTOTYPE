@@ -10,4 +10,5 @@ display_name = "Soda Can"
 storage_category = "Hydration"
 can_be_stacked = true
 can_support_stack = true
+auto_stack_group = &"round_cans"
 visual_scene = ExtResource("2_e6p74")

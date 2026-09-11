@@ -11,4 +11,5 @@ storage_category = "Food"
 storage_footprint = Vector3i(3, 1, 1)
 can_be_stacked = true
 can_support_stack = true
+auto_stack_group = &"boxed_food"
 visual_scene = ExtResource("2_s8geq")

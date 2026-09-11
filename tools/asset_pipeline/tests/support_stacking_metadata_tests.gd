@@ -33,6 +33,13 @@ const CANDIDATE_EXPECTED: Dictionary = {
 	"loot_000040": [true, false], "loot_000041": [true, false],
 	"loot_000042": [true, false]
 }
+const PHASE_ONE_AUTO_GROUP_APPROVALS: Dictionary = {
+	"loot_000007": &"boxed_food",
+	"loot_000008": &"round_cans",
+	"loot_000010": &"round_cans",
+	"loot_000022": &"round_cans",
+	"loot_000023": &"round_cans"
+}
 
 var _failed: bool = false
 
@@ -122,7 +129,8 @@ func _test_exact_phase_one_runtime_content() -> void:
 			var candidate_expected: Array = CANDIDATE_EXPECTED[item_id] as Array
 			_check(item.can_be_stacked() == bool(candidate_expected[0]), "%s candidate stackable role" % item_id)
 			_check(item.can_support_stack() == bool(candidate_expected[1]), "%s candidate support role" % item_id)
-			_check(item.get_auto_stack_group().is_empty(), "%s candidate retains empty group" % item_id)
+			var expected_group: StringName = PHASE_ONE_AUTO_GROUP_APPROVALS.get(item_id, &"") as StringName
+			_check(item.get_auto_stack_group() == expected_group, "%s approved group" % item_id)
 		else:
 			_check(not item.can_be_stacked(), "%s blocked stackable default" % item_id)
 			_check(not item.can_support_stack(), "%s blocked support default" % item_id)

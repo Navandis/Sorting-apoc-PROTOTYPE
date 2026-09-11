@@ -3,11 +3,25 @@
 		"loot_000001": {
 			"auto_group_review": {
 				"flags": [],
-				"notes": "",
+				"notes": "Human-approved explicit None.",
 				"reviewed_auto_stack_group": "",
 				"reviewed_registry_compatibility_revision": 0,
-				"reviewed_stack_role_snapshot": {},
-				"status": "UNREVIEWED"
+				"reviewed_stack_role_snapshot": {
+					"reviewed_can_be_stacked": true,
+					"reviewed_can_support_stack": false,
+					"reviewed_footprint": [
+						1,
+						2,
+						1
+					],
+					"reviewed_rotation_degrees": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"reviewed_source_fingerprint": "93b21de28ec54c132f4cffe2bec4d867b533193216c076f19a51c34433083439"
+				},
+				"status": "APPROVED"
 			},
 			"footprint_review": {
 				"notes": "Current Footprint approved against posed geometry.",
@@ -139,11 +153,25 @@
 		"loot_000003": {
 			"auto_group_review": {
 				"flags": [],
-				"notes": "",
+				"notes": "Human-approved explicit None.",
 				"reviewed_auto_stack_group": "",
 				"reviewed_registry_compatibility_revision": 0,
-				"reviewed_stack_role_snapshot": {},
-				"status": "UNREVIEWED"
+				"reviewed_stack_role_snapshot": {
+					"reviewed_can_be_stacked": true,
+					"reviewed_can_support_stack": false,
+					"reviewed_footprint": [
+						3,
+						5,
+						1
+					],
+					"reviewed_rotation_degrees": [
+						0.0,
+						90.0,
+						0.0
+					],
+					"reviewed_source_fingerprint": "61929a0e30280bedd792f0af49ef16fc7bccdff11cab8f5800563eae3b945503"
+				},
+				"status": "APPROVED"
 			},
 			"footprint_review": {
 				"notes": "Current Footprint approved against posed geometry.",
@@ -200,11 +228,25 @@
 		"loot_000004": {
 			"auto_group_review": {
 				"flags": [],
-				"notes": "",
+				"notes": "Human-approved explicit None.",
 				"reviewed_auto_stack_group": "",
 				"reviewed_registry_compatibility_revision": 0,
-				"reviewed_stack_role_snapshot": {},
-				"status": "UNREVIEWED"
+				"reviewed_stack_role_snapshot": {
+					"reviewed_can_be_stacked": true,
+					"reviewed_can_support_stack": false,
+					"reviewed_footprint": [
+						3,
+						3,
+						1
+					],
+					"reviewed_rotation_degrees": [
+						0.0,
+						90.0,
+						0.0
+					],
+					"reviewed_source_fingerprint": "4d2312e22b298995e88a4eb23135ddcb6bb7158dd01f4553cba521302a918993"
+				},
+				"status": "APPROVED"
 			},
 			"footprint_review": {
 				"notes": "Current Footprint approved as a deliberate authored override.",
@@ -411,11 +453,25 @@
 		"loot_000007": {
 			"auto_group_review": {
 				"flags": [],
-				"notes": "",
-				"reviewed_auto_stack_group": "",
-				"reviewed_registry_compatibility_revision": 0,
-				"reviewed_stack_role_snapshot": {},
-				"status": "UNREVIEWED"
+				"notes": "Human-approved existing Auto Stack Group.",
+				"reviewed_auto_stack_group": "boxed_food",
+				"reviewed_registry_compatibility_revision": 1,
+				"reviewed_stack_role_snapshot": {
+					"reviewed_can_be_stacked": true,
+					"reviewed_can_support_stack": true,
+					"reviewed_footprint": [
+						3,
+						1,
+						1
+					],
+					"reviewed_rotation_degrees": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"reviewed_source_fingerprint": "9b02e0a19892a539208c02a6098345c3cacb26cf0f2bafcd6995b14c184e576e"
+				},
+				"status": "APPROVED"
 			},
 			"footprint_review": {
 				"notes": "Current Footprint approved against posed geometry.",
@@ -472,11 +528,25 @@
 		"loot_000008": {
 			"auto_group_review": {
 				"flags": [],
-				"notes": "",
-				"reviewed_auto_stack_group": "",
-				"reviewed_registry_compatibility_revision": 0,
-				"reviewed_stack_role_snapshot": {},
-				"status": "UNREVIEWED"
+				"notes": "Human-approved existing Auto Stack Group.",
+				"reviewed_auto_stack_group": "round_cans",
+				"reviewed_registry_compatibility_revision": 1,
+				"reviewed_stack_role_snapshot": {
+					"reviewed_can_be_stacked": true,
+					"reviewed_can_support_stack": true,
+					"reviewed_footprint": [
+						1,
+						1,
+						1
+					],
+					"reviewed_rotation_degrees": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"reviewed_source_fingerprint": "73876bc2b02dfd931b227d5148c96a15196e9b6e7cfaeb0e317a3ed2bd330c1a"
+				},
+				"status": "APPROVED"
 			},
 			"footprint_review": {
 				"notes": "Current Footprint approved against posed geometry.",
@@ -608,11 +678,25 @@
 		"loot_000010": {
 			"auto_group_review": {
 				"flags": [],
-				"notes": "",
-				"reviewed_auto_stack_group": "",
-				"reviewed_registry_compatibility_revision": 0,
-				"reviewed_stack_role_snapshot": {},
-				"status": "UNREVIEWED"
+				"notes": "Human-approved existing Auto Stack Group.",
+				"reviewed_auto_stack_group": "round_cans",
+				"reviewed_registry_compatibility_revision": 1,
+				"reviewed_stack_role_snapshot": {
+					"reviewed_can_be_stacked": true,
+					"reviewed_can_support_stack": true,
+					"reviewed_footprint": [
+						1,
+						1,
+						1
+					],
+					"reviewed_rotation_degrees": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"reviewed_source_fingerprint": "6c57f9e480bc9c9160da0d61ef75986e72384e330bbcf99a31218e895a61b7aa"
+				},
+				"status": "APPROVED"
 			},
 			"footprint_review": {
 				"notes": "Current Footprint approved against posed geometry.",
@@ -669,11 +753,25 @@
 		"loot_000011": {
 			"auto_group_review": {
 				"flags": [],
-				"notes": "",
+				"notes": "Human-approved explicit None.",
 				"reviewed_auto_stack_group": "",
 				"reviewed_registry_compatibility_revision": 0,
-				"reviewed_stack_role_snapshot": {},
-				"status": "UNREVIEWED"
+				"reviewed_stack_role_snapshot": {
+					"reviewed_can_be_stacked": false,
+					"reviewed_can_support_stack": false,
+					"reviewed_footprint": [
+						10,
+						5,
+						1
+					],
+					"reviewed_rotation_degrees": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"reviewed_source_fingerprint": "0903d0a48de2af72b6eb814ef654569c60e0a73bdaf4270fb10d3755c8a088a6"
+				},
+				"status": "APPROVED"
 			},
 			"footprint_review": {
 				"notes": "Current Footprint approved as a deliberate authored override.",
@@ -730,11 +828,25 @@
 		"loot_000012": {
 			"auto_group_review": {
 				"flags": [],
-				"notes": "",
+				"notes": "Human-approved explicit None.",
 				"reviewed_auto_stack_group": "",
 				"reviewed_registry_compatibility_revision": 0,
-				"reviewed_stack_role_snapshot": {},
-				"status": "UNREVIEWED"
+				"reviewed_stack_role_snapshot": {
+					"reviewed_can_be_stacked": true,
+					"reviewed_can_support_stack": false,
+					"reviewed_footprint": [
+						3,
+						3,
+						1
+					],
+					"reviewed_rotation_degrees": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"reviewed_source_fingerprint": "cedc1401c90bc6bf2733ca2648ee4ab9daf5a85c1fa724cca2a70a4de3173e15"
+				},
+				"status": "APPROVED"
 			},
 			"footprint_review": {
 				"notes": "Current Footprint approved against posed geometry.",
@@ -791,11 +903,25 @@
 		"loot_000013": {
 			"auto_group_review": {
 				"flags": [],
-				"notes": "",
+				"notes": "Human-approved explicit None.",
 				"reviewed_auto_stack_group": "",
 				"reviewed_registry_compatibility_revision": 0,
-				"reviewed_stack_role_snapshot": {},
-				"status": "UNREVIEWED"
+				"reviewed_stack_role_snapshot": {
+					"reviewed_can_be_stacked": true,
+					"reviewed_can_support_stack": false,
+					"reviewed_footprint": [
+						2,
+						4,
+						1
+					],
+					"reviewed_rotation_degrees": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"reviewed_source_fingerprint": "58ec440f4d8a9b89d4ae6f30a0d7384cb6c9e584e25bdf8e2c6d99874ce6d658"
+				},
+				"status": "APPROVED"
 			},
 			"footprint_review": {
 				"notes": "Current Footprint approved as a deliberate authored override.",
@@ -852,11 +978,25 @@
 		"loot_000014": {
 			"auto_group_review": {
 				"flags": [],
-				"notes": "",
+				"notes": "Human-approved explicit None.",
 				"reviewed_auto_stack_group": "",
 				"reviewed_registry_compatibility_revision": 0,
-				"reviewed_stack_role_snapshot": {},
-				"status": "UNREVIEWED"
+				"reviewed_stack_role_snapshot": {
+					"reviewed_can_be_stacked": false,
+					"reviewed_can_support_stack": false,
+					"reviewed_footprint": [
+						6,
+						4,
+						1
+					],
+					"reviewed_rotation_degrees": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"reviewed_source_fingerprint": "e0d55a6a3fb0548e9bafb082d80aa7e29d4875c92f47b33df666e5de3ab35729"
+				},
+				"status": "APPROVED"
 			},
 			"footprint_review": {
 				"notes": "Current Footprint approved as a deliberate authored override.",
@@ -913,11 +1053,25 @@
 		"loot_000015": {
 			"auto_group_review": {
 				"flags": [],
-				"notes": "",
+				"notes": "Human-approved explicit None.",
 				"reviewed_auto_stack_group": "",
 				"reviewed_registry_compatibility_revision": 0,
-				"reviewed_stack_role_snapshot": {},
-				"status": "UNREVIEWED"
+				"reviewed_stack_role_snapshot": {
+					"reviewed_can_be_stacked": true,
+					"reviewed_can_support_stack": false,
+					"reviewed_footprint": [
+						4,
+						2,
+						1
+					],
+					"reviewed_rotation_degrees": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"reviewed_source_fingerprint": "e3cbd7d3dd60c9fde76fe92df640aaf62091c9e6c9b6491ee548b0ac1cf10698"
+				},
+				"status": "APPROVED"
 			},
 			"footprint_review": {
 				"notes": "Current Footprint approved against posed geometry.",
@@ -974,11 +1128,25 @@
 		"loot_000016": {
 			"auto_group_review": {
 				"flags": [],
-				"notes": "",
+				"notes": "Human-approved explicit None.",
 				"reviewed_auto_stack_group": "",
 				"reviewed_registry_compatibility_revision": 0,
-				"reviewed_stack_role_snapshot": {},
-				"status": "UNREVIEWED"
+				"reviewed_stack_role_snapshot": {
+					"reviewed_can_be_stacked": true,
+					"reviewed_can_support_stack": false,
+					"reviewed_footprint": [
+						3,
+						2,
+						1
+					],
+					"reviewed_rotation_degrees": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"reviewed_source_fingerprint": "c057b5d534a7b5c2d443c9d89ab62bb3cfcb6efa725f7acd2f5a20fd2270c952"
+				},
+				"status": "APPROVED"
 			},
 			"footprint_review": {
 				"notes": "Current Footprint approved as a deliberate authored override.",
@@ -1035,11 +1203,25 @@
 		"loot_000017": {
 			"auto_group_review": {
 				"flags": [],
-				"notes": "",
+				"notes": "Human-approved explicit None.",
 				"reviewed_auto_stack_group": "",
 				"reviewed_registry_compatibility_revision": 0,
-				"reviewed_stack_role_snapshot": {},
-				"status": "UNREVIEWED"
+				"reviewed_stack_role_snapshot": {
+					"reviewed_can_be_stacked": true,
+					"reviewed_can_support_stack": false,
+					"reviewed_footprint": [
+						4,
+						3,
+						1
+					],
+					"reviewed_rotation_degrees": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"reviewed_source_fingerprint": "3ef3c398222ed18752ab1fb54d1e83aec579a5a215fdd4376f193a75f21de9f4"
+				},
+				"status": "APPROVED"
 			},
 			"footprint_review": {
 				"notes": "Current Footprint approved as a deliberate authored override.",
@@ -1096,11 +1278,25 @@
 		"loot_000018": {
 			"auto_group_review": {
 				"flags": [],
-				"notes": "",
+				"notes": "Human-approved explicit None.",
 				"reviewed_auto_stack_group": "",
 				"reviewed_registry_compatibility_revision": 0,
-				"reviewed_stack_role_snapshot": {},
-				"status": "UNREVIEWED"
+				"reviewed_stack_role_snapshot": {
+					"reviewed_can_be_stacked": true,
+					"reviewed_can_support_stack": false,
+					"reviewed_footprint": [
+						3,
+						3,
+						1
+					],
+					"reviewed_rotation_degrees": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"reviewed_source_fingerprint": "5c6a25e519c6e0e2544ad1a7e325c77be9ad79500c0466952fc9c35b1ffe3b61"
+				},
+				"status": "APPROVED"
 			},
 			"footprint_review": {
 				"notes": "Current Footprint approved against posed geometry.",
@@ -1232,11 +1428,25 @@
 		"loot_000020": {
 			"auto_group_review": {
 				"flags": [],
-				"notes": "",
+				"notes": "Human-approved explicit None.",
 				"reviewed_auto_stack_group": "",
 				"reviewed_registry_compatibility_revision": 0,
-				"reviewed_stack_role_snapshot": {},
-				"status": "UNREVIEWED"
+				"reviewed_stack_role_snapshot": {
+					"reviewed_can_be_stacked": true,
+					"reviewed_can_support_stack": false,
+					"reviewed_footprint": [
+						1,
+						1,
+						1
+					],
+					"reviewed_rotation_degrees": [
+						0.0,
+						90.0,
+						0.0
+					],
+					"reviewed_source_fingerprint": "08407b1d661f88250b2ab1687a7f4b9bd74d1863046e818828a44e89a849481f"
+				},
+				"status": "APPROVED"
 			},
 			"footprint_review": {
 				"notes": "Current Footprint approved against posed geometry.",
@@ -1293,11 +1503,25 @@
 		"loot_000021": {
 			"auto_group_review": {
 				"flags": [],
-				"notes": "",
+				"notes": "Human-approved explicit None.",
 				"reviewed_auto_stack_group": "",
 				"reviewed_registry_compatibility_revision": 0,
-				"reviewed_stack_role_snapshot": {},
-				"status": "UNREVIEWED"
+				"reviewed_stack_role_snapshot": {
+					"reviewed_can_be_stacked": true,
+					"reviewed_can_support_stack": false,
+					"reviewed_footprint": [
+						1,
+						1,
+						1
+					],
+					"reviewed_rotation_degrees": [
+						0.0,
+						90.0,
+						0.0
+					],
+					"reviewed_source_fingerprint": "d31b3993c3dfa7de7de871386090d11edcfc7394d1b0ff9dac0b1d332092bb6d"
+				},
+				"status": "APPROVED"
 			},
 			"footprint_review": {
 				"notes": "Current Footprint approved against posed geometry.",
@@ -1354,11 +1578,25 @@
 		"loot_000022": {
 			"auto_group_review": {
 				"flags": [],
-				"notes": "",
-				"reviewed_auto_stack_group": "",
-				"reviewed_registry_compatibility_revision": 0,
-				"reviewed_stack_role_snapshot": {},
-				"status": "UNREVIEWED"
+				"notes": "Human-approved existing Auto Stack Group.",
+				"reviewed_auto_stack_group": "round_cans",
+				"reviewed_registry_compatibility_revision": 1,
+				"reviewed_stack_role_snapshot": {
+					"reviewed_can_be_stacked": true,
+					"reviewed_can_support_stack": true,
+					"reviewed_footprint": [
+						1,
+						1,
+						1
+					],
+					"reviewed_rotation_degrees": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"reviewed_source_fingerprint": "632f4ce2e4d333fbd2417b0581c7dacc987108d24a440d62772bcc86ddf9a7fa"
+				},
+				"status": "APPROVED"
 			},
 			"footprint_review": {
 				"notes": "Current Footprint approved against posed geometry.",
@@ -1415,11 +1653,25 @@
 		"loot_000023": {
 			"auto_group_review": {
 				"flags": [],
-				"notes": "",
-				"reviewed_auto_stack_group": "",
-				"reviewed_registry_compatibility_revision": 0,
-				"reviewed_stack_role_snapshot": {},
-				"status": "UNREVIEWED"
+				"notes": "Human-approved existing Auto Stack Group.",
+				"reviewed_auto_stack_group": "round_cans",
+				"reviewed_registry_compatibility_revision": 1,
+				"reviewed_stack_role_snapshot": {
+					"reviewed_can_be_stacked": true,
+					"reviewed_can_support_stack": true,
+					"reviewed_footprint": [
+						1,
+						1,
+						1
+					],
+					"reviewed_rotation_degrees": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"reviewed_source_fingerprint": "0863285b857c56deb2473a35e8511700751c56fcedb0cb8f212ec6a8ea1b17d1"
+				},
+				"status": "APPROVED"
 			},
 			"footprint_review": {
 				"notes": "Current Footprint approved against posed geometry.",
@@ -1476,11 +1728,25 @@
 		"loot_000024": {
 			"auto_group_review": {
 				"flags": [],
-				"notes": "",
+				"notes": "Human-approved explicit None.",
 				"reviewed_auto_stack_group": "",
 				"reviewed_registry_compatibility_revision": 0,
-				"reviewed_stack_role_snapshot": {},
-				"status": "UNREVIEWED"
+				"reviewed_stack_role_snapshot": {
+					"reviewed_can_be_stacked": true,
+					"reviewed_can_support_stack": false,
+					"reviewed_footprint": [
+						1,
+						1,
+						1
+					],
+					"reviewed_rotation_degrees": [
+						0.0,
+						90.0,
+						0.0
+					],
+					"reviewed_source_fingerprint": "062b7b317fbf97b664a07c1ddc10b36aac362cb7fa6ec81b542486dfcbcc2fa1"
+				},
+				"status": "APPROVED"
 			},
 			"footprint_review": {
 				"notes": "Current Footprint approved against posed geometry.",
@@ -1537,11 +1803,25 @@
 		"loot_000025": {
 			"auto_group_review": {
 				"flags": [],
-				"notes": "",
+				"notes": "Human-approved explicit None.",
 				"reviewed_auto_stack_group": "",
 				"reviewed_registry_compatibility_revision": 0,
-				"reviewed_stack_role_snapshot": {},
-				"status": "UNREVIEWED"
+				"reviewed_stack_role_snapshot": {
+					"reviewed_can_be_stacked": true,
+					"reviewed_can_support_stack": false,
+					"reviewed_footprint": [
+						1,
+						1,
+						1
+					],
+					"reviewed_rotation_degrees": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"reviewed_source_fingerprint": "7a921edc40b390590fd9f36bf5eada1bb4f3575a8c49b18350ba7826c0c9434d"
+				},
+				"status": "APPROVED"
 			},
 			"footprint_review": {
 				"notes": "Current Footprint approved against posed geometry.",
@@ -1598,11 +1878,25 @@
 		"loot_000026": {
 			"auto_group_review": {
 				"flags": [],
-				"notes": "",
+				"notes": "Human-approved explicit None.",
 				"reviewed_auto_stack_group": "",
 				"reviewed_registry_compatibility_revision": 0,
-				"reviewed_stack_role_snapshot": {},
-				"status": "UNREVIEWED"
+				"reviewed_stack_role_snapshot": {
+					"reviewed_can_be_stacked": true,
+					"reviewed_can_support_stack": false,
+					"reviewed_footprint": [
+						1,
+						2,
+						1
+					],
+					"reviewed_rotation_degrees": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"reviewed_source_fingerprint": "4853eae6d79f9ddd5c619c5bdd4201a333955da009786d2a62f749c585bbe44c"
+				},
+				"status": "APPROVED"
 			},
 			"footprint_review": {
 				"notes": "Current Footprint approved as a deliberate authored override.",
@@ -1659,11 +1953,25 @@
 		"loot_000027": {
 			"auto_group_review": {
 				"flags": [],
-				"notes": "",
+				"notes": "Human-approved explicit None.",
 				"reviewed_auto_stack_group": "",
 				"reviewed_registry_compatibility_revision": 0,
-				"reviewed_stack_role_snapshot": {},
-				"status": "UNREVIEWED"
+				"reviewed_stack_role_snapshot": {
+					"reviewed_can_be_stacked": true,
+					"reviewed_can_support_stack": false,
+					"reviewed_footprint": [
+						1,
+						1,
+						1
+					],
+					"reviewed_rotation_degrees": [
+						0.0,
+						-120.0,
+						0.0
+					],
+					"reviewed_source_fingerprint": "df65c2a162cba24514f8ca4d4491da16abb918f79f1204dd6fb111750354c1ea"
+				},
+				"status": "APPROVED"
 			},
 			"footprint_review": {
 				"notes": "Current Footprint approved against posed geometry.",
@@ -1795,11 +2103,25 @@
 		"loot_000029": {
 			"auto_group_review": {
 				"flags": [],
-				"notes": "",
+				"notes": "Human-approved explicit None.",
 				"reviewed_auto_stack_group": "",
 				"reviewed_registry_compatibility_revision": 0,
-				"reviewed_stack_role_snapshot": {},
-				"status": "UNREVIEWED"
+				"reviewed_stack_role_snapshot": {
+					"reviewed_can_be_stacked": true,
+					"reviewed_can_support_stack": false,
+					"reviewed_footprint": [
+						2,
+						2,
+						1
+					],
+					"reviewed_rotation_degrees": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"reviewed_source_fingerprint": "0c39f0837ab52a56e7ae6504fa0aeeaa414d44fc25a2dd011757598cb047218f"
+				},
+				"status": "APPROVED"
 			},
 			"footprint_review": {
 				"notes": "Current Footprint approved against posed geometry.",
@@ -2006,11 +2328,25 @@
 		"loot_000032": {
 			"auto_group_review": {
 				"flags": [],
-				"notes": "",
+				"notes": "Human-approved explicit None.",
 				"reviewed_auto_stack_group": "",
 				"reviewed_registry_compatibility_revision": 0,
-				"reviewed_stack_role_snapshot": {},
-				"status": "UNREVIEWED"
+				"reviewed_stack_role_snapshot": {
+					"reviewed_can_be_stacked": true,
+					"reviewed_can_support_stack": false,
+					"reviewed_footprint": [
+						3,
+						3,
+						1
+					],
+					"reviewed_rotation_degrees": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"reviewed_source_fingerprint": "8fa1fa14942a2bd8dd60514d23c393784fa6d2612dcd719bf1bb871f5ca70194"
+				},
+				"status": "APPROVED"
 			},
 			"footprint_review": {
 				"notes": "Current Footprint approved as a deliberate authored override.",
@@ -2067,11 +2403,25 @@
 		"loot_000033": {
 			"auto_group_review": {
 				"flags": [],
-				"notes": "",
+				"notes": "Human-approved explicit None.",
 				"reviewed_auto_stack_group": "",
 				"reviewed_registry_compatibility_revision": 0,
-				"reviewed_stack_role_snapshot": {},
-				"status": "UNREVIEWED"
+				"reviewed_stack_role_snapshot": {
+					"reviewed_can_be_stacked": true,
+					"reviewed_can_support_stack": false,
+					"reviewed_footprint": [
+						3,
+						3,
+						1
+					],
+					"reviewed_rotation_degrees": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"reviewed_source_fingerprint": "280514a80eeffbee0ea34cb0f6ec7987a16ee29b087da9694f9401132e98e1a2"
+				},
+				"status": "APPROVED"
 			},
 			"footprint_review": {
 				"notes": "Current Footprint approved against posed geometry.",
@@ -2189,11 +2539,25 @@
 		"loot_000035": {
 			"auto_group_review": {
 				"flags": [],
-				"notes": "",
+				"notes": "Human-approved explicit None.",
 				"reviewed_auto_stack_group": "",
 				"reviewed_registry_compatibility_revision": 0,
-				"reviewed_stack_role_snapshot": {},
-				"status": "UNREVIEWED"
+				"reviewed_stack_role_snapshot": {
+					"reviewed_can_be_stacked": true,
+					"reviewed_can_support_stack": false,
+					"reviewed_footprint": [
+						3,
+						3,
+						1
+					],
+					"reviewed_rotation_degrees": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"reviewed_source_fingerprint": "93d6e0e5b9df34b5d0cf9b27275f1895e7cf85879bc60eac5a12dd66d0e9e0b3"
+				},
+				"status": "APPROVED"
 			},
 			"footprint_review": {
 				"notes": "Current Footprint approved against posed geometry.",
@@ -2311,11 +2675,25 @@
 		"loot_000037": {
 			"auto_group_review": {
 				"flags": [],
-				"notes": "",
+				"notes": "Human-approved explicit None.",
 				"reviewed_auto_stack_group": "",
 				"reviewed_registry_compatibility_revision": 0,
-				"reviewed_stack_role_snapshot": {},
-				"status": "UNREVIEWED"
+				"reviewed_stack_role_snapshot": {
+					"reviewed_can_be_stacked": true,
+					"reviewed_can_support_stack": false,
+					"reviewed_footprint": [
+						4,
+						1,
+						1
+					],
+					"reviewed_rotation_degrees": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"reviewed_source_fingerprint": "4ac5a2d4e8d8a170b7a6abeeb095fd51172097d991798e6ef1ece1bcc74a40c8"
+				},
+				"status": "APPROVED"
 			},
 			"footprint_review": {
 				"notes": "Current Footprint approved against posed geometry.",
@@ -2372,11 +2750,25 @@
 		"loot_000038": {
 			"auto_group_review": {
 				"flags": [],
-				"notes": "",
+				"notes": "Human-approved explicit None.",
 				"reviewed_auto_stack_group": "",
 				"reviewed_registry_compatibility_revision": 0,
-				"reviewed_stack_role_snapshot": {},
-				"status": "UNREVIEWED"
+				"reviewed_stack_role_snapshot": {
+					"reviewed_can_be_stacked": true,
+					"reviewed_can_support_stack": false,
+					"reviewed_footprint": [
+						3,
+						12,
+						1
+					],
+					"reviewed_rotation_degrees": [
+						0.0,
+						0.0,
+						90.0
+					],
+					"reviewed_source_fingerprint": "38598f0566dcb6bd0d338cc3a844ec9f9b68c4903a3ed6360c39ccf6f1dd4bb1"
+				},
+				"status": "APPROVED"
 			},
 			"footprint_review": {
 				"notes": "Current Footprint approved as a deliberate authored override.",
@@ -2508,11 +2900,25 @@
 		"loot_000040": {
 			"auto_group_review": {
 				"flags": [],
-				"notes": "",
+				"notes": "Human-approved explicit None.",
 				"reviewed_auto_stack_group": "",
 				"reviewed_registry_compatibility_revision": 0,
-				"reviewed_stack_role_snapshot": {},
-				"status": "UNREVIEWED"
+				"reviewed_stack_role_snapshot": {
+					"reviewed_can_be_stacked": true,
+					"reviewed_can_support_stack": false,
+					"reviewed_footprint": [
+						2,
+						10,
+						1
+					],
+					"reviewed_rotation_degrees": [
+						0.0,
+						0.0,
+						90.0
+					],
+					"reviewed_source_fingerprint": "6c39da4730013101fa22348c90e8ce04d5be6fff5487f45255a8d0f37ffab352"
+				},
+				"status": "APPROVED"
 			},
 			"footprint_review": {
 				"notes": "Current Footprint approved as a deliberate authored override.",
@@ -2569,11 +2975,25 @@
 		"loot_000041": {
 			"auto_group_review": {
 				"flags": [],
-				"notes": "",
+				"notes": "Human-approved explicit None.",
 				"reviewed_auto_stack_group": "",
 				"reviewed_registry_compatibility_revision": 0,
-				"reviewed_stack_role_snapshot": {},
-				"status": "UNREVIEWED"
+				"reviewed_stack_role_snapshot": {
+					"reviewed_can_be_stacked": true,
+					"reviewed_can_support_stack": false,
+					"reviewed_footprint": [
+						1,
+						1,
+						1
+					],
+					"reviewed_rotation_degrees": [
+						0.0,
+						0.0,
+						180.0
+					],
+					"reviewed_source_fingerprint": "0239435c9e3eccaec42d61f323878f64a08432f79ec47f412ef62d6338eb2517"
+				},
+				"status": "APPROVED"
 			},
 			"footprint_review": {
 				"notes": "Current Footprint approved against posed geometry.",
@@ -2630,11 +3050,25 @@
 		"loot_000042": {
 			"auto_group_review": {
 				"flags": [],
-				"notes": "",
+				"notes": "Human-approved explicit None.",
 				"reviewed_auto_stack_group": "",
 				"reviewed_registry_compatibility_revision": 0,
-				"reviewed_stack_role_snapshot": {},
-				"status": "UNREVIEWED"
+				"reviewed_stack_role_snapshot": {
+					"reviewed_can_be_stacked": true,
+					"reviewed_can_support_stack": false,
+					"reviewed_footprint": [
+						3,
+						5,
+						1
+					],
+					"reviewed_rotation_degrees": [
+						0.0,
+						0.0,
+						0.0
+					],
+					"reviewed_source_fingerprint": "65b52da2eee3f955d39fe045fbf2924364eae2291576899dded783d72b78fe69"
+				},
+				"status": "APPROVED"
 			},
 			"footprint_review": {
 				"notes": "Current Footprint approved as a deliberate authored override.",

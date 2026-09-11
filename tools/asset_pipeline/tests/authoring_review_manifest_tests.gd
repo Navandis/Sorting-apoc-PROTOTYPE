@@ -35,6 +35,9 @@ func _init() -> void:
 	_test_auto_group_requires_current_stack_role()
 	_test_auto_group_registry_revision_and_description_semantics()
 	_test_approved_empty_auto_group_is_current()
+	_test_auto_group_apply_is_idempotent_but_refuses_stack_role_drift()
+	_test_auto_group_apply_refuses_registry_revision_drift()
+	_test_auto_group_apply_refuses_malformed_source_review()
 	_test_serialization_is_deterministic()
 	_test_serialized_manifest_validates_after_json_parse()
 	print("PASS: authoring review manifest tests")
@@ -498,6 +501,73 @@ func _test_approved_empty_auto_group_is_current() -> void:
 	assert(bool(evidence["auto_group_review_eligible"]))
 	assert(bool(evidence["auto_group_review_current"]))
 	assert(not bool(evidence["auto_group_review_stale"]))
+
+
+func _test_auto_group_apply_is_idempotent_but_refuses_stack_role_drift() -> void:
+	var asset: Dictionary = _stack_asset("hash", [0.0, 0.0, 0.0], [2, 2, 1], true, true, "flat_media")
+	var record: Dictionary = _approved_stack_role_record(asset)
+	var manifest: Dictionary = AuthoringReviewManifestScript.empty_manifest()
+	manifest["assets"] = {"loot_000001": record}
+	var applied: Dictionary = AuthoringReviewManifestScript.apply_auto_group_approvals(
+		manifest, [asset], _registry(), {"loot_000001": "flat_media"}
+	)
+	assert((applied["errors"] as PackedStringArray).is_empty())
+	var applied_manifest: Dictionary = applied["manifest"] as Dictionary
+	var applied_record: Dictionary = (applied_manifest["assets"] as Dictionary)["loot_000001"] as Dictionary
+	assert(bool(AuthoringReviewManifestScript.review_evidence(applied_record, asset, _registry())["auto_group_review_current"]))
+	var repeated: Dictionary = AuthoringReviewManifestScript.apply_auto_group_approvals(
+		applied_manifest, [asset], _registry(), {"loot_000001": "flat_media"}
+	)
+	assert((repeated["errors"] as PackedStringArray).is_empty())
+	assert(repeated["manifest"] == applied_manifest)
+	var missing_group_asset: Dictionary = asset.duplicate(true)
+	missing_group_asset["auto_stack_group"] = ""
+	var missing_group: Dictionary = AuthoringReviewManifestScript.apply_auto_group_approvals(
+		applied_manifest, [missing_group_asset], _registry(), {"loot_000001": "flat_media"}
+	)
+	assert(_errors_contain(missing_group["errors"] as PackedStringArray, "does not match"))
+	assert(missing_group["manifest"] == applied_manifest)
+
+	var changed_asset: Dictionary = asset.duplicate(true)
+	changed_asset["can_support_stack"] = false
+	var changed_manifest: Dictionary = applied_manifest.duplicate(true)
+	var changed_record: Dictionary = (changed_manifest["assets"] as Dictionary)["loot_000001"] as Dictionary
+	var changed_stack_review: Dictionary = changed_record["stack_role_review"] as Dictionary
+	for key_value: Variant in AuthoringReviewManifestScript.stack_role_snapshot(changed_asset).keys():
+		changed_stack_review[key_value] = AuthoringReviewManifestScript.stack_role_snapshot(changed_asset)[key_value]
+	var rejected: Dictionary = AuthoringReviewManifestScript.apply_auto_group_approvals(
+		changed_manifest, [changed_asset], _registry(), {"loot_000001": "flat_media"}
+	)
+	assert(_errors_contain(rejected["errors"] as PackedStringArray, "existing approval is stale"))
+	assert(rejected["manifest"] == changed_manifest)
+
+
+func _test_auto_group_apply_refuses_registry_revision_drift() -> void:
+	var asset: Dictionary = _stack_asset("hash", [0.0, 0.0, 0.0], [2, 2, 1], true, true, "flat_media")
+	var record: Dictionary = _approved_stack_role_record(asset)
+	_approve_auto_group(record, asset, 1)
+	var manifest: Dictionary = AuthoringReviewManifestScript.empty_manifest()
+	manifest["assets"] = {"loot_000001": record}
+	var changed_registry: Dictionary = _registry()
+	((changed_registry["classes"] as Dictionary)["flat_media"] as Dictionary)["compatibility_revision"] = 2
+	var rejected: Dictionary = AuthoringReviewManifestScript.apply_auto_group_approvals(
+		manifest, [asset], changed_registry, {"loot_000001": "flat_media"}
+	)
+	assert(_errors_contain(rejected["errors"] as PackedStringArray, "existing approval is stale"))
+	assert(rejected["manifest"] == manifest)
+
+
+func _test_auto_group_apply_refuses_malformed_source_review() -> void:
+	var asset: Dictionary = _stack_asset("hash", [0.0, 0.0, 0.0], [2, 2, 1], true, true, "flat_media")
+	var record: Dictionary = _approved_stack_role_record(asset)
+	(record["auto_group_review"] as Dictionary)["status"] = "BROKEN"
+	var manifest: Dictionary = AuthoringReviewManifestScript.empty_manifest()
+	manifest["assets"] = {"loot_000001": record}
+	var rejected: Dictionary = AuthoringReviewManifestScript.apply_auto_group_approvals(
+		manifest, [asset], _registry(), {"loot_000001": "flat_media"}
+	)
+	assert(_errors_contain(rejected["errors"] as PackedStringArray, "auto_group_review.status"))
+	assert(rejected["manifest"] == manifest)
 
 
 func _test_serialization_is_deterministic() -> void:
