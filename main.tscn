@@ -241,8 +241,8 @@ transform = Transform3D(2.465, 0, 0, 0, 2.465, 0, 0, 0, 2.465, -3.6650796, 0, 6)
 [node name="SM_Sewer_Wall_Arch_01a" parent="SM_Sewer_Wall_Arch_01a" unique_id=197288745 instance=ExtResource("3_lquwl")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 6, 0, -2)
 
-[node name="SM_Dry_Goods_01g" parent="SM_Sewer_Wall_Arch_01a" unique_id=1923626718 instance=ExtResource("10_blkrb")]
-transform = Transform3D(-0.09814275, 0, 0.3936291, 0, 0.40567952, 0, -0.3936291, 0, -0.09814275, 3.694265, 0.35150024, -1.4505534)
+[node name="SM_Dry_Goods_01g" parent="." unique_id=1923626718 instance=ExtResource("10_blkrb")]
+transform = Transform3D(-0.24192189, 0, 0.9702957, 0, 1, 0, -0.9702957, 0, -0.24192189, 5.4412837, 0.8664481, 2.4243858)
 
 [node name="SM_Sewer_Wall_Arch_01a3" parent="." unique_id=2030190907 instance=ExtResource("3_lquwl")]
 transform = Transform3D(2.465, 0, 0, 0, 2.465, 0, 0, 0, 2.465, -3.6650796, 0, 1.0194244)
