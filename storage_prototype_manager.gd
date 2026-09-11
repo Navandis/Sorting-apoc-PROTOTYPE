@@ -80,7 +80,7 @@ func _install_known_shelves() -> void:
 					# bottom → top
 					_make_level_profile(0.100, 0.96, 0.92, 0.00, 0.00),
 					_make_level_profile(0.380, 0.96, 0.92, 0.00, 0.00),
-					_make_level_profile(0.667, 0.96, 0.92, 0.00, 0.00),
+					_make_level_profile(0.677, 0.96, 0.92, 0.00, 0.00),
 					_make_level_profile(0.965, 0.96, 0.92, 0.00, 0.00)
 				],
 				0.919
