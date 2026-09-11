@@ -165,6 +165,29 @@ func get_maximum_stack_top_y_m() -> float:
 	return stack_clearance_m * MAX_STACK_USED_FRACTION
 
 
+func get_singleton_clearance_result(
+	entry: StorageStack.Entry,
+	host_y_m: float
+) -> Dictionary:
+	var resulting_top_y_m: float = INF
+	if entry != null:
+		# aligned_bounds is already expressed in the seated frame produced by
+		# StorageVisualPose. Its end therefore includes both the normalized
+		# seated minimum and posed height without reconstructing either value.
+		resulting_top_y_m = host_y_m + entry.aligned_bounds.end.y
+	var clearance_ok: bool = (
+		entry != null
+		and resulting_top_y_m <= stack_clearance_m + StorageStackScript.HEIGHT_EPSILON_M
+	)
+	return {
+		"valid": clearance_ok,
+		"clearance_ok": clearance_ok,
+		"host_y_m": host_y_m,
+		"resulting_top_y_m": resulting_top_y_m,
+		"physical_clearance_m": stack_clearance_m,
+	}
+
+
 func get_occupancy_ratio() -> float:
 	if _cells.is_empty():
 		return 0.0
@@ -312,6 +335,7 @@ func find_zone_stack_or_empty_fit(
 		orientations.append(rotated_entry)
 
 	var category: String = storage_category.strip_edges()
+	var last_empty_failure: Dictionary = {}
 	for zone_category: String in _auto_zone_tiers(category):
 		var stack_fit: Dictionary = _find_auto_stack_fit_in_zone(
 			zone_category,
@@ -328,25 +352,27 @@ func find_zone_stack_or_empty_fit(
 			)
 			if not bool(empty_fit.get("valid", false)):
 				continue
-			var origin: Vector2i = empty_fit.get("origin", Vector2i.ZERO) as Vector2i
-			return {
-				"valid": true,
-				"placement_kind": "empty",
-				"stack_id": entry.item_key,
-				"insertion_index": 0,
-				"origin": origin,
-				"footprint": entry.footprint,
-				"base_footprint": entry.footprint,
-				"rotated": entry.packing_rotated,
-				"zone_kind": _zone_kind(category, zone_category),
-				"zone_category": zone_category,
-				"host_y_m": get_local_placement_position(
-					origin,
-					entry.footprint
-				).y
-			}
+			var decorated: Dictionary = _decorate_empty_fit(
+				empty_fit,
+				entry,
+				_zone_kind(category, zone_category),
+				zone_category
+			)
+			if bool(decorated.get("valid", false)):
+				return decorated
+			last_empty_failure = decorated
 
-	return _invalid_stack_placement()
+	return last_empty_failure if not last_empty_failure.is_empty() else _invalid_stack_placement()
+
+
+func find_manual_empty_fit(
+	local_point: Vector3,
+	entry: StorageStack.Entry
+) -> Dictionary:
+	if entry == null:
+		return _invalid_stack_placement()
+	var fit: Dictionary = find_nearest_fit_to_local_point(local_point, entry.footprint)
+	return _decorate_empty_fit(fit, entry, "manual", "")
 
 
 func find_manual_stack_fit(
@@ -395,6 +421,13 @@ func commit_stack_entry(entry: StorageStack.Entry, fit: Dictionary) -> bool:
 			return false
 		var origin: Vector2i = fit.get("origin", Vector2i.ZERO) as Vector2i
 		var footprint: Vector2i = fit.get("footprint", entry.footprint) as Vector2i
+		var canonical_host_y_m: float = get_local_placement_position(origin, footprint).y
+		var supplied_host_y_m: float = float(fit.get("host_y_m", canonical_host_y_m))
+		if absf(supplied_host_y_m - canonical_host_y_m) > StorageStackScript.HEIGHT_EPSILON_M:
+			return false
+		var clearance: Dictionary = get_singleton_clearance_result(entry, canonical_host_y_m)
+		if not bool(clearance.get("clearance_ok", false)):
+			return false
 		if not reserve_at(stack_id, origin, footprint, entry.packing_rotated):
 			return false
 		var stack: StorageStack = StorageStackScript.new()
@@ -685,6 +718,31 @@ func _decorate_stack_fit(
 	result["rotated"] = entry.packing_rotated
 	result["zone_kind"] = zone_kind
 	result["zone_category"] = zone_category
+	return result
+
+
+func _decorate_empty_fit(
+	fit: Dictionary,
+	entry: StorageStack.Entry,
+	zone_kind: String,
+	zone_category: String
+) -> Dictionary:
+	var result: Dictionary = fit.duplicate(true)
+	var origin: Vector2i = result.get("origin", Vector2i.ZERO) as Vector2i
+	var host_y_m: float = get_local_placement_position(origin, entry.footprint).y
+	var clearance: Dictionary = get_singleton_clearance_result(entry, host_y_m)
+	var horizontal_fit_ok: bool = bool(result.get("valid", false))
+	result["placement_kind"] = "empty"
+	result["stack_id"] = entry.item_key
+	result["insertion_index"] = 0
+	result["footprint"] = entry.footprint
+	result["base_footprint"] = entry.footprint
+	result["rotated"] = entry.packing_rotated
+	result["zone_kind"] = zone_kind
+	result["zone_category"] = zone_category
+	for key: String in clearance:
+		result[key] = clearance[key]
+	result["valid"] = horizontal_fit_ok and bool(clearance.get("clearance_ok", false))
 	return result
 
 

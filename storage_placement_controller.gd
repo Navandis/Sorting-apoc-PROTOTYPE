@@ -233,24 +233,11 @@ func update_target() -> void:
 		var position_value: Variant = result.get("position", Vector3.ZERO)
 		var hit_world: Vector3 = position_value as Vector3
 		var hit_local: Vector3 = surface.to_local(hit_world)
-		var footprint: Vector2i = _selected_footprint(selected_item)
-
-		_current_fit = surface.find_nearest_fit_to_local_point(
-			hit_local,
-			footprint
-		)
-		_current_fit["placement_kind"] = "empty"
-		_current_fit["stack_id"] = _item_key(selected_item)
-		_current_fit["insertion_index"] = 0
-		_current_fit["base_footprint"] = footprint
-		_current_fit["rotated"] = _rotated
-		_current_fit["zone_kind"] = "manual"
-		_current_fit["zone_category"] = ""
-		var manual_origin: Vector2i = _current_fit.get("origin", Vector2i.ZERO) as Vector2i
-		_current_fit["host_y_m"] = surface.get_local_placement_position(
-			manual_origin,
-			footprint
-		).y
+		var entry: StorageStack.Entry = _entry_for_item(selected_item, _rotated)
+		if entry == null or not surface.has_method("find_manual_empty_fit"):
+			_current_fit = {}
+		else:
+			_current_fit = surface.find_manual_empty_fit(hit_local, entry)
 		_update_ghost(selected_item)
 		return
 
