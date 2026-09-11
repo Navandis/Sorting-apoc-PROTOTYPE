@@ -2,7 +2,7 @@
 
 ## Gate status and evidence rules
 
-This is the formal gameplay-validation gate for the current 40-item eligible catalogue. It is a stratified stress test, not exhaustive pairwise coverage.
+This is the completed formal gameplay-validation gate for the current 40-item eligible catalogue. It is a stratified stress test, not exhaustive pairwise coverage.
 
 The gate has two independent evidence tracks:
 
@@ -11,11 +11,11 @@ The gate has two independent evidence tracks:
 
 A mechanical `PASS` does not imply that the Auto Group is well authored. For example, a technically correct automatic combination may still be visually surprising and require `REVISE AUTHORING`.
 
-Codex may verify setup, automated behavior, and scenario reproducibility. Codex setup verification is not human gameplay evidence. The final `PROMOTE`, `REVISE AUTHORING`, or `REVISE SYSTEM` decision remains pending until a human completes the observation fields in-game.
+Codex setup and automated verification remain distinct from the human gameplay evidence recorded below. The human run completed S01–S14 with mechanical `PASS` results and expected predictability. The final decision is `PROMOTE`.
 
 ## Current preflight snapshot
 
-Snapshot date: 2026-09-11. Git baseline: `4245d5c` on clean `main`.
+Snapshot date: 2026-09-11. Matrix preflight baseline: `4245d5c`. Completed human gameplay evidence was recorded against current baseline `4fbb6e0` on clean `main`.
 
 - Audit: 42 current assets; 40 Stack Role eligible/approved/current; 40 Auto Group eligible/approved/current.
 - Blocked upstream: `loot_000034` Gloves and `loot_000036` Pants.
@@ -54,7 +54,7 @@ Within-group footprint extremes are Book `3x2` versus CD Stack `2x2` for `flat_m
 
 - Shortest selected member: `loot_000001` Computer Mouse 01 at about `0.03 m`.
 - Tallest eligible item: `loot_000017` Gas Cylinder 01 at about `0.55 m`.
-- Selected near-limit chain: `0.14 + 0.13 = 0.27 m` valid under the `SM_ventilated_locker` open-top permitted cap of about `0.32295 m`; adding a `0.12 m` can produces `0.39 m` and must fail.
+- Selected near-limit chain: `0.14 + 0.13 = 0.27 m` valid under the `SM_ventilated_locker` highest-level permitted cap of about `0.32295 m`; adding a `0.12 m` can produces `0.39 m` and must fail.
 - Selected 90-degree boundary: Electronic Device `3x5` does not fit natively on Med Kit `5x4`, but its `5x3` alternative does.
 - Selected automatic rotation boundary: Book `3x2` / `2x3` promoting a CD Stack `2x2` where surrounding reservations leave only one expansion orientation.
 - Selected explicit-None contrasts: Milk Carton against same-category `round_cans`; Electronic Device on Med Kit across category/group; small medical None items on a Med Kit; Bread as a same-category terminal package that must not be mistaken for `boxed_food`.
@@ -70,7 +70,7 @@ Within-group footprint extremes are Book `3x2` versus CD Stack `2x2` for `flat_m
 | S05 | Awkward flat-media carry order | `flat_media`; full members | `3x2/2x3` and `2x2`; preserve prior yaw | Morale-specific; highest-valid smart insertion | Final narrowing chain without repack | Insertion does not look magical |
 | S06 | Automatic base promotion and expansion | `flat_media`; full members | CD `2x2` → Book `3x2/2x3` | General; promotion, shift, atomic rekey | New base owns expanded reservation | Rearrangement is visually legible |
 | S07 | Correctly blocked base promotion | `flat_media`; full members | Only expansion cells blocked | General; failed promotion | Existing stack, ownership, and carry remain unchanged | Rejection feels explainable |
-| S08 | Restrictive clearance boundary | `round_cans`; full members | `0.27 m` valid; `0.39 m` invalid | low authored open top | Near-limit accept, over-limit reject | Remaining headroom looks credible |
+| S08 | Restrictive clearance boundary | `round_cans`; full members | `0.27 m` valid; `0.39 m` invalid | low authored top-level cap | Near-limit accept, over-limit reject | Remaining headroom looks credible |
 | S09 | Support-only and ordinary clearance | Tower support-only; Book full member | Tower `5x3/3x5`; Book fits; Med Kit does not | `SM_MetalShelves2` level 1 | Tower supports but cannot be incoming; footprint/clearance rules hold | Tall support stack remains readable |
 | S10 | Authored open-top contexts | `round_cans` / `flat_media` | Compare explicit caps | top levels of two shelf families | Each family stops at its own cap | Different caps do not look arbitrary |
 | S11 | Manual rotated cross-group stack | Med Kit full; Electronic Device None terminal | native `3x5` fails, `5x3` succeeds | manual current-top append | Rotation gates placement; later auto rejects mixed stack | Broader manual compatibility is useful and clear |
@@ -115,11 +115,13 @@ If a setup step cannot be reproduced in `main.tscn`, record `BLOCKED — <exact 
 
 ### S01 — Boxed-food ordinary automatic stack
 
-1. Mark an empty shelf segment Food-specific.
-2. Carry both `loot_000005` Cereal Box instances and `loot_000007` Cereal Box 2.
-3. In automatic mode, place Cereal Box, Cereal Box 2, then the second Cereal Box while looking at the same surface.
+1. Use the top level of `SM_MetalShelves` and mark an empty segment Food-specific.
+2. Carry one `loot_000005` Cereal Box and `loot_000007` Cereal Box 2.
+3. In automatic mode, place the two-box contrast pair while looking at the same surface.
 4. Require one centered coherent `3x1` column, one base reservation, stable authored poses, and no intersection or air gap.
 5. Observe whether the package variants advertise the same storage convention before placement.
+
+The earlier draft requested a three-box stack. No current enclosed shelf provides sufficient vertical clearance for that configuration. The reproducible current-fixture scenario and completed evidence therefore use the two-member contrast pair on the genuinely open top of `SM_MetalShelves`; no three-box result is claimed.
 
 ### S02 — Medical-box duplicate convention
 
@@ -174,7 +176,7 @@ If a setup step cannot be reproduced in `main.tscn`, record `BLOCKED — <exact 
 
 ### S08 — Restrictive clearance, near-limit valid, then invalid
 
-1. Use the top level of `SM_ventilated_locker`, whose explicit open-top clearance is `0.339945 m` and whose permitted 95% top is about `0.32295 m`.
+1. Use the highest generated level of the enclosed `SM_ventilated_locker`, whose explicit top-level clearance cap is `0.339945 m` and whose permitted 95% top is about `0.32295 m`.
 2. Automatically stack a `0.14 m` can and a `0.13 m` can. Require the `0.27 m` stack to remain valid.
 3. Attempt a `0.12 m` can. Require rejection because `0.39 m` exceeds the permitted top.
 4. Require visible headroom to remain and no mutation of the valid two-can stack.
@@ -191,11 +193,13 @@ If a setup step cannot be reproduced in `main.tscn`, record `BLOCKED — <exact 
 
 ### S10 — Explicit open-top contexts
 
-1. Use top levels from `SM_ventilated_locker2` (`0.519 m`), `SM_MetalShelves2` (`0.61573 m`), and `SM_MetalShelves` (`0.919 m`).
+1. Use the genuinely open top levels of `SM_MetalShelves2` (`0.61573 m`) and `SM_MetalShelves` (`0.919 m`).
 2. Build equivalent automatic can or flat-media stacks on each, continuing until each family rejects its next member.
 3. Require each family to use its placed `StorageShelfClearanceContext` cap rather than a shared fallback.
 4. Require rejected additions to leave the existing stack unchanged.
 5. Observe whether the different visible shelf contexts make their different capacities unsurprising.
+
+`SM_ventilated_locker2` has an authored `0.519 m` highest-level clearance cap in the runtime profile, but the physical furniture remains an enclosed locker. It is not counted as visual open-top evidence. S10's completed open-top evidence comes from the two metal-shelf families.
 
 ### S11 — Manual rotated cross-group relationship
 
@@ -234,48 +238,111 @@ If a setup step cannot be reproduced in `main.tscn`, record `BLOCKED — <exact 
 6. Require visible non-top members to be retrievable and fully occluded members not to be selected through geometry.
 7. Observe whether selection and compression remain intuitive in the dense arrangement.
 
-## Per-scenario result record
+## Completed human gameplay evidence
 
-Copy this block once for each scenario:
+The tester completed all fourteen scenarios. Every scenario received a mechanical `PASS`; predictability matched the expected behavior in every case. The observations below remain scenario-specific so the mechanical and authoring conclusions can be audited independently.
 
-```text
-Scenario: S__
-Shelf / level / zone layout:
-Incoming order and packing rotations:
+### S01 result — Boxed food
 
-Mechanical result: PASS | FAIL | BLOCKED
-Mechanical evidence:
+- **Mechanical:** `PASS`
+- **Predictability:** `PREDICTABLE` — expected
+- **Observation:** The reproducible two-box Cereal Box/Cereal Box 2 contrast formed one coherent `boxed_food` column with a single reservation and stable poses. The package variants communicated the shared convention clearly. The originally drafted third box was not tested: no current enclosed shelf had sufficient clearance for a three-box stack, so no evidence is claimed for that unavailable setup.
 
-Human authoring/playability tags:
-Human observation:
+### S02 result — Medical boxes
 
-Screenshot/video reference, if any:
-Follow-up defect or authoring action:
-```
+- **Mechanical:** `PASS`
+- **Predictability:** `PREDICTABLE` — expected
+- **Observation:** Repeated Med Kit instances formed the expected uniform `medical_boxes` stack. The single-definition group remained understandable as a repeatable storage convention and did not read as arbitrarily broad or narrow.
 
-Do not replace the two result sections with one combined pass column.
+### S03 result — Cross-category round cans
+
+- **Mechanical:** `PASS`
+- **Predictability:** `PREDICTABLE` — expected
+- **Observation:** Food and Hydration members formed the expected cross-category `round_cans` stack on General storage, with stable seating and height accumulation. Dimensional variation among the authored `1x1` cans remained visually readable. A thin can supporting somewhat wider members can look slightly less stable, but the effect does not currently justify an Auto Group, Stack Role, Footprint, or system change.
+
+### S04 result — Zone tier ordering
+
+- **Mechanical:** `PASS`
+- **Predictability:** `PREDICTABLE` — expected
+- **Observation:** Automatic placement respected matching category first, General second, then stop. Cross-category group membership did not override specific-zone authority, and the distinction remained understandable during play.
+
+### S05 result — Smart insertion
+
+- **Mechanical:** `PASS`
+- **Predictability:** `PREDICTABLE` — expected
+- **Observation:** The awkward flat-media carry order resolved into the expected narrowing chain through highest-valid insertion. Existing order and packing rotation were retained, and the insertion read as helpful rather than as a global repack or unexplained rearrangement.
+
+### S06 result — Base promotion
+
+- **Mechanical:** `PASS`
+- **Predictability:** `PREDICTABLE` — expected
+- **Observation:** The larger Book promoted beneath the CD Stack, expanded and rekeyed the reservation, and shifted only as required by the available cells. The prior members remained stable, and the base change was visually legible.
+
+### S07 result — Blocked promotion
+
+- **Mechanical:** `PASS`
+- **Predictability:** `PREDICTABLE` — expected
+- **Observation:** Blocking all legal expansion alternatives caused the expected atomic rejection. The existing stack, reservation, ownership, and carried state remained unchanged; removing the blocker restored the valid deterministic promotion path.
+
+### S08 result — Restrictive clearance
+
+- **Mechanical:** `PASS`
+- **Predictability:** `PREDICTABLE` — expected
+- **Observation:** The near-limit can stack was accepted and the over-limit third can was rejected without mutating the existing stack. Insufficient remaining vertical clearance for the third can was visually obvious as well as mechanically correct.
+
+### S09 result — Support-only Tower
+
+- **Mechanical:** `PASS`
+- **Predictability:** `PREDICTABLE` — expected
+- **Observation:** The Tower behaved as support-only: it accepted the valid Book while remaining invalid as an incoming member. The Tower/Med Kit rejection reflected both the authored Footprint mismatch and clearance limit, and the valid Tower/Book stack remained readable.
+
+### S10 result — Genuine open-top contexts
+
+- **Mechanical:** `PASS`
+- **Predictability:** `PREDICTABLE` — expected
+- **Observation:** The genuinely open top levels of `SM_MetalShelves2` and `SM_MetalShelves` enforced their distinct authored caps and left rejected stacks unchanged. Their different visible contexts made the capacity difference understandable. `SM_ventilated_locker2` was not counted as open-top evidence because its physical model is enclosed, even though its highest generated storage level has an authored clearance cap.
+
+### S11 result — Manual rotated cross-group relationship
+
+- **Mechanical:** `PASS`
+- **Predictability:** `PREDICTABLE` — expected
+- **Observation:** The Med Kit/Electronic Device relationship obeyed the expected manual orientation boundary, terminal support rule, and later automatic-coherence refusal. In the associated clearance check, insufficient remaining vertical clearance for a third can was also visually obvious as well as mechanically correct.
+
+### S12 result — Explicit-None automatic negative
+
+- **Mechanical:** `PASS`
+- **Predictability:** `PREDICTABLE` — expected, with a catalogue watchpoint
+- **Observation:** Milk Carton on Soda Can demonstrated the retained distinction correctly: manual `1x1` placement was physically valid, while automatic placement did not treat the explicit-None Milk Carton as a coherent `round_cans` member. The result is somewhat visually awkward because both items occupy authored `1x1` Footprints despite visibly different dimensions. Record this as a future catalogue/content watchpoint, not an Auto Group, Stack Role, or system failure.
+
+### S13 result — Stack Role controls
+
+- **Mechanical:** `PASS`
+- **Predictability:** `PREDICTABLE` — expected
+- **Observation:** Stackable/non-supporting, support-only, and non-participant controls each accepted or rejected stacking according to their authored role while preserving ordinary storage and retrieval. The restrictions agreed with the representative items' visible forms.
+
+### S14 result — Dense retrieval
+
+- **Mechanical:** `PASS`
+- **Predictability:** `PREDICTABLE` — expected
+- **Observation:** Top, visible-middle, base, and final removal preserved the expected compression, atomic rekey, reservation shrink, and cleanup behavior. Dense can stacks retained useful sightlines, and member targeting and stack manipulation remained understandable.
+
+## Separate follow-up defect
+
+The human run exposed a separate ordinary-placement issue: sufficiently tall singleton items can apparently exceed a closed shelf level's vertical clearance and penetrate the shelf or top geometry through both automatic and manual empty placement. Automatic stacking continued to enforce vertical clearance correctly.
+
+This issue was not investigated or fixed as part of this gate. It is recorded as `OPEN — SEPARATE DEBUGGING ISSUE` in `docs/testing/singleton-shelf-vertical-clearance-follow-up.md` and does not alter the stacking evidence above.
 
 ## Final gate decision
 
-Leave this section pending until all required mechanical results and human observations are recorded.
+**Decision: `PROMOTE`**
 
-```text
-Decision: PENDING HUMAN GAMEPLAY EVIDENCE
+- Current deterministic single-column support stacking is **PROMOTED** and gameplay-validated for the representative catalogue scope covered by S01–S14.
+- All four approved Auto Groups remain accepted: `boxed_food`, `flat_media`, `medical_boxes`, and `round_cans`.
+- No Stack Role or Auto Group authoring revision is indicated by this gate.
+- Mechanical correctness and human authoring evidence remain separate: all scenarios passed mechanically, and the human observations found expected predictability with only the non-blocking S03 stability note and S12 catalogue watchpoint.
+- Mixed/non-auto-coherent stack automation remains unchanged and unresolved as previously documented; this gate does not redesign or promote that retained rule.
+- Manual under-base insertion remains deferred.
+- Multi-column support packing remains outside the architecture.
+- The newly discovered singleton vertical-clearance issue is separate from this promotion and remains an uninvestigated follow-up debugging issue.
 
-Mechanical summary:
-Authoring/playability summary:
-Visual-predictability examples:
-Auto Groups that appear too broad:
-Auto Groups that appear too narrow:
-Explicit-None distinctions that confused the player:
-System defects:
-
-Final decision: PROMOTE | REVISE AUTHORING | REVISE SYSTEM
-Rationale:
-```
-
-Decision guidance:
-
-- `PROMOTE`: required mechanics pass and human evidence supports predictable, understandable conventions.
-- `REVISE AUTHORING`: mechanics behave as designed, but one or more group/None decisions are too broad, too narrow, or visually confusing.
-- `REVISE SYSTEM`: deterministic operations, ownership, reservation, orientation, zone, clearance, or retrieval behavior fails or the rules themselves are not usable.
+The promotion applies only to the current deterministic single-column architecture and representative authored catalogue scope. It does not imply exhaustive pairwise validation or expansion to deferred stacking models.

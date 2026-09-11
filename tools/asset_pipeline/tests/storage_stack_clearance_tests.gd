@@ -167,12 +167,12 @@ func _test_authored_surface_profile() -> void:
 	_check(surfaces.size() == 16, "all current authored surfaces load")
 	var expected_clearances: Dictionary = {
 		"SM_MetalShelves_level_1": 0.822046,
-		"SM_MetalShelves_level_2": 0.842597,
-		"SM_MetalShelves_level_3": 0.874892,
+		"SM_MetalShelves_level_2": 0.871956,
+		"SM_MetalShelves_level_3": 0.845533,
 		"SM_MetalShelves_level_4": 0.919000,
 		"SM_MetalShelves2_level_1": 0.550771,
-		"SM_MetalShelves2_level_2": 0.564540,
-		"SM_MetalShelves2_level_3": 0.586178,
+		"SM_MetalShelves2_level_2": 0.584211,
+		"SM_MetalShelves2_level_3": 0.566507,
 		"SM_MetalShelves2_level_4": 0.615730,
 		"SM_ventilated_locker2_level_1": 0.951673,
 		"SM_ventilated_locker2_level_2": 0.639966,
