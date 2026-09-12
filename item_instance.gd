@@ -9,8 +9,14 @@ var definition: ItemDefinition
 var contaminated: bool = false
 
 
-func _init(item_definition: ItemDefinition = null) -> void:
+func _init(
+	item_definition: ItemDefinition = null,
+	explicit_instance_id: String = ""
+) -> void:
 	definition = item_definition
+	if not explicit_instance_id.is_empty():
+		instance_id = explicit_instance_id
+		return
 	instance_id = "%s-%s" % [
 		String(definition.item_id) if definition != null else "item",
 		str(Time.get_ticks_usec())
