@@ -48,6 +48,8 @@ if ($LASTEXITCODE -ne 0) { throw 'Headless test failed.' }
 
 The literal `<test_file>` token above is descriptive only; every task below provides the exact test filename and command to execute.
 
+**Failure accounting (final-review correction):** Godot 4.7 can abort an assertion-bearing or runtime-failing helper and return to its caller. Every suite must count failed checks explicitly and observe completion of every test/fixture helper, including nested helpers. Follow the Task 1 harness: increment `_pending_helpers` before work, decrement only after the final check or after computing a return value, and emit PASS/exit 0 only when no failures and no unfinished helpers remain. Do not rely on `assert()` alone. Later snippets are excerpts using this same `_init()`, `_check()`, and accounting; each added helper needs completion tracking. Prove every suite rejects temporarily injected failed checks and assertion/runtime aborts with a nonzero exit and no PASS, then remove the injections before final verification.
+
 ---
 
 ## File Structure
@@ -103,36 +105,70 @@ extends SceneTree
 const ItemInstanceScript = preload("res://item_instance.gd")
 const PersistentItemCatalog = preload("res://data/items/item_catalog.tres")
 
+# A runtime abort can return from a helper to its caller in Godot. Every
+# test or fixture helper stays pending until its final statement is reached.
+var _failures: int = 0
+var _pending_helpers: int = 0
+
+
 func _init() -> void:
-    _test_explicit_identity_is_preserved()
-    _test_legacy_identity_path_remains_non_empty()
-    _test_two_explicit_instances_of_same_definition_remain_distinct()
-    print("PASS: receiving item identity tests")
-    quit(0)
+	_run_suite()
+	_check(_pending_helpers == 0, "%d test or fixture helpers did not complete" % _pending_helpers)
+	if _failures > 0:
+		print("FAIL: receiving item identity tests (%d failures)" % _failures)
+		quit(1)
+		return
+	print("PASS: receiving item identity tests")
+	quit(0)
+
+
+func _run_suite() -> void:
+	_pending_helpers += 1
+	_test_explicit_identity_is_preserved()
+	_test_legacy_identity_path_remains_non_empty()
+	_test_two_explicit_instances_of_same_definition_remain_distinct()
+	_pending_helpers -= 1
 
 func _definition() -> ItemDefinition:
-    return PersistentItemCatalog.get_definition_by_id(&"loot_000001")
+	_pending_helpers += 1
+	var completed_result: ItemDefinition = PersistentItemCatalog.get_definition_by_id(&"loot_000001")
+	_pending_helpers -= 1
+	return completed_result
 
 func _test_explicit_identity_is_preserved() -> void:
-    var instance: ItemInstance = ItemInstanceScript.new(
-        _definition(),
-        "batch_alpha:item_0000"
-    )
-    assert(instance.instance_id == "batch_alpha:item_0000")
-    assert(instance.definition == _definition())
+	_pending_helpers += 1
+	var instance: ItemInstance = ItemInstanceScript.new(
+		_definition(),
+		"batch_alpha:item_0000"
+	)
+	_check(instance.instance_id == "batch_alpha:item_0000")
+	_check(instance.definition == _definition())
+	_pending_helpers -= 1
 
 func _test_legacy_identity_path_remains_non_empty() -> void:
-    var first: ItemInstance = ItemInstanceScript.new(_definition())
-    var second: ItemInstance = ItemInstanceScript.new(_definition())
-    assert(not first.instance_id.is_empty())
-    assert(not second.instance_id.is_empty())
-    assert(first.instance_id != second.instance_id)
+	_pending_helpers += 1
+	var first: ItemInstance = ItemInstanceScript.new(_definition())
+	var second: ItemInstance = ItemInstanceScript.new(_definition())
+	_check(not first.instance_id.is_empty())
+	_check(not second.instance_id.is_empty())
+	_check(first.instance_id != second.instance_id)
+	_pending_helpers -= 1
 
 func _test_two_explicit_instances_of_same_definition_remain_distinct() -> void:
-    var first: ItemInstance = ItemInstanceScript.new(_definition(), "batch_a:item_0000")
-    var second: ItemInstance = ItemInstanceScript.new(_definition(), "batch_b:item_0000")
-    assert(first.definition == second.definition)
-    assert(first.instance_id != second.instance_id)
+	_pending_helpers += 1
+	var first: ItemInstance = ItemInstanceScript.new(_definition(), "batch_a:item_0000")
+	var second: ItemInstance = ItemInstanceScript.new(_definition(), "batch_b:item_0000")
+	_check(first.definition == second.definition)
+	_check(first.instance_id != second.instance_id)
+	_pending_helpers -= 1
+
+
+func _check(condition: bool, message: String = "") -> bool:
+	if not condition:
+		_failures += 1
+		var caller: Dictionary = get_stack()[1]
+		push_error("FAILED: %s:%s %s" % [caller["function"], caller["line"], message])
+	return condition
 ```
 
 - [ ] **Step 2: Run the test and verify it fails on the current one-argument constructor**
@@ -206,7 +242,7 @@ git commit -m "feat: support durable item instance identity"
 
 - [ ] **Step 1: Write failing batch tests**
 
-Create tests that assert all of the following in `receiving_loot_batch_tests.gd`:
+Create tests that check all of the following in `receiving_loot_batch_tests.gd`, retaining Task 1's failure-accounting harness with the appropriate suite label:
 
 ```gdscript
 extends SceneTree
@@ -215,34 +251,37 @@ const LootBatchEntryScript = preload("res://receiving/loot_batch_entry.gd")
 const LootBatchScript = preload("res://receiving/loot_batch.gd")
 const PersistentItemCatalog = preload("res://data/items/item_catalog.tres")
 
-func _init() -> void:
+func _run_suite() -> void:
+    _pending_helpers += 1
     _test_committed_content_is_immutable_from_arrangement_retries()
     _test_arrangement_commit_is_atomic()
     _test_snapshot_round_trip_preserves_identity_state_and_transform()
     _test_item_instance_reconstruction_preserves_durable_identity()
     _test_release_requires_matching_entry_and_identity()
-    print("PASS: receiving loot batch tests")
-    quit(0)
+    _pending_helpers -= 1
 ```
 
 Use two entries:
 
 ```gdscript
 func _entries() -> Array[LootBatchEntry]:
-    return [
+    _pending_helpers += 1
+    var result: Array[LootBatchEntry] = [
         LootBatchEntryScript.new("entry_0000", "batch_a:item_0000", &"loot_000001"),
         LootBatchEntryScript.new("entry_0001", "batch_a:item_0001", &"loot_000002"),
     ]
+    _pending_helpers -= 1
+    return result
 ```
 
 The atomic arrangement test must call `commit_arrangement()` with only one of two transforms and assert:
 
 ```gdscript
-assert(not batch.commit_arrangement(incomplete, &"profile_test", 1))
-assert(batch.preparation_state == LootBatchScript.STATE_CONTENT_COMMITTED)
-assert(batch.presentation_profile_id == &"")
-assert(not batch.entries[0].has_frozen_transform)
-assert(not batch.entries[1].has_frozen_transform)
+_check(not batch.commit_arrangement(incomplete, &"profile_test", 1))
+_check(batch.preparation_state == LootBatchScript.STATE_CONTENT_COMMITTED)
+_check(batch.presentation_profile_id == &"")
+_check(not batch.entries[0].has_frozen_transform)
+_check(not batch.entries[1].has_frozen_transform)
 ```
 
 Then commit an exact two-entry transform dictionary and assert both transforms plus profile ID/revision are committed together and state becomes `PREPARED`.
@@ -323,7 +362,7 @@ const STATE_CONTENT_COMMITTED: StringName = &"CONTENT_COMMITTED"
 const STATE_PREPARED: StringName = &"PREPARED"
 ```
 
-Use fields from the approved spec and an `Array[LootBatchEntry]`. `create_committed()` must validate non-empty batch ID, unique non-empty entry IDs, unique non-empty item IDs, non-empty definition IDs, positive `actual_bulk`, and `target_bulk > 0`. Return `null` on malformed content before any committed object escapes.
+Use fields from the approved spec and an `Array[LootBatchEntry]`. `create_committed()` must validate a non-empty entry array, non-empty batch ID, unique non-empty entry IDs, unique non-empty item IDs, non-empty definition IDs, positive `actual_bulk`, and `target_bulk > 0`. Return `null` on malformed or empty content before any committed object escapes. Add an atomic fresh-empty-array rejection test before implementing this guard; rejection must leave caller input and existing committed data unchanged.
 
 `commit_arrangement()` must:
 
@@ -345,7 +384,7 @@ return ItemInstanceScript.new(definition, entry.item_instance_id)
 
 `to_snapshot()` must contain only durable fields and entry snapshots. Do not serialize transient preparation-job state.
 
-`from_snapshot()` must reject malformed state/duplicate identity and reconstruct exact durable values without generating new IDs.
+`from_snapshot()` must reject malformed state/duplicate identity and reconstruct exact durable values without generating new IDs. Preserve legitimate fully released snapshots: they retain their non-empty committed entry records with `remaining_in_batch = false`, even though they can no longer be physically deposited. Test byte-identical reconstruction of fully released committed and PREPARED snapshots.
 
 - [ ] **Step 6: Run tests**
 
@@ -380,7 +419,7 @@ git commit -m "feat: add committed loot batch model"
 
 - [ ] **Step 1: Write the pool-content tests first**
 
-The test must load both persistent resources and assert exact boundaries:
+The test must load both persistent resources and check exact boundaries, retaining Task 1's failure-accounting harness with the appropriate suite label:
 
 ```gdscript
 extends SceneTree
@@ -388,21 +427,21 @@ extends SceneTree
 const PersistentItemCatalog = preload("res://data/items/item_catalog.tres")
 const PrototypePool = preload("res://data/receiving/prototype_loot_pool.tres")
 
-func _init() -> void:
-    assert(PrototypePool.pool_id == &"prototype_receiving_pool")
-    assert(PrototypePool.revision == 1)
-    assert(PrototypePool.item_definition_ids.size() == 40)
-    assert(not PrototypePool.item_definition_ids.has(&"loot_000034"))
-    assert(not PrototypePool.item_definition_ids.has(&"loot_000036"))
-    assert(PrototypePool.validate_against_catalog(PersistentItemCatalog).is_empty())
-    assert(PrototypePool.resolve_definitions(PersistentItemCatalog).size() == 40)
-    assert((PersistentItemCatalog.get("definitions") as Array).size() == 42)
+func _run_suite() -> void:
+    _pending_helpers += 1
+    _check(PrototypePool.pool_id == &"prototype_receiving_pool")
+    _check(PrototypePool.revision == 1)
+    _check(PrototypePool.item_definition_ids.size() == 40)
+    _check(not PrototypePool.item_definition_ids.has(&"loot_000034"))
+    _check(not PrototypePool.item_definition_ids.has(&"loot_000036"))
+    _check(PrototypePool.validate_against_catalog(PersistentItemCatalog).is_empty())
+    _check(PrototypePool.resolve_definitions(PersistentItemCatalog).size() == 40)
+    _check((PersistentItemCatalog.get("definitions") as Array).size() == 42)
     _assert_exact_expected_ids()
-    print("PASS: receiving prototype loot pool tests")
-    quit(0)
+    _pending_helpers -= 1
 ```
 
-`_assert_exact_expected_ids()` must compare against `loot_000001` through `loot_000042` excluding only `loot_000034` and `loot_000036`, so accidental additions/removals are visible.
+`_assert_exact_expected_ids()` must compare against `loot_000001` through `loot_000042` excluding only `loot_000034` and `loot_000036`, so accidental additions/removals are visible. It must also reach its helper-completion marker before the suite can PASS.
 
 - [ ] **Step 2: Run and verify failure because the resource does not exist**
 
@@ -526,10 +565,10 @@ var first: LootBatch = source.generate_committed_batch(
 var second: LootBatch = source.generate_committed_batch(
     PersistentItemCatalog, PrototypePool, "batch_b", 1842, 9001, 24
 )
-assert(_definition_sequence(first) == _definition_sequence(second))
-assert(first.actual_bulk == second.actual_bulk)
-assert(first.entries[0].item_instance_id != second.entries[0].item_instance_id)
-assert(first.preparation_state == LootBatchScript.STATE_CONTENT_COMMITTED)
+_check(_definition_sequence(first) == _definition_sequence(second))
+_check(first.actual_bulk == second.actual_bulk)
+_check(first.entries[0].item_instance_id != second.entries[0].item_instance_id)
+_check(first.preparation_state == LootBatchScript.STATE_CONTENT_COMMITTED)
 ```
 
 - [ ] **Step 2: Run and verify failure**
@@ -663,7 +702,7 @@ attempts_used, accepted_via_physics, fallback_used, preparation_duration_ms,
 rejection_counts_by_reason, accepted_drain_iterations, accepted_profile_revision
 ```
 
-`PilePreparationMetrics.snapshot()` must calculate p95 from sorted recorded durations without introducing a hard pass/fail threshold.
+`PilePreparationMetrics.snapshot()` must calculate p95 from sorted recorded durations without introducing a hard pass/fail threshold. Use at least 20 shuffled distinct durations in the p95 test and a literal expected nearest-rank p95 below the maximum, so substituting maximum or omitting sorting fails.
 
 - [ ] **Step 5: Implement transient `PilePreparationJob` contract**
 
@@ -728,7 +767,7 @@ Test exact lifecycle:
 3. first prepared deposit becomes active;
 4. second and third append FIFO;
 5. fourth prepared deposit returns false and leaves active/queue state byte-semantically unchanged;
-6. duplicate deposited `batch_id` is rejected;
+6. duplicate deposited `batch_id` is rejected; an already-drained PREPARED batch is also rejected atomically in both a fresh and occupied manager, preserving active/queue IDs, registrations, object references, all batch data, and active/drained signals;
 7. `release_entry()` rejects queued batch, unknown entry, mismatched item identity, and already-released entry;
 8. releasing the final active entry emits `active_batch_drained` but does not promote the queue;
 9. `retire_drained_active_after_close()` removes the drained active batch and promotes the first queued ID only then;
@@ -762,7 +801,7 @@ var _queued_batch_ids: Array[String] = []
 var _deposited_batches: Dictionary = {}
 ```
 
-`deposit_batch()` must validate the batch fully before mutation, including `STATE_PREPARED`, non-empty ID, no duplicate deposited ID, and capacity. On capacity rejection emit `deposit_rejected` without modifying the queue dictionary or arrays.
+`deposit_batch()` must validate the batch fully before mutation, including `STATE_PREPARED`, at least one remaining entry (`not batch.is_drained()`), non-empty ID, no duplicate deposited ID, and capacity. On rejection emit `deposit_rejected` without modifying the deposited dictionary, queue, active slot, or batch data. Reconstruction of a fully released snapshot remains valid; attempting a new physical deposit of it does not.
 
 `release_entry()` must only delegate to the active batch's matching entry. When that call causes `is_drained()` to become true, emit `active_batch_drained` once.
 
@@ -822,8 +861,8 @@ Also create three additional PREPARED batches and verify the fourth physical dep
 In the same test, read every `.gd` file directly under `res://receiving/` and fail if the source contains either runtime-forbidden string:
 
 ```gdscript
-assert(not source.contains("item_authoring_review.json"))
-assert(not source.contains("authoring_review_manifest"))
+_check(not source.contains("item_authoring_review.json"))
+_check(not source.contains("authoring_review_manifest"))
 ```
 
 This is a narrow architecture guard for the approved authoring/runtime separation, not a general style test.
@@ -1007,7 +1046,7 @@ No Stage B requirement is implemented early. In particular, this plan does not c
 - `LootBatch.batch_id` is unique per committed batch even for repeated content seeds.
 - `LootBatch.preparation_state` owns only `CONTENT_COMMITTED` / `PREPARED`.
 - `PilePreparationJob.JobState` is transient and never serialized into `LootBatch`.
-- `ReceivingManager` accepts only PREPARED batches and owns deposited capacity independently of preparation.
+- `ReceivingManager` accepts only PREPARED batches with remaining items and owns deposited capacity independently of preparation.
 
 ### Scope check
 

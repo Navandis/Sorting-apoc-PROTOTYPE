@@ -17,6 +17,7 @@ func deposit_batch(batch: LootBatch) -> bool:
 	if (
 		batch == null
 		or batch.preparation_state != LootBatch.STATE_PREPARED
+		or batch.is_drained()
 		or batch.batch_id.is_empty()
 		or _deposited_batches.has(batch.batch_id)
 		or (

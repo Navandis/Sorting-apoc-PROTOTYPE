@@ -299,6 +299,8 @@ static func _has_valid_content(
 ) -> bool:
 	if wanted_batch_id.is_empty() or wanted_target_bulk <= 0 or wanted_actual_bulk <= 0:
 		return false
+	if wanted_entries.is_empty():
+		return false
 	var entry_ids: Dictionary = {}
 	var item_ids: Dictionary = {}
 	for entry: LootBatchEntry in wanted_entries:
