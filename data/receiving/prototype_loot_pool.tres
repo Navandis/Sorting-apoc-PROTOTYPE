@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="PrototypeLootPool" format=3]
+
+[ext_resource type="Script" path="res://receiving/prototype_loot_pool.gd" id="1_prototype_loot_pool"]
+
+[resource]
+script = ExtResource("1_prototype_loot_pool")
+item_definition_ids = Array[StringName]([&"loot_000001", &"loot_000002", &"loot_000003", &"loot_000004", &"loot_000005", &"loot_000006", &"loot_000007", &"loot_000008", &"loot_000009", &"loot_000010", &"loot_000011", &"loot_000012", &"loot_000013", &"loot_000014", &"loot_000015", &"loot_000016", &"loot_000017", &"loot_000018", &"loot_000019", &"loot_000020", &"loot_000021", &"loot_000022", &"loot_000023", &"loot_000024", &"loot_000025", &"loot_000026", &"loot_000027", &"loot_000028", &"loot_000029", &"loot_000030", &"loot_000031", &"loot_000032", &"loot_000033", &"loot_000035", &"loot_000037", &"loot_000038", &"loot_000039", &"loot_000040", &"loot_000041", &"loot_000042"])
