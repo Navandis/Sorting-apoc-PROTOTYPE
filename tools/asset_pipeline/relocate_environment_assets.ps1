@@ -195,7 +195,7 @@ function Assert-DuplicateMatches([object]$Retirement, [object]$CanonicalMove) {
 function Invoke-Preflight {
     if (-not (Test-Path -LiteralPath (To-Absolute 'assets') -PathType Container)) { throw 'Authoritative local assets directory is missing.' }
     $branch = (& git -C $ProjectRoot branch --show-current).Trim()
-    if ([string]::IsNullOrWhiteSpace($branch) -or $branch -in @('main', 'master')) { throw "Unsafe branch state: '$branch'" }
+    if ($Mode -eq 'Apply' -and ([string]::IsNullOrWhiteSpace($branch) -or $branch -in @('main', 'master'))) { throw "Unsafe branch state: '$branch'" }
     if ($manifest.Count -ne 50) { throw "Unexpected primary manifest count: $($manifest.Count)" }
     if (@($manifest | Where-Object Action -eq 'Move').Count -ne 49) { throw 'Expected 49 move primaries.' }
     if (@($manifest | Where-Object Action -eq 'RetireDuplicate').Count -ne 1) { throw 'Expected one duplicate retirement.' }
