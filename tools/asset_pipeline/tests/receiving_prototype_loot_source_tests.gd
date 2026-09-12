@@ -8,6 +8,8 @@ const PrototypeLootSourceScript = preload("res://receiving/prototype_loot_source
 const PersistentItemCatalog = preload("res://data/items/item_catalog.tres")
 const PrototypePool = preload("res://data/receiving/prototype_loot_pool.tres")
 
+var _abort_requested: bool = false
+
 
 func _init() -> void:
 	_test_same_seed_produces_same_ordered_content()
@@ -16,6 +18,9 @@ func _init() -> void:
 	_test_generated_content_stays_in_explicit_pool()
 	_test_generated_identity_is_ordered_and_provenance_defaults_to_pool()
 	_test_invalid_inputs_are_rejected_before_commitment()
+	_test_invalid_catalog_with_resolvable_pool_member_is_rejected()
+	if _abort_requested:
+		return
 	print("PASS: receiving prototype loot source tests")
 	quit(0)
 
@@ -158,6 +163,39 @@ func _test_invalid_inputs_are_rejected_before_commitment() -> void:
 	) == null)
 
 
+# Catches validating only selected pool IDs while ignoring catalog-wide
+# authoring errors that leave those IDs individually resolvable.
+func _test_invalid_catalog_with_resolvable_pool_member_is_rejected() -> void:
+	var shared_visual: PackedScene = PersistentItemCatalog.get_definition_by_id(
+		&"loot_000001"
+	).visual_scene
+	var selected_definition: ItemDefinition = ItemDefinitionScript.new()
+	selected_definition.item_id = &"selected_definition"
+	selected_definition.visual_scene = shared_visual
+	var conflicting_definition: ItemDefinition = ItemDefinitionScript.new()
+	conflicting_definition.item_id = &"conflicting_definition"
+	conflicting_definition.visual_scene = shared_visual
+	var invalid_catalog: ItemCatalog = ItemCatalogScript.new()
+	invalid_catalog.set_definitions([selected_definition, conflicting_definition])
+	_check(
+		invalid_catalog.get_definition_by_id(&"selected_definition") != null,
+		"invalid catalog fixture keeps the selected pool member resolvable"
+	)
+	_check(
+		not invalid_catalog.get_validation_errors().is_empty(),
+		"invalid catalog fixture reports a catalog-wide validation error"
+	)
+
+	var resolvable_pool: PrototypeLootPool = PrototypeLootPoolScript.new()
+	resolvable_pool.item_definition_ids = [&"selected_definition"]
+	_check(
+		_source().generate_committed_batch(
+			invalid_catalog, resolvable_pool, "batch_invalid_catalog", 1, 2, 1
+		) == null,
+		"catalog-wide validation errors prevent generation"
+	)
+
+
 func _definition_sequence(batch: LootBatch) -> Array[StringName]:
 	var result: Array[StringName] = []
 	for entry: LootBatchEntry in batch.entries:
@@ -173,3 +211,11 @@ func _summed_bulk(batch: LootBatch) -> int:
 		)
 		result += definition.bulk
 	return result
+
+
+func _check(condition: bool, message: String) -> void:
+	if condition:
+		return
+	push_error("FAILED: %s" % message)
+	_abort_requested = true
+	quit(1)

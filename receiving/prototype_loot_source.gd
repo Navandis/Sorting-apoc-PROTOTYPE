@@ -17,6 +17,8 @@ func generate_committed_batch(
 ) -> LootBatch:
 	if catalog == null or pool == null or batch_id.is_empty() or target_bulk <= 0:
 		return null
+	if not catalog.get_validation_errors().is_empty():
+		return null
 	if pool.pool_id == &"" or pool.revision <= 0:
 		return null
 
