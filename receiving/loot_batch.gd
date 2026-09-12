@@ -7,17 +7,76 @@ const LootBatchEntryScript = preload("res://receiving/loot_batch_entry.gd")
 const STATE_CONTENT_COMMITTED: StringName = &"CONTENT_COMMITTED"
 const STATE_PREPARED: StringName = &"PREPARED"
 
-var batch_id: String = ""
-var source_kind: StringName = &""
-var source_ref: String = ""
-var target_bulk: int = 0
-var actual_bulk: int = 0
-var content_seed: int = 0
-var presentation_seed: int = 0
-var preparation_state: StringName = STATE_CONTENT_COMMITTED
-var presentation_profile_id: StringName = &""
-var presentation_profile_revision: int = 0
-var entries: Array[LootBatchEntry] = []
+var _batch_id: String = ""
+var _source_kind: StringName = &""
+var _source_ref: String = ""
+var _target_bulk: int = 0
+var _actual_bulk: int = 0
+var _content_seed: int = 0
+var _presentation_seed: int = 0
+var _preparation_state: StringName = STATE_CONTENT_COMMITTED
+var _presentation_profile_id: StringName = &""
+var _presentation_profile_revision: int = 0
+var _entries: Array[LootBatchEntry] = []
+
+var batch_id: String:
+	set(_value):
+		pass
+	get:
+		return _batch_id
+var source_kind: StringName:
+	set(_value):
+		pass
+	get:
+		return _source_kind
+var source_ref: String:
+	set(_value):
+		pass
+	get:
+		return _source_ref
+var target_bulk: int:
+	set(_value):
+		pass
+	get:
+		return _target_bulk
+var actual_bulk: int:
+	set(_value):
+		pass
+	get:
+		return _actual_bulk
+var content_seed: int:
+	set(_value):
+		pass
+	get:
+		return _content_seed
+var presentation_seed: int:
+	set(_value):
+		pass
+	get:
+		return _presentation_seed
+var preparation_state: StringName:
+	set(_value):
+		pass
+	get:
+		return _preparation_state
+var presentation_profile_id: StringName:
+	set(_value):
+		pass
+	get:
+		return _presentation_profile_id
+var presentation_profile_revision: int:
+	set(_value):
+		pass
+	get:
+		return _presentation_profile_revision
+var entries: Array[LootBatchEntry]:
+	set(_value):
+		pass
+	get:
+		var read_view: Array[LootBatchEntry] = []
+		for entry: LootBatchEntry in _entries:
+			read_view.append(LootBatchEntryScript.from_snapshot(entry.to_snapshot()))
+		return read_view
 
 
 static func create_committed(
@@ -34,17 +93,24 @@ static func create_committed(
 		new_batch_id, new_target_bulk, new_actual_bulk, new_entries
 	):
 		return null
-	var batch: LootBatch = LootBatch.new()
-	batch.batch_id = new_batch_id
-	batch.source_kind = new_source_kind
-	batch.source_ref = new_source_ref
-	batch.target_bulk = new_target_bulk
-	batch.actual_bulk = new_actual_bulk
-	batch.content_seed = new_content_seed
-	batch.presentation_seed = new_presentation_seed
-	batch.preparation_state = STATE_CONTENT_COMMITTED
-	batch.entries = new_entries.duplicate()
-	return batch
+	var owned_entries: Array[LootBatchEntry] = []
+	for entry: LootBatchEntry in new_entries:
+		owned_entries.append(LootBatchEntryScript.new(
+			entry.entry_id, entry.item_instance_id, entry.definition_id
+		))
+	return _create_from_validated_values(
+		new_batch_id,
+		new_source_kind,
+		new_source_ref,
+		new_target_bulk,
+		new_actual_bulk,
+		new_content_seed,
+		new_presentation_seed,
+		STATE_CONTENT_COMMITTED,
+		&"",
+		0,
+		owned_entries
+	)
 
 
 func commit_arrangement(
@@ -52,14 +118,14 @@ func commit_arrangement(
 	profile_id: StringName,
 	profile_revision: int
 ) -> bool:
-	if preparation_state != STATE_CONTENT_COMMITTED:
+	if _preparation_state != STATE_CONTENT_COMMITTED:
 		return false
 	if profile_id == &"" or profile_revision <= 0:
 		return false
 
 	var remaining_count: int = 0
 	var remaining_by_id: Dictionary = {}
-	for entry: LootBatchEntry in entries:
+	for entry: LootBatchEntry in _entries:
 		if entry.remaining_in_batch:
 			remaining_count += 1
 			remaining_by_id[entry.entry_id] = entry
@@ -83,14 +149,13 @@ func commit_arrangement(
 	if validated_transforms.size() != remaining_count:
 		return false
 
-	for entry: LootBatchEntry in entries:
+	for entry: LootBatchEntry in _entries:
 		if not entry.remaining_in_batch:
 			continue
-		entry.frozen_transform = validated_transforms[entry.entry_id] as Transform3D
-		entry.has_frozen_transform = true
-	presentation_profile_id = profile_id
-	presentation_profile_revision = profile_revision
-	preparation_state = STATE_PREPARED
+		entry._commit_frozen_transform(validated_transforms[entry.entry_id] as Transform3D)
+	_presentation_profile_id = profile_id
+	_presentation_profile_revision = profile_revision
+	_preparation_state = STATE_PREPARED
 	return true
 
 
@@ -112,12 +177,12 @@ func mark_entry_released(entry_id: String, item_instance_id: String) -> bool:
 		return false
 	if entry.item_instance_id != item_instance_id or not entry.remaining_in_batch:
 		return false
-	entry.remaining_in_batch = false
+	entry._mark_released()
 	return true
 
 
 func is_drained() -> bool:
-	for entry: LootBatchEntry in entries:
+	for entry: LootBatchEntry in _entries:
 		if entry.remaining_in_batch:
 			return false
 	return true
@@ -125,19 +190,19 @@ func is_drained() -> bool:
 
 func to_snapshot() -> Dictionary:
 	var entry_snapshots: Array[Dictionary] = []
-	for entry: LootBatchEntry in entries:
+	for entry: LootBatchEntry in _entries:
 		entry_snapshots.append(entry.to_snapshot())
 	return {
-		"batch_id": batch_id,
-		"source_kind": source_kind,
-		"source_ref": source_ref,
-		"target_bulk": target_bulk,
-		"actual_bulk": actual_bulk,
-		"content_seed": content_seed,
-		"presentation_seed": presentation_seed,
-		"preparation_state": preparation_state,
-		"presentation_profile_id": presentation_profile_id,
-		"presentation_profile_revision": presentation_profile_revision,
+		"batch_id": _batch_id,
+		"source_kind": _source_kind,
+		"source_ref": _source_ref,
+		"target_bulk": _target_bulk,
+		"actual_bulk": _actual_bulk,
+		"content_seed": _content_seed,
+		"presentation_seed": _presentation_seed,
+		"preparation_state": _preparation_state,
+		"presentation_profile_id": _presentation_profile_id,
+		"presentation_profile_revision": _presentation_profile_revision,
 		"entries": entry_snapshots,
 	}
 
@@ -158,19 +223,16 @@ static func from_snapshot(snapshot: Dictionary) -> LootBatch:
 			return null
 		restored_entries.append(entry)
 
-	var restored: LootBatch = create_committed(
-		String(snapshot["batch_id"]),
-		StringName(snapshot["source_kind"]),
-		String(snapshot["source_ref"]),
-		int(snapshot["target_bulk"]),
-		int(snapshot["actual_bulk"]),
-		int(snapshot["content_seed"]),
-		int(snapshot["presentation_seed"]),
+	var restored_batch_id: String = String(snapshot["batch_id"])
+	var restored_target_bulk: int = int(snapshot["target_bulk"])
+	var restored_actual_bulk: int = int(snapshot["actual_bulk"])
+	if not _has_valid_content(
+		restored_batch_id,
+		restored_target_bulk,
+		restored_actual_bulk,
 		restored_entries
-	)
-	if restored == null:
+	):
 		return null
-
 	var restored_state: StringName = StringName(snapshot["preparation_state"])
 	var restored_profile_id: StringName = StringName(snapshot["presentation_profile_id"])
 	var restored_profile_revision: int = int(snapshot["presentation_profile_revision"])
@@ -178,17 +240,55 @@ static func from_snapshot(snapshot: Dictionary) -> LootBatch:
 		restored_state, restored_profile_id, restored_profile_revision, restored_entries
 	):
 		return null
-	restored.preparation_state = restored_state
-	restored.presentation_profile_id = restored_profile_id
-	restored.presentation_profile_revision = restored_profile_revision
-	return restored
+
+	return _create_from_validated_values(
+		restored_batch_id,
+		StringName(snapshot["source_kind"]),
+		String(snapshot["source_ref"]),
+		restored_target_bulk,
+		restored_actual_bulk,
+		int(snapshot["content_seed"]),
+		int(snapshot["presentation_seed"]),
+		restored_state,
+		restored_profile_id,
+		restored_profile_revision,
+		restored_entries
+	)
 
 
 func _find_entry(wanted_entry_id: String) -> LootBatchEntry:
-	for entry: LootBatchEntry in entries:
+	for entry: LootBatchEntry in _entries:
 		if entry.entry_id == wanted_entry_id:
 			return entry
 	return null
+
+
+static func _create_from_validated_values(
+	new_batch_id: String,
+	new_source_kind: StringName,
+	new_source_ref: String,
+	new_target_bulk: int,
+	new_actual_bulk: int,
+	new_content_seed: int,
+	new_presentation_seed: int,
+	new_preparation_state: StringName,
+	new_profile_id: StringName,
+	new_profile_revision: int,
+	owned_entries: Array[LootBatchEntry]
+) -> LootBatch:
+	var batch: LootBatch = LootBatch.new()
+	batch._batch_id = new_batch_id
+	batch._source_kind = new_source_kind
+	batch._source_ref = new_source_ref
+	batch._target_bulk = new_target_bulk
+	batch._actual_bulk = new_actual_bulk
+	batch._content_seed = new_content_seed
+	batch._presentation_seed = new_presentation_seed
+	batch._preparation_state = new_preparation_state
+	batch._presentation_profile_id = new_profile_id
+	batch._presentation_profile_revision = new_profile_revision
+	batch._entries = owned_entries
+	return batch
 
 
 static func _has_valid_content(

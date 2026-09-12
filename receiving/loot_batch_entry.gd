@@ -1,12 +1,43 @@
 extends RefCounted
 class_name LootBatchEntry
 
-var entry_id: String = ""
-var item_instance_id: String = ""
-var definition_id: StringName = &""
-var frozen_transform: Transform3D = Transform3D.IDENTITY
-var has_frozen_transform: bool = false
-var remaining_in_batch: bool = true
+var _entry_id: String = ""
+var _item_instance_id: String = ""
+var _definition_id: StringName = &""
+var _frozen_transform: Transform3D = Transform3D.IDENTITY
+var _has_frozen_transform: bool = false
+var _remaining_in_batch: bool = true
+
+var entry_id: String:
+	set(_value):
+		pass
+	get:
+		return _entry_id
+var item_instance_id: String:
+	set(_value):
+		pass
+	get:
+		return _item_instance_id
+var definition_id: StringName:
+	set(_value):
+		pass
+	get:
+		return _definition_id
+var frozen_transform: Transform3D:
+	set(_value):
+		pass
+	get:
+		return _frozen_transform
+var has_frozen_transform: bool:
+	set(_value):
+		pass
+	get:
+		return _has_frozen_transform
+var remaining_in_batch: bool:
+	set(_value):
+		pass
+	get:
+		return _remaining_in_batch
 
 
 func _init(
@@ -14,19 +45,19 @@ func _init(
 	new_item_instance_id: String = "",
 	new_definition_id: StringName = &""
 ) -> void:
-	entry_id = new_entry_id
-	item_instance_id = new_item_instance_id
-	definition_id = new_definition_id
+	_entry_id = new_entry_id
+	_item_instance_id = new_item_instance_id
+	_definition_id = new_definition_id
 
 
 func to_snapshot() -> Dictionary:
 	return {
-		"entry_id": entry_id,
-		"item_instance_id": item_instance_id,
-		"definition_id": definition_id,
-		"frozen_transform": frozen_transform,
-		"has_frozen_transform": has_frozen_transform,
-		"remaining_in_batch": remaining_in_batch,
+		"entry_id": _entry_id,
+		"item_instance_id": _item_instance_id,
+		"definition_id": _definition_id,
+		"frozen_transform": _frozen_transform,
+		"has_frozen_transform": _has_frozen_transform,
+		"remaining_in_batch": _remaining_in_batch,
 	}
 
 
@@ -38,10 +69,31 @@ static func from_snapshot(snapshot: Dictionary) -> LootBatchEntry:
 		String(snapshot["item_instance_id"]),
 		StringName(snapshot["definition_id"])
 	)
-	entry.frozen_transform = snapshot["frozen_transform"] as Transform3D
-	entry.has_frozen_transform = bool(snapshot["has_frozen_transform"])
-	entry.remaining_in_batch = bool(snapshot["remaining_in_batch"])
+	entry._restore_presentation_state(
+		snapshot["frozen_transform"] as Transform3D,
+		bool(snapshot["has_frozen_transform"]),
+		bool(snapshot["remaining_in_batch"])
+	)
 	return entry
+
+
+func _commit_frozen_transform(value: Transform3D) -> void:
+	_frozen_transform = value
+	_has_frozen_transform = true
+
+
+func _mark_released() -> void:
+	_remaining_in_batch = false
+
+
+func _restore_presentation_state(
+	restored_transform: Transform3D,
+	restored_has_transform: bool,
+	restored_remaining: bool
+) -> void:
+	_frozen_transform = restored_transform
+	_has_frozen_transform = restored_has_transform
+	_remaining_in_batch = restored_remaining
 
 
 static func _has_valid_snapshot_fields(snapshot: Dictionary) -> bool:
