@@ -27,21 +27,28 @@ Stage A is implemented and technically verified as of 2026-09-12. This is techni
 
 Verified in the authoritative local project, `D:\Godot Projects\Sorting-apoc-PROTOTYPE`, on branch `codex/receiving-elevator-stage-a`, using `D:\AI Tools\Godot-4.7-Codex\Godot_v4.7-stable_win64_console.exe` (reported version `4.7.stable.official.5b4e0cb0f`).
 
-The exact implementation/test range is `137155868a089c5d45f0682f4cc26c518f1de385..21080fb57612be9a92b8a0c6b54fed4969786441` (exclusive baseline, inclusive verified implementation head). Its first commit is `6270e064b81100d671f8975064300118117eeee3`; the range contains 11 commits. This validation record is the subsequent documentation-only closure commit, `docs: close receiving stage a gate`.
+The final hardened implementation/test range is `137155868a089c5d45f0682f4cc26c518f1de385..d37c01113868417ecef854b77b4a9aaa211af6a1` (exclusive baseline, inclusive verified implementation head). Its first commit is `6270e064b81100d671f8975064300118117eeee3`; the range contains 13 commits, including the original closure record `17c306c0de10135dd82cdb1cf07b75c34b260b09` and the final-review fix `d37c01113868417ecef854b77b4a9aaa211af6a1` (`fix: harden receiving validation and test failure accounting`). This refreshed record is the subsequent documentation-only commit, `docs: refresh hardened receiving stage a verification`.
+
+Fresh verification ran after the hardening commit on 2026-09-12: full regression from **15:52:53 to 15:53:42 +01:00**, then the main-scene audit and editor/parser/scope checks completed by **15:54:45 +01:00** (Europe/Dublin).
 
 ### Full regression
 
-All **30 suites** (23 baseline plus seven Receiving suites) ran in filename order. Every suite printed `PASS` and exited **0**; the full PowerShell loop exited **0**.
+All **30 suites** (23 baseline plus seven Receiving suites) ran in filename order against the hardened commit. Every suite printed exactly one `PASS`, exited **0**, and emitted **zero `SCRIPT ERROR` or `FAIL:` lines**; the full PowerShell loop exited **0**. No deliberate harness-error injection remained in this run.
 
 ```powershell
 $GODOT = 'D:/AI Tools/Godot-4.7-Codex/Godot_v4.7-stable_win64_console.exe'
 $testFiles = Get-ChildItem 'tools/asset_pipeline/tests/*_tests.gd' | Sort-Object Name
 Write-Output "SUITE_COUNT=$($testFiles.Count)"
 foreach ($test in $testFiles) {
-    & $GODOT --headless --path . --script $test.FullName
+    $suiteOutput = & $GODOT --headless --path . --script $test.FullName 2>&1
     $suiteExit = $LASTEXITCODE
-    Write-Output "SUITE_EXIT $($test.Name)=$suiteExit"
-    if ($suiteExit -ne 0) { throw "Headless suite failed: $($test.Name)" }
+    $suiteOutput
+    $passCount = @($suiteOutput | Where-Object { "$_" -match '^PASS:' }).Count
+    $scriptErrorCount = @($suiteOutput | Where-Object { "$_" -match 'SCRIPT ERROR|^FAIL:' }).Count
+    Write-Output "SUITE_EXIT $($test.Name)=$suiteExit PASS_COUNT=$passCount SCRIPT_ERRORS=$scriptErrorCount"
+    if ($suiteExit -ne 0 -or $passCount -ne 1 -or $scriptErrorCount -ne 0) {
+        throw "Headless suite failed: $($test.Name)"
+    }
 }
 ```
 
@@ -78,6 +85,29 @@ foreach ($test in $testFiles) {
 | storage_visual_pose_tests.gd | 0 |
 | support_stacking_metadata_tests.gd | 0 |
 
+### Final-review hardening and failure-path proofs
+
+The original identity harness was reproduced with a temporary helper `assert(false, ...)`: Godot emitted an assertion script error, then the suite printed PASS and exited 0. All six focused Receiving suites now use explicit failed-check counts plus pending-helper accounting. Every test, fixture, and signal helper remains pending until its last statement or until its return value has been computed. A runtime-aborted nested helper therefore prevents PASS/exit 0 even when its caller resumes. Inspection found completion accounting in all 63 such helpers across the six suites.
+
+Each suite was independently run with three temporary injections: `_check(false, ...)`, a raw `assert(false, ...)`, and an invalid array-index assignment. Every injected run exited **1** with **zero PASS lines**. The manager injection targeted its nested `_prepared_batch` fixture for `prepared_elsewhere`; assertion/runtime aborts left both the fixture and its interrupted caller incomplete. All injections were removed before the hardening commit and final regression.
+
+| Focused suite | Failed check exit | Assertion-abort exit | Runtime-abort exit |
+| --- | ---: | ---: | ---: |
+| receiving_item_identity_tests.gd | 1 | 1 | 1 |
+| receiving_loot_batch_tests.gd | 1 | 1 | 1 |
+| receiving_prototype_loot_pool_tests.gd | 1 | 1 | 1 |
+| receiving_prototype_loot_source_tests.gd | 1 | 1 | 1 |
+| receiving_preparation_contract_tests.gd | 1 | 1 | 1 |
+| receiving_manager_tests.gd | 1 | 1 | 1 |
+
+Lifecycle TDD added the rejection tests before production changes. RED: `LIFECYCLE_RED receiving_loot_batch_tests.gd EXIT=1` (fresh empty commitment escaped; one failed check) and `LIFECYCLE_RED receiving_manager_tests.gd EXIT=1` (exhausted PREPARED deposits changed state in fresh and occupied managers; ten failed checks). GREEN after the two guards: `LIFECYCLE_GREEN receiving_loot_batch_tests.gd EXIT=0` and `LIFECYCLE_GREEN receiving_manager_tests.gd EXIT=0`.
+
+Fresh commitment now requires a non-empty entry array. Already-drained PREPARED deposits are rejected before ownership/capacity mutation; the tests compare active/queue IDs, registrations, object references, batch bytes, and active/drained notifications. Legitimate fully released committed and PREPARED snapshots retain their item records and reconstruct byte-identically.
+
+The misleading non-finite setter fixture was replaced with an actual snapshot-input rejection boundary. The finite dirty-presentation fixture now verifies its reconstructed input state before testing fresh normalization. A separate p95 test supplies 20 shuffled distinct durations from 10 to 200 ms and requires the nineteenth sorted observation, **190 ms**, so maximum or unsorted selection cannot satisfy it. Preparation contract GREEN exit: **0**.
+
+The implementation plan's affected examples and validation guidance now require failure accounting, observed helper completion, non-empty fresh content, rejection of drained physical deposits, and preserved released-snapshot reconstruction. Its architecture, existing checkboxes, and Stage B stop remain unchanged.
+
 ### Fresh main-scene audit
 
 ```powershell
@@ -102,9 +132,9 @@ git status --short
 git diff --stat
 ```
 
-Editor/parser exit **0**, with no GDScript parse errors. Diff check exit **0**. Before writing this record, status and diff stat were empty after both audit and parser scan. No new UID sidecars or unexpected tracked/untracked files needed inclusion. Final staged scope is this validation document only; no implementation/test defect fix was needed.
+Editor/parser exit **0**, with no GDScript parse errors. Diff check exit **0**. Before refreshing this record, status and tracked diff were empty after both audit and parser scan. No new UID sidecars or unexpected tracked/untracked files needed inclusion. The hardening commit changed only two Receiving runtime files, the six focused suites, and affected plan guidance. No assets, scenes, player/storage/WorldItem files, catalogue/pool data, physics, or presenter implementation changed in the fix wave. Final staged scope for the evidence refresh is this validation document only.
 
-Godot emitted `Failed to read the root certificate store.` during these local runs. The negative catalogue tests also deliberately emitted duplicate-ID/visual-path diagnostics, and the storage clearance negative fixture emitted its missing-context fallback warning. All affected suites still printed `PASS` and exited 0. These observations do not establish network/TLS functionality and are not hidden as clean stderr.
+Godot emitted `Failed to read the root certificate store.` during these local runs. The negative catalogue tests also deliberately emitted duplicate-ID/visual-path diagnostics, including the Receiving source's invalid-catalogue fixture, and the storage clearance negative fixture emitted its missing-context fallback warning. All affected default suites printed `PASS` and exited 0, with no script errors or object/resource leak diagnostics. The separate deliberate assertion/runtime-abort probes emitted script errors; the manager's deliberately interrupted fixture also emitted leak diagnostics in those probe-only runs. Those probes are not part of the default final output. These observations do not establish network/TLS functionality and are not hidden as clean stderr.
 
 ### Reproducibility, identity, and lifecycle proof
 
