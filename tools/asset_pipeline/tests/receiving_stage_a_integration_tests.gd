@@ -70,7 +70,7 @@ func _test_reconstruction_deposit_release_and_post_close_fifo() -> void:
 	var original: LootBatch = _generate("integration_first")
 	var repeated: LootBatch = _generate("integration_first")
 	var distinct: LootBatch = _generate("integration_distinct")
-	if original == null or repeated == null or distinct == null:
+	if not _check(original != null and repeated != null and distinct != null, "generation helpers completed"):
 		return
 	_check(var_to_bytes(original.to_snapshot()) == var_to_bytes(repeated.to_snapshot()), "same inputs reproduce committed snapshot")
 	_check(_definition_sequence(original) == _definition_sequence(distinct), "batch ID does not alter ordered content")
@@ -82,10 +82,12 @@ func _test_reconstruction_deposit_release_and_post_close_fifo() -> void:
 		_check(not original_ids.has(entry.item_instance_id), "distinct batches have disjoint item identities")
 
 	var active: LootBatch = _round_trip(original)
-	if active == null:
+	if not _check(active != null, "committed round-trip helper completed"):
 		return
 	_check(active.preparation_state == LootBatchScript.STATE_CONTENT_COMMITTED, "reconstructed content remains committed")
 	var profile: FreightBayPresentationProfile = _profile()
+	if not _check(profile != null, "profile helper completed"):
+		return
 	var transforms: Dictionary = _synthetic_transforms(active)
 	var incomplete: Dictionary = transforms.duplicate()
 	incomplete.erase(active.entries.back().entry_id)
@@ -97,7 +99,7 @@ func _test_reconstruction_deposit_release_and_post_close_fifo() -> void:
 	_check(active.presentation_profile_id == INTEGRATION_PROFILE_ID, "profile identity committed")
 	_check(active.presentation_profile_revision == INTEGRATION_PROFILE_REVISION, "profile revision committed")
 	active = _round_trip(active)
-	if active == null:
+	if not _check(active != null, "prepared round-trip helper completed"):
 		return
 	for entry: LootBatchEntry in active.entries:
 		_check(entry.has_frozen_transform and entry.frozen_transform == transforms[entry.entry_id], "prepared transform survives bytes")
@@ -113,7 +115,7 @@ func _test_reconstruction_deposit_release_and_post_close_fifo() -> void:
 	var third: LootBatch = _prepared("integration_third")
 	var fourth: LootBatch = _prepared("integration_fourth")
 	var undelivered: LootBatch = _prepared("integration_undelivered")
-	if second == null or third == null or fourth == null or undelivered == null:
+	if not _check(second != null and third != null and fourth != null and undelivered != null, "preparation helpers completed"):
 		return
 	var undelivered_before: PackedByteArray = var_to_bytes(undelivered.to_snapshot())
 	var manager: ReceivingManager = ReceivingManagerScript.new()
@@ -142,7 +144,9 @@ func _test_reconstruction_deposit_release_and_post_close_fifo() -> void:
 	_check(var_to_bytes(active.to_snapshot()) == release_before, "wrong release preserves active content")
 
 	for batch: LootBatch in [active, second, third]:
-		_drain(manager, batch)
+		if not _check(_drain(manager, batch), "drain helper completed every assertion"):
+			manager.free()
+			return
 		_check(manager.get_active_batch_id() == batch.batch_id, "drained batch remains active before close")
 		_check(manager.get_deposited_batch(batch.batch_id) == batch, "drained batch still occupies slot before close")
 		var expected_next: String = "integration_second" if batch == active else ("integration_third" if batch == second else "")
@@ -162,10 +166,12 @@ func _test_reconstruction_deposit_release_and_post_close_fifo() -> void:
 # failed work mutating committed content. A fresh job can consume reconstruction.
 func _test_failed_preparation_is_disposable() -> void:
 	var committed: LootBatch = _generate("integration_failed_job")
-	if committed == null:
+	if not _check(committed != null, "failed-job generation helper completed"):
 		return
 	var before: PackedByteArray = var_to_bytes(committed.to_snapshot())
 	var profile: FreightBayPresentationProfile = _profile()
+	if not _check(profile != null, "failed-job profile helper completed"):
+		return
 	var job: PilePreparationJob = JobScript.new(committed, profile)
 	_check(job.begin(), "preparation job begins on committed data")
 	job.diagnostics.attempts_used = 1
@@ -184,7 +190,7 @@ func _test_failed_preparation_is_disposable() -> void:
 		_check(not durable_snapshot.has(transient_key), "batch excludes transient key: " + transient_key)
 	job = null
 	var restored: LootBatch = _round_trip(committed)
-	if restored == null:
+	if not _check(restored != null, "failed-job round-trip helper completed"):
 		return
 	_check(restored.preparation_state == LootBatchScript.STATE_CONTENT_COMMITTED, "failed job reconstructs as committed")
 	_check(var_to_bytes(restored.to_snapshot()) == before, "identity and content survive discarded failed job")
@@ -218,6 +224,8 @@ func _test_runtime_manifest_boundary() -> void:
 	_completed_sections += 1
 
 
+# Assertion-bearing helpers return their non-null result only after all checks.
+# Callers must stop before section completion if a helper aborts and returns null.
 func _generate(batch_id: String) -> LootBatch:
 	var source: PrototypeLootSource = PrototypeLootSourceScript.new()
 	var batch: LootBatch = source.generate_committed_batch(PersistentItemCatalog, PrototypePool, batch_id, INTEGRATION_CONTENT_SEED, INTEGRATION_PRESENTATION_SEED, INTEGRATION_TARGET_BULK)
@@ -260,8 +268,9 @@ func _synthetic_transforms(batch: LootBatch) -> Dictionary:
 
 func _prepared(batch_id: String) -> LootBatch:
 	var batch: LootBatch = _generate(batch_id)
-	if batch != null:
-		_check(batch.commit_arrangement(_synthetic_transforms(batch), INTEGRATION_PROFILE_ID, INTEGRATION_PROFILE_REVISION), "synthetically prepare: " + batch_id)
+	if not _check(batch != null, "nested generation helper completed"):
+		return null
+	_check(batch.commit_arrangement(_synthetic_transforms(batch), INTEGRATION_PROFILE_ID, INTEGRATION_PROFILE_REVISION), "synthetically prepare: " + batch_id)
 	return batch
 
 
@@ -280,7 +289,9 @@ func _manager_snapshot(manager: ReceivingManager, batches: Array[LootBatch]) -> 
 	return var_to_bytes(state)
 
 
-func _drain(manager: ReceivingManager, batch: LootBatch) -> void:
+# Unlike the object-returning helpers, draining needs an explicit completion
+# result: a runtime abort must never be mistaken for completed release checks.
+func _drain(manager: ReceivingManager, batch: LootBatch) -> bool:
 	var previous_signal_count: int = _drained_ids.size()
 	var entries: Array[LootBatchEntry] = batch.entries
 	for index: int in entries.size():
@@ -294,6 +305,7 @@ func _drain(manager: ReceivingManager, batch: LootBatch) -> void:
 	_check(batch.is_drained(), "all reconstructed items released")
 	_check(not manager.release_entry(batch.batch_id, entries[0].entry_id, entries[0].item_instance_id), "duplicate release rejected")
 	_check(_drained_ids.size() == previous_signal_count + 1, "duplicate release emits no extra drained signal")
+	return true
 
 
 func _check(condition: bool, message: String) -> bool:
