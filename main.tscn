@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://p5umbk5l64xn" path="res://assets/environment/infrastructure/lighting/SM_Sewer_Light_Wall_Fixture_On.glb" id="8_ycdy4"]
 [ext_resource type="Script" uid="uid://cgyx12l50wvxd" path="res://player_controller.gd" id="10_2cqfq"]
 [ext_resource type="PackedScene" uid="uid://bp3cjq3eibwvr" path="res://assets/props/Food/SM_Dry_Goods_01g.glb" id="10_blkrb"]
+[ext_resource type="PackedScene" uid="uid://uq6c3i0nd3ir" path="res://assets/environment/dressing/decoration/SM_Pen.glb" id="10_rqtf5"]
 [ext_resource type="PackedScene" uid="uid://b1wqlnmlknpfg" path="res://assets/environment/infrastructure/lighting/SM_Lamp_long.glb" id="10_vivmo"]
 [ext_resource type="PackedScene" uid="uid://drng5nc7f5et3" path="res://assets/environment/architecture/floors/SM_Hangar_floor_8x8.glb" id="11_2cqfq"]
 [ext_resource type="PackedScene" uid="uid://f3be33b7gyjw" path="res://assets/environment/infrastructure/electrical/SM_Electrical_Cabinet_03a.glb" id="15_82xsv"]
@@ -186,6 +187,9 @@ transform = Transform3D(2.465, 0, 0, 0, 2.465, 0, 0, 0, 2.465, -3.6650796, 0, 1.
 
 [node name="SM_Sewer_Wall_Arch_01a" parent="SM_Sewer_Wall_Arch_01a3" unique_id=1062875000 instance=ExtResource("3_lquwl")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 5.9990487, 0, -1.9631801)
+
+[node name="SM_Pen" parent="SM_Sewer_Wall_Arch_01a3" unique_id=857318628 instance=ExtResource("10_rqtf5")]
+transform = Transform3D(0.40567952, 0, 0, 0, 0.40567952, 0, 0, 0, 0.40567952, 4.325511, 0.37344784, 1.5132569)
 
 [node name="SM_Sewer_Wall_Arch_01a2" parent="." unique_id=478239918 instance=ExtResource("3_lquwl")]
 transform = Transform3D(2.465, 0, 0, 0, 2.465, 0, 0, 0, 2.465, -3.6650796, 0, 10.866843)
