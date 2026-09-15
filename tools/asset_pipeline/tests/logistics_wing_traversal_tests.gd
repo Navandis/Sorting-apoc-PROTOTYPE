@@ -83,6 +83,13 @@ func _test_route_and_boundary_manifest() -> void:
 		_check(not waypoints.is_empty(), "route has hand-authored waypoints: " + route_name)
 	for route_name: String in REQUIRED_ROUTES:
 		_check(route_names.has(route_name), "required route exists: " + route_name)
+	var c_to_d_secondary := _find_record(routes, "gallery_c_to_d_secondary")
+	var c_to_d_spine := _find_record(routes, "gallery_c_to_d_via_spine")
+	_check(
+		c_to_d_secondary.get("start_anchor", "") == c_to_d_spine.get("start_anchor", "")
+		and c_to_d_secondary.get("end_anchor", "") == c_to_d_spine.get("end_anchor", ""),
+		"C-to-D alternatives use the same named endpoints"
+	)
 
 	var boundaries := runner.call("get_boundary_records") as Array
 	_check(boundaries.size() == REQUIRED_BOUNDARIES.size(), "all required fixed boundaries are declared")
@@ -95,6 +102,13 @@ func _test_route_and_boundary_manifest() -> void:
 	for boundary_name: String in REQUIRED_BOUNDARIES:
 		_check(boundary_names.has(boundary_name), "required boundary exists: " + boundary_name)
 	runner.free()
+
+
+func _find_record(records: Array, record_name: String) -> Dictionary:
+	for record: Dictionary in records:
+		if String(record.get("name", "")) == record_name:
+			return record
+	return {}
 
 
 func _check(condition: bool, message: String) -> bool:
