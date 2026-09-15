@@ -136,6 +136,21 @@ func _test_complete_wing_geometry_contract() -> void:
 	]:
 		_check(wing.get_node_or_null(required_path) != null, "required boundary/proxy exists: " + required_path)
 
+	# Catches a nominal safe-side marker that actually spawns the normal player
+	# overlapping the retained blocked-continuation debris.
+	var blocked_anchor := wing.get_node_or_null("Anchors/BlockedContinuationSafeSide") as Marker3D
+	for debris_path: String in ["Boundaries/BlockedDebrisWest", "Boundaries/BlockedDebrisEast"]:
+		var debris := wing.get_node_or_null(debris_path) as Node3D
+		if blocked_anchor != null and debris != null:
+			var collision := debris.get_node_or_null("StaticBody3D/CollisionShape3D") as CollisionShape3D
+			if collision != null and collision.shape is BoxShape3D:
+				var clearance := _horizontal_point_to_box_distance(
+					blocked_anchor.position,
+					debris.position,
+					(collision.shape as BoxShape3D).size
+				)
+				_check(clearance >= 0.39, "blocked-continuation safe anchor clears normal capsule at: " + debris_path)
+
 	var topology_edges := wing.get_meta("topology_edges", PackedStringArray()) as PackedStringArray
 	var forbidden_edges := wing.get_meta("forbidden_edges", PackedStringArray()) as PackedStringArray
 	for edge: String in REQUIRED_EDGES:
@@ -184,6 +199,12 @@ func _validate_box_shapes(node: Node) -> void:
 			_check(size.x > 0.0 and size.y > 0.0 and size.z > 0.0, "box collision size is positive below: " + String(node.get_parent().get_parent().name))
 	for child in node.get_children():
 		_validate_box_shapes(child)
+
+
+func _horizontal_point_to_box_distance(point: Vector3, center: Vector3, size: Vector3) -> float:
+	var dx := maxf(absf(point.x - center.x) - size.x * 0.5, 0.0)
+	var dz := maxf(absf(point.z - center.z) - size.z * 0.5, 0.0)
+	return Vector2(dx, dz).length()
 
 
 func _check(condition: bool, message: String) -> bool:

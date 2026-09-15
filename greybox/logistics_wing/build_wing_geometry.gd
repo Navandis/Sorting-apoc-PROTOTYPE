@@ -346,7 +346,7 @@ func _build_anchors() -> void:
 	_anchor("KitchenSafeSide", Vector3(24.5, 0.05, -18.2), 0.0)
 	_anchor("WorkshopSafeSide", Vector3(-10.3, 0.05, 20.0), -90.0)
 	_anchor("SalvagerFront", Vector3(5.5, 0.05, 24.8), 180.0)
-	_anchor("BlockedContinuationSafeSide", Vector3(-8.5, 0.05, 23.0), 180.0)
+	_anchor("BlockedContinuationSafeSide", Vector3(-8.5, 0.05, 21.5), 180.0)
 	_anchor("IncineratorFront", Vector3(37.0, 0.05, 12.2), 180.0)
 	_anchor("BunkerOpsSafeSide", Vector3(59.0, 0.05, -9.5), 0.0)
 	_anchor("DeeperClosureSafeSide", Vector3(60.5, 0.05, -7.0), -90.0)

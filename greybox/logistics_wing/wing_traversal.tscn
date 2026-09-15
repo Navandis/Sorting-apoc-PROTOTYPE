@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://greybox/logistics_wing/wing_traversal.gd" id="1_runner"]
+[ext_resource type="PackedScene" path="res://greybox/logistics_wing/wing_review.tscn" id="2_review"]
+
+[node name="LogisticsWingTraversal" type="Node3D"]
+script = ExtResource("1_runner")
+
+[node name="Review" parent="." instance=ExtResource("2_review")]
