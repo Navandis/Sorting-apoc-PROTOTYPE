@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://player_controller.gd" id="1_controller"]
+[ext_resource type="Script" path="res://carried_items.gd" id="2_carried"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_review_player"]
+radius = 0.34
+height = 1.75
+
+[node name="ReviewPlayer" type="CharacterBody3D"]
+script = ExtResource("1_controller")
+interaction_distance = 1.4
+prototype_auto_register_known_loot = false
+print_loot_registration = false
+enable_held_item_view = false
+storage_interaction_distance = 2.3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+position = Vector3(0, 0.875, 0)
+shape = SubResource("CapsuleShape3D_review_player")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.9953641, -0.09617806, 0, 0.09617806, 0.9953641, -0.00447291, 1.7162851, -0.13648391)
+current = true
+
+[node name="CarriedItems" type="Node" parent="."]
+script = ExtResource("2_carried")
