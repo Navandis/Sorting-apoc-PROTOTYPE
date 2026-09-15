@@ -97,7 +97,7 @@ Hard-code named primitive calls for the complete plan. Assign every shared wall 
 Run:
 
 ```powershell
-& 'D:\AI Tools\Godot-4.7-Codex\Godot_v4.7-stable_win64_console.exe' --headless --editor --path . --script res://greybox/logistics_wing/build_wing_geometry.gd
+& 'D:\AI Tools\Godot-4.7-Codex\Godot_v4.7-stable_win64_console.exe' --headless --path . --script res://greybox/logistics_wing/build_wing_geometry.gd
 ```
 
 Expected: exit 0, a `WING_GEOMETRY_GENERATED` record, and an ordinary `.tscn` containing named primitive/collision nodes rather than runtime-only construction.
@@ -248,4 +248,3 @@ git commit -m "docs: validate logistics wing greybox"
 - [ ] **Step 5: Stop for human walkthrough**
 
 Report local launch steps, branch/base/final commit, evidence paths, known limitations, and focused review questions. Mark human spatial review and revision reliability `PENDING`; do not push, merge, begin a speculative revision, implement functional Receiving, or start Applied Finish.
-

@@ -1,13 +1,48 @@
 extends SceneTree
 
 const REVIEW_PLAYER_PATH := "res://greybox/logistics_wing/review_player.tscn"
+const WING_GEOMETRY_PATH := "res://greybox/logistics_wing/wing_geometry.tscn"
 const EXPECTED_MAIN_SCENE := "uid://drbkr86g3cxl1"
+
+const REQUIRED_DISTRICTS := [
+	"Receiving", "Backlog", "Sorting", "StorageSpine", "GalleryA",
+	"GalleryB", "GalleryC", "GalleryD", "GalleryE", "MedicalApproach",
+	"KitchenApproach", "WorkshopService", "Salvager", "DeeperApproach",
+	"Incinerator", "BunkerOps",
+]
+const REQUIRED_ANCHORS := [
+	"ReceivingApron", "SortingWork", "StorageNear", "GalleryA", "GalleryB",
+	"GalleryC", "GalleryD", "GalleryE", "MedicalSafeSide",
+	"KitchenSafeSide", "WorkshopSafeSide", "SalvagerFront",
+	"BlockedContinuationSafeSide", "IncineratorFront", "BunkerOpsSafeSide",
+	"DeeperClosureSafeSide", "CSecondaryWest", "DSecondaryEast",
+]
+const REQUIRED_EDGES := [
+	"Receiving>Backlog", "Receiving>Dispatch", "Backlog>Sorting",
+	"Sorting>StorageSpine", "Sorting>WorkshopService",
+	"StorageSpine>GalleryA", "StorageSpine>GalleryB",
+	"StorageSpine>GalleryC", "StorageSpine>GalleryD",
+	"StorageSpine>GalleryE", "StorageSpine>MedicalApproach",
+	"StorageSpine>KitchenApproach", "GalleryC>GalleryD",
+	"StorageSpine>DeeperApproach", "WorkshopService>Salvager",
+	"WorkshopService>BlockedContinuation", "DeeperApproach>Incinerator",
+	"DeeperApproach>BunkerOps", "BunkerOps>DeeperSettlementClosure",
+]
+const FORBIDDEN_EDGES := [
+	"GalleryE>DeeperApproach", "GalleryA>MedicalApproach",
+	"GalleryB>KitchenApproach", "GalleryC>WorkshopService",
+	"MedicalApproach>KitchenApproach", "Receiving>SurfaceRoute",
+	"GalleryA>GalleryB", "GalleryA>GalleryC", "GalleryA>GalleryD",
+	"GalleryA>GalleryE", "GalleryB>GalleryC", "GalleryB>GalleryD",
+	"GalleryB>GalleryE", "GalleryC>GalleryE", "GalleryD>GalleryE",
+]
 
 var _failures := 0
 
 
 func _init() -> void:
 	_test_review_player_preserves_controller_contract()
+	_test_complete_wing_geometry_contract()
 	_test_default_launch_remains_the_storage_fixture()
 	if _failures > 0:
 		push_error("FAIL: logistics wing geometry contract (%d checks)" % _failures)
@@ -66,6 +101,58 @@ func _test_review_player_preserves_controller_contract() -> void:
 	player.free()
 
 
+# Catches omitted districts, accidental shortcuts, missing fixed boundaries,
+# invisible runtime-only construction, and malformed primitive collision.
+func _test_complete_wing_geometry_contract() -> void:
+	if not _check(ResourceLoader.exists(WING_GEOMETRY_PATH), "wing geometry scene exists"):
+		return
+	var packed := load(WING_GEOMETRY_PATH) as PackedScene
+	if not _check(packed != null, "wing geometry scene loads"):
+		return
+	var wing := packed.instantiate() as Node3D
+	if not _check(wing != null, "wing geometry instantiates as Node3D"):
+		return
+	_check(String(wing.get_meta("layout_revision", "")) == "logistics-wing-greybox-v1", "layout revision is explicit")
+	_check(wing.get_meta("regeneration_command", "") == "godot --headless --path . --script res://greybox/logistics_wing/build_wing_geometry.gd", "single regeneration command is explicit")
+	_check(wing.get_meta("overall_extents_m", Vector3.ZERO) == Vector3(104.0, 4.2, 53.0), "overall extents match the authored hypothesis")
+	_check(is_equal_approx(float(wing.get_meta("wall_thickness_m", 0.0)), 0.30), "wall thickness metadata is 0.30 m")
+	_check(is_equal_approx(float(wing.get_meta("clear_height_m", 0.0)), 3.40), "ordinary clear height metadata is 3.40 m")
+
+	for district_name: String in REQUIRED_DISTRICTS:
+		_check(wing.get_node_or_null("Districts/" + district_name) != null, "required district exists: " + district_name)
+	for anchor_name: String in REQUIRED_ANCHORS:
+		_check(wing.get_node_or_null("Anchors/" + anchor_name) is Marker3D, "required anchor exists: " + anchor_name)
+	for required_path: String in [
+		"Boundaries/FreightBarrier",
+		"Boundaries/MedicalFrontageClosure",
+		"Boundaries/KitchenFrontageClosure",
+		"Boundaries/WorkshopFrontageClosure",
+		"Boundaries/BlockedContinuation",
+		"Boundaries/BunkerOpsFrontageClosure",
+		"Boundaries/DeeperSettlementClosure",
+		"Proxies/SortingTable",
+		"Proxies/SalvagerMachine",
+		"Proxies/IncineratorMachine",
+	]:
+		_check(wing.get_node_or_null(required_path) != null, "required boundary/proxy exists: " + required_path)
+
+	var topology_edges := wing.get_meta("topology_edges", PackedStringArray()) as PackedStringArray
+	var forbidden_edges := wing.get_meta("forbidden_edges", PackedStringArray()) as PackedStringArray
+	for edge: String in REQUIRED_EDGES:
+		_check(topology_edges.has(edge), "required topology edge declared: " + edge)
+		_check(not forbidden_edges.has(edge), "required edge is not forbidden: " + edge)
+	for edge: String in FORBIDDEN_EDGES:
+		_check(forbidden_edges.has(edge), "forbidden topology edge declared: " + edge)
+		_check(not topology_edges.has(edge), "forbidden edge is absent: " + edge)
+
+	var roof := wing.get_node_or_null("RoofVisuals") as Node3D
+	_check(roof != null and roof.visible, "roof visuals exist and default visible")
+	_check(_count_nodes_of_type(wing, StaticBody3D) > 50, "wing has authored static collision bodies")
+	_check(_count_nodes_of_type(wing, MeshInstance3D) > 50, "wing has editor-visible primitive meshes")
+	_validate_box_shapes(wing)
+	wing.free()
+
+
 # Catches accidental replacement of the project's default launch scene.
 func _test_default_launch_remains_the_storage_fixture() -> void:
 	_check(
@@ -79,6 +166,24 @@ func _count_cameras(node: Node) -> int:
 	for child in node.get_children():
 		count += _count_cameras(child)
 	return count
+
+
+func _count_nodes_of_type(node: Node, expected_type: Variant) -> int:
+	var count := 1 if is_instance_of(node, expected_type) else 0
+	for child in node.get_children():
+		count += _count_nodes_of_type(child, expected_type)
+	return count
+
+
+func _validate_box_shapes(node: Node) -> void:
+	if node is CollisionShape3D:
+		var collision := node as CollisionShape3D
+		if collision.shape is BoxShape3D:
+			var size := (collision.shape as BoxShape3D).size
+			_check(size.is_finite(), "box collision size is finite below: " + String(node.get_parent().get_parent().name))
+			_check(size.x > 0.0 and size.y > 0.0 and size.z > 0.0, "box collision size is positive below: " + String(node.get_parent().get_parent().name))
+	for child in node.get_children():
+		_validate_box_shapes(child)
 
 
 func _check(condition: bool, message: String) -> bool:
