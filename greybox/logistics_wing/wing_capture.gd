@@ -2,8 +2,8 @@ extends Node3D
 
 const OUTPUT_DIRECTORY := "res://reports/logistics_wing/greybox"
 const CAPTURE_SIZE := Vector2i(1920, 1080)
-const CONTACT_TILE_SIZE := Vector2i(640, 360)
-const CONTACT_COLUMNS := 3
+const CONTACT_TILE_SIZE := Vector2i(480, 360)
+const CONTACT_COLUMNS := 4
 const CONTACT_ROWS := 3
 
 
@@ -23,23 +23,24 @@ func get_output_directory() -> String:
 
 func get_view_records() -> Array:
 	return [
-		_view("Full-wing debug overview", "overview_debug_topdown.png", Vector3(10, 92, 2), Vector3(10, 0, 2), 55.0, false, true),
+		_view("Full-wing debug overview", "overview_debug_topdown.png", Vector3(10, 62, 2), Vector3(10, 0, 2), 55.0, false, true),
 		_view("Receiving apron toward freight barrier", "receiving_freight.png", Vector3(-31.5, 1.7162851, 0), Vector3(-39.0, 1.2, 0), 75.0),
 		_view("Receiving toward Backlog", "receiving_core.png", Vector3(-32.0, 1.7162851, 2.0), Vector3(-20.0, 1.4, 0), 75.0),
 		_view("Backlog toward Sorting", "backlog_sorting.png", Vector3(-23.0, 1.7162851, 0), Vector3(-10.0, 1.4, 0), 75.0),
-		_view("Sorting work position toward table", "sorting_table.png", Vector3(-9.0, 1.7162851, -2.65), Vector3(-9.0, 1.2, -4.1), 75.0),
-		_view("Sorting work position toward Receiving", "sorting_receiving.png", Vector3(-9.0, 1.7162851, -2.65), Vector3(-22.0, 1.4, 0), 75.0),
-		_view("Sorting work position toward Storage", "sorting_storage.png", Vector3(-9.0, 1.7162851, -2.65), Vector3(-1.0, 1.4, 2.2), 75.0),
-		_view("Storage A and B approaches", "storage_ab.png", Vector3(6.0, 1.7162851, 1.0), Vector3(7.0, 1.4, -6.0), 75.0),
+		_view("Sorting work position toward table", "sorting_table.png", Vector3(-9.0, 1.7162851, -1.8), Vector3(-9.0, 1.15, -4.1), 75.0),
+		_view("Sorting work position toward Receiving", "sorting_receiving.png", Vector3(-9.0, 1.7162851, -1.8), Vector3(-22.0, 1.4, 0), 75.0),
+		_view("Sorting work position toward Storage", "sorting_storage.png", Vector3(-9.0, 1.7162851, -1.8), Vector3(-1.0, 1.4, 2.2), 75.0),
+		_view("Storage A and B approaches", "storage_ab.png", Vector3(6.0, 1.7162851, 1.8), Vector3(6.0, 1.4, -1.5), 75.0),
 		_view("Storage C and D secondary opening", "storage_cd.png", Vector3(9.5, 1.7162851, 9.5), Vector3(6.0, 1.4, 9.5), 75.0),
 		_view("Storage E single-entry boundary", "storage_e.png", Vector3(20.5, 1.7162851, 4.5), Vector3(22.0, 1.4, 11.5), 75.0),
 		_view("Medical protected approach", "medical_approach.png", Vector3(6.0, 1.7162851, -14.5), Vector3(6.0, 1.4, -22.0), 75.0),
 		_view("Kitchen and Mess approach", "kitchen_approach.png", Vector3(24.5, 1.7162851, -15.0), Vector3(25.0, 1.4, -22.0), 75.0),
-		_view("Workshop service leg and Salvager", "workshop_salvager.png", Vector3(-7.0, 1.7162851, 20.0), Vector3(5.5, 1.4, 26.0), 75.0),
-		_view("Workshop-side blocked continuation", "workshop_blocked.png", Vector3(-8.5, 1.7162851, 22.7), Vector3(-8.5, 1.3, 25.0), 75.0),
+		_view("Workshop frontage from shared service leg", "workshop_frontage.png", Vector3(-8.5, 1.7162851, 20.0), Vector3(-14.0, 1.4, 20.0), 75.0),
+		_view("Salvager spur from shared service leg", "workshop_salvager.png", Vector3(4.5, 1.7162851, 20.0), Vector3(5.5, 1.4, 26.5), 75.0),
+		_view("Workshop-side blocked continuation", "workshop_blocked.png", Vector3(-8.5, 1.7162851, 21.0), Vector3(-8.5, 1.3, 25.0), 75.0),
 		_view("Wide Deeper-Bunker approach to dog-leg", "deeper_wide.png", Vector3(28.0, 1.7162851, 0.5), Vector3(41.0, 1.4, -4.0), 75.0),
 		_view("Incinerator terminal spur", "incinerator.png", Vector3(37.0, 1.7162851, 7.0), Vector3(37.0, 1.4, 14.75), 75.0),
-		_view("Narrow dog-leg toward Bunker Ops", "deeper_narrow.png", Vector3(41.0, 1.7162851, -5.0), Vector3(54.0, 1.4, -8.5), 75.0),
+		_view("Narrow dog-leg toward Bunker Ops", "deeper_narrow.png", Vector3(41.0, 1.7162851, -8.5), Vector3(54.0, 1.4, -8.5), 75.0),
 		_view("Bunker Ops and deeper-settlement closure", "bunker_ops_closure.png", Vector3(58.7, 1.7162851, -8.2), Vector3(62.0, 1.4, -9.0), 75.0),
 	]
 
@@ -82,8 +83,9 @@ func make_contact_sheets(captures: Array[Image]) -> Array:
 func _capture_all() -> void:
 	var roof := get_node_or_null("Review/Geometry/RoofVisuals") as Node3D
 	var camera := get_node_or_null("CaptureCamera") as Camera3D
-	if roof == null or camera == null:
-		_fail_capture("missing RoofVisuals or CaptureCamera")
+	var orientation_aids := get_node_or_null("Review/OrientationAids") as Node3D
+	if roof == null or camera == null or orientation_aids == null:
+		_fail_capture("missing RoofVisuals, OrientationAids, or CaptureCamera")
 		return
 	var interaction_hud := get_node_or_null("Review/ReviewPlayer/InteractionHUD") as CanvasLayer
 	if interaction_hud != null:
@@ -100,6 +102,7 @@ func _capture_all() -> void:
 	var captures: Array[Image] = []
 	for record: Dictionary in records:
 		roof.visible = bool(record["ceiling_on"])
+		orientation_aids.visible = bool(record["overview"])
 		camera.fov = float(record["fov"])
 		camera.global_position = record["position"] as Vector3
 		var up := Vector3(0, 0, -1) if bool(record["overview"]) else Vector3.UP
@@ -121,6 +124,7 @@ func _capture_all() -> void:
 		captures.append(image)
 		print("CAPTURE view=%s path=%s position=%s target=%s fov=%.1f ceiling_on=%s" % [record["label"], output_path, record["position"], record["target"], record["fov"], record["ceiling_on"]])
 	roof.visible = true
+	orientation_aids.visible = true
 	var sheets := make_contact_sheets(captures)
 	for index: int in sheets.size():
 		var sheet_path := absolute_directory.path_join("contact_sheet_%02d.png" % (index + 1))
@@ -184,4 +188,3 @@ func _vector(value: Vector3) -> Dictionary:
 func _fail_capture(message: String) -> void:
 	push_error("CAPTURE_FAILED: " + message)
 	get_tree().quit(1)
-

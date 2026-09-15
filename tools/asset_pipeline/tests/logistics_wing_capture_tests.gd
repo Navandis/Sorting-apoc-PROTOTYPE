@@ -59,7 +59,7 @@ func _test_capture_manifest_and_image_contract() -> void:
 	_check(capture.call("should_capture", PackedStringArray(["--capture"])), "--capture explicitly enables evidence generation")
 	_check(String(capture.call("get_output_directory")) == "res://reports/logistics_wing/greybox", "capture output directory is stable")
 	var records := capture.call("get_view_records") as Array
-	_check(records.size() == 18, "capture manifest has all 18 required views")
+	_check(records.size() == 19, "capture manifest has all 19 required views")
 	var seen_basenames: Dictionary = {}
 	for index: int in records.size():
 		var record := records[index] as Dictionary
@@ -76,7 +76,7 @@ func _test_capture_manifest_and_image_contract() -> void:
 			_check(record.get("ceiling_on", false) == true, "normal capture keeps ceilings on: " + basename)
 			_check(is_equal_approx(float(record.get("fov", 0.0)), 75.0), "normal capture preserves 75 degree FOV: " + basename)
 	var basenames := capture.call("get_capture_basenames") as Array
-	_check(basenames.size() == 20, "18 full views plus two contact sheets are declared")
+	_check(basenames.size() == 21, "19 full views plus two contact sheets are declared")
 	_check(basenames.has("overview_debug_topdown.png"), "debug overview basename is declared")
 	_check(basenames.has("contact_sheet_01.png") and basenames.has("contact_sheet_02.png"), "both contact sheets are declared")
 
@@ -85,12 +85,12 @@ func _test_capture_manifest_and_image_contract() -> void:
 	var normalized := capture.call("normalize_capture_image", source) as Image
 	_check(normalized.get_size() == Vector2i(1920, 1080), "full captures normalize to 1920x1080")
 	var fixtures: Array[Image] = []
-	for index: int in 18:
+	for index: int in 19:
 		var fixture := Image.create_empty(64, 36, false, Image.FORMAT_RGBA8)
-		fixture.fill(Color.from_hsv(float(index) / 18.0, 0.65, 0.85))
+		fixture.fill(Color.from_hsv(float(index) / 19.0, 0.65, 0.85))
 		fixtures.append(fixture)
 	var sheets := capture.call("make_contact_sheets", fixtures) as Array
-	_check(sheets.size() == 2, "18 captures produce two contact sheets")
+	_check(sheets.size() == 2, "19 captures produce two contact sheets")
 	for sheet: Image in sheets:
 		_check(sheet.get_size() == Vector2i(1920, 1080), "contact sheet is readable at 1920x1080")
 	capture.free()
