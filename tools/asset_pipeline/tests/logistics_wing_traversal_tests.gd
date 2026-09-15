@@ -12,8 +12,14 @@ const REQUIRED_ROUTES := [
 	"sorting_to_salvager",
 	"sorting_to_incinerator",
 	"sorting_to_bunker_ops",
+	"sorting_to_blocked_continuation",
+	"sorting_to_deeper_closure",
 	"gallery_c_to_d_secondary",
 	"gallery_c_to_d_via_spine",
+	"storage_near_to_gallery_a",
+	"storage_near_to_gallery_b",
+	"storage_near_to_gallery_c",
+	"storage_near_to_gallery_d",
 	"storage_near_to_gallery_e",
 ]
 

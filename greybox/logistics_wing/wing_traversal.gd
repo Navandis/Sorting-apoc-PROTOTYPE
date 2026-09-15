@@ -64,6 +64,19 @@ func get_route_records() -> Array:
 			Vector3(40.8, 0.05, -8.5), Vector3(50.0, 0.05, -8.5),
 			Vector3(57.0, 0.05, -8.5), Vector3(59.0, 0.05, -9.5),
 		]),
+		_route("sorting_to_blocked_continuation", "SortingWork", "BlockedContinuationSafeSide", [
+			Vector3(-10.0, 0.05, 3.5), Vector3(-9.0, 0.05, 8.0),
+			Vector3(-9.0, 0.05, 16.5), Vector3(-8.5, 0.05, 20.0),
+			Vector3(-8.5, 0.05, 21.5),
+		]),
+		_route("sorting_to_deeper_closure", "SortingWork", "DeeperClosureSafeSide", [
+			Vector3(-9.0, 0.05, 1.8), Vector3(-3.5, 0.05, 2.2),
+			Vector3(10.0, 0.05, 0.5), Vector3(24.0, 0.05, 0.5),
+			Vector3(37.5, 0.05, 0.5), Vector3(40.8, 0.05, -2.5),
+			Vector3(40.8, 0.05, -8.5), Vector3(50.0, 0.05, -8.5),
+			Vector3(57.0, 0.05, -8.5), Vector3(59.0, 0.05, -8.5),
+			Vector3(60.5, 0.05, -7.0),
+		]),
 		_route("gallery_c_to_d_secondary", "GalleryC", "GalleryD", [
 			Vector3(4.5, 0.05, 9.5), Vector3(7.0, 0.05, 9.5),
 			Vector3(7.5, 0.05, 9.0), Vector3(7.5, 0.05, 6.5),
@@ -71,6 +84,22 @@ func get_route_records() -> Array:
 		]),
 		_route("gallery_c_to_d_via_spine", "GalleryC", "GalleryD", [
 			Vector3(1.5, 0.05, 5.8), Vector3(1.5, 0.05, 3.5),
+			Vector3(5.5, 0.05, 1.0), Vector3(10.5, 0.05, 1.0),
+			Vector3(10.5, 0.05, 3.5), Vector3(10.0, 0.05, 5.0),
+		]),
+		_route("storage_near_to_gallery_a", "StorageNear", "GalleryA", [
+			Vector3(-1.0, 0.05, 1.0), Vector3(1.5, 0.05, 0.8),
+			Vector3(1.5, 0.05, -2.0), Vector3(1.5, 0.05, -6.0),
+		]),
+		_route("storage_near_to_gallery_b", "StorageNear", "GalleryB", [
+			Vector3(5.5, 0.05, 0.5), Vector3(11.5, 0.05, 0.0),
+			Vector3(11.5, 0.05, -2.5), Vector3(11.0, 0.05, -5.0),
+		]),
+		_route("storage_near_to_gallery_c", "StorageNear", "GalleryC", [
+			Vector3(1.5, 0.05, 3.5), Vector3(1.5, 0.05, 6.0),
+			Vector3(2.0, 0.05, 8.0),
+		]),
+		_route("storage_near_to_gallery_d", "StorageNear", "GalleryD", [
 			Vector3(5.5, 0.05, 1.0), Vector3(10.5, 0.05, 1.0),
 			Vector3(10.5, 0.05, 3.5), Vector3(10.0, 0.05, 5.0),
 		]),
