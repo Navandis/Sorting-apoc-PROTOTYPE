@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://greybox/logistics_wing/wing_capture.gd" id="1_capture"]
+[ext_resource type="PackedScene" path="res://greybox/logistics_wing/wing_review.tscn" id="2_review"]
+
+[node name="LogisticsWingCapture" type="Node3D"]
+script = ExtResource("1_capture")
+
+[node name="Review" parent="." instance=ExtResource("2_review")]
+
+[node name="CaptureCamera" type="Camera3D" parent="."]
+fov = 75.0
+
