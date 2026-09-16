@@ -8,7 +8,7 @@ const REQUIRED_DISTRICTS := [
 	"Receiving", "Backlog", "Sorting", "StorageSpine", "GalleryA",
 	"GalleryB", "GalleryC", "GalleryD", "GalleryE", "MedicalApproach",
 	"KitchenApproach", "WorkshopService", "Salvager", "DeeperApproach",
-	"Incinerator", "BunkerOps",
+	"Incinerator", "BunkerOps", "SharedABJunction",
 ]
 const REQUIRED_ANCHORS := [
 	"ReceivingApron", "SortingWork", "StorageNear", "GalleryA", "GalleryB",
@@ -16,21 +16,25 @@ const REQUIRED_ANCHORS := [
 	"KitchenSafeSide", "WorkshopSafeSide", "SalvagerFront",
 	"BlockedContinuationSafeSide", "IncineratorFront", "BunkerOpsSafeSide",
 	"DeeperClosureSafeSide", "CSecondaryWest", "DSecondaryEast",
+	"SharedABJunction", "MedicalAnteroom", "KitchenService",
+	"WorkshopService", "BunkerOpsLanding",
 ]
 const REQUIRED_EDGES := [
 	"Receiving>Backlog", "Receiving>Dispatch", "Backlog>Sorting",
 	"Sorting>StorageSpine", "Sorting>WorkshopService",
 	"StorageSpine>GalleryA", "StorageSpine>GalleryB",
 	"StorageSpine>GalleryC", "StorageSpine>GalleryD",
-	"StorageSpine>GalleryE", "StorageSpine>MedicalApproach",
-	"StorageSpine>KitchenApproach", "GalleryC>GalleryD",
+	"StorageSpine>GalleryE", "StorageSpine>SharedABJunction",
+	"SharedABJunction>GalleryA", "SharedABJunction>GalleryB",
+	"SharedABJunction>MedicalApproach", "GalleryB>KitchenApproach",
+	"GalleryC>GalleryD",
 	"StorageSpine>DeeperApproach", "WorkshopService>Salvager",
 	"WorkshopService>BlockedContinuation", "DeeperApproach>Incinerator",
 	"DeeperApproach>BunkerOps", "BunkerOps>DeeperSettlementClosure",
 ]
 const FORBIDDEN_EDGES := [
 	"GalleryE>DeeperApproach", "GalleryA>MedicalApproach",
-	"GalleryB>KitchenApproach", "GalleryC>WorkshopService",
+	"StorageSpine>KitchenApproach", "GalleryC>WorkshopService",
 	"MedicalApproach>KitchenApproach", "Receiving>SurfaceRoute",
 	"GalleryA>GalleryB", "GalleryA>GalleryC", "GalleryA>GalleryD",
 	"GalleryA>GalleryE", "GalleryB>GalleryC", "GalleryB>GalleryD",
@@ -112,9 +116,9 @@ func _test_complete_wing_geometry_contract() -> void:
 	var wing := packed.instantiate() as Node3D
 	if not _check(wing != null, "wing geometry instantiates as Node3D"):
 		return
-	_check(String(wing.get_meta("layout_revision", "")) == "logistics-wing-greybox-v1", "layout revision is explicit")
+	_check(String(wing.get_meta("layout_revision", "")) == "logistics-wing-greybox-round01-revision-01", "layout revision identifies the round-one correction")
 	_check(wing.get_meta("regeneration_command", "") == "godot --headless --path . --script res://greybox/logistics_wing/build_wing_geometry.gd", "single regeneration command is explicit")
-	_check(wing.get_meta("overall_extents_m", Vector3.ZERO) == Vector3(104.0, 4.2, 53.0), "overall extents match the authored hypothesis")
+	_check(wing.get_meta("overall_extents_m", Vector3.ZERO) == Vector3(110.0, 4.2, 55.0), "overall extents match the revised authored envelope")
 	_check(is_equal_approx(float(wing.get_meta("wall_thickness_m", 0.0)), 0.30), "wall thickness metadata is 0.30 m")
 	_check(is_equal_approx(float(wing.get_meta("clear_height_m", 0.0)), 3.40), "ordinary clear height metadata is 3.40 m")
 
@@ -124,17 +128,55 @@ func _test_complete_wing_geometry_contract() -> void:
 		_check(wing.get_node_or_null("Anchors/" + anchor_name) is Marker3D, "required anchor exists: " + anchor_name)
 	for required_path: String in [
 		"Boundaries/FreightBarrier",
-		"Boundaries/MedicalFrontageClosure",
-		"Boundaries/KitchenFrontageClosure",
-		"Boundaries/WorkshopFrontageClosure",
+		"Boundaries/MedicalInnerBoundary",
+		"Boundaries/KitchenInnerBoundary",
+		"Boundaries/WorkshopInnerBoundary",
 		"Boundaries/BlockedContinuation",
-		"Boundaries/BunkerOpsFrontageClosure",
-		"Boundaries/DeeperSettlementClosure",
+		"Boundaries/BunkerOpsInnerBoundary",
+		"Boundaries/DeeperSettlementDoor",
 		"Proxies/SortingTable",
 		"Proxies/SalvagerMachine",
 		"Proxies/IncineratorMachine",
+		"Proxies/MedicalInterface",
+		"Proxies/KitchenInterface",
+		"Proxies/WorkshopInterface",
+		"Proxies/BunkerOpsInterface",
 	]:
 		_check(wing.get_node_or_null(required_path) != null, "required boundary/proxy exists: " + required_path)
+	for removed_path: String in [
+		"Boundaries/MedicalFrontageClosure",
+		"Boundaries/KitchenFrontageClosure",
+		"Boundaries/WorkshopFrontageClosure",
+		"Boundaries/BunkerOpsFrontageClosure",
+		"Boundaries/DeeperSettlementClosure",
+	]:
+		_check(wing.get_node_or_null(removed_path) == null, "obsolete frontage blocker is absent: " + removed_path)
+
+	# These checks use the saved collision geometry rather than source text or
+	# metadata, so an incorrect builder output cannot satisfy them nominally.
+	_check_box(wing, "Districts/Receiving/Floor_ReceivingApron", Vector3(-33.0, -0.15, 0.0), Vector3(12.0, 0.30, 10.0), "Receiving Apron grows by roughly one third")
+	_check_box(wing, "Districts/Receiving/Floor_FreightEnclosure", Vector3(-41.5, -0.15, 0.0), Vector3(5.0, 0.30, 7.0), "freight enclosure is distinct and shallow")
+	_check_box(wing, "Districts/Receiving/ReceivingCeilingTransition", Vector3(-27.0, 3.8, 0.0), Vector3(0.30, 0.80, 4.8), "Receiving-to-Backlog upper transition is closed")
+	_check_box(wing, "Districts/Sorting/Floor_SortingPocket", Vector3(-10.0, -0.15, -6.1), Vector3(8.0, 0.30, 2.2), "Sorting work pocket extends north")
+	_check_box(wing, "Proxies/SortingTable", Vector3(-10.0, 0.45, -6.18), Vector3(4.8, 0.90, 1.74), "Sorting table has revised depth and end access")
+	_check_box(wing, "Districts/Incinerator/Floor_IncineratorPocket", Vector3(31.5, -0.15, 13.5), Vector3(7.0, 0.30, 7.0), "Incinerator pocket is approximately thirty percent narrower")
+	_check_box(wing, "Proxies/SalvagerMachine", Vector3(5.0, 1.45, 25.0), Vector3(5.4, 2.90, 3.0), "Salvager machine moves forward with its enclosure")
+	_check_box(wing, "Boundaries/DeeperSettlementDoor", Vector3(65.0, 1.45, -6.8), Vector3(0.65, 2.90, 2.4), "deeper closure is a personnel-sized door proxy")
+
+	for opening: Dictionary in [
+		{"point": Vector3(-27.0, 1.0, 0.0), "label": "Receiving-to-Backlog half-frontage opening"},
+		{"point": Vector3(-15.0, 1.0, 0.0), "label": "Backlog-to-Sorting opening"},
+		{"point": Vector3(4.5, 1.0, -3.6), "label": "Gallery A east opening"},
+		{"point": Vector3(9.0, 1.0, -3.6), "label": "Gallery B west opening"},
+		{"point": Vector3(16.5, 1.0, -6.8), "label": "Gallery B east Kitchen opening"},
+		{"point": Vector3(6.0, 1.0, 10.25), "label": "sole C-to-D secondary opening"},
+		{"point": Vector3(6.7, 1.0, -13.0), "label": "Medical territorial entrance"},
+		{"point": Vector3(25.6, 1.0, -18.0), "label": "Kitchen territorial entrance"},
+		{"point": Vector3(-10.5, 1.0, 13.0), "label": "Workshop territorial entrance"},
+		{"point": Vector3(58.0, 1.0, -5.5), "label": "Bunker Ops landing entrance"},
+	]:
+		_check_point_clear_of_static_boxes(wing, opening["point"] as Vector3, String(opening["label"]))
+	_check_no_collinear_wall_overlaps(wing)
 
 	# Catches a nominal safe-side marker that actually spawns the normal player
 	# overlapping the retained blocked-continuation debris.
@@ -199,6 +241,79 @@ func _validate_box_shapes(node: Node) -> void:
 			_check(size.x > 0.0 and size.y > 0.0 and size.z > 0.0, "box collision size is positive below: " + String(node.get_parent().get_parent().name))
 	for child in node.get_children():
 		_validate_box_shapes(child)
+
+
+func _check_box(wing: Node3D, path: String, expected_center: Vector3, expected_size: Vector3, message: String) -> void:
+	var box := wing.get_node_or_null(path) as Node3D
+	if not _check(box != null, message + " exists"):
+		return
+	var collision := box.get_node_or_null("StaticBody3D/CollisionShape3D") as CollisionShape3D
+	if not _check(collision != null and collision.shape is BoxShape3D, message + " has box collision"):
+		return
+	_check(box.position.is_equal_approx(expected_center), message + " center is exact")
+	_check((collision.shape as BoxShape3D).size.is_equal_approx(expected_size), message + " size is exact")
+
+
+func _check_point_clear_of_static_boxes(wing: Node3D, point: Vector3, message: String) -> void:
+	var blockers: Array[String] = []
+	_collect_point_blockers(wing, point, blockers)
+	_check(blockers.is_empty(), message + " is physically clear; blockers=" + ", ".join(blockers))
+
+
+func _collect_point_blockers(node: Node, point: Vector3, blockers: Array[String]) -> void:
+	if node is CollisionShape3D:
+		var collision := node as CollisionShape3D
+		if collision.shape is BoxShape3D:
+			var size := (collision.shape as BoxShape3D).size
+			var container := collision.get_parent().get_parent() as Node3D
+			var center := container.position
+			var half := size * 0.5
+			if (
+				absf(point.x - center.x) < half.x - 0.01
+				and absf(point.y - center.y) < half.y - 0.01
+				and absf(point.z - center.z) < half.z - 0.01
+			):
+				blockers.append("%s/%s" % [container.get_parent().name, container.name])
+	for child in node.get_children():
+		_collect_point_blockers(child, point, blockers)
+
+
+func _check_no_collinear_wall_overlaps(wing: Node3D) -> void:
+	var districts := wing.get_node_or_null("Districts") as Node3D
+	if not _check(districts != null, "district root exists for wall-ownership audit"):
+		return
+	var walls: Array[Dictionary] = []
+	_collect_wall_records(districts, walls)
+	var overlaps: Array[String] = []
+	for first_index: int in walls.size():
+		var first := walls[first_index]
+		for second_index: int in range(first_index + 1, walls.size()):
+			var second := walls[second_index]
+			if first["axis"] != second["axis"]:
+				continue
+			if not is_equal_approx(float(first["line"]), float(second["line"])):
+				continue
+			var overlap := minf(float(first["end"]), float(second["end"])) - maxf(float(first["start"]), float(second["start"]))
+			if overlap > 0.01:
+				overlaps.append("%s <> %s (%.2f m)" % [first["path"], second["path"], overlap])
+	_check(overlaps.is_empty(), "structural walls have one physical owner; overlaps=" + "; ".join(overlaps))
+
+
+func _collect_wall_records(node: Node, records: Array[Dictionary]) -> void:
+	if node is CollisionShape3D:
+		var collision := node as CollisionShape3D
+		if collision.shape is BoxShape3D:
+			var size := (collision.shape as BoxShape3D).size
+			if size.y >= 3.39:
+				var container := collision.get_parent().get_parent() as Node3D
+				var center := container.position
+				var record_path := "%s/%s" % [container.get_parent().name, container.name]
+				if is_equal_approx(size.z, 0.30) and size.x > 0.30:
+					records.append({"axis": "x", "line": center.z, "start": center.x - size.x * 0.5, "end": center.x + size.x * 0.5, "path": record_path})
+				elif is_equal_approx(size.x, 0.30) and size.z > 0.30:
+					records.append({"axis": "z", "line": center.x, "start": center.z - size.z * 0.5, "end": center.z + size.z * 0.5, "path": record_path})
+	for child in node.get_children():
+		_collect_wall_records(child, records)
 
 
 func _horizontal_point_to_box_distance(point: Vector3, center: Vector3, size: Vector3) -> float:
