@@ -35,32 +35,32 @@
 - Modify `greybox/logistics_wing/build_wing_geometry.gd`
 - Regenerate `greybox/logistics_wing/wing_geometry.tscn`
 
-- [ ] Introduce explicit joined-end wall helpers and use them at representative and exposed perpendicular junctions while preserving literal doorway widths.
-- [ ] Move A-east/B-west openings north, give their walls sole ownership, extend the shared junction, elongate A to the north-west, and move Medical north without any floor/ceiling overlap.
-- [ ] Replace the Kitchen zigzag with the B-east east leg followed by the north leg; close the former missing spans and retain the service-room boundary.
-- [ ] Regenerate and run the geometry suite. Diagnose any failure before another structural change.
+- [x] Introduce explicit joined-end wall helpers and use them at representative and exposed perpendicular junctions while preserving literal doorway widths.
+- [x] Move A-east/B-west openings north, give their walls sole ownership, extend the shared junction, elongate A to the north-west, and move Medical north without any floor/ceiling overlap.
+- [x] Replace the Kitchen zigzag with the B-east east leg followed by the north leg; close the former missing spans and retain the service-room boundary.
+- [x] Regenerate and run the geometry suite. Diagnose any failure before another structural change.
 
 ## Task 3: Correct southern Storage, Workshop, and Salvager
 
 **Files:** same builder and generated scene.
 
-- [ ] Keep C north at `Z=5.5`, move D/E south, broaden the spine, delete `GalleryCDividerSouth`, and make `GalleryCIrregularSouthMass` the southern separator.
-- [ ] Give Gallery E a 5.6 m southern projection within a 14.0 m final length (40%) while retaining one entry and no Deeper bypass.
-- [ ] Extend Workshop approach to 10 m and translate the room/spur coherently.
-- [ ] Delete the continuation floor, ceiling, side/rear walls, blocker, debris, anchor, and topology edge. Author one continuous Workshop south wall.
-- [ ] Move the Salvager assembly toward the revised approach, reduce rear clearance to about 1.35 m, and preserve restricted side/rear access.
-- [ ] Regenerate and run geometry RED/GREEN checks after each dependency group.
+- [x] Keep C north at `Z=5.5`, move D/E south, broaden the spine, delete `GalleryCDividerSouth`, and make `GalleryCIrregularSouthMass` the southern separator.
+- [x] Give Gallery E a 5.6 m southern projection within a 14.0 m final length (40%) while retaining one entry and no Deeper bypass.
+- [x] Extend Workshop approach to 10 m and translate the room/spur coherently.
+- [x] Delete the continuation floor, ceiling, side/rear walls, blocker, debris, anchor, and topology edge. Author one continuous Workshop south wall.
+- [x] Move the Salvager assembly toward the revised approach, reduce rear clearance to about 1.35 m, and preserve restricted side/rear access.
+- [x] Regenerate and run geometry RED/GREEN checks after each dependency group.
 
 ## Task 4: Correct western core and eastern approach
 
 **Files:** same builder and generated scene.
 
-- [ ] Shorten Receiving east-west without touching the freight cage; frame Dispatch as an outside 9.5 x 3.5 m annex with one doorless opening.
-- [ ] Narrow Receiving/Backlog to 3.84 m and place the height strip wholly on the Receiving side of the ceiling seam.
-- [ ] Move the Backlog/Sorting boundary west to `X=-21`, keep its north opening edge at `Z=-2.4`, and extend only the south return to `Z=1.44`. Confirm the exact Sorting-eye ray reaches the freight barrier through both openings.
-- [ ] Redistribute Deeper to 16 m pre-bend and 16 m post-bend authored runs; move Ops/door east as one terminal assembly and retain Incinerator separation.
-- [ ] Regenerate; run the geometry suite to GREEN.
-- [ ] Commit structural source, saved scene, and tests as `fix: correct logistics wing round-two geometry`.
+- [x] Shorten Receiving east-west without touching the freight cage; frame Dispatch as an outside 9.5 x 3.5 m annex with one doorless opening.
+- [x] Narrow Receiving/Backlog to 3.84 m and place the height strip wholly on the Receiving side of the ceiling seam.
+- [x] Move the Backlog/Sorting boundary west to `X=-21`, keep its north opening edge at `Z=-2.4`, and extend only the south return to `Z=1.44`. Confirm the exact Sorting-eye ray reaches the freight barrier through both openings.
+- [x] Redistribute Deeper to 16 m pre-bend and 16 m post-bend authored runs; move Ops/door east as one terminal assembly and retain Incinerator separation.
+- [x] Regenerate; run the geometry suite to GREEN.
+- [x] Commit structural source, saved scene, and tests as `fix: correct logistics wing round-two geometry`.
 
 ## Task 5: Synchronize controller traversal and review evidence
 

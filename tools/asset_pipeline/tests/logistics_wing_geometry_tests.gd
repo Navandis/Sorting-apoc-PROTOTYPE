@@ -178,7 +178,7 @@ func _test_complete_wing_geometry_contract() -> void:
 	_check_box(wing, "Districts/GalleryC/GalleryCIrregularSouthMass", Vector3(4.0, 1.7, 13.25), Vector3(4.0, 3.4, 3.5), "C irregular solid performs the southern C-D separation")
 	_check_box(wing, "Districts/GalleryE/Floor_GalleryEMain", Vector3(21.5, -0.15, 11.2), Vector3(8.0, 0.30, 8.4), "Gallery E main section is moved south")
 	_check_box(wing, "Districts/GalleryE/Floor_GalleryESouthProjection", Vector3(22.25, -0.15, 18.2), Vector3(6.5, 0.30, 5.6), "Gallery E southern projection is forty percent of total length")
-	_check_box(wing, "Districts/WorkshopService/WorkshopRoomSouth", Vector3(-12.0, 1.7, 25.0), Vector3(12.0, 3.4, 0.30), "Workshop ends at one continuous full-height south wall")
+	_check_box(wing, "Districts/WorkshopService/WorkshopRoomSouth", Vector3(-12.0, 1.7, 25.0), Vector3(12.3, 3.4, 0.30), "Workshop ends at one continuous joined full-height south wall")
 	_check_box(wing, "Proxies/SalvagerMachine", Vector3(5.0, 1.45, 26.5), Vector3(5.4, 2.90, 3.0), "Salvager machine and enclosure move toward the revised approach")
 	_check_box(wing, "Districts/DeeperApproach/Floor_DeeperWide", Vector3(34.0, -0.15, 2.25), Vector3(16.0, 0.30, 4.5), "Deeper pre-bend authored run is sixteen metres")
 	_check_box(wing, "Districts/DeeperApproach/Floor_DeeperNarrow", Vector3(51.0, -0.15, -5.5), Vector3(16.0, 0.30, 3.0), "Deeper post-bend authored run is sixteen metres")
@@ -191,7 +191,7 @@ func _test_complete_wing_geometry_contract() -> void:
 	for junction_sample: Vector3 in [
 		Vector3(-18.10, 1.0, 14.90),
 		Vector3(18.90, 1.0, -25.10),
-		Vector3(25.90, 1.0, 21.10),
+		Vector3(25.60, 1.0, 21.10),
 	]:
 		_check_point_inside_static_box(wing, junction_sample, "joined structural corner is solid at %s" % junction_sample)
 
