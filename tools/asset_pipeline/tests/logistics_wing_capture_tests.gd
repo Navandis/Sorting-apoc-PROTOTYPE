@@ -6,17 +6,22 @@ const CAPTURE_SCRIPT_PATH := "res://greybox/logistics_wing/wing_capture.gd"
 const REQUIRED_MATCHED_BASENAMES := [
 	"overview_debug_topdown.png",
 	"receiving_freight_aperture.png", "receiving_apron.png",
-	"receiving_backlog_threshold.png", "dispatch.png",
-	"backlog_sorting_threshold.png", "sorting_table.png",
-	"sorting_receiving_partial.png", "sorting_storage_offset.png",
-	"storage_ab_junction.png", "storage_cd_south.png",
-	"storage_network.png", "medical_anteroom.png",
-	"kitchen_b_east.png", "kitchen_service.png",
-	"workshop_service.png", "workshop_salvager_reveal.png",
-	"workshop_blocked.png", "deeper_storage_sightline.png",
+	"receiving_backlog_threshold.png", "dispatch_annex.png",
+	"backlog_sorting_approach.png", "backlog_sorting_threshold.png",
+	"backlog_sorting_departure.png", "sorting_table.png",
+	"sorting_desk_freight_aperture.png", "sorting_storage_turn.png",
+	"storage_ab_junction.png", "gallery_a_northwest.png",
+	"storage_cd_south.png", "storage_network.png",
+	"gallery_e_projection.png", "medical_approach.png",
+	"medical_anteroom.png", "kitchen_b_east.png",
+	"kitchen_turn.png", "kitchen_service.png",
+	"workshop_approach.png", "workshop_service.png",
+	"workshop_salvager_approach_reveal.png", "salvager_local.png",
+	"deeper_storage_sightline.png",
 	"deeper_dogleg.png", "incinerator.png",
 	"bunker_ops_landing.png", "bunker_ops_door.png",
-	"receiving_ceiling_transition.png",
+	"ceiling_transition_approach.png", "ceiling_transition_threshold.png",
+	"ceiling_transition_departure.png",
 ]
 
 var _failures := 0
@@ -72,9 +77,9 @@ func _test_capture_manifest_and_image_contract() -> void:
 	capture.set_script(script)
 	_check(not capture.call("should_capture", PackedStringArray()), "capture stays idle without --capture")
 	_check(capture.call("should_capture", PackedStringArray(["--capture"])), "--capture explicitly enables evidence generation")
-	_check(String(capture.call("get_output_directory")) == "res://reports/logistics_wing/greybox/revision_01", "revision capture output preserves first-pass evidence")
+	_check(String(capture.call("get_output_directory")) == "res://reports/logistics_wing/greybox/revision_02", "round-two capture output is isolated from earlier evidence")
 	var records := capture.call("get_view_records") as Array
-	_check(records.size() == 24, "capture manifest has all 24 revision views")
+	_check(records.size() == 33, "capture manifest has all 33 round-two views")
 	var seen_basenames: Dictionary = {}
 	for index: int in records.size():
 		var record := records[index] as Dictionary
@@ -92,10 +97,21 @@ func _test_capture_manifest_and_image_contract() -> void:
 			_check(is_equal_approx(float(record.get("fov", 0.0)), 75.0), "normal capture preserves 75 degree FOV: " + basename)
 	for basename: String in REQUIRED_MATCHED_BASENAMES:
 		_check(seen_basenames.has(basename), "matched revision view is declared: " + basename)
+	_check(not seen_basenames.has("workshop_blocked.png"), "removed Workshop stub has no capture")
+	var salvager_reveal := _find_record(records, "workshop_salvager_approach_reveal.png")
+	_check(salvager_reveal.get("position", Vector3.ZERO) == Vector3(-10.0, 1.7162851, 18.5), "Salvager reveal starts from the Workshop-room approach")
+	var desk_view := _find_record(records, "sorting_desk_freight_aperture.png")
+	_check(desk_view.get("position", Vector3.ZERO) == Vector3(-10.0, 1.7162851, -4.4), "freight sightline evidence uses the real Sorting work position")
 	var basenames := capture.call("get_capture_basenames") as Array
-	_check(basenames.size() == 26, "24 full views plus two contact sheets are declared")
+	_check(basenames.size() == 36, "33 full views plus three contact sheets are declared")
 	_check(basenames.has("overview_debug_topdown.png"), "debug overview basename is declared")
-	_check(basenames.has("contact_sheet_01.png") and basenames.has("contact_sheet_02.png"), "both contact sheets are declared")
+	_check(basenames.has("contact_sheet_01.png") and basenames.has("contact_sheet_02.png") and basenames.has("contact_sheet_03.png"), "all three contact sheets are declared")
+	var has_manifest_fields := _check(capture.has_method("get_manifest_static_fields"), "capture exposes revision and hash manifest fields")
+	if has_manifest_fields:
+		var manifest_fields := capture.call("get_manifest_static_fields") as Dictionary
+		_check(manifest_fields.get("layout_revision", "") == "logistics-wing-greybox-round02-revision-02", "manifest identifies round two")
+		_check(manifest_fields.get("source_hash_paths", PackedStringArray()).size() >= 4, "manifest hashes the coordinate and evidence sources")
+		_check(not String(manifest_fields.get("final_commit_relation", "")).is_empty(), "manifest states its relation to the final commit")
 
 	var source := Image.create_empty(320, 180, false, Image.FORMAT_RGBA8)
 	source.fill(Color.CORNFLOWER_BLUE)
@@ -123,6 +139,13 @@ func _find_scene_path(node: Node, expected_path: String) -> Node:
 		if found != null:
 			return found
 	return null
+
+
+func _find_record(records: Array, basename: String) -> Dictionary:
+	for record: Dictionary in records:
+		if String(record.get("basename", "")) == basename:
+			return record
+	return {}
 
 
 func _count_nodes_of_type(node: Node, expected_type: Variant) -> int:

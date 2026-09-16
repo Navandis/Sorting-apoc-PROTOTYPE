@@ -5,6 +5,7 @@ const TRAVERSAL_SCRIPT_PATH := "res://greybox/logistics_wing/wing_traversal.gd"
 
 const REQUIRED_ROUTES := [
 	"receiving_to_sorting",
+	"receiving_to_dispatch",
 	"receiving_to_storage_near",
 	"sorting_to_shared_ab_junction",
 	"shared_junction_to_gallery_a_east",
@@ -16,7 +17,6 @@ const REQUIRED_ROUTES := [
 	"sorting_to_incinerator",
 	"sorting_to_bunker_ops",
 	"deeper_to_ops_landing",
-	"sorting_to_blocked_continuation",
 	"sorting_to_deeper_closure",
 	"gallery_c_to_d_secondary",
 	"gallery_c_to_d_via_spine",
@@ -32,7 +32,7 @@ const REQUIRED_BOUNDARIES := [
 	"medical_inner_boundary",
 	"kitchen_inner_boundary",
 	"workshop_inner_boundary",
-	"blocked_continuation",
+	"workshop_south_wall",
 	"bunker_ops_inner_boundary",
 	"deeper_settlement_door",
 	"kitchen_turn_return",
@@ -65,7 +65,7 @@ func _test_traversal_scene_contract() -> void:
 	runner.set_script(script)
 	_check(not runner.call("should_run", PackedStringArray()), "traversal stays idle without explicit flag")
 	_check(runner.call("should_run", PackedStringArray(["--traversal-evidence"])), "traversal flag explicitly enables evidence run")
-	_check(String(runner.call("get_output_path")) == "res://reports/logistics_wing/greybox/revision_01/traversal_results.json", "revision traversal output preserves first-pass evidence")
+	_check(String(runner.call("get_output_path")) == "res://reports/logistics_wing/greybox/revision_02/traversal_results.json", "round-two traversal output is isolated from earlier evidence")
 	runner.free()
 
 	if ResourceLoader.exists(TRAVERSAL_SCENE_PATH):
@@ -96,6 +96,7 @@ func _test_route_and_boundary_manifest() -> void:
 		_check(not waypoints.is_empty(), "route has hand-authored waypoints: " + route_name)
 	for route_name: String in REQUIRED_ROUTES:
 		_check(route_names.has(route_name), "required route exists: " + route_name)
+	_check(not route_names.has("sorting_to_blocked_continuation"), "removed Workshop stub has no traversal route")
 	var c_to_d_secondary := _find_record(routes, "gallery_c_to_d_secondary")
 	var c_to_d_spine := _find_record(routes, "gallery_c_to_d_via_spine")
 	_check(
@@ -114,6 +115,7 @@ func _test_route_and_boundary_manifest() -> void:
 		_check(record.get("direction", null) is Vector3, "boundary drive direction is explicit: " + boundary_name)
 	for boundary_name: String in REQUIRED_BOUNDARIES:
 		_check(boundary_names.has(boundary_name), "required boundary exists: " + boundary_name)
+	_check(not boundary_names.has("blocked_continuation"), "removed Workshop stub has no boundary probe")
 	runner.free()
 
 
