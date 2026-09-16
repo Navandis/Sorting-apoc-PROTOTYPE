@@ -59,11 +59,11 @@ Shared collinear wall segments have one owner only. In particular, A owns A-east
 - Consumes: the coordinate/boundary table above and saved `wing_geometry.tscn`.
 - Produces: executable checks for revision metadata, actual box geometry, openings, service-space entrances/boundaries, no collinear duplicate walls, ceiling-step closure, and dimensional changes.
 
-- [ ] **Step 1: Add geometry assertions for the complete correction register**
+- [x] **Step 1: Add geometry assertions for the complete correction register**
 
 Add helpers that inspect real `BoxShape3D` sizes/positions, sample doorway points at standing height, and compare every structural wall pair for collinear overlap. Assert `layout_revision == "logistics-wing-greybox-round01-revision-01"`; require `MedicalInnerBoundary`, `KitchenInnerBoundary`, `WorkshopInnerBoundary`, `BunkerOpsInnerBoundary`, `DeeperSettlementDoor`, and four interface proxies; reject all old `*FrontageClosure` nodes.
 
-- [ ] **Step 2: Run the focused contract and verify RED**
+- [x] **Step 2: Run the focused contract and verify RED**
 
 Run:
 
@@ -73,7 +73,7 @@ Run:
 
 Expected: non-zero with failures for v1 metadata, the B→Kitchen forbidden edge, absent service-room boundary names/interfaces, missing ceiling-step strip, wrong Receiving/table/Incinerator measurements, blocked doorway samples, and duplicate collinear wall pairs.
 
-- [ ] **Step 3: Commit the verified failing contract**
+- [x] **Step 3: Commit the verified failing contract**
 
 ```powershell
 git add tools/asset_pipeline/tests/logistics_wing_geometry_tests.gd docs/superpowers/plans/2026-09-16-logistics-wing-greybox-round01-revision.md
@@ -91,15 +91,15 @@ git commit -m "test: lock logistics wing revision contract"
 - Consumes: Task 1's real-geometry checks.
 - Produces: revision-01 floors, ceilings, single-owner structural walls, open territorial entrances, inner boundaries, neutral interfaces, proxies, and anchors in the generated saved scene.
 
-- [ ] **Step 1: Replace v1 coordinates with the exact floor and wall decisions above**
+- [x] **Step 1: Replace v1 coordinates with the exact floor and wall decisions above**
 
 Update `TOPOLOGY_EDGES` so `GalleryB>KitchenApproach` is required, A/B open to `SharedABJunction`, and Medical enters from that junction. Remove B→Kitchen from `FORBIDDEN_EDGES`; keep direct A→B, Medical→Kitchen, E→Deeper, and all non-C↔D gallery links forbidden.
 
-- [ ] **Step 2: Build the three independent service-space boundaries**
+- [x] **Step 2: Build the three independent service-space boundaries**
 
 For Workshop, Kitchen, Medical, and Ops, author: (1) an open outer threshold, (2) a non-colliding neutral interface envelope on reachable floor, and (3) a colliding opaque inner boundary. Give each a distinct footprint and do not add interaction code.
 
-- [ ] **Step 3: Regenerate the saved scene and verify GREEN**
+- [x] **Step 3: Regenerate the saved scene and verify GREEN**
 
 ```powershell
 & 'D:\AI Tools\Godot-4.7-Codex\Godot_v4.7-stable_win64_console.exe' --headless --path . --script res://greybox/logistics_wing/build_wing_geometry.gd
@@ -108,7 +108,7 @@ For Workshop, Kitchen, Medical, and Ops, author: (1) an open outer threshold, (2
 
 Expected: generator exits 0 with revision-01 metadata and the focused geometry suite exits 0 without duplicate-wall or doorway failures.
 
-- [ ] **Step 4: Commit the structural correction**
+- [x] **Step 4: Commit the structural correction**
 
 ```powershell
 git add greybox/logistics_wing/build_wing_geometry.gd greybox/logistics_wing/wing_geometry.tscn tools/asset_pipeline/tests/logistics_wing_geometry_tests.gd
@@ -129,11 +129,11 @@ git commit -m "fix: revise logistics wing structural geometry"
 - Consumes: Task 2's revised anchors and geometry.
 - Produces: matched revision cameras, 16:9 captioned contact sheets, normal-controller routes through A-east/B-west/B-east and all service spaces, boundary drives against inner cores/enclosure edges, and same-endpoint C↔D timings.
 
-- [ ] **Step 1: Add failing capture and traversal assertions**
+- [x] **Step 1: Add failing capture and traversal assertions**
 
 Require output paths below `revision_01`; require `480 × 270` image rectangles inside `480 × 360` tiles with a separate `90 px` caption band; require before/after-matched view basenames for Receiving, Sorting, Workshop, Salvager, storage network/C↔D, Kitchen return, dogleg, Ops door, and both sightline breaks. Require routes `shared_junction_to_gallery_a_east`, `shared_junction_to_gallery_b_west`, `gallery_b_to_kitchen_service`, `shared_junction_to_medical_anteroom`, `sorting_to_workshop_service`, and `deeper_to_ops_landing`, plus inner-boundary and Kitchen/dogleg/junction enclosure drives.
 
-- [ ] **Step 2: Run both contracts and verify RED**
+- [x] **Step 2: Run both contracts and verify RED**
 
 ```powershell
 & 'D:\AI Tools\Godot-4.7-Codex\Godot_v4.7-stable_win64_console.exe' --headless --path . --script res://tools/asset_pipeline/tests/logistics_wing_capture_tests.gd
@@ -142,11 +142,11 @@ Require output paths below `revision_01`; require `480 × 270` image rectangles 
 
 Expected: non-zero because v1 paths, cameras, stretched tiles, routes, and old frontage boundary records remain.
 
-- [ ] **Step 3: Update capture, review labels/lights, routes, and boundaries**
+- [x] **Step 3: Update capture, review labels/lights, routes, and boundaries**
 
 Keep full images at `1920 × 1080`. Render each contact tile's `480 × 270` image above a separate caption band. Retarget all affected anchors/waypoints to revised coordinates; add actual controller routes through the three mandated openings and into all four playable service territories. Drive against every inner core boundary and the new door proxy without treating open entrances as blockers.
 
-- [ ] **Step 4: Verify contracts and run real evidence generation**
+- [x] **Step 4: Verify contracts and run real evidence generation**
 
 ```powershell
 & 'D:\AI Tools\Godot-4.7-Codex\Godot_v4.7-stable_win64_console.exe' --headless --path . --script res://tools/asset_pipeline/tests/logistics_wing_capture_tests.gd
@@ -157,11 +157,11 @@ Keep full images at `1920 × 1080`. Render each contact tile's `480 × 270` imag
 
 Expected: both contracts pass; capture prints `CAPTURE_COMPLETE`; traversal reports zero failures and writes only below `revision_01`.
 
-- [ ] **Step 5: Inspect every revised full-resolution view and contact sheet**
+- [x] **Step 5: Inspect every revised full-resolution view and contact sheet**
 
 Compare matched new frames with the preserved round-one reviewer images. If a structural defect remains, add or strengthen the failing contract before changing the builder, regenerate, and rerun affected evidence.
 
-- [ ] **Step 6: Commit coordinated evidence tooling**
+- [x] **Step 6: Commit coordinated evidence tooling**
 
 ```powershell
 git add greybox/logistics_wing/wing_capture.gd greybox/logistics_wing/wing_traversal.gd greybox/logistics_wing/wing_review.tscn tools/asset_pipeline/tests/logistics_wing_capture_tests.gd tools/asset_pipeline/tests/logistics_wing_traversal_tests.gd
@@ -178,11 +178,11 @@ git commit -m "test: verify revised wing evidence and traversal"
 - Consumes: final saved scene, test output, traversal JSON, matched images, Git preservation checks, and known baseline exception.
 - Produces: a per-observation 01–20 outcome record and a stopped, unmerged local branch ready for human walkthrough.
 
-- [ ] **Step 1: Run focused, parser, scene-smoke, and full non-hanging regression verification**
+- [x] **Step 1: Run focused, parser, scene-smoke, and full non-hanging regression verification**
 
 Run all three wing suites, the generated-scene rebuild, editor/parser scan, explicit review-scene smoke, unchanged default-main smoke, and every existing non-hanging `tools/asset_pipeline/tests/*_tests.gd` script. Bound `main_scene_loot_audit_integration_tests.gd` to 25 seconds and compare its exact diagnostics to the retained three-assertion baseline.
 
-- [ ] **Step 2: Verify preservation and diff scope**
+- [x] **Step 2: Verify preservation and diff scope**
 
 ```powershell
 git diff --check 8ee62bd3bc4f23918717517e066d4c6a8cb565df
@@ -193,11 +193,11 @@ git status --short --untracked-files=all
 
 Expected: protected files unchanged; rejected branch remains `c9752c8...`; original evidence folders remain present and untracked; revision evidence exists only under `revision_01`.
 
-- [ ] **Step 3: Write the validation record**
+- [x] **Step 3: Write the validation record**
 
 Record exact branch/base/final commit, Godot/version/renderer, a 01–20 PASS/DEFERRED/FAILED table with evidence paths, shared-wall ownership result, revised dimension/boundary table, before/after view mapping, route/boundary measurements, C↔D same-endpoint comparison, capture aspect result, full test output, baseline exception, self-inspection/rework, and separate technical/human/workflow/revision/art/Receiving/balance statuses.
 
-- [ ] **Step 4: Re-run documentation-sensitive checks and commit**
+- [x] **Step 4: Re-run documentation-sensitive checks and commit**
 
 Run `git diff --check`, all three wing suites, parser scan, and review/default scene smoke after the record. Commit only scoped source/tests/docs; leave reports untracked.
 
@@ -206,6 +206,6 @@ git add docs/testing/logistics-wing-greybox-round01-revision-validation.md docs/
 git commit -m "docs: validate logistics wing round-one revision"
 ```
 
-- [ ] **Step 5: Stop for human review**
+- [x] **Step 5: Stop for human review**
 
 Report launch command, branch/base/final commit, revised evidence directory, known baseline exception, and the remaining subjective walkthrough questions. Do not push, merge, begin functional Receiving, add furnishings, or start production art.
