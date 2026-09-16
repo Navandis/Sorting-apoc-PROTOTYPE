@@ -1,12 +1,19 @@
 # Logistics Wing Greybox — Round-One Revision Validation
 
-**Date:** 16 September 2026  
-**Branch:** `codex/logistics-wing-greybox`  
-**Revision start:** `d81783f00d5debfc44c37346c7acaa074c4e4e82`  
-**Main/origin base preserved:** `8ee62bd3bc4f23918717517e066d4c6a8cb565df`  
-**Implementation under validation:** `088bc2d188eded555a1e99259f3f3a600fb8c67b`  
-**Rejected Receiving branch preserved:** `c9752c8c68cd55b950dd588542ea271e1acc0aab`  
-**Engine:** Godot `4.7.stable.official.5b4e0cb0f`, Jolt, GL Compatibility  
+**Date:** 16 September 2026
+
+**Branch:** `codex/logistics-wing-greybox`
+
+**Revision start:** `d81783f00d5debfc44c37346c7acaa074c4e4e82`
+
+**Main/origin base preserved:** `8ee62bd3bc4f23918717517e066d4c6a8cb565df`
+
+**Implementation under validation:** `088bc2d188eded555a1e99259f3f3a600fb8c67b`
+
+**Rejected Receiving branch preserved:** `c9752c8c68cd55b950dd588542ea271e1acc0aab`
+
+**Engine:** Godot `4.7.stable.official.5b4e0cb0f`, Jolt, GL Compatibility
+
 **Evidence renderer:** OpenGL 3.3 Compatibility, NVIDIA GeForce RTX 5060 Ti
 
 ## Outcome
