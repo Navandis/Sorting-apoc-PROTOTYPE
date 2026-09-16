@@ -3,6 +3,21 @@ extends SceneTree
 const REVIEW_SCENE_PATH := "res://greybox/logistics_wing/wing_review.tscn"
 const CAPTURE_SCENE_PATH := "res://greybox/logistics_wing/wing_capture.tscn"
 const CAPTURE_SCRIPT_PATH := "res://greybox/logistics_wing/wing_capture.gd"
+const REQUIRED_MATCHED_BASENAMES := [
+	"overview_debug_topdown.png",
+	"receiving_freight_aperture.png", "receiving_apron.png",
+	"receiving_backlog_threshold.png", "dispatch.png",
+	"backlog_sorting_threshold.png", "sorting_table.png",
+	"sorting_receiving_partial.png", "sorting_storage_offset.png",
+	"storage_ab_junction.png", "storage_cd_south.png",
+	"storage_network.png", "medical_anteroom.png",
+	"kitchen_b_east.png", "kitchen_service.png",
+	"workshop_service.png", "workshop_salvager_reveal.png",
+	"workshop_blocked.png", "deeper_storage_sightline.png",
+	"deeper_dogleg.png", "incinerator.png",
+	"bunker_ops_landing.png", "bunker_ops_door.png",
+	"receiving_ceiling_transition.png",
+]
 
 var _failures := 0
 
@@ -57,9 +72,9 @@ func _test_capture_manifest_and_image_contract() -> void:
 	capture.set_script(script)
 	_check(not capture.call("should_capture", PackedStringArray()), "capture stays idle without --capture")
 	_check(capture.call("should_capture", PackedStringArray(["--capture"])), "--capture explicitly enables evidence generation")
-	_check(String(capture.call("get_output_directory")) == "res://reports/logistics_wing/greybox", "capture output directory is stable")
+	_check(String(capture.call("get_output_directory")) == "res://reports/logistics_wing/greybox/revision_01", "revision capture output preserves first-pass evidence")
 	var records := capture.call("get_view_records") as Array
-	_check(records.size() == 19, "capture manifest has all 19 required views")
+	_check(records.size() == 24, "capture manifest has all 24 revision views")
 	var seen_basenames: Dictionary = {}
 	for index: int in records.size():
 		var record := records[index] as Dictionary
@@ -75,8 +90,10 @@ func _test_capture_manifest_and_image_contract() -> void:
 			_check(record.get("overview", false) == false, "normal capture is not marked overview: " + basename)
 			_check(record.get("ceiling_on", false) == true, "normal capture keeps ceilings on: " + basename)
 			_check(is_equal_approx(float(record.get("fov", 0.0)), 75.0), "normal capture preserves 75 degree FOV: " + basename)
+	for basename: String in REQUIRED_MATCHED_BASENAMES:
+		_check(seen_basenames.has(basename), "matched revision view is declared: " + basename)
 	var basenames := capture.call("get_capture_basenames") as Array
-	_check(basenames.size() == 21, "19 full views plus two contact sheets are declared")
+	_check(basenames.size() == 26, "24 full views plus two contact sheets are declared")
 	_check(basenames.has("overview_debug_topdown.png"), "debug overview basename is declared")
 	_check(basenames.has("contact_sheet_01.png") and basenames.has("contact_sheet_02.png"), "both contact sheets are declared")
 
@@ -84,15 +101,17 @@ func _test_capture_manifest_and_image_contract() -> void:
 	source.fill(Color.CORNFLOWER_BLUE)
 	var normalized := capture.call("normalize_capture_image", source) as Image
 	_check(normalized.get_size() == Vector2i(1920, 1080), "full captures normalize to 1920x1080")
-	var fixtures: Array[Image] = []
-	for index: int in 19:
-		var fixture := Image.create_empty(64, 36, false, Image.FORMAT_RGBA8)
-		fixture.fill(Color.from_hsv(float(index) / 19.0, 0.65, 0.85))
-		fixtures.append(fixture)
-	var sheets := capture.call("make_contact_sheets", fixtures) as Array
-	_check(sheets.size() == 2, "19 captures produce two contact sheets")
-	for sheet: Image in sheets:
-		_check(sheet.get_size() == Vector2i(1920, 1080), "contact sheet is readable at 1920x1080")
+	var has_contact_layout := _check(capture.has_method("get_contact_tile_layout"), "capture exposes deterministic contact layout")
+	var has_aspect_fit := _check(capture.has_method("fit_capture_into_contact_image"), "capture exposes aspect-preserving image fit")
+	if has_contact_layout:
+		var layout := capture.call("get_contact_tile_layout") as Dictionary
+		_check(layout.get("tile_size") == Vector2i(480, 360), "contact tile remains 480x360")
+		_check(layout.get("image_size") == Vector2i(480, 270), "contact image region preserves 16:9")
+		_check(layout.get("caption_origin_y") == 270, "caption begins outside the image")
+		_check(layout.get("caption_height") == 90, "caption has a separate 90px band")
+	if has_aspect_fit:
+		_check(capture.call("fit_capture_into_contact_image", Vector2i(1920, 1080)) == Rect2i(0, 0, 480, 270), "16:9 capture fills only the 16:9 image region")
+		_check(capture.call("fit_capture_into_contact_image", Vector2i(800, 600)) == Rect2i(60, 0, 360, 270), "non-16:9 source is letterboxed without distortion")
 	capture.free()
 
 

@@ -1,6 +1,6 @@
 extends Node3D
 
-const OUTPUT_PATH := "res://reports/logistics_wing/greybox/traversal_results.json"
+const OUTPUT_PATH := "res://reports/logistics_wing/greybox/revision_01/traversal_results.json"
 const RUN_FLAG := "--traversal-evidence"
 const ARRIVAL_TOLERANCE := 0.45
 const PHYSICS_TICKS_PER_SECOND := 60.0
@@ -23,103 +23,125 @@ func get_output_path() -> String:
 func get_route_records() -> Array:
 	return [
 		_route("receiving_to_sorting", "ReceivingApron", "SortingWork", [
-			Vector3(-25.5, 0.05, 0.0), Vector3(-20.5, 0.05, 0.0),
-			Vector3(-13.0, 0.05, 0.0), Vector3(-9.0, 0.05, -2.65),
+			Vector3(-26.0, 0.05, 0.0), Vector3(-20.0, 0.05, 0.0),
+			Vector3(-14.0, 0.05, 0.0), Vector3(-10.0, 0.05, -4.4),
 		]),
 		_route("receiving_to_storage_near", "ReceivingApron", "StorageNear", [
-			Vector3(-25.5, 0.05, 0.0), Vector3(-20.5, 0.05, 0.0),
-			Vector3(-10.0, 0.05, 1.8), Vector3(-4.0, 0.05, 2.2),
-			Vector3(-1.0, 0.05, 2.5),
+			Vector3(-26.0, 0.05, 0.0), Vector3(-20.0, 0.05, 0.0),
+			Vector3(-14.0, 0.05, 0.0), Vector3(-10.0, 0.05, 2.5),
+			Vector3(-4.0, 0.05, 2.7), Vector3(-2.0, 0.05, 2.7),
 		]),
-		_route("sorting_to_medical", "SortingWork", "MedicalSafeSide", [
-			Vector3(-9.0, 0.05, 1.8), Vector3(-3.5, 0.05, 2.2),
-			Vector3(6.0, 0.05, 1.0), Vector3(6.0, 0.05, -4.0),
-			Vector3(6.0, 0.05, -12.0), Vector3(6.0, 0.05, -18.2),
+		_route("sorting_to_shared_ab_junction", "SortingWork", "SharedABJunction", [
+			Vector3(-10.0, 0.05, 2.5), Vector3(-4.0, 0.05, 2.7),
+			Vector3(3.0, 0.05, 1.0), Vector3(6.7, 0.05, 0.0),
+			Vector3(6.7, 0.05, -3.6),
 		]),
-		_route("sorting_to_kitchen", "SortingWork", "KitchenSafeSide", [
-			Vector3(-9.0, 0.05, 1.8), Vector3(-3.5, 0.05, 2.2),
-			Vector3(10.0, 0.05, 0.5), Vector3(18.0, 0.05, 0.5),
-			Vector3(18.0, 0.05, -8.0), Vector3(18.0, 0.05, -12.5),
-			Vector3(24.5, 0.05, -12.5), Vector3(24.5, 0.05, -18.2),
+		_route("shared_junction_to_gallery_a_east", "SharedABJunction", "GalleryA", [
+			Vector3(4.0, 0.05, -3.6), Vector3(1.5, 0.05, -4.0),
+			Vector3(1.5, 0.05, -6.0),
 		]),
-		_route("sorting_to_workshop", "SortingWork", "WorkshopSafeSide", [
-			Vector3(-10.0, 0.05, 3.5), Vector3(-9.0, 0.05, 8.0),
-			Vector3(-9.0, 0.05, 16.5), Vector3(-10.3, 0.05, 20.0),
+		_route("shared_junction_to_gallery_b_west", "SharedABJunction", "GalleryB", [
+			Vector3(9.5, 0.05, -3.6), Vector3(12.0, 0.05, -5.0),
+		]),
+		_route("shared_junction_to_medical_anteroom", "SharedABJunction", "MedicalAnteroom", [
+			Vector3(6.7, 0.05, -6.0), Vector3(6.7, 0.05, -12.0),
+			Vector3(6.7, 0.05, -17.0),
+		]),
+		_route("gallery_b_to_kitchen_service", "GalleryB", "KitchenService", [
+			Vector3(15.0, 0.05, -6.8), Vector3(18.0, 0.05, -6.8),
+			Vector3(19.5, 0.05, -9.0), Vector3(19.5, 0.05, -12.5),
+			Vector3(25.5, 0.05, -12.5), Vector3(25.5, 0.05, -16.5),
+			Vector3(25.6, 0.05, -19.0), Vector3(26.5, 0.05, -21.0),
+		]),
+		_route("sorting_to_workshop_service", "SortingWork", "WorkshopService", [
+			Vector3(-10.0, 0.05, 3.0), Vector3(-10.0, 0.05, 8.0),
+			Vector3(-10.0, 0.05, 12.0), Vector3(-11.0, 0.05, 15.0),
+			Vector3(-11.0, 0.05, 17.0),
 		]),
 		_route("sorting_to_salvager", "SortingWork", "SalvagerFront", [
-			Vector3(-10.0, 0.05, 3.5), Vector3(-9.0, 0.05, 8.0),
-			Vector3(-9.0, 0.05, 16.5), Vector3(-7.0, 0.05, 19.2),
-			Vector3(5.5, 0.05, 19.2), Vector3(5.5, 0.05, 24.8),
+			Vector3(-10.0, 0.05, 3.0), Vector3(-10.0, 0.05, 8.0),
+			Vector3(-10.0, 0.05, 15.0), Vector3(-7.0, 0.05, 19.5),
+			Vector3(0.0, 0.05, 20.0), Vector3(3.0, 0.05, 22.5),
+			Vector3(5.0, 0.05, 23.0),
 		]),
 		_route("sorting_to_incinerator", "SortingWork", "IncineratorFront", [
-			Vector3(-9.0, 0.05, 1.8), Vector3(-3.5, 0.05, 2.2),
-			Vector3(10.0, 0.05, 0.5), Vector3(24.0, 0.05, 0.5),
-			Vector3(37.0, 0.05, 0.5), Vector3(37.0, 0.05, 5.0),
-			Vector3(37.0, 0.05, 12.2),
+			Vector3(-10.0, 0.05, 2.5), Vector3(-2.0, 0.05, 2.7),
+			Vector3(10.0, 0.05, 2.0), Vector3(24.0, 0.05, 2.0),
+			Vector3(28.0, 0.05, 2.0), Vector3(31.5, 0.05, 6.0),
+			Vector3(31.5, 0.05, 12.4),
 		]),
 		_route("sorting_to_bunker_ops", "SortingWork", "BunkerOpsSafeSide", [
-			Vector3(-9.0, 0.05, 1.8), Vector3(-3.5, 0.05, 2.2),
-			Vector3(10.0, 0.05, 0.5), Vector3(24.0, 0.05, 0.5),
-			Vector3(37.5, 0.05, 0.5), Vector3(40.8, 0.05, -2.5),
-			Vector3(40.8, 0.05, -8.5), Vector3(50.0, 0.05, -8.5),
-			Vector3(57.0, 0.05, -8.5), Vector3(59.0, 0.05, -9.5),
+			Vector3(-10.0, 0.05, 2.5), Vector3(-2.0, 0.05, 2.7),
+			Vector3(10.0, 0.05, 2.0), Vector3(24.0, 0.05, 2.0),
+			Vector3(28.0, 0.05, 2.0), Vector3(33.8, 0.05, 2.0),
+			Vector3(34.0, 0.05, -5.5), Vector3(45.0, 0.05, -5.5),
+			Vector3(57.0, 0.05, -5.5), Vector3(60.0, 0.05, -5.5),
+			Vector3(61.5, 0.05, -8.5),
+		]),
+		_route("deeper_to_ops_landing", "IncineratorFront", "BunkerOpsLanding", [
+			Vector3(31.5, 0.05, 7.0), Vector3(31.5, 0.05, 4.8),
+			Vector3(33.8, 0.05, 2.0), Vector3(34.0, 0.05, -5.5),
+			Vector3(45.0, 0.05, -5.5), Vector3(57.0, 0.05, -5.5),
+			Vector3(61.5, 0.05, -6.0),
 		]),
 		_route("sorting_to_blocked_continuation", "SortingWork", "BlockedContinuationSafeSide", [
-			Vector3(-10.0, 0.05, 3.5), Vector3(-9.0, 0.05, 8.0),
-			Vector3(-9.0, 0.05, 16.5), Vector3(-8.5, 0.05, 20.0),
-			Vector3(-8.5, 0.05, 21.5),
+			Vector3(-10.0, 0.05, 3.0), Vector3(-10.0, 0.05, 8.0),
+			Vector3(-10.0, 0.05, 15.0), Vector3(-11.5, 0.05, 22.5),
+			Vector3(-11.5, 0.05, 24.2),
 		]),
 		_route("sorting_to_deeper_closure", "SortingWork", "DeeperClosureSafeSide", [
-			Vector3(-9.0, 0.05, 1.8), Vector3(-3.5, 0.05, 2.2),
-			Vector3(10.0, 0.05, 0.5), Vector3(24.0, 0.05, 0.5),
-			Vector3(37.5, 0.05, 0.5), Vector3(40.8, 0.05, -2.5),
-			Vector3(40.8, 0.05, -8.5), Vector3(50.0, 0.05, -8.5),
-			Vector3(57.0, 0.05, -8.5), Vector3(59.0, 0.05, -8.5),
-			Vector3(60.5, 0.05, -7.0),
+			Vector3(-10.0, 0.05, 2.5), Vector3(-2.0, 0.05, 2.7),
+			Vector3(10.0, 0.05, 2.0), Vector3(24.0, 0.05, 2.0),
+			Vector3(28.0, 0.05, 2.0), Vector3(33.8, 0.05, 2.0),
+			Vector3(34.0, 0.05, -5.5), Vector3(45.0, 0.05, -5.5),
+			Vector3(57.0, 0.05, -5.5), Vector3(63.5, 0.05, -6.8),
 		]),
 		_route("gallery_c_to_d_secondary", "GalleryC", "GalleryD", [
-			Vector3(4.5, 0.05, 9.5), Vector3(7.0, 0.05, 9.5),
-			Vector3(7.5, 0.05, 9.0), Vector3(7.5, 0.05, 6.5),
-			Vector3(10.0, 0.05, 5.0),
+			Vector3(4.5, 0.05, 10.25), Vector3(7.0, 0.05, 10.25),
+			Vector3(8.0, 0.05, 9.0), Vector3(10.0, 0.05, 7.0),
 		]),
 		_route("gallery_c_to_d_via_spine", "GalleryC", "GalleryD", [
-			Vector3(1.5, 0.05, 5.8), Vector3(1.5, 0.05, 3.5),
-			Vector3(5.5, 0.05, 1.0), Vector3(10.5, 0.05, 1.0),
-			Vector3(10.5, 0.05, 3.5), Vector3(10.0, 0.05, 5.0),
+			Vector3(2.0, 0.05, 6.0), Vector3(2.0, 0.05, 5.0),
+			Vector3(2.0, 0.05, 3.0), Vector3(10.0, 0.05, 3.0),
+			Vector3(10.0, 0.05, 5.0), Vector3(10.0, 0.05, 7.0),
 		]),
 		_route("storage_near_to_gallery_a", "StorageNear", "GalleryA", [
-			Vector3(-1.0, 0.05, 1.0), Vector3(1.5, 0.05, 0.8),
-			Vector3(1.5, 0.05, -2.0), Vector3(1.5, 0.05, -6.0),
+			Vector3(1.5, 0.05, 2.7), Vector3(1.5, 0.05, 0.0),
+			Vector3(1.5, 0.05, -4.0), Vector3(1.5, 0.05, -6.0),
 		]),
 		_route("storage_near_to_gallery_b", "StorageNear", "GalleryB", [
-			Vector3(5.5, 0.05, 0.5), Vector3(11.5, 0.05, 0.0),
-			Vector3(11.5, 0.05, -2.5), Vector3(11.0, 0.05, -5.0),
+			Vector3(3.0, 0.05, 1.0), Vector3(6.7, 0.05, 0.0),
+			Vector3(6.7, 0.05, -3.6), Vector3(9.5, 0.05, -3.6),
+			Vector3(12.0, 0.05, -5.0),
 		]),
 		_route("storage_near_to_gallery_c", "StorageNear", "GalleryC", [
-			Vector3(1.5, 0.05, 3.5), Vector3(1.5, 0.05, 6.0),
+			Vector3(2.0, 0.05, 3.0), Vector3(2.0, 0.05, 6.0),
 			Vector3(2.0, 0.05, 8.0),
 		]),
 		_route("storage_near_to_gallery_d", "StorageNear", "GalleryD", [
-			Vector3(5.5, 0.05, 1.0), Vector3(10.5, 0.05, 1.0),
-			Vector3(10.5, 0.05, 3.5), Vector3(10.0, 0.05, 5.0),
+			Vector3(5.0, 0.05, 2.7), Vector3(10.0, 0.05, 3.0),
+			Vector3(10.0, 0.05, 5.0), Vector3(10.0, 0.05, 7.0),
 		]),
 		_route("storage_near_to_gallery_e", "StorageNear", "GalleryE", [
-			Vector3(5.0, 0.05, 1.0), Vector3(13.0, 0.05, 1.0),
-			Vector3(20.5, 0.05, 1.0), Vector3(20.5, 0.05, 4.0),
-			Vector3(20.0, 0.05, 5.5),
+			Vector3(5.0, 0.05, 2.7), Vector3(13.0, 0.05, 2.7),
+			Vector3(21.0, 0.05, 3.0), Vector3(21.0, 0.05, 5.0),
+			Vector3(21.0, 0.05, 8.0),
 		]),
 	]
 
 
 func get_boundary_records() -> Array:
 	return [
-		_boundary("freight_barrier", Vector3(-31.5, 0.05, 0.0), Vector3(-1, 0, 0), "x", "min", -35.70),
-		_boundary("medical_frontage", Vector3(6.0, 0.05, -18.2), Vector3(0, 0, -1), "z", "min", -19.70),
-		_boundary("kitchen_frontage", Vector3(24.5, 0.05, -18.2), Vector3(0, 0, -1), "z", "min", -19.70),
-		_boundary("workshop_frontage", Vector3(-10.3, 0.05, 20.0), Vector3(-1, 0, 0), "x", "min", -11.70),
-		_boundary("blocked_continuation", Vector3(-8.5, 0.05, 21.5), Vector3(0, 0, 1), "z", "max", 23.60),
-		_boundary("bunker_ops_frontage", Vector3(60.75, 0.05, -9.0), Vector3(0, 0, -1), "z", "min", -11.70),
-		_boundary("deeper_settlement_closure", Vector3(60.5, 0.05, -7.0), Vector3(1, 0, 0), "x", "max", 61.45),
+		_boundary("freight_barrier", Vector3(-37.0, 0.05, 0.0), Vector3(-1, 0, 0), "x", "min", -38.75),
+		_boundary("medical_inner_boundary", Vector3(6.7, 0.05, -18.0), Vector3(0, 0, -1), "z", "min", -19.70),
+		_boundary("kitchen_inner_boundary", Vector3(26.5, 0.05, -22.0), Vector3(0, 0, -1), "z", "min", -24.70),
+		_boundary("workshop_inner_boundary", Vector3(-15.5, 0.05, 18.0), Vector3(-1, 0, 0), "x", "min", -17.70),
+		_boundary("blocked_continuation", Vector3(-11.5, 0.05, 24.2), Vector3(0, 0, 1), "z", "max", 25.45),
+		_boundary("bunker_ops_inner_boundary", Vector3(61.5, 0.05, -8.5), Vector3(0, 0, -1), "z", "min", -10.70),
+		_boundary("deeper_settlement_door", Vector3(63.5, 0.05, -6.8), Vector3(1, 0, 0), "x", "max", 64.70),
+		_boundary("kitchen_turn_return", Vector3(22.8, 0.05, -12.2), Vector3(0, 0, 1), "z", "max", -11.45),
+		_boundary("dogleg_return", Vector3(35.0, 0.05, -2.0), Vector3(1, 0, 0), "x", "max", 35.70),
+		_boundary("shared_junction_return", Vector3(5.0, 0.05, -4.0), Vector3(0, 0, -1), "z", "min", -4.70),
 	]
 
 
@@ -156,7 +178,7 @@ func _run_evidence() -> void:
 		])
 
 	var payload := {
-		"layout_revision": "logistics-wing-greybox-v1",
+		"layout_revision": "logistics-wing-greybox-round01-revision-01",
 		"evidence_kind": "normal-controller-input-replay",
 		"generated_utc": Time.get_datetime_string_from_system(true),
 		"review_scene": "res://greybox/logistics_wing/wing_review.tscn",

@@ -1,8 +1,10 @@
 extends Node3D
 
-const OUTPUT_DIRECTORY := "res://reports/logistics_wing/greybox"
+const OUTPUT_DIRECTORY := "res://reports/logistics_wing/greybox/revision_01"
 const CAPTURE_SIZE := Vector2i(1920, 1080)
 const CONTACT_TILE_SIZE := Vector2i(480, 360)
+const CONTACT_IMAGE_SIZE := Vector2i(480, 270)
+const CONTACT_CAPTION_HEIGHT := 90
 const CONTACT_COLUMNS := 4
 const CONTACT_ROWS := 3
 
@@ -23,25 +25,30 @@ func get_output_directory() -> String:
 
 func get_view_records() -> Array:
 	return [
-		_view("Full-wing debug overview", "overview_debug_topdown.png", Vector3(10, 62, 2), Vector3(10, 0, 2), 55.0, false, true),
-		_view("Receiving apron toward freight barrier", "receiving_freight.png", Vector3(-31.5, 1.7162851, 0), Vector3(-39.0, 1.2, 0), 75.0),
-		_view("Receiving toward Backlog", "receiving_core.png", Vector3(-32.0, 1.7162851, 2.0), Vector3(-20.0, 1.4, 0), 75.0),
-		_view("Backlog toward Sorting", "backlog_sorting.png", Vector3(-23.0, 1.7162851, 0), Vector3(-10.0, 1.4, 0), 75.0),
-		_view("Sorting work position toward table", "sorting_table.png", Vector3(-9.0, 1.7162851, -1.8), Vector3(-9.0, 1.15, -4.1), 75.0),
-		_view("Sorting work position toward Receiving", "sorting_receiving.png", Vector3(-9.0, 1.7162851, -1.8), Vector3(-22.0, 1.4, 0), 75.0),
-		_view("Sorting work position toward Storage", "sorting_storage.png", Vector3(-9.0, 1.7162851, -1.8), Vector3(-1.0, 1.4, 2.2), 75.0),
-		_view("Storage A and B approaches", "storage_ab.png", Vector3(6.0, 1.7162851, 1.8), Vector3(6.0, 1.4, -1.5), 75.0),
-		_view("Storage C and D secondary opening", "storage_cd.png", Vector3(9.5, 1.7162851, 9.5), Vector3(6.0, 1.4, 9.5), 75.0),
-		_view("Storage E single-entry boundary", "storage_e.png", Vector3(20.5, 1.7162851, 4.5), Vector3(22.0, 1.4, 11.5), 75.0),
-		_view("Medical protected approach", "medical_approach.png", Vector3(6.0, 1.7162851, -14.5), Vector3(6.0, 1.4, -22.0), 75.0),
-		_view("Kitchen and Mess approach", "kitchen_approach.png", Vector3(24.5, 1.7162851, -15.0), Vector3(25.0, 1.4, -22.0), 75.0),
-		_view("Workshop frontage from shared service leg", "workshop_frontage.png", Vector3(-8.5, 1.7162851, 20.0), Vector3(-14.0, 1.4, 20.0), 75.0),
-		_view("Salvager spur from shared service leg", "workshop_salvager.png", Vector3(4.5, 1.7162851, 20.0), Vector3(5.5, 1.4, 26.5), 75.0),
-		_view("Workshop-side blocked continuation", "workshop_blocked.png", Vector3(-8.5, 1.7162851, 21.0), Vector3(-8.5, 1.3, 25.0), 75.0),
-		_view("Wide Deeper-Bunker approach to dog-leg", "deeper_wide.png", Vector3(28.0, 1.7162851, 0.5), Vector3(41.0, 1.4, -4.0), 75.0),
-		_view("Incinerator terminal spur", "incinerator.png", Vector3(37.0, 1.7162851, 7.0), Vector3(37.0, 1.4, 14.75), 75.0),
-		_view("Narrow dog-leg toward Bunker Ops", "deeper_narrow.png", Vector3(41.0, 1.7162851, -8.5), Vector3(54.0, 1.4, -8.5), 75.0),
-		_view("Bunker Ops and deeper-settlement closure", "bunker_ops_closure.png", Vector3(58.7, 1.7162851, -8.2), Vector3(62.0, 1.4, -9.0), 75.0),
+		_view("Full-wing debug overview", "overview_debug_topdown.png", Vector3(10, 70, 0), Vector3(10, 0, 0), 55.0, false, true),
+		_view("Receiving flanked freight aperture and inset cage", "receiving_freight_aperture.png", Vector3(-32.5, 1.7162851, 0.0), Vector3(-42.0, 1.2, 0.0), 75.0),
+		_view("Expanded Receiving Apron", "receiving_apron.png", Vector3(-28.5, 1.7162851, 3.2), Vector3(-37.5, 1.4, -2.0), 75.0),
+		_view("Receiving to Backlog half-frontage threshold", "receiving_backlog_threshold.png", Vector3(-32.5, 1.7162851, 2.0), Vector3(-23.0, 1.4, 0.0), 75.0),
+		_view("Elongated shallow Expedition Dispatch", "dispatch.png", Vector3(-32.0, 1.7162851, -4.0), Vector3(-31.75, 1.0, -7.8), 75.0),
+		_view("Backlog to Sorting threshold", "backlog_sorting_threshold.png", Vector3(-23.0, 1.7162851, 0.0), Vector3(-10.0, 1.4, -1.0), 75.0),
+		_view("Deeper Sorting work pocket and table", "sorting_table.png", Vector3(-10.0, 1.7162851, -4.4), Vector3(-10.0, 1.15, -6.18), 75.0),
+		_view("Sorting partial oblique Receiving awareness", "sorting_receiving_partial.png", Vector3(-10.0, 1.7162851, -4.4), Vector3(-22.0, 1.4, 0.0), 75.0),
+		_view("Sorting offset threshold toward Storage", "sorting_storage_offset.png", Vector3(-10.0, 1.7162851, -4.4), Vector3(-1.0, 1.4, 3.0), 75.0),
+		_view("A and B openings onto shared junction", "storage_ab_junction.png", Vector3(6.7, 1.7162851, -1.8), Vector3(6.7, 1.4, -4.2), 75.0),
+		_view("C to D secondary link and southern forms", "storage_cd_south.png", Vector3(9.0, 1.7162851, 10.25), Vector3(6.0, 1.4, 10.25), 75.0),
+		_view("Broadened main Storage network", "storage_network.png", Vector3(10.0, 1.7162851, 2.5), Vector3(10.0, 1.4, 8.0), 75.0),
+		_view("Medical Supply Anteroom and inner boundary", "medical_anteroom.png", Vector3(6.7, 1.7162851, -15.0), Vector3(6.7, 1.4, -19.7), 75.0),
+		_view("Kitchen route from Gallery B east", "kitchen_b_east.png", Vector3(17.3, 1.7162851, -6.8), Vector3(12.5, 1.4, -6.8), 75.0),
+		_view("Elongated Kitchen Service Room", "kitchen_service.png", Vector3(25.6, 1.7162851, -19.5), Vector3(26.75, 1.4, -24.7), 75.0),
+		_view("Enterable Workshop Service Room", "workshop_service.png", Vector3(-10.5, 1.7162851, 14.5), Vector3(-17.5, 1.4, 18.0), 75.0),
+		_view("Salvager first reveal from Workshop approach", "workshop_salvager_reveal.png", Vector3(4.0, 1.7162851, 18.8), Vector3(5.0, 1.4, 25.0), 75.0),
+		_view("Workshop-side blocked continuation", "workshop_blocked.png", Vector3(-11.5, 1.7162851, 23.8), Vector3(-11.5, 1.3, 26.0), 75.0),
+		_view("Storage-to-Deeper sightline interruption", "deeper_storage_sightline.png", Vector3(24.0, 1.7162851, 2.5), Vector3(34.0, 1.4, 1.5), 75.0),
+		_view("Clean wide-to-narrow dogleg", "deeper_dogleg.png", Vector3(33.8, 1.7162851, 1.5), Vector3(39.0, 1.4, -5.5), 75.0),
+		_view("Narrowed Incinerator installation", "incinerator.png", Vector3(31.5, 1.7162851, 7.5), Vector3(31.5, 1.4, 14.75), 75.0),
+		_view("Open Bunker Ops Transfer Landing", "bunker_ops_landing.png", Vector3(59.0, 1.7162851, -5.5), Vector3(61.5, 1.4, -10.5), 75.0),
+		_view("Personnel-sized deeper-settlement door", "bunker_ops_door.png", Vector3(61.5, 1.7162851, -6.8), Vector3(65.0, 1.4, -6.8), 75.0),
+		_view("Closed Receiving ceiling-height transition", "receiving_ceiling_transition.png", Vector3(-24.0, 1.7162851, 0.0), Vector3(-27.0, 3.8, 0.0), 75.0),
 	]
 
 
@@ -60,23 +67,68 @@ func normalize_capture_image(image: Image) -> Image:
 	return image
 
 
-func make_contact_sheets(captures: Array[Image]) -> Array:
-	if captures.size() != get_view_records().size():
+func get_contact_tile_layout() -> Dictionary:
+	return {
+		"tile_size": CONTACT_TILE_SIZE,
+		"image_size": CONTACT_IMAGE_SIZE,
+		"caption_origin_y": CONTACT_IMAGE_SIZE.y,
+		"caption_height": CONTACT_CAPTION_HEIGHT,
+	}
+
+
+func fit_capture_into_contact_image(source_size: Vector2i) -> Rect2i:
+	if source_size.x <= 0 or source_size.y <= 0:
+		return Rect2i()
+	var scale := minf(float(CONTACT_IMAGE_SIZE.x) / float(source_size.x), float(CONTACT_IMAGE_SIZE.y) / float(source_size.y))
+	var fitted := Vector2i(roundi(float(source_size.x) * scale), roundi(float(source_size.y) * scale))
+	var offset := (CONTACT_IMAGE_SIZE - fitted) / 2
+	return Rect2i(offset, fitted)
+
+
+func make_contact_sheets(captures: Array[Image], records: Array) -> Array:
+	if captures.size() != records.size():
 		return []
-	var sheets: Array = []
+	var sheets: Array[Image] = []
 	var per_sheet := CONTACT_COLUMNS * CONTACT_ROWS
 	for sheet_index: int in ceili(float(captures.size()) / float(per_sheet)):
-		var sheet := Image.create_empty(1920, 1080, false, Image.FORMAT_RGBA8)
-		sheet.fill(Color(0.025, 0.025, 0.025, 1.0))
+		var viewport := SubViewport.new()
+		viewport.size = CAPTURE_SIZE
+		viewport.transparent_bg = false
+		viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
+		add_child(viewport)
+		var background := ColorRect.new()
+		background.color = Color(0.025, 0.025, 0.025, 1.0)
+		background.size = Vector2(CAPTURE_SIZE)
+		viewport.add_child(background)
 		for local_index: int in per_sheet:
 			var capture_index := sheet_index * per_sheet + local_index
 			if capture_index >= captures.size():
 				break
-			var tile := captures[capture_index].duplicate()
-			tile.resize(CONTACT_TILE_SIZE.x, CONTACT_TILE_SIZE.y, Image.INTERPOLATE_LANCZOS)
-			var tile_position := Vector2i(local_index % CONTACT_COLUMNS, local_index / CONTACT_COLUMNS) * CONTACT_TILE_SIZE
-			sheet.blit_rect(tile, Rect2i(Vector2i.ZERO, CONTACT_TILE_SIZE), tile_position)
+			var tile_origin := Vector2i(local_index % CONTACT_COLUMNS, local_index / CONTACT_COLUMNS) * CONTACT_TILE_SIZE
+			var image_rect := fit_capture_into_contact_image((captures[capture_index] as Image).get_size())
+			var texture_rect := TextureRect.new()
+			texture_rect.position = Vector2(tile_origin + image_rect.position)
+			texture_rect.size = Vector2(image_rect.size)
+			texture_rect.texture = ImageTexture.create_from_image(captures[capture_index] as Image)
+			texture_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+			texture_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+			viewport.add_child(texture_rect)
+			var caption := Label.new()
+			caption.position = Vector2(tile_origin + Vector2i(8, CONTACT_IMAGE_SIZE.y))
+			caption.size = Vector2(CONTACT_TILE_SIZE.x - 16, CONTACT_CAPTION_HEIGHT)
+			caption.text = "%02d  %s" % [capture_index + 1, String((records[capture_index] as Dictionary)["label"])]
+			caption.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+			caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			caption.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+			caption.add_theme_color_override("font_color", Color(0.92, 0.94, 0.96, 1.0))
+			caption.add_theme_font_size_override("font_size", 18)
+			viewport.add_child(caption)
+		await get_tree().process_frame
+		await RenderingServer.frame_post_draw
+		var sheet := viewport.get_texture().get_image()
 		sheets.append(sheet)
+		viewport.queue_free()
+		await get_tree().process_frame
 	return sheets
 
 
@@ -125,7 +177,7 @@ func _capture_all() -> void:
 		print("CAPTURE view=%s path=%s position=%s target=%s fov=%.1f ceiling_on=%s" % [record["label"], output_path, record["position"], record["target"], record["fov"], record["ceiling_on"]])
 	roof.visible = true
 	orientation_aids.visible = true
-	var sheets := make_contact_sheets(captures)
+	var sheets := await make_contact_sheets(captures, records)
 	for index: int in sheets.size():
 		var sheet_path := absolute_directory.path_join("contact_sheet_%02d.png" % (index + 1))
 		var sheet_error := (sheets[index] as Image).save_png(sheet_path)
@@ -156,9 +208,12 @@ func _save_manifest(absolute_directory: String, records: Array) -> Error:
 	var manifest := {
 		"scene": "res://greybox/logistics_wing/wing_capture.tscn",
 		"review_scene": "res://greybox/logistics_wing/wing_review.tscn",
-		"layout_revision": "logistics-wing-greybox-v1",
+		"layout_revision": "logistics-wing-greybox-round01-revision-01",
 		"renderer": RenderingServer.get_current_rendering_method(),
 		"capture_size": {"x": CAPTURE_SIZE.x, "y": CAPTURE_SIZE.y},
+		"contact_tile_size": {"x": CONTACT_TILE_SIZE.x, "y": CONTACT_TILE_SIZE.y},
+		"contact_image_size": {"x": CONTACT_IMAGE_SIZE.x, "y": CONTACT_IMAGE_SIZE.y},
+		"contact_caption_height": CONTACT_CAPTION_HEIGHT,
 		"views": serialized_views,
 	}
 	var file := FileAccess.open(absolute_directory.path_join("capture_manifest.json"), FileAccess.WRITE)

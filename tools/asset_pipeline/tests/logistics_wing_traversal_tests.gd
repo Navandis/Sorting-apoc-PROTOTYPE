@@ -6,12 +6,16 @@ const TRAVERSAL_SCRIPT_PATH := "res://greybox/logistics_wing/wing_traversal.gd"
 const REQUIRED_ROUTES := [
 	"receiving_to_sorting",
 	"receiving_to_storage_near",
-	"sorting_to_medical",
-	"sorting_to_kitchen",
-	"sorting_to_workshop",
+	"sorting_to_shared_ab_junction",
+	"shared_junction_to_gallery_a_east",
+	"shared_junction_to_gallery_b_west",
+	"shared_junction_to_medical_anteroom",
+	"gallery_b_to_kitchen_service",
+	"sorting_to_workshop_service",
 	"sorting_to_salvager",
 	"sorting_to_incinerator",
 	"sorting_to_bunker_ops",
+	"deeper_to_ops_landing",
 	"sorting_to_blocked_continuation",
 	"sorting_to_deeper_closure",
 	"gallery_c_to_d_secondary",
@@ -25,12 +29,15 @@ const REQUIRED_ROUTES := [
 
 const REQUIRED_BOUNDARIES := [
 	"freight_barrier",
-	"medical_frontage",
-	"kitchen_frontage",
-	"workshop_frontage",
+	"medical_inner_boundary",
+	"kitchen_inner_boundary",
+	"workshop_inner_boundary",
 	"blocked_continuation",
-	"bunker_ops_frontage",
-	"deeper_settlement_closure",
+	"bunker_ops_inner_boundary",
+	"deeper_settlement_door",
+	"kitchen_turn_return",
+	"dogleg_return",
+	"shared_junction_return",
 ]
 
 var _failures := 0
@@ -58,7 +65,7 @@ func _test_traversal_scene_contract() -> void:
 	runner.set_script(script)
 	_check(not runner.call("should_run", PackedStringArray()), "traversal stays idle without explicit flag")
 	_check(runner.call("should_run", PackedStringArray(["--traversal-evidence"])), "traversal flag explicitly enables evidence run")
-	_check(String(runner.call("get_output_path")) == "res://reports/logistics_wing/greybox/traversal_results.json", "traversal output path is stable")
+	_check(String(runner.call("get_output_path")) == "res://reports/logistics_wing/greybox/revision_01/traversal_results.json", "revision traversal output preserves first-pass evidence")
 	runner.free()
 
 	if ResourceLoader.exists(TRAVERSAL_SCENE_PATH):
