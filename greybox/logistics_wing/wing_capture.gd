@@ -1,6 +1,6 @@
 extends Node3D
 
-const OUTPUT_DIRECTORY := "res://reports/logistics_wing/greybox/revision_01"
+const OUTPUT_DIRECTORY := "res://reports/logistics_wing/greybox/revision_02"
 const CAPTURE_SIZE := Vector2i(1920, 1080)
 const CONTACT_TILE_SIZE := Vector2i(480, 360)
 const CONTACT_IMAGE_SIZE := Vector2i(480, 270)
@@ -25,39 +25,63 @@ func get_output_directory() -> String:
 
 func get_view_records() -> Array:
 	return [
-		_view("Full-wing debug overview", "overview_debug_topdown.png", Vector3(10, 70, 0), Vector3(10, 0, 0), 55.0, false, true),
-		_view("Receiving flanked freight aperture and inset cage", "receiving_freight_aperture.png", Vector3(-32.5, 1.7162851, 0.0), Vector3(-42.0, 1.2, 0.0), 75.0),
-		_view("Expanded Receiving Apron", "receiving_apron.png", Vector3(-28.5, 1.7162851, 3.2), Vector3(-37.5, 1.4, -2.0), 75.0),
-		_view("Receiving to Backlog half-frontage threshold", "receiving_backlog_threshold.png", Vector3(-32.5, 1.7162851, 2.0), Vector3(-23.0, 1.4, 0.0), 75.0),
-		_view("Elongated shallow Expedition Dispatch", "dispatch.png", Vector3(-32.0, 1.7162851, -4.0), Vector3(-31.75, 1.0, -7.8), 75.0),
-		_view("Backlog to Sorting threshold", "backlog_sorting_threshold.png", Vector3(-23.0, 1.7162851, 0.0), Vector3(-10.0, 1.4, -1.0), 75.0),
+		_view("Full-wing debug overview", "overview_debug_topdown.png", Vector3(10, 74, 0), Vector3(10, 0, 0), 55.0, false, true),
+		_view("Receiving flanked freight aperture and unchanged inset cage", "receiving_freight_aperture.png", Vector3(-33.0, 1.7162851, 0.0), Vector3(-42.0, 1.2, 0.0), 75.0),
+		_view("Shortened usable Receiving Apron", "receiving_apron.png", Vector3(-29.8, 1.7162851, 3.2), Vector3(-37.2, 1.4, -2.0), 75.0),
+		_view("Narrow Receiving to Backlog threshold", "receiving_backlog_threshold.png", Vector3(-34.0, 1.7162851, 2.0), Vector3(-24.0, 1.4, 0.0), 75.0),
+		_view("Framed shallow Expedition Dispatch annex", "dispatch_annex.png", Vector3(-33.0, 1.7162851, -3.8), Vector3(-33.25, 1.0, -7.8), 75.0),
+		_view("Backlog to Sorting turn sequence - approach", "backlog_sorting_approach.png", Vector3(-27.0, 1.7162851, 0.4), Vector3(-20.0, 1.4, -0.5), 75.0),
+		_view("Backlog to Sorting turn sequence - threshold", "backlog_sorting_threshold.png", Vector3(-23.0, 1.7162851, -0.4), Vector3(-17.0, 1.4, -1.0), 75.0),
+		_view("Backlog to Sorting turn sequence - departure", "backlog_sorting_departure.png", Vector3(-19.0, 1.7162851, -1.0), Vector3(-24.0, 1.4, 0.2), 75.0),
 		_view("Deeper Sorting work pocket and table", "sorting_table.png", Vector3(-10.0, 1.7162851, -4.4), Vector3(-10.0, 1.15, -6.18), 75.0),
-		_view("Sorting partial oblique Receiving awareness", "sorting_receiving_partial.png", Vector3(-10.0, 1.7162851, -4.4), Vector3(-22.0, 1.4, 0.0), 75.0),
-		_view("Sorting offset threshold toward Storage", "sorting_storage_offset.png", Vector3(-10.0, 1.7162851, -4.4), Vector3(-1.0, 1.4, 3.0), 75.0),
-		_view("A and B openings onto shared junction", "storage_ab_junction.png", Vector3(6.7, 1.7162851, -1.8), Vector3(6.7, 1.4, -4.2), 75.0),
-		_view("C to D secondary link and southern forms", "storage_cd_south.png", Vector3(9.0, 1.7162851, 10.25), Vector3(6.0, 1.4, 10.25), 75.0),
-		_view("Broadened main Storage network", "storage_network.png", Vector3(10.0, 1.7162851, 2.5), Vector3(10.0, 1.4, 8.0), 75.0),
-		_view("Medical Supply Anteroom and inner boundary", "medical_anteroom.png", Vector3(6.7, 1.7162851, -15.0), Vector3(6.7, 1.4, -19.7), 75.0),
-		_view("Kitchen route from Gallery B east", "kitchen_b_east.png", Vector3(17.3, 1.7162851, -6.8), Vector3(12.5, 1.4, -6.8), 75.0),
-		_view("Elongated Kitchen Service Room", "kitchen_service.png", Vector3(25.6, 1.7162851, -19.5), Vector3(26.75, 1.4, -24.7), 75.0),
-		_view("Enterable Workshop Service Room", "workshop_service.png", Vector3(-10.5, 1.7162851, 14.5), Vector3(-17.5, 1.4, 18.0), 75.0),
-		_view("Salvager first reveal from Workshop approach", "workshop_salvager_reveal.png", Vector3(4.0, 1.7162851, 18.8), Vector3(5.0, 1.4, 25.0), 75.0),
-		_view("Workshop-side blocked continuation", "workshop_blocked.png", Vector3(-11.5, 1.7162851, 23.8), Vector3(-11.5, 1.3, 26.0), 75.0),
-		_view("Storage-to-Deeper sightline interruption", "deeper_storage_sightline.png", Vector3(24.0, 1.7162851, 2.5), Vector3(34.0, 1.4, 1.5), 75.0),
-		_view("Clean wide-to-narrow dogleg", "deeper_dogleg.png", Vector3(33.8, 1.7162851, 1.5), Vector3(39.0, 1.4, -5.5), 75.0),
+		_view("Sorting desk partial freight-aperture awareness", "sorting_desk_freight_aperture.png", Vector3(-10.0, 1.7162851, -4.4), Vector3(-38.82, 1.2, 2.2), 75.0),
+		_view("Sorting turn toward Storage", "sorting_storage_turn.png", Vector3(-10.0, 1.7162851, -4.4), Vector3(-1.0, 1.4, 3.0), 75.0),
+		_view("North-shifted A and B openings onto shared junction", "storage_ab_junction.png", Vector3(6.75, 1.7162851, -5.5), Vector3(6.75, 1.4, -9.0), 75.0),
+		_view("Gallery A north-west elongation", "gallery_a_northwest.png", Vector3(0.0, 1.7162851, -11.0), Vector3(-2.0, 1.4, -15.5), 75.0),
+		_view("C to D sole secondary link and irregular southern solid", "storage_cd_south.png", Vector3(9.0, 1.7162851, 10.25), Vector3(5.8, 1.4, 10.25), 75.0),
+		_view("Broadened main Storage network", "storage_network.png", Vector3(10.0, 1.7162851, 3.0), Vector3(10.0, 1.4, 10.0), 75.0),
+		_view("Gallery E forty-percent southern projection", "gallery_e_projection.png", Vector3(22.0, 1.7162851, 13.0), Vector3(22.0, 1.4, 20.5), 75.0),
+		_view("Protected Medical approach beyond A and B", "medical_approach.png", Vector3(6.75, 1.7162851, -10.5), Vector3(6.9, 1.4, -15.5), 75.0),
+		_view("Medical Supply Anteroom and inner boundary", "medical_anteroom.png", Vector3(6.9, 1.7162851, -18.0), Vector3(6.9, 1.4, -22.7), 75.0),
+		_view("Kitchen route leaves Gallery B east", "kitchen_b_east.png", Vector3(15.0, 1.7162851, -6.8), Vector3(22.0, 1.4, -6.8), 75.0),
+		_view("Kitchen east-then-north turn", "kitchen_turn.png", Vector3(21.5, 1.7162851, -6.8), Vector3(23.0, 1.4, -12.5), 75.0),
+		_view("Elongated Kitchen Service Room", "kitchen_service.png", Vector3(22.6, 1.7162851, -19.5), Vector3(24.25, 1.4, -24.7), 75.0),
+		_view("Lengthened Workshop approach", "workshop_approach.png", Vector3(-10.0, 1.7162851, 9.5), Vector3(-10.0, 1.4, 18.0), 75.0),
+		_view("Workshop Service Room with solid south perimeter", "workshop_service.png", Vector3(-12.0, 1.7162851, 18.0), Vector3(-12.0, 1.4, 24.8), 75.0),
+		_view("Salvager reveal from Workshop-room approach", "workshop_salvager_approach_reveal.png", Vector3(-8.0, 1.7162851, 20.5), Vector3(7.0, 1.4, 25.0), 75.0),
+		_view("Salvager retained local operational view", "salvager_local.png", Vector3(4.0, 1.7162851, 22.0), Vector3(5.0, 1.4, 26.5), 75.0),
+		_view("Storage-to-Deeper sightline interruption", "deeper_storage_sightline.png", Vector3(24.0, 1.7162851, 2.5), Vector3(40.0, 1.4, 1.5), 75.0),
+		_view("Rebalanced wide-to-narrow dogleg", "deeper_dogleg.png", Vector3(40.0, 1.7162851, 1.5), Vector3(46.0, 1.4, -5.5), 75.0),
 		_view("Narrowed Incinerator installation", "incinerator.png", Vector3(31.5, 1.7162851, 7.5), Vector3(31.5, 1.4, 14.75), 75.0),
-		_view("Open Bunker Ops Transfer Landing", "bunker_ops_landing.png", Vector3(59.0, 1.7162851, -5.5), Vector3(61.5, 1.4, -10.5), 75.0),
-		_view("Personnel-sized deeper-settlement door", "bunker_ops_door.png", Vector3(61.5, 1.7162851, -6.8), Vector3(65.0, 1.4, -6.8), 75.0),
-		_view("Closed Receiving ceiling-height transition", "receiving_ceiling_transition.png", Vector3(-24.0, 1.7162851, 0.0), Vector3(-27.0, 3.8, 0.0), 75.0),
+		_view("Open Bunker Ops Transfer Landing", "bunker_ops_landing.png", Vector3(60.0, 1.7162851, -5.5), Vector3(62.5, 1.4, -10.5), 75.0),
+		_view("Personnel-sized deeper-settlement door", "bunker_ops_door.png", Vector3(62.5, 1.7162851, -6.8), Vector3(66.0, 1.4, -6.8), 75.0),
+		_view("Ceiling transition sequence - Receiving approach", "ceiling_transition_approach.png", Vector3(-33.0, 1.7162851, 0.0), Vector3(-28.65, 3.8, 0.0), 75.0),
+		_view("Ceiling transition sequence - threshold", "ceiling_transition_threshold.png", Vector3(-29.7, 1.7162851, 0.0), Vector3(-28.65, 3.8, 0.0), 75.0),
+		_view("Ceiling transition sequence - Backlog departure", "ceiling_transition_departure.png", Vector3(-26.8, 1.7162851, 0.0), Vector3(-28.65, 3.8, 0.0), 75.0),
 	]
+
+
+func get_manifest_static_fields() -> Dictionary:
+	return {
+		"layout_revision": "logistics-wing-greybox-round02-revision-02",
+		"source_hash_paths": PackedStringArray([
+			"res://greybox/logistics_wing/build_wing_geometry.gd",
+			"res://greybox/logistics_wing/wing_geometry.tscn",
+			"res://greybox/logistics_wing/wing_capture.gd",
+			"res://greybox/logistics_wing/wing_traversal.gd",
+			"res://greybox/logistics_wing/wing_review.tscn",
+		]),
+		"final_commit_relation": "Evidence revision is the Git HEAD used for capture; the final validation records whether the handoff commit is identical or a documentation-only descendant.",
+	}
 
 
 func get_capture_basenames() -> Array:
 	var basenames: Array = []
 	for record: Dictionary in get_view_records():
 		basenames.append(String(record["basename"]))
-	basenames.append("contact_sheet_01.png")
-	basenames.append("contact_sheet_02.png")
+	var sheet_count := ceili(float(get_view_records().size()) / float(CONTACT_COLUMNS * CONTACT_ROWS))
+	for sheet_index: int in sheet_count:
+		basenames.append("contact_sheet_%02d.png" % (sheet_index + 1))
 	return basenames
 
 
@@ -208,7 +232,11 @@ func _save_manifest(absolute_directory: String, records: Array) -> Error:
 	var manifest := {
 		"scene": "res://greybox/logistics_wing/wing_capture.tscn",
 		"review_scene": "res://greybox/logistics_wing/wing_review.tscn",
-		"layout_revision": "logistics-wing-greybox-round01-revision-01",
+		"layout_revision": "logistics-wing-greybox-round02-revision-02",
+		"code_revision": _git_revision(),
+		"evidence_revision": _git_revision(),
+		"final_commit_relation": String(get_manifest_static_fields()["final_commit_relation"]),
+		"source_hashes_sha256": _source_hashes(),
 		"renderer": RenderingServer.get_current_rendering_method(),
 		"capture_size": {"x": CAPTURE_SIZE.x, "y": CAPTURE_SIZE.y},
 		"contact_tile_size": {"x": CONTACT_TILE_SIZE.x, "y": CONTACT_TILE_SIZE.y},
@@ -238,6 +266,21 @@ func _view(label: String, basename: String, position: Vector3, target: Vector3, 
 
 func _vector(value: Vector3) -> Dictionary:
 	return {"x": value.x, "y": value.y, "z": value.z}
+
+
+func _git_revision() -> String:
+	var output: Array = []
+	var exit_code := OS.execute("git", PackedStringArray(["rev-parse", "HEAD"]), output, true)
+	if exit_code != 0 or output.is_empty():
+		return "unavailable"
+	return String(output[0]).strip_edges()
+
+
+func _source_hashes() -> Dictionary:
+	var hashes := {}
+	for resource_path: String in get_manifest_static_fields()["source_hash_paths"] as PackedStringArray:
+		hashes[resource_path] = FileAccess.get_sha256(ProjectSettings.globalize_path(resource_path))
+	return hashes
 
 
 func _fail_capture(message: String) -> void:

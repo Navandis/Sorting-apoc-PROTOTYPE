@@ -1,6 +1,6 @@
 extends Node3D
 
-const OUTPUT_PATH := "res://reports/logistics_wing/greybox/revision_01/traversal_results.json"
+const OUTPUT_PATH := "res://reports/logistics_wing/greybox/revision_02/traversal_results.json"
 const RUN_FLAG := "--traversal-evidence"
 const ARRIVAL_TOLERANCE := 0.45
 const PHYSICS_TICKS_PER_SECOND := 60.0
@@ -23,46 +23,54 @@ func get_output_path() -> String:
 func get_route_records() -> Array:
 	return [
 		_route("receiving_to_sorting", "ReceivingApron", "SortingWork", [
-			Vector3(-26.0, 0.05, 0.0), Vector3(-20.0, 0.05, 0.0),
-			Vector3(-14.0, 0.05, 0.0), Vector3(-10.0, 0.05, -4.4),
+			Vector3(-29.0, 0.05, 0.0), Vector3(-26.0, 0.05, 0.0),
+			Vector3(-22.0, 0.05, -0.4), Vector3(-18.0, 0.05, -0.4),
+			Vector3(-12.0, 0.05, -1.0), Vector3(-10.0, 0.05, -4.4),
+		]),
+		_route("receiving_to_dispatch", "ReceivingApron", "Dispatch", [
+			Vector3(-33.0, 0.05, -4.2), Vector3(-33.0, 0.05, -5.8),
+			Vector3(-33.0, 0.05, -6.75),
 		]),
 		_route("receiving_to_storage_near", "ReceivingApron", "StorageNear", [
-			Vector3(-26.0, 0.05, 0.0), Vector3(-20.0, 0.05, 0.0),
-			Vector3(-14.0, 0.05, 0.0), Vector3(-10.0, 0.05, 2.5),
+			Vector3(-29.0, 0.05, 0.0), Vector3(-26.0, 0.05, 0.0),
+			Vector3(-22.0, 0.05, -0.4), Vector3(-18.0, 0.05, -0.4),
+			Vector3(-12.0, 0.05, 2.5), Vector3(-10.0, 0.05, 2.5),
 			Vector3(-4.0, 0.05, 2.7), Vector3(-2.0, 0.05, 2.7),
 		]),
 		_route("sorting_to_shared_ab_junction", "SortingWork", "SharedABJunction", [
 			Vector3(-10.0, 0.05, 2.5), Vector3(-4.0, 0.05, 2.7),
-			Vector3(3.0, 0.05, 1.0), Vector3(6.7, 0.05, 0.0),
-			Vector3(6.7, 0.05, -3.6),
+			Vector3(3.0, 0.05, 1.0), Vector3(6.75, 0.05, 0.0),
+			Vector3(6.75, 0.05, -5.0), Vector3(6.75, 0.05, -8.2),
 		]),
 		_route("shared_junction_to_gallery_a_east", "SharedABJunction", "GalleryA", [
-			Vector3(4.0, 0.05, -3.6), Vector3(1.5, 0.05, -4.0),
-			Vector3(1.5, 0.05, -6.0),
+			Vector3(4.0, 0.05, -8.2), Vector3(1.5, 0.05, -8.0),
+			Vector3(0.0, 0.05, -7.0),
 		]),
 		_route("shared_junction_to_gallery_b_west", "SharedABJunction", "GalleryB", [
-			Vector3(9.5, 0.05, -3.6), Vector3(12.0, 0.05, -5.0),
+			Vector3(9.5, 0.05, -8.2), Vector3(12.0, 0.05, -7.0),
+			Vector3(12.0, 0.05, -5.0),
 		]),
 		_route("shared_junction_to_medical_anteroom", "SharedABJunction", "MedicalAnteroom", [
-			Vector3(6.7, 0.05, -6.0), Vector3(6.7, 0.05, -12.0),
-			Vector3(6.7, 0.05, -17.0),
+			Vector3(6.75, 0.05, -11.5), Vector3(7.0, 0.05, -14.5),
+			Vector3(6.9, 0.05, -17.0), Vector3(6.9, 0.05, -19.5),
 		]),
 		_route("gallery_b_to_kitchen_service", "GalleryB", "KitchenService", [
 			Vector3(15.0, 0.05, -6.8), Vector3(18.0, 0.05, -6.8),
-			Vector3(19.5, 0.05, -9.0), Vector3(19.5, 0.05, -12.5),
-			Vector3(25.5, 0.05, -12.5), Vector3(25.5, 0.05, -16.5),
-			Vector3(25.6, 0.05, -19.0), Vector3(26.5, 0.05, -21.0),
+			Vector3(22.5, 0.05, -6.8), Vector3(22.6, 0.05, -10.0),
+			Vector3(22.6, 0.05, -15.5), Vector3(22.6, 0.05, -19.0),
+			Vector3(24.25, 0.05, -21.0),
 		]),
 		_route("sorting_to_workshop_service", "SortingWork", "WorkshopService", [
 			Vector3(-10.0, 0.05, 3.0), Vector3(-10.0, 0.05, 8.0),
-			Vector3(-10.0, 0.05, 12.0), Vector3(-11.0, 0.05, 15.0),
-			Vector3(-11.0, 0.05, 17.0),
+			Vector3(-10.0, 0.05, 13.0), Vector3(-11.0, 0.05, 16.0),
+			Vector3(-11.0, 0.05, 19.0),
 		]),
 		_route("sorting_to_salvager", "SortingWork", "SalvagerFront", [
 			Vector3(-10.0, 0.05, 3.0), Vector3(-10.0, 0.05, 8.0),
-			Vector3(-10.0, 0.05, 15.0), Vector3(-7.0, 0.05, 19.5),
-			Vector3(0.0, 0.05, 20.0), Vector3(3.0, 0.05, 22.5),
-			Vector3(5.0, 0.05, 23.0),
+			Vector3(-10.0, 0.05, 16.0), Vector3(-7.0, 0.05, 21.5),
+			Vector3(0.0, 0.05, 22.0), Vector3(3.0, 0.05, 22.5),
+			Vector3(3.0, 0.05, 24.0),
+			Vector3(5.0, 0.05, 24.5),
 		]),
 		_route("sorting_to_incinerator", "SortingWork", "IncineratorFront", [
 			Vector3(-10.0, 0.05, 2.5), Vector3(-2.0, 0.05, 2.7),
@@ -73,45 +81,40 @@ func get_route_records() -> Array:
 		_route("sorting_to_bunker_ops", "SortingWork", "BunkerOpsSafeSide", [
 			Vector3(-10.0, 0.05, 2.5), Vector3(-2.0, 0.05, 2.7),
 			Vector3(10.0, 0.05, 2.0), Vector3(24.0, 0.05, 2.0),
-			Vector3(28.0, 0.05, 2.0), Vector3(33.8, 0.05, 2.0),
-			Vector3(34.0, 0.05, -5.5), Vector3(45.0, 0.05, -5.5),
-			Vector3(57.0, 0.05, -5.5), Vector3(60.0, 0.05, -5.5),
-			Vector3(61.5, 0.05, -8.5),
+			Vector3(28.0, 0.05, 2.0), Vector3(40.8, 0.05, 2.0),
+			Vector3(41.0, 0.05, -5.5), Vector3(48.0, 0.05, -5.5),
+			Vector3(58.0, 0.05, -5.5), Vector3(61.0, 0.05, -5.5),
+			Vector3(62.5, 0.05, -8.5),
 		]),
 		_route("deeper_to_ops_landing", "IncineratorFront", "BunkerOpsLanding", [
 			Vector3(31.5, 0.05, 7.0), Vector3(31.5, 0.05, 4.8),
-			Vector3(33.8, 0.05, 2.0), Vector3(34.0, 0.05, -5.5),
-			Vector3(45.0, 0.05, -5.5), Vector3(57.0, 0.05, -5.5),
-			Vector3(61.5, 0.05, -6.0),
-		]),
-		_route("sorting_to_blocked_continuation", "SortingWork", "BlockedContinuationSafeSide", [
-			Vector3(-10.0, 0.05, 3.0), Vector3(-10.0, 0.05, 8.0),
-			Vector3(-10.0, 0.05, 15.0), Vector3(-11.5, 0.05, 22.5),
-			Vector3(-11.5, 0.05, 24.2),
+			Vector3(40.8, 0.05, 2.0), Vector3(41.0, 0.05, -5.5),
+			Vector3(48.0, 0.05, -5.5), Vector3(58.0, 0.05, -5.5),
+			Vector3(62.5, 0.05, -6.0),
 		]),
 		_route("sorting_to_deeper_closure", "SortingWork", "DeeperClosureSafeSide", [
 			Vector3(-10.0, 0.05, 2.5), Vector3(-2.0, 0.05, 2.7),
 			Vector3(10.0, 0.05, 2.0), Vector3(24.0, 0.05, 2.0),
-			Vector3(28.0, 0.05, 2.0), Vector3(33.8, 0.05, 2.0),
-			Vector3(34.0, 0.05, -5.5), Vector3(45.0, 0.05, -5.5),
-			Vector3(57.0, 0.05, -5.5), Vector3(63.5, 0.05, -6.8),
+			Vector3(28.0, 0.05, 2.0), Vector3(40.8, 0.05, 2.0),
+			Vector3(41.0, 0.05, -5.5), Vector3(48.0, 0.05, -5.5),
+			Vector3(58.0, 0.05, -5.5), Vector3(64.5, 0.05, -6.8),
 		]),
 		_route("gallery_c_to_d_secondary", "GalleryC", "GalleryD", [
 			Vector3(4.5, 0.05, 10.25), Vector3(7.0, 0.05, 10.25),
-			Vector3(8.0, 0.05, 9.0), Vector3(10.0, 0.05, 7.0),
+			Vector3(8.0, 0.05, 10.0), Vector3(10.0, 0.05, 9.0),
 		]),
 		_route("gallery_c_to_d_via_spine", "GalleryC", "GalleryD", [
 			Vector3(2.0, 0.05, 6.0), Vector3(2.0, 0.05, 5.0),
 			Vector3(2.0, 0.05, 3.0), Vector3(10.0, 0.05, 3.0),
-			Vector3(10.0, 0.05, 5.0), Vector3(10.0, 0.05, 7.0),
+			Vector3(10.0, 0.05, 6.0), Vector3(10.0, 0.05, 9.0),
 		]),
 		_route("storage_near_to_gallery_a", "StorageNear", "GalleryA", [
 			Vector3(1.5, 0.05, 2.7), Vector3(1.5, 0.05, 0.0),
-			Vector3(1.5, 0.05, -4.0), Vector3(1.5, 0.05, -6.0),
+			Vector3(1.5, 0.05, -6.0), Vector3(0.0, 0.05, -7.0),
 		]),
 		_route("storage_near_to_gallery_b", "StorageNear", "GalleryB", [
-			Vector3(3.0, 0.05, 1.0), Vector3(6.7, 0.05, 0.0),
-			Vector3(6.7, 0.05, -3.6), Vector3(9.5, 0.05, -3.6),
+			Vector3(3.0, 0.05, 1.0), Vector3(6.75, 0.05, 0.0),
+			Vector3(6.75, 0.05, -8.2), Vector3(9.5, 0.05, -8.2),
 			Vector3(12.0, 0.05, -5.0),
 		]),
 		_route("storage_near_to_gallery_c", "StorageNear", "GalleryC", [
@@ -120,12 +123,12 @@ func get_route_records() -> Array:
 		]),
 		_route("storage_near_to_gallery_d", "StorageNear", "GalleryD", [
 			Vector3(5.0, 0.05, 2.7), Vector3(10.0, 0.05, 3.0),
-			Vector3(10.0, 0.05, 5.0), Vector3(10.0, 0.05, 7.0),
+			Vector3(10.0, 0.05, 6.0), Vector3(10.0, 0.05, 9.0),
 		]),
 		_route("storage_near_to_gallery_e", "StorageNear", "GalleryE", [
 			Vector3(5.0, 0.05, 2.7), Vector3(13.0, 0.05, 2.7),
-			Vector3(21.0, 0.05, 3.0), Vector3(21.0, 0.05, 5.0),
-			Vector3(21.0, 0.05, 8.0),
+			Vector3(21.0, 0.05, 3.0), Vector3(21.0, 0.05, 6.0),
+			Vector3(21.0, 0.05, 10.0),
 		]),
 	]
 
@@ -133,15 +136,15 @@ func get_route_records() -> Array:
 func get_boundary_records() -> Array:
 	return [
 		_boundary("freight_barrier", Vector3(-37.0, 0.05, 0.0), Vector3(-1, 0, 0), "x", "min", -38.75),
-		_boundary("medical_inner_boundary", Vector3(6.7, 0.05, -18.0), Vector3(0, 0, -1), "z", "min", -19.70),
-		_boundary("kitchen_inner_boundary", Vector3(26.5, 0.05, -22.0), Vector3(0, 0, -1), "z", "min", -24.70),
-		_boundary("workshop_inner_boundary", Vector3(-15.5, 0.05, 18.0), Vector3(-1, 0, 0), "x", "min", -17.70),
-		_boundary("blocked_continuation", Vector3(-11.5, 0.05, 24.2), Vector3(0, 0, 1), "z", "max", 25.45),
-		_boundary("bunker_ops_inner_boundary", Vector3(61.5, 0.05, -8.5), Vector3(0, 0, -1), "z", "min", -10.70),
-		_boundary("deeper_settlement_door", Vector3(63.5, 0.05, -6.8), Vector3(1, 0, 0), "x", "max", 64.70),
-		_boundary("kitchen_turn_return", Vector3(22.8, 0.05, -12.2), Vector3(0, 0, 1), "z", "max", -11.45),
-		_boundary("dogleg_return", Vector3(35.0, 0.05, -2.0), Vector3(1, 0, 0), "x", "max", 35.70),
-		_boundary("shared_junction_return", Vector3(5.0, 0.05, -4.0), Vector3(0, 0, -1), "z", "min", -4.70),
+		_boundary("medical_inner_boundary", Vector3(6.9, 0.05, -21.0), Vector3(0, 0, -1), "z", "min", -22.70),
+		_boundary("kitchen_inner_boundary", Vector3(24.25, 0.05, -22.0), Vector3(0, 0, -1), "z", "min", -24.70),
+		_boundary("workshop_inner_boundary", Vector3(-15.5, 0.05, 20.0), Vector3(-1, 0, 0), "x", "min", -17.70),
+		_boundary("workshop_south_wall", Vector3(-11.5, 0.05, 23.5), Vector3(0, 0, 1), "z", "max", 24.70),
+		_boundary("bunker_ops_inner_boundary", Vector3(62.5, 0.05, -8.5), Vector3(0, 0, -1), "z", "min", -10.70),
+		_boundary("deeper_settlement_door", Vector3(64.5, 0.05, -6.8), Vector3(1, 0, 0), "x", "max", 65.70),
+		_boundary("kitchen_turn_return", Vector3(22.4, 0.05, -10.0), Vector3(-1, 0, 0), "x", "min", 20.90),
+		_boundary("dogleg_return", Vector3(42.0, 0.05, -2.0), Vector3(1, 0, 0), "x", "max", 42.70),
+		_boundary("shared_junction_return", Vector3(5.0, 0.05, -11.8), Vector3(0, 0, -1), "z", "min", -12.70),
 	]
 
 
@@ -178,7 +181,9 @@ func _run_evidence() -> void:
 		])
 
 	var payload := {
-		"layout_revision": "logistics-wing-greybox-round01-revision-01",
+		"layout_revision": "logistics-wing-greybox-round02-revision-02",
+		"code_revision": _git_revision(),
+		"deeper_authored_runs_m": {"pre_bend": 16.0, "post_bend": 16.0, "ratio": 1.0},
 		"evidence_kind": "normal-controller-input-replay",
 		"generated_utc": Time.get_datetime_string_from_system(true),
 		"review_scene": "res://greybox/logistics_wing/wing_review.tscn",
@@ -407,6 +412,14 @@ func _axis_value(value: Vector3, axis: String) -> float:
 
 func _vector(value: Vector3) -> Dictionary:
 	return {"x": value.x, "y": value.y, "z": value.z}
+
+
+func _git_revision() -> String:
+	var output: Array = []
+	var exit_code := OS.execute("git", PackedStringArray(["rev-parse", "HEAD"]), output, true)
+	if exit_code != 0 or output.is_empty():
+		return "unavailable"
+	return String(output[0]).strip_edges()
 
 
 func _fail_run(message: String) -> void:

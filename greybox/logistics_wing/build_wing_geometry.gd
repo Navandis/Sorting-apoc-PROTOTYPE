@@ -208,7 +208,7 @@ func _build_structural_walls() -> void:
 	_wall_x(spine, "SpineEastSouthMid", 12.0, 20.0, 7.0)
 	_wall_x(spine, "SpineEastSouthEast", 23.0, 26.0, 7.0)
 	_wall_z(spine, "SpineEastNorthReturn", 26.0, -1.5, 0.8)
-	_wall_z(spine, "SpineEastSouthReturn", 26.0, 3.8, 4.5)
+	_wall_z(spine, "SpineEastSouthReturn", 26.0, 3.8, 7.0)
 
 	var gallery_a := _district("GalleryA")
 	_wall_z(gallery_a, "GalleryAWest", -3.0, -13.0, -1.5)

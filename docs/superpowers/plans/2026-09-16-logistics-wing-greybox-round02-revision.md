@@ -71,11 +71,11 @@
 - Modify the three wing test suites as required by real behavior
 - Generate only `reports/logistics_wing/greybox/revision_02/*`
 
-- [ ] Retarget every affected route, boundary probe, label, light, camera, and anchor. Add Dispatch traversal and replace the stub route/probe with Workshop south-wall collision evidence.
-- [ ] Add ceiling approach/threshold/departure frames, Backlog/Sorting turn frames, the Sorting desk-to-lift proof, whole-wing views, and an honest Salvager reveal from the Workshop-room approach.
-- [ ] Extend the capture manifest with source revision, evidence revision, scene/script hashes, renderer, dimensions, camera positions/targets/FOV, and the final-commit relationship field. If evidence precedes the final documentation commit, state that relation explicitly rather than implying identical hashes.
-- [ ] Run capture and traversal contracts to GREEN, generate evidence, and inspect every full-resolution image and contact sheet. Any reproduced structural defect gets a failing contract before a builder change.
-- [ ] Commit coordinated evidence tooling as `test: coordinate round-two wing evidence`.
+- [x] Retarget every affected route, boundary probe, label, light, camera, and anchor. Add Dispatch traversal and replace the stub route/probe with Workshop south-wall collision evidence.
+- [x] Add ceiling approach/threshold/departure frames, Backlog/Sorting turn frames, the Sorting desk-to-lift proof, whole-wing views, and an honest Salvager reveal from the Workshop-room approach.
+- [x] Extend the capture manifest with source revision, evidence revision, scene/script hashes, renderer, dimensions, camera positions/targets/FOV, and the final-commit relationship field. If evidence precedes the final documentation commit, state that relation explicitly rather than implying identical hashes.
+- [x] Run capture and traversal contracts to GREEN, generate evidence, and inspect every full-resolution image and contact sheet. Any reproduced structural defect gets a failing contract before a builder change.
+- [x] Commit coordinated evidence tooling as `test: coordinate round-two wing evidence`.
 
 ## Task 6: Whole-wing verification and handoff
 

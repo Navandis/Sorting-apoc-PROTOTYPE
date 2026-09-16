@@ -181,6 +181,7 @@ func _test_complete_wing_geometry_contract() -> void:
 	_check_box(wing, "Districts/WorkshopService/WorkshopRoomSouth", Vector3(-12.0, 1.7, 25.0), Vector3(12.3, 3.4, 0.30), "Workshop ends at one continuous joined full-height south wall")
 	_check_box(wing, "Proxies/SalvagerMachine", Vector3(5.0, 1.45, 26.5), Vector3(5.4, 2.90, 3.0), "Salvager machine and enclosure move toward the revised approach")
 	_check_box(wing, "Districts/DeeperApproach/Floor_DeeperWide", Vector3(34.0, -0.15, 2.25), Vector3(16.0, 0.30, 4.5), "Deeper pre-bend authored run is sixteen metres")
+	_check_box(wing, "Districts/StorageSpine/SpineEastSouthReturn", Vector3(26.0, 1.7, 5.4), Vector3(0.30, 3.4, 3.2), "Storage-to-Deeper south return closes the full spine perimeter without an exterior seam")
 	_check_box(wing, "Districts/DeeperApproach/Floor_DeeperNarrow", Vector3(51.0, -0.15, -5.5), Vector3(16.0, 0.30, 3.0), "Deeper post-bend authored run is sixteen metres")
 	_check_box(wing, "Districts/Incinerator/Floor_IncineratorPocket", Vector3(31.5, -0.15, 13.5), Vector3(7.0, 0.30, 7.0), "Incinerator pocket is approximately thirty percent narrower")
 	_check_box(wing, "Boundaries/DeeperSettlementDoor", Vector3(66.0, 1.45, -6.8), Vector3(0.65, 2.90, 2.4), "deeper closure moves with the Ops terminal")

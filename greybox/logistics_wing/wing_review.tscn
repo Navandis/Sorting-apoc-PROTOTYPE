@@ -25,7 +25,7 @@ size = Vector3(10, 0.04, 0.12)
 [node name="Geometry" parent="." instance=ExtResource("1_geometry")]
 
 [node name="ReviewPlayer" parent="." instance=ExtResource("2_player")]
-position = Vector3(-32.5, 0.05, 0)
+position = Vector3(-33, 0.05, 0)
 rotation_degrees = Vector3(0, 90, 0)
 
 [node name="ReviewEnvironment" type="WorldEnvironment" parent="."]
@@ -41,7 +41,7 @@ directional_shadow_max_distance = 140.0
 [node name="FillLights" type="Node3D" parent="."]
 
 [node name="West" type="OmniLight3D" parent="FillLights"]
-position = Vector3(-32.5, 2.7, 0)
+position = Vector3(-33, 2.7, 0)
 light_color = Color(1, 0.92, 0.8, 1)
 light_energy = 2.2
 omni_range = 22.0
@@ -66,25 +66,25 @@ light_energy = 2.0
 omni_range = 20.0
 
 [node name="MedicalKitchen" type="OmniLight3D" parent="FillLights"]
-position = Vector3(15, 2.7, -17)
+position = Vector3(15, 2.7, -19)
 light_color = Color(0.9, 0.96, 1, 1)
 light_energy = 2.0
 omni_range = 20.0
 
 [node name="Workshop" type="OmniLight3D" parent="FillLights"]
-position = Vector3(-8, 2.7, 19)
+position = Vector3(-8, 2.7, 21)
 light_color = Color(1, 0.88, 0.72, 1)
 light_energy = 2.1
 omni_range = 22.0
 
 [node name="Deeper" type="OmniLight3D" parent="FillLights"]
-position = Vector3(33, 2.7, 0)
+position = Vector3(40, 2.7, 0)
 light_color = Color(0.92, 0.96, 1, 1)
 light_energy = 2.0
 omni_range = 23.0
 
 [node name="East" type="OmniLight3D" parent="FillLights"]
-position = Vector3(55, 2.7, -5)
+position = Vector3(56, 2.7, -5)
 light_color = Color(0.94, 0.97, 1, 1)
 light_energy = 2.0
 omni_range = 22.0
@@ -112,7 +112,7 @@ pixel_size = 0.012
 billboard = 1
 
 [node name="ReceivingLabel" type="Label3D" parent="OrientationAids"]
-position = Vector3(-32.5, 2.65, 0)
+position = Vector3(-33, 2.65, 0)
 text = "RECEIVING"
 font_size = 56
 outline_size = 10
@@ -120,7 +120,7 @@ pixel_size = 0.009
 billboard = 1
 
 [node name="BacklogLabel" type="Label3D" parent="OrientationAids"]
-position = Vector3(-21, 2.65, 0)
+position = Vector3(-24.75, 2.65, 0)
 text = "BACKLOG"
 font_size = 48
 outline_size = 10
@@ -136,7 +136,7 @@ pixel_size = 0.009
 billboard = 1
 
 [node name="GalleryALabel" type="Label3D" parent="OrientationAids"]
-position = Vector3(0.5, 2.65, -7)
+position = Vector3(0, 2.65, -8)
 text = "A"
 font_size = 72
 outline_size = 12
@@ -160,7 +160,7 @@ pixel_size = 0.012
 billboard = 1
 
 [node name="GalleryDLabel" type="Label3D" parent="OrientationAids"]
-position = Vector3(10.5, 2.65, 8)
+position = Vector3(10.5, 2.65, 10)
 text = "D"
 font_size = 72
 outline_size = 12
@@ -168,7 +168,7 @@ pixel_size = 0.012
 billboard = 1
 
 [node name="GalleryELabel" type="Label3D" parent="OrientationAids"]
-position = Vector3(21, 2.65, 9)
+position = Vector3(21, 2.65, 11)
 text = "E"
 font_size = 72
 outline_size = 12
@@ -176,7 +176,7 @@ pixel_size = 0.012
 billboard = 1
 
 [node name="MedicalLabel" type="Label3D" parent="OrientationAids"]
-position = Vector3(6.7, 2.5, -17)
+position = Vector3(6.9, 2.5, -19.5)
 text = "MEDICAL SUPPLY\nANTEROOM"
 font_size = 42
 outline_size = 10
@@ -184,7 +184,7 @@ pixel_size = 0.008
 billboard = 1
 
 [node name="KitchenLabel" type="Label3D" parent="OrientationAids"]
-position = Vector3(26.5, 2.5, -21)
+position = Vector3(24.25, 2.5, -21)
 text = "KITCHEN / MESS\nSERVICE ROOM"
 font_size = 42
 outline_size = 10
@@ -192,7 +192,7 @@ pixel_size = 0.008
 billboard = 1
 
 [node name="WorkshopLabel" type="Label3D" parent="OrientationAids"]
-position = Vector3(-11, 2.45, 17)
+position = Vector3(-11, 2.45, 19)
 text = "WORKSHOP\nSERVICE ROOM"
 font_size = 40
 outline_size = 10
@@ -200,7 +200,7 @@ pixel_size = 0.008
 billboard = 1
 
 [node name="SalvagerLabel" type="Label3D" parent="OrientationAids"]
-position = Vector3(5, 2.55, 23)
+position = Vector3(5, 2.55, 24.5)
 text = "SALVAGER"
 font_size = 44
 outline_size = 10
@@ -216,7 +216,7 @@ pixel_size = 0.008
 billboard = 1
 
 [node name="BunkerOpsLabel" type="Label3D" parent="OrientationAids"]
-position = Vector3(61.5, 2.5, -8.5)
+position = Vector3(62.5, 2.5, -8.5)
 text = "BUNKER OPS\nTRANSFER LANDING"
 font_size = 40
 outline_size = 10
@@ -224,7 +224,7 @@ pixel_size = 0.008
 billboard = 1
 
 [node name="DeeperClosureLabel" type="Label3D" parent="OrientationAids"]
-position = Vector3(64.5, 2.35, -6.8)
+position = Vector3(65.5, 2.35, -6.8)
 text = "DEEPER SETTLEMENT\nCONTROLLED DOOR"
 font_size = 36
 outline_size = 10
@@ -232,8 +232,16 @@ pixel_size = 0.007
 billboard = 1
 
 [node name="SharedABJunctionLabel" type="Label3D" parent="OrientationAids"]
-position = Vector3(6.7, 2.5, -3.6)
+position = Vector3(6.75, 2.5, -8.2)
 text = "SHARED A/B\nJUNCTION"
+font_size = 36
+outline_size = 10
+pixel_size = 0.007
+billboard = 1
+
+[node name="DispatchLabel" type="Label3D" parent="OrientationAids"]
+position = Vector3(-33.25, 2.5, -6.75)
+text = "EXPEDITION\nDISPATCH"
 font_size = 36
 outline_size = 10
 pixel_size = 0.007
