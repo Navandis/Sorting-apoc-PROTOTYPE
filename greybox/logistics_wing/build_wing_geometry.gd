@@ -128,7 +128,8 @@ func _build_floor_and_ceiling_plan() -> void:
 	_floor_zone("GalleryA", "GalleryANorthWest", -5.0, 1.0, -16.0, -13.0, CLEAR_HEIGHT, "floor_storage")
 	_floor_zone("GalleryB", "GalleryBMain", 9.0, 16.5, -13.0, -1.5, CLEAR_HEIGHT, "floor_storage")
 	_floor_zone("GalleryB", "GalleryBNorthBump", 12.0, 16.5, -14.5, -13.0, CLEAR_HEIGHT, "floor_storage")
-	_floor_zone("GalleryC", "GalleryCMain", -2.0, 6.0, 5.5, 11.5, CLEAR_HEIGHT, "floor_storage")
+	_floor_zone("GalleryC", "GalleryCMainNorth", -2.0, 4.5, 5.5, 7.0, CLEAR_HEIGHT, "floor_storage")
+	_floor_zone("GalleryC", "GalleryCMainBody", -2.0, 6.0, 7.0, 11.5, CLEAR_HEIGHT, "floor_storage")
 	_floor_zone("GalleryC", "GalleryCSouthWest", -2.0, 2.0, 11.5, 15.0, CLEAR_HEIGHT, "floor_storage")
 	_floor_zone("GalleryD", "GalleryDMain", 6.0, 15.5, 7.0, 17.5, CLEAR_HEIGHT, "floor_storage")
 	_floor_zone("GalleryD", "GalleryDSouthBump", 9.5, 12.5, 17.5, 19.0, CLEAR_HEIGHT, "floor_storage")
@@ -146,12 +147,14 @@ func _build_floor_and_ceiling_plan() -> void:
 	# is removed rather than blocked or reserved.
 	_floor_zone("WorkshopService", "WorkshopEntry", -12.0, -8.0, 5.0, 15.0, CLEAR_HEIGHT, "floor_service")
 	_floor_zone("WorkshopService", "WorkshopServiceRoom", -18.0, -6.0, 15.0, 25.0, CLEAR_HEIGHT, "floor_service")
-	_floor_zone("Salvager", "SalvagerCrossLeg", -6.0, 8.0, 20.0, 24.0, CLEAR_HEIGHT, "floor_service")
+	_floor_zone("Salvager", "SalvagerCrossLegWest", -6.0, 2.0, 20.0, 24.0, CLEAR_HEIGHT, "floor_service")
+	_floor_zone("Salvager", "SalvagerCrossLegEast", 2.0, 8.0, 20.0, 23.5, CLEAR_HEIGHT, "floor_service")
 	_floor_zone("Salvager", "SalvagerPocket", 2.0, 8.0, 23.5, 29.5, CLEAR_HEIGHT, "floor_service")
 
 	# Wide-to-narrow dog-leg, Incinerator spur, and Bunker Ops terminus.
 	_floor_zone("DeeperApproach", "DeeperWide", 26.0, 42.0, 0.0, 4.5, CLEAR_HEIGHT, "floor_shared")
-	_floor_zone("DeeperApproach", "DeeperDogLeg", 39.0, 43.0, -7.0, 4.5, CLEAR_HEIGHT, "floor_shared")
+	_floor_zone("DeeperApproach", "DeeperDogLegNorth", 39.0, 43.0, -7.0, 0.0, CLEAR_HEIGHT, "floor_shared")
+	_floor_zone("DeeperApproach", "DeeperDogLegEastReturn", 42.0, 43.0, 0.0, 4.5, CLEAR_HEIGHT, "floor_shared")
 	_floor_zone("DeeperApproach", "DeeperNarrow", 43.0, 59.0, -7.0, -4.0, CLEAR_HEIGHT, "floor_shared")
 	_floor_zone("Incinerator", "IncineratorApproach", 29.5, 33.5, 4.5, 10.0, CLEAR_HEIGHT, "floor_service")
 	_floor_zone("Incinerator", "IncineratorPocket", 28.0, 35.0, 10.0, 17.0, CLEAR_HEIGHT, "floor_service")

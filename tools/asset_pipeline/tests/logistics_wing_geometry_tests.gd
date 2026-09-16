@@ -188,7 +188,12 @@ func _test_complete_wing_geometry_contract() -> void:
 	_check_no_positive_box_overlap(wing, "RoofVisuals/Ceiling_BacklogPassage", "Districts/Receiving/ReceivingCeilingTransition", "Receiving transition does not overlap the Backlog ceiling")
 	_check_no_positive_box_overlap(wing, "Districts/GalleryA/Floor_GalleryAMain", "Districts/MedicalApproach/Floor_MedicalAnteroom", "Medical floor does not overlap Gallery A")
 	_check_no_positive_box_overlap(wing, "RoofVisuals/Ceiling_GalleryAMain", "RoofVisuals/Ceiling_MedicalAnteroom", "Medical ceiling does not overlap Gallery A")
+	_check_no_positive_area_zone_overlaps(wing.get_node("Districts"), "Floor_", "floor rectangles meet only at boundaries")
+	_check_no_positive_area_zone_overlaps(wing.get_node("RoofVisuals"), "Ceiling_", "ceiling rectangles meet only at boundaries")
 	_check_segment_clear_of_structural_walls(wing, Vector3(-10.0, 1.7162851, -4.4), Vector3(-38.82, 1.7162851, 2.2), "Sorting work stance has a partial freight-aperture sightline")
+	_check_segment_hits_exact_box(wing, "Boundaries/FreightBarrier/UpperRail", Vector3(-10.0, 1.7162851, -4.4), Vector3(-39.0, 1.2, 2.2), "Sorting sightline terminates on identifiable freight-barrier geometry")
+	_check_segment_blocked_by_structural_wall(wing, Vector3(-38.82, 1.2, 2.2), Vector3(40.0, 1.4, 1.5), "Receiving/ReceivingEastSouth", "lift-to-Deeper long vista is interrupted")
+	_check_segment_blocked_by_structural_wall(wing, Vector3(24.0, 1.7162851, 2.5), Vector3(62.5, 1.4, -6.8), "DeeperApproach/DeeperWideNorth", "Storage-to-Ops long vista is interrupted")
 	for junction_sample: Vector3 in [
 		Vector3(-18.10, 1.0, 14.90),
 		Vector3(18.90, 1.0, -25.10),
@@ -300,10 +305,59 @@ func _check_no_positive_box_overlap(wing: Node3D, first_path: String, second_pat
 	_check(overlap.x <= 0.001 or overlap.y <= 0.001 or overlap.z <= 0.001, message + "; overlap=%s" % overlap)
 
 
+func _check_no_positive_area_zone_overlaps(root: Node, prefix: String, message: String) -> void:
+	var zones: Array[Dictionary] = []
+	_collect_zone_records(root, prefix, zones)
+	var overlaps: Array[String] = []
+	for first_index: int in zones.size():
+		var first := zones[first_index]
+		for second_index: int in range(first_index + 1, zones.size()):
+			var second := zones[second_index]
+			var overlap_x := minf(float(first["max_x"]), float(second["max_x"])) - maxf(float(first["min_x"]), float(second["min_x"]))
+			var overlap_z := minf(float(first["max_z"]), float(second["max_z"])) - maxf(float(first["min_z"]), float(second["min_z"]))
+			if overlap_x > 0.001 and overlap_z > 0.001:
+				overlaps.append("%s <> %s (%.2f x %.2f m)" % [first["path"], second["path"], overlap_x, overlap_z])
+	_check(overlaps.is_empty(), message + "; overlaps=" + "; ".join(overlaps))
+
+
+func _collect_zone_records(node: Node, prefix: String, records: Array[Dictionary]) -> void:
+	if node is Node3D and String(node.name).begins_with(prefix):
+		var zone := node as Node3D
+		var collision := zone.get_node_or_null("StaticBody3D/CollisionShape3D") as CollisionShape3D
+		if collision != null and collision.shape is BoxShape3D:
+			var size := (collision.shape as BoxShape3D).size
+			var parent_name := String(zone.get_parent().name)
+			records.append({
+				"path": parent_name + "/" + String(zone.name),
+				"min_x": zone.position.x - size.x * 0.5,
+				"max_x": zone.position.x + size.x * 0.5,
+				"min_z": zone.position.z - size.z * 0.5,
+				"max_z": zone.position.z + size.z * 0.5,
+			})
+	for child in node.get_children():
+		_collect_zone_records(child, prefix, records)
+
+
 func _check_segment_clear_of_structural_walls(wing: Node3D, start: Vector3, finish: Vector3, message: String) -> void:
 	var blockers: Array[String] = []
 	_collect_segment_blockers(wing.get_node("Districts"), start, finish, blockers)
 	_check(blockers.is_empty(), message + "; blockers=" + ", ".join(blockers))
+
+
+func _check_segment_blocked_by_structural_wall(wing: Node3D, start: Vector3, finish: Vector3, expected_blocker: String, message: String) -> void:
+	var blockers: Array[String] = []
+	_collect_segment_blockers(wing.get_node("Districts"), start, finish, blockers)
+	_check(blockers.has(expected_blocker), message + "; expected=" + expected_blocker + "; blockers=" + ", ".join(blockers))
+
+
+func _check_segment_hits_exact_box(wing: Node3D, path: String, start: Vector3, finish: Vector3, message: String) -> void:
+	var box := wing.get_node_or_null(path) as Node3D
+	if not _check(box != null, message + " target exists"):
+		return
+	var collision := box.get_node_or_null("StaticBody3D/CollisionShape3D") as CollisionShape3D
+	if not _check(collision != null and collision.shape is BoxShape3D, message + " target has box collision"):
+		return
+	_check(_segment_intersects_box_3d(start, finish, box.position, (collision.shape as BoxShape3D).size), message)
 
 
 func _collect_segment_blockers(node: Node, start: Vector3, finish: Vector3, blockers: Array[String]) -> void:
@@ -345,6 +399,33 @@ func _segment_intersects_box_xz(start: Vector3, finish: Vector3, center: Vector3
 		if t_min > t_max:
 			return false
 	return t_max > 0.001 and t_min < 0.999
+
+
+func _segment_intersects_box_3d(start: Vector3, finish: Vector3, center: Vector3, size: Vector3) -> bool:
+	var t_min := 0.0
+	var t_max := 1.0
+	var delta := finish - start
+	for axis: int in 3:
+		var origin := start[axis]
+		var direction := delta[axis]
+		var half := size[axis] * 0.5
+		var minimum := center[axis] - half
+		var maximum := center[axis] + half
+		if absf(direction) < 0.000001:
+			if origin < minimum or origin > maximum:
+				return false
+			continue
+		var first_t := (minimum - origin) / direction
+		var second_t := (maximum - origin) / direction
+		if first_t > second_t:
+			var swap := first_t
+			first_t = second_t
+			second_t = swap
+		t_min = maxf(t_min, first_t)
+		t_max = minf(t_max, second_t)
+		if t_min > t_max:
+			return false
+	return t_max >= 0.0 and t_min <= 1.0
 
 
 func _collect_point_blockers(node: Node, point: Vector3, blockers: Array[String]) -> void:

@@ -80,7 +80,7 @@ All values are metres. `+X` is east, `+Z` is south, and `Y=0` is finished floor.
 | Incinerator | unchanged footprint and buffer |
 | Bunker Ops | `X 59..66`, `Z -11..-2` |
 
-Floor rectangles meet at boundaries but do not overlap by positive area. Every floor rectangle has a matching ceiling rectangle except that the removed Workshop continuation has neither.
+The footprint rows above describe functional unions. Where those unions meet another functional footprint, the saved primitives tessellate the union without changing its outline: Gallery C is split at the east-spine boundary, the Salvager cross-leg stops at the pocket boundary, and the Deeper dogleg owns only the area not already owned by the wide run. Floor rectangles meet at boundaries but do not overlap by positive area. Every floor rectangle has a matching ceiling rectangle except that the removed Workshop continuation has neither.
 
 ## Solid outline and ownership
 
