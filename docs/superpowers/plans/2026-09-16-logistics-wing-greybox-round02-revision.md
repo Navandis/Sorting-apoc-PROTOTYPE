@@ -82,9 +82,9 @@
 **Files:**
 - Create `docs/testing/logistics-wing-greybox-round02-revision-validation.md`
 
-- [ ] Rebuild deterministically and run all three focused suites.
-- [ ] Run the editor/parser scan, review-scene smoke, unchanged default-main smoke, and every existing non-hanging `tools/asset_pipeline/tests/*_tests.gd` script. Bound the known hanging integration script and compare diagnostics with the documented baseline.
-- [ ] Verify changed `.gd`/`.tscn` source outside the engine where applicable, diff protected files, confirm the rejected branch, and verify evidence exists only in `revision_02` without cleaning any prior report.
-- [ ] Record every R02 item with disposition, geometry/measurement, runtime/evidence, and remaining human question. Record exact branch/start/source/evidence/final revisions, hashes, renderer, test commands/results, route timings, Deeper ratio, C/D comparison, self-inspection/rework, and known baseline diagnostics.
-- [ ] Run documentation-sensitive focused checks and `git diff --check`, then commit as `docs: validate logistics wing round-two revision`.
-- [ ] Stop on the local branch for human review. Do not merge, push, furnish, add art, implement physical Receiving, or promote the workflow.
+- [x] Rebuild deterministically and run all three focused suites.
+- [x] Run the editor/parser scan, review-scene smoke, unchanged default-main smoke, and every existing non-hanging `tools/asset_pipeline/tests/*_tests.gd` script. Bound the known hanging integration script and compare diagnostics with the documented baseline.
+- [x] Verify changed `.gd`/`.tscn` source outside the engine where applicable, diff protected files, confirm the rejected branch, and verify evidence exists only in `revision_02` without cleaning any prior report.
+- [x] Record every R02 item with disposition, geometry/measurement, runtime/evidence, and remaining human question. Record exact branch/start/source/evidence/final revisions, hashes, renderer, test commands/results, route timings, Deeper ratio, C/D comparison, self-inspection/rework, and known baseline diagnostics.
+- [x] Run documentation-sensitive focused checks and `git diff --check`, then commit as `docs: validate logistics wing round-two revision`.
+- [x] Stop on the local branch for human review. Do not merge, push, furnish, add art, implement physical Receiving, or promote the workflow.
