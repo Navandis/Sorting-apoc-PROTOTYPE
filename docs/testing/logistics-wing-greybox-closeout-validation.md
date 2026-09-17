@@ -124,17 +124,44 @@ successful commands. The project checks use no network feature.
 
 ## Integration and final synchronization
 
-This section is completed by the final documentation-only closeout update
-after the verified bookkeeping fast-forward and seeded-storage preflight. The
-bookkeeping commit, first integrated-main commit, final documentation commit,
-remote ref equality and ahead/behind results are recorded there rather than
-predicted here.
+Bookkeeping commit
+`55397bdbdc37a826731629f85ad7f0218b2dcc2a` was created on
+`codex/logistics-wing-greybox`. Before publication, `origin` was fetched again
+and remained at the inspected main baseline. The following gates all passed:
+
+- `origin/main` was an ancestor of the accepted branch;
+- accepted source `aeb1ef27671f2f07d651e5064b00c3c77a06600b` and accepted
+  Medical documentation `8d64086aa02ade21449af24dbc7742748115792c` were ancestors;
+- rejected Receiving commit
+  `c9752c8c68cd55b950dd588542ea271e1acc0aab` was not an ancestor; and
+- the worktree was clean and protected-path diffs remained empty.
+
+The feature branch was pushed normally to the intended repository. Local
+`main` then fast-forwarded with `--ff-only` to `55397bd...`. On integrated main,
+the 33/33 non-hanging regression set, original-main smoke and wing-review
+smoke passed again; the default UID stayed unchanged, protected-path diffing
+remained empty and the rejected commit remained excluded. A final pre-push
+fetch found no divergence, and `main` was pushed normally.
+
+After the first synchronization and its confirming fetch, local/remote `main`
+and local/remote `codex/logistics-wing-greybox` all resolved to
+`55397bdbdc37a826731629f85ad7f0218b2dcc2a`; `main...origin/main` was `0/0`
+and the worktree was clean. No force option, history rewrite, protection
+bypass, branch deletion, stash, clean or reset was used.
+
+Only after that equality was established, the supplied seeded-storage bridge
+preflight was performed. Its read-only dependency report is
+`docs/testing/wing-storage-integration-preflight.md`. The final
+documentation-only commit containing that report and this synchronization
+record is identified in the external closeout handoff because a commit cannot
+embed its own final SHA. That commit is synchronized by the same guarded
+feature-then-`--ff-only`-main sequence and reverified before closeout.
 
 ## Status gate
 
 - Greybox spatial baseline: **PROMOTED by human review**.
-- Pre-integration bookkeeping checks: **PASS**, subject to staged-diff review
-  and the synchronization steps above.
+- Bookkeeping publication and first main integration: **PASS**.
+- Seeded-storage dependency preflight: **COMPLETE**.
 - Seeded-storage bridge implementation: **NOT STARTED**.
 - Default-scene migration: **NOT STARTED**.
 - Functional Receiving: **NOT STARTED**.
