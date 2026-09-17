@@ -1,7 +1,7 @@
 # Logistics-Wing Greybox Design
 
-**Date:** 2026-09-15  
-**Status:** Approved handoff translated into a repository-grounded design  
+**Date:** 2026-09-15
+**Status:** Approved handoff translated into a repository-grounded design
 **Authority:** `D:\Godot Projects\Codex Handoff\01_MILESTONE_BRIEF.md`, Visual Direction v0.3, Basic Structural Schematic V2, Detailed Topology V3, and the local preflight recorded below
 
 ## Outcome
@@ -118,4 +118,3 @@ Automated topology is supplementary. The implementation also requires actual sav
 The evidence set contains one roof-hidden debug overview, ceiling-on first-person coverage of every district and boundary, fixed Sorting comparison views, full-resolution PNGs, and readable contact sheets under `reports/logistics_wing/greybox/`. The validation record identifies each camera position/target/FOV, capture resolution, renderer, roof state, measured dimensions, normal-walk route method/times, and any estimated routes.
 
 First-pass delivery stops after a complete verified wing is committed and presented for human walkthrough. Human spatial review, workflow promotion, and revision reliability remain `PENDING`. No feedback is invented and no functional Receiving or environment-art work begins.
-

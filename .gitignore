@@ -24,3 +24,7 @@ mono_crash.*.json
 .DS_Store
 Thumbs.db
 /reports/asset_pipeline/
+
+# Local generated/human validation evidence; current curated records are under docs/.
+/reports/logistics_wing/
+/reports/receiving/

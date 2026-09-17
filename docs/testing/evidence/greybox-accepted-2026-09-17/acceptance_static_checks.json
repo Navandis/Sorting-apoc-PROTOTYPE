@@ -1,0 +1,265 @@
+{
+  "method": "Static archive and saved-scene comparison; no Godot/runtime replay or live Git audit.",
+  "archive_sha256": "ca98bb36be4b4cbb0bc0ef2e60199ca395b35f18920db3693b71f4fb62ca2490",
+  "source_hashes": [
+    {
+      "path": "res://greybox/logistics_wing/build_wing_geometry.gd",
+      "expected": "7f0d6018396feb6412794f5f44efd3c53a645e18589291e300c74c43493d6242",
+      "actual": "7f0d6018396feb6412794f5f44efd3c53a645e18589291e300c74c43493d6242",
+      "matches": true
+    },
+    {
+      "path": "res://greybox/logistics_wing/wing_capture.gd",
+      "expected": "b5dbe0fc0a73a193342b82d2c2ee84196c2bde62936264fd2a7e67956b6413b3",
+      "actual": "b5dbe0fc0a73a193342b82d2c2ee84196c2bde62936264fd2a7e67956b6413b3",
+      "matches": true
+    },
+    {
+      "path": "res://greybox/logistics_wing/wing_geometry.tscn",
+      "expected": "0c9ec4f6916716ed32f99aaed6f8f2c66c1a99e97dc42cc3a77c6298bbebdd99",
+      "actual": "0c9ec4f6916716ed32f99aaed6f8f2c66c1a99e97dc42cc3a77c6298bbebdd99",
+      "matches": true
+    },
+    {
+      "path": "res://greybox/logistics_wing/wing_review.tscn",
+      "expected": "c025d46c594f0f30b4ca0a6935ba674595d838e9d109afc738d4f21fba3e828e",
+      "actual": "c025d46c594f0f30b4ca0a6935ba674595d838e9d109afc738d4f21fba3e828e",
+      "matches": true
+    },
+    {
+      "path": "res://greybox/logistics_wing/wing_traversal.gd",
+      "expected": "5c076decc09474d96e1dd009255d334ee1a985504d838bc58863aa526068d4d7",
+      "actual": "5c076decc09474d96e1dd009255d334ee1a985504d838bc58863aa526068d4d7",
+      "matches": true
+    },
+    {
+      "path": "res://tools/asset_pipeline/tests/logistics_wing_capture_tests.gd",
+      "expected": "956163a0de49cdb8763d9948eaf92508a81c5f900668a8d30558be0308b19fa8",
+      "actual": "956163a0de49cdb8763d9948eaf92508a81c5f900668a8d30558be0308b19fa8",
+      "matches": true
+    },
+    {
+      "path": "res://tools/asset_pipeline/tests/logistics_wing_geometry_tests.gd",
+      "expected": "6899fd8674b88f92b40683f391243acfd9c5edffe2d00c650f90d31590c098fe",
+      "actual": "6899fd8674b88f92b40683f391243acfd9c5edffe2d00c650f90d31590c098fe",
+      "matches": true
+    },
+    {
+      "path": "res://tools/asset_pipeline/tests/logistics_wing_traversal_tests.gd",
+      "expected": "b7535e99c7bcbe696a38209d26a3ebf7146b6236395a6ae147a65032d119c2cd",
+      "actual": "b7535e99c7bcbe696a38209d26a3ebf7146b6236395a6ae147a65032d119c2cd",
+      "matches": true
+    }
+  ],
+  "embedded_baseline_matches_prior_upload_after_resource_and_node_id_normalization": true,
+  "saved_scene_node_counts": {
+    "baseline": 968,
+    "current": 964
+  },
+  "comparison_excludes": [
+    ".",
+    "Districts/MedicalApproach",
+    "Boundaries/MedicalInnerBoundary",
+    "Proxies/MedicalInterface",
+    "Anchors/MedicalAnteroom",
+    "Anchors/MedicalSafeSide",
+    "RoofVisuals/Ceiling_MedicalCorridor",
+    "RoofVisuals/Ceiling_MedicalAnteroom"
+  ],
+  "comparison_normalization": "Node unique_id and subresource IDs normalized; referenced resource attributes/properties compared recursively. Line endings normalized. All remaining serialized node properties retained.",
+  "non_medical_saved_geometry_differences": [],
+  "all_changed_saved_geometry_paths": [
+    ".",
+    "Anchors/MedicalAnteroom",
+    "Anchors/MedicalSafeSide",
+    "Boundaries/MedicalInnerBoundary",
+    "Districts/MedicalApproach/Floor_MedicalAnteroom",
+    "Districts/MedicalApproach/Floor_MedicalCorridor",
+    "Districts/MedicalApproach/Floor_MedicalCorridor/Mesh",
+    "Districts/MedicalApproach/Floor_MedicalCorridor/StaticBody3D/CollisionShape3D",
+    "Districts/MedicalApproach/MedicalCorridorEast",
+    "Districts/MedicalApproach/MedicalCorridorEast/Mesh",
+    "Districts/MedicalApproach/MedicalCorridorEast/StaticBody3D/CollisionShape3D",
+    "Districts/MedicalApproach/MedicalCorridorWest",
+    "Districts/MedicalApproach/MedicalCorridorWest/Mesh",
+    "Districts/MedicalApproach/MedicalCorridorWest/StaticBody3D/CollisionShape3D",
+    "Districts/MedicalApproach/MedicalRoomEast",
+    "Districts/MedicalApproach/MedicalRoomEast/Mesh",
+    "Districts/MedicalApproach/MedicalRoomEast/StaticBody3D/CollisionShape3D",
+    "Districts/MedicalApproach/MedicalRoomSouthEast",
+    "Districts/MedicalApproach/MedicalRoomSouthEast/Mesh",
+    "Districts/MedicalApproach/MedicalRoomSouthEast/StaticBody3D",
+    "Districts/MedicalApproach/MedicalRoomSouthEast/StaticBody3D/CollisionShape3D",
+    "Districts/MedicalApproach/MedicalRoomSouthWest",
+    "Districts/MedicalApproach/MedicalRoomSouthWest/Mesh",
+    "Districts/MedicalApproach/MedicalRoomSouthWest/StaticBody3D/CollisionShape3D",
+    "Districts/MedicalApproach/MedicalRoomWest",
+    "Proxies/MedicalInterface",
+    "RoofVisuals/Ceiling_MedicalAnteroom",
+    "RoofVisuals/Ceiling_MedicalCorridor",
+    "RoofVisuals/Ceiling_MedicalCorridor/Mesh",
+    "RoofVisuals/Ceiling_MedicalCorridor/StaticBody3D/CollisionShape3D"
+  ],
+  "medical_mesh_boxes": {
+    "Districts/MedicalApproach/Floor_MedicalCorridor": {
+      "position": [
+        7.0,
+        -0.15,
+        -18.0
+      ],
+      "size": [
+        2.4,
+        0.3,
+        10.0
+      ]
+    },
+    "Districts/MedicalApproach/Floor_MedicalAnteroom": {
+      "position": [
+        4.3,
+        -0.15,
+        -26.5
+      ],
+      "size": [
+        7.8,
+        0.3,
+        7.0
+      ]
+    },
+    "Districts/MedicalApproach/MedicalCorridorWest": {
+      "position": [
+        5.8,
+        1.7,
+        -18.0
+      ],
+      "size": [
+        0.3,
+        3.4,
+        10.0
+      ]
+    },
+    "Districts/MedicalApproach/MedicalCorridorEast": {
+      "position": [
+        8.2,
+        1.7,
+        -18.0
+      ],
+      "size": [
+        0.3,
+        3.4,
+        10.0
+      ]
+    },
+    "Districts/MedicalApproach/MedicalRoomSouthWest": {
+      "position": [
+        3.1,
+        1.7,
+        -23.0
+      ],
+      "size": [
+        5.7,
+        3.4,
+        0.3
+      ]
+    },
+    "Districts/MedicalApproach/MedicalRoomWest": {
+      "position": [
+        0.4,
+        1.7,
+        -26.5
+      ],
+      "size": [
+        0.3,
+        3.4,
+        7.3
+      ]
+    },
+    "Districts/MedicalApproach/MedicalRoomEast": {
+      "position": [
+        8.2,
+        1.7,
+        -26.575
+      ],
+      "size": [
+        0.3,
+        3.4,
+        7.15
+      ]
+    },
+    "Boundaries/MedicalInnerBoundary": {
+      "position": [
+        4.3,
+        1.7,
+        -30.0
+      ],
+      "size": [
+        7.8,
+        3.4,
+        0.3
+      ]
+    },
+    "Proxies/MedicalInterface": {
+      "position": [
+        4.3,
+        0.6,
+        -29.15
+      ],
+      "size": [
+        3.6,
+        1.2,
+        0.6
+      ]
+    },
+    "RoofVisuals/Ceiling_MedicalCorridor": {
+      "position": [
+        7.0,
+        3.55,
+        -18.0
+      ],
+      "size": [
+        2.4,
+        0.3,
+        10.0
+      ]
+    },
+    "RoofVisuals/Ceiling_MedicalAnteroom": {
+      "position": [
+        4.3,
+        3.55,
+        -26.5
+      ],
+      "size": [
+        7.8,
+        0.3,
+        7.0
+      ]
+    }
+  },
+  "reported_machine_results": {
+    "route_count": 22,
+    "boundary_count": 12,
+    "all_passed_flags": true,
+    "failure_count": 0,
+    "junction_summary": {
+      "already_covered": 111,
+      "baseline_audited_pairs": 115,
+      "baseline_uncovered_pairs": 0,
+      "baseline_uncovered_quadrants": 0,
+      "corrected": 2,
+      "current_audited_pairs": 113,
+      "current_unresolved": 0,
+      "intentional_openings": 11,
+      "junction_types": {
+        "butt_or_t_join": 13,
+        "concave_return": 47,
+        "cross_join": 1,
+        "true_corner": 52
+      },
+      "not_applicable": 4
+    }
+  },
+  "root_image_files": 42,
+  "manifest_views": 38,
+  "root_images_all_1920_1080": true,
+  "runtime_tests_rerun": false,
+  "protected_live_project_verified": false
+}

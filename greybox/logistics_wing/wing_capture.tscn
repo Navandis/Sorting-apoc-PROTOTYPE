@@ -10,4 +10,3 @@ script = ExtResource("1_capture")
 
 [node name="CaptureCamera" type="Camera3D" parent="."]
 fov = 75.0
-
