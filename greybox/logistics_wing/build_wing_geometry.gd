@@ -61,7 +61,7 @@ func _build_and_save() -> void:
 		push_error("WING_GEOMETRY_FAILED save: " + error_string(save_error))
 		quit(1)
 		return
-	print("WING_GEOMETRY_GENERATED path=%s floor_plan_extents=110x53.5m nodes=%d" % [OUTPUT_PATH, _count_nodes(_root)])
+	print("WING_GEOMETRY_GENERATED path=%s floor_plan_extents=110x58.5m nodes=%d" % [OUTPUT_PATH, _count_nodes(_root)])
 	_root.free()
 	_root = null
 	_materials.clear()
@@ -73,9 +73,9 @@ func _build_and_save() -> void:
 func _create_roots() -> void:
 	_root = Node3D.new()
 	_root.name = "WingGeometry"
-	_root.set_meta("layout_revision", "logistics-wing-greybox-round03-revision-03")
+	_root.set_meta("layout_revision", "logistics-wing-greybox-medical-tuning-revision-04")
 	_root.set_meta("regeneration_command", "godot --headless --path . --script res://greybox/logistics_wing/build_wing_geometry.gd")
-	_root.set_meta("overall_extents_m", Vector3(110.0, 4.2, 53.5))
+	_root.set_meta("overall_extents_m", Vector3(110.0, 4.2, 58.5))
 	_root.set_meta("shared_ab_measurement_group", "MainStorage")
 	_root.set_meta("wall_thickness_m", WALL_THICKNESS)
 	_root.set_meta("clear_height_m", CLEAR_HEIGHT)
@@ -140,8 +140,8 @@ func _build_floor_and_ceiling_plan() -> void:
 	_floor_zone("GalleryE", "GalleryESouthProjection", 19.0, 25.5, 15.4, 21.0, CLEAR_HEIGHT, "floor_storage")
 
 	# Protected approaches and distinct playable departmental support rooms.
-	_floor_zone("MedicalApproach", "MedicalCorridor", 5.8, 8.2, -18.0, -13.0, CLEAR_HEIGHT, "floor_shared")
-	_floor_zone("MedicalApproach", "MedicalAnteroom", 3.0, 10.8, -25.0, -18.0, CLEAR_HEIGHT, "floor_shared")
+	_floor_zone("MedicalApproach", "MedicalCorridor", 5.8, 8.2, -23.0, -13.0, CLEAR_HEIGHT, "floor_shared")
+	_floor_zone("MedicalApproach", "MedicalAnteroom", 0.4, 8.2, -30.0, -23.0, CLEAR_HEIGHT, "floor_shared")
 	_floor_zone("KitchenApproach", "KitchenEastLeg", 16.5, 26.4, -8.2, -5.4, CLEAR_HEIGHT, "floor_shared")
 	_floor_zone("KitchenApproach", "KitchenNorthLeg", 23.6, 26.4, -18.0, -8.2, CLEAR_HEIGHT, "floor_shared")
 	_floor_zone("KitchenApproach", "KitchenServiceRoom", 21.4, 31.9, -25.0, -18.0, CLEAR_HEIGHT, "floor_shared")
@@ -240,12 +240,13 @@ func _build_structural_walls() -> void:
 	_wall_x_joined(junction, "SharedJunctionNorthEast", 8.2, 9.0, -13.0, CLEAR_HEIGHT, true, false)
 
 	var medical := _district("MedicalApproach")
-	_wall_z(medical, "MedicalCorridorWest", 5.8, -18.0, -13.0)
-	_wall_z(medical, "MedicalCorridorEast", 8.2, -18.0, -13.0)
-	_wall_x_joined(medical, "MedicalRoomSouthWest", 3.0, 5.8, -18.0)
-	_wall_x_joined(medical, "MedicalRoomSouthEast", 8.2, 10.8, -18.0)
-	_wall_z_joined(medical, "MedicalRoomWest", 3.0, -25.0, -18.0)
-	_wall_z_joined(medical, "MedicalRoomEast", 10.8, -25.0, -18.0)
+	_wall_z(medical, "MedicalCorridorWest", 5.8, -23.0, -13.0)
+	_wall_z(medical, "MedicalCorridorEast", 8.2, -23.0, -13.0)
+	_wall_x_joined(medical, "MedicalRoomSouthWest", 0.4, 5.8, -23.0)
+	_wall_z_joined(medical, "MedicalRoomWest", 0.4, -30.0, -23.0)
+	# The east room segment meets the corridor segment at Z=-23 without
+	# overlap, continuing the same exposed X=8.2 wall face north to the core.
+	_wall_z_joined(medical, "MedicalRoomEast", 8.2, -30.0, -23.0, CLEAR_HEIGHT, true, false)
 
 	var kitchen := _district("KitchenApproach")
 	_wall_x_joined(kitchen, "KitchenEastLegNorth", 16.5, 23.6, -8.2, CLEAR_HEIGHT, true, false)
@@ -334,7 +335,7 @@ func _build_fixed_boundaries() -> void:
 
 	# Each departmental support space has a traversable territorial entrance,
 	# a separate neutral interface envelope, and this opaque staffed-core edge.
-	_box(_boundaries, "MedicalInnerBoundary", Vector3(6.9, 1.7, -25.0), Vector3(7.8, 3.4, 0.30), _materials["closure"])
+	_box(_boundaries, "MedicalInnerBoundary", Vector3(4.3, 1.7, -30.0), Vector3(7.8, 3.4, 0.30), _materials["closure"])
 	_box(_boundaries, "KitchenInnerBoundary", Vector3(26.65, 1.7, -25.0), Vector3(10.5, 3.4, 0.30), _materials["closure"])
 	_box(_boundaries, "WorkshopInnerBoundary", Vector3(-18.0, 1.7, 20.0), Vector3(0.30, 3.4, 10.0), _materials["closure"])
 	_box(_boundaries, "BunkerOpsInnerBoundary", Vector3(62.5, 1.7, -11.0), Vector3(7.0, 3.4, 0.30), _materials["closure"])
@@ -361,7 +362,7 @@ func _build_spatial_proxies() -> void:
 	_box(_proxies, "GalleryD_LowIsland", Vector3(10.5, 0.65, 11.0), Vector3(3.0, 1.3, 1.1), _materials["proxy"])
 	_box(_proxies, "GalleryE_LowIsland", Vector3(21.0, 0.55, 11.0), Vector3(2.5, 1.1, 1.0), _materials["proxy"])
 
-	_box(_proxies, "MedicalInterface", Vector3(6.9, 0.60, -24.15), Vector3(3.6, 1.2, 0.6), _materials["interface"], false)
+	_box(_proxies, "MedicalInterface", Vector3(4.3, 0.60, -29.15), Vector3(3.6, 1.2, 0.6), _materials["interface"], false)
 	_box(_proxies, "KitchenInterface", Vector3(26.65, 0.60, -24.15), Vector3(6.0, 1.2, 0.6), _materials["interface"], false)
 	_box(_proxies, "WorkshopInterface", Vector3(-17.15, 0.60, 20.0), Vector3(0.6, 1.2, 3.2), _materials["interface"], false)
 	_box(_proxies, "BunkerOpsInterface", Vector3(62.5, 0.60, -10.15), Vector3(4.0, 1.2, 0.6), _materials["interface"], false)
@@ -380,11 +381,11 @@ func _build_anchors() -> void:
 	_anchor("GalleryD", Vector3(10.0, 0.05, 9.0), 180.0)
 	_anchor("GalleryE", Vector3(21.0, 0.05, 10.0), 180.0)
 	_anchor("SharedABJunction", Vector3(6.75, 0.05, -8.2), 0.0)
-	_anchor("MedicalAnteroom", Vector3(6.9, 0.05, -21.5), 0.0)
+	_anchor("MedicalAnteroom", Vector3(4.3, 0.05, -26.5), 0.0)
 	_anchor("KitchenService", Vector3(26.65, 0.05, -21.0), 0.0)
 	_anchor("WorkshopService", Vector3(-11.0, 0.05, 19.0), -90.0)
 	_anchor("BunkerOpsLanding", Vector3(62.5, 0.05, -6.0), -90.0)
-	_anchor("MedicalSafeSide", Vector3(6.9, 0.05, -23.0), 0.0)
+	_anchor("MedicalSafeSide", Vector3(4.3, 0.05, -28.0), 0.0)
 	_anchor("KitchenSafeSide", Vector3(26.65, 0.05, -22.0), 0.0)
 	_anchor("WorkshopSafeSide", Vector3(-15.5, 0.05, 20.0), -90.0)
 	_anchor("WorkshopApproach", Vector3(-10.0, 0.05, 18.5), -45.0)

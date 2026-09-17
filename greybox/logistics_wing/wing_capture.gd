@@ -1,6 +1,6 @@
 extends Node3D
 
-const OUTPUT_DIRECTORY := "res://reports/logistics_wing/greybox/revision_03"
+const OUTPUT_DIRECTORY := "res://reports/logistics_wing/greybox/revision_04"
 const CAPTURE_SIZE := Vector2i(1920, 1080)
 const CONTACT_TILE_SIZE := Vector2i(480, 360)
 const CONTACT_IMAGE_SIZE := Vector2i(480, 270)
@@ -43,8 +43,10 @@ func get_view_records() -> Array:
 		_view("Roof-off local audit of the folded C/D wall chain", "storage_cd_folded_roofoff.png", Vector3(4.0, 15.0, 19.0), Vector3(4.0, 0.0, 14.0), 50.0, false),
 		_view("Broadened main Storage network", "storage_network.png", Vector3(10.0, 1.7162851, 3.0), Vector3(10.0, 1.4, 10.0), 75.0),
 		_view("Gallery E forty-percent southern projection", "gallery_e_projection.png", Vector3(22.0, 1.7162851, 13.0), Vector3(22.0, 1.4, 20.5), 75.0),
-		_view("Protected five-metre Medical-only spur beyond Main Storage", "medical_approach.png", Vector3(6.75, 1.7162851, -11.0), Vector3(6.9, 1.4, -19.0), 75.0),
-		_view("Medical Supply Anteroom and translated inner boundary", "medical_anteroom.png", Vector3(6.9, 1.7162851, -20.0), Vector3(6.9, 1.4, -24.7), 75.0),
+		_view("Unchanged Storage-side approach into the doubled Medical-only corridor", "medical_approach.png", Vector3(6.75, 1.7162851, -11.0), Vector3(7.0, 1.4, -24.5), 75.0),
+		_view("Roof-off Medical plan showing ten-metre spur and west-expanded room", "medical_plan_roofoff.png", Vector3(4.3, 18.0, -21.5), Vector3(4.3, 0.0, -21.5), 50.0, false),
+		_view("Arrival at the Medical room's south-east entrance", "medical_entrance.png", Vector3(7.0, 1.7162851, -21.0), Vector3(4.3, 1.4, -26.5), 75.0),
+		_view("Inside Medical looking back along the continuous east wall", "medical_east_wall.png", Vector3(4.3, 1.7162851, -27.5), Vector3(7.9, 1.4, -18.5), 75.0),
 		_view("Kitchen route leaves Gallery B east", "kitchen_b_east.png", Vector3(15.0, 1.7162851, -6.8), Vector3(22.0, 1.4, -6.8), 75.0),
 		_view("Kitchen lengthened east-then-north turn", "kitchen_turn.png", Vector3(25.0, 1.7162851, -7.8), Vector3(25.0, 1.4, -13.5), 75.0),
 		_view("Translated elongated Kitchen Service Room", "kitchen_service.png", Vector3(25.0, 1.7162851, -19.5), Vector3(26.65, 1.4, -24.7), 75.0),
@@ -66,7 +68,7 @@ func get_view_records() -> Array:
 
 func get_manifest_static_fields() -> Dictionary:
 	return {
-		"layout_revision": "logistics-wing-greybox-round03-revision-03",
+		"layout_revision": "logistics-wing-greybox-medical-tuning-revision-04",
 		"source_hash_paths": PackedStringArray([
 			"res://greybox/logistics_wing/build_wing_geometry.gd",
 			"res://greybox/logistics_wing/wing_geometry.tscn",
@@ -257,7 +259,7 @@ func _save_manifest(absolute_directory: String, records: Array, geometry_aabb: A
 	var manifest := {
 		"scene": "res://greybox/logistics_wing/wing_capture.tscn",
 		"review_scene": "res://greybox/logistics_wing/wing_review.tscn",
-		"layout_revision": "logistics-wing-greybox-round03-revision-03",
+		"layout_revision": "logistics-wing-greybox-medical-tuning-revision-04",
 		"code_revision": _git_revision(),
 		"evidence_revision": _git_revision(),
 		"final_commit_relation": String(get_manifest_static_fields()["final_commit_relation"]),

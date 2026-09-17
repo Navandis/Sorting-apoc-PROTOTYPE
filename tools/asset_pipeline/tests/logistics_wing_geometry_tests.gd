@@ -7,7 +7,7 @@ const WALL_HALF_THICKNESS := 0.15
 const JUNCTION_EVIDENCE_FLAG := "--junction-evidence"
 const JUNCTION_BASELINE_PREFIX := "--junction-baseline="
 const JUNCTION_SOURCE_COMMIT_PREFIX := "--junction-source-commit="
-const JUNCTION_EVIDENCE_PATH := "res://reports/logistics_wing/greybox/revision_03/junction_inventory.json"
+const JUNCTION_EVIDENCE_PATH := "res://reports/logistics_wing/greybox/revision_04/junction_inventory.json"
 const ROUND_TWO_FINAL_COMMIT := "66b7c18f54c45c6b682970b1971dd2bc6e5f099a"
 const COLLISIONLESS_BOX_PATHS := [
 	"Proxies/MedicalInterface",
@@ -134,9 +134,9 @@ func _test_complete_wing_geometry_contract() -> void:
 	var wing := packed.instantiate() as Node3D
 	if not _check(wing != null, "wing geometry instantiates as Node3D"):
 		return
-	_check(String(wing.get_meta("layout_revision", "")) == "logistics-wing-greybox-round03-revision-03", "layout revision identifies the round-three correction")
+	_check(String(wing.get_meta("layout_revision", "")) == "logistics-wing-greybox-medical-tuning-revision-04", "layout revision identifies the Medical-only tuning")
 	_check(wing.get_meta("regeneration_command", "") == "godot --headless --path . --script res://greybox/logistics_wing/build_wing_geometry.gd", "single regeneration command is explicit")
-	_check(wing.get_meta("overall_extents_m", Vector3.ZERO) == Vector3(110.0, 4.2, 53.5), "overall extents match the round-three authored floor-plan envelope")
+	_check(wing.get_meta("overall_extents_m", Vector3.ZERO) == Vector3(110.0, 4.2, 58.5), "overall extents include the north-translated Medical room")
 	_check(String(wing.get_meta("shared_ab_measurement_group", "")) == "MainStorage", "shared A/B connector belongs to the Main Storage measurement group")
 	_check(is_equal_approx(float(wing.get_meta("wall_thickness_m", 0.0)), 0.30), "wall thickness metadata is 0.30 m")
 	_check(is_equal_approx(float(wing.get_meta("clear_height_m", 0.0)), 3.40), "ordinary clear height metadata is 3.40 m")
@@ -173,6 +173,7 @@ func _test_complete_wing_geometry_contract() -> void:
 		"Anchors/BlockedContinuationSafeSide",
 		"Districts/GalleryC/GalleryCDividerSouth",
 		"Districts/GalleryC/GalleryCIrregularSouthMass",
+		"Districts/MedicalApproach/MedicalRoomSouthEast",
 	]:
 		_check(wing.get_node_or_null(removed_path) == null, "superseded geometry is absent: " + removed_path)
 	for removed_path: String in [
@@ -199,8 +200,19 @@ func _test_complete_wing_geometry_contract() -> void:
 	_check_box(wing, "Proxies/SortingTable", Vector3(-10.0, 0.45, -6.18), Vector3(4.8, 0.90, 1.74), "Sorting table has revised depth and end access")
 	_check_box(wing, "Districts/SharedABJunction/Floor_SharedABJunction", Vector3(6.75, -0.15, -7.25), Vector3(4.5, 0.30, 11.5), "Main Storage A/B connector retains its accepted footprint")
 	_check_material_name(wing, "Districts/SharedABJunction/Floor_SharedABJunction", "Greybox Storage Floor", "A/B connector uses the Storage diagnostic floor treatment")
-	_check_box(wing, "Districts/MedicalApproach/Floor_MedicalCorridor", Vector3(7.0, -0.15, -15.5), Vector3(2.4, 0.30, 5.0), "Medical protected approach has five exclusive metres beyond the connector")
-	_check_box(wing, "Districts/MedicalApproach/Floor_MedicalAnteroom", Vector3(6.9, -0.15, -21.5), Vector3(7.8, 0.30, 7.0), "Medical room translates north without changing its useful footprint")
+	_check_box(wing, "Districts/MedicalApproach/Floor_MedicalCorridor", Vector3(7.0, -0.15, -18.0), Vector3(2.4, 0.30, 10.0), "Medical-exclusive corridor doubles from five to ten nominal metres")
+	_check_box(wing, "Districts/MedicalApproach/Floor_MedicalAnteroom", Vector3(4.3, -0.15, -26.5), Vector3(7.8, 0.30, 7.0), "Medical room translates north-west without changing its footprint")
+	_check_box(wing, "Districts/MedicalApproach/MedicalCorridorWest", Vector3(5.8, 1.7, -18.0), Vector3(0.30, 3.4, 10.0), "Medical corridor west wall follows the doubled exclusive run")
+	_check_box(wing, "Districts/MedicalApproach/MedicalCorridorEast", Vector3(8.2, 1.7, -18.0), Vector3(0.30, 3.4, 10.0), "Medical corridor east wall follows the doubled exclusive run")
+	_check_box(wing, "Districts/MedicalApproach/MedicalRoomSouthWest", Vector3(3.1, 1.7, -23.0), Vector3(5.70, 3.4, 0.30), "Medical room has only the west shoulder at its south-east entrance")
+	_check_box(wing, "Districts/MedicalApproach/MedicalRoomWest", Vector3(0.4, 1.7, -26.5), Vector3(0.30, 3.4, 7.30), "Medical room west wall translates without changing nominal depth")
+	_check_box(wing, "Districts/MedicalApproach/MedicalRoomEast", Vector3(8.2, 1.7, -26.575), Vector3(0.30, 3.4, 7.15), "Medical room east wall is collinear and face-continuous with the corridor east wall")
+	_check_box(wing, "Boundaries/MedicalInnerBoundary", Vector3(4.3, 1.7, -30.0), Vector3(7.8, 3.4, 0.30), "Medical staffed-core boundary translates with the unchanged room")
+	_check_visual_box(wing, "Proxies/MedicalInterface", Vector3(4.3, 0.60, -29.15), Vector3(3.6, 1.2, 0.6), "Medical provisional interface translates with the room")
+	var medical_anteroom_anchor := wing.get_node_or_null("Anchors/MedicalAnteroom") as Marker3D
+	var medical_safe_anchor := wing.get_node_or_null("Anchors/MedicalSafeSide") as Marker3D
+	_check(medical_anteroom_anchor != null and medical_anteroom_anchor.position == Vector3(4.3, 0.05, -26.5), "Medical anteroom anchor translates with the room")
+	_check(medical_safe_anchor != null and medical_safe_anchor.position == Vector3(4.3, 0.05, -28.0), "Medical safe-side anchor remains inside the moved room")
 	_check_box(wing, "Districts/GalleryC/GalleryCInsetWest", Vector3(2.0, 1.7, 13.25), Vector3(0.30, 3.4, 3.5), "C folded perimeter turns north at the red-overlay inset")
 	_check_box(wing, "Districts/GalleryC/GalleryCInsetCap", Vector3(4.0, 1.7, 11.5), Vector3(4.30, 3.4, 0.30), "C folded perimeter caps east to the D-side return")
 	_check_box(wing, "Districts/GalleryD/GalleryDWestSouthReturn", Vector3(6.0, 1.7, 14.5), Vector3(0.30, 3.4, 6.0), "D western return closes the complete 11.5 to 17.5 span")
@@ -257,7 +269,7 @@ func _test_complete_wing_geometry_contract() -> void:
 		{"point": Vector3(9.0, 1.0, -8.2), "label": "north-shifted Gallery B west opening"},
 		{"point": Vector3(16.5, 1.0, -6.8), "label": "Gallery B east Kitchen opening"},
 		{"point": Vector3(6.0, 1.0, 10.25), "label": "sole C-to-D secondary opening"},
-		{"point": Vector3(7.0, 1.0, -18.0), "label": "Medical territorial entrance"},
+		{"point": Vector3(7.0, 1.0, -23.0), "label": "Medical south-east room entrance"},
 		{"point": Vector3(25.0, 1.0, -18.0), "label": "Kitchen territorial entrance"},
 		{"point": Vector3(-10.0, 1.0, 15.0), "label": "Workshop territorial entrance"},
 		{"point": Vector3(59.0, 1.0, -5.5), "label": "Bunker Ops landing entrance"},
@@ -344,6 +356,17 @@ func _check_box(wing: Node3D, path: String, expected_center: Vector3, expected_s
 		return
 	_check(box.position.is_equal_approx(expected_center), message + " center is exact")
 	_check((collision.shape as BoxShape3D).size.is_equal_approx(expected_size), message + " size is exact")
+
+
+func _check_visual_box(wing: Node3D, path: String, expected_center: Vector3, expected_size: Vector3, message: String) -> void:
+	var box := wing.get_node_or_null(path) as Node3D
+	if not _check(box != null, message + " exists"):
+		return
+	var mesh_instance := box.get_node_or_null("Mesh") as MeshInstance3D
+	if not _check(mesh_instance != null and mesh_instance.mesh is BoxMesh, message + " has a box mesh"):
+		return
+	_check(box.position.is_equal_approx(expected_center), message + " center is exact")
+	_check((mesh_instance.mesh as BoxMesh).size.is_equal_approx(expected_size), message + " size is exact")
 
 
 func _check_material_name(wing: Node3D, path: String, expected_name: String, message: String) -> void:
@@ -814,7 +837,7 @@ func _junction_opening_records() -> Array[Dictionary]:
 		_opening_record("north-shifted Gallery B west opening", Vector3(9.0, 1.0, -8.2)),
 		_opening_record("Gallery B east Kitchen opening", Vector3(16.5, 1.0, -6.8)),
 		_opening_record("sole C-to-D secondary opening", Vector3(6.0, 1.0, 10.25)),
-		_opening_record("Medical territorial entrance", Vector3(7.0, 1.0, -18.0)),
+		_opening_record("Medical south-east room entrance", Vector3(7.0, 1.0, -23.0)),
 		_opening_record("Kitchen territorial entrance", Vector3(25.0, 1.0, -18.0)),
 		_opening_record("Workshop territorial entrance", Vector3(-10.0, 1.0, 15.0)),
 		_opening_record("Bunker Ops landing entrance", Vector3(59.0, 1.0, -5.5)),

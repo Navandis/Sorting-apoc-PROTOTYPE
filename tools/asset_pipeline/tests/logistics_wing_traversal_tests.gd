@@ -67,7 +67,7 @@ func _test_traversal_scene_contract() -> void:
 	runner.set_script(script)
 	_check(not runner.call("should_run", PackedStringArray()), "traversal stays idle without explicit flag")
 	_check(runner.call("should_run", PackedStringArray(["--traversal-evidence"])), "traversal flag explicitly enables evidence run")
-	_check(String(runner.call("get_output_path")) == "res://reports/logistics_wing/greybox/revision_03/traversal_results.json", "round-three traversal output is isolated from earlier evidence")
+	_check(String(runner.call("get_output_path")) == "res://reports/logistics_wing/greybox/revision_04/traversal_results.json", "Medical tuning traversal output is isolated from historic evidence")
 	runner.free()
 
 	if ResourceLoader.exists(TRAVERSAL_SCENE_PATH):
@@ -108,7 +108,11 @@ func _test_route_and_boundary_manifest() -> void:
 	)
 	var medical_route := _find_record(routes, "shared_junction_to_medical_anteroom")
 	var medical_waypoints := medical_route.get("waypoints", PackedVector3Array()) as PackedVector3Array
-	_check(medical_waypoints.has(Vector3(6.9, 0.05, -21.5)), "Medical traversal reaches the translated anteroom centre")
+	_check(medical_waypoints.has(Vector3(7.0, 0.05, -21.0)), "Medical traversal stays on the unchanged corridor centreline through the extended run")
+	_check(medical_waypoints.has(Vector3(7.0, 0.05, -24.0)), "Medical traversal enters the room before turning west")
+	_check(medical_waypoints.has(Vector3(4.3, 0.05, -26.5)), "Medical traversal reaches the north-west translated anteroom centre")
+	for waypoint: Vector3 in medical_waypoints:
+		_check(not (waypoint.x < 5.8 and waypoint.z > -23.0), "Medical traversal never cuts diagonally through the corridor west wall")
 	var kitchen_route := _find_record(routes, "gallery_b_to_kitchen_service")
 	var kitchen_waypoints := kitchen_route.get("waypoints", PackedVector3Array()) as PackedVector3Array
 	_check(kitchen_waypoints.has(Vector3(25.0, 0.05, -10.0)), "Kitchen traversal uses the translated north-leg centreline")
@@ -130,6 +134,9 @@ func _test_route_and_boundary_manifest() -> void:
 	var cd_outer := _find_record(boundaries, "gallery_cd_folded_outer_return")
 	_check(cd_outer.get("start", Vector3.ZERO) == Vector3(8.0, 0.05, 15.0), "C/D outer-return probe begins in playable Gallery D")
 	_check(cd_outer.get("direction", Vector3.ZERO) == Vector3(-1, 0, 0), "C/D outer-return probe drives into the reconstructed west boundary")
+	var medical_boundary := _find_record(boundaries, "medical_inner_boundary")
+	_check(medical_boundary.get("start", Vector3.ZERO) == Vector3(4.3, 0.05, -28.0), "Medical inner-boundary probe starts from the moved safe-side anchor")
+	_check(medical_boundary.get("limit", 0.0) == -29.70, "Medical inner-boundary probe targets the moved staffed-core edge")
 	_check(not boundary_names.has("blocked_continuation"), "removed Workshop stub has no boundary probe")
 	runner.free()
 
