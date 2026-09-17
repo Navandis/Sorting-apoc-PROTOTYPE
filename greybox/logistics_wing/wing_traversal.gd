@@ -55,6 +55,11 @@ func get_route_records() -> Array:
 			Vector3(7.0, 0.05, -21.0), Vector3(7.0, 0.05, -24.0),
 			Vector3(4.3, 0.05, -26.5),
 		]),
+		_route("medical_anteroom_to_shared_junction", "MedicalAnteroom", "SharedABJunction", [
+			Vector3(7.0, 0.05, -24.0), Vector3(7.0, 0.05, -21.0),
+			Vector3(7.0, 0.05, -15.0), Vector3(6.75, 0.05, -11.5),
+			Vector3(6.75, 0.05, -8.2),
+		]),
 		_route("gallery_b_to_kitchen_service", "GalleryB", "KitchenService", [
 			Vector3(15.0, 0.05, -6.8), Vector3(18.0, 0.05, -6.8),
 			Vector3(24.5, 0.05, -6.8), Vector3(25.0, 0.05, -10.0),

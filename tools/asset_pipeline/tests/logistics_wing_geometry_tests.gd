@@ -6,9 +6,9 @@ const EXPECTED_MAIN_SCENE := "uid://drbkr86g3cxl1"
 const WALL_HALF_THICKNESS := 0.15
 const JUNCTION_EVIDENCE_FLAG := "--junction-evidence"
 const JUNCTION_BASELINE_PREFIX := "--junction-baseline="
+const JUNCTION_BASELINE_COMMIT_PREFIX := "--junction-baseline-commit="
 const JUNCTION_SOURCE_COMMIT_PREFIX := "--junction-source-commit="
 const JUNCTION_EVIDENCE_PATH := "res://reports/logistics_wing/greybox/revision_04/junction_inventory.json"
-const ROUND_TWO_FINAL_COMMIT := "66b7c18f54c45c6b682970b1971dd2bc6e5f099a"
 const COLLISIONLESS_BOX_PATHS := [
 	"Proxies/MedicalInterface",
 	"Proxies/KitchenInterface",
@@ -624,6 +624,9 @@ func _write_junction_evidence(arguments: PackedStringArray) -> Error:
 	var source_commit := _argument_value(arguments, JUNCTION_SOURCE_COMMIT_PREFIX)
 	if source_commit.is_empty():
 		source_commit = "unknown"
+	var baseline_commit := _argument_value(arguments, JUNCTION_BASELINE_COMMIT_PREFIX)
+	if baseline_commit.is_empty():
+		baseline_commit = "unknown"
 	var baseline := _collect_junction_snapshot(baseline_path)
 	var current := _collect_junction_snapshot(WING_GEOMETRY_PATH)
 	if baseline.is_empty() or current.is_empty():
@@ -655,7 +658,7 @@ func _write_junction_evidence(arguments: PackedStringArray) -> Error:
 				corrected_count += 1
 		else:
 			classified["disposition"] = "corrected"
-			classified["note"] = "new or renamed round-three structural join; all four final quadrants are covered"
+			classified["note"] = "new or renamed Medical-tuning structural join; all four final quadrants are covered"
 			corrected_count += 1
 		var junction_type := String(classified["junction_type"])
 		junction_type_counts[junction_type] = int(junction_type_counts.get(junction_type, 0)) + 1
@@ -667,7 +670,7 @@ func _write_junction_evidence(arguments: PackedStringArray) -> Error:
 			continue
 		var retired := pair.duplicate(true)
 		retired["disposition"] = "not_applicable"
-		retired["note"] = "round-two pair is absent after an approved round-three wall replacement or extent change"
+		retired["note"] = "pre-task pair is absent after the approved Medical-only wall translation or shoulder removal"
 		not_applicable.append(retired)
 
 	var baseline_uncovered_pairs := 0
@@ -679,17 +682,18 @@ func _write_junction_evidence(arguments: PackedStringArray) -> Error:
 			baseline_uncovered_quadrants += gap_count
 	var intentional_openings := _junction_opening_records()
 	var payload := {
-		"layout_revision": "logistics-wing-greybox-round03-revision-03",
+		"layout_revision": "logistics-wing-greybox-medical-tuning-revision-04",
 		"source_commit": source_commit,
-		"baseline_commit": ROUND_TWO_FINAL_COMMIT,
+		"baseline_commit": baseline_commit,
+		"baseline_label": "pre-task round-three final",
 		"baseline_scene": baseline_path,
 		"current_scene": WING_GEOMETRY_PATH,
 		"audit_method": "Every perpendicular full-height structural-wall pair is sampled 0.075 m into all four thickness quadrants. Authorized openings are sampled independently at controller height.",
 		"classification_definitions": {
-			"corrected": "A round-two uncovered pair, or a new/renamed round-three join, with all four final quadrants covered.",
-			"already_covered": "The same pair was fully covered in round two and remains covered.",
+			"corrected": "A new or renamed Medical-tuning join with all four current quadrants covered.",
+			"already_covered": "The same pair was fully covered in the pre-task round-three baseline and remains covered.",
 			"intentional_opening": "An approved route opening whose controller-height sample remains clear.",
-			"not_applicable": "A round-two pair retired by an approved wall replacement or extent change.",
+			"not_applicable": "A pre-task pair retired by the approved Medical-only wall translation or shoulder removal.",
 		},
 		"junction_type_definitions": {
 			"true_corner": "Both structural runs terminate at the coordinate; one or two nearby playable-floor quadrants distinguish an ordinary perimeter corner.",
@@ -699,21 +703,20 @@ func _write_junction_evidence(arguments: PackedStringArray) -> Error:
 			"open_jamb": "An approved aperture or territorial entrance remains intentionally clear at the recorded controller-height sample.",
 		},
 		"summary": {
-			"round_two_seed_candidates": 39,
-			"round_two_audited_pairs": (baseline["pairs"] as Array).size(),
-			"round_two_uncovered_pairs": baseline_uncovered_pairs,
-			"round_two_uncovered_quadrants": baseline_uncovered_quadrants,
-			"round_three_audited_pairs": classified_current.size(),
+			"baseline_audited_pairs": (baseline["pairs"] as Array).size(),
+			"baseline_uncovered_pairs": baseline_uncovered_pairs,
+			"baseline_uncovered_quadrants": baseline_uncovered_quadrants,
+			"current_audited_pairs": classified_current.size(),
 			"corrected": corrected_count,
 			"already_covered": already_covered_count,
 			"intentional_openings": intentional_openings.size(),
 			"not_applicable": not_applicable.size(),
-			"round_three_unresolved": unresolved_count,
+			"current_unresolved": unresolved_count,
 			"junction_types": junction_type_counts,
 		},
 		"current_junctions": classified_current,
 		"intentional_openings": intentional_openings,
-		"retired_round_two_pairs": not_applicable,
+		"retired_baseline_pairs": not_applicable,
 	}
 	var absolute_path := ProjectSettings.globalize_path(JUNCTION_EVIDENCE_PATH)
 	var directory_error := DirAccess.make_dir_recursive_absolute(absolute_path.get_base_dir())

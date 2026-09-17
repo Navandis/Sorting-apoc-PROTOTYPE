@@ -11,6 +11,7 @@ const REQUIRED_ROUTES := [
 	"shared_junction_to_gallery_a_east",
 	"shared_junction_to_gallery_b_west",
 	"shared_junction_to_medical_anteroom",
+	"medical_anteroom_to_shared_junction",
 	"gallery_b_to_kitchen_service",
 	"sorting_to_workshop_service",
 	"sorting_to_salvager",
@@ -113,6 +114,12 @@ func _test_route_and_boundary_manifest() -> void:
 	_check(medical_waypoints.has(Vector3(4.3, 0.05, -26.5)), "Medical traversal reaches the north-west translated anteroom centre")
 	for waypoint: Vector3 in medical_waypoints:
 		_check(not (waypoint.x < 5.8 and waypoint.z > -23.0), "Medical traversal never cuts diagonally through the corridor west wall")
+	var medical_return := _find_record(routes, "medical_anteroom_to_shared_junction")
+	_check(medical_return.get("start_anchor", "") == "MedicalAnteroom", "Medical return replay starts in the moved room")
+	_check(medical_return.get("end_anchor", "") == "SharedABJunction", "Medical return replay ends in Main Storage")
+	var medical_return_waypoints := medical_return.get("waypoints", PackedVector3Array()) as PackedVector3Array
+	_check(medical_return_waypoints.has(Vector3(7.0, 0.05, -24.0)), "Medical return replay exits through the south-east room entrance")
+	_check(medical_return_waypoints.has(Vector3(7.0, 0.05, -15.0)), "Medical return replay follows the fixed corridor centreline")
 	var kitchen_route := _find_record(routes, "gallery_b_to_kitchen_service")
 	var kitchen_waypoints := kitchen_route.get("waypoints", PackedVector3Array()) as PackedVector3Array
 	_check(kitchen_waypoints.has(Vector3(25.0, 0.05, -10.0)), "Kitchen traversal uses the translated north-leg centreline")

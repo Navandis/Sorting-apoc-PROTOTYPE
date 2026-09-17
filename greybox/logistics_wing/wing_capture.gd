@@ -44,7 +44,7 @@ func get_view_records() -> Array:
 		_view("Broadened main Storage network", "storage_network.png", Vector3(10.0, 1.7162851, 3.0), Vector3(10.0, 1.4, 10.0), 75.0),
 		_view("Gallery E forty-percent southern projection", "gallery_e_projection.png", Vector3(22.0, 1.7162851, 13.0), Vector3(22.0, 1.4, 20.5), 75.0),
 		_view("Unchanged Storage-side approach into the doubled Medical-only corridor", "medical_approach.png", Vector3(6.75, 1.7162851, -11.0), Vector3(7.0, 1.4, -24.5), 75.0),
-		_view("Roof-off Medical plan showing ten-metre spur and west-expanded room", "medical_plan_roofoff.png", Vector3(4.3, 18.0, -21.5), Vector3(4.3, 0.0, -21.5), 50.0, false),
+		_view("Roof-off Medical plan showing ten-metre spur and west-expanded room", "medical_plan_roofoff.png", Vector3(4.3, 24.0, -21.5), Vector3(4.3, 0.0, -21.5), 50.0, false, false, true),
 		_view("Arrival at the Medical room's south-east entrance", "medical_entrance.png", Vector3(7.0, 1.7162851, -21.0), Vector3(4.3, 1.4, -26.5), 75.0),
 		_view("Inside Medical looking back along the continuous east wall", "medical_east_wall.png", Vector3(4.3, 1.7162851, -27.5), Vector3(7.9, 1.4, -18.5), 75.0),
 		_view("Kitchen route leaves Gallery B east", "kitchen_b_east.png", Vector3(15.0, 1.7162851, -6.8), Vector3(22.0, 1.4, -6.8), 75.0),
@@ -119,6 +119,15 @@ func get_contact_tile_layout() -> Dictionary:
 		"caption_origin_y": CONTACT_IMAGE_SIZE.y,
 		"caption_height": CONTACT_CAPTION_HEIGHT,
 	}
+
+
+func get_camera_up_vector(record: Dictionary) -> Vector3:
+	var position := record.get("position", Vector3.ZERO) as Vector3
+	var target := record.get("target", Vector3.ZERO) as Vector3
+	var direction := (target - position).normalized()
+	if absf(direction.dot(Vector3.UP)) > 0.999:
+		return Vector3(0, 0, -1)
+	return Vector3(0, 0, -1) if bool(record.get("overview", false)) else Vector3.UP
 
 
 func fit_capture_into_contact_image(source_size: Vector2i) -> Rect2i:
@@ -205,10 +214,10 @@ func _capture_all() -> void:
 	var captures: Array[Image] = []
 	for record: Dictionary in records:
 		roof.visible = bool(record["ceiling_on"])
-		orientation_aids.visible = bool(record["overview"])
+		orientation_aids.visible = bool(record["overview"]) or bool(record.get("show_orientation_aids", false))
 		camera.fov = float(record["fov"])
 		camera.global_position = record["position"] as Vector3
-		var up := Vector3(0, 0, -1) if bool(record["overview"]) else Vector3.UP
+		var up := get_camera_up_vector(record)
 		camera.look_at(record["target"] as Vector3, up)
 		camera.make_current()
 		await get_tree().process_frame
@@ -255,6 +264,7 @@ func _save_manifest(absolute_directory: String, records: Array, geometry_aabb: A
 			"fov": record["fov"],
 			"ceiling_on": record["ceiling_on"],
 			"overview": record["overview"],
+			"show_orientation_aids": record.get("show_orientation_aids", false),
 		})
 	var manifest := {
 		"scene": "res://greybox/logistics_wing/wing_capture.tscn",
@@ -284,7 +294,7 @@ func _save_manifest(absolute_directory: String, records: Array, geometry_aabb: A
 	return OK
 
 
-func _view(label: String, basename: String, position: Vector3, target: Vector3, fov: float, ceiling_on: bool = true, overview: bool = false) -> Dictionary:
+func _view(label: String, basename: String, position: Vector3, target: Vector3, fov: float, ceiling_on: bool = true, overview: bool = false, show_orientation_aids: bool = false) -> Dictionary:
 	return {
 		"label": label,
 		"basename": basename,
@@ -293,6 +303,7 @@ func _view(label: String, basename: String, position: Vector3, target: Vector3, 
 		"fov": fov,
 		"ceiling_on": ceiling_on,
 		"overview": overview,
+		"show_orientation_aids": show_orientation_aids,
 	}
 
 

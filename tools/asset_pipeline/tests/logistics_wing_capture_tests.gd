@@ -73,6 +73,8 @@ func _test_review_scene_is_isolated_and_runnable() -> void:
 	_check(medical_tuning_light != null and medical_tuning_light.position == Vector3(4.3, 2.7, -26.5), "moved Medical room gets a local neutral review fill")
 	var medical_label := review.get_node_or_null("OrientationAids/MedicalLabel") as Label3D
 	_check(medical_label != null and medical_label.position == Vector3(4.3, 2.5, -26.5), "Medical label translates with the unchanged-size room")
+	var medical_north_label := review.get_node_or_null("OrientationAids/MedicalNorthLabel") as Label3D
+	_check(medical_north_label != null and medical_north_label.position == Vector3(0.8, 0.1, -29.0), "Medical plan evidence has a local north label")
 	_check(_find_scene_path(review, "res://main.tscn") == null, "review does not instance main.tscn")
 	_check(_find_scene_path(review, "res://receiving/freight_bay_prototype.tscn") == null, "review does not instance rejected Receiving")
 	review.free()
@@ -140,9 +142,16 @@ func _test_capture_manifest_and_image_contract() -> void:
 	_check(medical_approach.get("position", Vector3.ZERO) == Vector3(6.75, 1.7162851, -11.0), "Medical approach preserves the Storage-side camera position")
 	_check(medical_approach.get("target", Vector3.ZERO) == Vector3(7.0, 1.4, -24.5), "Medical approach looks through the doubled exclusive corridor")
 	var medical_plan := _find_record(records, "medical_plan_roofoff.png")
-	_check(medical_plan.get("position", Vector3.ZERO) == Vector3(4.3, 18.0, -21.5), "Medical roof-off plan is centred over the tuned footprint")
+	_check(medical_plan.get("position", Vector3.ZERO) == Vector3(4.3, 24.0, -21.5), "Medical roof-off plan is centred high enough to include the complete tuned footprint")
 	_check(medical_plan.get("target", Vector3.ZERO) == Vector3(4.3, 0.0, -21.5), "Medical roof-off plan points straight at the tuned footprint")
+	_check(medical_plan.get("show_orientation_aids", false) == true, "Medical roof-off plan enables its local north label")
+	var wall_top_vertical_span := 2.0 * (24.0 - 3.4) * tan(deg_to_rad(25.0))
+	_check(wall_top_vertical_span > 17.0, "Medical roof-off plan frames the full 17 m footprint above wall-top height")
 	var medical_entrance := _find_record(records, "medical_entrance.png")
+	var has_camera_up := _check(capture.has_method("get_camera_up_vector"), "capture exposes a safe camera-up calculation")
+	if has_camera_up:
+		_check(capture.call("get_camera_up_vector", medical_plan) == Vector3(0, 0, -1), "vertical Medical plan view uses a non-collinear north-up vector")
+		_check(capture.call("get_camera_up_vector", medical_entrance) == Vector3.UP, "ordinary first-person views retain world-up orientation")
 	_check(medical_entrance.get("position", Vector3.ZERO) == Vector3(7.0, 1.7162851, -21.0), "Medical entrance view arrives on the unchanged corridor centreline")
 	_check(medical_entrance.get("target", Vector3.ZERO) == Vector3(4.3, 1.4, -26.5), "Medical entrance view turns into the west-expanded room")
 	var medical_east_wall := _find_record(records, "medical_east_wall.png")
