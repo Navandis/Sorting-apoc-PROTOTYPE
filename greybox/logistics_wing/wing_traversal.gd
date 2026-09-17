@@ -1,6 +1,6 @@
 extends Node3D
 
-const OUTPUT_PATH := "res://reports/logistics_wing/greybox/revision_02/traversal_results.json"
+const OUTPUT_PATH := "res://reports/logistics_wing/greybox/revision_03/traversal_results.json"
 const RUN_FLAG := "--traversal-evidence"
 const ARRIVAL_TOLERANCE := 0.45
 const PHYSICS_TICKS_PER_SECOND := 60.0
@@ -51,14 +51,14 @@ func get_route_records() -> Array:
 			Vector3(12.0, 0.05, -5.0),
 		]),
 		_route("shared_junction_to_medical_anteroom", "SharedABJunction", "MedicalAnteroom", [
-			Vector3(6.75, 0.05, -11.5), Vector3(7.0, 0.05, -14.5),
-			Vector3(6.9, 0.05, -17.0), Vector3(6.9, 0.05, -19.5),
+			Vector3(6.75, 0.05, -11.5), Vector3(7.0, 0.05, -15.0),
+			Vector3(6.9, 0.05, -18.5), Vector3(6.9, 0.05, -21.5),
 		]),
 		_route("gallery_b_to_kitchen_service", "GalleryB", "KitchenService", [
 			Vector3(15.0, 0.05, -6.8), Vector3(18.0, 0.05, -6.8),
-			Vector3(22.5, 0.05, -6.8), Vector3(22.6, 0.05, -10.0),
-			Vector3(22.6, 0.05, -15.5), Vector3(22.6, 0.05, -19.0),
-			Vector3(24.25, 0.05, -21.0),
+			Vector3(24.5, 0.05, -6.8), Vector3(25.0, 0.05, -10.0),
+			Vector3(25.0, 0.05, -15.5), Vector3(25.0, 0.05, -19.0),
+			Vector3(26.65, 0.05, -21.0),
 		]),
 		_route("sorting_to_workshop_service", "SortingWork", "WorkshopService", [
 			Vector3(-10.0, 0.05, 3.0), Vector3(-10.0, 0.05, 8.0),
@@ -75,8 +75,8 @@ func get_route_records() -> Array:
 		_route("sorting_to_incinerator", "SortingWork", "IncineratorFront", [
 			Vector3(-10.0, 0.05, 2.5), Vector3(-2.0, 0.05, 2.7),
 			Vector3(10.0, 0.05, 2.0), Vector3(24.0, 0.05, 2.0),
-			Vector3(28.0, 0.05, 2.0), Vector3(31.5, 0.05, 6.0),
-			Vector3(31.5, 0.05, 12.4),
+			Vector3(28.0, 0.05, 2.0), Vector3(36.5, 0.05, 3.0),
+			Vector3(36.5, 0.05, 6.0), Vector3(36.5, 0.05, 12.4),
 		]),
 		_route("sorting_to_bunker_ops", "SortingWork", "BunkerOpsSafeSide", [
 			Vector3(-10.0, 0.05, 2.5), Vector3(-2.0, 0.05, 2.7),
@@ -87,7 +87,7 @@ func get_route_records() -> Array:
 			Vector3(62.5, 0.05, -8.5),
 		]),
 		_route("deeper_to_ops_landing", "IncineratorFront", "BunkerOpsLanding", [
-			Vector3(31.5, 0.05, 7.0), Vector3(31.5, 0.05, 4.8),
+			Vector3(36.5, 0.05, 7.0), Vector3(36.5, 0.05, 4.8),
 			Vector3(40.8, 0.05, 2.0), Vector3(41.0, 0.05, -5.5),
 			Vector3(48.0, 0.05, -5.5), Vector3(58.0, 0.05, -5.5),
 			Vector3(62.5, 0.05, -6.0),
@@ -136,15 +136,17 @@ func get_route_records() -> Array:
 func get_boundary_records() -> Array:
 	return [
 		_boundary("freight_barrier", Vector3(-37.0, 0.05, 0.0), Vector3(-1, 0, 0), "x", "min", -38.75),
-		_boundary("medical_inner_boundary", Vector3(6.9, 0.05, -21.0), Vector3(0, 0, -1), "z", "min", -22.70),
-		_boundary("kitchen_inner_boundary", Vector3(24.25, 0.05, -22.0), Vector3(0, 0, -1), "z", "min", -24.70),
+		_boundary("medical_inner_boundary", Vector3(6.9, 0.05, -23.0), Vector3(0, 0, -1), "z", "min", -24.70),
+		_boundary("kitchen_inner_boundary", Vector3(26.65, 0.05, -22.0), Vector3(0, 0, -1), "z", "min", -24.70),
 		_boundary("workshop_inner_boundary", Vector3(-15.5, 0.05, 20.0), Vector3(-1, 0, 0), "x", "min", -17.70),
 		_boundary("workshop_south_wall", Vector3(-11.5, 0.05, 23.5), Vector3(0, 0, 1), "z", "max", 24.70),
 		_boundary("bunker_ops_inner_boundary", Vector3(62.5, 0.05, -8.5), Vector3(0, 0, -1), "z", "min", -10.70),
 		_boundary("deeper_settlement_door", Vector3(64.5, 0.05, -6.8), Vector3(1, 0, 0), "x", "max", 65.70),
-		_boundary("kitchen_turn_return", Vector3(22.4, 0.05, -10.0), Vector3(-1, 0, 0), "x", "min", 20.90),
+		_boundary("kitchen_turn_return", Vector3(25.2, 0.05, -10.0), Vector3(-1, 0, 0), "x", "min", 23.30),
 		_boundary("dogleg_return", Vector3(42.0, 0.05, -2.0), Vector3(1, 0, 0), "x", "max", 42.70),
 		_boundary("shared_junction_return", Vector3(5.0, 0.05, -11.8), Vector3(0, 0, -1), "z", "min", -12.70),
+		_boundary("gallery_cd_folded_outer_return", Vector3(8.0, 0.05, 15.0), Vector3(-1, 0, 0), "x", "min", 6.30),
+		_boundary("incinerator_old_mouth_closure", Vector3(31.5, 0.05, 3.0), Vector3(0, 0, 1), "z", "max", 4.20),
 	]
 
 
@@ -181,7 +183,7 @@ func _run_evidence() -> void:
 		])
 
 	var payload := {
-		"layout_revision": "logistics-wing-greybox-round02-revision-02",
+		"layout_revision": "logistics-wing-greybox-round03-revision-03",
 		"code_revision": _git_revision(),
 		"deeper_authored_runs_m": {"pre_bend": 16.0, "post_bend": 16.0, "ratio": 1.0},
 		"evidence_kind": "normal-controller-input-replay",

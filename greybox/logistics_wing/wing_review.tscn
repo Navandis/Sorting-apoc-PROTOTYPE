@@ -66,7 +66,7 @@ light_energy = 2.0
 omni_range = 20.0
 
 [node name="MedicalKitchen" type="OmniLight3D" parent="FillLights"]
-position = Vector3(15, 2.7, -19)
+position = Vector3(17, 2.7, -20)
 light_color = Color(0.9, 0.96, 1, 1)
 light_energy = 2.0
 omni_range = 20.0
@@ -120,7 +120,7 @@ pixel_size = 0.009
 billboard = 1
 
 [node name="BacklogLabel" type="Label3D" parent="OrientationAids"]
-position = Vector3(-24.75, 2.65, 0)
+position = Vector3(-21.75, 2.65, 0)
 text = "BACKLOG"
 font_size = 48
 outline_size = 10
@@ -176,7 +176,7 @@ pixel_size = 0.012
 billboard = 1
 
 [node name="MedicalLabel" type="Label3D" parent="OrientationAids"]
-position = Vector3(6.9, 2.5, -19.5)
+position = Vector3(6.9, 2.5, -21.5)
 text = "MEDICAL SUPPLY\nANTEROOM"
 font_size = 42
 outline_size = 10
@@ -184,7 +184,7 @@ pixel_size = 0.008
 billboard = 1
 
 [node name="KitchenLabel" type="Label3D" parent="OrientationAids"]
-position = Vector3(24.25, 2.5, -21)
+position = Vector3(26.65, 2.5, -21)
 text = "KITCHEN / MESS\nSERVICE ROOM"
 font_size = 42
 outline_size = 10
@@ -208,7 +208,7 @@ pixel_size = 0.008
 billboard = 1
 
 [node name="IncineratorLabel" type="Label3D" parent="OrientationAids"]
-position = Vector3(31.5, 2.55, 12.4)
+position = Vector3(36.5, 2.55, 12.4)
 text = "INCINERATOR"
 font_size = 42
 outline_size = 10
@@ -233,7 +233,7 @@ billboard = 1
 
 [node name="SharedABJunctionLabel" type="Label3D" parent="OrientationAids"]
 position = Vector3(6.75, 2.5, -8.2)
-text = "SHARED A/B\nJUNCTION"
+text = "MAIN STORAGE\nA/B CONNECTOR"
 font_size = 36
 outline_size = 10
 pixel_size = 0.007

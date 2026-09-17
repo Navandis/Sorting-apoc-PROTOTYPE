@@ -38,6 +38,8 @@ const REQUIRED_BOUNDARIES := [
 	"kitchen_turn_return",
 	"dogleg_return",
 	"shared_junction_return",
+	"gallery_cd_folded_outer_return",
+	"incinerator_old_mouth_closure",
 ]
 
 var _failures := 0
@@ -65,7 +67,7 @@ func _test_traversal_scene_contract() -> void:
 	runner.set_script(script)
 	_check(not runner.call("should_run", PackedStringArray()), "traversal stays idle without explicit flag")
 	_check(runner.call("should_run", PackedStringArray(["--traversal-evidence"])), "traversal flag explicitly enables evidence run")
-	_check(String(runner.call("get_output_path")) == "res://reports/logistics_wing/greybox/revision_02/traversal_results.json", "round-two traversal output is isolated from earlier evidence")
+	_check(String(runner.call("get_output_path")) == "res://reports/logistics_wing/greybox/revision_03/traversal_results.json", "round-three traversal output is isolated from earlier evidence")
 	runner.free()
 
 	if ResourceLoader.exists(TRAVERSAL_SCENE_PATH):
@@ -104,6 +106,16 @@ func _test_route_and_boundary_manifest() -> void:
 		and c_to_d_secondary.get("end_anchor", "") == c_to_d_spine.get("end_anchor", ""),
 		"C-to-D alternatives use the same named endpoints"
 	)
+	var medical_route := _find_record(routes, "shared_junction_to_medical_anteroom")
+	var medical_waypoints := medical_route.get("waypoints", PackedVector3Array()) as PackedVector3Array
+	_check(medical_waypoints.has(Vector3(6.9, 0.05, -21.5)), "Medical traversal reaches the translated anteroom centre")
+	var kitchen_route := _find_record(routes, "gallery_b_to_kitchen_service")
+	var kitchen_waypoints := kitchen_route.get("waypoints", PackedVector3Array()) as PackedVector3Array
+	_check(kitchen_waypoints.has(Vector3(25.0, 0.05, -10.0)), "Kitchen traversal uses the translated north-leg centreline")
+	_check(kitchen_waypoints.has(Vector3(26.65, 0.05, -21.0)), "Kitchen traversal reaches the translated service room")
+	var incinerator_route := _find_record(routes, "sorting_to_incinerator")
+	var incinerator_waypoints := incinerator_route.get("waypoints", PackedVector3Array()) as PackedVector3Array
+	_check(incinerator_waypoints.has(Vector3(36.5, 0.05, 12.4)), "Incinerator traversal follows the east-translated spur")
 
 	var boundaries := runner.call("get_boundary_records") as Array
 	_check(boundaries.size() == REQUIRED_BOUNDARIES.size(), "all required fixed boundaries are declared")
@@ -115,6 +127,9 @@ func _test_route_and_boundary_manifest() -> void:
 		_check(record.get("direction", null) is Vector3, "boundary drive direction is explicit: " + boundary_name)
 	for boundary_name: String in REQUIRED_BOUNDARIES:
 		_check(boundary_names.has(boundary_name), "required boundary exists: " + boundary_name)
+	var cd_outer := _find_record(boundaries, "gallery_cd_folded_outer_return")
+	_check(cd_outer.get("start", Vector3.ZERO) == Vector3(8.0, 0.05, 15.0), "C/D outer-return probe begins in playable Gallery D")
+	_check(cd_outer.get("direction", Vector3.ZERO) == Vector3(-1, 0, 0), "C/D outer-return probe drives into the reconstructed west boundary")
 	_check(not boundary_names.has("blocked_continuation"), "removed Workshop stub has no boundary probe")
 	runner.free()
 

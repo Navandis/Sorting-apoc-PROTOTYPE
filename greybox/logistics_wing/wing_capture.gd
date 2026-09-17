@@ -1,6 +1,6 @@
 extends Node3D
 
-const OUTPUT_DIRECTORY := "res://reports/logistics_wing/greybox/revision_02"
+const OUTPUT_DIRECTORY := "res://reports/logistics_wing/greybox/revision_03"
 const CAPTURE_SIZE := Vector2i(1920, 1080)
 const CONTACT_TILE_SIZE := Vector2i(480, 360)
 const CONTACT_IMAGE_SIZE := Vector2i(480, 270)
@@ -30,49 +30,68 @@ func get_view_records() -> Array:
 		_view("Shortened usable Receiving Apron", "receiving_apron.png", Vector3(-29.8, 1.7162851, 3.2), Vector3(-37.2, 1.4, -2.0), 75.0),
 		_view("Narrow Receiving to Backlog threshold", "receiving_backlog_threshold.png", Vector3(-34.0, 1.7162851, 2.0), Vector3(-24.0, 1.4, 0.0), 75.0),
 		_view("Framed shallow Expedition Dispatch annex", "dispatch_annex.png", Vector3(-33.0, 1.7162851, -3.8), Vector3(-33.25, 1.0, -7.8), 75.0),
-		_view("Backlog to Sorting turn sequence - approach", "backlog_sorting_approach.png", Vector3(-27.0, 1.7162851, 0.4), Vector3(-20.0, 1.4, -0.5), 75.0),
-		_view("Backlog to Sorting turn sequence - threshold", "backlog_sorting_threshold.png", Vector3(-23.0, 1.7162851, -0.4), Vector3(-17.0, 1.4, -1.0), 75.0),
-		_view("Backlog to Sorting turn sequence - departure", "backlog_sorting_departure.png", Vector3(-19.0, 1.7162851, -1.0), Vector3(-24.0, 1.4, 0.2), 75.0),
+		_view("Backlog to Sorting turn sequence - approach", "backlog_sorting_approach.png", Vector3(-25.0, 1.7162851, 0.4), Vector3(-16.0, 1.4, -0.6), 75.0),
+		_view("Backlog to Sorting turn sequence - threshold", "backlog_sorting_threshold.png", Vector3(-17.0, 1.7162851, -0.4), Vector3(-12.0, 1.4, -1.0), 75.0),
+		_view("Backlog to Sorting turn sequence - departure", "backlog_sorting_departure.png", Vector3(-13.0, 1.7162851, -1.0), Vector3(-18.0, 1.4, 0.2), 75.0),
 		_view("Deeper Sorting work pocket and table", "sorting_table.png", Vector3(-10.0, 1.7162851, -4.4), Vector3(-10.0, 1.15, -6.18), 75.0),
 		_view("Sorting desk partial freight-aperture awareness", "sorting_desk_freight_aperture.png", Vector3(-10.0, 1.7162851, -4.4), Vector3(-38.82, 1.2, 2.2), 75.0),
 		_view("Sorting turn toward Storage", "sorting_storage_turn.png", Vector3(-10.0, 1.7162851, -4.4), Vector3(-1.0, 1.4, 3.0), 75.0),
-		_view("North-shifted A and B openings onto shared junction", "storage_ab_junction.png", Vector3(6.75, 1.7162851, -5.5), Vector3(6.75, 1.4, -9.0), 75.0),
+		_view("Main Storage A/B connector and gallery openings", "storage_ab_junction.png", Vector3(6.75, 1.7162851, -5.5), Vector3(6.75, 1.4, -9.0), 75.0),
 		_view("Gallery A north-west elongation", "gallery_a_northwest.png", Vector3(0.0, 1.7162851, -11.0), Vector3(-2.0, 1.4, -15.5), 75.0),
-		_view("C to D sole secondary link and irregular southern solid", "storage_cd_south.png", Vector3(9.0, 1.7162851, 10.25), Vector3(5.8, 1.4, 10.25), 75.0),
+		_view("C to D sole secondary link and folded D-side return", "storage_cd_south.png", Vector3(9.0, 1.7162851, 14.5), Vector3(5.5, 1.4, 10.4), 75.0),
+		_view("Gallery C side of the folded C/D perimeter", "storage_cd_folded_c.png", Vector3(0.0, 1.7162851, 13.7), Vector3(3.4, 1.4, 10.8), 75.0),
+		_view("Roof-off local audit of the folded C/D wall chain", "storage_cd_folded_roofoff.png", Vector3(4.0, 15.0, 19.0), Vector3(4.0, 0.0, 14.0), 50.0, false),
 		_view("Broadened main Storage network", "storage_network.png", Vector3(10.0, 1.7162851, 3.0), Vector3(10.0, 1.4, 10.0), 75.0),
 		_view("Gallery E forty-percent southern projection", "gallery_e_projection.png", Vector3(22.0, 1.7162851, 13.0), Vector3(22.0, 1.4, 20.5), 75.0),
-		_view("Protected Medical approach beyond A and B", "medical_approach.png", Vector3(6.75, 1.7162851, -10.5), Vector3(6.9, 1.4, -15.5), 75.0),
-		_view("Medical Supply Anteroom and inner boundary", "medical_anteroom.png", Vector3(6.9, 1.7162851, -18.0), Vector3(6.9, 1.4, -22.7), 75.0),
+		_view("Protected five-metre Medical-only spur beyond Main Storage", "medical_approach.png", Vector3(6.75, 1.7162851, -11.0), Vector3(6.9, 1.4, -19.0), 75.0),
+		_view("Medical Supply Anteroom and translated inner boundary", "medical_anteroom.png", Vector3(6.9, 1.7162851, -20.0), Vector3(6.9, 1.4, -24.7), 75.0),
 		_view("Kitchen route leaves Gallery B east", "kitchen_b_east.png", Vector3(15.0, 1.7162851, -6.8), Vector3(22.0, 1.4, -6.8), 75.0),
-		_view("Kitchen east-then-north turn", "kitchen_turn.png", Vector3(21.5, 1.7162851, -6.8), Vector3(23.0, 1.4, -12.5), 75.0),
-		_view("Elongated Kitchen Service Room", "kitchen_service.png", Vector3(22.6, 1.7162851, -19.5), Vector3(24.25, 1.4, -24.7), 75.0),
+		_view("Kitchen lengthened east-then-north turn", "kitchen_turn.png", Vector3(25.0, 1.7162851, -7.8), Vector3(25.0, 1.4, -13.5), 75.0),
+		_view("Translated elongated Kitchen Service Room", "kitchen_service.png", Vector3(25.0, 1.7162851, -19.5), Vector3(26.65, 1.4, -24.7), 75.0),
 		_view("Lengthened Workshop approach", "workshop_approach.png", Vector3(-10.0, 1.7162851, 9.5), Vector3(-10.0, 1.4, 18.0), 75.0),
 		_view("Workshop Service Room with solid south perimeter", "workshop_service.png", Vector3(-12.0, 1.7162851, 18.0), Vector3(-12.0, 1.4, 24.8), 75.0),
 		_view("Salvager reveal from Workshop-room approach", "workshop_salvager_approach_reveal.png", Vector3(-8.0, 1.7162851, 20.5), Vector3(7.0, 1.4, 25.0), 75.0),
 		_view("Salvager retained local operational view", "salvager_local.png", Vector3(4.0, 1.7162851, 22.0), Vector3(5.0, 1.4, 26.5), 75.0),
+		_view("Roof-off Salvager enclosure and rear-clearance audit", "salvager_rear_clearance.png", Vector3(10.0, 10.0, 31.0), Vector3(5.0, 0.8, 26.5), 50.0, false),
 		_view("Storage-to-Deeper sightline interruption", "deeper_storage_sightline.png", Vector3(24.0, 1.7162851, 2.5), Vector3(40.0, 1.4, 1.5), 75.0),
 		_view("Rebalanced wide-to-narrow dogleg", "deeper_dogleg.png", Vector3(40.0, 1.7162851, 1.5), Vector3(46.0, 1.4, -5.5), 75.0),
-		_view("Narrowed Incinerator installation", "incinerator.png", Vector3(31.5, 1.7162851, 7.5), Vector3(31.5, 1.4, 14.75), 75.0),
+		_view("East-translated narrowed Incinerator installation", "incinerator.png", Vector3(36.5, 1.7162851, 7.5), Vector3(36.5, 1.4, 14.75), 75.0),
 		_view("Open Bunker Ops Transfer Landing", "bunker_ops_landing.png", Vector3(60.0, 1.7162851, -5.5), Vector3(62.5, 1.4, -10.5), 75.0),
 		_view("Personnel-sized deeper-settlement door", "bunker_ops_door.png", Vector3(62.5, 1.7162851, -6.8), Vector3(66.0, 1.4, -6.8), 75.0),
-		_view("Ceiling transition sequence - Receiving approach", "ceiling_transition_approach.png", Vector3(-33.0, 1.7162851, 0.0), Vector3(-28.65, 3.8, 0.0), 75.0),
-		_view("Ceiling transition sequence - threshold", "ceiling_transition_threshold.png", Vector3(-29.7, 1.7162851, 0.0), Vector3(-28.65, 3.8, 0.0), 75.0),
-		_view("Ceiling transition sequence - Backlog departure", "ceiling_transition_departure.png", Vector3(-26.8, 1.7162851, 0.0), Vector3(-28.65, 3.8, 0.0), 75.0),
+		_view("Ceiling transition sequence - Receiving approach", "ceiling_transition_approach.png", Vector3(-33.0, 1.7162851, 0.0), Vector3(-28.5, 3.8, 0.0), 75.0),
+		_view("Ceiling transition sequence - threshold", "ceiling_transition_threshold.png", Vector3(-29.7, 1.7162851, 0.0), Vector3(-28.5, 3.8, 0.0), 75.0),
+		_view("Ceiling transition sequence - Backlog departure", "ceiling_transition_departure.png", Vector3(-26.8, 1.7162851, 0.0), Vector3(-28.5, 3.8, 0.0), 75.0),
 	]
 
 
 func get_manifest_static_fields() -> Dictionary:
 	return {
-		"layout_revision": "logistics-wing-greybox-round02-revision-02",
+		"layout_revision": "logistics-wing-greybox-round03-revision-03",
 		"source_hash_paths": PackedStringArray([
 			"res://greybox/logistics_wing/build_wing_geometry.gd",
 			"res://greybox/logistics_wing/wing_geometry.tscn",
 			"res://greybox/logistics_wing/wing_capture.gd",
 			"res://greybox/logistics_wing/wing_traversal.gd",
 			"res://greybox/logistics_wing/wing_review.tscn",
+			"res://tools/asset_pipeline/tests/logistics_wing_geometry_tests.gd",
+			"res://tools/asset_pipeline/tests/logistics_wing_capture_tests.gd",
+			"res://tools/asset_pipeline/tests/logistics_wing_traversal_tests.gd",
 		]),
 		"final_commit_relation": "Evidence revision is the Git HEAD used for capture; the final validation records whether the handoff commit is identical or a documentation-only descendant.",
 	}
+
+
+func frame_overview_record(record: Dictionary, geometry_aabb: AABB) -> Dictionary:
+	var framed := record.duplicate(true)
+	var center := geometry_aabb.get_center()
+	var vertical_half_angle := deg_to_rad(float(record["fov"]) * 0.5)
+	var horizontal_half_angle := atan(tan(vertical_half_angle) * float(CAPTURE_SIZE.x) / float(CAPTURE_SIZE.y))
+	var half_width := geometry_aabb.size.x * 0.5 + 2.0
+	var half_depth := geometry_aabb.size.z * 0.5 + 2.0
+	var required_height := maxf(half_width / tan(horizontal_half_angle), half_depth / tan(vertical_half_angle))
+	framed["position"] = Vector3(center.x, geometry_aabb.end.y + required_height + 2.0, center.z)
+	framed["target"] = Vector3(center.x, 0.0, center.z)
+	return framed
 
 
 func get_capture_basenames() -> Array:
@@ -158,10 +177,15 @@ func make_contact_sheets(captures: Array[Image], records: Array) -> Array:
 
 func _capture_all() -> void:
 	var roof := get_node_or_null("Review/Geometry/RoofVisuals") as Node3D
+	var geometry := get_node_or_null("Review/Geometry") as Node3D
 	var camera := get_node_or_null("CaptureCamera") as Camera3D
 	var orientation_aids := get_node_or_null("Review/OrientationAids") as Node3D
-	if roof == null or camera == null or orientation_aids == null:
-		_fail_capture("missing RoofVisuals, OrientationAids, or CaptureCamera")
+	if roof == null or geometry == null or camera == null or orientation_aids == null:
+		_fail_capture("missing Geometry, RoofVisuals, OrientationAids, or CaptureCamera")
+		return
+	var geometry_aabb := _compute_geometry_aabb(geometry)
+	if geometry_aabb.size == Vector3.ZERO:
+		_fail_capture("could not compute geometry bounds")
 		return
 	var interaction_hud := get_node_or_null("Review/ReviewPlayer/InteractionHUD") as CanvasLayer
 	if interaction_hud != null:
@@ -175,6 +199,7 @@ func _capture_all() -> void:
 	await get_tree().process_frame
 	await get_tree().process_frame
 	var records := get_view_records()
+	records[0] = frame_overview_record(records[0] as Dictionary, geometry_aabb)
 	var captures: Array[Image] = []
 	for record: Dictionary in records:
 		roof.visible = bool(record["ceiling_on"])
@@ -209,7 +234,7 @@ func _capture_all() -> void:
 			_fail_capture("could not save contact sheet: " + error_string(sheet_error))
 			return
 		print("CAPTURE contact_sheet=" + sheet_path)
-	var manifest_error := _save_manifest(absolute_directory, records)
+	var manifest_error := _save_manifest(absolute_directory, records, geometry_aabb)
 	if manifest_error != OK:
 		_fail_capture("could not save capture manifest: " + error_string(manifest_error))
 		return
@@ -217,7 +242,7 @@ func _capture_all() -> void:
 	get_tree().quit(0)
 
 
-func _save_manifest(absolute_directory: String, records: Array) -> Error:
+func _save_manifest(absolute_directory: String, records: Array, geometry_aabb: AABB) -> Error:
 	var serialized_views: Array = []
 	for record: Dictionary in records:
 		serialized_views.append({
@@ -232,7 +257,7 @@ func _save_manifest(absolute_directory: String, records: Array) -> Error:
 	var manifest := {
 		"scene": "res://greybox/logistics_wing/wing_capture.tscn",
 		"review_scene": "res://greybox/logistics_wing/wing_review.tscn",
-		"layout_revision": "logistics-wing-greybox-round02-revision-02",
+		"layout_revision": "logistics-wing-greybox-round03-revision-03",
 		"code_revision": _git_revision(),
 		"evidence_revision": _git_revision(),
 		"final_commit_relation": String(get_manifest_static_fields()["final_commit_relation"]),
@@ -242,6 +267,11 @@ func _save_manifest(absolute_directory: String, records: Array) -> Error:
 		"contact_tile_size": {"x": CONTACT_TILE_SIZE.x, "y": CONTACT_TILE_SIZE.y},
 		"contact_image_size": {"x": CONTACT_IMAGE_SIZE.x, "y": CONTACT_IMAGE_SIZE.y},
 		"contact_caption_height": CONTACT_CAPTION_HEIGHT,
+		"actual_geometry_aabb_m": {
+			"position": _vector(geometry_aabb.position),
+			"size": _vector(geometry_aabb.size),
+			"end": _vector(geometry_aabb.end),
+		},
 		"views": serialized_views,
 	}
 	var file := FileAccess.open(absolute_directory.path_join("capture_manifest.json"), FileAccess.WRITE)
@@ -281,6 +311,26 @@ func _source_hashes() -> Dictionary:
 	for resource_path: String in get_manifest_static_fields()["source_hash_paths"] as PackedStringArray:
 		hashes[resource_path] = FileAccess.get_sha256(ProjectSettings.globalize_path(resource_path))
 	return hashes
+
+
+func _compute_geometry_aabb(root: Node) -> AABB:
+	var bounds := AABB()
+	var has_bounds := false
+	var pending: Array[Node] = [root]
+	while not pending.is_empty():
+		var node := pending.pop_back() as Node
+		if node is MeshInstance3D:
+			var mesh_instance := node as MeshInstance3D
+			if mesh_instance.mesh != null:
+				var mesh_bounds := mesh_instance.global_transform * mesh_instance.mesh.get_aabb()
+				if not has_bounds:
+					bounds = mesh_bounds
+					has_bounds = true
+				else:
+					bounds = bounds.merge(mesh_bounds)
+		for child: Node in node.get_children():
+			pending.append(child)
+	return bounds
 
 
 func _fail_capture(message: String) -> void:
