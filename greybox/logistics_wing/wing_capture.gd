@@ -46,7 +46,7 @@ func get_view_records() -> Array:
 		_view("Unchanged Storage-side approach into the doubled Medical-only corridor", "medical_approach.png", Vector3(6.75, 1.7162851, -11.0), Vector3(7.0, 1.4, -24.5), 75.0),
 		_view("Roof-off Medical plan showing ten-metre spur and west-expanded room", "medical_plan_roofoff.png", Vector3(4.3, 24.0, -21.5), Vector3(4.3, 0.0, -21.5), 50.0, false, false, true),
 		_view("Arrival at the Medical room's south-east entrance", "medical_entrance.png", Vector3(7.0, 1.7162851, -21.0), Vector3(4.3, 1.4, -26.5), 75.0),
-		_view("Inside Medical looking back along the continuous east wall", "medical_east_wall.png", Vector3(2.0, 1.7162851, -26.5), Vector3(7.0, 1.4, -18.5), 75.0),
+		_view("Inside Medical looking back along the continuous east wall", "medical_east_wall.png", Vector3(6.5, 1.7162851, -27.0), Vector3(7.6, 1.4, -17.0), 75.0),
 		_view("Kitchen route leaves Gallery B east", "kitchen_b_east.png", Vector3(15.0, 1.7162851, -6.8), Vector3(22.0, 1.4, -6.8), 75.0),
 		_view("Kitchen lengthened east-then-north turn", "kitchen_turn.png", Vector3(25.0, 1.7162851, -7.8), Vector3(25.0, 1.4, -13.5), 75.0),
 		_view("Translated elongated Kitchen Service Room", "kitchen_service.png", Vector3(25.0, 1.7162851, -19.5), Vector3(26.65, 1.4, -24.7), 75.0),
