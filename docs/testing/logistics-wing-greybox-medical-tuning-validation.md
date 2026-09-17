@@ -1,10 +1,10 @@
 # Logistics wing Medical tuning validation
 
-**Date:** 17 September 2026  
-**Branch:** `codex/logistics-wing-greybox`  
-**Round-three baseline:** `f2fb9b090b39ac6cfdc136ab68e1269c3c4a204a`  
-**Source and evidence checkpoint:** `aeb1ef27671f2f07d651e5064b00c3c77a06600b`  
-**Layout:** `logistics-wing-greybox-medical-tuning-revision-04`  
+**Date:** 17 September 2026
+**Branch:** `codex/logistics-wing-greybox`
+**Round-three baseline:** `f2fb9b090b39ac6cfdc136ab68e1269c3c4a204a`
+**Source and evidence checkpoint:** `aeb1ef27671f2f07d651e5064b00c3c77a06600b`
+**Layout:** `logistics-wing-greybox-medical-tuning-revision-04`
 **Evidence:** `reports/logistics_wing/greybox/revision_04/`
 
 ## Outcome
