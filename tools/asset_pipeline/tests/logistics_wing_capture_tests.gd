@@ -74,7 +74,7 @@ func _test_review_scene_is_isolated_and_runnable() -> void:
 	var medical_label := review.get_node_or_null("OrientationAids/MedicalLabel") as Label3D
 	_check(medical_label != null and medical_label.position == Vector3(4.3, 2.5, -26.5), "Medical label translates with the unchanged-size room")
 	var medical_north_label := review.get_node_or_null("OrientationAids/MedicalNorthLabel") as Label3D
-	_check(medical_north_label != null and medical_north_label.position == Vector3(0.8, 0.1, -29.0), "Medical plan evidence has a local north label")
+	_check(medical_north_label != null and medical_north_label.position == Vector3(2.0, 0.1, -29.0), "Medical plan evidence has an inset local north label")
 	_check(_find_scene_path(review, "res://main.tscn") == null, "review does not instance main.tscn")
 	_check(_find_scene_path(review, "res://receiving/freight_bay_prototype.tscn") == null, "review does not instance rejected Receiving")
 	review.free()
@@ -155,8 +155,8 @@ func _test_capture_manifest_and_image_contract() -> void:
 	_check(medical_entrance.get("position", Vector3.ZERO) == Vector3(7.0, 1.7162851, -21.0), "Medical entrance view arrives on the unchanged corridor centreline")
 	_check(medical_entrance.get("target", Vector3.ZERO) == Vector3(4.3, 1.4, -26.5), "Medical entrance view turns into the west-expanded room")
 	var medical_east_wall := _find_record(records, "medical_east_wall.png")
-	_check(medical_east_wall.get("position", Vector3.ZERO) == Vector3(4.3, 1.7162851, -27.5), "Medical east-wall view begins inside the moved room")
-	_check(medical_east_wall.get("target", Vector3.ZERO) == Vector3(7.9, 1.4, -18.5), "Medical east-wall view looks back along the continuous aligned side")
+	_check(medical_east_wall.get("position", Vector3.ZERO) == Vector3(2.0, 1.7162851, -26.5), "Medical east-wall view begins on the west side of the moved room")
+	_check(medical_east_wall.get("target", Vector3.ZERO) == Vector3(7.0, 1.4, -18.5), "Medical east-wall view looks through the entrance along the aligned corridor side")
 	var incinerator := _find_record(records, "incinerator.png")
 	_check(incinerator.get("position", Vector3.ZERO) == Vector3(36.5, 1.7162851, 7.5), "Incinerator view moves east with the complete spur")
 	var workshop_service := _find_record(records, "workshop_service.png")
