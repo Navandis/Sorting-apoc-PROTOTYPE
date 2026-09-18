@@ -1,6 +1,6 @@
 # Locker level-2 and Fuel Canister maintenance validation
 
-**Technical result:** M01 and M02 complete on `codex/locker-fuel-maintenance`; separate human PROMOTE/REVISE decisions remain pending.
+**Technical result:** M01 and M02 complete on `codex/locker-fuel-maintenance`; M02 is human-PROMOTED and M01 human review remains pending.
 **Published base:** `948275ee296eaa0a94329e8bf0b202d6f5ad6129`
 **M01 commits:** `4cf5ca6c11725dd5d56a2791f80d92365b0d71b4` and front-containment follow-up `1d9d1eaa0adfc85a95c1c04ac2d5617346724665`
 **M02 commit:** `88ba1c20f0d900b54c3c34b7ca3f18f647ffe61c`
@@ -87,6 +87,8 @@ Fuel-as-support rejection and absence of automatic group stacking pass. The
 labelled runtime-only review scene leaves the normal fourteen-host saved setup
 unchanged. Detailed provenance and commands are in
 [the Fuel reconciliation report](fuel-canister-maintenance-reconciliation.md).
+The developer human-PROMOTED M02 on 18 September 2026. This packaging-only
+follow-up does not remove Fuel from the continuing seed exclusion.
 
 ## Combined verification
 
@@ -141,6 +143,27 @@ Authoritative final records are under
 - `m01/front_containment/` RED/GREEN, affected checks and matched captures;
 - the hashed compact review bundle, evidence manifest and SHA-256 sidecar.
 
+## Packaging isolation follow-up
+
+Before resuming M01's human check, Godot discovered copied scripts and UIDs in
+the two project-local review-bundle staging directories. Each staging root now
+contains a genuine zero-byte `.gdignore` created at the root, before any child
+resource can be scanned:
+
+- `reports/logistics_wing/content_maintenance/locker_fuel/initial/final/review_bundle_5e9366f/.gdignore`
+- `reports/logistics_wing/content_maintenance/locker_fuel/initial/final/review_bundle_95a8787/.gdignore`
+
+No sibling `review_bundle_*` directory remains unisolated. The copied payloads,
+ZIPs, checksum sidecars, production classes and production `.uid` files were not
+changed or removed. A fresh settled editor scan and normal default launch both
+exit 0 without duplicate-UID, duplicate-global-class or dependent compilation
+errors. Logs are retained under `initial/final/packaging_isolation/`.
+
+Future source-bundle staging must be created outside the Godot project when
+practical. If it must be project-local, its empty `.gdignore` must be created
+before any scripts, scenes, resources or `.uid` files are copied into it. This
+is a packaging rule, not a new packaging framework.
+
 ## Preservation result
 
 Of 26 protected tracked paths, 22 match the pre-task Git object and working-file
@@ -169,19 +192,14 @@ For Fuel, launch the runtime-only candidate review:
 & 'D:\AI Tools\Godot-4.7-Codex\Godot_v4.7-stable_win64_console.exe' --path . --rendering-method gl_compatibility res://gameplay/logistics_wing/review/fuel_maintenance_review.tscn -- --review-fuel
 ```
 
-Please record PROMOTE or REVISE independently:
+M01 still requires its independent PROMOTE or REVISE decision:
 
 1. **M01, locker:** With F6 on, is the second-from-bottom grid inside the usable
    shelf? With actual auto/manual placed items along the formerly offending rear
    row, is back-panel penetration gone, and do placement/retrieval and other
    levels still behave normally?
-2. **M02, Fuel:** Does the current canister retain the intended appearance, size
-   and stored pose, and can it be picked up, carried, auto/manually stored,
-   rotated in the allowed packing direction, and retrieved without clipping,
-   duplication or changed support expectations in the supplied valid test
-   conditions?
 
-After a separate Fuel PROMOTE, the bounded follow-through is to remove only
+A later separately authorized Fuel-eligibility follow-through would remove only
 `loot_000015` from `BLOCKED_ITEM_IDS` in
 `gameplay/logistics_wing/development/seed_registrar.gd` and update only its
 expectation in `wing_seed_fixture_tests.gd`. That follow-through is not included
