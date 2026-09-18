@@ -21,9 +21,9 @@ func _ready() -> void:
 	if _storage_manager == null:
 		push_error("FunctionalFixtures could not initialize StoragePrototypeManager")
 		return
-	# F7 clears a surface and injects debug reservations. It is useful only in
-	# the historical mechanics fixture, never in the continuing game scene.
-	_storage_manager.set_process_unhandled_input(false)
+	# This local manager accepts only F6. Its override deliberately never
+	# forwards F7 to the historical occupancy demonstration.
+	_storage_manager.set_process_unhandled_input(true)
 
 
 func get_installed_surfaces() -> Array[Node]:
@@ -39,7 +39,12 @@ func get_missing_top_clearance_contexts() -> Array[String]:
 
 
 func is_storage_debug_input_enabled() -> bool:
+	## True means the non-destructive F6 presentation toggle is available.
 	return (
 		_storage_manager != null
 		and _storage_manager.is_processing_unhandled_input()
 	)
+
+
+func is_storage_occupancy_demo_enabled() -> bool:
+	return false

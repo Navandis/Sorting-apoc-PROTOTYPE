@@ -176,9 +176,27 @@ func _assert_composition(scene: Node, context: String) -> void:
 	_assert_environment_proxy_contract(environment, context)
 	await _assert_fixture_contract(scene, context)
 	if development_setup != null:
+		var seed_items := development_setup.get_node("SeedItems")
+		var seed_hosts := seed_items.get_children()
 		_check(
-			development_setup.get_node("SeedItems").get_child_count() == 12,
-			"%s composition begins with twelve authored seed hosts" % context
+			seed_hosts.size() >= 12,
+			"%s composition preserves the editable seed fixture" % context
+		)
+		var live_instance_ids: Dictionary = {}
+		for host_node: Node in seed_hosts:
+			var world_item := host_node.get_node_or_null("WorldItem") as WorldItem
+			_check(world_item != null, "%s live seed %s registers one WorldItem" % [context, host_node.name])
+			if world_item == null or world_item.get_item_instance() == null:
+				continue
+			var expected_id := "wing_seed_v1:%s" % host_node.name
+			_check(
+				world_item.get_item_instance().instance_id == expected_id,
+				"%s live seed %s keeps its name-derived identity" % [context, host_node.name]
+			)
+			live_instance_ids[world_item.get_item_instance().instance_id] = true
+		_check(
+			live_instance_ids.size() == seed_hosts.size(),
+			"%s live edited seed fixture has distinct identities" % context
 		)
 
 
@@ -230,6 +248,7 @@ func _assert_duplicate_fixture_namespace_rejected(packed: PackedScene) -> void:
 	host.add_child(first)
 	await process_frame
 	await physics_frame
+	var primary_seed_count := first.get_node("DevelopmentSetup/SeedItems").get_child_count()
 
 	var second := packed.instantiate()
 	second.name = "WingGameplayDuplicate"
@@ -255,13 +274,19 @@ func _assert_duplicate_fixture_namespace_rejected(packed: PackedScene) -> void:
 			"second active fixture namespace registers no identities"
 		)
 	var world_items := host.find_children("WorldItem", "WorldItem", true, false)
-	_check(world_items.size() == 12, "duplicate fixture rejection leaves exactly twelve registered items")
+	_check(
+		world_items.size() == primary_seed_count,
+		"duplicate fixture rejection leaves exactly one live seed set"
+	)
 	var instance_ids: Dictionary = {}
 	for value: Node in world_items:
 		var world_item := value as WorldItem
 		if world_item != null and world_item.get_item_instance() != null:
 			instance_ids[world_item.get_item_instance().instance_id] = true
-	_check(instance_ids.size() == 12, "duplicate fixture rejection leaves twelve unique item identities")
+	_check(
+		instance_ids.size() == primary_seed_count,
+		"duplicate fixture rejection leaves one distinct identity per live seed"
+	)
 
 	host.free()
 	current_scene = null
@@ -276,6 +301,7 @@ func _assert_duplicate_setup_namespace_rejected(gameplay_packed: PackedScene) ->
 	current_scene = gameplay
 	await process_frame
 	await physics_frame
+	var live_seed_count := gameplay.get_node("DevelopmentSetup/SeedItems").get_child_count()
 
 	var duplicate_setup := setup_packed.instantiate()
 	duplicate_setup.name = "DevelopmentSetupCopy"
@@ -294,7 +320,10 @@ func _assert_duplicate_setup_namespace_rejected(gameplay_packed: PackedScene) ->
 		"duplicated setup creates no partial runtime ownership"
 	)
 	var all_world_items := gameplay.find_children("WorldItem", "WorldItem", true, false)
-	_check(all_world_items.size() == 12, "duplicated setup leaves exactly one twelve-item owner")
+	_check(
+		all_world_items.size() == live_seed_count,
+		"duplicated setup leaves exactly one live edited seed owner set"
+	)
 
 	gameplay.free()
 	current_scene = null
@@ -428,8 +457,13 @@ func _assert_fixture_contract(scene: Node, context: String) -> void:
 		"%s fixtures have no missing clearance contexts" % context
 	)
 	_check(
-		fixtures.call("is_storage_debug_input_enabled") == false,
-		"%s destructive fixture debug input is disabled" % context
+		fixtures.call("is_storage_debug_input_enabled") == true,
+		"%s non-destructive F6 grid input is enabled" % context
+	)
+	_check(
+		fixtures.has_method("is_storage_occupancy_demo_enabled")
+		and fixtures.call("is_storage_occupancy_demo_enabled") == false,
+		"%s destructive F7 occupancy demo remains disabled" % context
 	)
 
 	var all_surfaces := scene.find_children("*", "StorageSurface", true, false)
@@ -437,6 +471,7 @@ func _assert_fixture_contract(scene: Node, context: String) -> void:
 	var occupancy_before: Array[float] = []
 	for surface: StorageSurface in surfaces:
 		occupancy_before.append(surface.get_occupancy_ratio())
+		_check(not surface.is_debug_visible(), "%s %s starts with its grid hidden" % [context, surface.surface_id])
 	var key_down := InputEventKey.new()
 	key_down.keycode = KEY_F7
 	key_down.pressed = true

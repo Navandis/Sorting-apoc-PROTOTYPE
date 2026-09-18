@@ -1,6 +1,7 @@
 extends SceneTree
 
 const GAMEPLAY_PATH := "res://gameplay/logistics_wing/wing_gameplay.tscn"
+const DEVELOPMENT_SETUP_PATH := "res://gameplay/logistics_wing/development/seeded_storage_setup.tscn"
 const StorageCategoriesScript = preload("res://storage_categories.gd")
 
 var _failed: bool = false
@@ -24,7 +25,7 @@ func _run() -> void:
 
 
 func _test_identity_stack_and_transfer_loop(packed: PackedScene) -> void:
-	var scene := packed.instantiate()
+	var scene := _instantiate_with_regression_seed_fixture(packed)
 	root.add_child(scene)
 	current_scene = scene
 	await process_frame
@@ -146,7 +147,7 @@ func _test_identity_stack_and_transfer_loop(packed: PackedScene) -> void:
 
 
 func _test_rejection_and_rollback_loop(packed: PackedScene) -> void:
-	var scene := packed.instantiate()
+	var scene := _instantiate_with_regression_seed_fixture(packed)
 	root.add_child(scene)
 	current_scene = scene
 	await process_frame
@@ -363,6 +364,19 @@ func _owner_census(scene: Node) -> Dictionary:
 		"total": loose + carried_count + stored,
 		"unique_ids": ids.size(),
 	}
+
+
+func _instantiate_with_regression_seed_fixture(gameplay_packed: PackedScene) -> Node:
+	var scene := gameplay_packed.instantiate()
+	var live_setup := scene.get_node_or_null("DevelopmentSetup")
+	if live_setup != null:
+		scene.remove_child(live_setup)
+		live_setup.free()
+	var setup_packed := load(DEVELOPMENT_SETUP_PATH) as PackedScene
+	var regression_setup := setup_packed.instantiate()
+	regression_setup.name = "DevelopmentSetup"
+	scene.add_child(regression_setup)
+	return scene
 
 
 func _finish() -> void:

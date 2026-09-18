@@ -54,6 +54,7 @@ var _interaction_area: Area3D = null
 var _debug_grid: MeshInstance3D = null
 var _debug_occupancy_root: Node3D = null
 var _debug_visible: bool = true
+var _developer_debug_visible: bool = false
 
 
 func configure(
@@ -1492,14 +1493,32 @@ func get_local_placement_transform(item_key: String) -> Transform3D:
 
 func set_debug_visible(value: bool) -> void:
 	_debug_visible = value
+	_apply_debug_visibility()
+
+
+func set_developer_debug_visible(value: bool) -> void:
+	_developer_debug_visible = value
+	_apply_debug_visibility()
+
+
+func is_developer_debug_visible() -> bool:
+	return _developer_debug_visible
+
+
+func is_normal_debug_visible() -> bool:
+	return _debug_visible
+
+
+func _apply_debug_visibility() -> void:
+	var effective_visible := _debug_visible or _developer_debug_visible
 	if _debug_grid != null:
-		_debug_grid.visible = value
+		_debug_grid.visible = effective_visible
 	if _debug_occupancy_root != null:
-		_debug_occupancy_root.visible = value
+		_debug_occupancy_root.visible = effective_visible
 
 
 func is_debug_visible() -> bool:
-	return _debug_visible
+	return _debug_visible or _developer_debug_visible
 
 
 func debug_summary() -> String:
@@ -1579,13 +1598,13 @@ func _rebuild_debug_grid() -> void:
 	_debug_grid.name = "StorageDebugGrid"
 	_debug_grid.mesh = immediate_mesh
 	_debug_grid.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-	_debug_grid.visible = _debug_visible
+	_debug_grid.visible = is_debug_visible()
 	add_child(_debug_grid)
 
 	if _debug_occupancy_root == null:
 		_debug_occupancy_root = Node3D.new()
 		_debug_occupancy_root.name = "StorageDebugOccupancy"
-		_debug_occupancy_root.visible = _debug_visible
+		_debug_occupancy_root.visible = is_debug_visible()
 		add_child(_debug_occupancy_root)
 
 
@@ -1637,4 +1656,4 @@ func _refresh_debug_occupancy() -> void:
 
 		marker_index += 1
 
-	_debug_occupancy_root.visible = _debug_visible
+	_debug_occupancy_root.visible = is_debug_visible()
