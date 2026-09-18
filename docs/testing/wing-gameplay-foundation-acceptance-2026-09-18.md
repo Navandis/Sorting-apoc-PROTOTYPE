@@ -1,9 +1,9 @@
 # Continuing gameplay foundation and F6 — human acceptance
 
-**Recorded:** 18 September 2026  
-**Disposition:** PROMOTE within the tested integration and developer-visualization scope.  
-**Reported local branch:** `codex/wing-storage-bridge`  
-**Reported F6 final HEAD:** `2b00d5d612e8ec74e8a09f1620469c54552a15e8`  
+**Recorded:** 18 September 2026
+**Disposition:** PROMOTE within the tested integration and developer-visualization scope.
+**Reported local branch:** `codex/wing-storage-bridge`
+**Reported F6 final HEAD:** `2b00d5d612e8ec74e8a09f1620469c54552a15e8`
 **Reported evidence revision:** `2de099164e2564e46884443cd5d4ceda296f33e4`
 
 ## Human evidence
