@@ -42,3 +42,19 @@ This accepts the tested scene integration, editor workflow and F6 behavior. It d
 4. Begin functional Receiving only after the preceding gates.
 
 This acceptance record was installed from the authoritative close-out handoff. It records human approval after the dated implementation reports; it does not backdate their original pending statuses or itself publish the repository.
+
+## Default-entry transition — final developer confirmation
+
+**Developer check completed:** 18 September 2026, after the default-entry close-out
+
+**Recorded in this chronology:** 18 September 2026 at 20:36 +01:00
+
+**Published baseline checked:** `948275ee296eaa0a94329e8bf0b202d6f5ad6129`
+
+**Disposition:** CLOSED / PROMOTED within the tested continuing-gameplay and authoring scope.
+
+The developer subsequently confirmed that Godot Run Project starts the intended `wing_gameplay` scene rather than legacy `main`, the moved table/items and duplicated objects are in their expected locations, and loot/shelf interactions behave as expected. No issue was identified in that final human check. This follows the earlier successful broad handling/editor review and explicit PROMOTE for all three F6 checks; no further transition correction or default-launch migration is requested.
+
+At the checked baseline, `project.godot` selects `uid://bljf1nlhijej`, which resolves to `res://gameplay/logistics_wing/wing_gameplay.tscn`. The accepted scene remains Git blob `e53b4b6eb48540cd229868962a785baccffcdd8b`, with fourteen authored hosts including `Book2` and `CDStack_B2` and the saved East-table transform. The committed raw LF payload SHA-256 is `eb260b07795edc0975e7c1a21706ef72a6494b9ceb8ccde24cc5f43f6f66d3e9`; the Windows CRLF checkout representation may have a different raw byte hash without constituting a scene edit.
+
+This final confirmation closes only the continuing-scene/default-entry transition. Locker level-2 calibration and Fuel Canister freshness remain the next separate maintenance work; broader item coverage and upper-shelf/ceiling ergonomics follow, and physical Receiving remains later. The bounded legacy audit's inherited assertions remain recorded rather than converted into a pass. This appended outcome intentionally leaves the earlier implementation and review chronology unchanged.
