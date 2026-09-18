@@ -10,6 +10,15 @@
 
 **Spec:** `docs/superpowers/specs/2026-09-18-wing-gameplay-foundation-design.md`
 
+## Execution status
+
+- [x] Task 1 — continuing composition, player, HUD and environment boundary.
+- [x] Task 2 — three functional fixtures, proxy isolation and measured clearance.
+- [x] Task 3 — saved table/loot fixture and deterministic registrar.
+- [x] Task 4 — ownership, navigation, preservation, evidence and review handoff.
+
+The implementation stops at the approved human handling/editor review gate. Default launch, merge, push, Receiving and production art remain outside this plan's completed scope.
+
 ## Global Constraints
 
 - Work only in `D:\Godot Projects\Sorting-apoc-PROTOTYPE` on `codex/wing-storage-bridge`, created from verified synchronized `main` at `1491fd729f3237706ad9533274b7525f6b058932`.

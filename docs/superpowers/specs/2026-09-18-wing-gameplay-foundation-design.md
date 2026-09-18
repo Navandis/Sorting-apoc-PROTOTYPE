@@ -1,8 +1,8 @@
 # Continuing Wing Gameplay Foundation Design
 
-**Decision date:** 18 September 2026  
-**Implementation branch:** `codex/wing-storage-bridge`  
-**Verified baseline:** synchronized local and remote `main` at `1491fd729f3237706ad9533274b7525f6b058932`  
+**Decision date:** 18 September 2026
+**Implementation branch:** `codex/wing-storage-bridge`
+**Verified baseline:** synchronized local and remote `main` at `1491fd729f3237706ad9533274b7525f6b058932`
 **Approval:** The continuing gameplay composition and editor-authored table/loot workflow are approved for implementation. Human handling approval and default-launch promotion remain separate gates.
 
 ## Purpose and lifetime
