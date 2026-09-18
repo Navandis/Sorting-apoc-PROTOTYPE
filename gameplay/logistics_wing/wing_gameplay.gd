@@ -17,3 +17,10 @@ func _enter_tree() -> void:
 
 func is_development_setup_active() -> bool:
 	return get_node_or_null("DevelopmentSetup") != null
+
+
+func get_functional_surfaces() -> Array[Node]:
+	var fixtures := get_node_or_null("FunctionalFixtures")
+	if fixtures == null or not fixtures.has_method("get_installed_surfaces"):
+		return []
+	return fixtures.call("get_installed_surfaces") as Array[Node]
