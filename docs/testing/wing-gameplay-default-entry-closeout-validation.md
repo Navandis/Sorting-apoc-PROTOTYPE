@@ -5,6 +5,7 @@
 **Synchronized starting main:** `1491fd729f3237706ad9533274b7525f6b058932`
 **Saved-scene checkpoint:** `d359ab6ce1ea9ff72d3e0f9a60cfeeb5da3025bf`
 **Default-entry implementation:** `ea96777f5a094aa785f8b2f8d7a492034792f41e`
+**First verified integration:** `c1c570c3a683b0ad1f21d023066829e8f1e4eb29`
 
 ## Result and bounded scope
 
@@ -58,4 +59,12 @@ The protected Git objects below are byte-identical between the accepted F6 tip `
 
 After a fresh fetch, local `main` and `origin/main` both remained at `1491fd729f3237706ad9533274b7525f6b058932`. That revision is an ancestor of the feature tip; the rejected Receiving commit `c9752c8c68cd55b950dd588542ea271e1acc0aab` is not. The accepted foundation, evidence, F6 and saved-scene checkpoint commits are all in the linear feature history.
 
-The authorized GitHub repository is public and its default branch is `main`. The outgoing audit found nineteen commits and fifty-two changed paths at the implementation checkpoint: forty-six additions, six modifications, no deletions, and 330,432 bytes of tracked payload. No changed file exceeds 1 MiB; no credential-like filename, `assets/`, `.godot/` or ignored `reports/` content is present. The final publication revisions and remote equality are recorded in the concluding update to this report after guarded synchronization.
+The authorized GitHub repository is public and its default branch is `main`. The outgoing audit found nineteen commits and fifty-two changed paths at the implementation checkpoint: forty-six additions, six modifications, no deletions, and 330,432 bytes of tracked payload. No changed file exceeds 1 MiB; no credential-like filename, `assets/`, `.godot/` or ignored `reports/` content is present.
+
+## Guarded synchronization result
+
+The feature branch was published first at `c1c570c3a683b0ad1f21d023066829e8f1e4eb29`. A fresh fetch proved the remote feature matched exactly and `origin/main` was still the synchronized starting revision. Local `main` then fast-forwarded from `1491fd729f3237706ad9533274b7525f6b058932` with `--ff-only`; no merge commit was created.
+
+On integrated `main`, all 39 non-hanging suites again exited 0 with one PASS each and the same 52 expected diagnostics. Normal default launch, explicit legacy main, explicit neutral review and the focused F6 suite all exited 0. A fresh pre-push fetch showed no upstream movement, after which `main` was pushed normally. The post-push fetch showed local/remote feature and local/remote main all equal to `c1c570c3a683b0ad1f21d023066829e8f1e4eb29`, with ahead/behind `0/0` for both branches.
+
+This concluding documentation-only update is propagated through the same guarded feature-push, `--ff-only` local-main update and normal main push. The final containing revision is the common feature/main tip; both remote refs are re-fetched and required to match it with `0/0` divergence before close-out is reported complete. No force-push, protection bypass, branch deletion or rejected-branch publication is used.
