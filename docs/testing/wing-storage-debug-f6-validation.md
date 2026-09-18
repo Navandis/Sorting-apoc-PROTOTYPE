@@ -53,7 +53,7 @@ The focused F6 test was first run against the blocked baseline and failed on inp
 - `wing_gameplay_capture_tests.gd`, `wing_gameplay_navigation_tests.gd` and `wing_seed_fixture_tests.gd`: exit 0 with one `PASS:` each;
 - all **39/39** established non-hanging `*_tests.gd` scripts except the known legacy integration audit: exit 0 with exactly one `PASS:` each.
 
-The expanded run emitted 52 expected `ERROR:` lines: 39 recurring Windows root-certificate diagnostics plus two deliberate catalogue duplicate diagnostics, one Receiving duplicate-source diagnostic, eight seed rejection/lifecycle diagnostics and two active-namespace rejection diagnostics. There were no unexpected assertions.
+The expanded run emitted 52 expected `ERROR:` lines: 39 recurring Windows root-certificate diagnostics plus two deliberate catalogue duplicate diagnostics, one Receiving duplicate-source diagnostic, eight seed rejection/lifecycle diagnostics and two active-namespace rejection diagnostics. `storage_pose_content_tests.gd` also reproduced its inherited Fuel Canister source-fingerprint assertion at line 143 while exiting 0 and printing its historical PASS line. That known content exception was not silenced or relabelled as repaired; there were no unexpected assertions.
 
 The separately bounded `main_scene_loot_audit_integration_tests.gd` run was terminated after 25 seconds, printed no PASS and reproduced exactly its inherited three assertions: `_assert_summary` line 179 twice and `_init` line 95 once. This remains an exception, not a pass.
 
