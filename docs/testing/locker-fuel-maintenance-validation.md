@@ -1,15 +1,16 @@
 # Locker level-2 and Fuel Canister maintenance validation
 
-**Technical result:** M01 and M02 complete on `codex/locker-fuel-maintenance`; M02 is human-PROMOTED and M01 human review remains pending.
+**Final result:** M01 and M02 are human-PROMOTED; the bounded maintenance close-out and Fuel eligibility follow-through are complete on `codex/locker-fuel-maintenance`.
 **Published base:** `948275ee296eaa0a94329e8bf0b202d6f5ad6129`
 **M01 commits:** `4cf5ca6c11725dd5d56a2791f80d92365b0d71b4` and front-containment follow-up `1d9d1eaa0adfc85a95c1c04ac2d5617346724665`
 **M02 commit:** `88ba1c20f0d900b54c3c34b7ca3f18f647ffe61c`
+**Fuel eligibility commit:** `e0fca655eecbdb245e44b5f30ff155a7153975ab`
 
 The accepted default wing, fourteen saved item hosts and developer transforms,
-F6/F7 policy, geometry, player/HUD, item definitions, Receiving pool and normal
-seed eligibility were preserved. No merge or push has occurred. Fuel remains
-blocked from the continuing seed pending its focused human review; Gloves and
-Pants remain blocked.
+F6/F7 policy, geometry, player/HUD, item definitions and Receiving pool are
+preserved. The bounded close-out changes only Fuel eligibility: Fuel is eligible
+for a correctly authored development host without adding or moving any host in
+the saved fourteen-host scene. Gloves and Pants remain blocked.
 
 ## M01 — ventilated-locker level 2
 
@@ -53,6 +54,9 @@ seating convention. Full measurements and RED/GREEN evidence are in
 [the M01 measurement report](locker-level2-maintenance-measurements.md) and the
 ignored `reports/logistics_wing/content_maintenance/locker_fuel/initial/m01/`
 tree, including the non-overwriting `front_containment/` follow-up.
+The developer human-PROMOTED M01 on 18 September 2026 after checking the
+second-from-bottom F6 grid and actual placement at both rear and front edges;
+all requested human placement/retrieval checks passed.
 
 ## M02 — Fuel Canister reconciliation
 
@@ -87,8 +91,8 @@ Fuel-as-support rejection and absence of automatic group stacking pass. The
 labelled runtime-only review scene leaves the normal fourteen-host saved setup
 unchanged. Detailed provenance and commands are in
 [the Fuel reconciliation report](fuel-canister-maintenance-reconciliation.md).
-The developer human-PROMOTED M02 on 18 September 2026. This packaging-only
-follow-up does not remove Fuel from the continuing seed exclusion.
+The developer human-PROMOTED M02 on 18 September 2026 after the recorded Fuel
+appearance, handling, native/R90 storage and retrieval checks passed.
 
 ## Combined verification
 
@@ -118,6 +122,32 @@ composition and F6 tests all exit 0 with PASS. The affected default and explicit
 legacy-main 90-frame smokes also exit 0. No M02 file changed and the full
 combined suite was not rerun merely for this focused repair; the new raw logs
 are under `initial/m01/front_containment/`.
+
+### Accepted close-out verification
+
+After both human PROMOTEs, commit
+`e0fca655eecbdb245e44b5f30ff155a7153975ab` removes only `loot_000015`
+from the continuing seed registrar's blocked IDs. The saved fourteen-host scene
+is unchanged. A runtime-only correctly authored Fuel host now registers through
+the production registrar; the same test proves Gloves (`loot_000034`) and Pants
+(`loot_000036`) remain rejected. Fuel definition, catalogue, Receiving pool,
+locker calibration, default launch and F6 behavior are unchanged.
+
+Five focused eligibility/Fuel checks pass with no assertion, script, parse or
+resource failure. The final discovered combined pass includes all 42 test
+scripts, including `main_scene_loot_audit_integration_tests.gd`: 42/42 exit 0,
+print exactly one PASS marker and match the established per-test intentional
+diagnostic headers. The legacy audit's former Fuel-related failure and timeout
+are resolved; it now completes normally with no assertion. A fresh settled
+editor scan and normal default launch both exit 0 without duplicate UID/class or
+dependent compile errors. Default startup still reports twelve functional
+surfaces, F6 default OFF and F7 disabled. The only common engine diagnostic is
+the disclosed Windows root-certificate-store error.
+
+Close-out logs and strict structured accounting are retained under
+`initial/final/closeout/`, including `combined_e0fca65/combined_results.json`,
+`editor_scan_final.log` and `default_launch_final.log`. The earlier technical,
+RED/GREEN, rendered and packaging evidence remains historical and unchanged.
 
 The first test-results classifier expected the baseline JSON's wrong container
 shape and falsely labelled four known negative-diagnostic suites. The raw runs
@@ -166,18 +196,20 @@ is a packaging rule, not a new packaging framework.
 
 ## Preservation result
 
-Of 26 protected tracked paths, 22 match the pre-task Git object and working-file
-SHA exactly. The only four authorized differences are
+Of 26 protected tracked paths, 21 match the pre-task Git object and working-file
+SHA exactly. The only five authorized differences are
 `storage_prototype_manager.gd` for M01 and
 `tools/asset_pipeline/item_authoring_review.json`,
 `authoring_review_manifest.gd` and
-`seed_or_sync_item_authoring_review.gd` for M02. Protected geometry trees,
+`seed_or_sync_item_authoring_review.gd` for M02, plus
+`gameplay/logistics_wing/development/seed_registrar.gd` for the approved Fuel
+eligibility follow-through. Protected geometry trees,
 `project.godot`, `wing_gameplay.tscn`, `main.tscn`, functional fixtures,
-player/HUD, F6 sources, shared placement/stacking behavior, `data/`, Receiving
-and the seed registrar remain unchanged. The ignored locker/Fuel source hashes
-and required import state remain present.
+player/HUD, F6 sources, shared placement/stacking behavior, `data/` and Receiving
+remain unchanged. The ignored locker/Fuel source hashes and required import
+state remain present.
 
-## Focused human review
+## Human acceptance
 
 For the locker, start normal Run Project and enable F6. The dedicated labelled
 capture/helper can also be launched with:
@@ -192,16 +224,8 @@ For Fuel, launch the runtime-only candidate review:
 & 'D:\AI Tools\Godot-4.7-Codex\Godot_v4.7-stable_win64_console.exe' --path . --rendering-method gl_compatibility res://gameplay/logistics_wing/review/fuel_maintenance_review.tscn -- --review-fuel
 ```
 
-M01 still requires its independent PROMOTE or REVISE decision:
-
-1. **M01, locker:** With F6 on, is the second-from-bottom grid inside the usable
-   shelf? With actual auto/manual placed items along the formerly offending rear
-   row, is back-panel penetration gone, and do placement/retrieval and other
-   levels still behave normally?
-
-A later separately authorized Fuel-eligibility follow-through would remove only
-`loot_000015` from `BLOCKED_ITEM_IDS` in
-`gameplay/logistics_wing/development/seed_registrar.gd` and update only its
-expectation in `wing_seed_fixture_tests.gd`. That follow-through is not included
-here. No upper-level visibility, shelf/ceiling height, expanded palette, art or
-Receiving work is approved by this delivery.
+M01 and M02 are independently PROMOTED within the focused checks described
+above. The bounded Fuel eligibility follow-through is complete: only
+`loot_000015` was removed from `BLOCKED_ITEM_IDS`, while Gloves and Pants remain
+blocked. No upper-level visibility, shelf/ceiling height, expanded palette, art
+or Receiving work is approved by this acceptance.

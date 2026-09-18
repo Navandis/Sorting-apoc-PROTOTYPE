@@ -8,19 +8,20 @@
 - Medical: 10 m exclusive protected corridor, unchanged 7.8 × 7.0 m nominal anteroom, continuous eastern wall/south-east entrance. A/B connector remains Main Storage.
 - Supervised full-wing authoring and the bounded Medical revision are demonstrated. This does not imply unattended design or final art feasibility.
 - The continuing gameplay composition is promoted as the normal development launch: three supported empty storage units, the accepted fourteen-host editable table-loot setup, the normal player/HUD and preserved accepted geometry. The developer accepted the broad handling/editor-authorship review and all three focused F6 checks; F6 developer grids remain default-OFF and F7 remains suppressed in this composition.
+- The bounded locker/Fuel maintenance is human-PROMOTED. Locker level 2 is contained at both measured edges at identity and legacy scale; the current Fuel source retains its approved authoring/handling choices. Fuel is eligible for correctly authored development hosts, while Gloves and Pants remain blocked. The saved fourteen-host scene is unchanged.
 
 ## Current authorities
 GDD v0.8; Visual Design Direction v0.5; Prototype Findings v0.8. See [documentation index](README.md). Accepted in-engine source/scene/overview govern current dimensions over historical schematic pixels.
 
 ## Gate order
-1. The bounded locker/Fuel maintenance is technically complete on its review branch. Record independent human PROMOTE/REVISE decisions for the repaired locker level and reconciled Fuel candidate before eligibility or publication follow-through.
-2. Expand the editable development palette and evaluate vertical ergonomics without presuming final heights only after that review gate.
-3. Implement functional Receiving only after those gates, then later timed obligations and the wider Systems MVP.
+1. The bounded locker/Fuel maintenance, human review and Fuel eligibility follow-through are complete.
+2. Expand the editable development palette and evaluate vertical ergonomics without presuming final heights.
+3. Implement functional Receiving only after that gate, then later timed obligations and the wider Systems MVP.
 
 The default entry is `res://gameplay/logistics_wing/wing_gameplay.tscn` through UID `uid://bljf1nlhijej`. Keep the old `main.tscn` intact as the explicit historical mechanics fixture and keep `greybox/logistics_wing/wing_review.tscn` for neutral review. The table/loot setup supersedes the preflight's runtime-array seed proposal with saved editor-visible hosts while preserving the preflight as historical evidence.
 
 ## Explicitly deferred / known debt
-Freight cage lining and actual pile containment/reach; production Structural Shell/Applied Finish and full furnishing; facility interactions; integrated balance; full save/journal implementation; human reapproval and seed eligibility follow-through for technically reconciled `loot_000015`; Gloves/Pants source/pose blocks. The maintenance branch resolves the legacy audit's Fuel-dependent assertions, but remains unmerged and unpublished pending human review.
+Freight cage lining and actual pile containment/reach; production Structural Shell/Applied Finish and full furnishing; facility interactions; integrated balance; full save/journal implementation; Gloves/Pants source/pose blocks. The Fuel-related legacy-audit failure and timeout are resolved; unrelated intentional negative-test and host certificate diagnostics remain separately disclosed.
 
 No abandoned stub remains in the accepted wing. Later opportunistic stubs are not current work and must avoid immediate/direct service-space or Ops adjacency. The rejected Receiving shell remains preserved separately and must not be merged as accepted geometry.
 
@@ -34,6 +35,6 @@ No abandoned stub remains in the accepted wing. Later opportunistic stubs are no
 - [F6 developer-grid validation](testing/wing-storage-debug-f6-validation.md) — owns the bounded correction, focused evidence and pending F6 check.
 - [Continuing gameplay and F6 human acceptance](testing/wing-gameplay-foundation-acceptance-2026-09-18.md) — records the developer's PROMOTE decisions and their limits.
 - [Default-entry close-out](testing/wing-gameplay-default-entry-closeout-validation.md) — owns the saved-scene checkpoint, launch promotion, fresh verification and repository synchronization evidence.
-- [Locker/Fuel maintenance validation](testing/locker-fuel-maintenance-validation.md) — owns the measured locker correction, Fuel reconciliation, combined verification, preservation audit and pending focused human decisions.
+- [Locker/Fuel maintenance validation](testing/locker-fuel-maintenance-validation.md) — owns the human-PROMOTED locker correction, Fuel reconciliation and eligibility follow-through, combined close-out verification, packaging isolation and preservation audit.
 
 Original reports and bundles are retained locally under their original evidence paths. Ignored directories are not backed up by GitHub; the curated acceptance evidence is under `docs/testing/evidence/greybox-accepted-2026-09-17/`.
