@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://gameplay/logistics_wing/review/wing_gameplay_capture.gd" id="1_capture"]
+[ext_resource type="PackedScene" path="res://gameplay/logistics_wing/wing_gameplay.tscn" id="2_gameplay"]
+
+[node name="WingGameplayCapture" type="Node3D"]
+script = ExtResource("1_capture")
+
+[node name="Gameplay" parent="." instance=ExtResource("2_gameplay")]
+
+[node name="Player" parent="Gameplay" index="3"]
+enable_held_item_view = false
+
+[node name="Camera3D" parent="Gameplay/Player" index="1"]
+current = false
+
+[node name="CaptureCamera" type="Camera3D" parent="."]
+fov = 75.0
+
+[editable path="Gameplay"]
