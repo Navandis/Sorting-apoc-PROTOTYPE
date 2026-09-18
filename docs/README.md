@@ -27,6 +27,7 @@ The normal development entry is the promoted continuing-gameplay scene `res://ga
 - [F6 developer-grid validation](testing/wing-storage-debug-f6-validation.md): key-specific correction, tests, preservation and focused human-check evidence.
 - [Continuing gameplay and F6 human acceptance](testing/wing-gameplay-foundation-acceptance-2026-09-18.md): recorded PROMOTE decisions and scope limits.
 - [Default-entry close-out](testing/wing-gameplay-default-entry-closeout-validation.md): saved-scene checkpoint, launch promotion, fresh verification and repository synchronization.
+- [Locker/Fuel maintenance validation](testing/locker-fuel-maintenance-validation.md): measured level-2 locker correction, bounded Fuel source reconciliation, combined verification and the pending independent human review gates.
 - [Receiving/Elevator design](superpowers/specs/2026-09-12-receiving-elevator-mvp-design.md): subsystem contract, not proof of physical Receiving.
 
 Older DOCX editions, design amendments, implementation plans and validation reports remain historical evidence. Their original dates and pre-human-review statuses must not be silently rewritten. Active tasks use the current versions and later explicitly recorded decisions.
