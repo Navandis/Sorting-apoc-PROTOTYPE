@@ -15,7 +15,9 @@ This close-out checkpoints the developer's accepted saved scene, records the hum
 
 ## Saved authoring authority
 
-Before any launch change, the modified working scene was recorded and committed by itself. Its working-file SHA-256 remains `eb260b07795edc0975e7c1a21706ef72a6494b9ceb8ccde24cc5f43f6f66d3e9`; its Git blob is `e53b4b6eb48540cd229868962a785baccffcdd8b`. The scene contains fourteen saved hosts, including `Book2` (`loot_000030`) and `CDStack_B2` (`loot_000031`), plus the developer's moved and 90-degree-rotated East table at `(-6.0698276, 0, -1.65)`.
+Before any launch change, the modified working scene was recorded and committed by itself. The captured LF payload and raw committed blob both have SHA-256 `eb260b07795edc0975e7c1a21706ef72a6494b9ceb8ccde24cc5f43f6f66d3e9`; its Git blob is `e53b4b6eb48540cd229868962a785baccffcdd8b`. The scene contains fourteen saved hosts, including `Book2` (`loot_000030`) and `CDStack_B2` (`loot_000031`), plus the developer's moved and 90-degree-rotated East table at `(-6.0698276, 0, -1.65)`.
+
+The Windows checkout has global `core.autocrlf=true` while the repository declares `* text=auto`. A later branch checkout therefore materialized the unchanged 6,692-byte LF blob as a 6,808-byte CRLF working file (SHA-256 `e3b90bd934c6b84e8a9283c4c955eab5544c982246fa191ab4ec86bad6858619`). `git status` remains clean and the path-filtered working hash still resolves to the accepted blob. This is a checkout representation difference, not a scene edit; the published Git payload is byte-identical to the captured authority.
 
 The fixed twelve-host regression fixture remains separate. No restore, reset, content repair, seed expansion or mass reimport occurred.
 
