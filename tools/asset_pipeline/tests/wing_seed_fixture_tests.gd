@@ -40,7 +40,7 @@ func _run() -> void:
 	await _test_transform_round_trip(packed)
 	await _test_editor_style_duplicate(packed, first_ids)
 	await _test_invalid_declaration(packed, "unknown", &"loot_999999", "unknown item ID")
-	await _test_invalid_declaration(packed, "blocked_000015", &"loot_000015", "blocked item ID")
+	await _test_fuel_registration(packed)
 	await _test_invalid_declaration(packed, "blocked_000034", &"loot_000034", "blocked item ID")
 	await _test_invalid_declaration(packed, "blocked_000036", &"loot_000036", "blocked item ID")
 	await _test_invalid_declaration(packed, "missing_visual", &"", "missing authored visual")
@@ -230,6 +230,44 @@ func _test_editor_style_duplicate(packed: PackedScene, original_ids: Array[Strin
 			duplicate_world.get_item_instance() != original_world.get_item_instance(),
 			"original and duplicate own distinct ItemInstance references"
 		)
+	setup.free()
+
+
+func _test_fuel_registration(packed: PackedScene) -> void:
+	var setup := packed.instantiate()
+	var seeds := setup.get_node("SeedItems")
+	var host := seeds.get_child(0)
+	var original_visual := host.call("get_authored_visual") as Node3D
+	var definition := _catalogue.call("get_definition_by_id", &"loot_000015") as ItemDefinition
+	_check(definition != null, "Fuel resolves for eligibility follow-through")
+	if definition == null:
+		setup.free()
+		return
+
+	host.set("item_id", &"loot_000015")
+	host.remove_child(original_visual)
+	original_visual.free()
+	var fuel_visual := definition.visual_scene.instantiate() as Node3D
+	host.add_child(fuel_visual)
+
+	root.add_child(setup)
+	await process_frame
+	await physics_frame
+
+	var registrar := setup.get_node("SeedRegistrar")
+	_check(
+		(registrar.call("get_validation_failures") as Array).is_empty(),
+		"correctly authored Fuel host has no seed validation failure"
+	)
+	_check(
+		(registrar.call("get_registered_instance_ids") as Array).size() == 12,
+		"correctly authored Fuel host registers with the complete fixture"
+	)
+	var world_item := host.get_node_or_null("WorldItem") as WorldItem
+	_check(world_item != null, "correctly authored Fuel host receives runtime ownership")
+	if world_item != null:
+		var item := world_item.get_item_instance()
+		_check(item != null and item.definition == definition, "Fuel registration preserves catalogue identity")
 	setup.free()
 
 

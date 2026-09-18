@@ -6,7 +6,6 @@ const WorldItemScript = preload("res://world_item.gd")
 const SeedHostScript = preload("res://gameplay/logistics_wing/development/seed_host.gd")
 
 const BLOCKED_ITEM_IDS: Array[StringName] = [
-	&"loot_000015",
 	&"loot_000034",
 	&"loot_000036",
 ]
