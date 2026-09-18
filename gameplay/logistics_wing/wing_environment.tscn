@@ -1,0 +1,85 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://gameplay/logistics_wing/wing_environment.gd" id="1_environment"]
+[ext_resource type="PackedScene" path="res://greybox/logistics_wing/wing_geometry.tscn" id="2_geometry"]
+
+[sub_resource type="Environment" id="Environment_gameplay"]
+background_mode = 1
+background_color = Color(0.055, 0.06, 0.065, 1)
+ambient_light_source = 3
+ambient_light_color = Color(0.78, 0.81, 0.84, 1)
+ambient_light_energy = 0.7
+reflected_light_source = 2
+tonemap_mode = 2
+
+[node name="Environment" type="Node3D"]
+script = ExtResource("1_environment")
+
+[node name="Greybox" parent="." instance=ExtResource("2_geometry")]
+
+[node name="GameplayEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_gameplay")
+
+[node name="KeyLight" type="DirectionalLight3D" parent="."]
+rotation_degrees = Vector3(-58, -32, 0)
+light_color = Color(1, 0.97, 0.92, 1)
+light_energy = 1.0
+shadow_enabled = true
+directional_shadow_max_distance = 140.0
+
+[node name="FillLights" type="Node3D" parent="."]
+
+[node name="West" type="OmniLight3D" parent="FillLights"]
+position = Vector3(-33, 2.7, 0)
+light_color = Color(1, 0.92, 0.8, 1)
+light_energy = 2.2
+omni_range = 22.0
+shadow_enabled = true
+
+[node name="Sorting" type="OmniLight3D" parent="FillLights"]
+position = Vector3(-10, 2.7, -1)
+light_color = Color(0.94, 0.97, 1, 1)
+light_energy = 2.0
+omni_range = 20.0
+
+[node name="StorageWest" type="OmniLight3D" parent="FillLights"]
+position = Vector3(3, 2.8, 0)
+light_color = Color(1, 0.96, 0.86, 1)
+light_energy = 2.0
+omni_range = 21.0
+
+[node name="StorageEast" type="OmniLight3D" parent="FillLights"]
+position = Vector3(18, 2.8, 1)
+light_color = Color(1, 0.96, 0.86, 1)
+light_energy = 2.0
+omni_range = 20.0
+
+[node name="MedicalKitchen" type="OmniLight3D" parent="FillLights"]
+position = Vector3(17, 2.7, -20)
+light_color = Color(0.9, 0.96, 1, 1)
+light_energy = 2.0
+omni_range = 20.0
+
+[node name="MedicalTuning" type="OmniLight3D" parent="FillLights"]
+position = Vector3(4.3, 2.7, -26.5)
+light_color = Color(0.9, 0.96, 1, 1)
+light_energy = 1.4
+omni_range = 12.0
+
+[node name="Workshop" type="OmniLight3D" parent="FillLights"]
+position = Vector3(-8, 2.7, 21)
+light_color = Color(1, 0.88, 0.72, 1)
+light_energy = 2.1
+omni_range = 22.0
+
+[node name="Deeper" type="OmniLight3D" parent="FillLights"]
+position = Vector3(40, 2.7, 0)
+light_color = Color(0.92, 0.96, 1, 1)
+light_energy = 2.0
+omni_range = 23.0
+
+[node name="East" type="OmniLight3D" parent="FillLights"]
+position = Vector3(56, 2.7, -5)
+light_color = Color(0.94, 0.97, 1, 1)
+light_energy = 2.0
+omni_range = 22.0
