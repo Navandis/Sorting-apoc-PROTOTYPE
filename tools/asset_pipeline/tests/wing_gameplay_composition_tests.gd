@@ -6,6 +6,7 @@ const PLAYER_SCRIPT_PATH := "res://player_controller.gd"
 const CARRIED_SCRIPT_PATH := "res://carried_items.gd"
 const HUD_SCRIPT_PATH := "res://carried_items_hud.gd"
 const ENVIRONMENT_PATH := "res://gameplay/logistics_wing/wing_environment.tscn"
+const DEVELOPMENT_SETUP_PATH := "res://gameplay/logistics_wing/development/seeded_storage_setup.tscn"
 const FIXTURE_NAMES: Array[String] = [
 	"SM_MetalShelves_GalleryA_West",
 	"SM_MetalShelves_GalleryB_North",
@@ -58,6 +59,7 @@ func _run() -> void:
 	host.free()
 	current_scene = null
 	await _assert_optional_development_setup(packed)
+	await _assert_duplicate_setup_namespace_rejected(packed)
 	await _assert_duplicate_fixture_namespace_rejected(packed)
 
 	_finish()
@@ -240,16 +242,18 @@ func _assert_duplicate_fixture_namespace_rejected(packed: PackedScene) -> void:
 		and bool(first.call("is_development_setup_active")),
 		"first fixture namespace owner remains active"
 	)
-	_check(
-		second.has_method("is_development_setup_active")
-		and not bool(second.call("is_development_setup_active")),
-		"second active fixture namespace is rejected before seed registration"
-	)
-	_check(
-		second.has_method("get_composition_failures")
-		and not (second.call("get_composition_failures") as Array).is_empty(),
-		"duplicate namespace rejection exposes a named composition failure"
-	)
+	var second_registrar := second.get_node_or_null("DevelopmentSetup/SeedRegistrar")
+	_check(second_registrar != null, "second composition retains inspectable rejected registrar")
+	if second_registrar != null:
+		var failures := second_registrar.call("get_validation_failures") as Array
+		_check(
+			"\n".join(failures).contains("duplicate seed identity namespace"),
+			"second active fixture namespace exposes a named registrar failure"
+		)
+		_check(
+			(second_registrar.call("get_registered_instance_ids") as Array).is_empty(),
+			"second active fixture namespace registers no identities"
+		)
 	var world_items := host.find_children("WorldItem", "WorldItem", true, false)
 	_check(world_items.size() == 12, "duplicate fixture rejection leaves exactly twelve registered items")
 	var instance_ids: Dictionary = {}
@@ -260,6 +264,39 @@ func _assert_duplicate_fixture_namespace_rejected(packed: PackedScene) -> void:
 	_check(instance_ids.size() == 12, "duplicate fixture rejection leaves twelve unique item identities")
 
 	host.free()
+	current_scene = null
+
+
+func _assert_duplicate_setup_namespace_rejected(gameplay_packed: PackedScene) -> void:
+	var setup_packed := load(DEVELOPMENT_SETUP_PATH) as PackedScene
+	if not _check(setup_packed != null, "development setup loads for duplicate namespace test"):
+		return
+	var gameplay := gameplay_packed.instantiate()
+	root.add_child(gameplay)
+	current_scene = gameplay
+	await process_frame
+	await physics_frame
+
+	var duplicate_setup := setup_packed.instantiate()
+	duplicate_setup.name = "DevelopmentSetupCopy"
+	gameplay.add_child(duplicate_setup)
+	await process_frame
+	await physics_frame
+
+	var registrar := duplicate_setup.get_node("SeedRegistrar")
+	var failures := registrar.call("get_validation_failures") as Array
+	_check(
+		"\n".join(failures).contains("duplicate seed identity namespace"),
+		"duplicated setup inside one composition reports the active namespace conflict"
+	)
+	_check(
+		duplicate_setup.find_children("WorldItem", "WorldItem", true, false).is_empty(),
+		"duplicated setup creates no partial runtime ownership"
+	)
+	var all_world_items := gameplay.find_children("WorldItem", "WorldItem", true, false)
+	_check(all_world_items.size() == 12, "duplicated setup leaves exactly one twelve-item owner")
+
+	gameplay.free()
 	current_scene = null
 
 

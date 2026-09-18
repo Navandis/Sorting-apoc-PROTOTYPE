@@ -11,6 +11,8 @@ const BLOCKED_ITEM_IDS: Array[StringName] = [
 	&"loot_000036",
 ]
 
+static var _active_namespace_owners: Dictionary = {}
+
 @export var seed_items_path: NodePath = NodePath("../SeedItems")
 @export var fixture_namespace: String = "wing_seed_v1"
 
@@ -25,6 +27,9 @@ func register_existing_hosts() -> bool:
 
 	_validation_failures.clear()
 	_registered_instance_ids.clear()
+	if not _claim_fixture_namespace():
+		_report_failures()
+		return false
 	var seed_items := get_node_or_null(seed_items_path)
 	if seed_items == null:
 		_record_failure("missing SeedItems root at %s" % seed_items_path)
@@ -61,6 +66,23 @@ func get_validation_failures() -> Array[String]:
 
 func get_registered_instance_ids() -> Array[String]:
 	return _registered_instance_ids.duplicate()
+
+
+func _claim_fixture_namespace() -> bool:
+	if fixture_namespace.strip_edges().is_empty():
+		_record_failure("empty seed identity namespace")
+		return false
+	var owner_ref := _active_namespace_owners.get(fixture_namespace) as WeakRef
+	var owner := owner_ref.get_ref() as Node if owner_ref != null else null
+	if owner != null and owner != self:
+		var owner_label := String(owner.get_path()) if owner.is_inside_tree() else String(owner.name)
+		_record_failure(
+			"duplicate seed identity namespace %s already active at %s"
+			% [fixture_namespace, owner_label]
+		)
+		return false
+	_active_namespace_owners[fixture_namespace] = weakref(self)
+	return true
 
 
 func _validate_host(

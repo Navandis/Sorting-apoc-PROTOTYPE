@@ -45,7 +45,8 @@ func _run() -> void:
 	await _test_invalid_declaration(packed, "blocked_000036", &"loot_000036", "blocked item ID")
 	await _test_invalid_declaration(packed, "missing_visual", &"", "missing authored visual")
 	await _test_invalid_declaration(packed, "mismatched_visual", &"", "visual mismatch")
-	_test_duplicate_derived_identity(packed)
+	await _test_duplicate_derived_identity(packed)
+	await _test_namespace_reservation_survives_detach(packed)
 	_finish()
 
 
@@ -276,27 +277,75 @@ func _test_invalid_declaration(
 
 
 func _test_duplicate_derived_identity(packed: PackedScene) -> void:
-	var setup := packed.instantiate()
-	var seeds := setup.get_node("SeedItems")
-	var registrar := setup.get_node("SeedRegistrar")
-	var host := seeds.get_child(0)
-	var declarations: Array[Dictionary] = []
-	var seen_instance_ids: Dictionary = {}
+	var primary := packed.instantiate()
+	primary.name = "PrimarySeedFixture"
+	root.add_child(primary)
+	await process_frame
+	var duplicate := packed.instantiate()
+	duplicate.name = "DuplicateSeedFixture"
 
-	registrar.call("_validate_host", host, declarations, seen_instance_ids)
-	registrar.call("_validate_host", host, declarations, seen_instance_ids)
-	var failures := registrar.call("get_validation_failures") as Array
+	var primary_registrar := primary.get_node("SeedRegistrar")
+	var duplicate_registrar := duplicate.get_node("SeedRegistrar")
 	_check(
-		"\n".join(failures).contains("duplicate seed identity"),
-		"duplicate derived identity reports named failure"
+		not bool(duplicate_registrar.call("register_existing_hosts")),
+		"duplicate derived identity namespace fails through the public registrar API"
 	)
-	_check(declarations.size() == 1, "duplicate derived identity is not added to declarations")
+	var failures := duplicate_registrar.call("get_validation_failures") as Array
 	_check(
-		seeds.find_children("WorldItem", "WorldItem", true, false).is_empty(),
-		"duplicate derived identity creates no runtime ownership"
+		"\n".join(failures).contains("duplicate seed identity namespace"),
+		"duplicate derived identity namespace reports named failure"
 	)
-	registrar.call("_report_failures")
-	setup.free()
+	_check(
+		duplicate.find_children("WorldItem", "WorldItem", true, false).is_empty(),
+		"duplicate derived identity namespace creates no partial runtime ownership"
+	)
+	_check(
+		(primary_registrar.call("get_registered_instance_ids") as Array).size() == 12,
+		"duplicate rejection preserves the primary twelve registered identities"
+	)
+	_check(
+		root.find_children("WorldItem", "WorldItem", true, false).size() == 12,
+		"duplicate rejection preserves exactly twelve total runtime owners"
+	)
+	primary.free()
+	duplicate.free()
+
+
+func _test_namespace_reservation_survives_detach(packed: PackedScene) -> void:
+	var primary := packed.instantiate()
+	primary.name = "DetachedPrimarySeedFixture"
+	root.add_child(primary)
+	await process_frame
+	root.remove_child(primary)
+
+	var competitor := packed.instantiate()
+	competitor.name = "CompetingSeedFixture"
+	root.add_child(competitor)
+	await process_frame
+	var competitor_registrar := competitor.get_node("SeedRegistrar")
+	_check(
+		"\n".join(competitor_registrar.call("get_validation_failures") as Array).contains(
+			"duplicate seed identity namespace"
+		),
+		"live detached fixture retains its namespace reservation"
+	)
+	_check(
+		competitor.find_children("WorldItem", "WorldItem", true, false).is_empty(),
+		"competitor creates no owners while original fixture is detached"
+	)
+
+	root.add_child(primary)
+	await process_frame
+	_check(
+		primary.find_children("WorldItem", "WorldItem", true, false).size() == 12,
+		"re-added fixture retains its original twelve runtime owners"
+	)
+	_check(
+		root.find_children("WorldItem", "WorldItem", true, false).size() == 12,
+		"detach and re-add cannot produce duplicate runtime owners"
+	)
+	primary.free()
+	competitor.free()
 
 
 func _finish() -> void:
