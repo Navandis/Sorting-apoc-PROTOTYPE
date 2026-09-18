@@ -13,3 +13,7 @@ func _enter_tree() -> void:
 		if setup != null:
 			remove_child(setup)
 			setup.queue_free()
+
+
+func is_development_setup_active() -> bool:
+	return get_node_or_null("DevelopmentSetup") != null

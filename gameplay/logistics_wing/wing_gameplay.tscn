@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=7 format=3]
 
 [ext_resource type="Script" path="res://gameplay/logistics_wing/wing_gameplay.gd" id="1_gameplay"]
 [ext_resource type="PackedScene" path="res://gameplay/logistics_wing/wing_environment.tscn" id="2_environment"]
 [ext_resource type="PackedScene" path="res://gameplay/player/gameplay_player.tscn" id="3_player"]
 [ext_resource type="PackedScene" path="res://gameplay/ui/carried_items_hud.tscn" id="4_hud"]
 [ext_resource type="PackedScene" path="res://gameplay/logistics_wing/functional_fixtures.tscn" id="5_fixtures"]
+[ext_resource type="PackedScene" path="res://gameplay/logistics_wing/development/seeded_storage_setup.tscn" id="6_development"]
 
 [node name="WingGameplay" type="Node3D"]
 script = ExtResource("1_gameplay")
@@ -12,6 +13,8 @@ script = ExtResource("1_gameplay")
 [node name="Environment" parent="." instance=ExtResource("2_environment")]
 
 [node name="FunctionalFixtures" parent="." instance=ExtResource("5_fixtures")]
+
+[node name="DevelopmentSetup" parent="." instance=ExtResource("6_development")]
 
 [node name="Player" parent="." instance=ExtResource("3_player")]
 position = Vector3(-10, 0.05, -2.5)

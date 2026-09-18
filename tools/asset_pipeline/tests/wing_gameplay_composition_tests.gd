@@ -57,6 +57,7 @@ func _run() -> void:
 	await _assert_composition(parented, "parent-hosted")
 	host.free()
 	current_scene = null
+	await _assert_optional_development_setup(packed)
 
 	_finish()
 
@@ -66,11 +67,18 @@ func _assert_composition(scene: Node, context: String) -> void:
 	var carried := scene.get_node_or_null("Player/CarriedItems")
 	var hud := scene.get_node_or_null("HUD/CarriedItemsHUD")
 	var environment := scene.get_node_or_null("Environment") as Node3D
+	var development_setup := scene.get_node_or_null("DevelopmentSetup") as Node3D
 
 	_check(player != null, "%s composition has full gameplay player" % context)
 	_check(carried != null, "%s composition has carried-items container" % context)
 	_check(hud != null, "%s composition has carried-items HUD" % context)
 	_check(environment != null, "%s composition has environment wrapper" % context)
+	_check(development_setup != null, "%s composition includes authored development setup" % context)
+	_check(
+		scene.has_method("is_development_setup_active")
+		and bool(scene.call("is_development_setup_active")),
+		"%s composition reports its development setup active" % context
+	)
 	if player == null or carried == null or hud == null or environment == null:
 		return
 
@@ -164,6 +172,62 @@ func _assert_composition(scene: Node, context: String) -> void:
 	)
 	_assert_environment_proxy_contract(environment, context)
 	await _assert_fixture_contract(scene, context)
+	if development_setup != null:
+		_check(
+			development_setup.get_node("SeedItems").get_child_count() == 12,
+			"%s composition begins with twelve authored seed hosts" % context
+		)
+
+
+func _assert_optional_development_setup(packed: PackedScene) -> void:
+	var disabled := packed.instantiate()
+	disabled.set("development_setup_enabled", false)
+	root.add_child(disabled)
+	current_scene = disabled
+	await process_frame
+	_check(
+		disabled.get_node_or_null("DevelopmentSetup") == null,
+		"disabled-before-tree composition creates no tables or seed hosts"
+	)
+	_check(
+		disabled.has_method("is_development_setup_active")
+		and not bool(disabled.call("is_development_setup_active")),
+		"disabled-before-tree composition reports setup inactive"
+	)
+	_assert_permanent_gameplay_survives_without_setup(disabled, "disabled")
+	disabled.free()
+	current_scene = null
+
+	var omitted := packed.instantiate()
+	var setup := omitted.get_node_or_null("DevelopmentSetup")
+	if setup != null:
+		omitted.remove_child(setup)
+		setup.free()
+	root.add_child(omitted)
+	current_scene = omitted
+	await process_frame
+	_check(
+		omitted.has_method("is_development_setup_active")
+		and not bool(omitted.call("is_development_setup_active")),
+		"composition reports physically omitted setup inactive"
+	)
+	_assert_permanent_gameplay_survives_without_setup(omitted, "omitted")
+	omitted.free()
+	current_scene = null
+
+
+func _assert_permanent_gameplay_survives_without_setup(scene: Node, context: String) -> void:
+	_check(scene.get_node_or_null("Environment") != null, "%s setup keeps environment" % context)
+	_check(scene.get_node_or_null("Player") != null, "%s setup keeps player" % context)
+	_check(scene.get_node_or_null("HUD/CarriedItemsHUD") != null, "%s setup keeps HUD" % context)
+	var fixtures := scene.get_node_or_null("FunctionalFixtures")
+	_check(fixtures != null, "%s setup keeps fixtures" % context)
+	if fixtures != null and fixtures.has_method("get_installed_surfaces"):
+		var surfaces := fixtures.call("get_installed_surfaces") as Array
+		_check(surfaces.size() == 12, "%s setup keeps twelve storage surfaces" % context)
+		for value: Variant in surfaces:
+			var surface := value as StorageSurface
+			_check(surface != null and surface.get_stack_count() == 0, "%s surfaces remain empty" % context)
 
 
 func _assert_saved_proxy_overrides() -> void:

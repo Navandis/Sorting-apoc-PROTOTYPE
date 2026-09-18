@@ -1,0 +1,129 @@
+[gd_scene load_steps=15 format=3]
+
+[ext_resource type="Script" path="res://gameplay/logistics_wing/development/seeded_storage_setup.gd" id="1_setup"]
+[ext_resource type="Script" path="res://environment_collision.gd" id="2_collision"]
+[ext_resource type="PackedScene" uid="uid://b2r5iiqby2gbi" path="res://assets/environment/furniture/work_surfaces/SM_Table.glb" id="3_table"]
+[ext_resource type="Script" path="res://gameplay/logistics_wing/development/seed_host.gd" id="4_host"]
+[ext_resource type="Script" path="res://gameplay/logistics_wing/development/seed_registrar.gd" id="5_registrar"]
+[ext_resource type="PackedScene" path="res://assets/props/Food/cereal_box.glb" id="6_cereal_a"]
+[ext_resource type="PackedScene" path="res://assets/props/Food/SM_CerealBox_2.glb" id="7_cereal_b"]
+[ext_resource type="PackedScene" path="res://assets/props/Hydration/SM_SodaCan.glb" id="8_soda_a"]
+[ext_resource type="PackedScene" path="res://assets/props/Hydration/soda_can.glb" id="9_soda_b"]
+[ext_resource type="PackedScene" path="res://assets/props/medical/SM_MedKit_4.glb" id="10_medkit"]
+[ext_resource type="PackedScene" path="res://assets/props/morale/SM_Book_01.glb" id="11_book"]
+[ext_resource type="PackedScene" path="res://assets/props/morale/SM_CDStack_01.glb" id="12_cd"]
+[ext_resource type="PackedScene" path="res://assets/props/Weapons/hammer.glb" id="13_hammer"]
+
+[node name="DevelopmentSetup" type="Node3D"]
+script = ExtResource("1_setup")
+
+[node name="Tables" type="Node3D" parent="."]
+script = ExtResource("2_collision")
+print_collision_summary = false
+generate_storage_prototype = false
+
+[node name="SM_Table_SeedWest" parent="Tables" instance=ExtResource("3_table")]
+position = Vector3(-11.4, 0, 2.65)
+
+[node name="SM_Table_SeedEast" parent="Tables" instance=ExtResource("3_table")]
+position = Vector3(-7.8, 0, 2.65)
+
+[node name="SeedItems" type="Node3D" parent="."]
+
+[node name="CerealBox_A" type="Node3D" parent="SeedItems"]
+position = Vector3(-12.0, 0.96, 2.35)
+rotation = Vector3(0, 0.174533, 0)
+script = ExtResource("4_host")
+item_id = &"loot_000005"
+
+[node name="Visual" parent="SeedItems/CerealBox_A" instance=ExtResource("6_cereal_a")]
+
+[node name="CerealBox_B" type="Node3D" parent="SeedItems"]
+position = Vector3(-11.4, 0.96, 2.35)
+rotation = Vector3(0, -0.122173, 0)
+script = ExtResource("4_host")
+item_id = &"loot_000005"
+
+[node name="Visual" parent="SeedItems/CerealBox_B" instance=ExtResource("6_cereal_a")]
+
+[node name="CerealBox_2" type="Node3D" parent="SeedItems"]
+position = Vector3(-10.8, 0.96, 2.35)
+rotation = Vector3(0, 0.0872665, 0)
+script = ExtResource("4_host")
+item_id = &"loot_000007"
+
+[node name="Visual" parent="SeedItems/CerealBox_2" instance=ExtResource("7_cereal_b")]
+
+[node name="SodaCan_A" type="Node3D" parent="SeedItems"]
+position = Vector3(-12.0, 0.96, 2.9)
+script = ExtResource("4_host")
+item_id = &"loot_000022"
+
+[node name="Visual" parent="SeedItems/SodaCan_A" instance=ExtResource("8_soda_a")]
+
+[node name="SodaCan_B" type="Node3D" parent="SeedItems"]
+position = Vector3(-11.6, 0.96, 2.9)
+rotation = Vector3(0, 0.139626, 0)
+script = ExtResource("4_host")
+item_id = &"loot_000022"
+
+[node name="Visual" parent="SeedItems/SodaCan_B" instance=ExtResource("8_soda_a")]
+
+[node name="SodaCan_Classic" type="Node3D" parent="SeedItems"]
+position = Vector3(-11.2, 0.96, 2.9)
+rotation = Vector3(0, -0.10472, 0)
+script = ExtResource("4_host")
+item_id = &"loot_000023"
+
+[node name="Visual" parent="SeedItems/SodaCan_Classic" instance=ExtResource("9_soda_b")]
+
+[node name="MedKit_A" type="Node3D" parent="SeedItems"]
+position = Vector3(-8.45, 0.96, 2.35)
+rotation = Vector3(0, -0.0872665, 0)
+script = ExtResource("4_host")
+item_id = &"loot_000028"
+
+[node name="Visual" parent="SeedItems/MedKit_A" instance=ExtResource("10_medkit")]
+
+[node name="MedKit_B" type="Node3D" parent="SeedItems"]
+position = Vector3(-7.75, 0.96, 2.35)
+rotation = Vector3(0, 0.10472, 0)
+script = ExtResource("4_host")
+item_id = &"loot_000028"
+
+[node name="Visual" parent="SeedItems/MedKit_B" instance=ExtResource("10_medkit")]
+
+[node name="Book" type="Node3D" parent="SeedItems"]
+position = Vector3(-7.05, 0.96, 2.35)
+rotation = Vector3(0, 0.0523599, 0)
+script = ExtResource("4_host")
+item_id = &"loot_000030"
+
+[node name="Visual" parent="SeedItems/Book" instance=ExtResource("11_book")]
+
+[node name="CDStack_A" type="Node3D" parent="SeedItems"]
+position = Vector3(-8.35, 0.96, 2.9)
+rotation = Vector3(0, 0.20944, 0)
+script = ExtResource("4_host")
+item_id = &"loot_000031"
+
+[node name="Visual" parent="SeedItems/CDStack_A" instance=ExtResource("12_cd")]
+
+[node name="CDStack_B" type="Node3D" parent="SeedItems"]
+position = Vector3(-7.8, 0.96, 2.9)
+rotation = Vector3(0, -0.15708, 0)
+script = ExtResource("4_host")
+item_id = &"loot_000031"
+
+[node name="Visual" parent="SeedItems/CDStack_B" instance=ExtResource("12_cd")]
+
+[node name="Hammer" type="Node3D" parent="SeedItems"]
+position = Vector3(-7.1, 0.98, 2.9)
+rotation = Vector3(0, 1.3962634, 0)
+script = ExtResource("4_host")
+item_id = &"loot_000037"
+
+[node name="Visual" parent="SeedItems/Hammer" instance=ExtResource("13_hammer")]
+
+[node name="SeedRegistrar" type="Node" parent="."]
+script = ExtResource("5_registrar")
