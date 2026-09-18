@@ -2,6 +2,7 @@ extends SceneTree
 
 const CAPTURE_SCRIPT_PATH := "res://gameplay/logistics_wing/review/wing_gameplay_capture.gd"
 const CAPTURE_SCENE_PATH := "res://gameplay/logistics_wing/review/wing_gameplay_capture.tscn"
+const CENSUS_SCRIPT_PATH := "res://gameplay/logistics_wing/review/generate_wing_fixture_census.gd"
 const GAMEPLAY_PATH := "res://gameplay/logistics_wing/wing_gameplay.tscn"
 
 var _failed := false
@@ -12,6 +13,7 @@ func _init() -> void:
 		_finish()
 		return
 	_check(ResourceLoader.exists(CAPTURE_SCENE_PATH), "gameplay capture scene exists")
+	_check(ResourceLoader.exists(CENSUS_SCRIPT_PATH), "fixture census generator exists")
 	var script := load(CAPTURE_SCRIPT_PATH) as Script
 	if not _check(script != null, "gameplay capture helper loads"):
 		_finish()
