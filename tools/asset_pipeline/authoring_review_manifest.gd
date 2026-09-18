@@ -576,6 +576,61 @@ static func review_evidence(
 	}
 
 
+static func reconcile_fuel_canister_maintenance(manifest: Dictionary, current_asset: Dictionary) -> Dictionary:
+	# One authorized source refresh, not a general way to bless stale assets.
+	const item_id := "loot_000015"
+	const source_path := "res://assets/props/Fuel/SM_FuelCanister.glb"
+	const old_sha := "e3cbd7d3dd60c9fde76fe92df640aaf62091c9e6c9b6491ee548b0ac1cf10698"
+	const current_sha := "f095c1ee2eb407ced7214686ba599207d3cbcae8cfbbb61ff0cf06242f54ef85"
+	const note := "2026-09-18 technical Fuel maintenance reconciliation: current source measured compatible with prior scale, zero Storage Pose, 4x2x1 Footprint, Stack Role and explicit None Auto Group decisions; prior decisions retained. Old binary/bounds unavailable; maintenance human review remains PENDING."
+	var errors := validate_manifest(manifest)
+	var unchanged := {"manifest": manifest.duplicate(true), "errors": errors}
+	if not errors.is_empty():
+		return unchanged
+	var expected := {"item_id": item_id, "source_path": source_path,
+		"definition_path": "res://data/items/definitions/loot_000015.tres",
+		"source_fingerprint": current_sha, "has_item_definition": true,
+		"storage_rotation_degrees": [0.0, 0.0, 0.0], "storage_footprint": [4, 2, 1],
+		"can_be_stacked": true, "can_support_stack": false, "auto_stack_group": ""}
+	for field: String in expected:
+		if current_asset.get(field) != expected[field]:
+			errors.append("Fuel maintenance current %s differs from measured authorization." % field)
+	var records: Dictionary = manifest.get("assets", {})
+	var record: Dictionary = records.get(item_id, {})
+	if record.get("item_id") != item_id or record.get("source_path") != source_path or record.get("source_fingerprint") != old_sha:
+		errors.append("Fuel maintenance prior identity/source fingerprint differs from retained decision.")
+	var statuses := {"scale_review": "APPROVED", "storage_pose_review": "DEFAULT_POSE_APPROVED", "footprint_review": "GEOMETRY_APPROVED", "stack_role_review": "APPROVED", "auto_group_review": "APPROVED"}
+	for field: String in statuses:
+		var review_value: Variant = record.get(field)
+		if not (review_value is Dictionary) or (review_value as Dictionary).get("status") != statuses[field]:
+			errors.append("Fuel maintenance cannot replace absent or changed prior %s decision." % field)
+	if not errors.is_empty():
+		return unchanged
+	var previous_asset := current_asset.duplicate(true)
+	previous_asset["source_fingerprint"] = old_sha
+	var previous_evidence := review_evidence(record, previous_asset)
+	for field: String in ["scale_review_current", "storage_pose_review_current", "footprint_review_current", "stack_role_review_current", "auto_group_review_current"]:
+		if not previous_evidence[field]:
+			errors.append("Fuel maintenance prior %s is not current against the retained source." % field)
+	for field: String in ["storage_pose_review", "footprint_review", "stack_role_review"]:
+		if record[field].get("reviewed_rotation_degrees") != [0.0, 0.0, 0.0]:
+			errors.append("Fuel maintenance prior rotation must be exactly zero.")
+	if not errors.is_empty():
+		return unchanged
+	var updated := manifest.duplicate(true)
+	var refreshed: Dictionary = updated["assets"][item_id]
+	refreshed["source_fingerprint"] = current_sha
+	for field: String in statuses:
+		var review: Dictionary = refreshed[field]
+		if field == "auto_group_review":
+			review["reviewed_stack_role_snapshot"]["reviewed_source_fingerprint"] = current_sha
+		else:
+			review["reviewed_source_fingerprint"] = current_sha
+		var prior_note := String(review.get("notes", ""))
+		review["notes"] = (prior_note + " " if not prior_note.is_empty() else "") + note
+	return {"manifest": updated, "errors": errors}
+
+
 static func stack_role_snapshot(current_asset: Dictionary) -> Dictionary:
 	return {
 		"reviewed_source_fingerprint": String(current_asset.get("source_fingerprint", "")),

@@ -40,6 +40,8 @@ func _run() -> int:
 		current_assets.append(_manifest_asset(scene_record))
 
 	var existing_manifest: Dictionary = AuthoringReviewManifestScript.load_manifest(MANIFEST_PATH)
+	if OS.get_cmdline_user_args().has("--reconcile-fuel-canister-maintenance"):
+		return _reconcile_fuel_canister_maintenance(existing_manifest, current_assets)
 	if OS.get_cmdline_user_args().has("--apply-stack-metadata-phase-1"):
 		return _apply_stack_metadata_phase_1(existing_manifest, current_assets)
 	if OS.get_cmdline_user_args().has("--apply-stack-role-batch-1"):
@@ -139,6 +141,26 @@ func _sync_item_ids_only(
 			str(before != after)
 		]
 	)
+	return 0
+
+
+func _reconcile_fuel_canister_maintenance(existing_manifest: Dictionary, current_assets: Array[Dictionary]) -> int:
+	var fuel_assets: Array[Dictionary] = []
+	for asset: Dictionary in current_assets:
+		if asset.get("item_id") == "loot_000015":
+			fuel_assets.append(asset)
+	if fuel_assets.size() != 1:
+		push_error("Fuel maintenance requires exactly one current catalogue source.")
+		return 1
+	var result := AuthoringReviewManifestScript.reconcile_fuel_canister_maintenance(existing_manifest, fuel_assets[0])
+	var errors: PackedStringArray = result["errors"]
+	if not errors.is_empty():
+		for message: String in errors:
+			push_error(message)
+		return 1
+	if not AuthoringReviewManifestScript.write_manifest(MANIFEST_PATH, result["manifest"]):
+		return 1
+	print("FUEL_MAINTENANCE_RECONCILED item=loot_000015 prior_decisions=retained human_maintenance_review=PENDING definitions_written=0")
 	return 0
 
 

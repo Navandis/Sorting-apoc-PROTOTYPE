@@ -2,9 +2,15 @@ extends SceneTree
 
 const AuthoringReviewManifestScript = preload("res://tools/asset_pipeline/authoring_review_manifest.gd")
 const AutoStackGroupRegistryScript = preload("res://tools/asset_pipeline/auto_stack_group_registry.gd")
+var _fuel_helper := AuthoringReviewManifestScript.new()
 
 
 func _init() -> void:
+	if not _fuel_helper.has_method("reconcile_fuel_canister_maintenance"):
+		push_error("ASSERTION FAILED: bounded Fuel source reconciliation is missing")
+		quit(1)
+		return
+	_test_fuel_maintenance_reconciliation()
 	_test_initial_seed_assigns_monotonic_opaque_keys()
 	_test_repeated_seed_does_not_duplicate_records()
 	_test_new_asset_uses_highest_existing_suffix_plus_one()
@@ -610,6 +616,70 @@ func _asset(
 		"storage_rotation_degrees": storage_rotation_degrees,
 		"storage_footprint": storage_footprint
 	}
+
+
+func _test_fuel_maintenance_reconciliation() -> void:
+	const old_sha := "e3cbd7d3dd60c9fde76fe92df640aaf62091c9e6c9b6491ee548b0ac1cf10698"
+	const new_sha := "f095c1ee2eb407ced7214686ba599207d3cbcae8cfbbb61ff0cf06242f54ef85"
+	var asset := _stack_asset(old_sha, [0.0, 0.0, 0.0], [4, 2, 1], true, false, "")
+	asset["source_path"] = "res://assets/props/Fuel/SM_FuelCanister.glb"
+	asset["item_id"] = "loot_000015"
+	asset["definition_path"] = "res://data/items/definitions/loot_000015.tres"
+	var record := _approved_stack_role_record(asset)
+	record["scale_review"] = {"status": "APPROVED", "reviewed_source_fingerprint": old_sha, "notes": "retained scale decision"}
+	record["storage_pose_review"]["status"] = "DEFAULT_POSE_APPROVED"
+	_approve_auto_group(record, asset, 0)
+	var manifest := AuthoringReviewManifestScript.empty_manifest()
+	manifest["assets"] = {"loot_000015": record, "unrelated": AuthoringReviewManifestScript.new_record(_asset("res://other.glb", "other", "other-sha"))}
+	var original := manifest.duplicate(true)
+	asset["source_fingerprint"] = new_sha
+	var result: Dictionary = _fuel_helper.call("reconcile_fuel_canister_maintenance", manifest, asset)
+	assert((result["errors"] as PackedStringArray).is_empty())
+	assert(manifest == original, "helper must not mutate its input")
+	var updated: Dictionary = result["manifest"]
+	assert(updated["assets"]["unrelated"] == original["assets"]["unrelated"])
+	var refreshed: Dictionary = updated["assets"]["loot_000015"]
+	var evidence := AuthoringReviewManifestScript.review_evidence(refreshed, asset)
+	for field: String in ["scale_review_current", "storage_pose_review_current", "footprint_review_current", "stack_role_review_current", "auto_group_review_current"]:
+		assert(evidence[field], field)
+	for field: String in ["scale_review", "storage_pose_review", "footprint_review", "stack_role_review", "auto_group_review"]:
+		assert(refreshed[field]["status"] == original["assets"]["loot_000015"][field]["status"])
+		assert("human review remains PENDING" in refreshed[field]["notes"])
+	assert("retained scale decision" in refreshed["scale_review"]["notes"])
+	# Every guarded current-value mutation must fail without changing any input.
+	for mutation: Dictionary in [
+		{"item_id": "loot_000016"}, {"source_path": "res://renamed.glb"},
+		{"definition_path": "res://other.tres"}, {"source_fingerprint": "unexpected"},
+		{"storage_rotation_degrees": [0.0, 0.001, 0.0]}, {"storage_footprint": [3, 2, 1]},
+		{"can_be_stacked": false}, {"can_support_stack": true}, {"auto_stack_group": "round_cans"},
+	]:
+		var changed_asset := asset.duplicate(true)
+		changed_asset.merge(mutation, true)
+		var refused: Dictionary = _fuel_helper.call("reconcile_fuel_canister_maintenance", manifest, changed_asset)
+		assert(not (refused["errors"] as PackedStringArray).is_empty(), str(mutation))
+		assert(refused["manifest"] == original)
+	for review_name: String in ["scale_review", "storage_pose_review", "footprint_review", "stack_role_review", "auto_group_review"]:
+		var changed := manifest.duplicate(true)
+		changed["assets"]["loot_000015"][review_name]["status"] = "UNREVIEWED"
+		var refused: Dictionary = _fuel_helper.call("reconcile_fuel_canister_maintenance", changed, asset)
+		assert(not (refused["errors"] as PackedStringArray).is_empty(), review_name)
+		assert(refused["manifest"] == changed)
+	for field: String in ["source_fingerprint", "source_path", "item_id"]:
+		var changed := manifest.duplicate(true)
+		changed["assets"]["loot_000015"][field] = "unexpected"
+		var refused: Dictionary = _fuel_helper.call("reconcile_fuel_canister_maintenance", changed, asset)
+		assert(not (refused["errors"] as PackedStringArray).is_empty(), field)
+		assert(refused["manifest"] == changed)
+	var stale_snapshot := manifest.duplicate(true)
+	stale_snapshot["assets"]["loot_000015"]["auto_group_review"]["reviewed_stack_role_snapshot"]["reviewed_can_support_stack"] = true
+	var refused: Dictionary = _fuel_helper.call("reconcile_fuel_canister_maintenance", stale_snapshot, asset)
+	assert(not (refused["errors"] as PackedStringArray).is_empty())
+	for review_name: String in ["scale_review", "storage_pose_review", "footprint_review"]:
+		var malformed := manifest.duplicate(true)
+		malformed["assets"]["loot_000015"].erase(review_name)
+		var malformed_result: Dictionary = _fuel_helper.call("reconcile_fuel_canister_maintenance", malformed, asset)
+		assert(not (malformed_result.get("errors", PackedStringArray()) as PackedStringArray).is_empty(), "missing review must be refused without script failure")
+		assert(malformed_result["manifest"] == malformed)
 
 
 func _manifest_with_record(authoring_key: String, asset: Dictionary) -> Dictionary:

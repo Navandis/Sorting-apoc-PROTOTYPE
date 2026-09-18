@@ -1053,7 +1053,7 @@
 		"loot_000015": {
 			"auto_group_review": {
 				"flags": [],
-				"notes": "Human-approved explicit None.",
+				"notes": "Human-approved explicit None. 2026-09-18 technical Fuel maintenance reconciliation: current source measured compatible with prior scale, zero Storage Pose, 4x2x1 Footprint, Stack Role and explicit None Auto Group decisions; prior decisions retained. Old binary/bounds unavailable; maintenance human review remains PENDING.",
 				"reviewed_auto_stack_group": "",
 				"reviewed_registry_compatibility_revision": 0,
 				"reviewed_stack_role_snapshot": {
@@ -1069,12 +1069,12 @@
 						0.0,
 						0.0
 					],
-					"reviewed_source_fingerprint": "e3cbd7d3dd60c9fde76fe92df640aaf62091c9e6c9b6491ee548b0ac1cf10698"
+					"reviewed_source_fingerprint": "f095c1ee2eb407ced7214686ba599207d3cbcae8cfbbb61ff0cf06242f54ef85"
 				},
 				"status": "APPROVED"
 			},
 			"footprint_review": {
-				"notes": "Current Footprint approved against posed geometry.",
+				"notes": "Current Footprint approved against posed geometry. 2026-09-18 technical Fuel maintenance reconciliation: current source measured compatible with prior scale, zero Storage Pose, 4x2x1 Footprint, Stack Role and explicit None Auto Group decisions; prior decisions retained. Old binary/bounds unavailable; maintenance human review remains PENDING.",
 				"reviewed_footprint": [
 					4,
 					2,
@@ -1085,20 +1085,20 @@
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "e3cbd7d3dd60c9fde76fe92df640aaf62091c9e6c9b6491ee548b0ac1cf10698",
+				"reviewed_source_fingerprint": "f095c1ee2eb407ced7214686ba599207d3cbcae8cfbbb61ff0cf06242f54ef85",
 				"status": "GEOMETRY_APPROVED"
 			},
 			"item_id": "loot_000015",
 			"scale_review": {
-				"notes": "",
-				"reviewed_source_fingerprint": "e3cbd7d3dd60c9fde76fe92df640aaf62091c9e6c9b6491ee548b0ac1cf10698",
+				"notes": "2026-09-18 technical Fuel maintenance reconciliation: current source measured compatible with prior scale, zero Storage Pose, 4x2x1 Footprint, Stack Role and explicit None Auto Group decisions; prior decisions retained. Old binary/bounds unavailable; maintenance human review remains PENDING.",
+				"reviewed_source_fingerprint": "f095c1ee2eb407ced7214686ba599207d3cbcae8cfbbb61ff0cf06242f54ef85",
 				"status": "APPROVED"
 			},
-			"source_fingerprint": "e3cbd7d3dd60c9fde76fe92df640aaf62091c9e6c9b6491ee548b0ac1cf10698",
+			"source_fingerprint": "f095c1ee2eb407ced7214686ba599207d3cbcae8cfbbb61ff0cf06242f54ef85",
 			"source_path": "res://assets/props/Fuel/SM_FuelCanister.glb",
 			"stack_role_review": {
 				"flags": [],
-				"notes": "",
+				"notes": "2026-09-18 technical Fuel maintenance reconciliation: current source measured compatible with prior scale, zero Storage Pose, 4x2x1 Footprint, Stack Role and explicit None Auto Group decisions; prior decisions retained. Old binary/bounds unavailable; maintenance human review remains PENDING.",
 				"reviewed_can_be_stacked": true,
 				"reviewed_can_support_stack": false,
 				"reviewed_footprint": [
@@ -1111,17 +1111,17 @@
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "e3cbd7d3dd60c9fde76fe92df640aaf62091c9e6c9b6491ee548b0ac1cf10698",
+				"reviewed_source_fingerprint": "f095c1ee2eb407ced7214686ba599207d3cbcae8cfbbb61ff0cf06242f54ef85",
 				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Default zero authored storage pose approved.",
+				"notes": "Default zero authored storage pose approved. 2026-09-18 technical Fuel maintenance reconciliation: current source measured compatible with prior scale, zero Storage Pose, 4x2x1 Footprint, Stack Role and explicit None Auto Group decisions; prior decisions retained. Old binary/bounds unavailable; maintenance human review remains PENDING.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
 					0.0
 				],
-				"reviewed_source_fingerprint": "e3cbd7d3dd60c9fde76fe92df640aaf62091c9e6c9b6491ee548b0ac1cf10698",
+				"reviewed_source_fingerprint": "f095c1ee2eb407ced7214686ba599207d3cbcae8cfbbb61ff0cf06242f54ef85",
 				"status": "DEFAULT_POSE_APPROVED"
 			}
 		},
