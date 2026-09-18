@@ -40,7 +40,10 @@ func _capture() -> void:
 	var carried := player.get_node("CarriedItems") as CarriedItems
 	var surface := gameplay.get_node("FunctionalFixtures/SM_ventilated_locker_GalleryC_West/StorageSurface_02") as StorageSurface
 	var records: Array[Dictionary] = []
-	for far_end: bool in [false, true]:
+	for corner: int in range(4):
+		var far_end := corner % 2 == 1
+		var front_row := corner >= 2
+		var manual := corner != 0
 		var definition := load("res://data/items/definitions/loot_000022.tres") as ItemDefinition
 		var host := definition.visual_scene.instantiate() as Node3D
 		add_child(host)
@@ -53,22 +56,22 @@ func _capture() -> void:
 			return
 		var entry := controller.call("_entry_for_item", item, far_end) as StorageStack.Entry
 		var fit: Dictionary
-		if far_end:
-			fit = surface.find_manual_empty_fit(Vector3(-100, 0, 100), entry)
+		if manual:
+			fit = surface.find_manual_empty_fit(Vector3(100 if front_row else -100, 0, 100 if far_end else -100), entry)
 		else:
 			surface.set_zone_rect("Hydration", Vector2i.ZERO, surface.grid_size - Vector2i.ONE)
 			fit = surface.find_zone_stack_or_empty_fit("Hydration", entry)
 		controller.set("_current_surface", surface)
 		controller.set("_current_fit", fit)
-		controller.set("_manual_mode", far_end)
+		controller.set("_manual_mode", manual)
 		controller.set("_rotated", far_end)
 		if not controller.place_selected():
-			_fail("review rear-row placement failed")
+			_fail("review corner placement failed")
 			return
 		var stored := surface.get_storage_stack(item.instance_id).entries[0]
 		var packing := stored.host.get_node("StoredPackingYaw") as Node3D
 		var bounds: AABB = packing.global_transform * stored.aligned_bounds
-		records.append({"mode": "manual_R90" if far_end else "auto_native", "origin": str(fit["origin"]), "bounds_world": str(bounds), "instance": item.instance_id, "world_scale": str(stored.host.global_basis.get_scale())})
+		records.append({"mode": "manual" if manual else "auto", "rotated": far_end, "front_row": front_row, "origin": str(fit["origin"]), "bounds_world": str(bounds), "instance": item.instance_id, "world_scale": str(stored.host.global_basis.get_scale())})
 	var key := InputEventKey.new()
 	key.keycode = KEY_F6
 	key.pressed = true
@@ -99,7 +102,7 @@ func _capture() -> void:
 	for view: Dictionary in views:
 		camera.position = view["position"]
 		camera.look_at(view["target"], Vector3.UP)
-		label.text = "M01 %s | %s\nReal F6 grid; 2 Soda Cans at rear-row ends (auto/native + manual/R90)" % [phase.to_upper(), view["label"]]
+		label.text = "M01 %s | %s\nReal F6 grid; 4 Soda Cans at front/rear corners (auto + manual/native + R90)" % [phase.to_upper(), view["label"]]
 		await get_tree().process_frame
 		await get_tree().process_frame
 		await RenderingServer.frame_post_draw

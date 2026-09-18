@@ -1,6 +1,6 @@
 extends SceneTree
 
-# Detects legal rear placements penetrating the mesh's inner back plane.
+# Detects legal grid/placements crossing either measured support X edge.
 # These mesh-level measurements are valid only for this exact source export;
 # they are not aggregate bounds or movement-collider approximations.
 const LOCKER_PATH := "res://assets/environment/furniture/storage/SM_ventilated_locker.glb"
@@ -59,7 +59,10 @@ func _scene_case(path: String, wing: bool) -> void:
 		var expected_origin := Vector3(-1.35, 0, 9) if wing else (Vector3(0.80279386, 0.074747086, 0.444) if scaled else Vector3(0.80263567, 0.04006219, 2.0317678))
 		_check(shelf.global_position.distance_to(expected_origin) < TOLERANCE, "locker fixture position unchanged")
 		_check(shelf.global_basis.is_equal_approx(Basis.IDENTITY.scaled(Vector3.ONE * (0.655 if scaled else 1.0))), "locker fixture orientation and scale unchanged")
-		_check(surface.get_grid_size() == (Vector2i(5, 8) if scaled else Vector2i(8, 13)), "all four locker capacities unchanged")
+		var expected_grid := Vector2i(5, 8) if scaled else Vector2i(8, 13)
+		if level == 1:
+			expected_grid.x -= 1
+		_check(surface.get_grid_size() == expected_grid, "level 2 loses only one X cell; other locker capacities unchanged")
 		_check(absf(local_center.y - (LOCKER_Y[level] - 0.018 + 0.018 / shelf_scale.y)) < TOLERANCE, "locker level height unchanged")
 		_check(absf(local_center.z - (-0.043877 if level in [1, 2] else 0.000013)) < TOLERANCE, "locker Z alignment unchanged")
 		if level != 1:
@@ -70,13 +73,18 @@ func _scene_case(path: String, wing: bool) -> void:
 		if level == 1:
 			var rear_grid_world := surface.to_global(Vector3(-surface.usable_size_m.x * 0.5, 0, 0))
 			var rear_grid_local := shelf.to_local(rear_grid_world)
-			print("GRID_REAR shelf=%s boundary_world=%s boundary_shelf=%s clearance_world_m=%.6f" % [shelf.name, rear_grid_world, rear_grid_local, (rear_grid_local.x - BACK_X) * shelf_scale.x])
+			var front_grid_local := shelf.to_local(surface.to_global(Vector3(surface.usable_size_m.x * 0.5, 0, 0)))
+			print("GRID_X shelf=%s rear_shelf=%.6f front_shelf=%.6f rear_clearance_world_m=%.6f front_clearance_world_m=%.6f" % [shelf.name, rear_grid_local.x, front_grid_local.x, (rear_grid_local.x - BACK_X) * shelf_scale.x, (SUPPORT_FRONT_X - front_grid_local.x) * shelf_scale.x])
 			_check(rear_grid_local.x >= BACK_X - TOLERANCE, "PHYSICAL quantized rear grid boundary must clear measured inner back panel")
+			_check(front_grid_local.x <= SUPPORT_FRONT_X + TOLERANCE, "PHYSICAL quantized front grid boundary must remain inside measured support front edge")
 			for rotated: bool in [false, true]:
 				for far_end: bool in [false, true]:
 					await _placement(surface, carried, controller, "loot_000022", rotated, far_end, false, true)
+					await _placement(surface, carried, controller, "loot_000022", rotated, far_end, false, true, true)
 			for rotated: bool in [false, true]:
 				await _placement(surface, carried, controller, "loot_000030", rotated, false, false, true)
+				for far_end: bool in [false, true]:
+					await _placement(surface, carried, controller, "loot_000030", rotated, far_end, false, true, true)
 			await _placement(surface, carried, controller, "loot_000022", false, false, true, true)
 		else:
 			await _placement(surface, carried, controller, "loot_000022", false, false, false, false)
@@ -85,18 +93,18 @@ func _scene_case(path: String, wing: bool) -> void:
 	await process_frame
 
 
-func _placement(surface: StorageSurface, carried: CarriedItems, controller: StoragePlacementController, id: String, rotated: bool, far_end: bool, automatic: bool, check_interior: bool) -> void:
+func _placement(surface: StorageSurface, carried: CarriedItems, controller: StoragePlacementController, id: String, rotated: bool, far_end: bool, automatic: bool, check_interior: bool, front_row: bool = false) -> void:
 	var item := ItemInstance.new(load("res://data/items/definitions/%s.tres" % id) as ItemDefinition)
 	var pose := StorageVisualPose.measure_item(item, rotated)
 	_check(bool(pose.get("valid", false)), "real asset pose measures")
 	var entry := controller.call("_entry_for_item", item, rotated) as StorageStack.Entry
-	var point := Vector3(-100, 0, 100 if far_end else -100)
+	var point := Vector3(100 if front_row else -100, 0, 100 if far_end else -100)
 	var fit := surface.find_manual_empty_fit(point, entry)
 	if automatic:
 		surface.set_zone_rect(item.get_storage_category(), Vector2i.ZERO, surface.grid_size - Vector2i.ONE)
 		fit = surface.find_zone_stack_or_empty_fit(item.get_storage_category(), entry)
-	_check(bool(fit.get("valid", false)), "nearest rear/manual or auto fit is legal")
-	_check(fit.get("origin") == Vector2i(0, surface.grid_size.y - entry.footprint.y if far_end else 0), "nearest legal placement reaches requested rear-row end")
+	_check(bool(fit.get("valid", false)), "nearest boundary/manual or auto fit is legal")
+	_check(fit.get("origin") == Vector2i(surface.grid_size.x - entry.footprint.x if front_row else 0, surface.grid_size.y - entry.footprint.y if far_end else 0), "nearest legal placement reaches requested front/rear-row end")
 	if not bool(fit.get("valid", false)):
 		return
 	_check(carried.add_item(item), "representative item enters carry")
@@ -118,10 +126,10 @@ func _placement(surface: StorageSurface, carried: CarriedItems, controller: Stor
 	var shelf := surface.get_parent() as Node3D
 	var local_bounds: AABB = shelf.global_transform.affine_inverse() * world_bounds
 	if check_interior:
-		print("PLACED shelf=%s item=%s rotated=%s auto=%s origin=%s bounds_world=%s bounds_shelf=%s rear_clearance_world_m=%.6f support_seating_delta_world_m=%.6f" % [shelf.name, id, rotated, automatic, fit["origin"], world_bounds, local_bounds, (local_bounds.position.x - BACK_X) * shelf.global_basis.get_scale().x, (local_bounds.position.y - SUPPORT_TOP_Y) * shelf.global_basis.get_scale().y])
-		_check(local_bounds.position.x >= BACK_X - TOLERANCE, "PHYSICAL rear item must not penetrate measured inner back panel")
-		_check(local_bounds.end.x <= SUPPORT_FRONT_X + TOLERANCE, "rear item remains within measured shelf support depth")
-		_check(local_bounds.position.z >= SUPPORT_Z.x - TOLERANCE and local_bounds.end.z <= SUPPORT_Z.y + TOLERANCE, "rear-row ends remain inside measured side supports")
+		print("PLACED shelf=%s item=%s rotated=%s auto=%s front=%s origin=%s bounds_world=%s bounds_shelf=%s rear_clearance_world_m=%.6f front_clearance_world_m=%.6f support_seating_delta_world_m=%.6f" % [shelf.name, id, rotated, automatic, front_row, fit["origin"], world_bounds, local_bounds, (local_bounds.position.x - BACK_X) * shelf.global_basis.get_scale().x, (SUPPORT_FRONT_X - local_bounds.end.x) * shelf.global_basis.get_scale().x, (local_bounds.position.y - SUPPORT_TOP_Y) * shelf.global_basis.get_scale().y])
+		_check(local_bounds.position.x >= BACK_X - TOLERANCE, "PHYSICAL item must not penetrate measured inner back panel")
+		_check(local_bounds.end.x <= SUPPORT_FRONT_X + TOLERANCE, "PHYSICAL front/rear item must remain inside measured support front edge")
+		_check(local_bounds.position.z >= SUPPORT_Z.x - TOLERANCE and local_bounds.end.z <= SUPPORT_Z.y + TOLERANCE, "front/rear-row ends remain inside measured side supports")
 	_check(stored.world_item.pickup_into(carried), "stored WorldItem retrieves normally")
 	_check(carried.get_selected_item() == item and surface.get_stack_count() == 0, "retrieval keeps exact identity and releases reservation")
 	controller.set("_current_surface", surface)

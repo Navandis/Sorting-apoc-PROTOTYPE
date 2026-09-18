@@ -93,7 +93,7 @@ func _install_known_shelves() -> void:
 					# Bottom and top shelf geometry is shallower/differently
 					# centered than the two middle levels.
 					_make_level_profile(0.045, 0.94, 0.92, 0.00, 0.00),
-					_make_level_profile(0.390, 0.94, 0.92, 0.005, -0.03),
+					_make_level_profile(0.390, 0.89, 0.92, 0.005, -0.03),
 					_make_level_profile(0.622, 0.94, 0.92, 0.00, -0.03),
 					_make_level_profile(0.800, 0.94, 0.92, 0.00, 0.00)
 				],

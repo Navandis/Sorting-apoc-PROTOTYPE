@@ -2,114 +2,131 @@
 
 Technical repair on 18 September 2026. Human PROMOTE/REVISE remains pending.
 
-The only production change is the shared second locker level's X offset fraction,
-`-0.10` to `0.005`, in `storage_prototype_manager.gd`. Heights, other profile
-parameters, other levels/families, scene transforms, cell size and item scale are
-unchanged. The continuing wing and both legacy lockers inherit this owner.
+Final shared level-2 profile: `_make_level_profile(0.390, 0.89, 0.92, 0.005, -0.03)`.
+Relative to the original, only width fraction `0.94 -> 0.89` and X offset fraction
+`-0.10 -> 0.005` change. The front-containment follow-up changes width only.
+Height, depth/Z, other locker levels, metal profiles, fixture transforms, cell
+size, canonical item scale and placement mechanics remain unchanged. M02 is not
+changed by this follow-up. The wing and both legacy lockers use the shared owner.
 
-## Mesh reference and scope
+## Mesh reference and calibration
 
 Source: `res://assets/environment/furniture/storage/SM_ventilated_locker.glb`.
 SHA-256: `0d1c9a54532ca71ebba71c3b05fa31980a03c7f43c18189720cd3c9de7159c6e`.
-The test refuses a different source fingerprint. Retained mesh-triangle evidence
-is in `reports/logistics_wing/content_maintenance/locker_fuel/initial/asset_geometry_probe.log`.
+The regression refuses a different fingerprint. Retained mesh-triangle evidence:
+`reports/logistics_wing/content_maintenance/locker_fuel/initial/asset_geometry_probe.log`.
 
-Front-to-back is local X. Inner back plane: X=-0.390274. Level-2 horizontal
-support top: Y=1.116512, X=-0.390274..0.367064, Z=-0.718901..0.718882.
-These are mesh measurements, not coarse movement-collider bounds.
+Front-to-back is local X. Measured level-2 horizontal support: Y=1.116512,
+X=[-0.390274, 0.367064], Z=[-0.718901, 0.718882]. These are mesh measurements,
+not coarse movement-collider bounds. Aggregate asset X span is 0.857411 m.
 
-| Measurement | Before | After |
+| Stage | Width / X fractions | Identity local grid X (m) | Identity / scaled capacity |
+|---|---|---|---|
+| Original | 0.94 / -0.10 | [-0.479559, 0.320441] | 8×13 / 5×8 |
+| Superseded first candidate | 0.94 / 0.00 | [-0.393818, 0.406182] | 8×13 / 5×8 |
+| Superseded rear-only repair | 0.94 / 0.005 | [-0.389531, 0.410469] | 8×13 / 5×8 |
+| Final both-edge repair | 0.89 / 0.005 | [-0.339531, 0.360469] | 7×13 / 4×8 |
+
+The original penetrated the rear panel. The 0.00 candidate still left the rear
+grid line 3.544 mm behind it. The 0.005 offset cleared that line but overhung the
+front by 43.405 mm at identity and 16.430 mm at 0.655 scale. It was not a complete
+support-containment repair and is retained only as superseded diagnostic evidence.
+
+An 0.8 m grid cannot fit the 0.757338 m support span. At scale 0.655, an 0.5 m
+world grid cannot fit the 0.496056 m world support span either. One X column must
+be removed at each scale; no translation can preserve these former capacities.
+The scaled quantization threshold is width fraction
+`0.5 / (0.857411 * 0.655) = 0.890306724`: it must be strictly below that value.
+`0.89` is the largest hundredth-step profile value that fits both scales; `0.90`
+would retain the invalid scaled fifth column. Requested widths are 0.763095790 m
+identity and 0.499827742 m scaled, quantizing to 0.7 and 0.4 m. The scaled request
+has a 0.172258 mm margin below the rounding threshold; this calibration is bound
+to the exact asset and scales, not a claim for arbitrary future exports/scales.
+Keeping X offset 0.005 avoids another center shift and contains both final edges.
+
+| Final measurement | Identity scale (wing and legacy) | 0.655 legacy scale |
 |---|---:|---:|
-| Level-2 local X center | -0.079559 | 0.010469 |
-| Identity world movement in +X | — | 0.090028 m |
-| 0.655 world movement in +X | — | 0.058968 m |
-| Identity quantized size/capacity | 0.8 × 1.3 m / 8×13 | unchanged |
-| 0.655 quantized size/capacity | 0.5 × 0.8 m / 5×8 | unchanged |
-| Identity Soda Can rear clearance | -0.066426 m | 0.023602 m |
-| 0.655 Soda Can rear clearance | -0.023622 m | 0.035346 m |
-| Identity Book native / R90 rear clearance | -0.046170 / -0.062863 m | 0.043858 / 0.027165 m |
-| 0.655 Book native / R90 rear clearance | -0.003366 / -0.020059 m | 0.055602 / 0.038909 m |
-| Identity rear grid-line clearance | -0.089285 m | 0.000743 m |
-| 0.655 rear grid-line clearance | -0.046482 m | 0.012487 m |
+| Local X center | 0.010469 m | 0.010469 m |
+| Local grid X interval | [-0.339531, 0.360469] m | [-0.294875, 0.315812] m |
+| World usable size | 0.7×1.3 m | 0.4×0.8 m |
+| Level-2 cells | 91 (was 104; -13) | 32 (was 40; -8) |
+| Grid rear / front clearance, world | 50.743 / 6.595 mm | 62.487 / 33.570 mm |
+| Soda rear / front-row clearance, world | 73.602 / 29.455 mm | 85.346 / 56.429 mm |
+| Book native rear / front clearance, world | 93.858 / 49.711 mm | 105.602 / 76.685 mm |
+| Book R90 rear / front clearance, world | 77.165 / 33.018 mm | 88.909 / 59.992 mm |
 
-The identity grid's local X interval changes from [-0.479559, 0.320441] to
-[-0.389531, 0.410469]; Z remains [-0.693877, 0.606123]. For the wing's placed
-locker, world X changes from [-1.829559, -1.029559] to [-1.739531, -0.939531],
-with world Z [8.306123, 9.606123]. The scaled legacy grid's world X changes from
-[0.500682, 1.000682] to [0.559651, 1.059651], with world Z [0.015260, 0.815260].
-The identity legacy grid's world X changes from [0.323076, 1.123076] to
-[0.413105, 1.213105], with world Z [1.337891, 2.637891].
+Identity Z remains [-0.693877, 0.606123]. Wing world X is now
+[-1.689531, -0.989531], Z=[8.306123, 9.606123]. Legacy identity world X is
+[0.463105, 1.163105], Z=[1.337891, 2.637891]. Legacy scaled world X is
+[0.609651, 1.009651], Z=[0.015260, 0.815260]. Other locker levels retain
+8×13 identity / 5×8 scaled; metal surfaces retain 10×29 and 4×29 capacities.
 
-The regression proves the quantized rear grid boundary clears the panel and
-actual rear-row item bounds clear the back and side interior at both ends.
-The initial 0.00 candidate left the identity rear line 3.544 mm behind the panel;
-the second RED test rejected it. The geometric minimum is approximately 0.004134
-of the asset's 0.857411 m X span; 0.005 provides 0.743 mm clearance without losing
-cells. It does **not** certify that the complete grid outline lies on the flat
-support polygon: its front is beyond the measured flat top's X=0.367064 end.
-The unchanged seating convention also leaves a
-measured bottom-to-support delta of -5.054 mm at identity scale and +9.110 mm
-at 0.655. Height tuning and full shelf-mesh certification are outside M01.
+Unchanged seating leaves bottom-to-support Y deltas -5.054 mm at identity and
++9.110 mm at 0.655. Height tuning is explicitly outside this repair. The test
+certifies the measured horizontal support edges and representative mesh bounds,
+not all possible items, arbitrary scales, full 3D shelf geometry or human approval.
 
-## Reproduction and verification
+## RED/GREEN and focused verification
 
-`tools/asset_pipeline/tests/locker_level2_calibration_tests.gd` was written and
-run before the owner edit. `initial/m01/red_verified.log` exits 1 with 21
-physical back-plane failures. The 0.00 intermediate candidate passed the item
-test (`green.log`) but failed the added quantized-grid assertion twice in
-`red_grid_boundary.log` (exit 1). The final 0.005 repair passes both requirements:
-`green_grid_boundary.log` exits 0, prints its PASS marker, and has no
-script/assertion failures. All runs contain the existing Windows
-root-certificate-store diagnostic.
-The earlier `red.log` is retained as a harness-development attempt, not the
-authoritative RED result; its wrong legacy player path was corrected before
-`red_verified.log` and before the production edit.
+Evidence root: `reports/logistics_wing/content_maintenance/locker_fuel/initial/m01/`.
+All earlier evidence is retained: original `red_verified.log` (21 back-plane
+failures), 0.00 `green.log` (items only), `red_grid_boundary.log` (rear-grid fail),
+and 0.005 `green_grid_boundary.log` (rear-only pass, now superseded).
 
-The test loads the actual wing and legacy scenes, uses `StorageVisualPose`,
-installed `StorageSurface` fit APIs, the production placement controller and
-`WorldItem` retrieval. It checks native/R90 Soda Cans at both rear ends,
-native/R90 Book placement, auto placement reaching (0,0), nearest legal manual
-placement, retrieval/re-store identity, unit stored scale, all four levels,
-capacities and preserved level heights/Z offsets. Metal capacities and heights
-are checked; the owner diff proves every metal profile field is unchanged.
-Fits are selected programmatically at the production controller boundary;
-this does not claim a human mouse/raycast interaction test.
+New non-overwriting child `front_containment/` contains:
 
-Final focused regressions (`*_final.log`) exit 0 with PASS markers:
+- `red.log`: exit 1 before the width edit. Three front-grid failures, sixteen
+  front-item failures (two identity installations), and three expected capacity
+  failures. Identity Soda overhang was 20.545 mm; Book native/R90 overhang was
+  0.289/16.982 mm. Scaled grid failed although sampled items were already inside.
+- `green.log`: exit 0, `PASS: locker level2 calibration tests`, no assertions or
+  script errors. Both X grid boundaries and front/rear item bounds now pass.
+- `storage_stack_clearance.log`, `wing_storage_bridge_interaction.log`,
+  `wing_gameplay_composition.log`, `wing_storage_debug_f6.log`: exit 0 and PASS.
+- `default_smoke.log`, `main_smoke.log`: affected 90-frame headless launches exit 0.
+- `capture_before.log`, `capture_after.log`: rendered real-F6 captures exit 0.
 
-- `storage_stack_clearance_tests.gd` (intentional MissingContextShelf warning).
-- `wing_storage_bridge_interaction_tests.gd`.
-- `wing_gameplay_composition_tests.gd` (two intentional duplicate-namespace errors).
-- `wing_storage_debug_f6_tests.gd`.
+The regression uses the actual wing and legacy scenes, fingerprint-bound mesh
+planes, `StorageVisualPose`, installed `StorageSurface` fits, the production
+placement controller and `WorldItem` retrieval. Native/R90 Soda Cans cover both
+ends of both front and rear rows; native/R90 Books cover front ends and rear
+placement; auto reaches (0,0); extreme manual requests reach the nearest legal
+edge. All samples retrieve/re-store with identity and canonical scale preserved.
+All four locker levels get real placement loops and height/Z/capacity checks;
+metal capacities/heights and locker fixture transforms are also checked.
+Fits are selected at the controller boundary, not by a human mouse/raycast.
 
-Default wing and explicit `main.tscn` headless 90-frame smokes exit 0. Editor
-initialization exits 0 without parser errors. The certificate diagnostic occurs
-throughout; it is disclosed separately from gameplay/test failures.
+Known diagnostics remain: Windows root-certificate-store error throughout,
+intentional MissingContextShelf warning in clearance tests, two intentional
+duplicate-namespace errors in composition tests. No new script/assertion errors
+occur in GREEN. No full baseline or 41-suite rerun was performed for this follow-up.
 
 ## Matched rendered evidence
 
-Use `reports/logistics_wing/content_maintenance/locker_fuel/initial/m01/before_03/`
-and `after_02/`. Each contains full-resolution 1920×1080 `player_eye.png`,
-`diagnostic_rear.png`, and a manifest with source/helper SHA, camera position,
-target/FOV, surface center, actual item bounds and reservation origins. Helper
-SHA is identical between the matched runs. The earlier `before_02` diagnostic
-was occluded by the wing wall and is not the selected comparison. `after/`
-retains the superseded 0.00 candidate, not the final repair.
+Selected final comparison: `front_containment/before/` and
+`front_containment/after/`, each with 1920×1080 `player_eye.png`,
+`diagnostic_rear.png`, and `manifest.json`. These are copies of newly created
+`before_04/` (0.94/0.005) and `after_03/` (0.89/0.005), respectively. The previous
+`before_03/` versus `after_02/` still documents the earlier rear-only correction.
 
-The normal view uses Y=1.72 m, FOV 75°, and the same position/target before and
-after. Two actual cans use auto/native and manual/R90 placements. F6 is enabled
-through the real input event path. The diagnostic rear-oblique image is
-explicitly labelled. Inspection shows both cans behind the panel before and
-inside the locker afterward. No furniture or mesh is moved for either image.
+New matched helper SHA:
+`62a5d16143bb9c110987b830d070f47c2b89d97ab13adea62fd3e4c247463152`.
+Camera transforms/FOV, surface center, fixture, art and lighting match. The
+ordinary camera uses Y=1.72 m, FOV 75°. The rear-oblique view is explicitly
+diagnostic. Four actual Soda Cans use auto/native plus manual/native/R90 corner
+placements with real F6 enabled. Inspection shows the narrowed level-2 grid and
+corner placements drawn inward; numerical edge checks establish the clearances.
+Manifests retain actual poses, origins, source/helper hashes and world scales.
 
-From the project directory, use the authoritative executable:
+From the project directory:
 
 ```powershell
-& 'D:\AI Tools\Godot-4.7-Codex\Godot_v4.7-stable_win64_console.exe' --headless --path . --script res://tools/asset_pipeline/tests/locker_level2_calibration_tests.gd
-& 'D:\AI Tools\Godot-4.7-Codex\Godot_v4.7-stable_win64_console.exe' --path . --rendering-method gl_compatibility res://gameplay/logistics_wing/review/locker_level2_maintenance_capture.tscn -- --capture-m01 --phase=after
+$exe = 'D:\AI Tools\Godot-4.7-Codex\Godot_v4.7-stable_win64_console.exe'
+& $exe --headless --path . --script res://tools/asset_pipeline/tests/locker_level2_calibration_tests.gd
+& $exe --path . --rendering-method gl_compatibility res://gameplay/logistics_wing/review/locker_level2_maintenance_capture.tscn -- --capture-m01 --phase=after
 ```
 
-The capture scene is inert without `--capture-m01`, requires an explicit phase,
-chooses a new numbered output directory if one exists, has a 45-second deadline,
-and exits after capture. Its runtime-only sample disappears on exit. Ordinary
-launch, F6/F7 behavior, saved fourteen-host setup and Fuel eligibility are untouched.
+The capture remains inert without `--capture-m01`, requires an explicit phase,
+chooses a fresh numbered directory, has a 45-second deadline, and exits after
+capture. Samples are transient. Default launch, F6/F7 behavior, fourteen-host
+setup, Fuel, Receiving, palette, art and accepted wing geometry are untouched.
