@@ -1,25 +1,116 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene format=3 uid="uid://bljf1nlhijej"]
 
-[ext_resource type="Script" path="res://gameplay/logistics_wing/wing_gameplay.gd" id="1_gameplay"]
+[ext_resource type="Script" uid="uid://biayrmaxttpah" path="res://gameplay/logistics_wing/wing_gameplay.gd" id="1_gameplay"]
 [ext_resource type="PackedScene" path="res://gameplay/logistics_wing/wing_environment.tscn" id="2_environment"]
 [ext_resource type="PackedScene" path="res://gameplay/player/gameplay_player.tscn" id="3_player"]
 [ext_resource type="PackedScene" path="res://gameplay/ui/carried_items_hud.tscn" id="4_hud"]
+[ext_resource type="Script" uid="uid://6qrk22inrvej" path="res://gameplay/logistics_wing/development/seed_host.gd" id="5_8pqnk"]
 [ext_resource type="PackedScene" path="res://gameplay/logistics_wing/functional_fixtures.tscn" id="5_fixtures"]
+[ext_resource type="PackedScene" uid="uid://dqahwgcsham5a" path="res://assets/props/morale/SM_Book_01.glb" id="6_54osu"]
 [ext_resource type="PackedScene" path="res://gameplay/logistics_wing/development/seeded_storage_setup.tscn" id="6_development"]
+[ext_resource type="PackedScene" uid="uid://xt5xd2i71gmi" path="res://assets/props/morale/SM_CDStack_01.glb" id="7_tw2hy"]
 
-[node name="WingGameplay" type="Node3D"]
+[node name="WingGameplay" type="Node3D" unique_id=1126541559]
 script = ExtResource("1_gameplay")
 
-[node name="Environment" parent="." instance=ExtResource("2_environment")]
+[node name="Environment" parent="." unique_id=1856855740 instance=ExtResource("2_environment")]
 
-[node name="FunctionalFixtures" parent="." instance=ExtResource("5_fixtures")]
+[node name="FunctionalFixtures" parent="." unique_id=1215529146 instance=ExtResource("5_fixtures")]
 
-[node name="DevelopmentSetup" parent="." instance=ExtResource("6_development")]
+[node name="SM_MetalShelves_GalleryA_West" parent="FunctionalFixtures" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.28, 0, -7.2)
 
-[node name="Player" parent="." instance=ExtResource("3_player")]
-position = Vector3(-10, 0.05, -2.5)
+[node name="SM_MetalShelves_GalleryB_North" parent="FunctionalFixtures" index="1"]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 14, 0, -13.78)
 
-[node name="HUD" type="CanvasLayer" parent="."]
+[node name="SM_ventilated_locker_GalleryC_West" parent="FunctionalFixtures" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.35, 0, 9)
+
+[node name="DevelopmentSetup" parent="." unique_id=1793037051 instance=ExtResource("6_development")]
+
+[node name="SM_Table_SeedWest" parent="DevelopmentSetup/Tables" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.4, 0, 2.65)
+
+[node name="SM_Table_SeedEast" parent="DevelopmentSetup/Tables" index="1"]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -6.0698276, 0, -1.65)
+
+[node name="CerealBox_A" parent="DevelopmentSetup/SeedItems" index="0"]
+transform = Transform3D(0.9848077, 0, 0.17364825, 0, 1, 0, -0.17364825, 0, 0.9848077, -12, 0.96, 2.35)
+
+[node name="CerealBox_B" parent="DevelopmentSetup/SeedItems" index="1"]
+transform = Transform3D(0.99254614, 0, -0.121869296, 0, 1, 0, 0.121869296, 0, 0.99254614, -11.4, 0.96, 2.35)
+
+[node name="CerealBox_2" parent="DevelopmentSetup/SeedItems" index="2"]
+transform = Transform3D(0.9961947, 0, 0.087155774, 0, 1, 0, -0.087155774, 0, 0.9961947, -10.8, 0.96, 2.35)
+
+[node name="SodaCan_A" parent="DevelopmentSetup/SeedItems" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0.96, 2.9)
+
+[node name="SodaCan_B" parent="DevelopmentSetup/SeedItems" index="4"]
+transform = Transform3D(0.9902681, 0, 0.13917276, 0, 1, 0, -0.13917276, 0, 0.9902681, -11.6, 0.96, 2.9)
+
+[node name="SodaCan_Classic" parent="DevelopmentSetup/SeedItems" index="5"]
+transform = Transform3D(0.99452186, 0, -0.1045287, 0, 1, 0, 0.1045287, 0, 0.99452186, -11.2, 0.96, 2.9)
+
+[node name="MedKit_A" parent="DevelopmentSetup/SeedItems" index="6"]
+transform = Transform3D(0.9961947, 0, -0.087155774, 0, 1, 0, 0.087155774, 0, 0.9961947, -8.45, 0.96, 2.35)
+
+[node name="Visual" parent="DevelopmentSetup/SeedItems/MedKit_A" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5651803, 0, -4.4317384)
+
+[node name="MedKit_B" parent="DevelopmentSetup/SeedItems" index="7"]
+transform = Transform3D(0.99452186, 0, 0.1045287, 0, 1, 0, -0.1045287, 0, 0.99452186, -7.75, 0.96, 2.35)
+
+[node name="Visual" parent="DevelopmentSetup/SeedItems/MedKit_B" index="0"]
+transform = Transform3D(1.0000007, 0, -2.9802322e-08, 0, 1, 0, 2.9802322e-08, 0, 1.0000007, 1.8671675, 0, -4.6859646)
+
+[node name="Book" parent="DevelopmentSetup/SeedItems" index="8"]
+transform = Transform3D(0.9986295, 0, 0.05233598, 0, 1, 0, -0.05233598, 0, 0.9986295, -7.05, 0.96, 2.35)
+
+[node name="Visual" parent="DevelopmentSetup/SeedItems/Book" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6110072, 0, -3.525773)
+
+[node name="Book2" type="Node3D" parent="DevelopmentSetup/SeedItems" index="9" unique_id=1871088161]
+transform = Transform3D(0.9986295, 0, 0.05233598, 0, 1, 0, -0.05233598, 0, 0.9986295, -6.783966, 0.96, 2.0854619)
+script = ExtResource("5_8pqnk")
+item_id = &"loot_000030"
+
+[node name="Visual" parent="DevelopmentSetup/SeedItems/Book2" unique_id=798088132 instance=ExtResource("6_54osu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.39785385, 0, -3.487834)
+
+[node name="CDStack_A" parent="DevelopmentSetup/SeedItems" index="10"]
+transform = Transform3D(0.9781475, 0, 0.20791216, 0, 1, 0, -0.20791216, 0, 0.9781475, -8.35, 0.96, 2.9)
+
+[node name="Visual" parent="DevelopmentSetup/SeedItems/CDStack_A" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9768715, 0, -3.018014)
+
+[node name="CDStack_B" parent="DevelopmentSetup/SeedItems" index="11"]
+transform = Transform3D(0.9876883, 0, -0.15643482, 0, 1, 0, 0.15643482, 0, 0.9876883, -7.8, 0.96, 2.9)
+
+[node name="Visual" parent="DevelopmentSetup/SeedItems/CDStack_B" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8207202, 0, -4.026299)
+
+[node name="CDStack_B2" type="Node3D" parent="DevelopmentSetup/SeedItems" index="12" unique_id=156528063]
+transform = Transform3D(0.9876883, 0, -0.15643482, 0, 1, 0, 0.15643482, 0, 0.9876883, -7.429105, 0.96, 2.9)
+script = ExtResource("5_8pqnk")
+item_id = &"loot_000031"
+
+[node name="Visual" parent="DevelopmentSetup/SeedItems/CDStack_B2" unique_id=254711058 instance=ExtResource("7_tw2hy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49883223, 0, -3.770858)
+
+[node name="Hammer" parent="DevelopmentSetup/SeedItems" index="13"]
+transform = Transform3D(0.17364822, 0, 0.9848077, 0, 1, 0, -0.9848077, 0, 0.17364822, -7.1, 0.98, 2.9)
+
+[node name="Visual" parent="DevelopmentSetup/SeedItems/Hammer" index="0"]
+transform = Transform3D(1.0000006, 0, -4.4703484e-08, 0, 1, 0, 4.4703484e-08, 0, 1.0000006, 4.000502, 0, 0.39388704)
+
+[node name="Player" parent="." unique_id=551360273 instance=ExtResource("3_player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0.05, -2.5)
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=836250621]
 layer = 10
 
-[node name="CarriedItemsHUD" parent="HUD" instance=ExtResource("4_hud")]
+[node name="CarriedItemsHUD" parent="HUD" unique_id=626635065 instance=ExtResource("4_hud")]
+
+[editable path="FunctionalFixtures"]
+[editable path="DevelopmentSetup"]
