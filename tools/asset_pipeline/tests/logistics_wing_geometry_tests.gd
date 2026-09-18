@@ -2,7 +2,10 @@ extends SceneTree
 
 const REVIEW_PLAYER_PATH := "res://greybox/logistics_wing/review_player.tscn"
 const WING_GEOMETRY_PATH := "res://greybox/logistics_wing/wing_geometry.tscn"
-const EXPECTED_MAIN_SCENE := "uid://drbkr86g3cxl1"
+const WING_GAMEPLAY_PATH := "res://gameplay/logistics_wing/wing_gameplay.tscn"
+const LEGACY_MAIN_PATH := "res://main.tscn"
+const NEUTRAL_REVIEW_PATH := "res://greybox/logistics_wing/wing_review.tscn"
+const EXPECTED_MAIN_SCENE := "uid://bljf1nlhijej"
 const WALL_HALF_THICKNESS := 0.15
 const JUNCTION_EVIDENCE_FLAG := "--junction-evidence"
 const JUNCTION_BASELINE_PREFIX := "--junction-baseline="
@@ -59,7 +62,7 @@ var _failures := 0
 func _init() -> void:
 	_test_review_player_preserves_controller_contract()
 	_test_complete_wing_geometry_contract()
-	_test_default_launch_remains_the_storage_fixture()
+	_test_default_launch_promotes_wing_gameplay()
 	if _failures > 0:
 		push_error("FAIL: logistics wing geometry contract (%d checks)" % _failures)
 		quit(1)
@@ -296,12 +299,35 @@ func _test_complete_wing_geometry_contract() -> void:
 	wing.free()
 
 
-# Catches accidental replacement of the project's default launch scene.
-func _test_default_launch_remains_the_storage_fixture() -> void:
+# Catches a default launch that does not resolve to the accepted gameplay scene,
+# or a promotion that makes either preserved review fixture unavailable.
+func _test_default_launch_promotes_wing_gameplay() -> void:
 	_check(
 		String(ProjectSettings.get_setting("application/run/main_scene", "")) == EXPECTED_MAIN_SCENE,
-		"project default launch remains main.tscn"
+		"project default launch resolves through the wing gameplay UID"
 	)
+	var default_uid := ResourceUID.text_to_id(EXPECTED_MAIN_SCENE)
+	_check(default_uid != ResourceUID.INVALID_ID, "wing gameplay UID is valid")
+	if default_uid != ResourceUID.INVALID_ID:
+		_check(ResourceUID.get_id_path(default_uid) == WING_GAMEPLAY_PATH, "wing gameplay UID maps to the accepted scene")
+	for fixture: Dictionary in [
+		{"path": WING_GAMEPLAY_PATH, "label": "wing gameplay"},
+		{"path": LEGACY_MAIN_PATH, "label": "legacy main"},
+		{"path": NEUTRAL_REVIEW_PATH, "label": "neutral review"},
+	]:
+		var fixture_path := String(fixture["path"])
+		var fixture_label := String(fixture["label"])
+		_check(ResourceLoader.exists(fixture_path), fixture_label + " scene remains addressable")
+		var packed := load(fixture_path) as PackedScene
+		_check(packed != null, fixture_label + " scene remains explicitly loadable")
+		if fixture_path == WING_GAMEPLAY_PATH and packed != null:
+			var default_root := packed.instantiate()
+			_check(default_root.name == &"WingGameplay", "promoted scene keeps the WingGameplay root")
+			_check(default_root.get_node_or_null("Player") != null, "promoted scene keeps one gameplay player")
+			_check(default_root.get_node_or_null("HUD/CarriedItemsHUD") != null, "promoted scene keeps one carried-items HUD")
+			var seed_items := default_root.get_node_or_null("DevelopmentSetup/SeedItems")
+			_check(seed_items != null and seed_items.get_child_count() == 14, "promoted scene keeps all fourteen accepted seed hosts")
+			default_root.free()
 
 
 func _count_cameras(node: Node) -> int:

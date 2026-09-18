@@ -2,7 +2,7 @@
 
 **Decision recorded:** 18 September 2026
 **Branch:** `codex/wing-storage-bridge`
-**Scope:** Record the completed integration review, the F6 clarification and the approved follow-up order. This record does not change default launch.
+**Scope:** Record the completed integration review, the completed F6 check and the approved follow-up order. Default-entry promotion is recorded separately.
 
 ## Human integration result
 
@@ -21,7 +21,7 @@ The saved working scene contains the developer's intended edit evidence: `SM_Tab
 
 The earlier foundation scope permitted diagnostic-grid toggling to remain absent. The developer subsequently required F6 as the next bounded follow-up. The continuing scene now starts with developer grids OFF; a non-repeat F6 key-down toggles the existing grid/occupancy visuals on all twelve functional shelf surfaces. The developer request is independent of Manual's normal target-grid request, so either request may keep the same visual nodes visible. F7 remains suppressed in this composition.
 
-Technical validation and focused rendered evidence are in [F6 validation](wing-storage-debug-f6-validation.md). The broad integration review is complete; the small F6 handling check is still pending.
+Technical validation and focused rendered evidence are in [F6 validation](wing-storage-debug-f6-validation.md). The developer subsequently answered **PROMOTE** for all three focused F6 checks. The broad integration and F6 human gates are closed; the authoritative result is preserved in [human acceptance](wing-gameplay-foundation-acceptance-2026-09-18.md).
 
 ## Approved follow-up sequence
 
@@ -33,8 +33,8 @@ The developer approved this order on 18 September 2026:
 4. Expand the editable development palette and evaluate vertical ergonomics.
 5. Begin functional Receiving only after the preceding gates.
 
-Only step 1 was executed here. Agreement with the order is not acceptance of unperformed work. The next task must not infer a final ceiling/shelf height, expand the seed set or start Receiving from this record.
+Steps 1 and 2 were separately authorized and completed in sequence. Agreement with the remaining order is not acceptance of unperformed work. The next task must not infer a final ceiling/shelf height, expand the seed set or start Receiving from this record.
 
 ## Current stop
 
-Run the explicit scene `res://gameplay/logistics_wing/wing_gameplay.tscn` and perform the three-question F6 check recorded in the validation report. `main.tscn` remains the default launch and historical mechanics fixture; `wing_review.tscn` remains the neutral geometry harness. No merge, push or remote integration has occurred.
+The F6 human check is complete. The default-entry close-out promotes `res://gameplay/logistics_wing/wing_gameplay.tscn` while retaining `main.tscn` as the historical mechanics fixture and `wing_review.tscn` as the neutral geometry harness. Publication and synchronization evidence belongs to [the close-out validation](wing-gameplay-default-entry-closeout-validation.md), not to this earlier follow-up.

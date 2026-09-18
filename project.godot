@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Sorting-apoc-PROTOTYPE"
-run/main_scene="uid://drbkr86g3cxl1"
+run/main_scene="uid://bljf1nlhijej"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 

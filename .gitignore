@@ -28,3 +28,11 @@ Thumbs.db
 # Local generated/human validation evidence; current curated records are under docs/.
 /reports/logistics_wing/
 /reports/receiving/
+
+# Local Godot import metadata for committed documentation evidence images.
+/docs/readable/media/Sorting_Apocalypse_Visual_Design_Direction_v0.5_image_01.png.import
+/docs/readable/media/Sorting_Apocalypse_Visual_Design_Direction_v0.5_image_02.png.import
+/docs/readable/media/Sorting_Apocalypse_Visual_Design_Direction_v0.5_image_03.png.import
+/docs/readable/media/Sorting_Apocalypse_Visual_Design_Direction_v0.5_image_04.png.import
+/docs/readable/media/Sorting_Apocalypse_Visual_Design_Direction_v0.5_image_05.png.import
+/docs/testing/evidence/greybox-accepted-2026-09-17/overview_debug_topdown.png.import
