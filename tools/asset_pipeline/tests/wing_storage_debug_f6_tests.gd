@@ -1,6 +1,7 @@
 extends SceneTree
 
 const GAMEPLAY_PATH := "res://gameplay/logistics_wing/wing_gameplay.tscn"
+const MAIN_PATH := "res://main.tscn"
 
 var _failed: bool = false
 
@@ -92,6 +93,8 @@ func _run() -> void:
 
 	host.free()
 	current_scene = null
+	await process_frame
+	await _assert_legacy_main_controls()
 	_finish()
 
 
@@ -212,6 +215,49 @@ func _assert_zoning_round_trip(player: Node, manager: Node, surfaces: Array) -> 
 	_check(_all_surface_visuals_match(surfaces, true), "zoning close preserves all developer grids")
 
 
+func _assert_legacy_main_controls() -> void:
+	var packed := load(MAIN_PATH) as PackedScene
+	if not _check(packed != null, "legacy main scene loads for scoped input regression"):
+		return
+	var scene := packed.instantiate()
+	root.add_child(scene)
+	current_scene = scene
+	await process_frame
+	await physics_frame
+	var manager := scene.find_child("StoragePrototypeManager", true, false)
+	if not _check(manager != null, "legacy main retains its historical storage manager"):
+		scene.free()
+		current_scene = null
+		return
+	var surfaces := manager.call("get_surfaces") as Array
+	_check(surfaces.size() == 16, "legacy main retains its sixteen historical surfaces")
+	_check(
+		_all_normal_visibility_matches(surfaces, true),
+		"legacy main grids retain their historical visible startup"
+	)
+	await _send_key(KEY_F6, true, false)
+	_check(
+		_all_normal_visibility_matches(surfaces, false),
+		"legacy main still routes F6 through its historical manager"
+	)
+	await _send_key(KEY_F6, true, false)
+	_check(
+		_all_normal_visibility_matches(surfaces, true),
+		"legacy main F6 still restores its historical grid presentation"
+	)
+	var demo_surface := manager.get("_demo_surface") as StorageSurface
+	var reservation_count_before := demo_surface.get_reservation_count()
+	await _send_key(KEY_F7, true, false)
+	_check(int(manager.get("_demo_state")) == 1, "legacy main still routes F7 to its occupancy demo")
+	_check(
+		demo_surface.get_reservation_count() > reservation_count_before,
+		"legacy main F7 still creates its historical demo reservations"
+	)
+	scene.free()
+	current_scene = null
+	await process_frame
+
+
 func _auto_place_selected(
 	controller: StoragePlacementController,
 	carried: Node,
@@ -238,6 +284,11 @@ func _gameplay_state_snapshot(scene: Node, surfaces: Array) -> Dictionary:
 		var surface := value as StorageSurface
 		var reservation_keys: Array = (surface.get("_reservations") as Dictionary).keys()
 		reservation_keys.sort()
+		var reservation_records: Array = []
+		for reservation_key: Variant in reservation_keys:
+			reservation_records.append(
+				surface.get_reservation(String(reservation_key)).duplicate(true)
+			)
 		var stack_records: Array = []
 		var stack_ids: Array = (surface.get("_stacks") as Dictionary).keys()
 		stack_ids.sort()
@@ -249,19 +300,29 @@ func _gameplay_state_snapshot(scene: Node, surfaces: Array) -> Dictionary:
 					"instance_id": entry.item.instance_id,
 					"packing_rotated": entry.packing_rotated,
 					"host_transform": entry.host.transform,
+					"host_global_transform": entry.host.global_transform,
+					"host_parent": String(entry.host.get_parent().get_path()),
+					"world_item_instance_id": entry.world_item.get_item_instance().instance_id,
+					"world_item_parent": String(entry.world_item.get_parent().get_path()),
 				})
 			stack_records.append({"stack_id": String(stack_id), "entries": entry_records})
 		surface_records.append({
+			"node_name": String(surface.name),
 			"surface_id": String(surface.surface_id),
 			"global_transform": surface.global_transform,
+			"visible": surface.visible,
 			"grid_size": surface.get_grid_size(),
+			"capacity_cells": surface.get_grid_size().x * surface.get_grid_size().y,
 			"cell_size_m": surface.get_cell_size_m(),
 			"usable_size_m": surface.get_usable_size_m(),
 			"stack_clearance_m": surface.stack_clearance_m,
-			"reservation_keys": reservation_keys,
+			"reservations": reservation_records,
+			"cells": (surface.get("_cells") as Array).duplicate(true),
+			"item_to_stack": (surface.get("_item_to_stack") as Dictionary).duplicate(true),
 			"zone_cells": surface.get_zone_cells_copy(),
 			"zones_initialized": surface.are_zones_initialized(),
 			"stacks": stack_records,
+			"collision": _surface_collision_snapshot(surface),
 		})
 
 	var seed_records: Array = []
@@ -292,6 +353,27 @@ func _gameplay_state_snapshot(scene: Node, surfaces: Array) -> Dictionary:
 	}
 
 
+func _surface_collision_snapshot(surface: StorageSurface) -> Dictionary:
+	var area := surface.get_node_or_null("StorageInteractionArea") as Area3D
+	if area == null:
+		return {"present": false}
+	var shape_node := area.get_node_or_null("StorageInteractionShape") as CollisionShape3D
+	var shape_size := Vector3.ZERO
+	if shape_node != null and shape_node.shape is BoxShape3D:
+		shape_size = (shape_node.shape as BoxShape3D).size
+	return {
+		"present": true,
+		"area_transform": area.transform,
+		"collision_layer": area.collision_layer,
+		"collision_mask": area.collision_mask,
+		"monitoring": area.monitoring,
+		"monitorable": area.monitorable,
+		"shape_disabled": shape_node.disabled if shape_node != null else true,
+		"shape_transform": shape_node.transform if shape_node != null else Transform3D.IDENTITY,
+		"shape_size": shape_size,
+	}
+
+
 func _manager_override(manager: Node) -> bool:
 	return bool(manager.call("is_developer_grid_visible")) if manager.has_method("is_developer_grid_visible") else false
 
@@ -305,6 +387,16 @@ func _surface_visuals_visible(surface: StorageSurface) -> bool:
 func _all_surface_visuals_match(surfaces: Array, expected_visible: bool) -> bool:
 	for value: Variant in surfaces:
 		var surface := value as StorageSurface
+		if _surface_visuals_visible(surface) != expected_visible:
+			return false
+	return true
+
+
+func _all_normal_visibility_matches(surfaces: Array, expected_visible: bool) -> bool:
+	for value: Variant in surfaces:
+		var surface := value as StorageSurface
+		if surface == null or surface.is_normal_debug_visible() != expected_visible:
+			return false
 		if _surface_visuals_visible(surface) != expected_visible:
 			return false
 	return true
