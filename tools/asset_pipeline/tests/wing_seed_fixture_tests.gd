@@ -40,9 +40,12 @@ func _run() -> void:
 	await _test_transform_round_trip(packed)
 	await _test_editor_style_duplicate(packed, first_ids)
 	await _test_invalid_declaration(packed, "unknown", &"loot_999999", "unknown item ID")
-	await _test_invalid_declaration(packed, "blocked", &"loot_000015", "blocked item ID")
+	await _test_invalid_declaration(packed, "blocked_000015", &"loot_000015", "blocked item ID")
+	await _test_invalid_declaration(packed, "blocked_000034", &"loot_000034", "blocked item ID")
+	await _test_invalid_declaration(packed, "blocked_000036", &"loot_000036", "blocked item ID")
 	await _test_invalid_declaration(packed, "missing_visual", &"", "missing authored visual")
 	await _test_invalid_declaration(packed, "mismatched_visual", &"", "visual mismatch")
+	_test_duplicate_derived_identity(packed)
 	_finish()
 
 
@@ -238,7 +241,7 @@ func _test_invalid_declaration(
 	var setup := packed.instantiate()
 	var seeds := setup.get_node("SeedItems")
 	var host := seeds.get_child(0)
-	if case_name == "unknown" or case_name == "blocked":
+	if case_name == "unknown" or case_name.begins_with("blocked_"):
 		host.set("item_id", replacement_id)
 	elif case_name == "missing_visual":
 		var visual := host.call("get_authored_visual") as Node3D
@@ -269,6 +272,30 @@ func _test_invalid_declaration(
 		(registrar.call("get_registered_instance_ids") as Array).is_empty(),
 		"%s declaration leaves registrar census empty" % case_name
 	)
+	setup.free()
+
+
+func _test_duplicate_derived_identity(packed: PackedScene) -> void:
+	var setup := packed.instantiate()
+	var seeds := setup.get_node("SeedItems")
+	var registrar := setup.get_node("SeedRegistrar")
+	var host := seeds.get_child(0)
+	var declarations: Array[Dictionary] = []
+	var seen_instance_ids: Dictionary = {}
+
+	registrar.call("_validate_host", host, declarations, seen_instance_ids)
+	registrar.call("_validate_host", host, declarations, seen_instance_ids)
+	var failures := registrar.call("get_validation_failures") as Array
+	_check(
+		"\n".join(failures).contains("duplicate seed identity"),
+		"duplicate derived identity reports named failure"
+	)
+	_check(declarations.size() == 1, "duplicate derived identity is not added to declarations")
+	_check(
+		seeds.find_children("WorldItem", "WorldItem", true, false).is_empty(),
+		"duplicate derived identity creates no runtime ownership"
+	)
+	registrar.call("_report_failures")
 	setup.free()
 
 

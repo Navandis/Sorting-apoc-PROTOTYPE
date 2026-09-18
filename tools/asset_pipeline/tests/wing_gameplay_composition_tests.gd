@@ -58,6 +58,7 @@ func _run() -> void:
 	host.free()
 	current_scene = null
 	await _assert_optional_development_setup(packed)
+	await _assert_duplicate_fixture_namespace_rejected(packed)
 
 	_finish()
 
@@ -213,6 +214,52 @@ func _assert_optional_development_setup(packed: PackedScene) -> void:
 	)
 	_assert_permanent_gameplay_survives_without_setup(omitted, "omitted")
 	omitted.free()
+	current_scene = null
+
+
+func _assert_duplicate_fixture_namespace_rejected(packed: PackedScene) -> void:
+	var host := Node3D.new()
+	host.name = "DuplicateNamespaceHost"
+	root.add_child(host)
+	current_scene = host
+
+	var first := packed.instantiate()
+	first.name = "WingGameplayPrimary"
+	host.add_child(first)
+	await process_frame
+	await physics_frame
+
+	var second := packed.instantiate()
+	second.name = "WingGameplayDuplicate"
+	host.add_child(second)
+	await process_frame
+	await physics_frame
+
+	_check(
+		first.has_method("is_development_setup_active")
+		and bool(first.call("is_development_setup_active")),
+		"first fixture namespace owner remains active"
+	)
+	_check(
+		second.has_method("is_development_setup_active")
+		and not bool(second.call("is_development_setup_active")),
+		"second active fixture namespace is rejected before seed registration"
+	)
+	_check(
+		second.has_method("get_composition_failures")
+		and not (second.call("get_composition_failures") as Array).is_empty(),
+		"duplicate namespace rejection exposes a named composition failure"
+	)
+	var world_items := host.find_children("WorldItem", "WorldItem", true, false)
+	_check(world_items.size() == 12, "duplicate fixture rejection leaves exactly twelve registered items")
+	var instance_ids: Dictionary = {}
+	for value: Node in world_items:
+		var world_item := value as WorldItem
+		if world_item != null and world_item.get_item_instance() != null:
+			instance_ids[world_item.get_item_instance().instance_id] = true
+	_check(instance_ids.size() == 12, "duplicate fixture rejection leaves twelve unique item identities")
+
+	host.free()
 	current_scene = null
 
 
