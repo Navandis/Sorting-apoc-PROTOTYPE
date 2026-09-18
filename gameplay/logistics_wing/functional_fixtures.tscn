@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://gameplay/logistics_wing/functional_fixtures.gd" id="1_fixtures"]
+[ext_resource type="PackedScene" uid="uid://d3mlmnn3nikxt" path="res://assets/environment/furniture/storage/SM_MetalShelves.glb" id="2_metal"]
+[ext_resource type="PackedScene" uid="uid://c4pb7l6u1paus" path="res://assets/environment/furniture/storage/SM_ventilated_locker.glb" id="3_locker"]
+[ext_resource type="Script" path="res://storage_shelf_clearance_context.gd" id="4_clearance"]
+
+[node name="FunctionalFixtures" type="Node3D"]
+script = ExtResource("1_fixtures")
+print_collision_summary = false
+
+[node name="SM_MetalShelves_GalleryA_West" parent="." instance=ExtResource("2_metal")]
+position = Vector3(-2.28, 0, -7.2)
+
+[node name="StorageShelfClearanceContext" type="Node" parent="SM_MetalShelves_GalleryA_West"]
+script = ExtResource("4_clearance")
+open_top_clearance_world_m = 0.518
+
+[node name="SM_MetalShelves_GalleryB_North" parent="." instance=ExtResource("2_metal")]
+position = Vector3(14, 0, -13.78)
+rotation = Vector3(0, 1.5707964, 0)
+
+[node name="StorageShelfClearanceContext" type="Node" parent="SM_MetalShelves_GalleryB_North"]
+script = ExtResource("4_clearance")
+open_top_clearance_world_m = 0.518
+
+[node name="SM_ventilated_locker_GalleryC_West" parent="." instance=ExtResource("3_locker")]
+position = Vector3(-1.35, 0, 9)
+
+[node name="StorageShelfClearanceContext" type="Node" parent="SM_ventilated_locker_GalleryC_West"]
+script = ExtResource("4_clearance")
+open_top_clearance_world_m = 0.519

@@ -5,6 +5,18 @@ const GEOMETRY_PATH := "res://greybox/logistics_wing/wing_geometry.tscn"
 const PLAYER_SCRIPT_PATH := "res://player_controller.gd"
 const CARRIED_SCRIPT_PATH := "res://carried_items.gd"
 const HUD_SCRIPT_PATH := "res://carried_items_hud.gd"
+const ENVIRONMENT_PATH := "res://gameplay/logistics_wing/wing_environment.tscn"
+const FIXTURE_NAMES: Array[String] = [
+	"SM_MetalShelves_GalleryA_West",
+	"SM_MetalShelves_GalleryB_North",
+	"SM_ventilated_locker_GalleryC_West",
+]
+const PROXY_NAMES: Array[String] = [
+	"GalleryA_West",
+	"GalleryB_North",
+	"GalleryC_West",
+]
+const ORDINARY_CEILING_UNDERSIDE_Y_M := 3.40
 
 var _failed: bool = false
 
@@ -22,13 +34,14 @@ func _run() -> void:
 	if not _check(packed != null, "continuing gameplay scene loads"):
 		_finish()
 		return
+	_assert_saved_proxy_overrides()
 
 	var direct := packed.instantiate()
 	root.add_child(direct)
 	current_scene = direct
 	await process_frame
 	await physics_frame
-	_assert_composition(direct, "direct")
+	await _assert_composition(direct, "direct")
 	root.remove_child(direct)
 	direct.free()
 	current_scene = null
@@ -41,7 +54,7 @@ func _run() -> void:
 	host.add_child(parented)
 	await process_frame
 	await physics_frame
-	_assert_composition(parented, "parent-hosted")
+	await _assert_composition(parented, "parent-hosted")
 	host.free()
 	current_scene = null
 
@@ -149,6 +162,149 @@ func _assert_composition(scene: Node, context: String) -> void:
 		not _instances_scene(scene, "res://greybox/logistics_wing/wing_review.tscn"),
 		"%s composition does not embed neutral-review harness" % context
 	)
+	_assert_environment_proxy_contract(environment, context)
+	await _assert_fixture_contract(scene, context)
+
+
+func _assert_saved_proxy_overrides() -> void:
+	var packed := load(ENVIRONMENT_PATH) as PackedScene
+	if not _check(packed != null, "environment wrapper loads for saved-state inspection"):
+		return
+	var environment := packed.instantiate()
+	for proxy_name: String in PROXY_NAMES:
+		var mesh := environment.get_node_or_null(
+			"Greybox/Proxies/%s/Mesh" % proxy_name
+		) as MeshInstance3D
+		var shape := environment.get_node_or_null(
+			"Greybox/Proxies/%s/StaticBody3D/CollisionShape3D" % proxy_name
+		) as CollisionShape3D
+		_check(mesh != null and not mesh.visible, "%s proxy mesh is suppressed in saved gameplay data" % proxy_name)
+		_check(shape != null and shape.disabled, "%s proxy collider is suppressed in saved gameplay data" % proxy_name)
+	environment.free()
+
+
+func _assert_environment_proxy_contract(environment: Node3D, context: String) -> void:
+	_check(
+		environment.has_method("get_proxy_suppression_failures")
+		and (environment.call("get_proxy_suppression_failures") as Array).is_empty(),
+		"%s environment reports no proxy-suppression failures" % context
+	)
+	for proxy_name: String in PROXY_NAMES:
+		var mesh := environment.get_node_or_null(
+			"Greybox/Proxies/%s/Mesh" % proxy_name
+		) as MeshInstance3D
+		var shape := environment.get_node_or_null(
+			"Greybox/Proxies/%s/StaticBody3D/CollisionShape3D" % proxy_name
+		) as CollisionShape3D
+		_check(mesh != null and not mesh.visible, "%s %s proxy mesh is hidden" % [context, proxy_name])
+		_check(shape != null and shape.disabled, "%s %s proxy collider is disabled" % [context, proxy_name])
+
+	var neutral := (load(GEOMETRY_PATH) as PackedScene).instantiate()
+	for proxy_name: String in PROXY_NAMES:
+		var neutral_mesh := neutral.get_node_or_null(
+			"Proxies/%s/Mesh" % proxy_name
+		) as MeshInstance3D
+		var neutral_shape := neutral.get_node_or_null(
+			"Proxies/%s/StaticBody3D/CollisionShape3D" % proxy_name
+		) as CollisionShape3D
+		_check(neutral_mesh != null and neutral_mesh.visible, "%s neutral %s proxy mesh remains visible" % [context, proxy_name])
+		_check(neutral_shape != null and not neutral_shape.disabled, "%s neutral %s proxy collider remains enabled" % [context, proxy_name])
+	neutral.free()
+
+
+func _assert_fixture_contract(scene: Node, context: String) -> void:
+	var fixtures := scene.get_node_or_null("FunctionalFixtures") as Node3D
+	if not _check(fixtures != null, "%s composition has fixture root" % context):
+		return
+	if not _check(
+		fixtures.has_method("get_installed_surfaces"),
+		"%s fixture root exposes installed surfaces" % context
+	):
+		return
+
+	var expected_positions := {
+		"SM_MetalShelves_GalleryA_West": Vector3(-2.28, 0.0, -7.20),
+		"SM_MetalShelves_GalleryB_North": Vector3(14.00, 0.0, -13.78),
+		"SM_ventilated_locker_GalleryC_West": Vector3(-1.35, 0.0, 9.00),
+	}
+	for fixture_name: String in FIXTURE_NAMES:
+		var fixture := fixtures.get_node_or_null(fixture_name) as Node3D
+		_check(fixture != null, "%s has fixture %s" % [context, fixture_name])
+		if fixture == null:
+			continue
+		_check(fixture.scale.is_equal_approx(Vector3.ONE), "%s %s uses identity scale" % [context, fixture_name])
+		_check(fixture.position.is_equal_approx(expected_positions[fixture_name]), "%s %s uses approved position" % [context, fixture_name])
+		var expected_yaw := deg_to_rad(90.0) if fixture_name == "SM_MetalShelves_GalleryB_North" else 0.0
+		_check(is_equal_approx(fixture.rotation.y, expected_yaw), "%s %s uses approved yaw" % [context, fixture_name])
+		var clearance_context := fixture.get_node_or_null("StorageShelfClearanceContext")
+		_check(clearance_context != null, "%s %s has explicit clearance context" % [context, fixture_name])
+
+	var surfaces := fixtures.call("get_installed_surfaces") as Array
+	_check(surfaces.size() == 12, "%s installs twelve storage surfaces" % context)
+	var surface_ids: Dictionary = {}
+	var top_surfaces: Dictionary = {}
+	for value: Variant in surfaces:
+		var surface := value as StorageSurface
+		if not _check(surface != null, "%s surface census contains StorageSurface" % context):
+			continue
+		var surface_key := String(surface.surface_id)
+		_check(not surface_ids.has(surface_key), "%s surface ID is unique: %s" % [context, surface_key])
+		surface_ids[surface_key] = true
+		_check(surface.get_reservation_count() == 0, "%s %s starts without reservations" % [context, surface_key])
+		_check(surface.get_stack_count() == 0, "%s %s starts without stacks" % [context, surface_key])
+		_check(is_zero_approx(surface.get_occupancy_ratio()), "%s %s starts empty" % [context, surface_key])
+		_check(not surface.are_zones_initialized(), "%s %s starts unzoned" % [context, surface_key])
+		if String(surface.name) == "StorageSurface_04":
+			top_surfaces[String(surface.get_parent().name)] = surface
+
+	_check(surface_ids.size() == 12, "%s has twelve distinct surface IDs" % context)
+	_check(top_surfaces.size() == 3, "%s exposes three top surfaces" % context)
+	for fixture_name: String in FIXTURE_NAMES:
+		var top := top_surfaces.get(fixture_name) as StorageSurface
+		if top == null:
+			continue
+		var physical_ceiling_clearance := ORDINARY_CEILING_UNDERSIDE_Y_M - top.global_position.y
+		_check(top.stack_clearance_m > 0.01, "%s %s top clearance is positive" % [context, fixture_name])
+		_check(
+			top.stack_clearance_m <= physical_ceiling_clearance - 0.019,
+			"%s %s top cap stays below ceiling with construction margin" % [context, fixture_name]
+		)
+		if fixture_name.begins_with("SM_ventilated_locker"):
+			_check(
+				top.stack_clearance_m <= 0.519001,
+				"%s locker top cap respects its lower cabinet obstruction" % context
+			)
+
+	_check(
+		fixtures.call("get_missing_top_clearance_contexts") == [],
+		"%s fixtures have no missing clearance contexts" % context
+	)
+	_check(
+		fixtures.call("is_storage_debug_input_enabled") == false,
+		"%s destructive fixture debug input is disabled" % context
+	)
+
+	var all_surfaces := scene.find_children("*", "StorageSurface", true, false)
+	_check(all_surfaces.size() == 12, "%s no other asset gains a StorageSurface" % context)
+	var occupancy_before: Array[float] = []
+	for surface: StorageSurface in surfaces:
+		occupancy_before.append(surface.get_occupancy_ratio())
+	var key_down := InputEventKey.new()
+	key_down.keycode = KEY_F7
+	key_down.pressed = true
+	Input.parse_input_event(key_down)
+	await process_frame
+	var key_up := InputEventKey.new()
+	key_up.keycode = KEY_F7
+	key_up.pressed = false
+	Input.parse_input_event(key_up)
+	for index: int in range(surfaces.size()):
+		var surface := surfaces[index] as StorageSurface
+		_check(
+			is_equal_approx(surface.get_occupancy_ratio(), occupancy_before[index]),
+			"%s F7 does not change %s occupancy" % [context, surface.surface_id]
+		)
+		_check(not surface.are_zones_initialized(), "%s F7 does not zone %s" % [context, surface.surface_id])
 
 
 func _count_current_cameras(root_node: Node) -> int:

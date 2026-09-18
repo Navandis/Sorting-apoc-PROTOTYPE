@@ -17,6 +17,24 @@ script = ExtResource("1_environment")
 
 [node name="Greybox" parent="." instance=ExtResource("2_geometry")]
 
+[node name="Mesh" parent="Greybox/Proxies/GalleryA_West" index="0"]
+visible = false
+
+[node name="CollisionShape3D" parent="Greybox/Proxies/GalleryA_West/StaticBody3D" index="0"]
+disabled = true
+
+[node name="Mesh" parent="Greybox/Proxies/GalleryB_North" index="0"]
+visible = false
+
+[node name="CollisionShape3D" parent="Greybox/Proxies/GalleryB_North/StaticBody3D" index="0"]
+disabled = true
+
+[node name="Mesh" parent="Greybox/Proxies/GalleryC_West" index="0"]
+visible = false
+
+[node name="CollisionShape3D" parent="Greybox/Proxies/GalleryC_West/StaticBody3D" index="0"]
+disabled = true
+
 [node name="GameplayEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_gameplay")
 
@@ -83,3 +101,5 @@ position = Vector3(56, 2.7, -5)
 light_color = Color(0.94, 0.97, 1, 1)
 light_energy = 2.0
 omni_range = 22.0
+
+[editable path="Greybox"]
