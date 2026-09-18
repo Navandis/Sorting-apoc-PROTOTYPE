@@ -3,7 +3,8 @@
 **Validated:** 18 September 2026
 **Branch:** `codex/wing-storage-bridge`
 **Task start:** `69078edd0b197e582edc246eae6bfbff58d18de5`
-**Implementation/evidence revision:** `1830488a8d4056ef6cdab6c8297022d10d1cbaff`
+**Core implementation revision:** `1830488a8d4056ef6cdab6c8297022d10d1cbaff`
+**Final verified/evidence revision:** `2de099164e2564e46884443cd5d4ceda296f33e4`
 **Main and origin/main observed:** `1491fd729f3237706ad9533274b7525f6b058932`
 
 ## Result and scope
@@ -83,8 +84,8 @@ Focused SHA-256 values:
 | `storage_surface.gd` | `ca070f7aadca92952e005dc91fb2fd7ec204b647ab6087fa4c77462c251cdc9d` |
 | `gameplay/logistics_wing/functional_storage_manager.gd` | `fcf8fa82ef0583f4d47a254654502cea361efb36a0372b167c219df225784672` |
 | `gameplay/logistics_wing/functional_fixtures.gd` | `39897b41b5c4fcc3d75cb5548835f8b664285f3d795e2ec5ab6608afe58746e4` |
-| `tools/asset_pipeline/tests/wing_storage_debug_f6_tests.gd` | `7d26cbb16ab0e56dc7a3832540bbe8d00ac87a8621717ef4520a7f122db10abf` |
-| `capture_manifest.json` | `94e9760bcb35a4ced856f5f4a39ba653f16abbc653053d9775cff159ac94498c` |
+| `tools/asset_pipeline/tests/wing_storage_debug_f6_tests.gd` | `9ee224be50f7a9aa80e9db83e39c4326baed2e5b815780cf21a3e69bc23bef56` |
+| `capture_manifest.json` | `295c9e12d029b802ed7b025948cd0056b69876f0dc1dd1ba1f95af20941eb25b` |
 | `contact_sheet.png` | `df09dabdc5c04ff3050968eafcd52c0fb4171fb46dbf09ad172145cbe30bdfd6` |
 
 Authoritative handoff hashes were verified locally: execution handoff `b657484899e56baf8182051edd56318acf812a7b928638c72db1c05f128ce6d0`, approved sequence `8adf50bbb2cf1be41f0c8343aea0c56671c9d62b491594f046b9a685ccd68e63`, and kickoff `d9cfa94ff1606c9f812fb6b188c431a2ff4646aad94df3b436f3fbc9988140a6`.
