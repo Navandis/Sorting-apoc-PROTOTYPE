@@ -31,7 +31,7 @@ Godot `4.7.stable.official.5b4e0cb0f` was used for fresh verification.
 - Normal launch with no `--script` and no explicit scene exits 0, loads `wing_gameplay.tscn`, and reports twelve functional surfaces, F6 default OFF and F7 disabled.
 - Parser/editor initialization and explicit wing, legacy-main and neutral-review smokes exit 0 without script or parse failures. Legacy main still reports its historical sixteen surfaces.
 - All 39 non-hanging `*_tests.gd` scripts exit 0 with exactly one PASS each. Their 52 diagnostic lines match the established ledger, including the inherited Fuel Canister content assertion and intentional negative tests.
-- The bounded legacy audit was stopped after 25 seconds with no PASS and reproduced its three inherited assertion stacks at lines 72, 73 and 95. It remains a known exception, not a pass or repaired condition.
+- The bounded legacy audit was stopped after 25 seconds with no PASS and reproduced its three inherited assertion stacks: `_assert_summary` line 179 twice, called from lines 72 and 73, and `_init` line 95 once. It remains a known exception, not a pass or repaired condition.
 
 The normal launch was also recorded for two rendered frames at 1920×1080 using `gl_compatibility` on an NVIDIA GeForce RTX 5060 Ti. `default_entry00000000.png` and `default_entry00000001.png` are byte-identical with SHA-256 `3f1ebf01abc4df6bca5ac780064de7a3a065f0a161d2b86b15346797bf2303da`. The capture and process logs remain ignored under `reports/logistics_wing/storage_bridge/closeout/`; they are review evidence, not production assets.
 
