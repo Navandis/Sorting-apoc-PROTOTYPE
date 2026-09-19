@@ -57,8 +57,11 @@
 [ext_resource type="PackedScene" uid="uid://b8kwe7ttomifv" path="res://assets/props/Fuel/SM_GasCylinder_01.glb" id="65_wy5fy"]
 [ext_resource type="PackedScene" uid="uid://5tmqsrcxc405" path="res://assets/props/Fuel/SM_PropaneTank_02.glb" id="66_gx4rg"]
 [ext_resource type="PackedScene" uid="uid://g7gfxcmhy3no" path="res://assets/props/protection/SM_HardHat_01.glb" id="67_5dllo"]
+[ext_resource type="PackedScene" uid="uid://dnj3rfj4x3f6j" path="res://assets/environment/furniture/storage/SM_StorageShelvesTop04.glb" id="68_1vm84"]
 [ext_resource type="PackedScene" uid="uid://cdtpk0sa4cpcp" path="res://assets/props/electronics/SM_ComputerMouse_01.glb" id="68_phcyf"]
 [ext_resource type="PackedScene" uid="uid://bnkwk3smcnutr" path="res://assets/props/electronics/SM_ComputerTower_01.glb" id="69_birbe"]
+[ext_resource type="PackedScene" uid="uid://cqmcikmpp27bi" path="res://assets/environment/furniture/storage/SM_ToolRack_01.glb" id="69_cyx1q"]
+[ext_resource type="PackedScene" uid="uid://bcx2fh3qc60ou" path="res://assets/environment/furniture/storage/SM_cabinet_b.glb" id="70_0dhbp"]
 [ext_resource type="PackedScene" uid="uid://bccl7gu0qfqi3" path="res://assets/props/electronics/SM_ElectronicDevice_01.glb" id="70_f1p13"]
 [ext_resource type="PackedScene" uid="uid://bxjf574hsfsrk" path="res://assets/props/electronics/SM_Phone_01.glb" id="71_4obbf"]
 [ext_resource type="PackedScene" uid="uid://dmkwp66fg38ct" path="res://assets/props/morale/SM_Ball_01.glb" id="72_ovcoh"]
@@ -594,7 +597,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.584892, 0.8762828, -0.93937
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.790341, 0.8762828, -0.93937045)
 
 [node name="SM_CDStack_03" parent="." unique_id=741461779 instance=ExtResource("74_34ol3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.911709, 0.8762828, -0.50881046)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.8776984, 0.88719153, -0.5584178)
 
 [node name="SM_CDStack_05" parent="." unique_id=1972226467 instance=ExtResource("74_34ol3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.911709, 0.8762828, -0.3400861)
@@ -613,3 +616,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.399109, 0.91281724, 0.58447
 
 [node name="SM_CoughSyrup_01" parent="." unique_id=590556541 instance=ExtResource("75_c2n8d")]
 transform = Transform3D(0.59482276, 0, 0.80385685, 0, 1, 0, -0.80385685, 0, 0.59482276, 6.390529, 0.85099405, 3.0536628)
+
+[node name="SM_StorageShelvesTop04" parent="." unique_id=1880687064 instance=ExtResource("68_1vm84")]
+transform = Transform3D(0.003518888, 0, 0.9999938, 0, 1, 0, -0.9999938, 0, 0.003518888, 0.5005648, 0, -2.4526925)
+
+[node name="SM_ToolRack_01" parent="." unique_id=1619853203 instance=ExtResource("69_cyx1q")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 8.099436, 1.3331366, -1.981319)
+
+[node name="SM_cabinet_b" parent="." unique_id=1514343344 instance=ExtResource("70_0dhbp")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0.9429755, 0, -5.3726873)
