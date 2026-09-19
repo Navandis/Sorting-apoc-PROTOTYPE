@@ -7,6 +7,12 @@ const CARRIED_SCRIPT_PATH := "res://carried_items.gd"
 const HUD_SCRIPT_PATH := "res://carried_items_hud.gd"
 const ENVIRONMENT_PATH := "res://gameplay/logistics_wing/wing_environment.tscn"
 const DEVELOPMENT_SETUP_PATH := "res://gameplay/logistics_wing/development/seeded_storage_setup.tscn"
+const CATALOGUE_PATH := "res://data/items/item_catalog.tres"
+const LIVE_PALETTE_ROUND_TRIP_PATH := "user://wing_live_palette_transform_test.tscn"
+const BLOCKED_ITEM_IDS: Array[StringName] = [
+	&"loot_000034",
+	&"loot_000036",
+]
 const FIXTURE_NAMES: Array[String] = [
 	"SM_MetalShelves_GalleryA_West",
 	"SM_MetalShelves_GalleryB_North",
@@ -59,6 +65,7 @@ func _run() -> void:
 	host.free()
 	current_scene = null
 	await _assert_optional_development_setup(packed)
+	await _assert_live_host_transform_round_trip(packed)
 	await _assert_duplicate_setup_namespace_rejected(packed)
 	await _assert_duplicate_fixture_namespace_rejected(packed)
 
@@ -198,6 +205,169 @@ func _assert_composition(scene: Node, context: String) -> void:
 			live_instance_ids.size() == seed_hosts.size(),
 			"%s live edited seed fixture has distinct identities" % context
 		)
+		_assert_live_palette_coverage(development_setup, seed_hosts, context)
+		await _assert_live_palette_handling(scene, context)
+
+
+func _assert_live_palette_coverage(
+	development_setup: Node3D,
+	seed_hosts: Array[Node],
+	context: String
+) -> void:
+	var catalogue := load(CATALOGUE_PATH)
+	_check(catalogue != null, "%s live palette loads the persistent catalogue" % context)
+	if catalogue == null:
+		return
+
+	var eligible_ids: Dictionary = {}
+	for value: Variant in catalogue.get("definitions") as Array:
+		var definition := value as ItemDefinition
+		_check(definition != null, "%s catalogue entry is an ItemDefinition" % context)
+		if definition != null and not BLOCKED_ITEM_IDS.has(definition.item_id):
+			eligible_ids[definition.item_id] = true
+
+	var covered_ids: Dictionary = {}
+	var host_names: Dictionary = {}
+	for host_node: Node in seed_hosts:
+		var host := host_node as Node3D
+		_check(host != null, "%s live palette host is Node3D" % context)
+		if host == null:
+			continue
+		var host_name := StringName(host.name)
+		_check(not host_names.has(host_name), "%s live palette host name is unique: %s" % [context, host_name])
+		host_names[host_name] = true
+		var item_id := StringName(host.get("item_id"))
+		_check(not BLOCKED_ITEM_IDS.has(item_id), "%s live palette excludes blocked item %s" % [context, item_id])
+		var definition := catalogue.call("get_definition_by_id", item_id) as ItemDefinition
+		_check(definition != null, "%s live palette host resolves %s" % [context, host_name])
+		var visual := host.call("get_authored_visual") as Node3D
+		_check(
+			int(host.call("get_authored_visual_count")) == 1 and visual != null,
+			"%s live palette host has exactly one imported visual: %s" % [context, host_name]
+		)
+		if definition != null and visual != null:
+			_check(
+				visual.scene_file_path == definition.visual_scene.resource_path,
+				"%s live palette visual matches %s" % [context, host_name]
+			)
+			covered_ids[item_id] = true
+
+	for eligible_id: StringName in eligible_ids:
+		_check(covered_ids.has(eligible_id), "%s live palette covers eligible item %s" % [context, eligible_id])
+	_check(
+		covered_ids.size() == eligible_ids.size(),
+		"%s live palette covers every eligible catalogue type without a fixed host quota" % context
+	)
+	var tables := development_setup.get_node_or_null("Tables")
+	_check(tables != null, "%s live palette retains its table root" % context)
+	if tables != null:
+		_check(
+			tables.find_children("*", "StorageSurface", true, false).is_empty(),
+			"%s live palette tables remain TAKE-only furniture" % context
+		)
+
+
+func _assert_live_palette_handling(scene: Node, context: String) -> void:
+	var player := scene.get_node_or_null("Player")
+	var carried := scene.get_node_or_null("Player/CarriedItems")
+	var controller := scene.get_node_or_null("Player/StoragePlacementController") as StoragePlacementController
+	var surfaces := scene.call("get_functional_surfaces") as Array
+	_check(player != null, "%s palette handling has the normal player" % context)
+	_check(carried != null, "%s palette handling has carried items" % context)
+	_check(controller != null, "%s palette handling has the normal controller" % context)
+	_check(surfaces.size() >= 2, "%s palette handling has real storage surfaces" % context)
+	if player == null or carried == null or controller == null or surfaces.size() < 2:
+		return
+	await _exercise_live_palette_item(scene, carried, controller, surfaces[0] as StorageSurface, &"loot_000015", "Fuel", context)
+	await _exercise_live_palette_item(scene, carried, controller, surfaces[1] as StorageSurface, &"loot_000002", "larger electronics", context)
+
+
+func _assert_live_host_transform_round_trip(packed: PackedScene) -> void:
+	var editable_scene := packed.instantiate()
+	var host := editable_scene.get_node_or_null("DevelopmentSetup/SeedItems/Fuel_Canister") as Node3D
+	_check(host != null, "live palette exposes Fuel_Canister as an editor-movable host")
+	if host == null:
+		editable_scene.free()
+		return
+	var moved := host.transform.translated_local(Vector3(0.06, 0.01, -0.05))
+	moved = moved.rotated_local(Vector3.UP, deg_to_rad(7.0))
+	host.transform = moved
+	var temporary := PackedScene.new()
+	_check(temporary.pack(editable_scene) == OK, "moved live palette host packs for editor save")
+	_check(
+		ResourceSaver.save(temporary, LIVE_PALETTE_ROUND_TRIP_PATH) == OK,
+		"moved live palette host saves"
+	)
+	editable_scene.free()
+	var reloaded_packed := ResourceLoader.load(
+		LIVE_PALETTE_ROUND_TRIP_PATH,
+		"PackedScene",
+		ResourceLoader.CACHE_MODE_IGNORE
+	) as PackedScene
+	_check(reloaded_packed != null, "saved live palette host reloads")
+	if reloaded_packed != null:
+		var reloaded_scene := reloaded_packed.instantiate()
+		var reloaded_host := reloaded_scene.get_node_or_null(
+			"DevelopmentSetup/SeedItems/Fuel_Canister"
+		) as Node3D
+		_check(
+			reloaded_host != null and reloaded_host.transform.is_equal_approx(moved),
+			"saved Fuel_Canister move survives reload"
+		)
+		reloaded_scene.free()
+	DirAccess.remove_absolute(ProjectSettings.globalize_path(LIVE_PALETTE_ROUND_TRIP_PATH))
+
+
+func _exercise_live_palette_item(
+	scene: Node,
+	carried: Node,
+	controller: StoragePlacementController,
+	surface: StorageSurface,
+	item_id: StringName,
+	label: String,
+	context: String
+) -> void:
+	var host := _find_live_host(scene, item_id)
+	_check(host != null, "%s palette handling finds %s host" % [context, label])
+	if host == null or surface == null:
+		return
+	var world_item := host.get_node_or_null("WorldItem") as WorldItem
+	var item := world_item.get_item_instance() as ItemInstance if world_item != null else null
+	_check(world_item != null and item != null, "%s palette handling owns %s" % [context, label])
+	if world_item == null or item == null:
+		return
+	_check(world_item.pickup_into(carried), "%s palette handling picks up %s" % [context, label])
+	_check(carried.get_selected_item() == item, "%s pickup preserves %s identity" % [context, label])
+	surface.set_zone_rect(item.get_storage_category(), Vector2i.ZERO, surface.get_grid_size() - Vector2i.ONE)
+	var orientations := controller.call("_entry_orientations_for_item", item) as Array
+	var fit := surface.find_zone_stack_or_empty_fit(
+		item.get_storage_category(),
+		orientations[0],
+		orientations[1] if orientations.size() > 1 else null
+	)
+	controller.set("_current_surface", surface)
+	controller.set("_current_fit", fit)
+	controller.set("_manual_mode", false)
+	_check(controller.place_selected(), "%s palette handling stores %s through the normal controller" % [context, label])
+	var stack := surface.get_storage_stack(surface.get_stack_id_for_item(item.instance_id))
+	_check(stack != null and not stack.entries.is_empty(), "%s palette handling stores %s once" % [context, label])
+	if stack == null or stack.entries.is_empty():
+		return
+	var stored_world := stack.entries[0].world_item as WorldItem
+	_check(stored_world.pickup_into(carried), "%s palette handling retrieves %s" % [context, label])
+	_check(carried.get_selected_item() == item, "%s retrieval preserves %s identity" % [context, label])
+	carried.call("remove_item", item)
+	await process_frame
+
+
+func _find_live_host(scene: Node, item_id: StringName) -> Node3D:
+	var seed_items := scene.get_node_or_null("DevelopmentSetup/SeedItems")
+	if seed_items == null:
+		return null
+	for child: Node in seed_items.get_children():
+		if StringName(child.get("item_id")) == item_id and not child.is_queued_for_deletion():
+			return child as Node3D
+	return null
 
 
 func _assert_optional_development_setup(packed: PackedScene) -> void:

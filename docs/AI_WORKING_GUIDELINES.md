@@ -27,3 +27,5 @@ For ChatGPT architects, local Codex and reviewers. This is a solo project: optim
 **Architect's responsibility:** Keep handoffs and evidence requests proportionate too. State approval/preservation boundaries once; do not generate a large package or a new bookkeeping phase for every small correction.
 
 **Bootstrap insert:** “Read `docs/AI_WORKING_GUIDELINES.md` before planning or delegating. Apply its proportionality rules to this session's handoffs, implementation, review and evidence. Increase process only for a stated task-specific risk.”
+
+**Handoff preference:** Future implementation handoffs should state the intended model, reasoning effort, and whether the work starts in a new or existing session.

@@ -8,7 +8,8 @@
 - Medical: 10 m exclusive protected corridor, unchanged 7.8 × 7.0 m nominal anteroom, continuous eastern wall/south-east entrance. A/B connector remains Main Storage.
 - Supervised full-wing authoring and the bounded Medical revision are demonstrated. This does not imply unattended design or final art feasibility.
 - The continuing gameplay composition is promoted as the normal development launch: three supported empty storage units, the accepted fourteen-host editable table-loot setup, the normal player/HUD and preserved accepted geometry. The developer accepted the broad handling/editor-authorship review and all three focused F6 checks; F6 developer grids remain default-OFF and F7 remains suppressed in this composition.
-- The bounded locker/Fuel maintenance is human-PROMOTED. Locker level 2 is contained at both measured edges at identity and legacy scale; the current Fuel source retains its approved authoring/handling choices. Fuel is eligible for correctly authored development hosts, while Gloves and Pants remain blocked. The saved fourteen-host scene is unchanged.
+- The bounded locker/Fuel maintenance is human-PROMOTED. Locker level 2 is contained at both measured edges at identity and legacy scale; the current Fuel source retains its approved authoring/handling choices. Fuel is eligible for correctly authored development hosts, while Gloves and Pants remain blocked. Its maintenance checkpoint preserved the then-fourteen-host scene.
+- The expanded development palette is implemented locally for human review: the continuing gameplay scene now keeps the original fourteen saved hosts and adds one direct editor-authored host for each of the 32 previously unrepresented eligible catalogue types. The fixed twelve-host regression fixture remains separate and unchanged; vertical ergonomics and Receiving remain deferred.
 
 ## Current authorities
 GDD v0.8; Visual Design Direction v0.5; Prototype Findings v0.8. See [documentation index](README.md). Accepted in-engine source/scene/overview govern current dimensions over historical schematic pixels.
@@ -36,5 +37,6 @@ No abandoned stub remains in the accepted wing. Later opportunistic stubs are no
 - [Continuing gameplay and F6 human acceptance](testing/wing-gameplay-foundation-acceptance-2026-09-18.md) — records the developer's PROMOTE decisions and their limits.
 - [Default-entry close-out](testing/wing-gameplay-default-entry-closeout-validation.md) — owns the saved-scene checkpoint, launch promotion, fresh verification and repository synchronization evidence.
 - [Locker/Fuel maintenance validation](testing/locker-fuel-maintenance-validation.md) — owns the human-PROMOTED locker correction, Fuel reconciliation and eligibility follow-through, combined close-out verification, packaging isolation and preservation audit.
+- [Expanded item-palette validation](testing/expanded-item-palette-validation.md) — records the local editor-authored palette expansion and its bounded technical checks; it stops for human review.
 
 Original reports and bundles are retained locally under their original evidence paths. Ignored directories are not backed up by GitHub; the curated acceptance evidence is under `docs/testing/evidence/greybox-accepted-2026-09-17/`.
