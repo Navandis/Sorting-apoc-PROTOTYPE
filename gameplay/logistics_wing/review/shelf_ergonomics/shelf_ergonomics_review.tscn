@@ -1,0 +1,20 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://gameplay/logistics_wing/review/shelf_ergonomics/shelf_ergonomics_review.gd" id="1_review"]
+[ext_resource type="PackedScene" path="res://gameplay/logistics_wing/wing_environment.tscn" id="2_environment"]
+[ext_resource type="PackedScene" path="res://gameplay/player/gameplay_player.tscn" id="3_player"]
+[ext_resource type="PackedScene" path="res://gameplay/ui/carried_items_hud.tscn" id="4_hud"]
+
+[node name="ShelfErgonomicsReview" type="Node3D"]
+script = ExtResource("1_review")
+
+[node name="Environment" parent="." instance=ExtResource("2_environment")]
+
+[node name="Player" parent="." instance=ExtResource("3_player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.9, 0.05, -8.65)
+
+[node name="HUD" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="CarriedItemsHUD" parent="HUD" instance=ExtResource("4_hud")]
+carried_items_path = NodePath("../../Player/CarriedItems")
