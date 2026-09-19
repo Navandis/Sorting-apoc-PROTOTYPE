@@ -67,26 +67,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.4, 0, 2.65)
 [node name="SM_Table_SeedEast" parent="DevelopmentSetup/Tables" index="1"]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -6.0698276, 0, -1.65)
 
-[node name="SM_Table_Palette_Electronics" parent="DevelopmentSetup/Tables" index="2" instance=ExtResource("40_table")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 2.65)
-
 [node name="SM_Table_Palette_Food" parent="DevelopmentSetup/Tables" index="3" instance=ExtResource("40_table")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.8, 0, 2.65)
-
-[node name="SM_Table_Palette_Fuel" parent="DevelopmentSetup/Tables" index="4" instance=ExtResource("40_table")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.2, 0, 2.65)
-
-[node name="SM_Table_Palette_Hydration" parent="DevelopmentSetup/Tables" index="5" instance=ExtResource("40_table")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, -1.1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 2.65)
 
 [node name="SM_Table_Palette_Medical" parent="DevelopmentSetup/Tables" index="6" instance=ExtResource("40_table")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.4, 0, -1.1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.4, 0, -0.1)
 
 [node name="SM_Table_Palette_MoraleProtection" parent="DevelopmentSetup/Tables" index="7" instance=ExtResource("40_table")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.8, 0, -1.1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.2, 0, -0.1)
 
-[node name="SM_Table_Palette_Weapons" parent="DevelopmentSetup/Tables" index="8" instance=ExtResource("40_table")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.2, 0, -1.1)
+[node name="SM_Table_Palette_Hydration" parent="DevelopmentSetup/Tables" index="8" instance=ExtResource("40_table")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, -2.8)
 
 [node name="CerealBox_A" parent="DevelopmentSetup/SeedItems" index="0"]
 transform = Transform3D(0.9848077, 0, 0.17364825, 0, 1, 0, -0.17364825, 0, 0.9848077, -12, 0.96, 2.35)
@@ -159,224 +150,227 @@ transform = Transform3D(0.17364822, 0, 0.9848077, 0, 1, 0, -0.9848077, 0, 0.1736
 transform = Transform3D(1.0000006, 0, -4.4703484e-08, 0, 1, 0, 4.4703484e-08, 0, 1.0000006, 4.000502, 0, 0.39388704)
 
 [node name="Electronics_ComputerMouse" type="Node3D" parent="DevelopmentSetup/SeedItems" index="14"]
-position = Vector3(-15.9, 0.96, 2.2)
+position = Vector3(-12.35, 0.885, -0.52)
 script = ExtResource("5_8pqnk")
 item_id = &"loot_000001"
 
 [node name="Visual" parent="DevelopmentSetup/SeedItems/Electronics_ComputerMouse" instance=ExtResource("8_mouse")]
 
 [node name="Electronics_ComputerTower" type="Node3D" parent="DevelopmentSetup/SeedItems" index="15"]
-position = Vector3(-15.2, 0.96, 2.2)
+position = Vector3(-11.9, 0.886, -0.5)
 script = ExtResource("5_8pqnk")
 item_id = &"loot_000002"
 
 [node name="Visual" parent="DevelopmentSetup/SeedItems/Electronics_ComputerTower" instance=ExtResource("9_tower")]
 
 [node name="Electronics_Device" type="Node3D" parent="DevelopmentSetup/SeedItems" index="16"]
-position = Vector3(-14.5, 0.96, 2.2)
+position = Vector3(-11.35, 0.885, -0.5)
 script = ExtResource("5_8pqnk")
 item_id = &"loot_000003"
 
 [node name="Visual" parent="DevelopmentSetup/SeedItems/Electronics_Device" instance=ExtResource("10_device")]
 
 [node name="Electronics_Phone" type="Node3D" parent="DevelopmentSetup/SeedItems" index="17"]
-position = Vector3(-13.8, 0.96, 2.2)
+position = Vector3(-10.75, 0.884, -0.5)
 script = ExtResource("5_8pqnk")
 item_id = &"loot_000004"
 
 [node name="Visual" parent="DevelopmentSetup/SeedItems/Electronics_Phone" instance=ExtResource("11_phone")]
 
 [node name="Food_Bread" type="Node3D" parent="DevelopmentSetup/SeedItems" index="18"]
-position = Vector3(-8.6, 0.96, 2.2)
+position = Vector3(-9.05, 0.885, 2.15)
 script = ExtResource("5_8pqnk")
 item_id = &"loot_000006"
 
 [node name="Visual" parent="DevelopmentSetup/SeedItems/Food_Bread" instance=ExtResource("12_bread")]
 
 [node name="Food_DryGoodsA" type="Node3D" parent="DevelopmentSetup/SeedItems" index="19"]
-position = Vector3(-8.0, 0.96, 2.2)
+position = Vector3(-8.65, 0.884, 2.15)
 script = ExtResource("5_8pqnk")
 item_id = &"loot_000008"
 
 [node name="Visual" parent="DevelopmentSetup/SeedItems/Food_DryGoodsA" instance=ExtResource("13_dry_a")]
 
 [node name="Food_DryGoodsC" type="Node3D" parent="DevelopmentSetup/SeedItems" index="20"]
-position = Vector3(-7.4, 0.96, 2.2)
+position = Vector3(-8.3, 0.884, 2.15)
 script = ExtResource("5_8pqnk")
 item_id = &"loot_000009"
 
 [node name="Visual" parent="DevelopmentSetup/SeedItems/Food_DryGoodsC" instance=ExtResource("14_dry_c")]
 
 [node name="Food_DryGoodsG" type="Node3D" parent="DevelopmentSetup/SeedItems" index="21"]
-position = Vector3(-6.8, 0.96, 2.2)
+position = Vector3(-7.95, 0.884, 2.15)
 script = ExtResource("5_8pqnk")
 item_id = &"loot_000010"
 
 [node name="Visual" parent="DevelopmentSetup/SeedItems/Food_DryGoodsG" instance=ExtResource("15_dry_g")]
 
 [node name="Food_PigCarcass" type="Node3D" parent="DevelopmentSetup/SeedItems" index="22"]
-position = Vector3(-8.4, 0.96, 3.0)
+position = Vector3(-8.75, 0.938, 2.95)
 script = ExtResource("5_8pqnk")
 item_id = &"loot_000011"
 
 [node name="Visual" parent="DevelopmentSetup/SeedItems/Food_PigCarcass" instance=ExtResource("16_pig")]
 
 [node name="Food_Watermelon" type="Node3D" parent="DevelopmentSetup/SeedItems" index="23"]
-position = Vector3(-7.3, 0.96, 3.0)
+position = Vector3(-7.9, 1.005, 2.95)
 script = ExtResource("5_8pqnk")
 item_id = &"loot_000012"
 
 [node name="Visual" parent="DevelopmentSetup/SeedItems/Food_Watermelon" instance=ExtResource("17_watermelon")]
 
 [node name="Fuel_Firewood" type="Node3D" parent="DevelopmentSetup/SeedItems" index="24"]
-position = Vector3(-5.0, 0.96, 2.2)
+position = Vector3(-7.55, 0.887, 2.15)
 script = ExtResource("5_8pqnk")
 item_id = &"loot_000013"
 
 [node name="Visual" parent="DevelopmentSetup/SeedItems/Fuel_Firewood" instance=ExtResource("18_firewood")]
 
 [node name="Fuel_FirewoodPile" type="Node3D" parent="DevelopmentSetup/SeedItems" index="25"]
-position = Vector3(-4.35, 0.96, 2.2)
+position = Vector3(-7.2, 0.889, 2.95)
 script = ExtResource("5_8pqnk")
 item_id = &"loot_000014"
 
 [node name="Visual" parent="DevelopmentSetup/SeedItems/Fuel_FirewoodPile" instance=ExtResource("19_firewood_pile")]
 
 [node name="Fuel_Canister" type="Node3D" parent="DevelopmentSetup/SeedItems" index="26"]
-position = Vector3(-3.7, 0.96, 2.2)
+position = Vector3(-7.05, 0.884, 2.15)
 script = ExtResource("5_8pqnk")
 item_id = &"loot_000015"
 
 [node name="Visual" parent="DevelopmentSetup/SeedItems/Fuel_Canister" instance=ExtResource("20_fuel_canister")]
 
 [node name="Fuel_GasCanister" type="Node3D" parent="DevelopmentSetup/SeedItems" index="27"]
-position = Vector3(-5.0, 0.96, 3.0)
+position = Vector3(-9.15, 0.884, -0.55)
 script = ExtResource("5_8pqnk")
 item_id = &"loot_000016"
 
 [node name="Visual" parent="DevelopmentSetup/SeedItems/Fuel_GasCanister" instance=ExtResource("21_gas_canister")]
 
 [node name="Fuel_GasCylinder" type="Node3D" parent="DevelopmentSetup/SeedItems" index="28"]
-position = Vector3(-4.35, 0.96, 3.0)
+position = Vector3(-8.6, 0.884, -0.55)
 script = ExtResource("5_8pqnk")
 item_id = &"loot_000017"
 
 [node name="Visual" parent="DevelopmentSetup/SeedItems/Fuel_GasCylinder" instance=ExtResource("22_gas_cylinder")]
 
 [node name="Fuel_PropaneTank" type="Node3D" parent="DevelopmentSetup/SeedItems" index="29"]
-position = Vector3(-3.7, 0.96, 3.0)
+position = Vector3(-8.0, 0.884, -0.55)
 script = ExtResource("5_8pqnk")
 item_id = &"loot_000018"
 
 [node name="Visual" parent="DevelopmentSetup/SeedItems/Fuel_PropaneTank" instance=ExtResource("23_propane_tank")]
 
 [node name="Hydration_FoodCan" type="Node3D" parent="DevelopmentSetup/SeedItems" index="30"]
-position = Vector3(-15.8, 0.96, -1.5)
+position = Vector3(-12.35, 0.884, 0.05)
 script = ExtResource("5_8pqnk")
 item_id = &"loot_000019"
 
 [node name="Visual" parent="DevelopmentSetup/SeedItems/Hydration_FoodCan" instance=ExtResource("24_food_can")]
 
 [node name="Hydration_MilkCarton" type="Node3D" parent="DevelopmentSetup/SeedItems" index="31"]
-position = Vector3(-15.1, 0.96, -1.5)
+position = Vector3(-11.85, 0.884, 0.05)
 script = ExtResource("5_8pqnk")
 item_id = &"loot_000020"
 
 [node name="Visual" parent="DevelopmentSetup/SeedItems/Hydration_MilkCarton" instance=ExtResource("25_milk")]
 
 [node name="Hydration_OrangeJuice" type="Node3D" parent="DevelopmentSetup/SeedItems" index="32"]
-position = Vector3(-14.4, 0.96, -1.5)
+position = Vector3(-11.35, 0.884, 0.05)
 script = ExtResource("5_8pqnk")
 item_id = &"loot_000021"
 
 [node name="Visual" parent="DevelopmentSetup/SeedItems/Hydration_OrangeJuice" instance=ExtResource("26_orange_juice")]
 
 [node name="Medical_Painkillers" type="Node3D" parent="DevelopmentSetup/SeedItems" index="33"]
-position = Vector3(-12.3, 0.96, -1.5)
+position = Vector3(-10.8, 0.884, 0.05)
 script = ExtResource("5_8pqnk")
 item_id = &"loot_000024"
 
 [node name="Visual" parent="DevelopmentSetup/SeedItems/Medical_Painkillers" instance=ExtResource("27_painkillers")]
 
 [node name="Medical_Antibiotics" type="Node3D" parent="DevelopmentSetup/SeedItems" index="34"]
-position = Vector3(-11.7, 0.96, -1.5)
+position = Vector3(-10.5, 0.884, 0.05)
 script = ExtResource("5_8pqnk")
 item_id = &"loot_000025"
 
 [node name="Visual" parent="DevelopmentSetup/SeedItems/Medical_Antibiotics" instance=ExtResource("28_antibiotics")]
 
 [node name="Medical_Bandages" type="Node3D" parent="DevelopmentSetup/SeedItems" index="35"]
-position = Vector3(-11.1, 0.96, -1.5)
+position = Vector3(-12.1, 0.884, 0.35)
 script = ExtResource("5_8pqnk")
 item_id = &"loot_000026"
 
 [node name="Visual" parent="DevelopmentSetup/SeedItems/Medical_Bandages" instance=ExtResource("29_bandages")]
 
 [node name="Medical_CoughSyrup" type="Node3D" parent="DevelopmentSetup/SeedItems" index="36"]
-position = Vector3(-10.5, 0.96, -1.5)
+position = Vector3(-11.7, 0.885, 0.35)
 script = ExtResource("5_8pqnk")
 item_id = &"loot_000027"
 
 [node name="Visual" parent="DevelopmentSetup/SeedItems/Medical_CoughSyrup" instance=ExtResource("30_cough_syrup")]
 
 [node name="Morale_Ball" type="Node3D" parent="DevelopmentSetup/SeedItems" index="37"]
-position = Vector3(-8.7, 0.96, -1.5)
+position = Vector3(-7.45, 0.966, -0.5)
 script = ExtResource("5_8pqnk")
 item_id = &"loot_000029"
 
 [node name="Visual" parent="DevelopmentSetup/SeedItems/Morale_Ball" instance=ExtResource("31_ball")]
 
 [node name="Protection_Armor" type="Node3D" parent="DevelopmentSetup/SeedItems" index="38"]
-position = Vector3(-8.1, 0.96, -1.5)
+position = Vector3(-9.15, 0.885, 0.05)
 script = ExtResource("5_8pqnk")
 item_id = &"loot_000032"
 
 [node name="Visual" parent="DevelopmentSetup/SeedItems/Protection_Armor" instance=ExtResource("32_armor")]
 
 [node name="Protection_Boots" type="Node3D" parent="DevelopmentSetup/SeedItems" index="39"]
-position = Vector3(-7.5, 0.96, -1.5)
+position = Vector3(-8.5, 0.906, 0.05)
 script = ExtResource("5_8pqnk")
 item_id = &"loot_000033"
 
 [node name="Visual" parent="DevelopmentSetup/SeedItems/Protection_Boots" instance=ExtResource("33_boots")]
 
 [node name="Protection_HardHat" type="Node3D" parent="DevelopmentSetup/SeedItems" index="40"]
-position = Vector3(-6.9, 0.96, -1.5)
+position = Vector3(-7.85, 0.884, 0.05)
 script = ExtResource("5_8pqnk")
 item_id = &"loot_000035"
 
 [node name="Visual" parent="DevelopmentSetup/SeedItems/Protection_HardHat" instance=ExtResource("34_hardhat")]
 
 [node name="Weapons_AssaultRifle" type="Node3D" parent="DevelopmentSetup/SeedItems" index="41"]
-position = Vector3(-5.1, 0.96, -1.5)
+position = Vector3(-12.7, 1.087, -2.55)
+rotation = Vector3(0, 1.570796, 0)
 script = ExtResource("5_8pqnk")
 item_id = &"loot_000038"
 
 [node name="Visual" parent="DevelopmentSetup/SeedItems/Weapons_AssaultRifle" instance=ExtResource("35_rifle")]
 
 [node name="Weapons_Pistol" type="Node3D" parent="DevelopmentSetup/SeedItems" index="42"]
-position = Vector3(-4.6, 0.96, -1.5)
+position = Vector3(-12.65, 0.997, -3.15)
 script = ExtResource("5_8pqnk")
 item_id = &"loot_000039"
 
 [node name="Visual" parent="DevelopmentSetup/SeedItems/Weapons_Pistol" instance=ExtResource("36_pistol")]
 
 [node name="Weapons_Shotgun" type="Node3D" parent="DevelopmentSetup/SeedItems" index="43"]
-position = Vector3(-4.1, 0.96, -1.5)
+position = Vector3(-11.3, 1.046, -2.55)
+rotation = Vector3(0, 1.570796, 0)
 script = ExtResource("5_8pqnk")
 item_id = &"loot_000040"
 
 [node name="Visual" parent="DevelopmentSetup/SeedItems/Weapons_Shotgun" instance=ExtResource("37_shotgun")]
 
 [node name="Weapons_Hammer3" type="Node3D" parent="DevelopmentSetup/SeedItems" index="44"]
-position = Vector3(-3.6, 0.96, -1.5)
+position = Vector3(-11.2, 0.882, -3.15)
 script = ExtResource("5_8pqnk")
 item_id = &"loot_000041"
 
 [node name="Visual" parent="DevelopmentSetup/SeedItems/Weapons_Hammer3" instance=ExtResource("38_hammer_3")]
 
 [node name="Weapons_TennisRacket" type="Node3D" parent="DevelopmentSetup/SeedItems" index="45"]
-position = Vector3(-3.1, 0.96, -1.5)
+position = Vector3(-11.85, 0.881, -3.15)
+rotation = Vector3(0, 1.570796, 0)
 script = ExtResource("5_8pqnk")
 item_id = &"loot_000042"
 
