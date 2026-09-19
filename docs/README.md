@@ -30,7 +30,7 @@ The normal development entry is the promoted continuing-gameplay scene `res://ga
 - [Continuing gameplay and F6 human acceptance](testing/wing-gameplay-foundation-acceptance-2026-09-18.md): recorded PROMOTE decisions and scope limits.
 - [Default-entry close-out](testing/wing-gameplay-default-entry-closeout-validation.md): saved-scene checkpoint, launch promotion, fresh verification and repository synchronization.
 - [Locker/Fuel maintenance validation](testing/locker-fuel-maintenance-validation.md): human-PROMOTED level-2 locker correction and Fuel reconciliation, bounded Fuel eligibility follow-through, combined close-out verification and packaging isolation.
-- [Expanded item-palette validation](testing/expanded-item-palette-validation.md): editor-authored eligible-type coverage, preserved fixed fixture, bounded verification and human review gate.
+- [Expanded item-palette validation](testing/expanded-item-palette-validation.md): human-PROMOTED editor-authored eligible-type coverage, final manual-authoring checkpoint, preserved fixed fixture, bounded verification, and acceptance limits; shelf/ceiling ergonomics are next.
 - [Receiving/Elevator design](superpowers/specs/2026-09-12-receiving-elevator-mvp-design.md): subsystem contract, not proof of physical Receiving.
 
 Older DOCX editions, design amendments, implementation plans and validation reports remain historical evidence. Their original dates and pre-human-review statuses must not be silently rewritten. Active tasks use the current versions and later explicitly recorded decisions.

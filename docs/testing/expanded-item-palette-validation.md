@@ -1,8 +1,16 @@
 # Expanded item-palette validation
 
-**Status:** Technical checks complete; stop for human review. This is a saved editor-authored development setup expansion, not a palette UI, production inventory, height revision, or Receiving work. It follows the deployed [AI working guidelines](../AI_WORKING_GUIDELINES.md). Model and reasoning effort are unavailable from this session's exposed runtime.
+**Status:** Human-PROMOTED. This is a saved editor-authored development setup expansion, not a palette UI, production inventory, height revision, or Receiving work. It follows the deployed [AI working guidelines](../AI_WORKING_GUIDELINES.md). Model and reasoning effort are unavailable from this session's exposed runtime.
 
-## Scope and preservation
+## Final human acceptance — 19 September 2026
+
+- The developer completed and tested the manual arrangement and accepted the final saved scene at `8010e54 chore: refine development palette placement`.
+- At least one copy of every approved loot type remains present; the developer confirmed no reported table/item clipping or collisions and that loot and shelf interactions work as expected.
+- The accepted manual authoring intentionally repositions the development tables and hosts and removes only redundant palette tables. It preserves the authored host names, IDs, Visual children, registration/handling contract, and the separate fixed twelve-item regression fixture.
+- This final manual arrangement supersedes the table-count and transform-specific notes in the historical implementation snapshot below. It is the authoritative palette layout; this close-out does not normalize or otherwise edit it.
+- Next task: evaluate shelf/ceiling ergonomics. This promotion does not approve current shelf/ceiling heights, production starting inventory, item scale, storage rules, art, or Receiving.
+
+## Historical implementation snapshot (before manual acceptance)
 
 - `wing_gameplay.tscn` retains its fourteen pre-existing direct `DevelopmentSetup/SeedItems` hosts, including their host and Visual-child transforms.
 - Thirty-two new direct hosts extend the live scene from eight represented eligible types to all forty eligible catalogue types. `loot_000015` Fuel Canister is included. `loot_000034` Gloves and `loot_000036` Pants remain absent and blocked.
@@ -36,6 +44,15 @@ Using `D:\AI Tools\Godot-4.7-Codex\Godot_v4.7-stable_win64_console.exe` (4.7.sta
 
 Each Godot invocation retained the known Windows root-certificate diagnostic. The fixture and composition suites also intentionally emit named invalid-declaration or duplicate-namespace diagnostics while exiting successfully with their `PASS` marker; no unexpected assertion was observed.
 
-## Human review gate
+## Post-acceptance close-out checks — 19 September 2026
+
+1. `wing_gameplay_composition_tests.gd` — PASS against the final accepted saved arrangement, including coverage, registration, collision-only table contract, normal handling checks, and its temporary Fuel move/save/reload assertion.
+2. Fresh Godot editor scan — PASS. The project completed its filesystem scan and editor initialization without an unexpected parse or import error.
+3. Normal-renderer launch smoke — PASS. The default scene launched under GL Compatibility and installed its expected twelve functional storage surfaces.
+4. `git diff --check` — PASS before recording this close-out.
+
+The composition run deliberately reports duplicate seed-namespace validation errors for its named negative probes, then exits successfully with `PASS`; no unexpected assertion was observed.
+
+## Historical human-review gate (closed)
 
 Focused human review: assess compactness, table/wall clearances, walking lanes, and normal-input pickup feel with all neighbours present. The saved composition, identities, registration, collision-only table behavior, and editor reload preservation are already covered above. This correction does not change heights, storage rules, production art, or start Receiving.
