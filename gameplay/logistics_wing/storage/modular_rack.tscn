@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://gameplay/logistics_wing/storage/modular_rack.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://assets/environment/furniture/storage/SM_Rack01.glb" id="2_frame"]
+[ext_resource type="PackedScene" path="res://assets/environment/furniture/storage/SM_Rack02.glb" id="3_shelf"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rack"]
+size = Vector3(2.4, 2.2, 0.8)
+
+[node name="ModularRack" type="Node3D"]
+script = ExtResource("1_script")
+
+[node name="Frame" type="Node3D" parent="."]
+
+[node name="Visual" parent="Frame" instance=ExtResource("2_frame")]
+
+[node name="Levels" type="Node3D" parent="."]
+
+[node name="Shelf_01" type="Node3D" parent="Levels"]
+position = Vector3(0, 0.25, 0)
+
+[node name="Visual" parent="Levels/Shelf_01" instance=ExtResource("3_shelf")]
+
+[node name="Shelf_02" type="Node3D" parent="Levels"]
+position = Vector3(0, 0.95, 0)
+
+[node name="Visual" parent="Levels/Shelf_02" instance=ExtResource("3_shelf")]
+
+[node name="Shelf_03" type="Node3D" parent="Levels"]
+position = Vector3(0, 1.65, 0)
+
+[node name="Visual" parent="Levels/Shelf_03" instance=ExtResource("3_shelf")]
+
+[node name="OverheadLimit" type="Marker3D" parent="."]
+position = Vector3(0, 3.4, 0)
+
+[node name="MovementCollision" type="StaticBody3D" parent="."]
+
+[node name="Shape" type="CollisionShape3D" parent="MovementCollision"]
+position = Vector3(0, 1.1, 0)
+shape = SubResource("BoxShape3D_rack")
