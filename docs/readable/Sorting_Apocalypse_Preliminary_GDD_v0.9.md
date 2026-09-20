@@ -272,7 +272,7 @@ Competent people operate with scarce, mismatched resources. Active areas are wor
 | Abandoned continuations | No abandoned stub is required or reserved in the accepted wing. Later consider roughly two or three opportunistically, never directly connected or immediately adjacent to service spaces/Ops. Retain the storytelling option without rebuilding the removed Workshop branch. Functional machine spurs and the active settlement closure are unaffected. [D16-R02] |
 | A/B shared junction | Required A-east and B-west openings face shared circulation. Distinguish that junction from the protected Medical spur; these are not an extra direct inter-gallery shortcut. C<->D remains the sole dedicated gallery-to-gallery secondary connection. [H16] |
 
-The accepted in-engine builder, saved scene and final overview are now the working dimensional authority, subordinate to later explicit decisions. Detailed Topology V3 and Basic Structural Schematic V2 remain unchanged historical intent references; do not revert approved in-engine refinements to match their pixels. Visual Direction v0.5 records the current service spaces, Kitchen-from-B routing, Medical alignment and abandoned-stub deferral. [V05, A17, D16-R02]
+The accepted in-engine builder, saved scene and final overview are now the working dimensional authority, subordinate to later explicit decisions. Detailed Topology V3 and Basic Structural Schematic V2 remain unchanged historical intent references; do not revert approved in-engine refinements to match their pixels. Visual Direction v0.5 recorded the service spaces, Kitchen-from-B routing, Medical alignment and abandoned-stub deferral at that checkpoint; Visual Direction v0.6 is the current visual authority. [V05, A17, D16-R02]
 
 ### 4.7 Interior threshold and boundary policy
 
@@ -805,7 +805,7 @@ LootBatch owns content and accepted arrangement, not queue position. CONTENT_COM
 
 Repeating content seed, pool revision/configuration and Bulk budget reproduces ordered definitions and content, not a globally reusable batch identity. A newly committed batch gets unique batch/item IDs; reconstructing an existing commitment preserves its IDs. Representation changes and retries never mint replacement identities.
 
-ItemDefinition remains gameplay truth; the authoring manifest is evidence truth. The prototype generator uses an explicit 40-ID approved pool excluding Gloves/Pants, not runtime manifest inspection. The later loot_000015 reimport debt requires reconciliation before clean catalogue-dependent pile validation; it does not justify silent runtime pool mutation. Prototype Bulk sampling is a test producer, not final expedition reward balance. [R12 §§4-7; D12A, D13B]
+ItemDefinition remains gameplay truth; the authoring manifest is evidence truth. The prototype generator uses an explicit 40-ID approved Receiving pool rather than runtime manifest inspection. Fuel (loot_000015) is reconciled and remains in that pool; Gloves and Pants remain excluded. Prototype Bulk sampling is a test producer, not final expedition reward balance. [R12 §§4-7; D12A, D13B]
 
 ### 11.3 Preferred hidden-settle route
 
@@ -1384,7 +1384,7 @@ VALIDATED IN REPRESENTATIVE SCOPE Pickup/carry/store/retrieve, zoning, determini
 
 The gate comprised 14 mechanical passes and 14 expected-predictability judgments across all four approved Auto Groups. It used 40 eligible definitions within the 42-definition catalogue; Gloves/Pants were intentionally blocked. loot_000010 pickup and singleton shelf-clearance defects were separately fixed and human-validated. [P04 §§13-14]
 
-The representative storage/content gate does not establish a functional Receiving source or broader Systems MVP. The accepted wing still uses noninteractive storage proxies and a review-oriented player configuration. Before physical Receiving, a separate integration gate must reuse existing shelves, item representations, carrying, zoning and stacking with a small pre-seeded interactive assortment. Full requests, saves/journals and economy remain later work; loot_000015 freshness remains bounded debt until explicitly reconciled. [A17, D17B]
+The representative storage/content gate does not establish a functional Receiving source or broader Systems MVP. The accepted wing now supplies the continuing gameplay composition, functional storage surfaces, saved editor-authored palette and default project entry. The current evidence sequence is review-scene supply reuse, reusable functional modular-rack authoring, one fixed-ladder proof, the human ladder decision, then Receiving. Full requests, saves/journals and economy remain later work. [A17, D17B]
 
 ### 20.2 Systems MVP
 
@@ -1445,31 +1445,31 @@ The Systems MVP should answer whether sorting and survival form one loop, whethe
 
 ### 20.6 Approved execution roadmap and gated transition
 
-Promoted storage/content + promoted whole-wing spatial baseline -> repository/documentation close-out and synchronization -> seeded storage gameplay integration in the wing -> functional Receiving -> first real timed request/system slice -> expedition-produced batches -> broader Systems MVP.
+Promoted storage/content + promoted whole-wing spatial baseline + completed repository/documentation close-out, seeded wing integration, default-entry promotion and Fuel reconciliation -> review-scene supply reuse -> reusable functional modular-rack authoring -> fixed-ladder proof -> human ladder decision -> functional Receiving -> first real timed request/system slice -> expedition-produced batches -> broader Systems MVP.
 
-Greybox geometry is accepted. The current administrative gate records that acceptance, consolidates documents and publishes/integrates the accepted work from the authoritative local checkout after verification. Preserve history and ignored assets/import state; a clean repository must not be achieved by deleting local evidence or silently waiving known baseline diagnostics. Repository completion requires a separate local/remote verification record. [A17, D17B]
+Greybox geometry, the continuing wing, default project entry, editor-authored eligible palette and Fuel maintenance are accepted. Repository and documentation close-out is complete and synchronized. Preserve history and ignored asset/import state; later bounded gates must not delete local evidence or silently waive known diagnostics. [A17, D17B]
 
 | Stage | Scope | Reported state at this revision |
 | --- | --- | --- |
 | A: data/lifecycle | Durable identities, immutable committed content, prepared transforms/snapshots, 40-ID pool, seeded Bulk source, profile/job/diagnostics contracts, one-active/two-queued manager. | Implemented, reviewed, merged and technically verified. No physical-pile or full-save claim. |
-| B: one physical batch | Representative bay geometry, barrier/shutter boundary, isolated settle/validation/fallback, WorldItem materialization, contextual TAKE, reproducible deliveries and human pile tests. Production-art gates remain separate. | Physical piles remain unvalidated. Whole-wing spatial geometry is now PROMOTED after human review. Bookkeeping/synchronization and the seeded storage integration gate precede physical Receiving. Art approval remains separate. [A17, D17B] |
+| B: one physical batch | Representative bay geometry, barrier/shutter boundary, isolated settle/validation/fallback, WorldItem materialization, contextual TAKE, reproducible deliveries and human pile tests. Production-art gates remain separate. | Physical piles remain unvalidated. Whole-wing spatial geometry, continuing gameplay integration and default entry are PROMOTED after human review. Review-scene supply reuse, reusable rack authoring and the bounded fixed-ladder decision precede physical Receiving. Art approval remains separate. [A17, D17B] |
 | C: deposited pressure | Enable three deposited slots, FIFO advancement after closure, rejected fourth deposit and repeated synthetic delivery/throughput tests. | Not started. Requires Stage B human promotion. |
 
-The next gameplay gate is seeded storage integration, not further general layout work. Bring several storage-capable shelves and existing functional loot into the accepted wing, using normal TAKE/carry/PUT/zoning/stacking/retrieval and a repeatable fixture. Preserve the old main test scene intact; its later role may become a legacy regression fixture. Exact scene composition, bootstrap reuse and any default-launch switch require local dependency inspection and a focused implementation handoff. No switch is performed by bookkeeping. [D17B]
+Seeded storage integration, the continuing gameplay composition and the default-launch switch are complete. The next bounded gate is review-scene supply reuse, followed by reusable functional modular-rack authoring, the fixed-ladder proof, the human ladder decision and then Receiving. Preserve the old main test scene as an explicit legacy mechanics fixture and keep the neutral and shelf-ergonomics review scenes available. [D17B]
 
 Systems-MVP scope in §20.2 is retained as the eventual integrated target, not authorization to switch all mechanics on from Day 1 or to bypass the phased roadmap.
 
-### 20.7 Seeded storage gameplay integration: required bridge
+### 20.7 Seeded storage gameplay integration completed bridge
 
-Entry condition: repository/documentation close-out is verified complete. Deliver a playable wing containing several existing storage-capable shelves and a bounded assortment of real, pre-seeded catalogue items. Preserve accepted geometry; fit the fixture into valid Storage/Sorting space rather than redesigning rooms or populating departmental service spaces.
+The completed bridge provides a playable continuing wing with existing storage-capable shelves and a bounded editor-authored assortment of real catalogue items. It preserves the accepted geometry and keeps the functional setup within valid Storage and Sorting space rather than redesigning rooms or populating departmental service spaces.
 
-Reuse existing ItemDefinition/ItemInstance/WorldItem, per-level StorageSurface profiles, carrying, held/HUD presentation, zoning, placement and support stacking. Shelf meshes alone are insufficient. Confirm registration, unique runtime identities, reservations, scale isolation, collision layers and world-context clearance. Repeated copies should support stacking tests; include varied eligible shapes/categories without treating the fixture as production starting stock.
+The continuing scene reuses ItemDefinition, ItemInstance, WorldItem, per-level StorageSurface profiles, carrying, held/HUD presentation, zoning, placement and support stacking. Shelf meshes alone remain insufficient. The editor-authored palette supplies varied eligible shapes and categories without defining production starting stock; the fixed twelve-host fixture remains separate regression evidence.
 
-Preserve main.tscn and its tunnel/test-room contents and original regression purpose. A separate gameplay scene composed from the accepted geometry is the recommended implementation candidate; local preflight must confirm its bootstrap/dependency details. Keep the neutral review/capture scene separately runnable. Do not instance the old room and delete/hide its shell, or place functional nodes inside a generated subtree that regeneration overwrites.
+main.tscn and its tunnel/test-room contents retain their original mechanics-fixture purpose. res://gameplay/logistics_wing/wing_gameplay.tscn is the accepted continuing composition built from the promoted geometry. The neutral wing review and shelf-ergonomics review scenes remain separately runnable, and functional authoring remains outside generated geometry subtrees.
 
-Human gate: pick up seeded items; observe carrying/selection and held/HUD feedback; zone untouched shelves; auto-store and hold-to-store; manually place/rotate; retrieve visible stack members and re-store; confirm disabled cells and physical headroom; reproduce the fixture without duplicate items. Technical tests plus this in-game gate establish readiness for Receiving, not requests, live piles or full-game saves.
+The developer accepted the continuing wing's broad handling and editor-authorship review, including the saved item arrangement, carrying and storage behavior, and the three focused F6 checks. That acceptance establishes the completed integration bridge; it does not validate requests, live Receiving piles or full-game saves.
 
-Promoting the new wing gameplay scene to normal project launch is a deliberate later switch after this bridge works. The old main remains independently runnable and is not deleted, stripped or merged into the new environment. Neither launch switching nor seeded-fixture implementation occurs in the bookkeeping phase.
+The continuing wing is now the normal project launch through UID uid://bljf1nlhijej. The old main remains independently runnable and is not deleted, stripped or merged into the new environment. F6 developer grids remain available and default off in the continuing scene; F7 is suppressed there.
 
 ## 21. Validation Plan, Risks, and Open Questions
 
@@ -1516,24 +1516,24 @@ Promoting the new wing gameplay scene to normal project launch is a deliberate l
 | Starting inventory | Economy/balance TBD. Moderate starting installed capacity does not imply a fixed stock level. |
 | Furniture movement / labels | Unit/socket movement remains OPEN; existing empty-only safeguard applies if retained. Labels are intended, restrained/diegetic; exact mechanics, anchors, renderer and icons remain open. |
 | Machinery unlocks | Incinerator unavailable on Day 1; exact day and prerequisites open. Offline-from-start repair is preferred fiction. Salvager introduction remains undecided. |
-| Layout / shelf and bay metrics | Accepted builder/saved geometry and final overview are the working spatial baseline. Future furniture, bay lining, actual item visibility/reach and request travel may motivate specific revisions; they do not reopen the completed greybox by default. Seeded storage integration is required before Receiving. |
+| Layout / shelf and bay metrics | Accepted builder/saved geometry and final overview are the working spatial baseline. Future furniture, bay lining, actual item visibility/reach and request travel may motivate specific revisions; they do not reopen the completed greybox by default. Current storage-authoring gates precede Receiving in the order stated in §21.3. |
 | Expedition precomputation | Optional only after outcome commitment removes player influence. Backend preparation cannot change deposited capacity or reveal timing. |
 | Material-kit route | Ready PBR maps inspected; generated structural-kit pipeline and in-game finish quality still require proof. No subscription purchase implied. |
 | Service-space detailing | Room roles, distinct footprint character and three boundaries are confirmed. Exact furnishing, asset roster, delivery actions/mechanisms and feedback are later work, not a greybox prerequisite. |
 
 ### 21.3 Current next artifacts and bounded follow-ups
 
-Current documents are GDD v0.8, Prototype Findings v0.8 and Visual Direction v0.5. Greybox spatial approval is closed; the accepted in-engine layout is the working baseline. Finish verified repository/documentation synchronization before beginning seeded storage integration, and human-validate that bridge before physical Receiving.
+Current documents are GDD v0.9, Prototype Findings v0.9 and Visual Direction v0.6. Greybox spatial approval, repository/documentation synchronization, seeded wing integration, default-entry promotion and Fuel reconciliation are complete. The current gate order is review-scene supply reuse -> reusable functional modular-rack authoring -> fixed-ladder proof -> human ladder decision -> Receiving.
 
-- Persist the 17 September acceptance and current-status index, retain dated reports, install the current documents and readable extracts, and verify that local main and the intended GitHub main contain the accepted source after the authorized close-out. Stop for unsafe divergence or new test failures; do not force-push, reset user work or merge the rejected shell.
+- Reuse the accepted review-scene supply setup. Retain the A, B and C comparison scene and developer-authored rack; this gate does not select production installations.
 
-- Preflight the scene/gameplay bridge: inspect main.tscn, the review player, shelf installation and clearances, item registration, HUD and fixture-reset dependencies. Implement in a later focused task with several real shelves and a bounded deterministic seed set. Preserve the original room, accepted geometry, review harness and established mechanics; no new Receiving behaviour yet.
+- Build reusable functional modular-rack authoring while preserving developer authority over model, placement, dimensions and levels. The retained static rack is not production storage.
 
-- Keep the small architectural/material construction proof as a separate later production gate. It must establish repeatable coherent surfaces and asset integration before detailed art expands across the wing. It is not a prerequisite for the seeded-storage fixture or neutral physical Receiving prototype; neither gameplay gate promotes production art.
+- Test one fixed shelf-serving ladder on one rack, then obtain the human decision. The proof does not authorize general climbing, movable ladders, animation, fall systems or adjustable shelves.
 
-- Reconcile loot_000015 texture/reimport/fingerprint drift through the established authoring workflow before clean catalogue-scale Receiving pile playtests. Preserve intended scale, pose, Footprint, support role and Auto Group unless evidence requires an explicit new decision.
+- After the human ladder decision, resume Receiving unless storage work reveals another blocker. Fuel is reconciled; Gloves and Pants remain excluded from the Receiving pool.
 
-- Later complete and human-validate the physical Stage B pile/presentation gate, then Stage C queue pressure and the first genuine timed obligation. Item-economy sheets, request/Outcome Profile matrices, simulation and full save/crash work remain separate later gates. This documentation revision neither implements nor promotes them.
+- Keep the architectural and material proof separate. Later validate Stage B piles, Stage C queue pressure and the first timed obligation; economy, simulation and save/crash work remain later.
 
 APPENDIX A | EXAMPLE DAY
 
@@ -1679,21 +1679,21 @@ The following remain deliberately unchanged: day clock and fixed meals; request 
 | P06 | Supplied Prototype Findings v0.6, 15 September 2026. Historical implementation/evidence baseline before first-wing review. |
 | D15T | 15 September topology/layout session: approved five-gallery network, C<->D loop, branch/frontage refinements, dog-legged Deeper-Bunker Approach, door policy, Detailed Topology V3 and Basic Structural Schematic V2. Design approval only; no Godot greybox run. |
 | G06 | Supplied Preliminary GDD v0.6, 15 September 2026. Source document for this targeted revision. |
-| V04 / P07 | Prior companion Visual Direction v0.4 and Findings v0.7. Service-space agreement retained; current geometry status and roadmap superseded by V05/P08. |
+| V04 / P07 | Prior companion Visual Direction v0.4 and Findings v0.7. Service-space agreement retained; their then-current geometry status and roadmap were superseded by V05/P08 and later by V06/P09. |
 | W16 | Supplied logistics-wing-greybox-validation.md: implementation verified through 7ba27a5, captures at 21a2dba, 33/33 non-hanging scripts and 17 routes / 7 boundaries reported. Later final commit d81783f is user-reported, not independently audited. |
 | H16 | Developer round-one walkthrough observations, annotated images and recording. Disposition: refine existing wing; geometry correction directions include Kitchen access via Gallery B east. |
 | S16 | Supplied Greybox Round01 Source Review and wing source snapshot: static geometry/shared-wall/capture findings, not a new Godot or physics test run. |
 | D16S | Developer-approved dedicated service-space concept: three enterable support rooms, distinct footprints, open Ops landing, three boundaries; furnishing and delivery detail explicitly deferred. |
 | D16P | Earlier approved in-session sequence: low-fidelity wing first, prompt return to functional Receiving, then a bounded visual-construction proof. Production-art approval does not block neutral gameplay experiments. |
 | G07 / P07 | Supplied full GDD v0.7 and Findings v0.7 (16 September), retained source for this consolidation. |
-| V05 / P08 | Companion Visual Direction v0.5 and Findings v0.8 (17 September); current visual/spatial and evidence records. |
+| V05 / P08 | Companion Visual Direction v0.5 and Findings v0.8 (17 September); historical records of the then-current visual, spatial and evidence state, superseded by V06/P09. |
 | D16-R02 | Developer decision and round-two amendment: remove Workshop abandoned stub, no immediate service-space adjacency, later opportunistic stubs only. |
 | W17 / H17 | Supplied round-one/two/three and Medical reports plus developer walkthroughs. Final Medical source aeb1ef2; final docs 8d64086; local reported tests, followed by explicit human acceptance. |
 | A17 | Sorting_Apocalypse_Wing_Greybox_Acceptance_2026-09-17.md and independent static-check JSON. Promoted neutral spatial baseline; no new runtime test or repository write. |
 | D17B | Developer request in this conversation: complete repository/documentation bookkeeping, then functional shelves and pre-seeded loot in the wing before Receiving; retain old main intact. |
-| R17 | Read-only GitHub inspection on 17 September: Navandis/Sorting-apoc-PROTOTYPE main at 8ee62bd3, only main branch returned. Publication of the local wing remains a local close-out action, not performed here. |
+| R17 | Read-only GitHub inspection on 17 September: Navandis/Sorting-apoc-PROTOTYPE main at 8ee62bd3, only main branch returned. At that historical checkpoint, publication of the local wing remained a local close-out action and had not been performed. |
 
-This revision consolidates accepted spatial evidence and the developer-required seeded-storage prerequisite. It changes current status, abandoned-route scope and sequencing, not item, request, treatment, expedition, stacking, zoning or save mechanics. No local merge/push, Godot run, scene migration or functional Receiving implementation is claimed by this document preparation. [W17, H17, A17, D17B, R17]
+This v0.8 consolidation recorded accepted spatial evidence and the then-required seeded-storage prerequisite. At that checkpoint it changed status, abandoned-route scope and sequencing, not item, request, treatment, expedition, stacking, zoning or save mechanics. It made no local merge/push, Godot-run, scene-migration or functional-Receiving claim. [W17, H17, A17, D17B, R17]
 
 ## APPENDIX D v0.9 STORAGE AUTHORING CONSOLIDATION
 

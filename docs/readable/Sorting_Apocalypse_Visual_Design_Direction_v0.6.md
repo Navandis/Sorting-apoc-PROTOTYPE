@@ -248,7 +248,7 @@ The bunker leader is referred to as the Administrator. The Administrator and oth
 
 3. Layer 5 - Character/detail: signage, notes, small props, humor, localized grime and storytelling.
 
-The Foundation Gate remains a production-art checkpoint. A seeded-storage integration scene with real functional shelves/loot, followed by a bounded functional Receiving prototype, is permitted in neutral geometry before finished materials. Neither promotes the art layers or authorizes dressing a failed composition. No general furnishing or departmental delivery design is needed to perform the next gameplay bridge. [D17B]
+The Foundation Gate remains a production-art checkpoint. The completed seeded-storage integration scene used real functional shelves and loot in neutral geometry before finished materials; a bounded functional Receiving prototype may follow the current §32.5 sequence. Neither promotes the art layers or authorizes dressing a failed composition. No general furnishing or departmental delivery design is required for Receiving. [D17B]
 
 ## 11. Spatial and architectural grammar
 
@@ -366,7 +366,7 @@ The staffed fabrication floor, treatment ward, cooking/mess interior and adminis
 
 Workshop remains a broad room-like support space; Kitchen an elongated catering-service room; Medical an anteroom widening west of its aligned corridor wall; Bunker Ops an open dedicated transfer landing. Their accepted footprints and approaches distinguish the destinations. Use the saved geometry as the working dimensional baseline, not the original schematic pixels. [A17]
 
-The neutral geometry provides enclosing floors/ceilings, wall thickness, open territorial entrances, inner boundaries and essential proxy masses. The next seeded-storage integration uses only the functional fixtures needed to test handling. Departmental furnishing, hatch mechanics, delivery choreography and final audio/lighting remain later work; no speculative asset acquisition or four bespoke interaction systems are required. [D16S, D17B]
+The neutral geometry provides enclosing floors/ceilings, wall thickness, open territorial entrances, inner boundaries and essential proxy masses. The completed continuing-gameplay integration uses only the functional fixtures needed to test handling. Departmental furnishing, hatch mechanics, delivery choreography and final audio/lighting remain later work; no speculative asset acquisition or four bespoke interaction systems are required. [D16S, D17B]
 
 Department ownership is not a new inventory rule. These spaces add no implicit free Quartermaster capacity, retrievable departmental reserve, automatic submission or autonomous prop handling. Existing utility lanes, request consequences, Workshop projects and output rules are retained.
 
@@ -538,7 +538,7 @@ The environment should be achievable through a compact modular architecture kit 
 
 10. Are the four footprint/arrival conditions distinct without using finished props, and are the inner boundaries positioned behind rather than across the usable floor?
 
-## 27. Next validation work
+## 27. Historical next validation sequence superseded by Section 32.5
 
 1. Close the promoted greybox administratively: consolidate current authority and acceptance, preserve evidence and verify repository synchronization. Do not start another general geometry correction round. [A17, D17B]
 
@@ -602,22 +602,22 @@ Figure 2 - Retained Basic Structural Schematic V2 (15 September). Historical wal
 
 ## 30. v0.5 revision and source register
 
-This revision consolidates the accepted greybox, final Medical geometry, dead-end removal and required seeded-storage bridge. It preserves v0.4 service-space roles and the established world/material grammar. No final asset composition, materials, NPC interiors, supply mechanisms or economy rules are introduced.
+This historical v0.5 revision consolidated the accepted greybox, final Medical geometry, dead-end removal and then-required seeded-storage bridge. It preserved v0.4 service-space roles and the established world/material grammar. No final asset composition, materials, NPC interiors, supply mechanisms or economy rules were introduced.
 
 | Key | Source / evidence boundary |
 | --- | --- |
 | G06 / P06 / V03 | Supplied GDD v0.6, Prototype Findings v0.6 and Visual Direction v0.3. Base content and historical topology/art rules. |
-| G07 / P07 | Prior GDD v0.7 / Findings v0.7, retained source for service-space roles and earlier evidence. Current companions are G08/P08. |
+| G07 / P07 | Prior GDD v0.7 / Findings v0.7, retained source for service-space roles and earlier evidence. G08/P08 were the then-current companions at the v0.5 checkpoint. |
 | D16S | Developer approval in this conversation: dedicated Workshop/Kitchen service rooms, Medical Supply Anteroom, open Ops landing, distinct footprints and three boundaries. Exact furnishing/delivery details deferred. |
 | H16 | Developer round-one findings, expected/actual screenshots and walkthrough recording. Refine rather than rebuild; includes Kitchen-from-B-east and door-sized deeper closure. |
 | W16 / S16 | Supplied first-pass validation report and source-review artifacts. Reported technical checks and static/source/video findings are distinct from human spatial approval or new engine tests. |
 | D16P | Earlier approved sequence in this session: useful low-fidelity wing baseline, functional Receiving, then a small visual-construction proof. Art gates remain separate. |
-| G08 / P08 | Current GDD v0.8 and Findings v0.8, 17 September: accepted spatial baseline, bounded evidence and seeded-storage prerequisite. |
+| G08 / P08 | Then-current GDD v0.8 and Findings v0.8, 17 September: accepted spatial baseline, bounded evidence and seeded-storage prerequisite. Current companions are GDD v0.9 and Findings v0.9. |
 | D16-R02 | Explicit developer decision to remove Workshop abandoned stub and defer later opportunistic stubs away from service-space adjacencies. |
 | W17 / H17 / A17 | Round-three and Medical evidence plus developer acceptance and the 17 September close-out record. Geometry source aeb1ef2; final documentation checkpoint 8d64086. |
 | D17B | Developer request to synchronize repository/docs, then integrate functional shelves and seeded loot before Receiving. Exact gameplay-scene wiring is subject to local preflight. |
 
-Current spatial disposition: PROMOTED by developer walkthrough after round three and Medical tuning. This document preparation does not execute local tests, merge/push, change project launch or implement the next gameplay scene. Runtime evidence, human acceptance and repository close-out remain separately recorded. [A17, D17B]
+At the v0.5 checkpoint, the spatial disposition was PROMOTED by developer walkthrough after round three and Medical tuning. That historical document preparation did not execute local tests, merge/push, change project launch or implement the next gameplay scene. Sections 31 and 32 record the later accepted baseline and current direction. [A17, D17B]
 
 ## 31. Accepted whole-wing greybox baseline
 
@@ -629,7 +629,7 @@ Actual Godot output from the accepted Medical-tuned wing. Spatial source/evidenc
 
 Figure 3 - Accepted whole-wing greybox, revision_04. Roof hidden for plan review; coloured floors, labels and equipment blocks are diagnostic proxies. This image records actual accepted geometry, not final materials, furnishing, capacity or live gameplay. Normal player views retain ceilings.
 
-The builder and saved geometry remain the editable dimensional source. Preserve them when adding the gameplay layer; do not replace review proxies with permanent art by implication. Seeded storage integration is the next gameplay evidence gate after repository/documentation close-out.
+The builder and saved geometry remain the editable dimensional source. Preserve them when extending the gameplay layer; do not replace review proxies with permanent art by implication. The continuing wing and default entry now provide that gameplay layer, and Section 32.5 records the current validation order.
 
 ## 32 v0.6 Storage installation and ergonomics direction
 
