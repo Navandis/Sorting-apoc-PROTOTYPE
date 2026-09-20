@@ -5,7 +5,7 @@ const ClearanceContextScript = preload("res://storage_shelf_clearance_context.gd
 const MetalScene = preload("res://assets/environment/furniture/storage/SM_MetalShelves.glb")
 const LockerScene = preload("res://assets/environment/furniture/storage/SM_ventilated_locker.glb")
 const CabinetScene = preload("res://assets/environment/furniture/storage/SM_ClothesCabinet.glb")
-const CabinetTakeSamplesScene = preload("res://gameplay/logistics_wing/review/shelf_ergonomics/cabinet_take_samples.tscn")
+const WingGameplayScene = preload("res://gameplay/logistics_wing/wing_gameplay.tscn")
 
 const GALLERY_CEILING_Y_A_B := 3.40
 const GALLERY_CEILING_Y_C := 2.80
@@ -27,7 +27,7 @@ var _manager: StoragePrototypeManager
 var _metal: Node3D
 var _locker: Node3D
 var _cabinet: Node3D
-var _cabinet_samples: Node3D
+var _development_setup: Node3D
 var _eye_height_m := 1.80
 var _status_label: Label
 var _unfitted_samples: Array[String] = []
@@ -46,6 +46,7 @@ func _assemble() -> void:
 	_build_fixtures()
 	_install_functional_storage()
 	_seed_review_samples()
+	_install_authoritative_supply()
 	_place_player_at_review_entry()
 	_add_status_label()
 	print("Shelf ergonomics review ready: case=%s ceiling=%.2fm surfaces=%d" % [_case, _ceiling_y_m, _manager.get_surfaces().size()])
@@ -238,7 +239,6 @@ func _seed_review_samples() -> void:
 	_store_sample(carried, controller, surfaces[2] as StorageSurface, &"loot_000030")
 	_store_sample(carried, controller, surfaces[5] as StorageSurface, &"loot_000001")
 	_store_sample(carried, controller, surfaces[4] as StorageSurface, &"loot_000015")
-	_add_cabinet_take_samples()
 
 
 func _store_sample(carried: CarriedItems, controller: StoragePlacementController, surface: StorageSurface, item_id: StringName) -> void:
@@ -270,12 +270,16 @@ func _store_sample(carried: CarriedItems, controller: StoragePlacementController
 		push_warning("Shelf ergonomics review: %s does not fit %s" % [item_id, surface.surface_id])
 
 
-func _add_cabinet_take_samples() -> void:
-	_cabinet_samples = CabinetTakeSamplesScene.instantiate() as Node3D
-	_cabinet_samples.name = "CabinetTakeSamples"
-	add_child(_cabinet_samples)
-	if not _cabinet_samples.has_method("activate_case") or not bool(_cabinet_samples.call("activate_case", _case)):
-		push_error("Shelf ergonomics review could not register saved cabinet TAKE samples")
+func _install_authoritative_supply() -> void:
+	var gameplay_root := WingGameplayScene.instantiate() as Node3D
+	_development_setup = gameplay_root.get_node_or_null("DevelopmentSetup") as Node3D
+	if _development_setup == null:
+		gameplay_root.free()
+		push_error("Shelf ergonomics review could not extract WingGameplay/DevelopmentSetup")
+		return
+	gameplay_root.remove_child(_development_setup)
+	gameplay_root.free()
+	add_child(_development_setup)
 
 
 func _place_player_at_review_entry() -> void:
@@ -330,7 +334,7 @@ func _set_review_eye_height(target_height_m: float) -> void:
 
 func _refresh_status_label() -> void:
 	if _status_label != null:
-		_status_label.text = "Shelf ergonomics review — Case %s | ceiling %.2fm | eye %.3fm (F5) | F6 grids | cabinet TAKE only" % [_case, _ceiling_y_m, _eye_height_m]
+		_status_label.text = "Shelf ergonomics review — Case %s | ceiling %.2fm | eye %.3fm (F5) | F6 grids | wing palette TAKE" % [_case, _ceiling_y_m, _eye_height_m]
 
 
 func _capture_if_requested() -> void:
@@ -382,18 +386,6 @@ func get_review_contract() -> Dictionary:
 	var metal_top := 0.0
 	var stored_sample_count := 0
 	var level_metrics := {}
-	var cabinet_sample_positions := []
-	var cabinet_take_sample_count := 0
-	var cabinet_samples_editor_authored := false
-	if _cabinet_samples != null and _cabinet_samples.has_method("get_active_hosts"):
-		var active_hosts: Array = _cabinet_samples.call("get_active_hosts") as Array
-		for sample_value: Variant in active_hosts:
-			var sample := sample_value as Node3D
-			if sample == null:
-				continue
-			cabinet_take_sample_count += 1
-			cabinet_sample_positions.append({"name": String(sample.name), "position": sample.global_position})
-		cabinet_samples_editor_authored = _cabinet_samples.has_method("authored_transforms_preserved") and bool(_cabinet_samples.call("authored_transforms_preserved"))
 	for value: Variant in surfaces:
 		var surface := value as StorageSurface
 		if surface == null:
@@ -427,9 +419,7 @@ func get_review_contract() -> Dictionary:
 		"surface_count": surfaces.size(),
 		"surfaces_unit_scale": unit_scale,
 		"stored_sample_count": stored_sample_count,
-		"cabinet_take_sample_count": cabinet_take_sample_count,
-		"cabinet_sample_positions": cabinet_sample_positions,
-		"cabinet_samples_editor_authored": cabinet_samples_editor_authored,
+		"cabinet_take_sample_count": 0,
 		"unfitted_samples": _unfitted_samples.duplicate(),
 		"level_metrics": level_metrics,
 		"f6_enabled": _manager != null and _manager.is_processing_unhandled_input(),
