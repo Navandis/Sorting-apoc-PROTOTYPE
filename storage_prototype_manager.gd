@@ -103,6 +103,20 @@ func _install_known_shelves() -> void:
 	# SM_ClothesCabinet remains intentionally deferred. Its vertical dividers
 	# should become separate compartment surfaces rather than one shelf-wide
 	# grid.
+	_install_modular_racks()
+
+
+func _install_modular_racks() -> void:
+	if _scene_root == null:
+		return
+	for child: Node in _scene_root.get_children():
+		if not (child is ModularRack):
+			continue
+		var rack := child as ModularRack
+		for surface: StorageSurface in rack.build_runtime_storage():
+			surface.set_debug_visible(_debug_visible)
+			if not _surfaces.has(surface):
+				_surfaces.append(surface)
 
 
 func _make_level_profile(

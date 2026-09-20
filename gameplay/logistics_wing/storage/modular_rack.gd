@@ -208,10 +208,50 @@ func get_layout_contract() -> Dictionary:
 
 
 func build_runtime_storage() -> Array[StorageSurface]:
+	var installed: Array[StorageSurface] = []
+	for surface: StorageSurface in _runtime_surfaces:
+		if is_instance_valid(surface):
+			installed.append(surface)
+	_runtime_surfaces = installed
+	if not _runtime_surfaces.is_empty():
+		return _runtime_surfaces.duplicate()
+
+	var layout := compute_layout()
+	if not bool(layout.get("valid", false)):
+		push_warning("ModularRack %s cannot build runtime storage: %s" % [name, "; ".join(layout.get("errors", []) as Array[String])])
+		return []
+
+	for value: Variant in layout.get("levels", []) as Array:
+		var level := value as Dictionary
+		var level_node := level.get("node") as Node3D
+		if level_node == null:
+			continue
+		var center := level.get("usable_center", Vector2.ZERO) as Vector2
+		var usable := level.get("usable_size", Vector2.ZERO) as Vector2
+		var surface := StorageSurfaceScript.new() as StorageSurface
+		surface.name = "StorageSurface"
+		level_node.add_child(surface)
+		surface.position = Vector3(center.x, SURFACE_VERTICAL_NUDGE_M, center.y)
+		surface.configure(
+			level.get("surface_id", &"modular_rack_surface") as StringName,
+			usable.x,
+			usable.y,
+			DEFAULT_WORLD_CELL_SIZE_M,
+			float(level.get("clearance", 0.0))
+		)
+		_runtime_surfaces.append(surface)
 	return _runtime_surfaces.duplicate()
 
 
 func clear_runtime_storage() -> bool:
+	for surface: StorageSurface in _runtime_surfaces:
+		if not is_instance_valid(surface):
+			continue
+		if surface.get_reservation_count() > 0 or surface.get_stack_count() > 0:
+			return false
+	for surface: StorageSurface in _runtime_surfaces:
+		if is_instance_valid(surface):
+			surface.free()
 	_runtime_surfaces.clear()
 	return true
 

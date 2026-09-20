@@ -1,5 +1,10 @@
 extends SceneTree
 
+const CarriedItemsScript = preload("res://carried_items.gd")
+const FunctionalStorageManagerScript = preload("res://gameplay/logistics_wing/functional_storage_manager.gd")
+const ItemInstanceScript = preload("res://item_instance.gd")
+const StoragePlacementControllerScript = preload("res://storage_placement_controller.gd")
+
 const RACK_SCENE := "res://gameplay/logistics_wing/storage/modular_rack.tscn"
 const POSITION_EPSILON_M := 0.002
 const EXPECTED_PLATFORM_LENGTH_AT_2_60_M := 2.469214
@@ -22,6 +27,9 @@ func _run() -> void:
 	_test_stable_identity_and_physical_clearance()
 	_test_asymmetric_insets_and_invalid_states()
 	_test_save_reload_independence()
+	_test_runtime_surfaces_and_world_transform()
+	_test_item_scale_and_vertical_fit()
+	await _test_manager_f6_f7()
 	_finish()
 
 
@@ -221,6 +229,177 @@ func _test_save_reload_independence() -> void:
 		reloaded.free()
 	host.free()
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(path))
+
+
+func _test_runtime_surfaces_and_world_transform() -> void:
+	var rack := _make_rack("RuntimeRack")
+	rack.position = Vector3(4.0, 0.35, -3.0)
+	rack.rotation.y = PI * 0.5
+	rack.call("refresh_authoring_state")
+	var layout := rack.call("compute_layout") as Dictionary
+	var levels := layout.get("levels", []) as Array
+	var surfaces := rack.call("build_runtime_storage") as Array
+	_check(surfaces.size() == levels.size(), "runtime build creates one StorageSurface per valid authored level")
+	var second_build := rack.call("build_runtime_storage") as Array
+	_check(second_build.size() == surfaces.size(), "runtime build is idempotent")
+	if surfaces.size() == levels.size() and not surfaces.is_empty():
+		for index: int in range(surfaces.size()):
+			var surface := surfaces[index] as StorageSurface
+			var level := levels[index] as Dictionary
+			var expected_local := Vector3(
+				(level.get("usable_center", Vector2.ZERO) as Vector2).x,
+				float(level.get("surface_origin_y", 0.0)),
+				(level.get("usable_center", Vector2.ZERO) as Vector2).y
+			)
+			var expected_global := rack.global_transform * expected_local
+			var requested_size := level.get("usable_size", Vector2.ZERO) as Vector2
+			var expected_grid := Vector2i(
+				int(floor(requested_size.x / 0.10)),
+				int(floor(requested_size.y / 0.10))
+			)
+			_check(String(surface.surface_id) == String(level.get("surface_id", "")), "runtime surface uses derived stable identity")
+			_check(surface.get_grid_size() == expected_grid, "runtime surface quantizes the derived usable dimensions")
+			_check(_near(surface.stack_clearance_m, float(level.get("clearance", -1.0))), "runtime surface uses derived physical clearance")
+			_check(surface.global_position.distance_to(expected_global) <= POSITION_EPSILON_M, "runtime surface follows translated/yaw-rotated rack placement")
+			_check(surface.global_basis.get_scale().is_equal_approx(Vector3.ONE), "runtime surface remains unit scale")
+			_check(surface.get_parent() == level.get("node"), "runtime surface remains logically associated with its shelf level")
+		_check(surfaces[0] == second_build[0], "idempotent runtime build returns the same installed surfaces")
+	rack.free()
+
+
+func _test_item_scale_and_vertical_fit() -> void:
+	var short_rack := _make_rack("ShortOpeningRack")
+	_set_level_y(short_rack, "Shelf_01", 0.25)
+	_set_level_y(short_rack, "Shelf_02", 0.25 + EXPECTED_SURFACE_NUDGE_M + EXPECTED_PLATFORM_THICKNESS_M + 0.30)
+	_set_level_y(short_rack, "Shelf_03", 1.60)
+	short_rack.call("refresh_authoring_state")
+	var short_surfaces := short_rack.call("build_runtime_storage") as Array
+	_check(short_surfaces.size() == 3, "short-opening rack remains structurally valid")
+
+	var context := _placement_context()
+	var controller := context["controller"] as StoragePlacementController
+	var tall_definition := load("res://data/items/definitions/loot_000002.tres") as ItemDefinition
+	var tall_item := ItemInstanceScript.new(tall_definition)
+	var orientations := controller.call("_entry_orientations_for_item", tall_item) as Array
+	if not short_surfaces.is_empty() and not orientations.is_empty():
+		var short_surface := short_surfaces[0] as StorageSurface
+		short_surface.set_zone_rect(tall_item.get_storage_category(), Vector2i.ZERO, short_surface.grid_size - Vector2i.ONE)
+		var rejected := short_surface.find_zone_stack_or_empty_fit(
+			tall_item.get_storage_category(),
+			orientations[0] as StorageStack.Entry,
+			orientations[1] as StorageStack.Entry if orientations.size() > 1 else null
+		)
+		_check(not bool(rejected.get("valid", true)), "tall item fails in intentionally short modular opening")
+
+	var open_rack := _make_rack("OpenRack")
+	_set_level_y(open_rack, "Shelf_01", 0.25)
+	_set_level_y(open_rack, "Shelf_02", 1.05)
+	_set_level_y(open_rack, "Shelf_03", 1.75)
+	open_rack.call("refresh_authoring_state")
+	var open_surfaces := open_rack.call("build_runtime_storage") as Array
+	_check(open_surfaces.size() == 3, "fresh rack with raised upper shelf builds all surfaces")
+	if not open_surfaces.is_empty() and not orientations.is_empty():
+		var open_surface := open_surfaces[0] as StorageSurface
+		open_surface.set_zone_rect(tall_item.get_storage_category(), Vector2i.ZERO, open_surface.grid_size - Vector2i.ONE)
+		var accepted := open_surface.find_zone_stack_or_empty_fit(
+			tall_item.get_storage_category(),
+			orientations[0] as StorageStack.Entry,
+			orientations[1] as StorageStack.Entry if orientations.size() > 1 else null
+		)
+		_check(bool(accepted.get("valid", false)), "same tall item fits on a fresh rack after the upper shelf is raised")
+		var carried := context["carried"] as CarriedItems
+		_check(carried.add_item(tall_item), "real tall item enters carried storage fixture")
+		controller.set("_current_surface", open_surface)
+		controller.set("_current_fit", accepted)
+		controller.set("_manual_mode", false)
+		_check(controller.place_selected(), "real controller stores the tall item on modular surface")
+		var stack_id := open_surface.get_stack_id_for_item(tall_item.instance_id)
+		var stack := open_surface.get_storage_stack(stack_id)
+		_check(stack != null and stack.entries.size() == 1, "modular surface owns the real stored stack")
+		if stack != null and not stack.entries.is_empty():
+			var entry := stack.entries[0] as StorageStack.Entry
+			_check(entry.host.global_basis.get_scale().is_equal_approx(Vector3.ONE), "stored modular-rack loot remains canonical scale")
+			_check(not bool(open_rack.call("clear_runtime_storage")), "occupied rack refuses runtime surface reconfiguration")
+			_check(entry.world_item.pickup_into(carried), "stored modular-rack item retrieves through WorldItem")
+			_check(carried.get_selected_item() == tall_item, "retrieval preserves exact ItemInstance identity")
+			_check(bool(open_rack.call("clear_runtime_storage")), "empty rack permits test-lifecycle surface cleanup")
+
+	_free_placement_context(context)
+	short_rack.free()
+	open_rack.free()
+
+
+func _test_manager_f6_f7() -> void:
+	var fixtures := Node3D.new()
+	fixtures.name = "ManagerFixtures"
+	root.add_child(fixtures)
+	var rack := (load(RACK_SCENE) as PackedScene).instantiate() as Node3D
+	rack.name = "ManagedRack"
+	fixtures.add_child(rack)
+	var manager := FunctionalStorageManagerScript.new() as StoragePrototypeManager
+	manager.name = "FunctionalStorageManager"
+	fixtures.add_child(manager)
+	manager.install(fixtures)
+	manager.set_process_unhandled_input(true)
+	var surfaces := manager.get_surfaces()
+	_check(surfaces.size() == 3, "shared functional manager installs all direct-child modular levels")
+	_check(_all_developer_visibility(surfaces, false), "managed modular grids start with developer visibility off")
+	var before_f7 := _runtime_surface_snapshot(surfaces)
+	await _send_key(KEY_F6)
+	_check(bool(manager.call("is_developer_grid_visible")), "real F6 input enables manager developer-grid state")
+	_check(_all_developer_visibility(surfaces, true), "F6 reaches every installed modular surface")
+	await _send_key(KEY_F7)
+	_check(_runtime_surface_snapshot(surfaces) == before_f7, "F7 leaves modular reservations, stacks, zones and transforms unchanged")
+	await _send_key(KEY_F6)
+	_check(_all_developer_visibility(surfaces, false), "second F6 press hides every modular grid")
+	fixtures.free()
+
+
+func _placement_context() -> Dictionary:
+	var carried := CarriedItemsScript.new() as CarriedItems
+	carried.max_bulk = 999
+	root.add_child(carried)
+	var controller := StoragePlacementControllerScript.new() as StoragePlacementController
+	root.add_child(controller)
+	controller.configure(null, carried, 1.8)
+	return {"carried": carried, "controller": controller}
+
+
+func _free_placement_context(context: Dictionary) -> void:
+	(context["controller"] as Node).free()
+	(context["carried"] as Node).free()
+
+
+func _all_developer_visibility(surfaces: Array, expected: bool) -> bool:
+	for value: Variant in surfaces:
+		var surface := value as StorageSurface
+		if surface == null or surface.is_developer_debug_visible() != expected:
+			return false
+	return true
+
+
+func _runtime_surface_snapshot(surfaces: Array) -> Array:
+	var result: Array = []
+	for value: Variant in surfaces:
+		var surface := value as StorageSurface
+		result.append({
+			"surface_id": String(surface.surface_id),
+			"global_transform": surface.global_transform,
+			"reservations": surface.get_reservation_count(),
+			"stacks": surface.get_stack_count(),
+			"zones": surface.get_zone_cells_copy(),
+		})
+	return result
+
+
+func _send_key(keycode: Key) -> void:
+	var event := InputEventKey.new()
+	event.keycode = keycode
+	event.pressed = true
+	event.echo = false
+	Input.parse_input_event(event)
+	await process_frame
+	await physics_frame
 
 
 func _make_rack(rack_name: String) -> Node3D:

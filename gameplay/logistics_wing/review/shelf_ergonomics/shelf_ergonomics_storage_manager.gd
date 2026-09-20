@@ -42,3 +42,4 @@ func _install_known_shelves() -> void:
 				],
 				0.519 * fixture.global_basis.get_scale().y
 			)
+	_install_modular_racks()
