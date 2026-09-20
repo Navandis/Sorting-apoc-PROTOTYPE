@@ -1713,7 +1713,7 @@ Storage usability belongs to the complete installation: furniture model, authore
 
 - A slim authored usable-area inset may be evaluated independently at each edge. Do not impose one universal percentage or silently remove useful front-edge capacity.
 
-- The player owns final functional storage authoring: model selection, installation placement, unit dimensions, level count and distribution, and ladder availability and placement. Codex may assist with tooling, validation, decoration and later synthetic checks. The player's taxonomy and organization remain their own.
+- The developer retains final authority over functional storage installation authoring: model selection, installation placement, unit dimensions, level count and distribution, and ladder availability and placement. Codex may assist with tooling, validation, decoration and later synthetic checks. This is a development-authoring responsibility, not a player-facing furniture-construction permission. The in-game player retains ownership of storage taxonomy, zoning, labels and day-to-day organization within the authored installations.
 
 ### D.3 Ground access evidence and fixed ladder proof
 

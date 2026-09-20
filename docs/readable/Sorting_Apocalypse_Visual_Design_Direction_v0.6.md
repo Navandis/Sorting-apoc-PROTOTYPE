@@ -649,9 +649,9 @@ A storage model is not usable in isolation. Evaluate the installed furniture wit
 
 - Use appropriate furniture, a deliberately absent top deck, shallow specialist wall storage, non-loot upper dressing or a fixed shelf-serving ladder when ordinary standing access cannot serve the top zone.
 
-### 32.3 Player authored installations
+### 32.3 Developer-authored installations and player-owned organization
 
-The player owns final functional storage authoring: model choice, placement in the wing, unit dimensions, level count and vertical distribution, and ladder availability and placement. Codex may provide authoring tools, validation, decorations and later synthetic checks. The environment may suggest capacity and circulation, but it does not prescribe the player's category taxonomy or turn one manually authored rack into a universal template.
+The developer retains final authority over functional storage installation authoring: model choice, placement in the wing, unit dimensions, level count and vertical distribution, and ladder availability and placement. Codex may provide authoring tools, validation, decorations and later synthetic checks. This does not create a player-facing free-build mode: physical storage remains spatially authored and constrained by the game's established installation/socket rules. The in-game player owns category taxonomy, zoning, labels and day-to-day organization within those authored installations. The bunker geometry may suggest capacity and circulation, but one manually authored rack must not become a universal template.
 
 The developer's three-level modular rack in the retained review scene is a useful ground-access reference for the tested corner location. SM_Rack01.glb and SM_Rack02.glb are still static review-scene assets and have no functional storage surfaces. Mixed storage families remain the visual direction.
 
