@@ -1,6 +1,6 @@
 # Modular rack authoring validation
 
-**Status: IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN REVIEW PENDING**
+**Status: IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN PROMOTED**
 
 **Date:** 20 September 2026
 
@@ -73,7 +73,7 @@ Diff checks confirm no changes to:
 
 Existing Metal Shelf and Locker profile literals are unchanged. Loot definitions/catalogue and promoted supply reuse are unchanged. No ladder behavior, Receiving work, zone-editor changes, general StorageSurface axis change or broad front/back/orientation repair was added.
 
-The broader StorageSurface front/back/orientation debt is intentionally deferred to the next separate gate after this milestone is promoted and before the fixed-ladder proof.
+The broader StorageSurface front/back/orientation debt was intentionally excluded from this milestone. With modular-rack authoring promoted, it becomes the next separate active gate before the fixed-ladder proof.
 
 ## Known warnings and limitations
 
@@ -108,7 +108,8 @@ The broader StorageSurface front/back/orientation debt is intentionally deferred
 - Confirm canonical loot scale, tall-item fit behavior, and unchanged Metal Shelf/Locker behavior.
 - Confirm default Run Project remains `wing_gameplay.tscn`.
 
-Disposition:
+## Human review disposition
 
-- **PROMOTE**
-- **REVISE** with concrete observed behavior
+**PROMOTE — human-approved on 20 September 2026.**
+
+Reusable modular-rack authoring is complete. The next active gate is the separate **Storage Surface Orientation / Front–Back Contract**, explicitly before the fixed-ladder proof. No orientation repair is included in this close-out.
