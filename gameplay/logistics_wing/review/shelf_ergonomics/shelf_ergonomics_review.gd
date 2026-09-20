@@ -139,9 +139,10 @@ func _add_ceiling_slab(slab_name: String, centre: Vector3, size: Vector3) -> voi
 
 
 func _build_fixtures() -> void:
-	_fixtures = Node3D.new()
-	_fixtures.name = "ReviewFixtures"
-	add_child(_fixtures)
+	_fixtures = get_node_or_null("ReviewFixtures") as Node3D
+	if _fixtures == null:
+		push_error("Shelf ergonomics review requires the saved ReviewFixtures root")
+		return
 	_collision_root = Node3D.new()
 	_collision_root.name = "ReviewFixtureCollision"
 	add_child(_collision_root)
@@ -216,6 +217,11 @@ func _scan_global_bounds(node: Node, state: Dictionary) -> void:
 
 
 func _install_functional_storage() -> void:
+	if _fixtures == null:
+		return
+	for rack: ModularRack in _get_modular_racks():
+		rack.overhead_limit_local_y_m = _ceiling_y_m - rack.global_position.y
+		rack.refresh_authoring_state()
 	_manager = StorageManagerScript.new() as StoragePrototypeManager
 	_manager.name = "ReviewStorageManager"
 	_manager.configure_review(_case, _ceiling_y_m)
@@ -381,10 +387,17 @@ func _report_if_requested() -> void:
 
 func get_review_contract() -> Dictionary:
 	var surfaces := _manager.get_surfaces() if _manager != null else []
+	var modular_racks := _get_modular_racks()
+	var modular_level_count := 0
+	for rack: ModularRack in modular_racks:
+		var levels := rack.get_node_or_null("Levels")
+		if levels != null:
+			modular_level_count += levels.get_child_count()
 	var unit_scale := true
 	var locker_top := 0.0
 	var metal_top := 0.0
 	var stored_sample_count := 0
+	var modular_surface_count := 0
 	var level_metrics := {}
 	for value: Variant in surfaces:
 		var surface := value as StorageSurface
@@ -406,6 +419,8 @@ func get_review_contract() -> Dictionary:
 			locker_top = maxf(locker_top, surface.global_position.y)
 		if parent == _metal:
 			metal_top = maxf(metal_top, surface.global_position.y)
+		if _modular_rack_ancestor(surface) != null:
+			modular_surface_count += 1
 		for stack_value: Variant in (surface.get("_stacks") as Dictionary).values():
 			var stack := stack_value as StorageStack
 			for entry in stack.entries:
@@ -417,6 +432,10 @@ func get_review_contract() -> Dictionary:
 		"functional_family_count": 2,
 		"cabinet_surface_count": 0,
 		"surface_count": surfaces.size(),
+		"legacy_surface_count": surfaces.size() - modular_surface_count,
+		"modular_rack_count": modular_racks.size(),
+		"modular_level_count": modular_level_count,
+		"modular_surface_count": modular_surface_count,
 		"surfaces_unit_scale": unit_scale,
 		"stored_sample_count": stored_sample_count,
 		"cabinet_take_sample_count": 0,
@@ -431,3 +450,22 @@ func get_review_contract() -> Dictionary:
 		"eye_height_m": snappedf(_eye_height_m, 0.001),
 		"eye_toggle": "F5",
 	}
+
+
+func _get_modular_racks() -> Array[ModularRack]:
+	var result: Array[ModularRack] = []
+	if _fixtures == null:
+		return result
+	for child: Node in _fixtures.get_children():
+		if child is ModularRack:
+			result.append(child as ModularRack)
+	return result
+
+
+func _modular_rack_ancestor(node: Node) -> ModularRack:
+	var current := node
+	while current != null:
+		if current is ModularRack:
+			return current as ModularRack
+		current = current.get_parent()
+	return null

@@ -27,19 +27,30 @@ func _run() -> void:
 
 func _check_case(case_id: String) -> void:
 	var scene := (load(REVIEW_SCENE) as PackedScene).instantiate()
+	var saved_fixtures := scene.get_node_or_null("ReviewFixtures") as Node3D
+	_check(saved_fixtures != null, "%s review scene saves its ReviewFixtures root" % case_id)
+	var authored_racks := _direct_modular_racks(saved_fixtures)
+	_check(not authored_racks.is_empty(), "%s review scene contains at least one authored ModularRack" % case_id)
 	scene.set("case_override", case_id)
 	root.add_child(scene)
 	current_scene = scene
 	await process_frame
 	await physics_frame
 	_assert_authoritative_supply(scene, case_id)
+	_assert_modular_review_scene(scene, case_id)
 	_check(scene.has_method("get_review_contract"), "%s exposes a review contract" % case_id)
 	if scene.has_method("get_review_contract"):
 		var contract: Dictionary = scene.call("get_review_contract") as Dictionary
+		var current_racks := _direct_modular_racks(scene.get_node_or_null("ReviewFixtures") as Node3D)
+		var current_level_count := _authored_modular_level_count(current_racks)
 		_check(contract.get("case") == case_id, "%s selects the requested preset" % case_id)
 		_check(contract.get("functional_family_count") == 2, "%s has metal and locker storage only" % case_id)
 		_check(contract.get("cabinet_surface_count") == 0, "%s cabinet remains TAKE-only" % case_id)
-		_check(contract.get("surface_count") == 8, "%s exposes four metal and four locker supports" % case_id)
+		_check(int(contract.get("legacy_surface_count", -1)) == 8, "%s preserves four metal and four locker supports" % case_id)
+		_check(int(contract.get("modular_rack_count", -1)) == current_racks.size(), "%s reports the current authored modular-rack count" % case_id)
+		_check(int(contract.get("modular_level_count", -1)) == current_level_count, "%s reports the current authored modular-level count" % case_id)
+		_check(int(contract.get("modular_surface_count", -1)) == current_level_count, "%s installs one modular surface per valid authored level" % case_id)
+		_check(int(contract.get("surface_count", -1)) == 8 + current_level_count, "%s derives total surfaces from legacy plus current modular levels" % case_id)
 		_check(bool(contract.get("surfaces_unit_scale", false)), "%s storage and stored hosts keep unit scale" % case_id)
 		_check(int(contract.get("stored_sample_count", 0)) >= 2, "%s reserves representative functional samples through real storage" % case_id)
 		_check((contract.get("unfitted_samples", []) as Array).is_empty(), "%s seats every review functional sample after the height amendment" % case_id)
@@ -105,9 +116,9 @@ func _exercise_review_storage(scene: Node, case_id: String) -> void:
 	_check(controller.place_selected(), "%s re-stores through the normal controller" % case_id)
 	var tall := ItemInstance.new(load("res://data/items/definitions/loot_000032.tres") as ItemDefinition)
 	var tall_entry := controller.call("_entry_for_item", tall, false) as StorageStack.Entry
-	var narrow_surface := surfaces[1] as StorageSurface
+	var narrow_surface := _surface_by_id(surfaces, "SM_MetalShelves_Ergonomics_level_2")
 	_check(
-		tall_entry != null and bool(narrow_surface.get_singleton_clearance_result(tall_entry, 0.0).get("valid", false)),
+		tall_entry != null and narrow_surface != null and bool(narrow_surface.get_singleton_clearance_result(tall_entry, 0.0).get("valid", false)),
 		"%s accepts the revised opening's credible tall-item fit" % case_id
 	)
 
@@ -216,12 +227,15 @@ func _exercise_reused_supply_pickup(scene: Node, case_id: String) -> void:
 func _exercise_review_manual_and_stack(scene: Node, case_id: String) -> void:
 	var carried := scene.get_node("Player/CarriedItems") as CarriedItems
 	var controller := scene.get_node("Player/StoragePlacementController") as StoragePlacementController
-	var surfaces := scene.find_children("*", "StorageSurface", true, false)
+	var surfaces := _modular_surfaces(scene)
+	_check(surfaces.size() >= 2, "%s exposes enough modular surfaces for manual and stacking checks" % case_id)
+	if surfaces.size() < 2:
+		return
 	var hammer_host := scene.get_node("DevelopmentSetup/SeedItems/Hammer") as Node3D
 	var hammer_world := hammer_host.get_node("WorldItem") as WorldItem
 	var hammer_item := hammer_world.get_item_instance() as ItemInstance
 	_check(hammer_world.pickup_into(carried), "%s takes the irregular Hammer from reused supply" % case_id)
-	var manual_surface := surfaces[3] as StorageSurface
+	var manual_surface := surfaces[1] as StorageSurface
 	var hammer_entry := controller.call("_entry_for_item", hammer_item, true) as StorageStack.Entry
 	var manual_origin := Vector2i(1, 1)
 	var manual_fit := {
@@ -246,6 +260,7 @@ func _exercise_review_manual_and_stack(scene: Node, case_id: String) -> void:
 	_check(hammer_stack != null and hammer_stack.entries.size() == 1, "%s manual PUT creates one real review-shelf entry" % case_id)
 	if hammer_stack != null and not hammer_stack.entries.is_empty():
 		_check(hammer_stack.entries[0].packing_rotated, "%s manual PUT preserves rotation" % case_id)
+		_check(hammer_stack.entries[0].host.global_basis.get_scale().is_equal_approx(Vector3.ONE), "%s manual modular PUT preserves canonical item scale" % case_id)
 		_check((hammer_stack.entries[0].world_item as WorldItem).pickup_into(carried), "%s retrieves the manually placed Hammer" % case_id)
 		carried.call("remove_item", hammer_item)
 	controller.set_manual_mode(false)
@@ -272,6 +287,9 @@ func _exercise_review_manual_and_stack(scene: Node, case_id: String) -> void:
 	var stack_id := stack_surface.get_stack_id_for_item(stacked_items[0].instance_id)
 	var stack := stack_surface.get_storage_stack(stack_id)
 	_check(stack != null and stack.entries.size() == 2, "%s stacks matching reused items on the functional review shelf" % case_id)
+	if stack != null:
+		for entry: StorageStack.Entry in stack.entries:
+			_check(entry.host.global_basis.get_scale().is_equal_approx(Vector3.ONE), "%s stacked modular loot remains canonical scale" % case_id)
 	for index: int in [1, 0]:
 		var item := stacked_items[index]
 		var current_stack := stack_surface.get_storage_stack(stack_surface.get_stack_id_for_item(item.instance_id))
@@ -285,6 +303,65 @@ func _exercise_review_manual_and_stack(scene: Node, case_id: String) -> void:
 		carried.call("remove_item", item)
 	_check(stack_surface.get_stack_count() == 0, "%s stacked review shelf returns to empty after retrieval" % case_id)
 	await process_frame
+
+
+func _assert_modular_review_scene(scene: Node, case_id: String) -> void:
+	_check(scene.get_node_or_null("Control") == null, "%s removes obsolete Control rack/static-loot experiment" % case_id)
+	_check(scene.get_node_or_null("Control2") == null, "%s removes obsolete Control2 rack/static-loot experiment" % case_id)
+	var fixtures := scene.get_node_or_null("ReviewFixtures") as Node3D
+	var racks := _direct_modular_racks(fixtures)
+	_check(not racks.is_empty(), "%s retains at least one saved modular rack" % case_id)
+	for rack: ModularRack in racks:
+		var contract := rack.get_layout_contract()
+		_check(bool(contract.get("valid", false)), "%s authored rack %s has a valid derived contract" % [case_id, rack.name])
+		_check((rack.get_node("Levels") as Node3D).get_child_count() > 0, "%s authored rack %s derives levels from current children" % [case_id, rack.name])
+	for node: Node in scene.find_children("SM_Rack*", "", true, false):
+		_check(_modular_rack_ancestor(node) != null, "%s has no raw Rack01/Rack02 experiment outside a ModularRack" % case_id)
+
+
+func _direct_modular_racks(fixtures: Node3D) -> Array[ModularRack]:
+	var result: Array[ModularRack] = []
+	if fixtures == null:
+		return result
+	for child: Node in fixtures.get_children():
+		if child is ModularRack:
+			result.append(child as ModularRack)
+	return result
+
+
+func _authored_modular_level_count(racks: Array[ModularRack]) -> int:
+	var result := 0
+	for rack: ModularRack in racks:
+		var levels := rack.get_node_or_null("Levels")
+		if levels != null:
+			result += levels.get_child_count()
+	return result
+
+
+func _modular_surfaces(scene: Node) -> Array:
+	var result: Array = []
+	for value: Variant in scene.find_children("*", "StorageSurface", true, false):
+		var surface := value as StorageSurface
+		if surface != null and _modular_rack_ancestor(surface) != null:
+			result.append(surface)
+	return result
+
+
+func _modular_rack_ancestor(node: Node) -> ModularRack:
+	var current := node
+	while current != null:
+		if current is ModularRack:
+			return current as ModularRack
+		current = current.get_parent()
+	return null
+
+
+func _surface_by_id(surfaces: Array, requested_id: String) -> StorageSurface:
+	for value: Variant in surfaces:
+		var surface := value as StorageSurface
+		if surface != null and String(surface.surface_id) == requested_id:
+			return surface
+	return null
 
 
 func _assert_metal_fixture_clearance_and_coherence(scene: Node, case_id: String) -> void:

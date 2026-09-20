@@ -4,16 +4,8 @@
 [ext_resource type="PackedScene" path="res://gameplay/logistics_wing/wing_environment.tscn" id="2_environment"]
 [ext_resource type="PackedScene" path="res://gameplay/player/gameplay_player.tscn" id="3_player"]
 [ext_resource type="PackedScene" path="res://gameplay/ui/carried_items_hud.tscn" id="4_hud"]
-[ext_resource type="PackedScene" uid="uid://jieuavuskxcx" path="res://assets/environment/furniture/storage/SM_Rack01.glb" id="5_hgi02"]
-[ext_resource type="PackedScene" uid="uid://crhai3v0or4eb" path="res://assets/environment/furniture/storage/SM_Rack02.glb" id="6_yjwk2"]
-[ext_resource type="PackedScene" uid="uid://xt5xd2i71gmi" path="res://assets/props/morale/SM_CDStack_01.glb" id="7_getyn"]
-[ext_resource type="PackedScene" uid="uid://dqahwgcsham5a" path="res://assets/props/morale/SM_Book_01.glb" id="8_6ltgu"]
-[ext_resource type="PackedScene" uid="uid://b5kdjjl24ncie" path="res://assets/props/medical/SM_Antibiotics_01.glb" id="9_13l42"]
-[ext_resource type="PackedScene" uid="uid://cdtpk0sa4cpcp" path="res://assets/props/electronics/SM_ComputerMouse_01.glb" id="10_k8nuc"]
-[ext_resource type="PackedScene" uid="uid://d2ky67y4v3cux" path="res://assets/props/Fuel/SM_FuelCanister.glb" id="11_6ltgu"]
-[ext_resource type="PackedScene" uid="uid://1pwvsst3kpkv" path="res://assets/props/Fuel/SM_GasCanister_01.glb" id="12_k8nuc"]
-[ext_resource type="PackedScene" uid="uid://bnkwk3smcnutr" path="res://assets/props/electronics/SM_ComputerTower_01.glb" id="13_w1e2e"]
-[ext_resource type="PackedScene" uid="uid://du775526cba45" path="res://assets/environment/furniture/storage/SM_Ind_War_Equipment_Ladder_Metal_Worn_01.glb" id="14_w1e2e"]
+[ext_resource type="PackedScene" path="res://gameplay/logistics_wing/storage/modular_rack.tscn" id="5_modular_rack"]
+[ext_resource type="PackedScene" uid="uid://du775526cba45" path="res://assets/environment/furniture/storage/SM_Ind_War_Equipment_Ladder_Metal_Worn_01.glb" id="6_ladder"]
 
 [node name="ShelfErgonomicsReview" type="Node3D" unique_id=961672822]
 script = ExtResource("1_review")
@@ -28,258 +20,25 @@ layer = 10
 
 [node name="CarriedItemsHUD" parent="HUD" unique_id=1652596386 instance=ExtResource("4_hud")]
 
-[node name="Control" type="Control" parent="." unique_id=1349193220]
-visible = false
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="ReviewFixtures" type="Node3D" parent="."]
 
-[node name="SM_Rack01" parent="Control" unique_id=1421830540 instance=ExtResource("5_hgi02")]
-transform = Transform3D(0.75, 0, 0, 0, 0.53, 0, 0, 0, 1, 9.698531, 0.01669586, -3.8278763)
-visible = false
+[node name="ModularRack_Starter" parent="ReviewFixtures" instance=ExtResource("5_modular_rack")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 9.719639, 0, -3.833064)
+rack_length_m = 3.994705
+rack_depth_m = 0.928107
+frame_height_m = 2.552749
 
-[node name="SM_Rack02" parent="Control" unique_id=1073697624 instance=ExtResource("6_yjwk2")]
-transform = Transform3D(0.75, 0, 0, 0, 1, 0, 0, 0, 1, 9.719639, 0.16558513, -3.8330638)
-visible = false
+[node name="Shelf_01" parent="ReviewFixtures/ModularRack_Starter/Levels" index="0"]
+position = Vector3(0, 0.370333, 0)
 
-[node name="SM_Rack03" parent="Control" unique_id=1555733848 instance=ExtResource("6_yjwk2")]
-transform = Transform3D(0.75, 0, 0, 0, 1, 0, 0, 0, 1, 9.719639, 1.041792, -3.8330638)
-visible = false
+[node name="Shelf_02" parent="ReviewFixtures/ModularRack_Starter/Levels" index="1"]
+position = Vector3(0, 1.24654, 0)
 
-[node name="SM_Rack04" parent="Control" unique_id=409007865 instance=ExtResource("6_yjwk2")]
-transform = Transform3D(0.75, 0, 0, 0, 1, 0, 0, 0, 1, 9.719639, 1.5463024, -3.8330638)
-visible = false
+[node name="Shelf_03" parent="ReviewFixtures/ModularRack_Starter/Levels" index="2"]
+position = Vector3(0, 1.75105, 0)
 
-[node name="SM_CDStack_01" parent="Control" unique_id=254711058 instance=ExtResource("7_getyn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.418709, 1.6470712, -2.1916838)
-visible = false
-
-[node name="SM_CDStack_02" parent="Control" unique_id=2116084313 instance=ExtResource("7_getyn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.455409, 1.6694866, -3.6674676)
-visible = false
-
-[node name="SM_Book_01" parent="Control" unique_id=798088132 instance=ExtResource("8_6ltgu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.4651785, 1.6857544, -3.0653381)
-visible = false
-
-[node name="SM_Book_02" parent="Control" unique_id=972403000 instance=ExtResource("8_6ltgu")]
-transform = Transform3D(-0.05059279, 0, -0.9987194, 0, 1, 0, 0.9987194, 0, -0.05059279, 9.4651785, 1.6909667, -5.453491)
-visible = false
-
-[node name="SM_Book_07" parent="Control" unique_id=366487034 instance=ExtResource("8_6ltgu")]
-transform = Transform3D(-0.05059279, 0, -0.9987194, 0, 1, 0, 0.9987194, 0, -0.05059279, 9.935751, 2.1464257, -4.90605)
-visible = false
-
-[node name="SM_Antibiotics_01" parent="Control" unique_id=2043823780 instance=ExtResource("9_13l42")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.425483, 1.663232, -2.7176118)
-visible = false
-
-[node name="SM_Antibiotics_02" parent="Control" unique_id=2097283547 instance=ExtResource("9_13l42")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.425483, 1.666274, -4.0266314)
-visible = false
-
-[node name="SM_CDStack_03" parent="Control" unique_id=1614527928 instance=ExtResource("7_getyn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.418709, 1.1596782, -2.1916838)
-visible = false
-
-[node name="SM_CDStack_04" parent="Control" unique_id=15586215 instance=ExtResource("7_getyn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.455409, 1.1820936, -3.6674676)
-visible = false
-
-[node name="SM_Book_03" parent="Control" unique_id=803706763 instance=ExtResource("8_6ltgu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.4651785, 1.1983614, -3.0653381)
-visible = false
-
-[node name="SM_Book_04" parent="Control" unique_id=544702961 instance=ExtResource("8_6ltgu")]
-transform = Transform3D(-0.05059279, 0, -0.9987194, 0, 1, 0, 0.9987194, 0, -0.05059279, 9.4651785, 1.2035737, -5.453491)
-visible = false
-
-[node name="SM_Antibiotics_03" parent="Control" unique_id=1470053787 instance=ExtResource("9_13l42")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.425483, 1.175839, -2.7176118)
-visible = false
-
-[node name="SM_Antibiotics_04" parent="Control" unique_id=1788704332 instance=ExtResource("9_13l42")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.425483, 1.1788809, -4.0266314)
-visible = false
-
-[node name="SM_ComputerMouse_01" parent="Control" unique_id=558632912 instance=ExtResource("10_k8nuc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.421914, 1.670404, -4.56326)
-visible = false
-
-[node name="SM_ComputerMouse_02" parent="Control" unique_id=1620573874 instance=ExtResource("10_k8nuc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.421914, 1.1656992, -4.56326)
-visible = false
-
-[node name="SM_CDStack_05" parent="Control" unique_id=408454499 instance=ExtResource("7_getyn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.444721, 0.28569233, -2.1916838)
-visible = false
-
-[node name="SM_CDStack_06" parent="Control" unique_id=23318962 instance=ExtResource("7_getyn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.481421, 0.30810773, -3.6674676)
-visible = false
-
-[node name="SM_Book_05" parent="Control" unique_id=1662771271 instance=ExtResource("8_6ltgu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.491191, 0.3243755, -3.0653381)
-visible = false
-
-[node name="SM_Book_06" parent="Control" unique_id=341853753 instance=ExtResource("8_6ltgu")]
-transform = Transform3D(-0.05059279, 0, -0.9987194, 0, 1, 0, 0.9987194, 0, -0.05059279, 9.491191, 0.32958782, -5.453491)
-visible = false
-
-[node name="SM_Antibiotics_05" parent="Control" unique_id=1738909300 instance=ExtResource("9_13l42")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.451495, 0.30185306, -2.7176118)
-visible = false
-
-[node name="SM_Antibiotics_06" parent="Control" unique_id=558555032 instance=ExtResource("9_13l42")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.451495, 0.30489504, -4.0266314)
-visible = false
-
-[node name="SM_ComputerMouse_03" parent="Control" unique_id=964670065 instance=ExtResource("10_k8nuc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.4479265, 0.29171336, -4.56326)
-visible = false
-
-[node name="SM_FuelCanister" parent="Control" unique_id=240305427 instance=ExtResource("11_6ltgu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.939947, 1.1631311, -2.4582531)
-visible = false
-
-[node name="SM_GasCanister_01" parent="Control" unique_id=888357765 instance=ExtResource("12_k8nuc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.926607, 1.1710289, -3.2871792)
-visible = false
-
-[node name="SM_ComputerTower_01" parent="Control" unique_id=1278709336 instance=ExtResource("13_w1e2e")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.949125, 1.1681956, -3.94774)
-visible = false
-
-[node name="SM_ComputerTower_02" parent="Control" unique_id=2144475836 instance=ExtResource("13_w1e2e")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.949125, 1.6717025, -4.8539248)
-visible = false
-
-[node name="Control2" type="Control" parent="." unique_id=2093001051]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="SM_Rack01" parent="Control2" unique_id=136751691 instance=ExtResource("5_hgi02")]
-transform = Transform3D(0.75, 0, 0, 0, 0.68, 0, 0, 0, 1, 9.698531, 0.01669586, -3.8278763)
-
-[node name="SM_Rack02" parent="Control2" unique_id=79749313 instance=ExtResource("6_yjwk2")]
-transform = Transform3D(0.75, 0, 0, 0, 1, 0, 0, 0, 1, 9.719639, 0.16558513, -3.8330638)
-
-[node name="SM_Rack03" parent="Control2" unique_id=204604595 instance=ExtResource("6_yjwk2")]
-transform = Transform3D(0.75, 0, 0, 0, 1, 0, 0, 0, 1, 9.719639, 1.1796079, -3.8330638)
-
-[node name="SM_Rack04" parent="Control2" unique_id=2075546394 instance=ExtResource("6_yjwk2")]
-transform = Transform3D(0.75, 0, 0, 0, 1, 0, 0, 0, 1, 9.719639, 1.8313842, -3.8330638)
-
-[node name="SM_CDStack_01" parent="Control2" unique_id=1902144225 instance=ExtResource("7_getyn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.418709, 1.9321527, -2.1916838)
-
-[node name="SM_CDStack_02" parent="Control2" unique_id=303243789 instance=ExtResource("7_getyn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.455409, 1.9545684, -3.6674676)
-
-[node name="SM_Book_01" parent="Control2" unique_id=974471467 instance=ExtResource("8_6ltgu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.4651785, 1.9708362, -3.0653381)
-
-[node name="SM_Book_02" parent="Control2" unique_id=998665171 instance=ExtResource("8_6ltgu")]
-transform = Transform3D(-0.05059279, 0, -0.9987194, 0, 1, 0, 0.9987194, 0, -0.05059279, 9.4651785, 1.9760485, -5.453491)
-
-[node name="SM_Book_07" parent="Control2" unique_id=1285809098 instance=ExtResource("8_6ltgu")]
-transform = Transform3D(-0.05059279, 0, -0.9987194, 0, 1, 0, 0.9987194, 0, -0.05059279, 9.935751, 2.4315073, -4.90605)
-
-[node name="SM_Antibiotics_01" parent="Control2" unique_id=1318800260 instance=ExtResource("9_13l42")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.425483, 1.9483137, -2.7176118)
-
-[node name="SM_Antibiotics_02" parent="Control2" unique_id=1157240623 instance=ExtResource("9_13l42")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.425483, 1.9513555, -4.0266314)
-
-[node name="SM_CDStack_03" parent="Control2" unique_id=1677839182 instance=ExtResource("7_getyn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.418709, 1.297494, -2.1916838)
-
-[node name="SM_CDStack_04" parent="Control2" unique_id=1982833107 instance=ExtResource("7_getyn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.455409, 1.3199095, -3.6674676)
-
-[node name="SM_Book_03" parent="Control2" unique_id=408948650 instance=ExtResource("8_6ltgu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.4651785, 1.1983614, -3.0653381)
-
-[node name="SM_Book_04" parent="Control2" unique_id=1858149336 instance=ExtResource("8_6ltgu")]
-transform = Transform3D(-0.05059279, 0, -0.9987194, 0, 1, 0, 0.9987194, 0, -0.05059279, 9.4651785, 1.3413895, -5.453491)
-
-[node name="SM_Antibiotics_03" parent="Control2" unique_id=1652492205 instance=ExtResource("9_13l42")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.425483, 1.3136548, -2.7176118)
-
-[node name="SM_Antibiotics_04" parent="Control2" unique_id=1996325757 instance=ExtResource("9_13l42")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.425483, 1.1788809, -4.0266314)
-
-[node name="SM_ComputerMouse_01" parent="Control2" unique_id=879092132 instance=ExtResource("10_k8nuc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.421914, 1.9554856, -4.56326)
-
-[node name="SM_ComputerMouse_02" parent="Control2" unique_id=1922949429 instance=ExtResource("10_k8nuc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.421914, 1.3035151, -4.56326)
-
-[node name="SM_CDStack_05" parent="Control2" unique_id=1004472159 instance=ExtResource("7_getyn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.444721, 0.28569233, -2.1916838)
-
-[node name="SM_CDStack_06" parent="Control2" unique_id=462517510 instance=ExtResource("7_getyn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.481421, 0.30810773, -3.6674676)
-
-[node name="SM_Book_05" parent="Control2" unique_id=1951365667 instance=ExtResource("8_6ltgu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.491191, 0.3243755, -3.0653381)
-
-[node name="SM_Book_06" parent="Control2" unique_id=320329396 instance=ExtResource("8_6ltgu")]
-transform = Transform3D(-0.05059279, 0, -0.9987194, 0, 1, 0, 0.9987194, 0, -0.05059279, 9.491191, 0.32958782, -5.453491)
-
-[node name="SM_Antibiotics_05" parent="Control2" unique_id=1219575041 instance=ExtResource("9_13l42")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.451495, 0.30185306, -2.7176118)
-
-[node name="SM_Antibiotics_06" parent="Control2" unique_id=513026236 instance=ExtResource("9_13l42")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.451495, 0.30489504, -4.0266314)
-
-[node name="SM_ComputerMouse_03" parent="Control2" unique_id=170974020 instance=ExtResource("10_k8nuc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.4479265, 0.29171336, -4.56326)
-
-[node name="SM_FuelCanister" parent="Control2" unique_id=155795764 instance=ExtResource("11_6ltgu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.939947, 1.300947, -2.4582531)
-
-[node name="SM_GasCanister_01" parent="Control2" unique_id=861578319 instance=ExtResource("12_k8nuc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.926607, 1.3088447, -3.2871792)
-
-[node name="SM_ComputerTower_01" parent="Control2" unique_id=2037614417 instance=ExtResource("13_w1e2e")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.949125, 1.3060114, -3.94774)
-
-[node name="SM_ComputerTower_02" parent="Control2" unique_id=1182202284 instance=ExtResource("13_w1e2e")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.949125, 1.9567842, -4.8539248)
-
-[node name="SM_Rack05" parent="Control2" unique_id=128663817 instance=ExtResource("6_yjwk2")]
-transform = Transform3D(0.75, 0, 0, 0, 1, 0, 0, 0, 1, 9.719639, 2.6831656, -3.8330638)
-
-[node name="SM_CDStack_07" parent="Control2" unique_id=1178028602 instance=ExtResource("7_getyn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.418709, 2.783934, -2.1916838)
-
-[node name="SM_CDStack_08" parent="Control2" unique_id=1362910823 instance=ExtResource("7_getyn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.455409, 2.8063498, -3.6674676)
-
-[node name="SM_Book_08" parent="Control2" unique_id=37170584 instance=ExtResource("8_6ltgu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.4651785, 2.8226175, -3.0653381)
-
-[node name="SM_Book_09" parent="Control2" unique_id=1432699307 instance=ExtResource("8_6ltgu")]
-transform = Transform3D(-0.05059279, 0, -0.9987194, 0, 1, 0, 0.9987194, 0, -0.05059279, 9.4651785, 2.8278298, -5.453491)
-
-[node name="SM_Book_10" parent="Control2" unique_id=1929656973 instance=ExtResource("8_6ltgu")]
-transform = Transform3D(-0.05059279, 0, -0.9987194, 0, 1, 0, 0.9987194, 0, -0.05059279, 9.935751, 3.2832887, -4.90605)
-
-[node name="SM_Antibiotics_07" parent="Control2" unique_id=65273760 instance=ExtResource("9_13l42")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.425483, 2.800095, -2.7176118)
-
-[node name="SM_Antibiotics_08" parent="Control2" unique_id=1153741176 instance=ExtResource("9_13l42")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.425483, 2.8031368, -4.0266314)
-
-[node name="SM_ComputerMouse_04" parent="Control2" unique_id=1555791476 instance=ExtResource("10_k8nuc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.421914, 2.807267, -4.56326)
-
-[node name="SM_ComputerTower_03" parent="Control2" unique_id=57637755 instance=ExtResource("13_w1e2e")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.949125, 2.8085656, -4.8539248)
-
-[node name="SM_Ind_War_Equipment_Ladder_Metal_Worn_01" parent="." unique_id=842094049 instance=ExtResource("14_w1e2e")]
+[node name="SM_Ind_War_Equipment_Ladder_Metal_Worn_01" parent="." unique_id=842094049 instance=ExtResource("6_ladder")]
 transform = Transform3D(-5.004954e-08, -1, 0, 1.145, -4.371139e-08, 0, 0, 0, 1, 10.146227, 1.467566, -3.8100755)
+visible = false
+
+[editable path="ReviewFixtures/ModularRack_Starter"]
