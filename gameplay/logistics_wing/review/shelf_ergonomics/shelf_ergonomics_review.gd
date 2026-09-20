@@ -5,12 +5,15 @@ const ClearanceContextScript = preload("res://storage_shelf_clearance_context.gd
 const MetalScene = preload("res://assets/environment/furniture/storage/SM_MetalShelves.glb")
 const LockerScene = preload("res://assets/environment/furniture/storage/SM_ventilated_locker.glb")
 const CabinetScene = preload("res://assets/environment/furniture/storage/SM_ClothesCabinet.glb")
+const CabinetTakeSamplesScene = preload("res://gameplay/logistics_wing/review/shelf_ergonomics/cabinet_take_samples.tscn")
 
 const GALLERY_CEILING_Y_A_B := 3.40
 const GALLERY_CEILING_Y_C := 2.80
-const LOWER_METAL_Y_SCALE := 0.49
-const LOWER_LOCKER_Y_SCALE := 0.63
+const LOWER_METAL_Y_SCALE := 0.592
+const LOWER_LOCKER_Y_SCALE := 0.760
 const LOWER_CABINET_Y_SCALE := 0.62
+const METAL_REVIEW_POSITION := Vector3(10.10, 0.0, -10.95)
+const REVIEW_EYE_HEIGHTS_M := [1.80, 1.716]
 const GALLERY_B_CENTRE := Vector3(12.75, 0.0, -7.25)
 const GALLERY_B_SIZE := Vector3(7.50, 0.20, 11.50)
 
@@ -24,6 +27,9 @@ var _manager: StoragePrototypeManager
 var _metal: Node3D
 var _locker: Node3D
 var _cabinet: Node3D
+var _cabinet_samples: Node3D
+var _eye_height_m := 1.80
+var _status_label: Label
 var _unfitted_samples: Array[String] = []
 
 
@@ -141,7 +147,7 @@ func _build_fixtures() -> void:
 	var y_scale := 1.0 if _case == "A" else LOWER_METAL_Y_SCALE
 	_metal = MetalScene.instantiate() as Node3D
 	_metal.name = "SM_MetalShelves_Ergonomics"
-	_metal.position = Vector3(10.70, 0.0, -11.90)
+	_metal.position = METAL_REVIEW_POSITION
 	_metal.scale = Vector3(1.0, y_scale, 1.0)
 	_fixtures.add_child(_metal)
 	_add_clearance_context(_metal, maxf(0.05, _ceiling_y_m - 2.86 * y_scale))
@@ -231,7 +237,7 @@ func _seed_review_samples() -> void:
 	_store_sample(carried, controller, surfaces[1] as StorageSurface, &"loot_000024")
 	_store_sample(carried, controller, surfaces[2] as StorageSurface, &"loot_000030")
 	_store_sample(carried, controller, surfaces[5] as StorageSurface, &"loot_000001")
-	_store_sample(carried, controller, surfaces[6] as StorageSurface, &"loot_000015")
+	_store_sample(carried, controller, surfaces[4] as StorageSurface, &"loot_000015")
 	_add_cabinet_take_samples()
 
 
@@ -265,35 +271,11 @@ func _store_sample(carried: CarriedItems, controller: StoragePlacementController
 
 
 func _add_cabinet_take_samples() -> void:
-	var definitions: Array[StringName] = [&"loot_000024", &"loot_000030", &"loot_000001", &"loot_000015", &"loot_000032"]
-	var offsets := [
-		Vector3(-0.25, 0.55, 0.10), Vector3(0.18, 0.62, 0.10),
-		Vector3(-0.22, 1.00, 0.10), Vector3(0.17, 1.08, 0.10), Vector3(0.0, 1.38, 0.10),
-	]
-	for index: int in range(definitions.size()):
-		var definition := load("res://data/items/definitions/%s.tres" % definitions[index]) as ItemDefinition
-		if definition == null or definition.visual_scene == null:
-			continue
-		var host := Node3D.new()
-		host.name = "CabinetTake_%s" % definitions[index]
-		host.add_to_group("shelf_ergonomics_cabinet_take")
-		# The host stays out of the visually scaled cabinet subtree.
-		add_child(host)
-		host.global_position = _cabinet.to_global(offsets[index] as Vector3)
-		var packing := Node3D.new()
-		packing.name = "CabinetDisplayPose"
-		host.add_child(packing)
-		var visual := definition.visual_scene.instantiate() as Node3D
-		StorageVisualPose.build_visual(
-			packing,
-			visual,
-			definition.storage_rotation_degrees,
-			false
-		)
-		var world := WorldItem.new()
-		world.name = "WorldItem"
-		host.add_child(world)
-		world.configure(host, definition)
+	_cabinet_samples = CabinetTakeSamplesScene.instantiate() as Node3D
+	_cabinet_samples.name = "CabinetTakeSamples"
+	add_child(_cabinet_samples)
+	if not _cabinet_samples.has_method("activate_case") or not bool(_cabinet_samples.call("activate_case", _case)):
+		push_error("Shelf ergonomics review could not register saved cabinet TAKE samples")
 
 
 func _place_player_at_review_entry() -> void:
@@ -305,6 +287,7 @@ func _place_player_at_review_entry() -> void:
 	if camera != null:
 		camera.look_at(Vector3(13.20, 1.15, -11.90), Vector3.UP)
 		player.set("_pitch", camera.rotation.x)
+		_set_review_eye_height(REVIEW_EYE_HEIGHTS_M[0])
 
 
 func _add_status_label() -> void:
@@ -318,8 +301,36 @@ func _add_status_label() -> void:
 	label.add_theme_color_override("font_shadow_color", Color.BLACK)
 	label.add_theme_constant_override("shadow_offset_x", 1)
 	label.add_theme_constant_override("shadow_offset_y", 1)
-	label.text = "Shelf ergonomics review — Case %s | ceiling %.2fm | F6 grids | cabinet TAKE only" % [_case, _ceiling_y_m]
+	_status_label = label
+	_refresh_status_label()
 	layer.add_child(label)
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_F5:
+		toggle_review_eye_height()
+		get_viewport().set_input_as_handled()
+
+
+func toggle_review_eye_height() -> void:
+	var next_height := REVIEW_EYE_HEIGHTS_M[1] if is_equal_approx(_eye_height_m, REVIEW_EYE_HEIGHTS_M[0]) else REVIEW_EYE_HEIGHTS_M[0]
+	_set_review_eye_height(next_height)
+
+
+func _set_review_eye_height(target_height_m: float) -> void:
+	var camera := get_node_or_null("Player/Camera3D") as Camera3D
+	if camera == null:
+		return
+	var preserved_view := camera.global_transform
+	preserved_view.origin.y = target_height_m
+	camera.global_transform = preserved_view
+	_eye_height_m = camera.global_position.y
+	_refresh_status_label()
+
+
+func _refresh_status_label() -> void:
+	if _status_label != null:
+		_status_label.text = "Shelf ergonomics review — Case %s | ceiling %.2fm | eye %.3fm (F5) | F6 grids | cabinet TAKE only" % [_case, _ceiling_y_m, _eye_height_m]
 
 
 func _capture_if_requested() -> void:
@@ -337,8 +348,9 @@ func _capture_if_requested() -> void:
 		return
 	get_window().size = Vector2i(1920, 1080)
 	var views := [
-		{"name": "front", "position": Vector3(12.9, 1.716, -8.65), "target": Vector3(13.2, 1.12, -11.9)},
-		{"name": "right_front", "position": Vector3(14.25, 1.716, -9.15), "target": Vector3(14.65, 0.82, -11.85)},
+		{"name": "front", "position": Vector3(12.9, _eye_height_m, -8.65), "target": Vector3(13.2, 1.12, -11.9)},
+		{"name": "right_front", "position": Vector3(14.25, _eye_height_m, -9.15), "target": Vector3(14.65, 0.82, -11.85)},
+		{"name": "cabinet_front", "position": Vector3(13.85, 1.10, -11.90), "target": Vector3(15.15, 0.95, -11.90)},
 	]
 	for view: Dictionary in views:
 		camera.global_position = view["position"] as Vector3
@@ -367,12 +379,21 @@ func get_review_contract() -> Dictionary:
 	var surfaces := _manager.get_surfaces() if _manager != null else []
 	var unit_scale := true
 	var locker_top := 0.0
+	var metal_top := 0.0
 	var stored_sample_count := 0
 	var level_metrics := {}
 	var cabinet_sample_positions := []
-	for sample: Node in get_tree().get_nodes_in_group("shelf_ergonomics_cabinet_take"):
-		if sample is Node3D:
-			cabinet_sample_positions.append({"name": String(sample.name), "position": (sample as Node3D).global_position})
+	var cabinet_take_sample_count := 0
+	var cabinet_samples_editor_authored := false
+	if _cabinet_samples != null and _cabinet_samples.has_method("get_active_hosts"):
+		var active_hosts: Array = _cabinet_samples.call("get_active_hosts") as Array
+		for sample_value: Variant in active_hosts:
+			var sample := sample_value as Node3D
+			if sample == null:
+				continue
+			cabinet_take_sample_count += 1
+			cabinet_sample_positions.append({"name": String(sample.name), "position": sample.global_position})
+		cabinet_samples_editor_authored = _cabinet_samples.has_method("authored_transforms_preserved") and bool(_cabinet_samples.call("authored_transforms_preserved"))
 	for value: Variant in surfaces:
 		var surface := value as StorageSurface
 		if surface == null:
@@ -391,6 +412,8 @@ func get_review_contract() -> Dictionary:
 		})
 		if parent == _locker:
 			locker_top = maxf(locker_top, surface.global_position.y)
+		if parent == _metal:
+			metal_top = maxf(metal_top, surface.global_position.y)
 		for stack_value: Variant in (surface.get("_stacks") as Dictionary).values():
 			var stack := stack_value as StorageStack
 			for entry in stack.entries:
@@ -404,11 +427,17 @@ func get_review_contract() -> Dictionary:
 		"surface_count": surfaces.size(),
 		"surfaces_unit_scale": unit_scale,
 		"stored_sample_count": stored_sample_count,
-		"cabinet_take_sample_count": get_tree().get_nodes_in_group("shelf_ergonomics_cabinet_take").size(),
+		"cabinet_take_sample_count": cabinet_take_sample_count,
 		"cabinet_sample_positions": cabinet_sample_positions,
+		"cabinet_samples_editor_authored": cabinet_samples_editor_authored,
 		"unfitted_samples": _unfitted_samples.duplicate(),
 		"level_metrics": level_metrics,
 		"f6_enabled": _manager != null and _manager.is_processing_unhandled_input(),
 		"f7_disabled": true,
 		"locker_top_y_m": locker_top,
+		"metal_top_y_m": metal_top,
+		"metal_x_m": _metal.global_position.x if _metal != null else 0.0,
+		"metal_z_m": _metal.global_position.z if _metal != null else 0.0,
+		"eye_height_m": snappedf(_eye_height_m, 0.001),
+		"eye_toggle": "F5",
 	}

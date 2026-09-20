@@ -1,0 +1,109 @@
+[gd_scene format=3 uid="uid://bqjkcechaysw5"]
+
+[ext_resource type="Script" uid="uid://cae6njfkp5lcu" path="res://gameplay/logistics_wing/review/shelf_ergonomics/cabinet_take_samples.gd" id="1_samples"]
+[ext_resource type="Script" uid="uid://6qrk22inrvej" path="res://gameplay/logistics_wing/development/seed_host.gd" id="2_host"]
+[ext_resource type="Script" uid="uid://btkjw475usxpx" path="res://gameplay/logistics_wing/development/seed_registrar.gd" id="3_registrar"]
+[ext_resource type="PackedScene" uid="uid://l0kqvj1n6wrl" path="res://assets/props/medical/pill_bottle.glb" id="4_painkillers"]
+[ext_resource type="PackedScene" uid="uid://dqahwgcsham5a" path="res://assets/props/morale/SM_Book_01.glb" id="5_book"]
+[ext_resource type="PackedScene" uid="uid://cdtpk0sa4cpcp" path="res://assets/props/electronics/SM_ComputerMouse_01.glb" id="6_mouse"]
+[ext_resource type="PackedScene" uid="uid://d2ky67y4v3cux" path="res://assets/props/Fuel/SM_FuelCanister.glb" id="7_fuel"]
+[ext_resource type="PackedScene" uid="uid://cyag5i6w8fjq4" path="res://assets/props/protection/SM_Armor_02.glb" id="8_armor"]
+
+[node name="CabinetTakeSamples" type="Node3D" unique_id=1910542889]
+script = ExtResource("1_samples")
+
+[node name="FullHeightHosts" type="Node3D" parent="." unique_id=1008217045]
+
+[node name="SeedItems" type="Node3D" parent="FullHeightHosts" unique_id=1515451065]
+
+[node name="Armor_TallBay" type="Node3D" parent="FullHeightHosts/SeedItems" unique_id=1057681257]
+transform = Transform3D(-3.6199901e-06, 0, 1, 0, 1, 0, -1, 0, -3.6199901e-06, 15.05, 0.29, -12.3)
+script = ExtResource("2_host")
+item_id = &"loot_000032"
+
+[node name="Visual" parent="FullHeightHosts/SeedItems/Armor_TallBay" unique_id=1391871170 instance=ExtResource("8_armor")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5100012, -0.15255699, -0.26263618)
+
+[node name="Fuel_LowerBay" type="Node3D" parent="FullHeightHosts/SeedItems" unique_id=1601608101]
+transform = Transform3D(-3.6199901e-06, 0, -1, 0, 1, 0, 1, 0, -3.6199901e-06, 15.05, 0.29, -11.9)
+script = ExtResource("2_host")
+item_id = &"loot_000015"
+
+[node name="Visual" parent="FullHeightHosts/SeedItems/Fuel_LowerBay" unique_id=2043915722 instance=ExtResource("7_fuel")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.536743e-07, -0.14910015, 0.352623)
+
+[node name="Painkillers_MidBay" type="Node3D" parent="FullHeightHosts/SeedItems" unique_id=1948422544]
+transform = Transform3D(-3.6199901e-06, 0, 1, 0, 1, 0, -1, 0, -3.6199901e-06, 15.05, 1.27, -12.3)
+script = ExtResource("2_host")
+item_id = &"loot_000024"
+
+[node name="Visual" parent="FullHeightHosts/SeedItems/Painkillers_MidBay" unique_id=2130035418 instance=ExtResource("4_painkillers")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.536743e-07, -0.85624576, 0.14025402)
+
+[node name="Book_UpperBay" type="Node3D" parent="FullHeightHosts/SeedItems" unique_id=1389350655]
+transform = Transform3D(0.9848077, 0, 0.17364825, 0, 1, 0, -0.17364825, 0, 0.9848077, 15.05, 1.27, -11.9)
+script = ExtResource("2_host")
+item_id = &"loot_000030"
+
+[node name="Visual" parent="FullHeightHosts/SeedItems/Book_UpperBay" unique_id=2094280108 instance=ExtResource("5_book")]
+transform = Transform3D(1.0000024, 0, 5.9604645e-08, 0, 1, 0, -5.9604645e-08, 0, 1.0000024, 0.4887581, -0.8429824, 0.08619022)
+
+[node name="Mouse_TopBay" type="Node3D" parent="FullHeightHosts/SeedItems" unique_id=30888588]
+transform = Transform3D(0.9848077, 0, -0.17364825, 0, 1, 0, 0.17364825, 0, 0.9848077, 15.05, 1.27, -11.5)
+script = ExtResource("2_host")
+item_id = &"loot_000001"
+
+[node name="Visual" parent="FullHeightHosts/SeedItems/Mouse_TopBay" unique_id=102724967 instance=ExtResource("6_mouse")]
+transform = Transform3D(1.0000024, 0, -5.9604645e-08, 0, 1, 0, 5.9604645e-08, 0, 1.0000024, 0.15400696, -0.8635584, -0.02715969)
+
+[node name="SeedRegistrar" type="Node" parent="FullHeightHosts" unique_id=1739865305]
+script = ExtResource("3_registrar")
+fixture_namespace = "shelf_ergonomics_cabinet_full_v2"
+
+[node name="LoweredHosts" type="Node3D" parent="." unique_id=1590957382]
+
+[node name="SeedItems" type="Node3D" parent="LoweredHosts" unique_id=758645778]
+
+[node name="Armor_TallBay" type="Node3D" parent="LoweredHosts/SeedItems" unique_id=1712395131]
+transform = Transform3D(-3.6199901e-06, 0, 1, 0, 1, 0, -1, 0, -3.6199901e-06, 15.05, 0.18, -12.3)
+script = ExtResource("2_host")
+item_id = &"loot_000032"
+
+[node name="Visual" parent="LoweredHosts/SeedItems/Armor_TallBay" unique_id=1957646729 instance=ExtResource("8_armor")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.039256096, 0.5390002, -0.070801735)
+
+[node name="Fuel_LowerBay" type="Node3D" parent="LoweredHosts/SeedItems" unique_id=1976582657]
+transform = Transform3D(-3.6199901e-06, 0, -1, 0, 1, 0, 1, 0, -3.6199901e-06, 15.05, 0.18, -11.9)
+script = ExtResource("2_host")
+item_id = &"loot_000015"
+
+[node name="Visual" parent="LoweredHosts/SeedItems/Fuel_LowerBay" unique_id=1151687324 instance=ExtResource("7_fuel")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.536743e-07, 0, 0.2606926)
+
+[node name="Painkillers_MidBay" type="Node3D" parent="LoweredHosts/SeedItems" unique_id=1870521332]
+transform = Transform3D(-3.6199901e-06, 0, 1, 0, 1, 0, -1, 0, -3.6199901e-06, 15.05, 0.79, -12.3)
+script = ExtResource("2_host")
+item_id = &"loot_000024"
+
+[node name="Visual" parent="LoweredHosts/SeedItems/Painkillers_MidBay" unique_id=392510158 instance=ExtResource("4_painkillers")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9073486e-06, -0.50866795, -0.46578693)
+
+[node name="Book_UpperBay" type="Node3D" parent="LoweredHosts/SeedItems" unique_id=22459503]
+transform = Transform3D(0.9848077, 0, 0.17364825, 0, 1, 0, -0.17364825, 0, 0.9848077, 15.05, 0.79, -11.9)
+script = ExtResource("2_host")
+item_id = &"loot_000030"
+
+[node name="Visual" parent="LoweredHosts/SeedItems/Book_UpperBay" unique_id=660879705 instance=ExtResource("5_book")]
+transform = Transform3D(1.0000013, 0, 8.940697e-08, 0, 1, 0, -8.940697e-08, 0, 1.0000013, -0.4602661, -0.48088118, -0.08115578)
+
+[node name="Mouse_TopBay" type="Node3D" parent="LoweredHosts/SeedItems" unique_id=265477780]
+transform = Transform3D(0.9848077, 0, -0.17364825, 0, 1, 0, 0.17364825, 0, 0.9848077, 15.05, 0.79, -11.5)
+script = ExtResource("2_host")
+item_id = &"loot_000001"
+
+[node name="Visual" parent="LoweredHosts/SeedItems/Mouse_TopBay" unique_id=1259655065 instance=ExtResource("6_mouse")]
+transform = Transform3D(1.0000013, 0, -8.940697e-08, 0, 1, 0, 8.940697e-08, 0, 1.0000013, -0.49457455, -0.49754092, 0.08720684)
+
+[node name="SeedRegistrar" type="Node" parent="LoweredHosts" unique_id=660070054]
+script = ExtResource("3_registrar")
+fixture_namespace = "shelf_ergonomics_cabinet_lower_v2"
