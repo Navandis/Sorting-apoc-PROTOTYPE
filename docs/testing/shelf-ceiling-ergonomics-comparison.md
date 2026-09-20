@@ -1,6 +1,6 @@
 # Shelf / ceiling ergonomics comparison
 
-**Status:** playable review experiment; no production height has been selected.
+**Status:** completed ergonomics evidence. The explicit review scene and the developer-authored modular-rack experiment are retained for future use; no production camera height, ceiling height, rack implementation or ladder system has been selected.
 
 Launch the explicit review scene; it never replaces the default launch:
 
@@ -49,4 +49,24 @@ Nine player-eye captures were rendered in Compatibility mode at normal front, ri
 - The cabinet is evidence for visibility and loose pickup only. In the unboosted front-side renderer views, its partitioned samples are not reliably legible enough to count as a visual-access pass; that negative result is retained rather than corrected with extra fill, outlines or storage behavior.
 - C changes containment/ceiling perception without changing fixtures or lighting. It should be judged for whether the 2.80 m lid feels cramped at the ordinary player eye, not promoted automatically.
 
-Human review should decide: which supports can be seen, recognized, targeted and retrieved from front/left-front/right-front stances; whether light alone rescues dark items; whether B's compressed openings are too restrictive; and whether C improves containment without feeling cramped. No production promotion follows from this document.
+## Human disposition and retained conclusions
+
+The developer completed the ground-access review and retained the review scene as a comparison tool. The storage installation, rather than the furniture mesh alone, is the usability unit: authored dimensions and levels, room placement, approach space, usable depth and edge insets, player viewpoint, reach, lighting, target visibility and obstruction all contribute.
+
+- Uniformly compressing existing multi-level furniture is rejected as the general solution.
+- More than three ground-access levels in the tested corner-mounted modular-rack context produced unacceptable visibility and manual-targeting compromises unless the shelves became too shallow or squat.
+- The developer's manually authored three-level modular-rack configuration is a useful ground-access reference, not a universal production template. `SM_Rack01.glb` and `SM_Rack02.glb` remain static review-scene assets without functional storage surfaces.
+- Open racks can tolerate more usable depth when approached from more sides. Wall and corner installations generally require shallower usable depth.
+- A slim usable-area inset can be authored per edge. No single percentage is promoted, and useful front-edge capacity should not be deleted silently.
+- Cabinet and opaque storage remain selective rather than the general storage backbone.
+- The 1.80 m eye-height trial helped some upper-level cases but did not solve deep shelves or opaque dividers and sometimes worsened low-shelf viewing. It remains provisional.
+- The 2.8 m ordinary ceiling looked more proportionate in the tested context. It is not a wing-wide production decision.
+- Upper storage beyond ordinary standing access may use appropriate furniture, a deliberately absent top deck, shallow or specialist wall storage, non-loot upper dressing, or a fixed shelf-serving ladder where justified.
+
+The developer owns final functional storage authoring: model choice, installation placement, unit dimensions, level count and distribution, and ladder availability and placement. Codex may assist with tools, validation, decoration and later synthetic checks.
+
+## Fixed ladder status
+
+A fixed shelf-serving ladder is approved for one bounded proof based on this ergonomics evidence. It is not production-approved. The proof does not authorize general climbing or jumping, movable or sliding ladders, animations, visible hands, a fall system, or shelf-adjustment interaction. Player-adjustable shelf levels remain a post-release or expansion possibility with no weight in the current ladder decision.
+
+Ordinary ground-access storage should remain usable without ladders. Intentionally ladder-served installations may exceed that limit only if the bounded proof is later accepted.

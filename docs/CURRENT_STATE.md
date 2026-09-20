@@ -1,42 +1,57 @@
-# Sorting Apocalypse — current development state
+# Sorting Apocalypse current development state
 
-**Decision record:** 18 September 2026. See the live close-out and continuing-gameplay validation reports for integration SHAs and synchronization evidence.
-
-## Promoted foundations
-- Representative deterministic storage/stacking and zoning have historical human validation; preserve mechanics and regressions.
-- Whole playable logistics-wing neutral greybox is human-PROMOTED after three correction rounds and final Medical tuning. Accepted spatial source: `aeb1ef27671f2f07d651e5064b00c3c77a06600b`; final Medical documentation checkpoint: `8d64086aa02ade21449af24dbc7742748115792c`.
-- Medical: 10 m exclusive protected corridor, unchanged 7.8 × 7.0 m nominal anteroom, continuous eastern wall/south-east entrance. A/B connector remains Main Storage.
-- Supervised full-wing authoring and the bounded Medical revision are demonstrated. This does not imply unattended design or final art feasibility.
-- The continuing gameplay composition is promoted as the normal development launch: three supported empty storage units, the accepted fourteen-host editable table-loot setup, the normal player/HUD and preserved accepted geometry. The developer accepted the broad handling/editor-authorship review and all three focused F6 checks; F6 developer grids remain default-OFF and F7 remains suppressed in this composition.
-- The bounded locker/Fuel maintenance is human-PROMOTED. Locker level 2 is contained at both measured edges at identity and legacy scale; the current Fuel source retains its approved authoring/handling choices. Fuel is eligible for correctly authored development hosts, while Gloves and Pants remain blocked. Its maintenance checkpoint preserved the then-fourteen-host scene.
-- The expanded development palette is human-PROMOTED. The final manual-authoring checkpoint is `8010e54 chore: refine development palette placement`; it keeps at least one direct editor-authored host for every approved eligible type, preserves the separate fixed twelve-host regression fixture, and accepts the developer's saved table/host arrangement. The [shelf/ceiling ergonomics comparison](testing/shelf-ceiling-ergonomics-comparison.md) is now ready for human review; Receiving remains deferred.
+**Decision record:** 20 September 2026. The Storage Authoring and Testbed Foundation is consolidated. The retained shelf and ceiling review scene is completed evidence, not an active production scene.
 
 ## Current authorities
-GDD v0.8; Visual Design Direction v0.5; Prototype Findings v0.8. See [documentation index](README.md). Accepted in-engine source/scene/overview govern current dimensions over historical schematic pixels.
+
+- [Preliminary GDD v0.9](Sorting_Apocalypse_Preliminary_GDD_v0.9.docx)
+- [Visual Design Direction v0.6](Sorting_Apocalypse_Visual_Design_Direction_v0.6.docx)
+- [Prototype Findings v0.9](Sorting_Apocalypse_Prototype_Findings_v0.9.docx)
+- [AI working guidelines](AI_WORKING_GUIDELINES.md)
+
+The accepted in-engine wing builder, saved scene and overview govern working dimensions over the retained 15 September schematic pixels.
+
+## Promoted foundations
+
+- Representative deterministic storage, stacking and zoning remain human-validated in their recorded scope.
+- The accepted whole-wing geometry and Medical tuning remain the spatial baseline. General greybox correction is closed.
+- `res://gameplay/logistics_wing/wing_gameplay.tscn` is the normal development and playable composition. It preserves the accepted geometry, normal player and HUD, three functional storage units, twelve functional surfaces and the saved `DevelopmentSetup` authoring setup. F6 developer grids remain default off and F7 is suppressed in this composition.
+- `DevelopmentSetup/SeedItems` in `wing_gameplay.tscn` is the current palette authority. It has at least one direct editor-authored host for every approved eligible type and preserves the developer's table and item arrangement. The fixed twelve-host regression fixture remains separate.
+- Locker level 2 and Fuel maintenance are promoted. Fuel (`loot_000015`) is eligible for correctly authored development hosts. Gloves (`loot_000034`) and Pants (`loot_000036`) remain blocked.
+- The default-entry transition is closed. `project.godot` selects `wing_gameplay.tscn` through UID `uid://bljf1nlhijej`. `main.tscn` remains the legacy mechanics fixture and `greybox/logistics_wing/wing_review.tscn` remains the neutral spatial review scene.
+
+## Storage ergonomics disposition
+
+The A, B and C shelf and ceiling experiment is complete. Keep `res://gameplay/logistics_wing/review/shelf_ergonomics/shelf_ergonomics_review.tscn` as a future review tool. The developer's manually authored three-level modular rack is retained as a useful ground-access reference. `SM_Rack01.glb` and `SM_Rack02.glb` are static review assets and do not yet provide functional storage surfaces.
+
+- Judge the whole installation: model, authored dimensions and levels, room placement, approach space, usable depth and edge insets, viewpoint, reach, lighting and obstruction.
+- Uniform compression of existing multi-level furniture is rejected as the general solution. In the tested corner-mounted rack context, more than three ground-access levels compromised visibility and manual targeting unless openings became too shallow or squat.
+- Open racks may tolerate greater depth with more approach sides. Wall and corner installations generally need shallower usable depth. Evaluate slim usable-area insets per edge; do not impose one universal percentage or silently remove useful front capacity.
+- Predominantly open modular storage remains the backbone. Cabinets and opaque storage are selective and lighting-aware.
+- The 1.80 m eye-height and 2.8 m ceiling results remain trial observations. They do not change the production camera or wing ceilings.
+- Ordinary ground-access storage should work without ladders. One fixed shelf-serving ladder proof is approved; no production ladder, general climbing or jumping, movable or sliding ladder, animation, visible hands, fall system or shelf-adjustment feature is approved.
+- The developer owns final functional storage authoring: model, installation placement, dimensions, level count and distribution, and ladder availability and placement. Codex may assist with tools, validation, decoration and later synthetic checks.
 
 ## Gate order
-1. The bounded locker/Fuel maintenance, human review and Fuel eligibility follow-through are complete.
-2. Evaluate shelf/ceiling ergonomics without presuming final heights.
-3. Implement functional Receiving only after that gate, then later timed obligations and the wider Systems MVP.
 
-The default entry is `res://gameplay/logistics_wing/wing_gameplay.tscn` through UID `uid://bljf1nlhijej`. Keep the old `main.tscn` intact as the explicit historical mechanics fixture and keep `greybox/logistics_wing/wing_review.tscn` for neutral review. The table/loot setup supersedes the preflight's runtime-array seed proposal with saved editor-visible hosts while preserving the preflight as historical evidence.
+1. Review-scene supply reuse.
+2. Reusable functional modular-rack authoring.
+3. Single-rack fixed-ladder proof.
+4. Human ladder decision.
+5. Resume Receiving unless storage ergonomics exposes another concrete blocker.
 
-## Explicitly deferred / known debt
-Freight cage lining and actual pile containment/reach; production Structural Shell/Applied Finish and full furnishing; facility interactions; integrated balance; full save/journal implementation; Gloves/Pants source/pose blocks. The Fuel-related legacy-audit failure and timeout are resolved; unrelated intentional negative-test and host certificate diagnostics remain separately disclosed.
+## Explicitly deferred and known debt
 
-No abandoned stub remains in the accepted wing. Later opportunistic stubs are not current work and must avoid immediate/direct service-space or Ops adjacency. The rejected Receiving shell remains preserved separately and must not be merged as accepted geometry.
+Production Structural Shell and Applied Finish; full gallery furnishing; freight cage lining and real pile reach and drainability; functional Receiving Stage B and Stage C; timed obligations; full save and journal implementation; Gloves and Pants source and pose work; production starting inventory; player-adjustable shelf levels; crouch; height-aware auto-placement; camera-height and wing-ceiling changes.
 
-## Evidence and repository status owners
-- [Spatial acceptance](testing/logistics-wing-greybox-acceptance-2026-09-17.md)
-- [Medical tuning validation](testing/logistics-wing-greybox-medical-tuning-validation.md)
-- [Close-out validation](testing/logistics-wing-greybox-closeout-validation.md) — created by the local close-out execution; it owns fresh test/synchronization claims.
-- [Bridge preflight](testing/wing-storage-integration-preflight.md) — created after bookkeeping; not an implementation claim.
-- [Continuing gameplay validation](testing/wing-gameplay-foundation-validation.md) — owns the new scene, fixture/seed, preservation and human-review-gate evidence.
-- [Continuing gameplay human follow-up](testing/wing-gameplay-foundation-follow-up.md) — records the accepted integration review and approved later sequence.
-- [F6 developer-grid validation](testing/wing-storage-debug-f6-validation.md) — owns the bounded correction, focused evidence and pending F6 check.
-- [Continuing gameplay and F6 human acceptance](testing/wing-gameplay-foundation-acceptance-2026-09-18.md) — records the developer's PROMOTE decisions and their limits.
-- [Default-entry close-out](testing/wing-gameplay-default-entry-closeout-validation.md) — owns the saved-scene checkpoint, launch promotion, fresh verification and repository synchronization evidence.
-- [Locker/Fuel maintenance validation](testing/locker-fuel-maintenance-validation.md) — owns the human-PROMOTED locker correction, Fuel reconciliation and eligibility follow-through, combined close-out verification, packaging isolation and preservation audit.
-- [Expanded item-palette validation](testing/expanded-item-palette-validation.md) — records the human-PROMOTED editor-authored palette, manual-authoring checkpoint, bounded technical checks, and acceptance limits.
+The Fuel-related legacy-audit failure and timeout are resolved. Historical reports keep the status they had when written; later acceptance and this current record supersede their pending state without rewriting them.
 
-Original reports and bundles are retained locally under their original evidence paths. Ignored directories are not backed up by GitHub; the curated acceptance evidence is under `docs/testing/evidence/greybox-accepted-2026-09-17/`.
+## Current evidence
+
+- [Continuing gameplay and F6 acceptance](testing/wing-gameplay-foundation-acceptance-2026-09-18.md)
+- [Default-entry close-out](testing/wing-gameplay-default-entry-closeout-validation.md)
+- [Locker and Fuel maintenance](testing/locker-fuel-maintenance-validation.md)
+- [Expanded item palette](testing/expanded-item-palette-validation.md)
+- [Shelf and ceiling ergonomics](testing/shelf-ceiling-ergonomics-comparison.md)
+
+Ignored reports and imported asset state remain local and are not GitHub backup. The curated accepted greybox evidence remains under `docs/testing/evidence/greybox-accepted-2026-09-17/`.
