@@ -1,6 +1,6 @@
 # Sorting Apocalypse current development state
 
-**Decision record:** 20 September 2026. The Storage Authoring and Testbed Foundation is consolidated. Review-scene supply reuse is promoted, and reusable functional modular-rack authoring is the active gate. The retained shelf and ceiling review scene is completed evidence, not an active production scene.
+**Decision record:** 20 September 2026. The Storage Authoring and Testbed Foundation is consolidated. Review-scene supply reuse is promoted. Reusable functional modular-rack authoring is implemented and technically verified on `codex/modular-rack-authoring`, with human review and promotion still pending. The retained shelf and ceiling review scene remains a mutable review tool rather than an active production scene.
 
 ## Current authorities
 
@@ -23,7 +23,7 @@ The accepted in-engine wing builder, saved scene and overview govern working dim
 
 ## Storage ergonomics disposition
 
-The A, B and C shelf and ceiling experiment is complete. Keep `res://gameplay/logistics_wing/review/shelf_ergonomics/shelf_ergonomics_review.tscn` as a future review tool. The developer's manually authored three-level modular rack is retained as a useful ground-access reference. `SM_Rack01.glb` and `SM_Rack02.glb` are static review assets and do not yet provide functional storage surfaces.
+The A, B and C shelf and ceiling experiment is complete. Keep `res://gameplay/logistics_wing/review/shelf_ergonomics/shelf_ergonomics_review.tscn` as a mutable review tool. Its saved three-level starter is now an editable `ModularRack`: the reusable base scene is shelf-empty, while deletable Rack02 shelf wrappers are local to the review scene. Runtime surfaces are derived through the existing storage backend. This implementation is technically verified but not yet human-promoted.
 
 - Judge the whole installation: model, authored dimensions and levels, room placement, approach space, usable depth and edge insets, viewpoint, reach, lighting and obstruction.
 - Uniform compression of existing multi-level furniture is rejected as the general solution. In the tested corner-mounted rack context, more than three ground-access levels compromised visibility and manual targeting unless openings became too shallow or squat.
@@ -37,14 +37,15 @@ The A, B and C shelf and ceiling experiment is complete. Keep `res://gameplay/lo
 
 Completed: Review-scene supply reuse.
 
-1. **Active: Reusable functional modular-rack authoring.**
-2. Single-rack fixed-ladder proof.
-3. Human ladder decision.
-4. Resume Receiving unless storage ergonomics exposes another concrete blocker.
+1. **Active: Reusable functional modular-rack authoring — implemented / technically verified / human review pending.**
+2. StorageSurface front/back/orientation debt identified during modular-rack review.
+3. Single-rack fixed-ladder proof.
+4. Human ladder decision.
+5. Resume Receiving unless storage ergonomics exposes another concrete blocker.
 
 ## Explicitly deferred and known debt
 
-Production Structural Shell and Applied Finish; full gallery furnishing; freight cage lining and real pile reach and drainability; functional Receiving Stage B and Stage C; timed obligations; full save and journal implementation; Gloves and Pants source and pose work; production starting inventory; player-adjustable shelf levels; crouch; height-aware auto-placement; camera-height and wing-ceiling changes.
+Production Structural Shell and Applied Finish; full gallery furnishing; freight cage lining and real pile reach and drainability; functional Receiving Stage B and Stage C; timed obligations; full save and journal implementation; Gloves and Pants source and pose work; production starting inventory; player-adjustable shelf levels; crouch; height-aware auto-placement; camera-height and wing-ceiling changes. General StorageSurface front/back axis semantics, item-packing orientation, zone-editor behavior and existing authored zones are deliberately deferred to the next separate gate after modular-rack promotion and before the ladder proof.
 
 The Fuel-related legacy-audit failure and timeout are resolved. Historical reports keep the status they had when written; later acceptance and this current record supersede their pending state without rewriting them.
 
@@ -56,5 +57,6 @@ The Fuel-related legacy-audit failure and timeout are resolved. Historical repor
 - [Expanded item palette](testing/expanded-item-palette-validation.md)
 - [Shelf and ceiling ergonomics](testing/shelf-ceiling-ergonomics-comparison.md)
 - [Review-scene supply reuse](testing/review-scene-supply-reuse-validation.md)
+- [Modular rack authoring](testing/modular-rack-authoring-validation.md)
 
 Ignored reports and imported asset state remain local and are not GitHub backup. The curated accepted greybox evidence remains under `docs/testing/evidence/greybox-accepted-2026-09-17/`.

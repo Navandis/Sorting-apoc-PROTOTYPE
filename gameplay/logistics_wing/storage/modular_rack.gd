@@ -5,10 +5,23 @@ class_name ModularRack
 const StorageSurfaceScript = preload("res://storage_surface.gd")
 
 const DEFAULT_WORLD_CELL_SIZE_M := 0.10
-const SURFACE_VERTICAL_NUDGE_M := 0.018
 const MIN_USABLE_DIMENSION_M := 0.10
 const DIMENSION_EPSILON_M := 0.0001
 const ROOT_TRANSFORM_EPSILON := 0.0001
+
+# SM_Rack02 is a single textured mesh: its aggregate AABB includes the orange
+# rails and end brackets. These one-time source-local measurements describe
+# only the gray load-bearing deck used by modular storage.
+const RACK02_DECK_SOURCE_X_MIN_M := -0.476953864
+const RACK02_DECK_SOURCE_X_MAX_M := 0.476953864
+const RACK02_DECK_SOURCE_Z_MIN_M := -1.875163436
+const RACK02_DECK_SOURCE_Z_MAX_M := 1.875163555
+const RACK02_DECK_TOP_SOURCE_Y_M := 0.113742
+const RACK02_DECK_UNDERSIDE_SOURCE_Y_M := 0.090407
+const RACK02_DECK_SOURCE_WIDTH_M := RACK02_DECK_SOURCE_X_MAX_M - RACK02_DECK_SOURCE_X_MIN_M
+const RACK02_DECK_SOURCE_LENGTH_M := RACK02_DECK_SOURCE_Z_MAX_M - RACK02_DECK_SOURCE_Z_MIN_M
+const RACK02_DECK_THICKNESS_M := RACK02_DECK_TOP_SOURCE_Y_M - RACK02_DECK_UNDERSIDE_SOURCE_Y_M
+const STORAGE_SURFACE_ORIGIN_OFFSET_Y_M := -StorageSurfaceScript.DEBUG_Y_OFFSET_M
 
 @export_range(0.10, 20.0, 0.01, "or_greater", "or_less") var rack_length_m := 2.40:
 	set(value):
@@ -93,12 +106,7 @@ func compute_layout() -> Dictionary:
 	var frame_result := _get_source_bounds(get_node_or_null("Frame/Visual"))
 	if not bool(frame_result.get("valid", false)):
 		errors.append("Frame/Visual is missing or has no mesh geometry.")
-	var platform_result := _first_platform_source_bounds()
-	if not bool(platform_result.get("valid", false)):
-		errors.append("Levels requires at least one shelf wrapper with a valid Rack02 Visual.")
-
 	var frame_bounds := frame_result.get("bounds", AABB()) as AABB
-	var platform_bounds := platform_result.get("bounds", AABB()) as AABB
 	var length_factor := 0.0
 	var depth_factor := 0.0
 	if frame_bounds.size.z > DIMENSION_EPSILON_M:
@@ -106,10 +114,10 @@ func compute_layout() -> Dictionary:
 	if frame_bounds.size.x > DIMENSION_EPSILON_M:
 		depth_factor = rack_depth_m / frame_bounds.size.x
 	var platform_size := Vector2(
-		platform_bounds.size.z * length_factor,
-		platform_bounds.size.x * depth_factor
+		RACK02_DECK_SOURCE_LENGTH_M * length_factor,
+		RACK02_DECK_SOURCE_WIDTH_M * depth_factor
 	)
-	var platform_thickness := platform_bounds.size.y
+	var platform_thickness := RACK02_DECK_THICKNESS_M
 	var usable_size := Vector2(
 		platform_size.x - usable_inset_left_m - usable_inset_right_m,
 		platform_size.y - usable_inset_front_m - usable_inset_back_m
@@ -151,16 +159,14 @@ func compute_layout() -> Dictionary:
 				"name": level_name,
 				"surface_id": StringName("%s_%s" % [name, level_name]),
 				"support_y": support_y,
-				"surface_origin_y": support_y + SURFACE_VERTICAL_NUDGE_M,
+				"surface_origin_y": support_y + STORAGE_SURFACE_ORIGIN_OFFSET_Y_M,
 				"usable_size": usable_size,
 				"usable_center": usable_center,
 				"clearance": 0.0,
 				"platform_thickness": platform_thickness,
 			})
 
-	if level_records.is_empty():
-		errors.append("Modular rack has no authored shelf levels.")
-	else:
+	if not level_records.is_empty():
 		level_records.sort_custom(
 			func(a: Dictionary, b: Dictionary) -> bool:
 				return float(a.get("support_y", 0.0)) < float(b.get("support_y", 0.0))
@@ -196,7 +202,7 @@ func compute_layout() -> Dictionary:
 			"depth": rack_depth_m,
 			"frame_height": frame_height_m,
 			"platform_base_size": platform_size,
-			"surface_vertical_nudge": SURFACE_VERTICAL_NUDGE_M,
+			"surface_origin_offset_y": STORAGE_SURFACE_ORIGIN_OFFSET_Y_M,
 			"cell_size": DEFAULT_WORLD_CELL_SIZE_M,
 		},
 		"levels": level_records,
@@ -231,7 +237,7 @@ func build_runtime_storage() -> Array[StorageSurface]:
 		var surface := StorageSurfaceScript.new() as StorageSurface
 		surface.name = "StorageSurface"
 		level_node.add_child(surface)
-		surface.position = Vector3(center.x, SURFACE_VERTICAL_NUDGE_M, center.y)
+		surface.position = Vector3(center.x, STORAGE_SURFACE_ORIGIN_OFFSET_Y_M, center.y)
 		surface.configure(
 			level.get("surface_id", &"modular_rack_surface") as StringName,
 			usable.x,
@@ -282,18 +288,6 @@ func _validate_root_authoring(errors: Array[String]) -> void:
 		errors.append("ModularRack root supports translation and yaw only; pitch and roll must remain zero.")
 
 
-func _first_platform_source_bounds() -> Dictionary:
-	var levels_root := get_node_or_null("Levels")
-	if levels_root == null:
-		return {"valid": false, "bounds": AABB()}
-	for child: Node in levels_root.get_children():
-		if child is Node3D:
-			var result := _get_source_bounds(child.get_node_or_null("Visual"))
-			if bool(result.get("valid", false)):
-				return result
-	return {"valid": false, "bounds": AABB()}
-
-
 func _get_source_bounds(branch: Node) -> Dictionary:
 	if not (branch is Node3D):
 		return {"valid": false, "bounds": AABB()}
@@ -333,7 +327,7 @@ func _align_frame_visual() -> void:
 		frame_height_m / bounds.size.y,
 		rack_length_m / bounds.size.z
 	)
-	_set_visual_transform(visual, bounds, source_scale, false)
+	_set_visual_transform(visual, bounds, source_scale)
 
 
 func _align_level_visuals() -> void:
@@ -359,14 +353,18 @@ func _align_level_visuals() -> void:
 		var visual := level.get_node_or_null("Visual") as Node3D
 		var result := _get_source_bounds(visual)
 		if visual != null and bool(result.get("valid", false)):
-			_set_visual_transform(visual, result.get("bounds", AABB()) as AABB, source_scale, true)
+			_set_visual_transform(visual, result.get("bounds", AABB()) as AABB, source_scale, RACK02_DECK_TOP_SOURCE_Y_M)
 
 
-func _set_visual_transform(visual: Node3D, bounds: AABB, source_scale: Vector3, top_aligned: bool) -> void:
+func _set_visual_transform(visual: Node3D, bounds: AABB, source_scale: Vector3, support_source_y: float = NAN) -> void:
 	var basis := Basis(Vector3.UP, PI * 0.5) * Basis.from_scale(source_scale)
 	var source_center := bounds.get_center()
 	var transformed_center := basis * Vector3(source_center.x, 0.0, source_center.z)
-	var target_y := -bounds.end.y * source_scale.y if top_aligned else -bounds.position.y * source_scale.y
+	var target_y := (
+		-bounds.position.y * source_scale.y
+		if is_nan(support_source_y)
+		else -support_source_y * source_scale.y
+	)
 	var target := Transform3D(basis, Vector3(-transformed_center.x, target_y, -transformed_center.z))
 	if not visual.transform.is_equal_approx(target):
 		visual.transform = target
@@ -433,7 +431,11 @@ func _rebuild_authoring_preview(layout: Dictionary) -> void:
 		mesh.size = Vector3(usable.x, 0.008, usable.y)
 		mesh.material = surface_material
 		mesh_instance.mesh = mesh
-		mesh_instance.position = Vector3(center.x, float(level.get("surface_origin_y", 0.0)), center.y)
+		mesh_instance.position = Vector3(
+			center.x,
+			float(level.get("surface_origin_y", 0.0)) + StorageSurfaceScript.DEBUG_Y_OFFSET_M,
+			center.y
+		)
 		preview.add_child(mesh_instance)
 	var overhead := MeshInstance3D.new()
 	overhead.name = "OverheadLimitPreview"

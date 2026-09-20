@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" path="res://gameplay/ui/carried_items_hud.tscn" id="4_hud"]
 [ext_resource type="PackedScene" path="res://gameplay/logistics_wing/storage/modular_rack.tscn" id="5_modular_rack"]
 [ext_resource type="PackedScene" uid="uid://du775526cba45" path="res://assets/environment/furniture/storage/SM_Ind_War_Equipment_Ladder_Metal_Worn_01.glb" id="6_ladder"]
+[ext_resource type="PackedScene" path="res://assets/environment/furniture/storage/SM_Rack02.glb" id="7_rack02"]
 
 [node name="ShelfErgonomicsReview" type="Node3D" unique_id=961672822]
 script = ExtResource("1_review")
@@ -28,14 +29,20 @@ rack_length_m = 3.994705
 rack_depth_m = 0.928107
 frame_height_m = 2.552749
 
-[node name="Shelf_01" parent="ReviewFixtures/ModularRack_Starter/Levels" index="0"]
+[node name="Shelf_01" type="Node3D" parent="ReviewFixtures/ModularRack_Starter/Levels"]
 position = Vector3(0, 0.370333, 0)
 
-[node name="Shelf_02" parent="ReviewFixtures/ModularRack_Starter/Levels" index="1"]
+[node name="Visual" parent="ReviewFixtures/ModularRack_Starter/Levels/Shelf_01" instance=ExtResource("7_rack02")]
+
+[node name="Shelf_02" type="Node3D" parent="ReviewFixtures/ModularRack_Starter/Levels"]
 position = Vector3(0, 1.24654, 0)
 
-[node name="Shelf_03" parent="ReviewFixtures/ModularRack_Starter/Levels" index="2"]
+[node name="Visual" parent="ReviewFixtures/ModularRack_Starter/Levels/Shelf_02" instance=ExtResource("7_rack02")]
+
+[node name="Shelf_03" type="Node3D" parent="ReviewFixtures/ModularRack_Starter/Levels"]
 position = Vector3(0, 1.75105, 0)
+
+[node name="Visual" parent="ReviewFixtures/ModularRack_Starter/Levels/Shelf_03" instance=ExtResource("7_rack02")]
 
 [node name="SM_Ind_War_Equipment_Ladder_Metal_Worn_01" parent="." unique_id=842094049 instance=ExtResource("6_ladder")]
 transform = Transform3D(-5.004954e-08, -1, 0, 1.145, -4.371139e-08, 0, 0, 0, 1, 10.146227, 1.467566, -3.8100755)

@@ -6,11 +6,13 @@ const ItemInstanceScript = preload("res://item_instance.gd")
 const StoragePlacementControllerScript = preload("res://storage_placement_controller.gd")
 
 const RACK_SCENE := "res://gameplay/logistics_wing/storage/modular_rack.tscn"
+const RACK02_SCENE := preload("res://assets/environment/furniture/storage/SM_Rack02.glb")
 const POSITION_EPSILON_M := 0.002
-const EXPECTED_PLATFORM_LENGTH_AT_2_60_M := 2.469214
-const EXPECTED_PLATFORM_DEPTH_AT_0_72_M := 0.672977
-const EXPECTED_PLATFORM_THICKNESS_M := 0.205345
-const EXPECTED_SURFACE_NUDGE_M := 0.018
+const EXPECTED_DECK_LENGTH_AT_2_60_M := 2.440944
+const EXPECTED_DECK_DEPTH_AT_0_72_M := 0.555012
+const EXPECTED_DECK_THICKNESS_M := 0.023335
+const EXPECTED_SURFACE_ORIGIN_Y_M := -0.012
+const EXPECTED_GRID_LOCAL_Y_M := 0.012
 
 var _failed := false
 
@@ -28,6 +30,7 @@ func _run() -> void:
 	_test_asymmetric_insets_and_invalid_states()
 	_test_save_reload_independence()
 	_test_runtime_surfaces_and_world_transform()
+	_test_grid_plane_is_contained_by_physical_deck()
 	_test_item_scale_and_vertical_fit()
 	await _test_manager_f6_f7()
 	_finish()
@@ -54,11 +57,15 @@ func _test_scene_skeleton() -> bool:
 	)
 	var levels := rack.get_node_or_null("Levels")
 	_check(
-		levels != null and levels.get_child_count() == 3,
-		"starter component contains three authored level wrappers"
+		levels != null and levels.get_child_count() == 0,
+		"reusable rack scaffold owns no inherited shelf wrappers"
 	)
+	var empty_layout := rack.call("compute_layout") as Dictionary
+	_check(bool(empty_layout.get("valid", false)), "shelf-empty rack scaffold remains a valid authoring state")
+	_check((empty_layout.get("levels", []) as Array).is_empty(), "shelf-empty rack layout reports no authored levels")
+	_check((rack.call("build_runtime_storage") as Array).is_empty(), "shelf-empty rack builds zero runtime surfaces")
 	rack.free()
-	return not _failed
+	return true
 
 
 func _test_authored_dimensions_and_collision() -> void:
@@ -83,8 +90,8 @@ func _test_authored_dimensions_and_collision() -> void:
 	var layout := rack.call("compute_layout") as Dictionary
 	var rack_record := layout.get("rack", {}) as Dictionary
 	var platform_size := rack_record.get("platform_base_size", Vector2.ZERO) as Vector2
-	_check(_near(platform_size.x, EXPECTED_PLATFORM_LENGTH_AT_2_60_M), "Rack02 length preserves source-family proportion")
-	_check(_near(platform_size.y, EXPECTED_PLATFORM_DEPTH_AT_0_72_M), "Rack02 depth preserves source-family proportion")
+	_check(_near(platform_size.x, EXPECTED_DECK_LENGTH_AT_2_60_M), "Rack02 calibrated gray-deck length preserves source-family proportion")
+	_check(_near(platform_size.y, EXPECTED_DECK_DEPTH_AT_0_72_M), "Rack02 calibrated gray-deck depth preserves source-family proportion")
 	rack.free()
 
 
@@ -103,12 +110,12 @@ func _test_stable_identity_and_physical_clearance() -> void:
 		var lower := initial_levels[0] as Dictionary
 		var upper := initial_levels[1] as Dictionary
 		_check(
-			_near(float(lower.get("clearance", -1.0)), 0.95 - EXPECTED_PLATFORM_THICKNESS_M - (0.25 + EXPECTED_SURFACE_NUDGE_M)),
+			_near(float(lower.get("clearance", -1.0)), 0.95 - EXPECTED_DECK_THICKNESS_M - (0.25 + EXPECTED_SURFACE_ORIGIN_Y_M)),
 			"intermediate clearance uses the next Rack02 underside"
 		)
 		var top := initial_levels[2] as Dictionary
 		_check(
-			_near(float(top.get("clearance", -1.0)), 2.40 - (1.65 + EXPECTED_SURFACE_NUDGE_M)),
+			_near(float(top.get("clearance", -1.0)), 2.40 - (1.65 + EXPECTED_SURFACE_ORIGIN_Y_M)),
 			"top clearance follows the authored overhead limit"
 		)
 		_check(String(lower.get("name", "")) == "Shelf_01" and String(upper.get("name", "")) == "Shelf_02", "initial levels sort by support height")
@@ -139,7 +146,7 @@ func _test_asymmetric_insets_and_invalid_states() -> void:
 	var levels := layout.get("levels", []) as Array
 	if not levels.is_empty():
 		var level := levels[0] as Dictionary
-		_check(_vector2_near(level.get("usable_size", Vector2.ZERO) as Vector2, Vector2(2.169214, 0.552977)), "asymmetric insets reduce the calibrated platform rectangle")
+		_check(_vector2_near(level.get("usable_size", Vector2.ZERO) as Vector2, Vector2(2.140944, 0.435012)), "asymmetric insets reduce the calibrated gray-deck rectangle")
 		_check(_vector2_near(level.get("usable_center", Vector2.ZERO) as Vector2, Vector2(-0.05, -0.03)), "asymmetric insets shift usable center in normalized local axes")
 
 	var duplicate := Node3D.new()
@@ -160,13 +167,13 @@ func _test_asymmetric_insets_and_invalid_states() -> void:
 	rack.set("rack_length_m", 2.60)
 
 	_set_level_y(rack, "Shelf_01", 0.20)
-	_set_level_y(rack, "Shelf_02", 0.20 + EXPECTED_SURFACE_NUDGE_M + EXPECTED_PLATFORM_THICKNESS_M)
+	_set_level_y(rack, "Shelf_02", 0.20 + EXPECTED_SURFACE_ORIGIN_Y_M + EXPECTED_DECK_THICKNESS_M)
 	_set_level_y(rack, "Shelf_03", 1.60)
 	_check(not bool((rack.call("compute_layout") as Dictionary).get("valid", true)), "nonpositive physical opening invalidates layout")
-	_set_level_y(rack, "Shelf_02", 0.20 + EXPECTED_SURFACE_NUDGE_M + EXPECTED_PLATFORM_THICKNESS_M + 0.01)
+	_set_level_y(rack, "Shelf_02", 0.20 + EXPECTED_SURFACE_ORIGIN_Y_M + EXPECTED_DECK_THICKNESS_M + 0.01)
 	_check(bool((rack.call("compute_layout") as Dictionary).get("valid", false)), "small positive physical opening remains legal")
 
-	rack.set("overhead_limit_local_y_m", 1.60 + EXPECTED_SURFACE_NUDGE_M)
+	rack.set("overhead_limit_local_y_m", 1.60 + EXPECTED_SURFACE_ORIGIN_Y_M)
 	_check(not bool((rack.call("compute_layout") as Dictionary).get("valid", true)), "top level at the overhead limit invalidates layout")
 	rack.set("overhead_limit_local_y_m", 3.40)
 	rack.set("frame_height_m", 1.50)
@@ -188,21 +195,32 @@ func _test_save_reload_independence() -> void:
 	host.name = "RoundTripHost"
 	root.add_child(host)
 	var rack_a := packed_rack.instantiate() as Node3D
-	var rack_b := packed_rack.instantiate() as Node3D
 	rack_a.name = "Rack_A"
-	rack_b.name = "Rack_B"
 	host.add_child(rack_a)
-	host.add_child(rack_b)
 	rack_a.owner = host
-	rack_b.owner = host
 	host.set_editable_instance(rack_a, true)
-	host.set_editable_instance(rack_b, true)
+	_replace_with_local_test_levels(rack_a, host)
 	rack_a.set("rack_length_m", 2.15)
 	rack_a.set("rack_depth_m", 0.66)
+	var rack_b := rack_a.duplicate(Node.DUPLICATE_USE_INSTANTIATION) as Node3D
+	rack_b.name = "Rack_B"
+	host.add_child(rack_b)
+	rack_b.owner = host
+	host.set_editable_instance(rack_b, true)
+	_set_local_level_owners(rack_b, host)
 	rack_b.set("rack_length_m", 3.05)
 	rack_b.set("rack_depth_m", 0.91)
-	_set_level_y(rack_a, "Shelf_02", 0.88)
 	_set_level_y(rack_b, "Shelf_02", 1.22)
+	var duplicated_level := (rack_b.get_node("Levels/Shelf_02") as Node3D).duplicate() as Node3D
+	duplicated_level.name = "Shelf_RoundTrip"
+	(rack_b.get_node("Levels") as Node3D).add_child(duplicated_level)
+	duplicated_level.owner = host
+	for child: Node in duplicated_level.get_children():
+		child.owner = host
+	duplicated_level.position.y = 2.18
+	var deleted_level := rack_b.get_node("Levels/Shelf_03")
+	deleted_level.get_parent().remove_child(deleted_level)
+	deleted_level.free()
 	rack_a.call("refresh_authoring_state")
 	rack_b.call("refresh_authoring_state")
 
@@ -210,7 +228,7 @@ func _test_save_reload_independence() -> void:
 	_check(round_trip.pack(host) == OK, "two authored racks pack for save/reload")
 	var path := "user://modular_rack_round_trip.tscn"
 	_check(ResourceSaver.save(round_trip, path) == OK, "authored rack round-trip scene saves")
-	var reloaded_packed := load(path) as PackedScene
+	var reloaded_packed := ResourceLoader.load(path, "PackedScene", ResourceLoader.CACHE_MODE_REPLACE) as PackedScene
 	var reloaded := reloaded_packed.instantiate() as Node3D if reloaded_packed != null else null
 	_check(reloaded != null, "authored rack round-trip scene reloads")
 	if reloaded != null:
@@ -219,8 +237,12 @@ func _test_save_reload_independence() -> void:
 		var loaded_b := reloaded.get_node("Rack_B") as Node3D
 		_check(_near(float(loaded_a.get("rack_length_m")), 2.15), "rack A root authoring property persists")
 		_check(_near(float(loaded_b.get("rack_length_m")), 3.05), "rack B root authoring property persists independently")
-		_check(_near((loaded_a.get_node("Levels/Shelf_02") as Node3D).position.y, 0.88), "rack A shelf transform persists")
+		_check(_near((loaded_a.get_node("Levels/Shelf_02") as Node3D).position.y, 0.95), "original rack shelf transform remains unchanged")
 		_check(_near((loaded_b.get_node("Levels/Shelf_02") as Node3D).position.y, 1.22), "rack B shelf transform persists independently")
+		_check((loaded_a.get_node("Levels") as Node3D).get_child_count() == 3, "original rack keeps its three local shelf levels")
+		_check((loaded_b.get_node("Levels") as Node3D).get_child_count() == 3, "duplicate add/delete sequence persists its resulting level count")
+		_check(loaded_b.get_node_or_null("Levels/Shelf_03") == null, "deleted local shelf remains deleted after reload")
+		_check(loaded_b.get_node_or_null("Levels/Shelf_RoundTrip") != null, "duplicated local shelf persists after reload")
 		loaded_a.call("refresh_authoring_state")
 		loaded_b.call("refresh_authoring_state")
 		var shape_a := (loaded_a.get_node("MovementCollision/Shape") as CollisionShape3D).shape
@@ -267,10 +289,44 @@ func _test_runtime_surfaces_and_world_transform() -> void:
 	rack.free()
 
 
+func _test_grid_plane_is_contained_by_physical_deck() -> void:
+	var rack := _make_rack("DeckContainmentRack")
+	rack.set("rack_length_m", 2.60)
+	rack.set("rack_depth_m", 0.72)
+	rack.set("usable_inset_left_m", 0.10)
+	rack.set("usable_inset_right_m", 0.20)
+	rack.set("usable_inset_front_m", 0.03)
+	rack.set("usable_inset_back_m", 0.09)
+	rack.call("refresh_authoring_state")
+	var layout := rack.call("compute_layout") as Dictionary
+	var surfaces := rack.call("build_runtime_storage") as Array
+	var levels := layout.get("levels", []) as Array
+	_check(surfaces.size() == 3 and levels.size() == 3, "calibrated rack builds each local shelf surface")
+	if surfaces.size() == 3 and levels.size() == 3:
+		for index: int in range(3):
+			var surface := surfaces[index] as StorageSurface
+			var level := levels[index] as Dictionary
+			var level_node := level.get("node") as Node3D
+			var actual_grid_size := surface.get_usable_size_m()
+			var center := level.get("usable_center", Vector2.ZERO) as Vector2
+			var min_x := center.x - actual_grid_size.x * 0.5
+			var max_x := center.x + actual_grid_size.x * 0.5
+			var min_z := center.y - actual_grid_size.y * 0.5
+			var max_z := center.y + actual_grid_size.y * 0.5
+			_check(min_x >= -EXPECTED_DECK_LENGTH_AT_2_60_M * 0.5 - POSITION_EPSILON_M, "quantized grid left edge stays within gray deck")
+			_check(max_x <= EXPECTED_DECK_LENGTH_AT_2_60_M * 0.5 + POSITION_EPSILON_M, "quantized grid right edge stays within gray deck")
+			_check(min_z >= -EXPECTED_DECK_DEPTH_AT_0_72_M * 0.5 - POSITION_EPSILON_M, "quantized grid front edge stays within gray deck")
+			_check(max_z <= EXPECTED_DECK_DEPTH_AT_0_72_M * 0.5 + POSITION_EPSILON_M, "quantized grid back edge stays within gray deck")
+			var surface_origin_in_level := level_node.to_local(surface.global_position).y
+			_check(_near(surface_origin_in_level, EXPECTED_SURFACE_ORIGIN_Y_M), "StorageSurface origin compensates for its internal debug offset")
+			_check(_near(surface_origin_in_level + EXPECTED_GRID_LOCAL_Y_M, 0.0), "F6 grid plane coincides with the physical deck top")
+	rack.free()
+
+
 func _test_item_scale_and_vertical_fit() -> void:
 	var short_rack := _make_rack("ShortOpeningRack")
 	_set_level_y(short_rack, "Shelf_01", 0.25)
-	_set_level_y(short_rack, "Shelf_02", 0.25 + EXPECTED_SURFACE_NUDGE_M + EXPECTED_PLATFORM_THICKNESS_M + 0.30)
+	_set_level_y(short_rack, "Shelf_02", 0.25 + EXPECTED_SURFACE_ORIGIN_Y_M + EXPECTED_DECK_THICKNESS_M + 0.30)
 	_set_level_y(short_rack, "Shelf_03", 1.60)
 	short_rack.call("refresh_authoring_state")
 	var short_surfaces := short_rack.call("build_runtime_storage") as Array
@@ -333,8 +389,8 @@ func _test_manager_f6_f7() -> void:
 	var fixtures := Node3D.new()
 	fixtures.name = "ManagerFixtures"
 	root.add_child(fixtures)
-	var rack := (load(RACK_SCENE) as PackedScene).instantiate() as Node3D
-	rack.name = "ManagedRack"
+	var rack := _make_rack("ManagedRack")
+	root.remove_child(rack)
 	fixtures.add_child(rack)
 	var manager := FunctionalStorageManagerScript.new() as StoragePrototypeManager
 	manager.name = "FunctionalStorageManager"
@@ -406,7 +462,40 @@ func _make_rack(rack_name: String) -> Node3D:
 	var rack := (load(RACK_SCENE) as PackedScene).instantiate() as Node3D
 	rack.name = rack_name
 	root.add_child(rack)
+	_replace_with_local_test_levels(rack)
+	rack.call("refresh_authoring_state")
 	return rack
+
+
+func _replace_with_local_test_levels(rack: Node3D, scene_owner: Node = null) -> void:
+	var levels := rack.get_node("Levels") as Node3D
+	for child: Node in levels.get_children():
+		levels.remove_child(child)
+		child.free()
+	_add_local_test_level(rack, "Shelf_01", 0.25, scene_owner)
+	_add_local_test_level(rack, "Shelf_02", 0.95, scene_owner)
+	_add_local_test_level(rack, "Shelf_03", 1.65, scene_owner)
+
+
+func _add_local_test_level(rack: Node3D, level_name: String, support_y: float, scene_owner: Node = null) -> Node3D:
+	var level := Node3D.new()
+	level.name = level_name
+	level.position.y = support_y
+	(rack.get_node("Levels") as Node3D).add_child(level)
+	var visual := RACK02_SCENE.instantiate() as Node3D
+	visual.name = "Visual"
+	level.add_child(visual)
+	if scene_owner != null:
+		level.owner = scene_owner
+		visual.owner = scene_owner
+	return level
+
+
+func _set_local_level_owners(rack: Node3D, scene_owner: Node) -> void:
+	for level: Node in (rack.get_node("Levels") as Node3D).get_children():
+		level.owner = scene_owner
+		for child: Node in level.get_children():
+			child.owner = scene_owner
 
 
 func _set_level_y(rack: Node3D, level_name: String, support_y: float) -> void:
