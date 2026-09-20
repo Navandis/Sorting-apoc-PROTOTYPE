@@ -1,6 +1,6 @@
 # Sorting Apocalypse current development state
 
-**Decision record:** 20 September 2026. The Storage Authoring and Testbed Foundation is consolidated. The retained shelf and ceiling review scene is completed evidence, not an active production scene.
+**Decision record:** 20 September 2026. The Storage Authoring and Testbed Foundation is consolidated. Review-scene supply reuse is promoted, and reusable functional modular-rack authoring is the active gate. The retained shelf and ceiling review scene is completed evidence, not an active production scene.
 
 ## Current authorities
 
@@ -19,6 +19,7 @@ The accepted in-engine wing builder, saved scene and overview govern working dim
 - `DevelopmentSetup/SeedItems` in `wing_gameplay.tscn` is the current palette authority. It has at least one direct editor-authored host for every approved eligible type and preserves the developer's table and item arrangement. The fixed twelve-host regression fixture remains separate.
 - Locker level 2 and Fuel maintenance are promoted. Fuel (`loot_000015`) is eligible for correctly authored development hosts. Gloves (`loot_000034`) and Pants (`loot_000036`) remain blocked.
 - The default-entry transition is closed. `project.godot` selects `wing_gameplay.tscn` through UID `uid://bljf1nlhijej`. `main.tscn` remains the legacy mechanics fixture and `greybox/logistics_wing/wing_review.tscn` remains the neutral spatial review scene.
+- Review-scene supply reuse is complete and human-promoted. The retained shelf ergonomics review extracts the composed `DevelopmentSetup` from `wing_gameplay.tscn` off-tree, keeps its authored tables, hosts, transforms and registrar path, and no longer activates the historical cabinet-only sample fixture.
 
 ## Storage ergonomics disposition
 
@@ -34,11 +35,12 @@ The A, B and C shelf and ceiling experiment is complete. Keep `res://gameplay/lo
 
 ## Gate order
 
-1. Review-scene supply reuse.
-2. Reusable functional modular-rack authoring.
-3. Single-rack fixed-ladder proof.
-4. Human ladder decision.
-5. Resume Receiving unless storage ergonomics exposes another concrete blocker.
+Completed: Review-scene supply reuse.
+
+1. **Active: Reusable functional modular-rack authoring.**
+2. Single-rack fixed-ladder proof.
+3. Human ladder decision.
+4. Resume Receiving unless storage ergonomics exposes another concrete blocker.
 
 ## Explicitly deferred and known debt
 
@@ -53,5 +55,6 @@ The Fuel-related legacy-audit failure and timeout are resolved. Historical repor
 - [Locker and Fuel maintenance](testing/locker-fuel-maintenance-validation.md)
 - [Expanded item palette](testing/expanded-item-palette-validation.md)
 - [Shelf and ceiling ergonomics](testing/shelf-ceiling-ergonomics-comparison.md)
+- [Review-scene supply reuse](testing/review-scene-supply-reuse-validation.md)
 
 Ignored reports and imported asset state remain local and are not GitHub backup. The curated accepted greybox evidence remains under `docs/testing/evidence/greybox-accepted-2026-09-17/`.

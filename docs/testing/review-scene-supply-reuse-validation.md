@@ -4,7 +4,7 @@
 
 **Baseline:** synchronized local and `origin/main` at `e7af7c103f35905f77a41f7ed078e4042455d5b4`
 
-**Status:** automated checks pass; human review is pending.
+**Status:** **PROMOTE**. Automated checks passed and human review completed with no issues found.
 
 ## Result
 
@@ -30,10 +30,4 @@ Protected-file checks confirm `wing_gameplay.tscn` and `project.godot` remain un
 
 ## Human review
 
-Launch the explicit review scene:
-
-```powershell
-& 'D:\AI Tools\Godot-4.7-Codex\Godot_v4.7-stable_win64_console.exe' --path . --rendering-method gl_compatibility res://gameplay/logistics_wing/review/shelf_ergonomics/shelf_ergonomics_review.tscn
-```
-
-Verify that the normal gameplay tables and complete eligible palette appear at their authored wing coordinates; representative small, tall, flat, irregular, and stackable items can be carried to the review fixtures; auto/manual placement, rotation, stacking, and retrieval still work; the old cabinet-only samples are absent; and A/B/C, F5, and F6 remain normal. Return **PROMOTE** or **REVISE**.
+Human review completed on 20 September 2026 with no issues found. The normal gameplay tables and eligible palette appeared at the expected wing locations; representative items remained pickup-capable and usable with the review fixtures; the old cabinet-only samples were absent; and the retained A/B/C, F5 and F6 behavior remained normal. Disposition: **PROMOTE**.
