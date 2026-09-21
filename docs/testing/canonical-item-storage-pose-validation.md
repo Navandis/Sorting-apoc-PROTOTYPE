@@ -82,6 +82,23 @@ An editor-process round trip used the existing asymmetric Hammer definition as t
 
 This is technical authoring verification, not human visual approval of existing item content.
 
+## Bounded authoring-tool correction after human review
+
+Human review exposed two authoring-tool defects. Editing X/Y/Z on an assigned external `.tres` did not always rebuild the rendered preview because Godot did not consistently deliver `Resource.changed` for that inspector path. The fixture also showed only the authored footprint, with no geometry-derived canonical suggestion to distinguish deliberate authoring from a stale or undersized value.
+
+The corrected fixture keeps `ItemDefinition.changed` as its fast path and also polls a stable editor-time fingerprint containing the definition identity/path, `storage_rotation_degrees`, `storage_footprint`, `visual_scene`, and the packing-preview toggle. It rebuilds only when that fingerprint changes or a refresh is explicitly requested. A regression changes all three rotation axes in place, without rebinding the definition or emitting `changed`, and verifies that the real `AuthoredStoragePose` basis refreshes.
+
+Footprint behavior is now explicit:
+
+- `authored_footprint` is the manually authored ItemDefinition width/depth and is never rewritten by pose or preview changes;
+- `suggested_canonical_footprint` is calculated from the real canonical, unrotated-packing `StorageVisualPose` aligned bounds at 0.10 m per cell using `ceil`, with a minimum of one cell per axis;
+- `suggestion_exceeds_authored` reports when either suggested axis is larger than its authored axis;
+- `packing_preview_footprint` is the authored footprint transposed only for the preview-only packing state, and never redefines the canonical suggestion.
+
+These four derived values are read-only in the fixture root inspector. The explicit **Apply Suggested Footprint** action writes only `storage_footprint.x/y` on the assigned ItemDefinition, preserves `storage_footprint.z` and `storage_rotation_degrees`, emits the resource change, and does not save or mutate the fixture scene as a substitute for the resource edit.
+
+The bounded correction is technically verified: in-place external-definition refresh passes without rebinding; asymmetric 31 cm × 11 cm bounds suggest 4×2 and swap to 2×4 at 90 degrees canonical yaw; a sub-cell symmetric visual remains 1×1; packing preview leaves the canonical suggestion unchanged; manual authored values remain untouched until apply; and apply preserves footprint Z and all rotation axes. The authoring suite passes both headless and editor-process modes, and the unchanged storage-orientation, visual-pose, wing-bridge, and stacking interaction suites pass. Human visual review remains **PENDING**.
+
 ## Protected content and future contracts
 
 - No `data/items/definitions/*.tres` resource was changed.
