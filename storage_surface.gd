@@ -2,6 +2,7 @@ extends Node3D
 class_name StorageSurface
 
 const StorageCategoriesScript = preload("res://storage_categories.gd")
+const StorageOrientationScript = preload("res://storage_orientation.gd")
 const StorageStackScript = preload("res://storage_stack.gd")
 
 ## Deterministic 2D storage grid attached to one physical shelf level.
@@ -42,6 +43,7 @@ var cell_size_m: float = 0.10
 var grid_size: Vector2i = Vector2i.ONE
 var usable_size_m: Vector2 = Vector2(0.10, 0.10)
 var stack_clearance_m: float = INF
+var semantic_orientation_quarter_turns: int = 0
 
 var _cells: Array[String] = []
 var _zone_cells: Array[String] = []
@@ -135,6 +137,39 @@ func configure(
 
 func get_grid_size() -> Vector2i:
 	return grid_size
+
+
+func set_semantic_orientation_quarter_turns(value: int) -> void:
+	semantic_orientation_quarter_turns = (
+		StorageOrientationScript.normalize_quarter_turns(value)
+	)
+
+
+func get_semantic_orientation_quarter_turns() -> int:
+	return semantic_orientation_quarter_turns
+
+
+func get_semantic_grid_size() -> Vector2i:
+	return StorageOrientationScript.semantic_grid_size(
+		grid_size,
+		semantic_orientation_quarter_turns
+	)
+
+
+func semantic_to_physical_cell(cell: Vector2i) -> Vector2i:
+	return StorageOrientationScript.semantic_to_physical_cell(
+		cell,
+		grid_size,
+		semantic_orientation_quarter_turns
+	)
+
+
+func physical_to_semantic_cell(cell: Vector2i) -> Vector2i:
+	return StorageOrientationScript.physical_to_semantic_cell(
+		cell,
+		grid_size,
+		semantic_orientation_quarter_turns
+	)
 
 
 func get_cell_size_m() -> float:
@@ -242,6 +277,13 @@ func get_zone_category(cell: Vector2i) -> String:
 	return _zone_cells[_cell_index(cell)]
 
 
+func get_semantic_zone_category(cell: Vector2i) -> String:
+	var semantic_size := get_semantic_grid_size()
+	if not _is_cell_inside_size(cell, semantic_size):
+		return ""
+	return get_zone_category(semantic_to_physical_cell(cell))
+
+
 func get_zone_cells_copy() -> Array[String]:
 	return _zone_cells.duplicate()
 
@@ -269,6 +311,36 @@ func set_zone_rect(
 
 func clear_zone_rect(first_cell: Vector2i, second_cell: Vector2i) -> void:
 	set_zone_rect("", first_cell, second_cell)
+
+
+func set_semantic_zone_rect(
+	category: String,
+	first_cell: Vector2i,
+	second_cell: Vector2i
+) -> void:
+	var semantic_size := get_semantic_grid_size()
+	if semantic_size.x <= 0 or semantic_size.y <= 0 or _zone_cells.is_empty():
+		return
+
+	var min_x := clampi(mini(first_cell.x, second_cell.x), 0, semantic_size.x - 1)
+	var max_x := clampi(maxi(first_cell.x, second_cell.x), 0, semantic_size.x - 1)
+	var min_y := clampi(mini(first_cell.y, second_cell.y), 0, semantic_size.y - 1)
+	var max_y := clampi(maxi(first_cell.y, second_cell.y), 0, semantic_size.y - 1)
+
+	_zones_initialized = true
+	for v: int in range(min_y, max_y + 1):
+		for u: int in range(min_x, max_x + 1):
+			var physical := semantic_to_physical_cell(Vector2i(u, v))
+			_zone_cells[_cell_index(physical)] = category
+
+	zones_changed.emit()
+
+
+func clear_semantic_zone_rect(
+	first_cell: Vector2i,
+	second_cell: Vector2i
+) -> void:
+	set_semantic_zone_rect("", first_cell, second_cell)
 
 
 func clear_all_zones() -> void:
@@ -312,6 +384,33 @@ func get_zone_rect_percentage(
 	var selected_cells: int = selected_width * selected_height
 	var total_cells: int = grid_size.x * grid_size.y
 	return float(selected_cells) / float(total_cells)
+
+
+func get_semantic_zone_rect_percentage(
+	first_cell: Vector2i,
+	second_cell: Vector2i
+) -> float:
+	var semantic_size := get_semantic_grid_size()
+	if semantic_size.x <= 0 or semantic_size.y <= 0:
+		return 0.0
+
+	var min_x := clampi(mini(first_cell.x, second_cell.x), 0, semantic_size.x - 1)
+	var max_x := clampi(maxi(first_cell.x, second_cell.x), 0, semantic_size.x - 1)
+	var min_y := clampi(mini(first_cell.y, second_cell.y), 0, semantic_size.y - 1)
+	var max_y := clampi(maxi(first_cell.y, second_cell.y), 0, semantic_size.y - 1)
+
+	var selected := (max_x - min_x + 1) * (max_y - min_y + 1)
+	var total := grid_size.x * grid_size.y
+	return float(selected) / float(total)
+
+
+func _is_cell_inside_size(cell: Vector2i, size: Vector2i) -> bool:
+	return (
+		cell.x >= 0
+		and cell.y >= 0
+		and cell.x < size.x
+		and cell.y < size.y
+	)
 
 
 func _is_cell_valid(cell: Vector2i) -> bool:
