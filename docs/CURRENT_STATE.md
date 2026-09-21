@@ -1,6 +1,6 @@
 # Sorting Apocalypse current development state
 
-**Decision record:** 20 September 2026. The Storage Authoring and Testbed Foundation is consolidated. Review-scene supply reuse and reusable functional modular-rack authoring are complete and human-promoted. **Storage Surface Orientation / Front–Back Contract** is the active gate, explicitly before the fixed-ladder proof. The retained shelf and ceiling review scene remains a mutable review tool rather than an active production scene.
+**Decision record:** 21 September 2026. The Storage Authoring and Testbed Foundation is consolidated. Review-scene supply reuse and reusable functional modular-rack authoring are complete and human-promoted. **Storage Unit Orientation & Zoning Basis** is implemented and technically verified on `codex/storage-unit-orientation-zoning`; human review is pending, so the fixed-ladder proof remains blocked. The retained shelf and ceiling review scene remains a mutable review tool rather than an active production scene.
 
 ## Current authorities
 
@@ -38,14 +38,14 @@ The A, B and C shelf and ceiling experiment is complete. Keep `res://gameplay/lo
 
 Completed: Review-scene supply reuse; reusable functional modular-rack authoring.
 
-1. **Active: Storage Surface Orientation / Front–Back Contract.**
-2. Single-rack fixed-ladder proof.
+1. **Active human gate: Storage Unit Orientation & Zoning Basis — implemented / technically verified / human review pending.**
+2. Single-rack fixed-ladder proof — blocked until the orientation gate is human-promoted.
 3. Human ladder decision.
 4. Resume Receiving unless storage ergonomics exposes another concrete blocker.
 
 ## Explicitly deferred and known debt
 
-Production Structural Shell and Applied Finish; full gallery furnishing; freight cage lining and real pile reach and drainability; functional Receiving Stage B and Stage C; timed obligations; full save and journal implementation; Gloves and Pants source and pose work; production starting inventory; player-adjustable shelf levels; crouch; height-aware auto-placement; camera-height and wing-ceiling changes. General StorageSurface front/back axis semantics, item-packing orientation, zone-editor behavior and existing authored zones now belong to the active **Storage Surface Orientation / Front–Back Contract** gate before the ladder proof; this modular-rack close-out does not begin that repair.
+Production Structural Shell and Applied Finish; full gallery furnishing; freight cage lining and real pile reach and drainability; functional Receiving Stage B and Stage C; timed obligations; full save and journal implementation; Gloves and Pants source and pose work; production starting inventory; player-adjustable shelf levels; crouch; height-aware auto-placement; camera-height and wing-ceiling changes. Storage-unit front/back semantics and the zone-editor mapping are implemented on the active feature branch but remain human-review pending. Existing physical zone cells are deliberately not migrated when authored orientation changes. Item-packing orientation remains a separate post-review observation; it is not automatically a blocker unless the human orientation review classifies it that way.
 
 The Fuel-related legacy-audit failure and timeout are resolved. Historical reports keep the status they had when written; later acceptance and this current record supersede their pending state without rewriting them.
 
@@ -58,5 +58,6 @@ The Fuel-related legacy-audit failure and timeout are resolved. Historical repor
 - [Shelf and ceiling ergonomics](testing/shelf-ceiling-ergonomics-comparison.md)
 - [Review-scene supply reuse](testing/review-scene-supply-reuse-validation.md)
 - [Modular rack authoring](testing/modular-rack-authoring-validation.md)
+- [Storage unit orientation and zoning basis](testing/storage-unit-orientation-zoning-validation.md) — implemented/technically verified; human review pending.
 
 Ignored reports and imported asset state remain local and are not GitHub backup. The curated accepted greybox evidence remains under `docs/testing/evidence/greybox-accepted-2026-09-17/`.
