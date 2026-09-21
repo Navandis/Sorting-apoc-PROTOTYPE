@@ -28,6 +28,7 @@ func _run() -> void:
 	_test_authored_dimensions_and_collision()
 	_test_stable_identity_and_physical_clearance()
 	_test_asymmetric_insets_and_invalid_states()
+	_test_storage_orientation_authoring()
 	_test_save_reload_independence()
 	_test_runtime_surfaces_and_world_transform()
 	_test_grid_plane_is_contained_by_physical_deck()
@@ -189,6 +190,47 @@ func _test_asymmetric_insets_and_invalid_states() -> void:
 	rack.free()
 
 
+func _test_storage_orientation_authoring() -> void:
+	var rack_a := _make_rack("OrientationRackA")
+	var rack_b := _make_rack("OrientationRackB")
+	var required_methods := [
+		"get_storage_orientation_quarter_turns",
+		"rotate_storage_directions_cw",
+		"rotate_storage_directions_ccw",
+	]
+	for method_name: String in required_methods:
+		_check(rack_a.has_method(method_name), "ModularRack root exposes %s" % method_name)
+	if not rack_a.has_method("get_storage_orientation_quarter_turns"):
+		rack_a.free()
+		rack_b.free()
+		return
+
+	_check(rack_a.call("get_storage_orientation_quarter_turns") == 0, "ModularRack defaults to orientation state 0")
+	rack_a.call("rotate_storage_directions_cw")
+	_check(rack_a.call("get_storage_orientation_quarter_turns") == 1, "ModularRack CW advances 0 -> 1")
+	rack_a.call("rotate_storage_directions_ccw")
+	_check(rack_a.call("get_storage_orientation_quarter_turns") == 0, "ModularRack CCW returns 1 -> 0")
+	rack_a.set("storage_orientation_quarter_turns", 1)
+	rack_b.set("storage_orientation_quarter_turns", 3)
+	var surfaces_a := rack_a.call("build_runtime_storage") as Array
+	var surfaces_b := rack_b.call("build_runtime_storage") as Array
+	_check(surfaces_a.size() == 3 and surfaces_b.size() == 3, "two oriented racks each build all levels")
+	for index: int in range(mini(surfaces_a.size(), surfaces_b.size())):
+		var surface_a := surfaces_a[index] as StorageSurface
+		var surface_b := surfaces_b[index] as StorageSurface
+		_check(surface_a.get_semantic_orientation_quarter_turns() == 1, "every RackA level inherits state 1")
+		_check(surface_b.get_semantic_orientation_quarter_turns() == 3, "every RackB level inherits state 3")
+		_check(surface_a.get_grid_size() == surface_b.get_grid_size(), "rack orientation preserves physical grid size")
+		_check(surface_a.get_usable_size_m().is_equal_approx(surface_b.get_usable_size_m()), "rack orientation preserves calibrated usable size")
+		_check(surface_a.global_transform.is_equal_approx(surface_b.global_transform), "rack orientation preserves physical surface transform")
+		_check(
+			surface_a.get_semantic_grid_size() == Vector2i(surface_a.get_grid_size().y, surface_a.get_grid_size().x),
+			"quarter-turned rack swaps semantic dimensions only"
+		)
+	rack_a.free()
+	rack_b.free()
+
+
 func _test_save_reload_independence() -> void:
 	var packed_rack := load(RACK_SCENE) as PackedScene
 	var host := Node3D.new()
@@ -202,6 +244,8 @@ func _test_save_reload_independence() -> void:
 	_replace_with_local_test_levels(rack_a, host)
 	rack_a.set("rack_length_m", 2.15)
 	rack_a.set("rack_depth_m", 0.66)
+	if rack_a.has_method("get_storage_orientation_quarter_turns"):
+		rack_a.set("storage_orientation_quarter_turns", 1)
 	var rack_b := rack_a.duplicate(Node.DUPLICATE_USE_INSTANTIATION) as Node3D
 	rack_b.name = "Rack_B"
 	host.add_child(rack_b)
@@ -210,6 +254,8 @@ func _test_save_reload_independence() -> void:
 	_set_local_level_owners(rack_b, host)
 	rack_b.set("rack_length_m", 3.05)
 	rack_b.set("rack_depth_m", 0.91)
+	if rack_b.has_method("get_storage_orientation_quarter_turns"):
+		rack_b.set("storage_orientation_quarter_turns", 3)
 	_set_level_y(rack_b, "Shelf_02", 1.22)
 	var duplicated_level := (rack_b.get_node("Levels/Shelf_02") as Node3D).duplicate() as Node3D
 	duplicated_level.name = "Shelf_RoundTrip"
@@ -237,6 +283,9 @@ func _test_save_reload_independence() -> void:
 		var loaded_b := reloaded.get_node("Rack_B") as Node3D
 		_check(_near(float(loaded_a.get("rack_length_m")), 2.15), "rack A root authoring property persists")
 		_check(_near(float(loaded_b.get("rack_length_m")), 3.05), "rack B root authoring property persists independently")
+		if loaded_a.has_method("get_storage_orientation_quarter_turns"):
+			_check(loaded_a.call("get_storage_orientation_quarter_turns") == 1, "rack A orientation persists through save/reload")
+			_check(loaded_b.call("get_storage_orientation_quarter_turns") == 3, "rack B orientation persists independently through save/reload")
 		_check(_near((loaded_a.get_node("Levels/Shelf_02") as Node3D).position.y, 0.95), "original rack shelf transform remains unchanged")
 		_check(_near((loaded_b.get_node("Levels/Shelf_02") as Node3D).position.y, 1.22), "rack B shelf transform persists independently")
 		_check((loaded_a.get_node("Levels") as Node3D).get_child_count() == 3, "original rack keeps its three local shelf levels")

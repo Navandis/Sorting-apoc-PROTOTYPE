@@ -1,7 +1,13 @@
 extends SceneTree
 
 const StorageCategoriesScript = preload("res://storage_categories.gd")
+const StoragePrototypeManagerScript = preload("res://storage_prototype_manager.gd")
+const StorageShelfClearanceContextScript = preload("res://storage_shelf_clearance_context.gd")
 const StorageSurfaceScript = preload("res://storage_surface.gd")
+const StorageUnitOrientationScript = preload("res://storage_unit_orientation.gd")
+const MetalShelfScene = preload("res://assets/environment/furniture/storage/SM_MetalShelves.glb")
+const LockerScene = preload("res://assets/environment/furniture/storage/SM_ventilated_locker.glb")
+const FunctionalFixturesScene = preload("res://gameplay/logistics_wing/functional_fixtures.tscn")
 
 var _failed := false
 var _zone_signal_count := 0
@@ -12,6 +18,9 @@ func _init() -> void:
 
 
 func _run() -> void:
+	_test_authoring_context()
+	_test_manager_orientation_propagation()
+	_test_continuing_fixture_contexts()
 	var surface := _make_surface()
 	var required_methods := [
 		"set_semantic_orientation_quarter_turns",
@@ -37,6 +46,113 @@ func _run() -> void:
 	_test_physical_state_preservation(surface)
 	surface.free()
 	_finish()
+
+
+func _test_authoring_context() -> void:
+	var context: Node = StorageUnitOrientationScript.new()
+	_check(context.call("get_storage_orientation_quarter_turns") == 0, "context defaults to state 0")
+	context.call("rotate_storage_directions_cw")
+	_check(context.call("get_storage_orientation_quarter_turns") == 1, "CW moves 0 -> 1")
+	context.call("rotate_storage_directions_ccw")
+	_check(context.call("get_storage_orientation_quarter_turns") == 0, "CCW returns 1 -> 0")
+	context.call("rotate_storage_directions_ccw")
+	_check(context.call("get_storage_orientation_quarter_turns") == 3, "CCW wraps 0 -> 3")
+	var expected_hint := (
+		"Front +Z / Right +X:0,Front +X / Right -Z:1,"
+		+ "Front -Z / Right -X:2,Front -X / Right +Z:3"
+	)
+	var enum_hint := ""
+	for property: Dictionary in context.get_property_list():
+		if String(property.get("name", "")) == "storage_orientation_quarter_turns":
+			enum_hint = String(property.get("hint_string", ""))
+			break
+	_check(enum_hint == expected_hint, "context inspector enum uses the approved state labels")
+	context.free()
+
+
+func _test_manager_orientation_propagation() -> void:
+	var fixture := Node3D.new()
+	fixture.name = "OrientationFixture"
+	root.add_child(fixture)
+	var metal_a := MetalShelfScene.instantiate() as Node3D
+	var metal_b := MetalShelfScene.instantiate() as Node3D
+	var locker := LockerScene.instantiate() as Node3D
+	metal_a.name = "SM_MetalShelves_OrientationA"
+	metal_b.name = "SM_MetalShelves_OrientationB"
+	locker.name = "SM_ventilated_locker_Orientation"
+	fixture.add_child(metal_a)
+	fixture.add_child(metal_b)
+	fixture.add_child(locker)
+	_add_orientation_context(metal_a, 2)
+	_add_orientation_context(metal_b, 1)
+	_add_orientation_context(locker, 3)
+
+	var manager: StoragePrototypeManager = StoragePrototypeManagerScript.new()
+	root.add_child(manager)
+	manager.install(fixture)
+	var surfaces_a := _surfaces_for_parent(manager, metal_a)
+	var surfaces_b := _surfaces_for_parent(manager, metal_b)
+	var locker_surfaces := _surfaces_for_parent(manager, locker)
+	_check(surfaces_a.size() == 4, "first Metal Shelf installs four surfaces")
+	_check(surfaces_b.size() == 4, "second Metal Shelf installs four surfaces")
+	_check(locker_surfaces.size() == 4, "Locker installs four surfaces")
+	for index: int in range(mini(surfaces_a.size(), surfaces_b.size())):
+		var surface_a := surfaces_a[index]
+		var surface_b := surfaces_b[index]
+		_check(surface_a.get_semantic_orientation_quarter_turns() == 2, "every first-unit Metal surface inherits state 2")
+		_check(surface_b.get_semantic_orientation_quarter_turns() == 1, "every second-unit Metal surface inherits state 1")
+		_check(surface_a.get_grid_size() == surface_b.get_grid_size(), "Metal orientation does not change physical grid size")
+		_check(surface_a.global_transform.is_equal_approx(surface_b.global_transform), "Metal orientation does not change physical transform")
+	for surface: StorageSurface in locker_surfaces:
+		_check(surface.get_semantic_orientation_quarter_turns() == 3, "every Locker surface inherits state 3")
+	var context_free_unit := Node3D.new()
+	_check(
+		manager.call("_resolve_storage_orientation_quarter_turns", context_free_unit) == 0,
+		"unit without authoring context resolves to state 0"
+	)
+	context_free_unit.free()
+	manager.free()
+	fixture.free()
+
+
+func _add_orientation_context(unit: Node3D, state: int) -> void:
+	var context: Node = StorageUnitOrientationScript.new()
+	context.name = "StorageUnitOrientation"
+	context.set("storage_orientation_quarter_turns", state)
+	unit.add_child(context)
+	var clearance: Node = StorageShelfClearanceContextScript.new()
+	clearance.name = "StorageShelfClearanceContext"
+	clearance.set("open_top_clearance_world_m", 0.9)
+	unit.add_child(clearance)
+
+
+func _test_continuing_fixture_contexts() -> void:
+	var fixture := FunctionalFixturesScene.instantiate()
+	var unit_paths := [
+		"SM_MetalShelves_GalleryA_West",
+		"SM_MetalShelves_GalleryB_North",
+		"SM_ventilated_locker_GalleryC_West",
+	]
+	for unit_path: String in unit_paths:
+		var context := fixture.get_node_or_null("%s/StorageUnitOrientation" % unit_path)
+		_check(context != null, "%s has explicit orientation authoring context" % unit_path)
+		if context != null:
+			_check(
+				context.call("get_storage_orientation_quarter_turns") == 0,
+				"%s orientation context defaults to state 0" % unit_path
+			)
+	fixture.free()
+
+
+func _surfaces_for_parent(
+	manager: StoragePrototypeManager,
+	unit: Node3D
+) -> Array[StorageSurface]:
+	var result: Array[StorageSurface] = []
+	for surface_node: Node in manager.get_surfaces():
+		if surface_node is StorageSurface and surface_node.get_parent() == unit:
+			result.append(surface_node as StorageSurface)
+	return result
 
 
 func _make_surface() -> StorageSurface:

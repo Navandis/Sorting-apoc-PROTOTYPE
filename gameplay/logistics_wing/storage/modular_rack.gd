@@ -2,6 +2,7 @@
 extends Node3D
 class_name ModularRack
 
+const StorageOrientationScript = preload("res://storage_orientation.gd")
 const StorageSurfaceScript = preload("res://storage_surface.gd")
 
 const DEFAULT_WORLD_CELL_SIZE_M := 0.10
@@ -22,6 +23,24 @@ const RACK02_DECK_SOURCE_WIDTH_M := RACK02_DECK_SOURCE_X_MAX_M - RACK02_DECK_SOU
 const RACK02_DECK_SOURCE_LENGTH_M := RACK02_DECK_SOURCE_Z_MAX_M - RACK02_DECK_SOURCE_Z_MIN_M
 const RACK02_DECK_THICKNESS_M := RACK02_DECK_TOP_SOURCE_Y_M - RACK02_DECK_UNDERSIDE_SOURCE_Y_M
 const STORAGE_SURFACE_ORIGIN_OFFSET_Y_M := -StorageSurfaceScript.DEBUG_Y_OFFSET_M
+
+@export_enum(
+	"Front +Z / Right +X:0",
+	"Front +X / Right -Z:1",
+	"Front -Z / Right -X:2",
+	"Front -X / Right +Z:3"
+)
+var storage_orientation_quarter_turns: int = 0:
+	set(value):
+		storage_orientation_quarter_turns = (
+			StorageOrientationScript.normalize_quarter_turns(value)
+		)
+
+@export_tool_button("Rotate Storage Directions CW", "RotateRight")
+var rotate_cw_action: Callable = rotate_storage_directions_cw
+
+@export_tool_button("Rotate Storage Directions CCW", "RotateLeft")
+var rotate_ccw_action: Callable = rotate_storage_directions_ccw
 
 @export_range(0.10, 20.0, 0.01, "or_greater", "or_less") var rack_length_m := 2.40:
 	set(value):
@@ -71,6 +90,26 @@ const STORAGE_SURFACE_ORIGIN_OFFSET_Y_M := -StorageSurfaceScript.DEBUG_Y_OFFSET_
 var _refresh_requested := true
 var _last_authoring_fingerprint := ""
 var _runtime_surfaces: Array[StorageSurface] = []
+
+
+func get_storage_orientation_quarter_turns() -> int:
+	return storage_orientation_quarter_turns
+
+
+func rotate_storage_directions_cw() -> void:
+	storage_orientation_quarter_turns = (
+		StorageOrientationScript.normalize_quarter_turns(
+			storage_orientation_quarter_turns + 1
+		)
+	)
+
+
+func rotate_storage_directions_ccw() -> void:
+	storage_orientation_quarter_turns = (
+		StorageOrientationScript.normalize_quarter_turns(
+			storage_orientation_quarter_turns - 1
+		)
+	)
 
 
 func _ready() -> void:
@@ -244,6 +283,9 @@ func build_runtime_storage() -> Array[StorageSurface]:
 			usable.y,
 			DEFAULT_WORLD_CELL_SIZE_M,
 			float(level.get("clearance", 0.0))
+		)
+		surface.set_semantic_orientation_quarter_turns(
+			storage_orientation_quarter_turns
 		)
 		_runtime_surfaces.append(surface)
 	return _runtime_surfaces.duplicate()

@@ -12,6 +12,7 @@ class_name StoragePrototypeManager
 
 const StorageSurfaceScript = preload("res://storage_surface.gd")
 const StorageShelfClearanceContextScript = preload("res://storage_shelf_clearance_context.gd")
+const StorageOrientationScript = preload("res://storage_orientation.gd")
 
 const DEFAULT_WORLD_CELL_SIZE_M: float = 0.10
 const SURFACE_VERTICAL_NUDGE_M: float = 0.018
@@ -33,6 +34,28 @@ func install(scene_root: Node) -> void:
 
 func get_surfaces() -> Array[Node]:
 	return _surfaces.duplicate()
+
+
+func _resolve_storage_orientation_quarter_turns(unit: Node) -> int:
+	if unit != null and unit.has_method("get_storage_orientation_quarter_turns"):
+		return StorageOrientationScript.normalize_quarter_turns(
+			int(unit.call("get_storage_orientation_quarter_turns"))
+		)
+
+	var context := (
+		unit.get_node_or_null("StorageUnitOrientation")
+		if unit != null
+		else null
+	)
+	if (
+		context != null
+		and context.has_method("get_storage_orientation_quarter_turns")
+	):
+		return StorageOrientationScript.normalize_quarter_turns(
+			int(context.call("get_storage_orientation_quarter_turns"))
+		)
+
+	return 0
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -161,6 +184,7 @@ func _install_authored_profile(
 
 	var vertical_world_scale: float = maxf(absf(root_scale.y), 0.001)
 	var shelf_id: String = String(shelf.name)
+	var semantic_orientation := _resolve_storage_orientation_quarter_turns(shelf)
 
 	for level_index: int in range(level_profiles.size()):
 		var profile_value: Variant = level_profiles[level_index]
@@ -200,7 +224,7 @@ func _install_authored_profile(
 			+ SURFACE_VERTICAL_NUDGE_M / vertical_world_scale
 		)
 
-		var surface: Node3D = StorageSurfaceScript.new()
+		var surface: StorageSurface = StorageSurfaceScript.new()
 		surface.name = "StorageSurface_%02d" % (level_index + 1)
 		surface.position = Vector3(local_x, local_y, local_z)
 		shelf.add_child(surface)
@@ -215,6 +239,7 @@ func _install_authored_profile(
 			local_cell_size,
 			stack_clearance_world_m
 		)
+		surface.set_semantic_orientation_quarter_turns(semantic_orientation)
 		surface.set_debug_visible(_debug_visible)
 		_surfaces.append(surface)
 
