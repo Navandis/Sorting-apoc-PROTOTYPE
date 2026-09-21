@@ -6,9 +6,9 @@
 
 | Current authority | Editable document | Derived readable text |
 | --- | --- | --- |
-| Overall game design | [GDD v0.9](Sorting_Apocalypse_Preliminary_GDD_v0.9.docx) | [Text and tables](readable/Sorting_Apocalypse_Preliminary_GDD_v0.9.md) |
-| Visual, world and spatial direction | [VDD v0.6](Sorting_Apocalypse_Visual_Design_Direction_v0.6.docx) | [Text, tables and images](readable/Sorting_Apocalypse_Visual_Design_Direction_v0.6.md) |
-| Implementation and human evidence | [Findings v0.9](Sorting_Apocalypse_Prototype_Findings_v0.9.docx) | [Text and tables](readable/Sorting_Apocalypse_Prototype_Findings_v0.9.md) |
+| Overall game design | [GDD v0.10](Sorting_Apocalypse_Preliminary_GDD_v0.10.docx) | [Text and tables](readable/Sorting_Apocalypse_Preliminary_GDD_v0.10.md) |
+| Visual, world and spatial direction | [VDD v0.7](Sorting_Apocalypse_Visual_Design_Direction_v0.7.docx) | [Text, tables and images](readable/Sorting_Apocalypse_Visual_Design_Direction_v0.7.md) |
+| Implementation and human evidence | [Findings v0.10](Sorting_Apocalypse_Prototype_Findings_v0.10.docx) | [Text and tables](readable/Sorting_Apocalypse_Prototype_Findings_v0.10.md) |
 
 The Markdown editions are generated extracts of the listed DOCX masters. Edit the master and regenerate its extract; do not maintain an independent Markdown authority. Older DOCX editions remain historical records.
 
@@ -26,6 +26,12 @@ The accepted in-engine builder, saved scene and [overview](testing/evidence/grey
 - [Locker and Fuel maintenance](testing/locker-fuel-maintenance-validation.md): promoted locker containment, Fuel reconciliation and Fuel eligibility.
 - [Expanded item palette](testing/expanded-item-palette-validation.md): promoted editor-authored eligible-type coverage and accepted manual arrangement.
 - [Shelf and ceiling ergonomics](testing/shelf-ceiling-ergonomics-comparison.md): completed ground-access experiment, retained review scene and bounded fixed-ladder status.
+- [Review-scene supply reuse](testing/review-scene-supply-reuse-validation.md): promoted reuse of the authored wing palette in the retained shelf-ergonomics review.
+- [ModularRack authoring](testing/modular-rack-authoring-validation.md): promoted shelf-empty reusable scaffold, scene-local editable levels and Rack02 calibration.
+- [Storage unit orientation and zoning](testing/storage-unit-orientation-zoning-validation.md): promoted unit-owned Front semantics and authored-Front zoning view without physical-cell migration.
+- [Canonical item storage pose](testing/canonical-item-storage-pose-validation.md): promoted canonical +Z Front, separate packing turn and the full 40-eligible-item human reconciliation.
 - [Receiving and Elevator design](superpowers/specs/2026-09-12-receiving-elevator-mvp-design.md): subsystem contract; physical Receiving remains unvalidated.
+
+Single-rack fixed-ladder proof is the active gate. No ladder implementation is promoted; it is followed by the human ladder decision and then Receiving unless a concrete storage blocker appears.
 
 Historical plans, validation reports and earlier master editions retain their original dates and evidence states. Later acceptance records and current authorities supersede stale pending conclusions without rewriting history.

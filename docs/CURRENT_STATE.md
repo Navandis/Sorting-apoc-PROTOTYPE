@@ -4,9 +4,9 @@
 
 ## Current authorities
 
-- [Preliminary GDD v0.9](Sorting_Apocalypse_Preliminary_GDD_v0.9.docx)
-- [Visual Design Direction v0.6](Sorting_Apocalypse_Visual_Design_Direction_v0.6.docx)
-- [Prototype Findings v0.9](Sorting_Apocalypse_Prototype_Findings_v0.9.docx)
+- [Preliminary GDD v0.10](Sorting_Apocalypse_Preliminary_GDD_v0.10.docx)
+- [Visual Design Direction v0.7](Sorting_Apocalypse_Visual_Design_Direction_v0.7.docx)
+- [Prototype Findings v0.10](Sorting_Apocalypse_Prototype_Findings_v0.10.docx)
 - [AI working guidelines](AI_WORKING_GUIDELINES.md)
 
 The accepted in-engine wing builder, saved scene and overview govern working dimensions over the retained 15 September schematic pixels.

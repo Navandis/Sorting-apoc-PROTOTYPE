@@ -14,12 +14,12 @@ Use one executor by default and match verification to risk. Reuse established co
 
 The normal playable composition is `res://gameplay/logistics_wing/wing_gameplay.tscn`. Its saved `DevelopmentSetup/SeedItems` composition is the palette authority. Preserve the legacy `main.tscn`, the neutral wing review scene, the shelf ergonomics review scene and the developer-authored modular-rack experiment.
 
+Review-scene supply reuse, reusable ModularRack authoring, Storage Unit Orientation & Zoning Basis, and Canonical Item Storage Pose & Shelf-Front Alignment are promoted foundations, not pending work.
+
 Current gate order:
 
-1. Review-scene supply reuse.
-2. Reusable functional modular-rack authoring.
-3. Single-rack fixed-ladder proof.
-4. Human ladder decision.
-5. Receiving, unless storage ergonomics exposes another concrete blocker.
+1. Single-rack fixed-ladder proof.
+2. Human ladder decision.
+3. Receiving unless a concrete storage blocker appears.
 
-Do not treat the 1.80 m eye-height or 2.8 m ceiling trials as production changes. Do not implement palette reuse, functional racks, ladder movement, gallery furnishing, Receiving, crouch, height-aware auto-placement or player-adjustable shelves unless a later handoff explicitly authorizes that gate.
+Do not treat the 1.80 m eye-height or 2.8 m ceiling trials as production changes. Preserve the promoted storage foundations rather than reimplementing them. Do not implement ladder movement, gallery furnishing, Receiving, crouch, height-aware auto-placement or player-adjustable shelves unless a later handoff explicitly authorizes that gate.
