@@ -1,0 +1,67 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://gameplay/dev/item_storage_pose/item_storage_pose_authoring.gd" id="1_script"]
+
+[sub_resource type="StandardMaterial3D" id="ShelfMaterial"]
+albedo_color = Color(0.22, 0.24, 0.28, 1)
+roughness = 0.85
+
+[sub_resource type="BoxMesh" id="ShelfMesh"]
+material = SubResource("ShelfMaterial")
+size = Vector3(1.6, 0.06, 1.2)
+
+[sub_resource type="StandardMaterial3D" id="FootprintMaterial"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0.18, 0.72, 0.95, 0.38)
+
+[sub_resource type="BoxMesh" id="FootprintMesh"]
+material = SubResource("FootprintMaterial")
+size = Vector3(0.1, 0.008, 0.1)
+
+[node name="ItemStoragePoseAuthoring" type="Node3D"]
+script = ExtResource("1_script")
+
+[node name="ReferenceShelf" type="MeshInstance3D" parent="."]
+position = Vector3(0, -0.03, 0)
+mesh = SubResource("ShelfMesh")
+
+[node name="DirectionMarkers" type="Node3D" parent="."]
+
+[node name="Front" type="Label3D" parent="DirectionMarkers"]
+position = Vector3(0, 0.06, 0.72)
+modulate = Color(0.3, 1, 0.45, 1)
+text = "FRONT +Z"
+font_size = 32
+outline_size = 8
+
+[node name="Back" type="Label3D" parent="DirectionMarkers"]
+position = Vector3(0, 0.06, -0.72)
+rotation = Vector3(0, 3.14159, 0)
+modulate = Color(1, 0.4, 0.35, 1)
+text = "BACK -Z"
+font_size = 32
+outline_size = 8
+
+[node name="Left" type="Label3D" parent="DirectionMarkers"]
+position = Vector3(-0.92, 0.06, 0)
+rotation = Vector3(0, -1.5708, 0)
+modulate = Color(1, 0.82, 0.25, 1)
+text = "LEFT -X"
+font_size = 32
+outline_size = 8
+
+[node name="Right" type="Label3D" parent="DirectionMarkers"]
+position = Vector3(0.92, 0.06, 0)
+rotation = Vector3(0, 1.5708, 0)
+modulate = Color(0.35, 0.72, 1, 1)
+text = "RIGHT +X"
+font_size = 32
+outline_size = 8
+
+[node name="FootprintPreview" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.004, 0)
+cast_shadow = 0
+mesh = SubResource("FootprintMesh")
+
+[node name="ItemPreviewRoot" type="Node3D" parent="."]
