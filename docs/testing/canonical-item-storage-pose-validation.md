@@ -1,6 +1,6 @@
 # Canonical item storage pose and shelf-Front alignment validation
 
-**Status: IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN REVIEW PENDING**
+**Status: IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN PROMOTED**
 
 **Date:** 21 September 2026  
 **Feature branch:** `codex/canonical-item-storage-pose`  
@@ -80,7 +80,7 @@ It is an `@tool` scene with a neutral support shelf, fixed FRONT/BACK/LEFT/RIGHT
 
 An editor-process round trip used the existing asymmetric Hammer definition as the source, duplicated it in memory, verified live nonzero X/Y/Z pose refresh, toggled packing preview, saved/reopened a temporary packed fixture, and confirmed pose and packing-preview persistence. The temporary scene was removed and the source ItemDefinition remained unchanged.
 
-This is technical authoring verification, not human visual approval of existing item content.
+This technical authoring verification was followed by a complete human visual review of the eligible catalogue content.
 
 ## Bounded authoring-tool correction after human review
 
@@ -97,24 +97,41 @@ Footprint behavior is now explicit:
 
 These four derived values are read-only in the fixture root inspector. The explicit **Apply Suggested Footprint** action writes only `storage_footprint.x/y` on the assigned ItemDefinition, preserves `storage_footprint.z` and `storage_rotation_degrees`, emits the resource change, and does not save or mutate the fixture scene as a substitute for the resource edit.
 
-The bounded correction is technically verified: in-place external-definition refresh passes without rebinding; asymmetric 31 cm × 11 cm bounds suggest 4×2 and swap to 2×4 at 90 degrees canonical yaw; a sub-cell symmetric visual remains 1×1; packing preview leaves the canonical suggestion unchanged; manual authored values remain untouched until apply; and apply preserves footprint Z and all rotation axes. The authoring suite passes both headless and editor-process modes, and the unchanged storage-orientation, visual-pose, wing-bridge, and stacking interaction suites pass. Human visual review remains **PENDING**.
+The bounded correction is technically verified: in-place external-definition refresh passes without rebinding; asymmetric 31 cm × 11 cm bounds suggest 4×2 and swap to 2×4 at 90 degrees canonical yaw; a sub-cell symmetric visual remains 1×1; packing preview leaves the canonical suggestion unchanged; manual authored values remain untouched until apply; and apply preserves footprint Z and all rotation axes. The authoring suite passes both headless and editor-process modes, and the unchanged storage-orientation, visual-pose, wing-bridge, and stacking interaction suites pass.
+
+## Final human promotion and content reconciliation
+
+The human verdict is **PROMOTE**. All 40 currently eligible ItemDefinitions were reviewed in the canonical pose workbench. Their saved `.tres` `storage_rotation_degrees` and `storage_footprint` values are now the promoted content authority. Gloves (`loot_000034`) and Pants (`loot_000036`) remain blocked in `CUSTOM_POSE_REQUIRED` with unreviewed footprint, Stack Role, and Auto Group decisions; they are not part of the 40-item promotion.
+
+The manifest and literal content regression were reconciled to those saved resources. The final evidence contains:
+
+- 21 `DEFAULT_POSE_APPROVED` and 19 `CUSTOM_POSE_APPROVED` eligible records;
+- 27 `GEOMETRY_APPROVED` and 13 deliberate `OVERRIDE_APPROVED` footprints;
+- 40 current pose, footprint, Stack Role, and Auto Group review snapshots;
+- two unchanged blocked records;
+- 42 catalogue definitions still present and resolvable.
+
+Existing `can_be_stacked`, `can_support_stack`, and `auto_stack_group` gameplay decisions, along with their notes and flags, were preserved. Only their dependent pose/footprint snapshots were refreshed. Reconciliation found no Stack Role, Auto Group, catalogue-identity, or blocked-item contradiction. Source GLB/FBX assets, scale-normalization decisions, ItemCatalog references, gameplay scenes, shelf/rack definitions, unit orientation, zoning, and modular-rack calibration were not rewritten by the close-out.
+
+The corrected fixture reduced the full 40-item pose/footprint review to roughly 10 minutes, compared with roughly two hours for the old seed-in-game → review → written-instructions → Codex-edit workflow. Future catalogue expansion should use this fixture as the primary pose/footprint authoring workflow.
 
 ## Protected content and future contracts
 
-- No `data/items/definitions/*.tres` resource was changed.
+- Twenty-six ItemDefinition `.tres` resources contain the saved human pose/footprint edits from the 40-item review and are promoted as content authority.
+- No source GLB/FBX asset was rotated, rescaled, or rewritten.
 - No storage-unit orientation or zoning semantics were changed.
 - No ModularRack calibration or `project.godot` default scene was changed.
 - Historical `storage_rotation_degrees` values were not guessed or bulk re-authored.
 - Future save/load must restore each placed item's saved orientation state and must not recompute it from the shelf's current Front.
 - Optional 0/90/180/270 display rotation remains separate UX debt; this milestone retains the existing boolean packing choice.
-- Ladder work remains blocked until human review disposition for this gate.
+- Fixed-ladder proof is the next active gate; no ladder implementation begins during this close-out.
 
 ## Known warnings and limitations
 
 - Godot emits the existing Windows root-certificate-store diagnostic in this environment.
 - `storage_stack_clearance_tests.gd` intentionally emits the existing missing-clearance-context fallback warning for its dedicated warning-path test.
 - The scripted editor round trip exits the editor from a `SceneTree` test and therefore emits scan-aborted/RID cleanup diagnostics at process shutdown. The separate normal editor scan exits cleanly apart from the certificate diagnostic.
-- Existing item definitions still require human review in the canonical fixture. Technical verification does not claim their historical rotations are correct under the new meaningful Front contract.
+- Gloves and Pants remain deliberately blocked for future source/pose work; all other current definitions completed human review.
 
 ## Exact review launch commands
 
@@ -138,4 +155,4 @@ Run the default gameplay composition:
 
 ## Human disposition
 
-Human review must choose **PROMOTE** or **REVISE**. Runtime defects should be distinguished from item-definition content that simply needs deliberate re-authoring in the canonical fixture.
+**PROMOTE.** Canonical Item Storage Pose & Shelf-Front Alignment is complete. Future save/load work must restore each placed item's saved orientation state rather than recomputing it from the shelf's current Front. Optional four-way 0/90/180/270 item display rotation remains deferred UX debt.
