@@ -121,7 +121,9 @@ func _placement(surface: StorageSurface, carried: CarriedItems, controller: Stor
 	_check(stored.item == item and carried.get_item_count() == 0, "exact identity transferred once")
 	_check(stored.host.global_basis.get_scale().is_equal_approx(Vector3.ONE), "stored visual keeps canonical world scale")
 	_check(stored.packing_rotated == rotated, "packing rotation preserved")
-	var packing := stored.host.get_node("StoredPackingYaw") as Node3D
+	var packing := stored.host.get_node(
+		"StoredUnitOrientationYaw/StoredPackingYaw"
+	) as Node3D
 	var world_bounds: AABB = packing.global_transform * (pose["aligned_bounds"] as AABB)
 	var shelf := surface.get_parent() as Node3D
 	var local_bounds: AABB = shelf.global_transform.affine_inverse() * world_bounds

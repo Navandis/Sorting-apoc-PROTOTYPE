@@ -52,6 +52,7 @@ The manual-placement ghost uses the same conceptual separation. `StorageVisualPo
 - Canonical and packing placements retain existing stack insertion, retrieval, support, base-promotion, and clearance behavior.
 - A committed item keeps its transform when surface Front metadata changes; a newly placed copy uses the new Front.
 - One asymmetric Hammer definition was exercised on ModularRack state 0, Metal Shelf state 2, and Ventilated Locker state 3. Canonical and packing placements preserved scale `Vector3.ONE`, used the expected two yaw roots, and reserved the corresponding footprint.
+- Consolidated self-review caught state-0 fallback use in direct review/capture tooling. A RED regression reproduced incorrect state-3 sample reservations; all production review/capture callers now pass their surface state explicitly, and the affected shelf, capture, Fuel, Locker, item-reviewability, and unstacked-equivalence checks pass.
 
 Focused verification on the final implementation state:
 

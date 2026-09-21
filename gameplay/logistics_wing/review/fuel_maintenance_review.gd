@@ -76,7 +76,12 @@ func _start(capture: bool) -> void:
 		return
 	await _shot("02_carried", "Picked up through WorldItem; normal held presentation", item)
 	for rotated: bool in [false, true]:
-		var entry := controller.call("_entry_for_item", item, rotated) as StorageStack.Entry
+		var entry := controller.call(
+			"_entry_for_item",
+			item,
+			rotated,
+			surface.get_semantic_orientation_quarter_turns()
+		) as StorageStack.Entry
 		var fit := surface.find_manual_empty_fit(Vector3.ZERO, entry) if rotated else surface.find_zone_stack_or_empty_fit("Fuel", entry)
 		controller.set("_current_surface", surface)
 		controller.set("_current_fit", fit)

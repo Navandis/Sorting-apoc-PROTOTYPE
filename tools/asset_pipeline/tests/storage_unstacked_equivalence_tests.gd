@@ -72,7 +72,9 @@ func _run() -> void:
 	var stored_host: Node3D = stack.entries[0].host
 	var expected_position: Vector3 = Vector3(-0.05, 0.012, -0.05)
 	_check(stored_host.position.is_equal_approx(expected_position), "ordinary stored transform matches pre-spike cell centering")
-	var packing_root: Node3D = stored_host.get_node("StoredPackingYaw") as Node3D
+	var packing_root: Node3D = stored_host.get_node(
+		"StoredUnitOrientationYaw/StoredPackingYaw"
+	) as Node3D
 	_check(packing_root.basis.is_equal_approx(Basis(Vector3.UP, deg_to_rad(90.0))), "ordinary packing yaw remains 90 degrees")
 	var seating_root: Node3D = packing_root.get_node("StorageSeating") as Node3D
 	var pose_root: Node3D = seating_root.get_node("AuthoredStoragePose") as Node3D

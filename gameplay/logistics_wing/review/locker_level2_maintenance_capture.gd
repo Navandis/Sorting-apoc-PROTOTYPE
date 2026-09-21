@@ -54,7 +54,12 @@ func _capture() -> void:
 		if not world.pickup_into(carried):
 			_fail("review can pickup failed")
 			return
-		var entry := controller.call("_entry_for_item", item, far_end) as StorageStack.Entry
+		var entry := controller.call(
+			"_entry_for_item",
+			item,
+			far_end,
+			surface.get_semantic_orientation_quarter_turns()
+		) as StorageStack.Entry
 		var fit: Dictionary
 		if manual:
 			fit = surface.find_manual_empty_fit(Vector3(100 if front_row else -100, 0, 100 if far_end else -100), entry)
@@ -69,7 +74,9 @@ func _capture() -> void:
 			_fail("review corner placement failed")
 			return
 		var stored := surface.get_storage_stack(item.instance_id).entries[0]
-		var packing := stored.host.get_node("StoredPackingYaw") as Node3D
+		var packing := stored.host.get_node(
+			"StoredUnitOrientationYaw/StoredPackingYaw"
+		) as Node3D
 		var bounds: AABB = packing.global_transform * stored.aligned_bounds
 		records.append({"mode": "manual" if manual else "auto", "rotated": far_end, "front_row": front_row, "origin": str(fit["origin"]), "bounds_world": str(bounds), "instance": item.instance_id, "world_scale": str(stored.host.global_basis.get_scale())})
 	var key := InputEventKey.new()

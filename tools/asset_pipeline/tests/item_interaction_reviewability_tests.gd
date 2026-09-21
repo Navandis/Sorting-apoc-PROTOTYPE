@@ -104,7 +104,9 @@ func _test_world_carry_store_and_retrieve(source_path: String) -> void:
 	)), "%s auto stored world item spawns" % source_path)
 	var stored_host: Node3D = _newest_stored_host(surface)
 	_check(stored_host != null, "%s auto stored host exists" % source_path)
-	var stored_packing_root: Node3D = stored_host.get_node("StoredPackingYaw") as Node3D
+	var stored_packing_root: Node3D = stored_host.get_node(
+		"StoredUnitOrientationYaw/StoredPackingYaw"
+	) as Node3D
 	var stored_pose_root: Node3D = stored_packing_root.get_node(
 		"StorageSeating/AuthoredStoragePose"
 	) as Node3D
@@ -151,7 +153,9 @@ func _test_world_carry_store_and_retrieve(source_path: String) -> void:
 		manual_rotated
 	)), "%s manual stored world item spawns" % source_path)
 	var manual_host: Node3D = _newest_stored_host(surface)
-	var manual_packing_root: Node3D = manual_host.get_node("StoredPackingYaw") as Node3D
+	var manual_packing_root: Node3D = manual_host.get_node(
+		"StoredUnitOrientationYaw/StoredPackingYaw"
+	) as Node3D
 	var manual_seating_root: Node3D = manual_packing_root.get_node("StorageSeating") as Node3D
 	var manual_pose_root: Node3D = manual_seating_root.get_node("AuthoredStoragePose") as Node3D
 	_check(manual_pose_root.basis.is_equal_approx(ghost_pose_root.basis), "%s manual ghost and final pose match" % source_path)

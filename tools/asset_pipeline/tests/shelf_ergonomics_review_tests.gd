@@ -68,6 +68,7 @@ func _check_case(case_id: String) -> void:
 	_assert_authoritative_supply(scene, case_id)
 	_assert_modular_review_scene(scene, case_id)
 	if case_id == "A":
+		_assert_existing_review_entry_orientation_parity(scene)
 		_assert_cross_family_item_orientation(scene)
 	_check(scene.has_method("get_review_contract"), "%s exposes a review contract" % case_id)
 	if scene.has_method("get_review_contract"):
@@ -540,6 +541,37 @@ func _assert_cross_family_item_orientation(scene: Node) -> void:
 				label
 			)
 	controller.set_manual_mode(false)
+
+
+func _assert_existing_review_entry_orientation_parity(scene: Node) -> void:
+	for value: Variant in scene.find_children("*", "StorageSurface", true, false):
+		var surface := value as StorageSurface
+		if surface == null:
+			continue
+		var state := surface.get_semantic_orientation_quarter_turns()
+		for stack_value: Variant in (surface.get("_stacks") as Dictionary).values():
+			var stack := stack_value as StorageStack
+			if stack == null or stack.entries.is_empty():
+				continue
+			var base := stack.entries[0] as StorageStack.Entry
+			var canonical_3d := base.item.get_storage_footprint()
+			var expected := StorageItemOrientationScript.physical_footprint(
+				Vector2i(canonical_3d.x, canonical_3d.y),
+				state,
+				base.packing_rotated
+			)
+			_check(
+				stack.base_footprint == expected,
+				"existing review sample reservation follows unit state %d" % state
+			)
+			var unit_root := base.host.get_node("StoredUnitOrientationYaw") as Node3D
+			_check(
+				unit_root.basis.is_equal_approx(Basis(
+					Vector3.UP,
+					StorageItemOrientationScript.unit_yaw_radians(state)
+				)),
+				"existing review sample visual follows unit state %d" % state
+			)
 
 
 func _assert_family_item_placement(

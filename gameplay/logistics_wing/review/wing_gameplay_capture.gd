@@ -216,7 +216,11 @@ func _place_selected(surface_index: int, category: String) -> bool:
 	if surface == null or controller == null or item == null:
 		return false
 	surface.set_zone_rect(category, Vector2i.ZERO, surface.get_grid_size() - Vector2i.ONE)
-	var orientations := controller.call("_entry_orientations_for_item", item) as Array
+	var orientations := controller.call(
+		"_entry_orientations_for_item",
+		item,
+		surface.get_semantic_orientation_quarter_turns()
+	) as Array
 	if orientations.is_empty():
 		return false
 	var fit := surface.find_zone_stack_or_empty_fit(

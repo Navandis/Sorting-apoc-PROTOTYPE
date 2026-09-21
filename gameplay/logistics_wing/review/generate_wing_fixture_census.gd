@@ -228,7 +228,11 @@ func _place_selected(
 	item: ItemInstance
 ) -> bool:
 	surface.set_zone_rect(item.get_storage_category(), Vector2i.ZERO, surface.get_grid_size() - Vector2i.ONE)
-	var orientations := controller.call("_entry_orientations_for_item", item) as Array
+	var orientations := controller.call(
+		"_entry_orientations_for_item",
+		item,
+		surface.get_semantic_orientation_quarter_turns()
+	) as Array
 	var fit := surface.find_zone_stack_or_empty_fit(
 		item.get_storage_category(),
 		orientations[0],

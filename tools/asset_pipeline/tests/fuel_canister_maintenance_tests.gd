@@ -62,7 +62,9 @@ func _run() -> void:
 		if stack == null:
 			break
 		var stored := stack.entries[0]
-		var packing := stored.host.get_node("StoredPackingYaw") as Node3D
+		var packing := stored.host.get_node(
+			"StoredUnitOrientationYaw/StoredPackingYaw"
+		) as Node3D
 		_check(packing.global_transform.is_equal_approx(ghost_transform), "actual ghost/final transforms match")
 		_check((packing.global_transform * stored.aligned_bounds).is_equal_approx(ghost_bounds), "ghost/final seated bounds match")
 		_check(stored.host.global_basis.get_scale().is_equal_approx(Vector3.ONE), "stored Fuel stays canonical world scale")

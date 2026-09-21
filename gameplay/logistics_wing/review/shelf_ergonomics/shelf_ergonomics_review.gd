@@ -260,7 +260,11 @@ func _store_sample(carried: CarriedItems, controller: StoragePlacementController
 		_unfitted_samples.append(String(item_id))
 		return
 	surface.set_zone_rect(item.get_storage_category(), Vector2i.ZERO, surface.grid_size - Vector2i.ONE)
-	var orientations: Array = controller.call("_entry_orientations_for_item", item)
+	var orientations: Array = controller.call(
+		"_entry_orientations_for_item",
+		item,
+		surface.get_semantic_orientation_quarter_turns()
+	)
 	if orientations.is_empty():
 		carried.remove_selected()
 		_unfitted_samples.append(String(item_id))
