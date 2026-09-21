@@ -1,6 +1,6 @@
 # Sorting Apocalypse current development state
 
-**Decision record:** 21 September 2026. The Storage Authoring and Testbed Foundation is consolidated. Review-scene supply reuse, reusable functional modular-rack authoring, and **Storage Unit Orientation & Zoning Basis** are complete and human-promoted. **Item Facing / Packing Orientation** is the active gate before the fixed-ladder proof. The retained shelf and ceiling review scene remains a mutable review tool rather than an active production scene.
+**Decision record:** 21 September 2026. The Storage Authoring and Testbed Foundation is consolidated. Review-scene supply reuse, reusable functional modular-rack authoring, and **Storage Unit Orientation & Zoning Basis** are complete and human-promoted. **Canonical Item Storage Pose & Shelf-Front Alignment** is implemented and technically verified on `codex/canonical-item-storage-pose`; human system and item-content review is pending before promotion. The fixed-ladder proof remains blocked behind that review. The retained shelf and ceiling review scene remains a mutable review tool rather than an active production scene.
 
 ## Current authorities
 
@@ -22,6 +22,7 @@ The accepted in-engine wing builder, saved scene and overview govern working dim
 - Review-scene supply reuse is complete and human-promoted. The retained shelf ergonomics review extracts the composed `DevelopmentSetup` from `wing_gameplay.tscn` off-tree, keeps its authored tables, hosts, transforms and registrar path, and no longer activates the historical cabinet-only sample fixture.
 - Reusable functional modular-rack authoring is complete and human-promoted. The reusable base scene is shelf-empty; review-scene-local Rack02 wrappers provide editable levels; runtime surfaces remain owned by the existing storage manager.
 - Storage Unit Orientation & Zoning Basis is complete and human-promoted. Orientation remains unit-owned, every generated surface inherits its unit state, zoning is presented from authored Front, and existing physical grids, zone arrays, F6 behavior and packing rules remain unchanged.
+- Canonical Item Storage Pose & Shelf-Front Alignment is implemented and technically verified on its feature branch. New placements align the ItemDefinition-authored canonical +Z Front to unit Front, retain the separate optional +90-degree packing turn, rotate reservation footprints with the final visual parity, and leave committed items stable. The retained canonical authoring fixture is `res://gameplay/dev/item_storage_pose/item_storage_pose_authoring.tscn`. Historical item-definition rotations still require deliberate human review before this gate can be promoted.
 
 ## Storage ergonomics disposition
 
@@ -39,14 +40,14 @@ The A, B and C shelf and ceiling experiment is complete. Keep `res://gameplay/lo
 
 Completed: Review-scene supply reuse; reusable functional modular-rack authoring; Storage Unit Orientation & Zoning Basis.
 
-1. **Active gate: Item Facing / Packing Orientation.** Human review classified this as the immediate follow-up. The tentative target is that canonical stored loot should face the storage unit's authored Front; it still requires its own design, implementation and human validation.
-2. Single-rack fixed-ladder proof — blocked until the Item Facing / Packing Orientation gate is complete and human-promoted.
+1. **Active gate: Canonical Item Storage Pose & Shelf-Front Alignment — human review pending.** System implementation and technical verification are complete on `codex/canonical-item-storage-pose`. Human review must validate representative canonical poses and cross-family placement, then choose PROMOTE or REVISE.
+2. Single-rack fixed-ladder proof — blocked until Canonical Item Storage Pose & Shelf-Front Alignment is human-promoted.
 3. Human ladder decision.
 4. Resume Receiving unless storage ergonomics exposes another concrete blocker.
 
 ## Explicitly deferred and known debt
 
-Production Structural Shell and Applied Finish; full gallery furnishing; freight cage lining and real pile reach and drainability; functional Receiving Stage B and Stage C; timed obligations; full save and journal implementation; Gloves and Pants source and pose work; production starting inventory; player-adjustable shelf levels; crouch; height-aware auto-placement; camera-height and wing-ceiling changes. Storage-unit front/back semantics and the zone-editor mapping are complete and human-promoted. Existing physical zone cells are deliberately not migrated when authored orientation changes. Item Facing / Packing Orientation is no longer deferred: it is the active gate, but no packing work began during the orientation close-out.
+Production Structural Shell and Applied Finish; full gallery furnishing; freight cage lining and real pile reach and drainability; functional Receiving Stage B and Stage C; timed obligations; full save and journal implementation; Gloves and Pants source and pose work; production starting inventory; player-adjustable shelf levels; crouch; height-aware auto-placement; camera-height and wing-ceiling changes. Storage-unit front/back semantics and the zone-editor mapping are complete and human-promoted. Existing physical zone cells are deliberately not migrated when authored orientation changes. Canonical item pose implementation is technically ready, but historical item-definition pose content remains a human authoring review. Full 0/90/180/270 item-display rotation remains optional UX debt; future save/load must restore placed orientation instead of recomputing it from current shelf Front.
 
 The Fuel-related legacy-audit failure and timeout are resolved. Historical reports keep the status they had when written; later acceptance and this current record supersede their pending state without rewriting them.
 
@@ -60,5 +61,6 @@ The Fuel-related legacy-audit failure and timeout are resolved. Historical repor
 - [Review-scene supply reuse](testing/review-scene-supply-reuse-validation.md)
 - [Modular rack authoring](testing/modular-rack-authoring-validation.md)
 - [Storage unit orientation and zoning basis](testing/storage-unit-orientation-zoning-validation.md) — complete, technically verified and human-promoted.
+- [Canonical item storage pose and shelf-Front alignment](testing/canonical-item-storage-pose-validation.md) — implemented and technically verified; human review pending.
 
 Ignored reports and imported asset state remain local and are not GitHub backup. The curated accepted greybox evidence remains under `docs/testing/evidence/greybox-accepted-2026-09-17/`.

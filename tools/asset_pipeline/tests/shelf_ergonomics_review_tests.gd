@@ -5,6 +5,7 @@ const GAMEPLAY_SCENE := "res://gameplay/logistics_wing/wing_gameplay.tscn"
 const METAL_SCENE := "res://assets/environment/furniture/storage/SM_MetalShelves.glb"
 const LOCKER_SCENE := "res://assets/environment/furniture/storage/SM_ventilated_locker.glb"
 const BLOCKED_ITEM_IDS: Array[StringName] = [&"loot_000034", &"loot_000036"]
+const StorageItemOrientationScript = preload("res://storage_item_orientation.gd")
 
 var _failed := false
 
@@ -66,6 +67,8 @@ func _check_case(case_id: String) -> void:
 	)
 	_assert_authoritative_supply(scene, case_id)
 	_assert_modular_review_scene(scene, case_id)
+	if case_id == "A":
+		_assert_cross_family_item_orientation(scene)
 	_check(scene.has_method("get_review_contract"), "%s exposes a review contract" % case_id)
 	if scene.has_method("get_review_contract"):
 		var contract: Dictionary = scene.call("get_review_contract") as Dictionary
@@ -213,7 +216,11 @@ func _exercise_review_storage(scene: Node, case_id: String) -> void:
 	var stored_item := stored_world.get_item_instance()
 	_check(stored_world.pickup_into(carried), "%s retrieves its reserved review item through WorldItem" % case_id)
 	_check(carried.get_selected_item() == stored_item, "%s retrieval preserves exact item identity" % case_id)
-	var orientations: Array = controller.call("_entry_orientations_for_item", stored_item)
+	var orientations: Array = controller.call(
+		"_entry_orientations_for_item",
+		stored_item,
+		stored_surface.get_semantic_orientation_quarter_turns()
+	)
 	stored_surface.set_zone_rect(stored_item.get_storage_category(), Vector2i.ZERO, stored_surface.grid_size - Vector2i.ONE)
 	var alternate := orientations[1] as StorageStack.Entry if orientations.size() > 1 else null
 	var fit := stored_surface.find_zone_stack_or_empty_fit(stored_item.get_storage_category(), orientations[0] as StorageStack.Entry, alternate)
@@ -221,9 +228,14 @@ func _exercise_review_storage(scene: Node, case_id: String) -> void:
 	controller.set("_current_fit", fit)
 	controller.set("_manual_mode", false)
 	_check(controller.place_selected(), "%s re-stores through the normal controller" % case_id)
-	var tall := ItemInstance.new(load("res://data/items/definitions/loot_000032.tres") as ItemDefinition)
-	var tall_entry := controller.call("_entry_for_item", tall, false) as StorageStack.Entry
 	var narrow_surface := _surface_by_id(surfaces, "SM_MetalShelves_Ergonomics_level_2")
+	var tall := ItemInstance.new(load("res://data/items/definitions/loot_000032.tres") as ItemDefinition)
+	var tall_entry := controller.call(
+		"_entry_for_item",
+		tall,
+		false,
+		narrow_surface.get_semantic_orientation_quarter_turns() if narrow_surface != null else 0
+	) as StorageStack.Entry
 	_check(
 		tall_entry != null and narrow_surface != null and bool(narrow_surface.get_singleton_clearance_result(tall_entry, 0.0).get("valid", false)),
 		"%s accepts the revised opening's credible tall-item fit" % case_id
@@ -343,7 +355,12 @@ func _exercise_review_manual_and_stack(scene: Node, case_id: String) -> void:
 	var hammer_item := hammer_world.get_item_instance() as ItemInstance
 	_check(hammer_world.pickup_into(carried), "%s takes the irregular Hammer from reused supply" % case_id)
 	var manual_surface := surfaces[1] as StorageSurface
-	var hammer_entry := controller.call("_entry_for_item", hammer_item, true) as StorageStack.Entry
+	var hammer_entry := controller.call(
+		"_entry_for_item",
+		hammer_item,
+		true,
+		manual_surface.get_semantic_orientation_quarter_turns()
+	) as StorageStack.Entry
 	var manual_origin := Vector2i(1, 1)
 	var manual_fit := {
 		"valid": manual_surface.can_place_at(manual_origin, hammer_entry.footprint),
@@ -380,7 +397,11 @@ func _exercise_review_manual_and_stack(scene: Node, case_id: String) -> void:
 		var item := world.get_item_instance() as ItemInstance
 		_check(world.pickup_into(carried), "%s takes %s from reused supply" % [case_id, host_name])
 		stack_surface.set_zone_rect(item.get_storage_category(), Vector2i.ZERO, stack_surface.grid_size - Vector2i.ONE)
-		var orientations: Array = controller.call("_entry_orientations_for_item", item)
+		var orientations: Array = controller.call(
+			"_entry_orientations_for_item",
+			item,
+			stack_surface.get_semantic_orientation_quarter_turns()
+		)
 		var fit := stack_surface.find_zone_stack_or_empty_fit(
 			item.get_storage_category(),
 			orientations[0] as StorageStack.Entry,
@@ -445,6 +466,167 @@ func _assert_modular_review_scene(scene: Node, case_id: String) -> void:
 			surface.set_semantic_orientation_quarter_turns(authored_state)
 	for node: Node in scene.find_children("SM_Rack*", "", true, false):
 		_check(_modular_rack_ancestor(node) != null, "%s has no raw Rack01/Rack02 experiment outside a ModularRack" % case_id)
+
+
+func _assert_cross_family_item_orientation(scene: Node) -> void:
+	var fixtures := scene.get_node("ReviewFixtures") as Node3D
+	var racks := _direct_modular_racks(fixtures)
+	var metal_units := _direct_scene_instances(fixtures, METAL_SCENE)
+	var locker_units := _direct_scene_instances(fixtures, LOCKER_SCENE)
+	var rack_surfaces := _modular_surfaces(scene)
+	var metal_surfaces := (
+		_direct_storage_surfaces(metal_units[0])
+		if not metal_units.is_empty()
+		else []
+	)
+	var locker_surfaces := (
+		_direct_storage_surfaces(locker_units[0])
+		if not locker_units.is_empty()
+		else []
+	)
+	_check(
+		not racks.is_empty()
+		and not rack_surfaces.is_empty()
+		and not metal_surfaces.is_empty()
+		and not locker_surfaces.is_empty(),
+		"cross-family pose fixture exposes ModularRack, Metal Shelf, and Locker"
+	)
+	if (
+		racks.is_empty()
+		or rack_surfaces.is_empty()
+		or metal_surfaces.is_empty()
+		or locker_surfaces.is_empty()
+	):
+		return
+	var controller := scene.get_node("Player/StoragePlacementController") as StoragePlacementController
+	var carried := scene.get_node("Player/CarriedItems") as CarriedItems
+	var definition := load(
+		"res://data/items/definitions/loot_000037.tres"
+	) as ItemDefinition
+	var cases := [
+		{
+			"label": "ModularRack",
+			"surface": rack_surfaces[0],
+			"state": racks[0].get_storage_orientation_quarter_turns(),
+		},
+		{
+			"label": "Metal Shelf",
+			"surface": metal_surfaces[0],
+			"state": 2,
+		},
+		{
+			"label": "Ventilated Locker",
+			"surface": locker_surfaces[0],
+			"state": 3,
+		},
+	]
+	for family: Dictionary in cases:
+		var surface := family["surface"] as StorageSurface
+		var state := int(family["state"])
+		var label := String(family["label"])
+		_check(
+			surface.get_semantic_orientation_quarter_turns() == state,
+			"%s cross-family surface uses state %d" % [label, state]
+		)
+		for packing_rotated: bool in [false, true]:
+			var item := ItemInstance.new(definition)
+			_assert_family_item_placement(
+				controller,
+				carried,
+				surface,
+				item,
+				state,
+				packing_rotated,
+				label
+			)
+	controller.set_manual_mode(false)
+
+
+func _assert_family_item_placement(
+	controller: StoragePlacementController,
+	carried: CarriedItems,
+	surface: StorageSurface,
+	item: ItemInstance,
+	state: int,
+	packing_rotated: bool,
+	label: String
+) -> void:
+	var entry := controller.call(
+		"_entry_for_item",
+		item,
+		packing_rotated,
+		state
+	) as StorageStack.Entry
+	_check(entry != null, "%s builds %s entry" % [label, "packing" if packing_rotated else "canonical"])
+	if entry == null:
+		return
+	var origin := _first_free_origin(surface, entry.footprint)
+	_check(origin.x >= 0, "%s has room for %s pose" % [label, "packing" if packing_rotated else "canonical"])
+	if origin.x < 0:
+		return
+	_check(carried.add_item(item), "%s item enters carry for pose verification" % label)
+	var fit := {
+		"valid": true,
+		"placement_kind": "empty",
+		"stack_id": item.instance_id,
+		"insertion_index": 0,
+		"origin": origin,
+		"footprint": entry.footprint,
+		"base_footprint": entry.footprint,
+		"rotated": packing_rotated,
+		"zone_kind": "manual",
+		"zone_category": "",
+		"host_y_m": surface.get_local_placement_position(origin, entry.footprint).y,
+	}
+	controller.set_manual_mode(true)
+	controller.set("_rotated", packing_rotated)
+	controller.set("_current_surface", surface)
+	controller.set("_current_fit", fit)
+	_check(controller.place_selected(), "%s commits %s pose" % [label, "packing" if packing_rotated else "canonical"])
+	var stack := surface.get_storage_stack(item.instance_id)
+	_check(stack != null and stack.entries.size() == 1, "%s stores one verified item" % label)
+	if stack == null or stack.entries.is_empty():
+		return
+	var committed := stack.entries[0] as StorageStack.Entry
+	var unit_root := committed.host.get_node("StoredUnitOrientationYaw") as Node3D
+	var packing_root := unit_root.get_node("StoredPackingYaw") as Node3D
+	_check(
+		unit_root.basis.is_equal_approx(Basis(
+			Vector3.UP,
+			StorageItemOrientationScript.unit_yaw_radians(state)
+		)),
+		"%s unit-yaw root matches state %d" % [label, state]
+	)
+	_check(
+		packing_root.basis.is_equal_approx(Basis(
+			Vector3.UP,
+			deg_to_rad(90.0) if packing_rotated else 0.0
+		)),
+		"%s packing root matches the placement choice" % label
+	)
+	_check(
+		committed.host.global_basis.get_scale().is_equal_approx(Vector3.ONE),
+		"%s canonical item scale remains one" % label
+	)
+	_check(
+		surface.get_reservation(item.instance_id).get("footprint") == entry.footprint,
+		"%s reservation matches combined quarter-turn parity" % label
+	)
+	_check(
+		(committed.world_item as WorldItem).pickup_into(carried),
+		"%s verified item retrieves after %s pose" % [label, "packing" if packing_rotated else "canonical"]
+	)
+	carried.call("remove_item", item)
+
+
+func _first_free_origin(surface: StorageSurface, footprint: Vector2i) -> Vector2i:
+	var size := surface.get_grid_size()
+	for z: int in range(size.y - footprint.y + 1):
+		for x: int in range(size.x - footprint.x + 1):
+			var origin := Vector2i(x, z)
+			if surface.can_place_at(origin, footprint):
+				return origin
+	return Vector2i(-1, -1)
 
 
 func _modular_physical_records(surfaces: Array[StorageSurface]) -> Array[Dictionary]:
