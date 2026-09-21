@@ -2,6 +2,8 @@ extends SceneTree
 
 const StorageVisualPoseScript = preload("res://storage_visual_pose.gd")
 const StoragePlacementControllerScript = preload("res://storage_placement_controller.gd")
+const StorageItemOrientationScript = preload("res://storage_item_orientation.gd")
+const StorageOrientationScript = preload("res://storage_orientation.gd")
 const ItemDefinitionScript = preload("res://item_definition.gd")
 const ItemInstanceScript = preload("res://item_instance.gd")
 
@@ -12,6 +14,8 @@ func _init() -> void:
 	_test_authored_pose_is_applied_before_seating_and_centering()
 	_test_zero_pose_preserves_canonical_alignment()
 	_test_packing_yaw_rotates_only_the_outer_root()
+	_test_outer_unit_yaw_preserves_authored_pose()
+	_test_unit_yaw_maps_canonical_front()
 	_test_parent_world_transform_does_not_change_stored_base_pose()
 	_test_controller_delegates_manual_and_auto_to_the_same_base_pose()
 	print("PASS: storage visual pose tests")
@@ -82,6 +86,56 @@ func _test_packing_yaw_rotates_only_the_outer_root() -> void:
 	assert(_basis_approx(packing_root.basis, Basis(Vector3.UP, deg_to_rad(90.0))))
 	assert(is_equal_approx(aligned_bounds.position.y, StorageVisualPoseScript.SHELF_CLEARANCE_M))
 	packing_root.free()
+
+
+# Catches unit alignment being folded into the authored pose or packing root.
+func _test_outer_unit_yaw_preserves_authored_pose() -> void:
+	var unit_root := Node3D.new()
+	var packing_root := Node3D.new()
+	root.add_child(unit_root)
+	unit_root.add_child(packing_root)
+	var result := StorageVisualPoseScript.build_visual(
+		packing_root,
+		_asymmetric_visual(),
+		Vector3(32.0, 17.0, -21.0),
+		true
+	)
+	unit_root.rotation.y = StorageItemOrientationScript.unit_yaw_radians(3)
+
+	var expected_authored := Basis.from_euler(Vector3(
+		deg_to_rad(32.0),
+		deg_to_rad(17.0),
+		deg_to_rad(-21.0)
+	)).orthonormalized()
+	assert(_basis_approx(
+		(result["pose_root"] as Node3D).basis,
+		expected_authored
+	))
+	assert(_basis_approx(
+		packing_root.basis,
+		Basis(Vector3.UP, deg_to_rad(90.0))
+	))
+	assert(_basis_approx(
+		unit_root.basis,
+		Basis(
+			Vector3.UP,
+			StorageItemOrientationScript.unit_yaw_radians(3)
+		)
+	))
+	unit_root.free()
+
+
+# Catches a yaw sign mismatch between the semantic Front table and visuals.
+func _test_unit_yaw_maps_canonical_front() -> void:
+	for state: int in range(4):
+		var unit_basis := Basis(
+			Vector3.UP,
+			StorageItemOrientationScript.unit_yaw_radians(state)
+		)
+		assert(_vector3_approx(
+			unit_basis * Vector3(0.0, 0.0, 1.0),
+			StorageOrientationScript.front_local_axis(state)
+		))
 
 
 # Catches deriving stored orientation from the particular receiving/world instance.

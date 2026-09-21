@@ -8,6 +8,7 @@ const StorageSurfaceScript = preload("res://storage_surface.gd")
 const StorageStackScript = preload("res://storage_stack.gd")
 const WorldItemScript = preload("res://world_item.gd")
 const StorageVisualPoseScript = preload("res://storage_visual_pose.gd")
+const StorageItemOrientationScript = preload("res://storage_item_orientation.gd")
 
 const GHOST_VALID_COLOR := Color(0.20, 1.00, 0.48, 0.68)
 const GHOST_BLOCKED_COLOR := Color(1.00, 0.22, 0.18, 0.68)
@@ -25,6 +26,7 @@ var _manual_mode: bool = false
 var _manual_debug_surface: Node = null
 
 var _ghost_host: Node3D = null
+var _ghost_unit_orientation_root: Node3D = null
 var _ghost_packing_root: Node3D = null
 var _ghost_visual: Node = null
 var _ghost_item: Variant = null
@@ -188,10 +190,14 @@ func update_target() -> void:
 			if stack_surface != null:
 				_current_surface = stack_surface
 				_set_manual_debug_surface(stack_surface)
+				var stack_unit_state := int(
+					stack_surface.get_semantic_orientation_quarter_turns()
+				)
 				_current_fit = _find_manual_stack_target_fit(
 					stack_surface,
 					stack_target.get_storage_stack_id(),
-					selected_item
+					selected_item,
+					stack_unit_state
 				)
 				_update_ghost(selected_item)
 				return
@@ -233,7 +239,12 @@ func update_target() -> void:
 		var position_value: Variant = result.get("position", Vector3.ZERO)
 		var hit_world: Vector3 = position_value as Vector3
 		var hit_local: Vector3 = surface.to_local(hit_world)
-		var entry: StorageStack.Entry = _entry_for_item(selected_item, _rotated)
+		var unit_state := int(surface.get_semantic_orientation_quarter_turns())
+		var entry: StorageStack.Entry = _entry_for_item(
+			selected_item,
+			_rotated,
+			unit_state
+		)
 		if entry == null or not surface.has_method("find_manual_empty_fit"):
 			_current_fit = {}
 		else:
@@ -250,8 +261,10 @@ func update_target() -> void:
 	if selected_item.has_method("get_storage_category"):
 		storage_category = String(selected_item.get_storage_category())
 
+	var unit_state := int(surface.get_semantic_orientation_quarter_turns())
 	var orientations: Array[StorageStack.Entry] = _entry_orientations_for_item(
-		selected_item
+		selected_item,
+		unit_state
 	)
 	var rotated_entry: StorageStack.Entry = null
 	if orientations.size() > 1:
@@ -359,9 +372,20 @@ func _spawn_stored_world_item(
 	surface.add_child(host)
 	host.transform = surface.get_stack_candidate_transform(effective_fit)
 
+	var unit_orientation_root := Node3D.new()
+	unit_orientation_root.name = "StoredUnitOrientationYaw"
+	host.add_child(unit_orientation_root)
+	unit_orientation_root.rotation = Vector3(
+		0.0,
+		StorageItemOrientationScript.unit_yaw_radians(
+			int(surface.get_semantic_orientation_quarter_turns())
+		),
+		0.0
+	)
+
 	var packing_root: Node3D = Node3D.new()
 	packing_root.name = "StoredPackingYaw"
-	host.add_child(packing_root)
+	unit_orientation_root.add_child(packing_root)
 
 	var visual: Node = visual_scene.instantiate()
 	_disable_embedded_nodes(visual)
@@ -455,6 +479,13 @@ func _update_ghost(item) -> void:
 	_ghost_host.transform = local_transform
 
 	var preview_rotated: bool = bool(_current_fit.get("rotated", _rotated))
+	_ghost_unit_orientation_root.rotation = Vector3(
+		0.0,
+		StorageItemOrientationScript.unit_yaw_radians(
+			int(_current_surface.get_semantic_orientation_quarter_turns())
+		),
+		0.0
+	)
 	StorageVisualPoseScript.apply_packing_yaw(
 		_ghost_packing_root,
 		preview_rotated
@@ -476,16 +507,25 @@ func _update_ghost(item) -> void:
 func _rebuild_ghost(item) -> void:
 	_ghost_item = item
 
-	if _ghost_packing_root != null and is_instance_valid(_ghost_packing_root):
-		_ghost_packing_root.queue_free()
+	if (
+		_ghost_unit_orientation_root != null
+		and is_instance_valid(_ghost_unit_orientation_root)
+	):
+		_ghost_unit_orientation_root.queue_free()
+	_ghost_unit_orientation_root = null
+	_ghost_packing_root = null
 
 	if _ghost_footprint != null and is_instance_valid(_ghost_footprint):
 		_ghost_footprint.queue_free()
 		_ghost_footprint = null
 
+	_ghost_unit_orientation_root = Node3D.new()
+	_ghost_unit_orientation_root.name = "GhostUnitOrientationYaw"
+	_ghost_host.add_child(_ghost_unit_orientation_root)
+
 	_ghost_packing_root = Node3D.new()
 	_ghost_packing_root.name = "GhostPackingYaw"
-	_ghost_host.add_child(_ghost_packing_root)
+	_ghost_unit_orientation_root.add_child(_ghost_packing_root)
 	_ghost_visual = null
 
 	if item == null:
@@ -527,16 +567,22 @@ func build_visual_pose_for_item(
 	)
 
 
-func _entry_for_item(item, packing_rotated: bool) -> StorageStack.Entry:
+func _entry_for_item(
+	item,
+	packing_rotated: bool,
+	unit_orientation_quarter_turns: int = 0
+) -> StorageStack.Entry:
 	if not (item is ItemInstance):
 		return null
 	var typed_item: ItemInstance = item as ItemInstance
 	var pose_result: Dictionary = _pose_metrics_for_item(typed_item, packing_rotated)
 	if not bool(pose_result.get("valid", false)):
 		return null
-	var footprint: Vector2i = _base_footprint(typed_item)
-	if packing_rotated:
-		footprint = Vector2i(footprint.y, footprint.x)
+	var footprint := StorageItemOrientationScript.physical_footprint(
+		_base_footprint(typed_item),
+		unit_orientation_quarter_turns,
+		packing_rotated
+	)
 	var aligned_bounds: AABB = pose_result.get("aligned_bounds", AABB()) as AABB
 	return StorageStackScript.create_entry(
 		typed_item,
@@ -546,15 +592,26 @@ func _entry_for_item(item, packing_rotated: bool) -> StorageStack.Entry:
 	)
 
 
-func _entry_orientations_for_item(item) -> Array[StorageStack.Entry]:
+func _entry_orientations_for_item(
+	item,
+	unit_orientation_quarter_turns: int = 0
+) -> Array[StorageStack.Entry]:
 	var orientations: Array[StorageStack.Entry] = []
-	var native_entry: StorageStack.Entry = _entry_for_item(item, false)
-	if native_entry == null:
+	var canonical_entry: StorageStack.Entry = _entry_for_item(
+		item,
+		false,
+		unit_orientation_quarter_turns
+	)
+	if canonical_entry == null:
 		return orientations
-	orientations.append(native_entry)
-	var footprint: Vector2i = _base_footprint(item)
-	if footprint.x != footprint.y:
-		var rotated_entry: StorageStack.Entry = _entry_for_item(item, true)
+	orientations.append(canonical_entry)
+	var canonical_footprint: Vector2i = _base_footprint(item)
+	if canonical_footprint.x != canonical_footprint.y:
+		var rotated_entry: StorageStack.Entry = _entry_for_item(
+			item,
+			true,
+			unit_orientation_quarter_turns
+		)
 		if rotated_entry != null:
 			orientations.append(rotated_entry)
 	return orientations
@@ -563,17 +620,26 @@ func _entry_orientations_for_item(item) -> Array[StorageStack.Entry]:
 func _find_manual_stack_target_fit(
 	surface: Node,
 	stack_id: String,
-	item
+	item,
+	unit_orientation_quarter_turns: int = 0
 ) -> Dictionary:
 	if surface == null or not surface.has_method("find_manual_stack_fit"):
 		return {}
-	var preferred_entry: StorageStack.Entry = _entry_for_item(item, _rotated)
+	var preferred_entry: StorageStack.Entry = _entry_for_item(
+		item,
+		_rotated,
+		unit_orientation_quarter_turns
+	)
 	if preferred_entry == null:
 		return {}
 	var alternate_entry: StorageStack.Entry = null
 	var footprint: Vector2i = _base_footprint(item)
 	if footprint.x != footprint.y:
-		alternate_entry = _entry_for_item(item, not _rotated)
+		alternate_entry = _entry_for_item(
+			item,
+			not _rotated,
+			unit_orientation_quarter_turns
+		)
 	return surface.find_manual_stack_fit(
 		stack_id,
 		preferred_entry,
@@ -723,10 +789,21 @@ func _update_ghost_footprint(
 
 
 func _selected_footprint(item) -> Vector2i:
-	var footprint: Vector2i = _base_footprint(item)
-	if _rotated:
-		return Vector2i(footprint.y, footprint.x)
-	return footprint
+	var state := 0
+	if (
+		_current_surface != null
+		and _current_surface.has_method(
+			"get_semantic_orientation_quarter_turns"
+		)
+	):
+		state = int(
+			_current_surface.get_semantic_orientation_quarter_turns()
+		)
+	return StorageItemOrientationScript.physical_footprint(
+		_base_footprint(item),
+		state,
+		_rotated
+	)
 
 
 func _base_footprint(item) -> Vector2i:

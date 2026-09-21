@@ -1,6 +1,9 @@
 extends SceneTree
 
 const StorageItemOrientation = preload("res://storage_item_orientation.gd")
+const StoragePlacementControllerScript = preload("res://storage_placement_controller.gd")
+const ItemDefinitionScript = preload("res://item_definition.gd")
+const ItemInstanceScript = preload("res://item_instance.gd")
 
 var _failed := false
 
@@ -13,6 +16,7 @@ func _run() -> void:
 	_check_asymmetric_footprints()
 	_check_square_footprints()
 	_check_yaws()
+	_check_controller_entries_follow_unit_state()
 	_finish()
 
 
@@ -110,6 +114,61 @@ func _check_yaws() -> void:
 			),
 			"state %d unit yaw" % state
 		)
+
+
+# Catches the controller reserving canonical dimensions in physical X/Z at
+# odd unit orientations while the visual receives an outer quarter-turn.
+func _check_controller_entries_follow_unit_state() -> void:
+	var controller := StoragePlacementControllerScript.new()
+	root.add_child(controller)
+	var definition: ItemDefinition = ItemDefinitionScript.new()
+	definition.storage_footprint = Vector3i(2, 1, 1)
+	definition.visual_scene = _packed_asymmetric_visual()
+	var item: ItemInstance = ItemInstanceScript.new(definition)
+	var entry_argument_count := -1
+	for method: Dictionary in controller.get_method_list():
+		if String(method.get("name", "")) == "_entry_for_item":
+			entry_argument_count = (method.get("args", []) as Array).size()
+			break
+	_check(
+		entry_argument_count == 3,
+		"controller entry builder accepts unit orientation state"
+	)
+	if entry_argument_count != 3:
+		controller.free()
+		return
+
+	var state0: Variant = controller.call("_entry_for_item", item, false, 0)
+	var state1: Variant = controller.call("_entry_for_item", item, false, 1)
+	var state1_rotated: Variant = controller.call("_entry_for_item", item, true, 1)
+	_check(state0 != null, "state 0 controller entry exists")
+	_check(state1 != null, "state 1 controller entry exists")
+	_check(state1_rotated != null, "state 1 packing controller entry exists")
+	if state0 != null and state1 != null and state1_rotated != null:
+		_check(state0.footprint == Vector2i(2, 1), "state 0 entry is 2x1")
+		_check(state1.footprint == Vector2i(1, 2), "state 1 entry is 1x2")
+		_check(
+			state1_rotated.footprint == Vector2i(2, 1),
+			"state 1 packing entry returns to 2x1"
+		)
+		_check(not state1.packing_rotated, "canonical entry remains unrotated")
+		_check(state1_rotated.packing_rotated, "packing entry records rotation")
+	controller.free()
+
+
+func _packed_asymmetric_visual() -> PackedScene:
+	var visual := Node3D.new()
+	var mesh_instance := MeshInstance3D.new()
+	var mesh := BoxMesh.new()
+	mesh.size = Vector3(0.2, 0.4, 0.1)
+	mesh_instance.mesh = mesh
+	visual.add_child(mesh_instance)
+	mesh_instance.owner = visual
+	var packed := PackedScene.new()
+	var result := packed.pack(visual)
+	assert(result == OK)
+	visual.free()
+	return packed
 
 
 func _check(condition: bool, message: String) -> void:
