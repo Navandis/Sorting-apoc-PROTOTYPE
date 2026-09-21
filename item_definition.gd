@@ -59,8 +59,11 @@ class_name ItemDefinition
 @export_range(0.10, 1.50, 0.05) var held_max_dimension: float = 0.55
 
 
-# Optional correction for shelf/world storage. The item's normal authored scale
-# is preserved. Player-controlled 90° shelf rotation is applied on top.
+# Three-axis correction that converts the untouched imported visual into its
+# canonical stored pose. In the canonical unrotated stance the item's intended
+# Front faces storage +Z. Runtime aligns that canonical pose to the owning
+# storage unit's authored Front, then applies the optional 90° packing turn.
+# The item's authored world scale is preserved.
 @export var storage_rotation_degrees: Vector3 = Vector3.ZERO
 
 
