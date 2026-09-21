@@ -315,8 +315,46 @@ func _assert_modular_review_scene(scene: Node, case_id: String) -> void:
 		var contract := rack.get_layout_contract()
 		_check(bool(contract.get("valid", false)), "%s authored rack %s has a valid derived contract" % [case_id, rack.name])
 		_check((rack.get_node("Levels") as Node3D).get_child_count() > 0, "%s authored rack %s derives levels from current children" % [case_id, rack.name])
+		var rack_surfaces: Array[StorageSurface] = []
+		for value: Variant in scene.find_children("*", "StorageSurface", true, false):
+			var surface := value as StorageSurface
+			if surface != null and _modular_rack_ancestor(surface) == rack:
+				rack_surfaces.append(surface)
+		var authored_state := rack.get_storage_orientation_quarter_turns()
+		for surface: StorageSurface in rack_surfaces:
+			_check(
+				surface.get_semantic_orientation_quarter_turns() == authored_state,
+				"%s rack %s propagates one root orientation to every level" % [case_id, rack.name]
+			)
+		var physical_before := _modular_physical_records(rack_surfaces)
+		var alternate_state := (authored_state + 1) % 4
+		for surface: StorageSurface in rack_surfaces:
+			surface.set_semantic_orientation_quarter_turns(alternate_state)
+		_check(
+			_modular_physical_records(rack_surfaces) == physical_before,
+			"%s rack %s semantic state leaves calibrated physical decks unchanged" % [case_id, rack.name]
+		)
+		for surface: StorageSurface in rack_surfaces:
+			surface.set_semantic_orientation_quarter_turns(authored_state)
 	for node: Node in scene.find_children("SM_Rack*", "", true, false):
 		_check(_modular_rack_ancestor(node) != null, "%s has no raw Rack01/Rack02 experiment outside a ModularRack" % case_id)
+
+
+func _modular_physical_records(surfaces: Array[StorageSurface]) -> Array[Dictionary]:
+	var records: Array[Dictionary] = []
+	for surface: StorageSurface in surfaces:
+		records.append({
+			"surface_id": String(surface.surface_id),
+			"global_transform": surface.global_transform,
+			"grid_size": surface.get_grid_size(),
+			"usable_size_m": surface.get_usable_size_m(),
+			"stack_clearance_m": surface.stack_clearance_m,
+		})
+	records.sort_custom(
+		func(a: Dictionary, b: Dictionary) -> bool:
+			return String(a.get("surface_id", "")) < String(b.get("surface_id", ""))
+	)
+	return records
 
 
 func _direct_modular_racks(fixtures: Node3D) -> Array[ModularRack]:

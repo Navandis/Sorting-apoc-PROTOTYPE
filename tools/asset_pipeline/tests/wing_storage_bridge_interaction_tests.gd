@@ -19,9 +19,73 @@ func _run() -> void:
 	if not _check(packed != null, "continuing gameplay scene loads"):
 		_finish()
 		return
+	await _test_semantic_orientation_handling(packed)
 	await _test_identity_stack_and_transfer_loop(packed)
 	await _test_rejection_and_rollback_loop(packed)
 	_finish()
+
+
+func _test_semantic_orientation_handling(packed: PackedScene) -> void:
+	var scene := _instantiate_with_regression_seed_fixture(packed)
+	var orientation := scene.get_node(
+		"FunctionalFixtures/SM_MetalShelves_GalleryA_West/StorageUnitOrientation"
+	)
+	orientation.set("storage_orientation_quarter_turns", 1)
+	root.add_child(scene)
+	current_scene = scene
+	await process_frame
+	await physics_frame
+	var player := scene.get_node("Player")
+	var carried := scene.get_node("Player/CarriedItems")
+	var controller := scene.get_node("Player/StoragePlacementController") as StoragePlacementController
+	var seeds := scene.get_node("DevelopmentSetup/SeedItems")
+	var surfaces := scene.call("get_functional_surfaces") as Array
+	var surface := surfaces[0] as StorageSurface
+	_check(surface.get_semantic_orientation_quarter_turns() == 1, "continuing Metal Shelf inherits authored state 1")
+	var physical_before := _surface_physical_signature(surface)
+	var semantic_size := surface.get_semantic_grid_size()
+	var zone_first := Vector2i(0, semantic_size.y - 3)
+	var zone_second := Vector2i(2, semantic_size.y - 1)
+	surface.set_semantic_zone_rect(StorageCategoriesScript.FOOD, zone_first, zone_second)
+
+	var stored_items: Array[ItemInstance] = []
+	for index: int in range(2):
+		var host := _host_for_item_id(seeds, &"loot_000005")
+		_check(host != null, "semantic Food fixture finds cereal host %d" % index)
+		if host == null:
+			break
+		var world_item := host.get_node("WorldItem") as WorldItem
+		var item: ItemInstance = world_item.get_item_instance()
+		player.call("_attempt_pickup", world_item)
+		_check(carried.get_selected_item() == item, "semantic Food pickup preserves identity %d" % index)
+		_check(_auto_place_selected(controller, carried, surface), "semantic front-left Food zone accepts item %d" % index)
+		stored_items.append(item)
+
+	_check(surface.get_stack_count() == 1, "semantic Food zone preserves normal compatible stacking")
+	if stored_items.size() == 2:
+		var stack_id := surface.get_stack_id_for_item(stored_items[0].instance_id)
+		var stack := surface.get_storage_stack(stack_id)
+		_check(stack != null and stack.entries.size() == 2, "semantic Food zone keeps two cereal identities in one stack")
+		var reservation := surface.get_reservation(stack_id)
+		var origin := reservation.get("origin", Vector2i(-1, -1)) as Vector2i
+		var footprint := reservation.get("footprint", Vector2i.ZERO) as Vector2i
+		for z: int in range(origin.y, origin.y + footprint.y):
+			for x: int in range(origin.x, origin.x + footprint.x):
+				_check(
+					surface.get_zone_category(Vector2i(x, z)) == StorageCategoriesScript.FOOD,
+					"auto-placement reservation stays inside mapped physical Food cells"
+				)
+		if stack != null and stack.entries.size() == 2:
+			var top_entry = stack.entries[1]
+			_check(top_entry.host.global_basis.get_scale().is_equal_approx(Vector3.ONE), "semantic auto-placement keeps canonical stored scale")
+			var top_item: ItemInstance = top_entry.item
+			_check((top_entry.world_item as WorldItem).pickup_into(carried), "semantic-zone stacked item retrieves normally")
+			_check(carried.get_selected_item() == top_item, "semantic-zone retrieval preserves exact identity")
+			_check(stack.entries.size() == 1, "semantic-zone retrieval preserves remaining stack ownership")
+	_check(_surface_physical_signature(surface) == physical_before, "semantic zoning and storage leave physical Metal surface unchanged")
+	scene.free()
+	current_scene = null
+	await process_frame
 
 
 func _test_identity_stack_and_transfer_loop(packed: PackedScene) -> void:
@@ -107,6 +171,20 @@ func _test_identity_stack_and_transfer_loop(packed: PackedScene) -> void:
 		player.call("_attempt_pickup", hammer_world)
 		_check(carried.get_selected_item() == hammer_item, "hammer pickup preserves identity")
 		var manual_surface := surfaces[9] as StorageSurface
+		var manual_physical_before := _surface_physical_signature(manual_surface)
+		manual_surface.set_semantic_orientation_quarter_turns(0)
+		var packing_before := _packing_orientation_signatures(
+			controller.call("_entry_orientations_for_item", hammer_item) as Array
+		)
+		manual_surface.set_semantic_orientation_quarter_turns(3)
+		var packing_after := _packing_orientation_signatures(
+			controller.call("_entry_orientations_for_item", hammer_item) as Array
+		)
+		_check(packing_after == packing_before, "semantic orientation adds no packing yaw or footprint change")
+		controller.set_manual_mode(true)
+		_check(not bool(controller.get("_rotated")), "Manual mode starts with native packing orientation")
+		controller.toggle_rotation()
+		_check(bool(controller.get("_rotated")), "Manual R rotation still selects the 90-degree packing entry")
 		var hammer_entry = controller.call("_entry_for_item", hammer_item, true)
 		var manual_origin := Vector2i(1, 1)
 		var manual_fit := {
@@ -122,8 +200,6 @@ func _test_identity_stack_and_transfer_loop(packed: PackedScene) -> void:
 			"zone_category": "",
 			"host_y_m": manual_surface.get_local_placement_position(manual_origin, hammer_entry.footprint).y,
 		}
-		controller.set_manual_mode(true)
-		controller.set("_rotated", true)
 		controller.set("_current_surface", manual_surface)
 		controller.set("_current_fit", manual_fit)
 		_check(controller.place_selected(), "hammer commits through manual rotated placement")
@@ -132,6 +208,11 @@ func _test_identity_stack_and_transfer_loop(packed: PackedScene) -> void:
 		if hammer_stack != null:
 			_check(hammer_stack.entries[0].item == hammer_item, "manual placement keeps exact hammer instance")
 			_check(hammer_stack.entries[0].packing_rotated, "manual placement records R rotation")
+			_check(
+				manual_surface.get_reservation(hammer_item.instance_id).get("origin") == manual_origin,
+				"manual placement keeps the physical nearest-cell origin under semantic state 3"
+			)
+		_check(_surface_physical_signature(manual_surface) == manual_physical_before, "semantic state 3 leaves manual target physical surface unchanged")
 		controller.set_manual_mode(false)
 
 	await process_frame
@@ -317,6 +398,27 @@ func _assert_family_storage(
 	_check(stored_ids.size() == items.size(), "%s stores every family member exactly once" % label)
 	for item: ItemInstance in items:
 		_check(stored_ids.get(item.instance_id) == item, "%s preserves identity %s" % [label, item.instance_id])
+
+
+func _surface_physical_signature(surface: StorageSurface) -> Dictionary:
+	return {
+		"global_transform": surface.global_transform,
+		"grid_size": surface.get_grid_size(),
+		"usable_size_m": surface.get_usable_size_m(),
+		"stack_clearance_m": surface.stack_clearance_m,
+	}
+
+
+func _packing_orientation_signatures(orientations: Array) -> Array[Dictionary]:
+	var result: Array[Dictionary] = []
+	for value: Variant in orientations:
+		var entry := value as StorageStack.Entry
+		result.append({
+			"footprint": entry.footprint,
+			"packing_rotated": entry.packing_rotated,
+			"aligned_bounds": entry.aligned_bounds,
+		})
+	return result
 
 
 func _host_for_item_id(seeds: Node, item_id: StringName) -> Node3D:

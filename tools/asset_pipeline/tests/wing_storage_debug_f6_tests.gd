@@ -15,6 +15,7 @@ func _run() -> void:
 	if not _check(packed != null, "continuing gameplay scene loads"):
 		_finish()
 		return
+	await _assert_orientation_independent_f6(packed)
 
 	var scene := packed.instantiate()
 	# The held-item clone is unrelated to grid presentation and triggers a
@@ -96,6 +97,105 @@ func _run() -> void:
 	await process_frame
 	await _assert_legacy_main_controls()
 	_finish()
+
+
+func _assert_orientation_independent_f6(packed: PackedScene) -> void:
+	var state_zero: Dictionary = await _capture_orientation_fixture(packed, 0, 0, false)
+	var rotated: Dictionary = await _capture_orientation_fixture(packed, 1, 3, true)
+	_check(state_zero.get("metal") == rotated.get("metal"), "Metal Shelf physical grids match between semantic states 0 and 1")
+	_check(state_zero.get("locker") == rotated.get("locker"), "Locker physical grids match between semantic states 0 and 3")
+
+
+func _capture_orientation_fixture(
+	packed: PackedScene,
+	metal_state: int,
+	locker_state: int,
+	exercise_keys: bool
+) -> Dictionary:
+	var scene := packed.instantiate()
+	scene.get_node("Player").set("enable_held_item_view", false)
+	var metal_context := scene.get_node(
+		"FunctionalFixtures/SM_MetalShelves_GalleryA_West/StorageUnitOrientation"
+	)
+	var locker_context := scene.get_node(
+		"FunctionalFixtures/SM_ventilated_locker_GalleryC_West/StorageUnitOrientation"
+	)
+	metal_context.set("storage_orientation_quarter_turns", metal_state)
+	locker_context.set("storage_orientation_quarter_turns", locker_state)
+	root.add_child(scene)
+	current_scene = scene
+	await process_frame
+	await physics_frame
+	var fixtures := scene.get_node("FunctionalFixtures")
+	var manager := fixtures.get_node("StoragePrototypeManager")
+	var surfaces := scene.call("get_functional_surfaces") as Array
+	var metal_records := _physical_grid_records(surfaces, "SM_MetalShelves_GalleryA_West")
+	var locker_records := _physical_grid_records(surfaces, "SM_ventilated_locker_GalleryC_West")
+	_check(metal_records.size() == 4, "orientation F6 fixture finds four Metal Shelf surfaces")
+	_check(locker_records.size() == 4, "orientation F6 fixture finds four Locker surfaces")
+	for value: Variant in surfaces:
+		var surface := value as StorageSurface
+		var parent_name := String(surface.get_parent().name)
+		if parent_name == "SM_MetalShelves_GalleryA_West":
+			_check(surface.get_semantic_orientation_quarter_turns() == metal_state, "every Metal Shelf level inherits the temporary fixture state")
+		elif parent_name == "SM_ventilated_locker_GalleryC_West":
+			_check(surface.get_semantic_orientation_quarter_turns() == locker_state, "every Locker level inherits the temporary fixture state")
+
+	if exercise_keys:
+		var before := {"metal": metal_records, "locker": locker_records}
+		await _send_key(KEY_F6, true, false)
+		_check(_manager_override(manager), "F6 enables grids with nonzero semantic orientations")
+		_check(_all_surface_visuals_match(surfaces, true), "F6 reveals every nonzero-oriented physical grid")
+		_check(
+			before == {
+				"metal": _physical_grid_records(surfaces, "SM_MetalShelves_GalleryA_West"),
+				"locker": _physical_grid_records(surfaces, "SM_ventilated_locker_GalleryC_West"),
+			},
+			"F6 changes presentation only under semantic orientation"
+		)
+		await _send_key(KEY_F6, true, false)
+		_check(not _manager_override(manager), "F6 turns back off under semantic orientation")
+		var demo_state_before := int(manager.get("_demo_state"))
+		await _send_key(KEY_F7, true, false)
+		await _send_key(KEY_F7, false, false)
+		_check(int(manager.get("_demo_state")) == demo_state_before, "F7 remains suppressed with nonzero semantic orientations")
+		_check(
+			before == {
+				"metal": _physical_grid_records(surfaces, "SM_MetalShelves_GalleryA_West"),
+				"locker": _physical_grid_records(surfaces, "SM_ventilated_locker_GalleryC_West"),
+			},
+			"F7 leaves nonzero-oriented physical grids and storage state untouched"
+		)
+
+	var result := {"metal": metal_records, "locker": locker_records}
+	scene.free()
+	current_scene = null
+	await process_frame
+	return result
+
+
+func _physical_grid_records(surfaces: Array, parent_name: String) -> Array[Dictionary]:
+	var records: Array[Dictionary] = []
+	for value: Variant in surfaces:
+		var surface := value as StorageSurface
+		if surface == null or String(surface.get_parent().name) != parent_name:
+			continue
+		var debug_grid := surface.get_node_or_null("StorageDebugGrid") as MeshInstance3D
+		records.append({
+			"surface_id": String(surface.surface_id),
+			"global_transform": surface.global_transform,
+			"grid_size": surface.get_grid_size(),
+			"usable_size_m": surface.get_usable_size_m(),
+			"stack_clearance_m": surface.stack_clearance_m,
+			"reservation_count": surface.get_reservation_count(),
+			"debug_grid_global_transform": debug_grid.global_transform,
+			"debug_grid_aabb": debug_grid.get_aabb(),
+		})
+	records.sort_custom(
+		func(a: Dictionary, b: Dictionary) -> bool:
+			return String(a.get("surface_id", "")) < String(b.get("surface_id", ""))
+	)
+	return records
 
 
 func _assert_manual_target_coexistence(
