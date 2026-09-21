@@ -1,13 +1,13 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://bdu1tbtqhd76k"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_cre0t"]
-[ext_resource type="PackedScene" path="res://assets/props/medical/SM_Bandages_1.glb" id="2_lnkr5"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_cre0t"]
+[ext_resource type="PackedScene" uid="uid://d30pld4bfmigb" path="res://assets/props/medical/SM_Bandages_1.glb" id="2_lnkr5"]
 
 [resource]
 script = ExtResource("1_cre0t")
 item_id = &"loot_000026"
 display_name = "Bandages 1"
 storage_category = "Medical"
-storage_footprint = Vector3i(1, 2, 1)
+storage_footprint = Vector3i(2, 1, 1)
 can_be_stacked = true
 visual_scene = ExtResource("2_lnkr5")

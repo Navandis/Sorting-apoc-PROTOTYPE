@@ -1,13 +1,14 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://bdc4xyxxl8hlg"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_5x0ml"]
-[ext_resource type="PackedScene" path="res://assets/props/Fuel/SM_Firewood_01.glb" id="2_tn0it"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_5x0ml"]
+[ext_resource type="PackedScene" uid="uid://v6yqq0xw4o56" path="res://assets/props/Fuel/SM_Firewood_01.glb" id="2_tn0it"]
 
 [resource]
 script = ExtResource("1_5x0ml")
 item_id = &"loot_000013"
 display_name = "Firewood 01"
 storage_category = "Fuel"
-storage_footprint = Vector3i(2, 4, 1)
+storage_footprint = Vector3i(4, 1, 1)
 can_be_stacked = true
 visual_scene = ExtResource("2_tn0it")
+storage_rotation_degrees = Vector3(0, 90, 0)

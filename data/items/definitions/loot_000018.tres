@@ -1,7 +1,7 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://c2o8p4strku3t"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_kymk2"]
-[ext_resource type="PackedScene" path="res://assets/props/Fuel/SM_PropaneTank_02.glb" id="2_dn5bs"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_kymk2"]
+[ext_resource type="PackedScene" uid="uid://5tmqsrcxc405" path="res://assets/props/Fuel/SM_PropaneTank_02.glb" id="2_dn5bs"]
 
 [resource]
 script = ExtResource("1_kymk2")
@@ -11,3 +11,4 @@ storage_category = "Fuel"
 storage_footprint = Vector3i(3, 3, 1)
 can_be_stacked = true
 visual_scene = ExtResource("2_dn5bs")
+storage_rotation_degrees = Vector3(0, -115, 0)

@@ -1,7 +1,7 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://ch6tt7n4i81sg"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_jdotd"]
-[ext_resource type="PackedScene" path="res://assets/props/medical/pill_bottle.glb" id="2_oaiy6"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_jdotd"]
+[ext_resource type="PackedScene" uid="uid://l0kqvj1n6wrl" path="res://assets/props/medical/pill_bottle.glb" id="2_oaiy6"]
 
 [resource]
 script = ExtResource("1_jdotd")
@@ -10,4 +10,3 @@ display_name = "Painkillers"
 storage_category = "Medical"
 can_be_stacked = true
 visual_scene = ExtResource("2_oaiy6")
-storage_rotation_degrees = Vector3(0, 90, 0)

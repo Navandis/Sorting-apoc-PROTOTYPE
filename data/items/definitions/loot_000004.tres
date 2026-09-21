@@ -1,14 +1,13 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://bpl7k34iwe1cc"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_h4il4"]
-[ext_resource type="PackedScene" path="res://assets/props/electronics/SM_Phone_01.glb" id="2_jj6q2"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_h4il4"]
+[ext_resource type="PackedScene" uid="uid://bxjf574hsfsrk" path="res://assets/props/electronics/SM_Phone_01.glb" id="2_jj6q2"]
 
 [resource]
 script = ExtResource("1_h4il4")
 item_id = &"loot_000004"
 display_name = "Phone 01"
 storage_category = "Electronics"
-storage_footprint = Vector3i(3, 3, 1)
-storage_rotation_degrees = Vector3(0, 90, 0)
+storage_footprint = Vector3i(4, 3, 1)
 can_be_stacked = true
 visual_scene = ExtResource("2_jj6q2")

@@ -1,7 +1,7 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://doxisj7je6g8q"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_dj3hp"]
-[ext_resource type="PackedScene" path="res://assets/props/Food/SM_Watermelon_1.glb" id="2_ggb77"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_dj3hp"]
+[ext_resource type="PackedScene" uid="uid://dhb54nxp7thnb" path="res://assets/props/Food/SM_Watermelon_1.glb" id="2_ggb77"]
 
 [resource]
 script = ExtResource("1_dj3hp")
@@ -11,3 +11,4 @@ storage_category = "Food"
 storage_footprint = Vector3i(3, 3, 1)
 can_be_stacked = true
 visual_scene = ExtResource("2_ggb77")
+storage_rotation_degrees = Vector3(0, 90, 0)

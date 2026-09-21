@@ -1,13 +1,14 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://craiilly8gb1v"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_jy33b"]
-[ext_resource type="PackedScene" path="res://assets/props/protection/SM_HardHat_01.glb" id="2_umnxq"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_jy33b"]
+[ext_resource type="PackedScene" uid="uid://g7gfxcmhy3no" path="res://assets/props/protection/SM_HardHat_01.glb" id="2_umnxq"]
 
 [resource]
 script = ExtResource("1_jy33b")
 item_id = &"loot_000035"
 display_name = "Hard Hat 01"
 storage_category = "Protection"
-storage_footprint = Vector3i(3, 3, 1)
+storage_footprint = Vector3i(3, 2, 1)
 can_be_stacked = true
 visual_scene = ExtResource("2_umnxq")
+storage_rotation_degrees = Vector3(0, 90, 0)

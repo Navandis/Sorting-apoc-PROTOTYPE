@@ -1,14 +1,14 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://rh15qadchnbb"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_47bqk"]
-[ext_resource type="PackedScene" path="res://assets/props/Weapons/SM_Gun_Shotgun.glb" id="2_7tcpe"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_47bqk"]
+[ext_resource type="PackedScene" uid="uid://dotocyn70iqyv" path="res://assets/props/Weapons/SM_Gun_Shotgun.glb" id="2_7tcpe"]
 
 [resource]
 script = ExtResource("1_47bqk")
 item_id = &"loot_000040"
 display_name = "Shotgun"
 storage_category = "Weapons"
-storage_footprint = Vector3i(2, 10, 1)
-storage_rotation_degrees = Vector3(0, 0, 90)
+storage_footprint = Vector3i(10, 2, 1)
 can_be_stacked = true
 visual_scene = ExtResource("2_7tcpe")
+storage_rotation_degrees = Vector3(0, -90, 90)

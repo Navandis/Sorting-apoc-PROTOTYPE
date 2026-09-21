@@ -1,7 +1,7 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://b3qpjdlgt80wr"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_fv5sn"]
-[ext_resource type="PackedScene" path="res://assets/props/Food/SM_Dry_Goods_01c.glb" id="2_2an0n"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_fv5sn"]
+[ext_resource type="PackedScene" uid="uid://uge4qvuuyt8f" path="res://assets/props/Food/SM_Dry_Goods_01c.glb" id="2_2an0n"]
 
 [resource]
 script = ExtResource("1_fv5sn")
@@ -12,3 +12,4 @@ can_be_stacked = true
 can_support_stack = true
 auto_stack_group = &"round_cans"
 visual_scene = ExtResource("2_2an0n")
+storage_rotation_degrees = Vector3(0, -90, 0)

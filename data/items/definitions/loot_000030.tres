@@ -1,15 +1,16 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://blmidiylc4fny"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_w1s1n"]
-[ext_resource type="PackedScene" path="res://assets/props/morale/SM_Book_01.glb" id="2_3hvdf"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_w1s1n"]
+[ext_resource type="PackedScene" uid="uid://dqahwgcsham5a" path="res://assets/props/morale/SM_Book_01.glb" id="2_3hvdf"]
 
 [resource]
 script = ExtResource("1_w1s1n")
 item_id = &"loot_000030"
 display_name = "Book 01"
 storage_category = "Morale"
-storage_footprint = Vector3i(3, 2, 1)
+storage_footprint = Vector3i(2, 2, 1)
 can_be_stacked = true
 can_support_stack = true
 auto_stack_group = &"flat_media"
 visual_scene = ExtResource("2_3hvdf")
+storage_rotation_degrees = Vector3(0, 90, 0)

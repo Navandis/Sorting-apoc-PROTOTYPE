@@ -1,7 +1,7 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://crdf2tvfhwds5"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_11h2o"]
-[ext_resource type="PackedScene" path="res://assets/props/medical/SM_Antibiotics_01.glb" id="2_lg0hq"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_11h2o"]
+[ext_resource type="PackedScene" uid="uid://b5kdjjl24ncie" path="res://assets/props/medical/SM_Antibiotics_01.glb" id="2_lg0hq"]
 
 [resource]
 script = ExtResource("1_11h2o")
@@ -10,3 +10,4 @@ display_name = "Medicine Bottle"
 storage_category = "Medical"
 can_be_stacked = true
 visual_scene = ExtResource("2_lg0hq")
+storage_rotation_degrees = Vector3(0, 200, 0)

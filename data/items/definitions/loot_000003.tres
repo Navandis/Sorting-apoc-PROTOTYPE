@@ -1,14 +1,13 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://difb2yqv0c2m"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_7171i"]
-[ext_resource type="PackedScene" path="res://assets/props/electronics/SM_ElectronicDevice_01.glb" id="2_48dqb"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_7171i"]
+[ext_resource type="PackedScene" uid="uid://bccl7gu0qfqi3" path="res://assets/props/electronics/SM_ElectronicDevice_01.glb" id="2_48dqb"]
 
 [resource]
 script = ExtResource("1_7171i")
 item_id = &"loot_000003"
 display_name = "Electronic Device 01"
 storage_category = "Electronics"
-storage_footprint = Vector3i(3, 5, 1)
-storage_rotation_degrees = Vector3(0, 90, 0)
+storage_footprint = Vector3i(5, 3, 1)
 can_be_stacked = true
 visual_scene = ExtResource("2_48dqb")

@@ -1,13 +1,14 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://dt81syycmeuoi"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_d0o8s"]
-[ext_resource type="PackedScene" path="res://assets/props/Weapons/tennis_racket.glb" id="2_erwye"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_d0o8s"]
+[ext_resource type="PackedScene" uid="uid://bqgbb88i4fa7q" path="res://assets/props/Weapons/tennis_racket.glb" id="2_erwye"]
 
 [resource]
 script = ExtResource("1_d0o8s")
 item_id = &"loot_000042"
 display_name = "Tennis Racket"
 storage_category = "Weapons"
-storage_footprint = Vector3i(3, 5, 1)
+storage_footprint = Vector3i(5, 3, 1)
 can_be_stacked = true
 visual_scene = ExtResource("2_erwye")
+storage_rotation_degrees = Vector3(0, -90, 0)

@@ -24,7 +24,7 @@
 				"status": "APPROVED"
 			},
 			"footprint_review": {
-				"notes": "Current Footprint approved against posed geometry.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; authored X/Y matches the 0.10 m canonical posed-bounds suggestion.",
 				"reviewed_footprint": [
 					1,
 					2,
@@ -65,7 +65,7 @@
 				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Default zero authored storage pose approved.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; default approximately-zero canonical pose accepted.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
@@ -85,13 +85,13 @@
 					"reviewed_can_be_stacked": false,
 					"reviewed_can_support_stack": true,
 					"reviewed_footprint": [
-						5,
 						3,
+						5,
 						1
 					],
 					"reviewed_rotation_degrees": [
 						0.0,
-						90.0,
+						0.0,
 						0.0
 					],
 					"reviewed_source_fingerprint": "ac0ebcf72372516de0771fd2b9e82739476bc1123c34af927028d96bde1df211"
@@ -99,15 +99,15 @@
 				"status": "APPROVED"
 			},
 			"footprint_review": {
-				"notes": "Current Footprint approved against posed geometry.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; authored X/Y matches the 0.10 m canonical posed-bounds suggestion.",
 				"reviewed_footprint": [
-					5,
 					3,
+					5,
 					1
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
-					90.0,
+					0.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "ac0ebcf72372516de0771fd2b9e82739476bc1123c34af927028d96bde1df211",
@@ -127,27 +127,27 @@
 				"reviewed_can_be_stacked": false,
 				"reviewed_can_support_stack": true,
 				"reviewed_footprint": [
-					5,
 					3,
+					5,
 					1
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
-					90.0,
+					0.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "ac0ebcf72372516de0771fd2b9e82739476bc1123c34af927028d96bde1df211",
 				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Default pose unsuitable; candidate Y +90 degrees faces the computer drive panel toward the player.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; default approximately-zero canonical pose accepted.",
 				"reviewed_rotation_degrees": [
 					0.0,
-					90.0,
+					0.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "ac0ebcf72372516de0771fd2b9e82739476bc1123c34af927028d96bde1df211",
-				"status": "CUSTOM_POSE_APPROVED"
+				"status": "DEFAULT_POSE_APPROVED"
 			}
 		},
 		"loot_000003": {
@@ -160,13 +160,13 @@
 					"reviewed_can_be_stacked": true,
 					"reviewed_can_support_stack": false,
 					"reviewed_footprint": [
-						3,
 						5,
+						3,
 						1
 					],
 					"reviewed_rotation_degrees": [
 						0.0,
-						90.0,
+						0.0,
 						0.0
 					],
 					"reviewed_source_fingerprint": "61929a0e30280bedd792f0af49ef16fc7bccdff11cab8f5800563eae3b945503"
@@ -174,15 +174,15 @@
 				"status": "APPROVED"
 			},
 			"footprint_review": {
-				"notes": "Current Footprint approved against posed geometry.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; authored X/Y matches the 0.10 m canonical posed-bounds suggestion.",
 				"reviewed_footprint": [
-					3,
 					5,
+					3,
 					1
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
-					90.0,
+					0.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "61929a0e30280bedd792f0af49ef16fc7bccdff11cab8f5800563eae3b945503",
@@ -202,27 +202,27 @@
 				"reviewed_can_be_stacked": true,
 				"reviewed_can_support_stack": false,
 				"reviewed_footprint": [
-					3,
 					5,
+					3,
 					1
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
-					90.0,
+					0.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "61929a0e30280bedd792f0af49ef16fc7bccdff11cab8f5800563eae3b945503",
 				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Default pose unsuitable; candidate Y +90 degrees faces the controls and dials toward the player.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; default approximately-zero canonical pose accepted.",
 				"reviewed_rotation_degrees": [
 					0.0,
-					90.0,
+					0.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "61929a0e30280bedd792f0af49ef16fc7bccdff11cab8f5800563eae3b945503",
-				"status": "CUSTOM_POSE_APPROVED"
+				"status": "DEFAULT_POSE_APPROVED"
 			}
 		},
 		"loot_000004": {
@@ -235,13 +235,13 @@
 					"reviewed_can_be_stacked": true,
 					"reviewed_can_support_stack": false,
 					"reviewed_footprint": [
-						3,
+						4,
 						3,
 						1
 					],
 					"reviewed_rotation_degrees": [
 						0.0,
-						90.0,
+						0.0,
 						0.0
 					],
 					"reviewed_source_fingerprint": "4d2312e22b298995e88a4eb23135ddcb6bb7158dd01f4553cba521302a918993"
@@ -249,19 +249,19 @@
 				"status": "APPROVED"
 			},
 			"footprint_review": {
-				"notes": "Current Footprint approved as a deliberate authored override.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; authored X/Y matches the 0.10 m canonical posed-bounds suggestion.",
 				"reviewed_footprint": [
-					3,
+					4,
 					3,
 					1
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
-					90.0,
+					0.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "4d2312e22b298995e88a4eb23135ddcb6bb7158dd01f4553cba521302a918993",
-				"status": "OVERRIDE_APPROVED"
+				"status": "GEOMETRY_APPROVED"
 			},
 			"item_id": "loot_000004",
 			"scale_review": {
@@ -277,27 +277,27 @@
 				"reviewed_can_be_stacked": true,
 				"reviewed_can_support_stack": false,
 				"reviewed_footprint": [
-					3,
+					4,
 					3,
 					1
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
-					90.0,
+					0.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "4d2312e22b298995e88a4eb23135ddcb6bb7158dd01f4553cba521302a918993",
 				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Default pose unsuitable; candidate Y +90 degrees faces the keypad toward the player.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; default approximately-zero canonical pose accepted.",
 				"reviewed_rotation_degrees": [
 					0.0,
-					90.0,
+					0.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "4d2312e22b298995e88a4eb23135ddcb6bb7158dd01f4553cba521302a918993",
-				"status": "CUSTOM_POSE_APPROVED"
+				"status": "DEFAULT_POSE_APPROVED"
 			}
 		},
 		"loot_000005": {
@@ -324,7 +324,7 @@
 				"status": "APPROVED"
 			},
 			"footprint_review": {
-				"notes": "Current Footprint approved as a deliberate authored override.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; deliberate authored override retained; canonical posed-bounds suggestion was 2x1 cells.",
 				"reviewed_footprint": [
 					3,
 					1,
@@ -365,7 +365,7 @@
 				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Default zero authored storage pose approved.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; default approximately-zero canonical pose accepted.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
@@ -399,7 +399,7 @@
 				"status": "APPROVED"
 			},
 			"footprint_review": {
-				"notes": "Current Footprint approved against posed geometry.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; authored X/Y matches the 0.10 m canonical posed-bounds suggestion.",
 				"reviewed_footprint": [
 					3,
 					2,
@@ -440,7 +440,7 @@
 				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Default zero authored storage pose approved.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; default approximately-zero canonical pose accepted.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
@@ -474,7 +474,7 @@
 				"status": "APPROVED"
 			},
 			"footprint_review": {
-				"notes": "Current Footprint approved against posed geometry.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; authored X/Y matches the 0.10 m canonical posed-bounds suggestion.",
 				"reviewed_footprint": [
 					3,
 					1,
@@ -515,7 +515,7 @@
 				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Default zero authored storage pose approved.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; default approximately-zero canonical pose accepted.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
@@ -541,7 +541,7 @@
 					],
 					"reviewed_rotation_degrees": [
 						0.0,
-						0.0,
+						-90.0,
 						0.0
 					],
 					"reviewed_source_fingerprint": "73876bc2b02dfd931b227d5148c96a15196e9b6e7cfaeb0e317a3ed2bd330c1a"
@@ -549,7 +549,7 @@
 				"status": "APPROVED"
 			},
 			"footprint_review": {
-				"notes": "Current Footprint approved against posed geometry.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; authored X/Y matches the 0.10 m canonical posed-bounds suggestion.",
 				"reviewed_footprint": [
 					1,
 					1,
@@ -557,7 +557,7 @@
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					-90.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "73876bc2b02dfd931b227d5148c96a15196e9b6e7cfaeb0e317a3ed2bd330c1a",
@@ -583,21 +583,21 @@
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					-90.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "73876bc2b02dfd931b227d5148c96a15196e9b6e7cfaeb0e317a3ed2bd330c1a",
 				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Default zero authored storage pose approved.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; current custom canonical pose accepted.",
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					-90.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "73876bc2b02dfd931b227d5148c96a15196e9b6e7cfaeb0e317a3ed2bd330c1a",
-				"status": "DEFAULT_POSE_APPROVED"
+				"status": "CUSTOM_POSE_APPROVED"
 			}
 		},
 		"loot_000009": {
@@ -616,7 +616,7 @@
 					],
 					"reviewed_rotation_degrees": [
 						0.0,
-						0.0,
+						-90.0,
 						0.0
 					],
 					"reviewed_source_fingerprint": "cb3f25b1e4746391b94d2d6151c2adf07d378a43f529d26d3ce4aef0338a8a2e"
@@ -624,7 +624,7 @@
 				"status": "APPROVED"
 			},
 			"footprint_review": {
-				"notes": "Current Footprint approved against posed geometry.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; authored X/Y matches the 0.10 m canonical posed-bounds suggestion.",
 				"reviewed_footprint": [
 					1,
 					1,
@@ -632,7 +632,7 @@
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					-90.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "cb3f25b1e4746391b94d2d6151c2adf07d378a43f529d26d3ce4aef0338a8a2e",
@@ -658,21 +658,21 @@
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					-90.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "cb3f25b1e4746391b94d2d6151c2adf07d378a43f529d26d3ce4aef0338a8a2e",
 				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Default zero authored storage pose approved.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; current custom canonical pose accepted.",
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					-90.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "cb3f25b1e4746391b94d2d6151c2adf07d378a43f529d26d3ce4aef0338a8a2e",
-				"status": "DEFAULT_POSE_APPROVED"
+				"status": "CUSTOM_POSE_APPROVED"
 			}
 		},
 		"loot_000010": {
@@ -691,7 +691,7 @@
 					],
 					"reviewed_rotation_degrees": [
 						0.0,
-						0.0,
+						-180.0,
 						0.0
 					],
 					"reviewed_source_fingerprint": "6c57f9e480bc9c9160da0d61ef75986e72384e330bbcf99a31218e895a61b7aa"
@@ -699,7 +699,7 @@
 				"status": "APPROVED"
 			},
 			"footprint_review": {
-				"notes": "Current Footprint approved against posed geometry.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; authored X/Y matches the 0.10 m canonical posed-bounds suggestion.",
 				"reviewed_footprint": [
 					1,
 					1,
@@ -707,7 +707,7 @@
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					-180.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "6c57f9e480bc9c9160da0d61ef75986e72384e330bbcf99a31218e895a61b7aa",
@@ -733,21 +733,21 @@
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					-180.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "6c57f9e480bc9c9160da0d61ef75986e72384e330bbcf99a31218e895a61b7aa",
 				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Default zero authored storage pose approved.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; current custom canonical pose accepted.",
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					-180.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "6c57f9e480bc9c9160da0d61ef75986e72384e330bbcf99a31218e895a61b7aa",
-				"status": "DEFAULT_POSE_APPROVED"
+				"status": "CUSTOM_POSE_APPROVED"
 			}
 		},
 		"loot_000011": {
@@ -774,7 +774,7 @@
 				"status": "APPROVED"
 			},
 			"footprint_review": {
-				"notes": "Current Footprint approved as a deliberate authored override.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; deliberate authored override retained; canonical posed-bounds suggestion was 10x6 cells.",
 				"reviewed_footprint": [
 					10,
 					5,
@@ -815,7 +815,7 @@
 				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Default zero authored storage pose approved.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; default approximately-zero canonical pose accepted.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
@@ -841,7 +841,7 @@
 					],
 					"reviewed_rotation_degrees": [
 						0.0,
-						0.0,
+						90.0,
 						0.0
 					],
 					"reviewed_source_fingerprint": "cedc1401c90bc6bf2733ca2648ee4ab9daf5a85c1fa724cca2a70a4de3173e15"
@@ -849,7 +849,7 @@
 				"status": "APPROVED"
 			},
 			"footprint_review": {
-				"notes": "Current Footprint approved against posed geometry.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; authored X/Y matches the 0.10 m canonical posed-bounds suggestion.",
 				"reviewed_footprint": [
 					3,
 					3,
@@ -857,7 +857,7 @@
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					90.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "cedc1401c90bc6bf2733ca2648ee4ab9daf5a85c1fa724cca2a70a4de3173e15",
@@ -883,21 +883,21 @@
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					90.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "cedc1401c90bc6bf2733ca2648ee4ab9daf5a85c1fa724cca2a70a4de3173e15",
 				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Default zero authored storage pose approved.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; current custom canonical pose accepted.",
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					90.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "cedc1401c90bc6bf2733ca2648ee4ab9daf5a85c1fa724cca2a70a4de3173e15",
-				"status": "DEFAULT_POSE_APPROVED"
+				"status": "CUSTOM_POSE_APPROVED"
 			}
 		},
 		"loot_000013": {
@@ -910,13 +910,13 @@
 					"reviewed_can_be_stacked": true,
 					"reviewed_can_support_stack": false,
 					"reviewed_footprint": [
-						2,
 						4,
+						1,
 						1
 					],
 					"reviewed_rotation_degrees": [
 						0.0,
-						0.0,
+						90.0,
 						0.0
 					],
 					"reviewed_source_fingerprint": "58ec440f4d8a9b89d4ae6f30a0d7384cb6c9e584e25bdf8e2c6d99874ce6d658"
@@ -924,15 +924,15 @@
 				"status": "APPROVED"
 			},
 			"footprint_review": {
-				"notes": "Current Footprint approved as a deliberate authored override.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; deliberate authored override retained; canonical posed-bounds suggestion was 5x2 cells.",
 				"reviewed_footprint": [
-					2,
 					4,
+					1,
 					1
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					90.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "58ec440f4d8a9b89d4ae6f30a0d7384cb6c9e584e25bdf8e2c6d99874ce6d658",
@@ -952,27 +952,27 @@
 				"reviewed_can_be_stacked": true,
 				"reviewed_can_support_stack": false,
 				"reviewed_footprint": [
-					2,
 					4,
+					1,
 					1
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					90.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "58ec440f4d8a9b89d4ae6f30a0d7384cb6c9e584e25bdf8e2c6d99874ce6d658",
 				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Default zero authored storage pose approved.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; current custom canonical pose accepted.",
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					90.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "58ec440f4d8a9b89d4ae6f30a0d7384cb6c9e584e25bdf8e2c6d99874ce6d658",
-				"status": "DEFAULT_POSE_APPROVED"
+				"status": "CUSTOM_POSE_APPROVED"
 			}
 		},
 		"loot_000014": {
@@ -999,7 +999,7 @@
 				"status": "APPROVED"
 			},
 			"footprint_review": {
-				"notes": "Current Footprint approved as a deliberate authored override.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; deliberate authored override retained; canonical posed-bounds suggestion was 7x5 cells.",
 				"reviewed_footprint": [
 					6,
 					4,
@@ -1040,7 +1040,7 @@
 				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Default zero authored storage pose approved.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; default approximately-zero canonical pose accepted.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
@@ -1066,7 +1066,7 @@
 					],
 					"reviewed_rotation_degrees": [
 						0.0,
-						0.0,
+						180.0,
 						0.0
 					],
 					"reviewed_source_fingerprint": "f095c1ee2eb407ced7214686ba599207d3cbcae8cfbbb61ff0cf06242f54ef85"
@@ -1074,7 +1074,7 @@
 				"status": "APPROVED"
 			},
 			"footprint_review": {
-				"notes": "Current Footprint approved against posed geometry. 2026-09-18 technical Fuel maintenance reconciliation: current source measured compatible with prior scale, zero Storage Pose, 4x2x1 Footprint, Stack Role and explicit None Auto Group decisions; prior decisions retained. Old binary/bounds unavailable; maintenance human review remains PENDING.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; authored X/Y matches the 0.10 m canonical posed-bounds suggestion.",
 				"reviewed_footprint": [
 					4,
 					2,
@@ -1082,7 +1082,7 @@
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					180.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "f095c1ee2eb407ced7214686ba599207d3cbcae8cfbbb61ff0cf06242f54ef85",
@@ -1108,21 +1108,21 @@
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					180.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "f095c1ee2eb407ced7214686ba599207d3cbcae8cfbbb61ff0cf06242f54ef85",
 				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Default zero authored storage pose approved. 2026-09-18 technical Fuel maintenance reconciliation: current source measured compatible with prior scale, zero Storage Pose, 4x2x1 Footprint, Stack Role and explicit None Auto Group decisions; prior decisions retained. Old binary/bounds unavailable; maintenance human review remains PENDING.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; current custom canonical pose accepted.",
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					180.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "f095c1ee2eb407ced7214686ba599207d3cbcae8cfbbb61ff0cf06242f54ef85",
-				"status": "DEFAULT_POSE_APPROVED"
+				"status": "CUSTOM_POSE_APPROVED"
 			}
 		},
 		"loot_000016": {
@@ -1135,13 +1135,13 @@
 					"reviewed_can_be_stacked": true,
 					"reviewed_can_support_stack": false,
 					"reviewed_footprint": [
-						3,
+						4,
 						2,
 						1
 					],
 					"reviewed_rotation_degrees": [
 						0.0,
-						0.0,
+						180.0,
 						0.0
 					],
 					"reviewed_source_fingerprint": "c057b5d534a7b5c2d443c9d89ab62bb3cfcb6efa725f7acd2f5a20fd2270c952"
@@ -1149,19 +1149,19 @@
 				"status": "APPROVED"
 			},
 			"footprint_review": {
-				"notes": "Current Footprint approved as a deliberate authored override.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; authored X/Y matches the 0.10 m canonical posed-bounds suggestion.",
 				"reviewed_footprint": [
-					3,
+					4,
 					2,
 					1
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					180.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "c057b5d534a7b5c2d443c9d89ab62bb3cfcb6efa725f7acd2f5a20fd2270c952",
-				"status": "OVERRIDE_APPROVED"
+				"status": "GEOMETRY_APPROVED"
 			},
 			"item_id": "loot_000016",
 			"scale_review": {
@@ -1177,27 +1177,27 @@
 				"reviewed_can_be_stacked": true,
 				"reviewed_can_support_stack": false,
 				"reviewed_footprint": [
-					3,
+					4,
 					2,
 					1
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					180.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "c057b5d534a7b5c2d443c9d89ab62bb3cfcb6efa725f7acd2f5a20fd2270c952",
 				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Default zero authored storage pose approved.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; current custom canonical pose accepted.",
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					180.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "c057b5d534a7b5c2d443c9d89ab62bb3cfcb6efa725f7acd2f5a20fd2270c952",
-				"status": "DEFAULT_POSE_APPROVED"
+				"status": "CUSTOM_POSE_APPROVED"
 			}
 		},
 		"loot_000017": {
@@ -1216,7 +1216,7 @@
 					],
 					"reviewed_rotation_degrees": [
 						0.0,
-						0.0,
+						-90.0,
 						0.0
 					],
 					"reviewed_source_fingerprint": "3ef3c398222ed18752ab1fb54d1e83aec579a5a215fdd4376f193a75f21de9f4"
@@ -1224,7 +1224,7 @@
 				"status": "APPROVED"
 			},
 			"footprint_review": {
-				"notes": "Current Footprint approved as a deliberate authored override.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; deliberate authored override retained; canonical posed-bounds suggestion was 4x4 cells.",
 				"reviewed_footprint": [
 					4,
 					3,
@@ -1232,7 +1232,7 @@
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					-90.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "3ef3c398222ed18752ab1fb54d1e83aec579a5a215fdd4376f193a75f21de9f4",
@@ -1258,21 +1258,21 @@
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					-90.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "3ef3c398222ed18752ab1fb54d1e83aec579a5a215fdd4376f193a75f21de9f4",
 				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Default zero authored storage pose approved.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; current custom canonical pose accepted.",
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					-90.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "3ef3c398222ed18752ab1fb54d1e83aec579a5a215fdd4376f193a75f21de9f4",
-				"status": "DEFAULT_POSE_APPROVED"
+				"status": "CUSTOM_POSE_APPROVED"
 			}
 		},
 		"loot_000018": {
@@ -1291,7 +1291,7 @@
 					],
 					"reviewed_rotation_degrees": [
 						0.0,
-						0.0,
+						-115.0,
 						0.0
 					],
 					"reviewed_source_fingerprint": "5c6a25e519c6e0e2544ad1a7e325c77be9ad79500c0466952fc9c35b1ffe3b61"
@@ -1299,7 +1299,7 @@
 				"status": "APPROVED"
 			},
 			"footprint_review": {
-				"notes": "Current Footprint approved against posed geometry.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; deliberate authored override retained; canonical posed-bounds suggestion was 4x4 cells.",
 				"reviewed_footprint": [
 					3,
 					3,
@@ -1307,11 +1307,11 @@
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					-115.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "5c6a25e519c6e0e2544ad1a7e325c77be9ad79500c0466952fc9c35b1ffe3b61",
-				"status": "GEOMETRY_APPROVED"
+				"status": "OVERRIDE_APPROVED"
 			},
 			"item_id": "loot_000018",
 			"scale_review": {
@@ -1333,21 +1333,21 @@
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					-115.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "5c6a25e519c6e0e2544ad1a7e325c77be9ad79500c0466952fc9c35b1ffe3b61",
 				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Default zero authored storage pose approved.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; current custom canonical pose accepted.",
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					-115.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "5c6a25e519c6e0e2544ad1a7e325c77be9ad79500c0466952fc9c35b1ffe3b61",
-				"status": "DEFAULT_POSE_APPROVED"
+				"status": "CUSTOM_POSE_APPROVED"
 			}
 		},
 		"loot_000019": {
@@ -1366,7 +1366,7 @@
 					],
 					"reviewed_rotation_degrees": [
 						0.0,
-						130.0,
+						45.0,
 						0.0
 					],
 					"reviewed_source_fingerprint": "4e7776b9816a8a74dedeebfd940ac578dc41fc49bb87b901359eb550d749fc6f"
@@ -1374,7 +1374,7 @@
 				"status": "APPROVED"
 			},
 			"footprint_review": {
-				"notes": "Current Footprint approved against posed geometry.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; authored X/Y matches the 0.10 m canonical posed-bounds suggestion.",
 				"reviewed_footprint": [
 					1,
 					1,
@@ -1382,7 +1382,7 @@
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
-					130.0,
+					45.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "4e7776b9816a8a74dedeebfd940ac578dc41fc49bb87b901359eb550d749fc6f",
@@ -1408,17 +1408,17 @@
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
-					130.0,
+					45.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "4e7776b9816a8a74dedeebfd940ac578dc41fc49bb87b901359eb550d749fc6f",
 				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Default pose unsuitable; candidate Y +130 degrees faces the label toward the player.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; current custom canonical pose accepted.",
 				"reviewed_rotation_degrees": [
 					0.0,
-					130.0,
+					45.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "4e7776b9816a8a74dedeebfd940ac578dc41fc49bb87b901359eb550d749fc6f",
@@ -1441,7 +1441,7 @@
 					],
 					"reviewed_rotation_degrees": [
 						0.0,
-						90.0,
+						0.0,
 						0.0
 					],
 					"reviewed_source_fingerprint": "08407b1d661f88250b2ab1687a7f4b9bd74d1863046e818828a44e89a849481f"
@@ -1449,7 +1449,7 @@
 				"status": "APPROVED"
 			},
 			"footprint_review": {
-				"notes": "Current Footprint approved against posed geometry.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; authored X/Y matches the 0.10 m canonical posed-bounds suggestion.",
 				"reviewed_footprint": [
 					1,
 					1,
@@ -1457,7 +1457,7 @@
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
-					90.0,
+					0.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "08407b1d661f88250b2ab1687a7f4b9bd74d1863046e818828a44e89a849481f",
@@ -1483,21 +1483,21 @@
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
-					90.0,
+					0.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "08407b1d661f88250b2ab1687a7f4b9bd74d1863046e818828a44e89a849481f",
 				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Default pose unsuitable; candidate Y +90 degrees faces the front label toward the player.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; default approximately-zero canonical pose accepted.",
 				"reviewed_rotation_degrees": [
 					0.0,
-					90.0,
+					0.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "08407b1d661f88250b2ab1687a7f4b9bd74d1863046e818828a44e89a849481f",
-				"status": "CUSTOM_POSE_APPROVED"
+				"status": "DEFAULT_POSE_APPROVED"
 			}
 		},
 		"loot_000021": {
@@ -1516,7 +1516,7 @@
 					],
 					"reviewed_rotation_degrees": [
 						0.0,
-						90.0,
+						0.0,
 						0.0
 					],
 					"reviewed_source_fingerprint": "d31b3993c3dfa7de7de871386090d11edcfc7394d1b0ff9dac0b1d332092bb6d"
@@ -1524,7 +1524,7 @@
 				"status": "APPROVED"
 			},
 			"footprint_review": {
-				"notes": "Current Footprint approved against posed geometry.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; authored X/Y matches the 0.10 m canonical posed-bounds suggestion.",
 				"reviewed_footprint": [
 					1,
 					1,
@@ -1532,7 +1532,7 @@
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
-					90.0,
+					0.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "d31b3993c3dfa7de7de871386090d11edcfc7394d1b0ff9dac0b1d332092bb6d",
@@ -1558,21 +1558,21 @@
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
-					90.0,
+					0.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "d31b3993c3dfa7de7de871386090d11edcfc7394d1b0ff9dac0b1d332092bb6d",
 				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Default pose unsuitable; candidate Y +90 degrees faces the front label toward the player.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; default approximately-zero canonical pose accepted.",
 				"reviewed_rotation_degrees": [
 					0.0,
-					90.0,
+					0.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "d31b3993c3dfa7de7de871386090d11edcfc7394d1b0ff9dac0b1d332092bb6d",
-				"status": "CUSTOM_POSE_APPROVED"
+				"status": "DEFAULT_POSE_APPROVED"
 			}
 		},
 		"loot_000022": {
@@ -1599,7 +1599,7 @@
 				"status": "APPROVED"
 			},
 			"footprint_review": {
-				"notes": "Current Footprint approved against posed geometry.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; authored X/Y matches the 0.10 m canonical posed-bounds suggestion.",
 				"reviewed_footprint": [
 					1,
 					1,
@@ -1640,7 +1640,7 @@
 				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Default zero authored storage pose approved.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; default approximately-zero canonical pose accepted.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
@@ -1674,7 +1674,7 @@
 				"status": "APPROVED"
 			},
 			"footprint_review": {
-				"notes": "Current Footprint approved against posed geometry.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; authored X/Y matches the 0.10 m canonical posed-bounds suggestion.",
 				"reviewed_footprint": [
 					1,
 					1,
@@ -1715,7 +1715,7 @@
 				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Default zero authored storage pose approved.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; default approximately-zero canonical pose accepted.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
@@ -1741,7 +1741,7 @@
 					],
 					"reviewed_rotation_degrees": [
 						0.0,
-						90.0,
+						0.0,
 						0.0
 					],
 					"reviewed_source_fingerprint": "062b7b317fbf97b664a07c1ddc10b36aac362cb7fa6ec81b542486dfcbcc2fa1"
@@ -1749,7 +1749,7 @@
 				"status": "APPROVED"
 			},
 			"footprint_review": {
-				"notes": "Current Footprint approved against posed geometry.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; authored X/Y matches the 0.10 m canonical posed-bounds suggestion.",
 				"reviewed_footprint": [
 					1,
 					1,
@@ -1757,7 +1757,7 @@
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
-					90.0,
+					0.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "062b7b317fbf97b664a07c1ddc10b36aac362cb7fa6ec81b542486dfcbcc2fa1",
@@ -1783,21 +1783,21 @@
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
-					90.0,
+					0.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "062b7b317fbf97b664a07c1ddc10b36aac362cb7fa6ec81b542486dfcbcc2fa1",
 				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Default pose unsuitable; candidate Y +90 degrees faces the label toward the player.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; default approximately-zero canonical pose accepted.",
 				"reviewed_rotation_degrees": [
 					0.0,
-					90.0,
+					0.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "062b7b317fbf97b664a07c1ddc10b36aac362cb7fa6ec81b542486dfcbcc2fa1",
-				"status": "CUSTOM_POSE_APPROVED"
+				"status": "DEFAULT_POSE_APPROVED"
 			}
 		},
 		"loot_000025": {
@@ -1816,7 +1816,7 @@
 					],
 					"reviewed_rotation_degrees": [
 						0.0,
-						0.0,
+						200.0,
 						0.0
 					],
 					"reviewed_source_fingerprint": "7a921edc40b390590fd9f36bf5eada1bb4f3575a8c49b18350ba7826c0c9434d"
@@ -1824,7 +1824,7 @@
 				"status": "APPROVED"
 			},
 			"footprint_review": {
-				"notes": "Current Footprint approved against posed geometry.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; authored X/Y matches the 0.10 m canonical posed-bounds suggestion.",
 				"reviewed_footprint": [
 					1,
 					1,
@@ -1832,7 +1832,7 @@
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					200.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "7a921edc40b390590fd9f36bf5eada1bb4f3575a8c49b18350ba7826c0c9434d",
@@ -1858,21 +1858,21 @@
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					200.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "7a921edc40b390590fd9f36bf5eada1bb4f3575a8c49b18350ba7826c0c9434d",
 				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Default zero authored storage pose approved.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; current custom canonical pose accepted.",
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					200.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "7a921edc40b390590fd9f36bf5eada1bb4f3575a8c49b18350ba7826c0c9434d",
-				"status": "DEFAULT_POSE_APPROVED"
+				"status": "CUSTOM_POSE_APPROVED"
 			}
 		},
 		"loot_000026": {
@@ -1885,8 +1885,8 @@
 					"reviewed_can_be_stacked": true,
 					"reviewed_can_support_stack": false,
 					"reviewed_footprint": [
-						1,
 						2,
+						1,
 						1
 					],
 					"reviewed_rotation_degrees": [
@@ -1899,10 +1899,10 @@
 				"status": "APPROVED"
 			},
 			"footprint_review": {
-				"notes": "Current Footprint approved as a deliberate authored override.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; deliberate authored override retained; canonical posed-bounds suggestion was 2x2 cells.",
 				"reviewed_footprint": [
-					1,
 					2,
+					1,
 					1
 				],
 				"reviewed_rotation_degrees": [
@@ -1927,8 +1927,8 @@
 				"reviewed_can_be_stacked": true,
 				"reviewed_can_support_stack": false,
 				"reviewed_footprint": [
-					1,
 					2,
+					1,
 					1
 				],
 				"reviewed_rotation_degrees": [
@@ -1940,7 +1940,7 @@
 				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Default zero authored storage pose approved.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; default approximately-zero canonical pose accepted.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
@@ -1966,7 +1966,7 @@
 					],
 					"reviewed_rotation_degrees": [
 						0.0,
-						-120.0,
+						150.0,
 						0.0
 					],
 					"reviewed_source_fingerprint": "df65c2a162cba24514f8ca4d4491da16abb918f79f1204dd6fb111750354c1ea"
@@ -1974,7 +1974,7 @@
 				"status": "APPROVED"
 			},
 			"footprint_review": {
-				"notes": "Current Footprint approved against posed geometry.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; authored X/Y matches the 0.10 m canonical posed-bounds suggestion.",
 				"reviewed_footprint": [
 					1,
 					1,
@@ -1982,7 +1982,7 @@
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
-					-120.0,
+					150.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "df65c2a162cba24514f8ca4d4491da16abb918f79f1204dd6fb111750354c1ea",
@@ -2008,17 +2008,17 @@
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
-					-120.0,
+					150.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "df65c2a162cba24514f8ca4d4491da16abb918f79f1204dd6fb111750354c1ea",
 				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Default pose unsuitable; candidate Y -120 degrees faces the label toward the player.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; current custom canonical pose accepted.",
 				"reviewed_rotation_degrees": [
 					0.0,
-					-120.0,
+					150.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "df65c2a162cba24514f8ca4d4491da16abb918f79f1204dd6fb111750354c1ea",
@@ -2049,7 +2049,7 @@
 				"status": "APPROVED"
 			},
 			"footprint_review": {
-				"notes": "Current Footprint approved against posed geometry.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; authored X/Y matches the 0.10 m canonical posed-bounds suggestion.",
 				"reviewed_footprint": [
 					5,
 					4,
@@ -2090,7 +2090,7 @@
 				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Default zero authored storage pose approved.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; default approximately-zero canonical pose accepted.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
@@ -2124,7 +2124,7 @@
 				"status": "APPROVED"
 			},
 			"footprint_review": {
-				"notes": "Current Footprint approved against posed geometry.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; authored X/Y matches the 0.10 m canonical posed-bounds suggestion.",
 				"reviewed_footprint": [
 					2,
 					2,
@@ -2165,7 +2165,7 @@
 				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Default zero authored storage pose approved.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; default approximately-zero canonical pose accepted.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
@@ -2185,13 +2185,13 @@
 					"reviewed_can_be_stacked": true,
 					"reviewed_can_support_stack": true,
 					"reviewed_footprint": [
-						3,
+						2,
 						2,
 						1
 					],
 					"reviewed_rotation_degrees": [
 						0.0,
-						0.0,
+						90.0,
 						0.0
 					],
 					"reviewed_source_fingerprint": "a4e66269ee59b6912d6e8f5cd5ea2fc309a4629d12d1f5a62d25d465a1a529e8"
@@ -2199,19 +2199,19 @@
 				"status": "APPROVED"
 			},
 			"footprint_review": {
-				"notes": "Current Footprint approved against posed geometry.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; deliberate authored override retained; canonical posed-bounds suggestion was 2x3 cells.",
 				"reviewed_footprint": [
-					3,
+					2,
 					2,
 					1
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					90.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "a4e66269ee59b6912d6e8f5cd5ea2fc309a4629d12d1f5a62d25d465a1a529e8",
-				"status": "GEOMETRY_APPROVED"
+				"status": "OVERRIDE_APPROVED"
 			},
 			"item_id": "loot_000030",
 			"scale_review": {
@@ -2227,27 +2227,27 @@
 				"reviewed_can_be_stacked": true,
 				"reviewed_can_support_stack": true,
 				"reviewed_footprint": [
-					3,
+					2,
 					2,
 					1
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					90.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "a4e66269ee59b6912d6e8f5cd5ea2fc309a4629d12d1f5a62d25d465a1a529e8",
 				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Default zero authored storage pose approved.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; current custom canonical pose accepted.",
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					90.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "a4e66269ee59b6912d6e8f5cd5ea2fc309a4629d12d1f5a62d25d465a1a529e8",
-				"status": "DEFAULT_POSE_APPROVED"
+				"status": "CUSTOM_POSE_APPROVED"
 			}
 		},
 		"loot_000031": {
@@ -2274,7 +2274,7 @@
 				"status": "APPROVED"
 			},
 			"footprint_review": {
-				"notes": "Current Footprint approved against posed geometry.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; authored X/Y matches the 0.10 m canonical posed-bounds suggestion.",
 				"reviewed_footprint": [
 					2,
 					2,
@@ -2315,7 +2315,7 @@
 				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Default zero authored storage pose approved.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; default approximately-zero canonical pose accepted.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
@@ -2349,7 +2349,7 @@
 				"status": "APPROVED"
 			},
 			"footprint_review": {
-				"notes": "Current Footprint approved as a deliberate authored override.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; deliberate authored override retained; canonical posed-bounds suggestion was 4x3 cells.",
 				"reviewed_footprint": [
 					3,
 					3,
@@ -2390,7 +2390,7 @@
 				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Default zero authored storage pose approved.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; default approximately-zero canonical pose accepted.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
@@ -2424,7 +2424,7 @@
 				"status": "APPROVED"
 			},
 			"footprint_review": {
-				"notes": "Current Footprint approved against posed geometry.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; authored X/Y matches the 0.10 m canonical posed-bounds suggestion.",
 				"reviewed_footprint": [
 					3,
 					3,
@@ -2465,7 +2465,7 @@
 				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Default zero authored storage pose approved.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; default approximately-zero canonical pose accepted.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
@@ -2547,12 +2547,12 @@
 					"reviewed_can_support_stack": false,
 					"reviewed_footprint": [
 						3,
-						3,
+						2,
 						1
 					],
 					"reviewed_rotation_degrees": [
 						0.0,
-						0.0,
+						90.0,
 						0.0
 					],
 					"reviewed_source_fingerprint": "93d6e0e5b9df34b5d0cf9b27275f1895e7cf85879bc60eac5a12dd66d0e9e0b3"
@@ -2560,19 +2560,19 @@
 				"status": "APPROVED"
 			},
 			"footprint_review": {
-				"notes": "Current Footprint approved against posed geometry.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; deliberate authored override retained; canonical posed-bounds suggestion was 3x3 cells.",
 				"reviewed_footprint": [
 					3,
-					3,
+					2,
 					1
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					90.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "93d6e0e5b9df34b5d0cf9b27275f1895e7cf85879bc60eac5a12dd66d0e9e0b3",
-				"status": "GEOMETRY_APPROVED"
+				"status": "OVERRIDE_APPROVED"
 			},
 			"item_id": "loot_000035",
 			"scale_review": {
@@ -2589,26 +2589,26 @@
 				"reviewed_can_support_stack": false,
 				"reviewed_footprint": [
 					3,
-					3,
+					2,
 					1
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					90.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "93d6e0e5b9df34b5d0cf9b27275f1895e7cf85879bc60eac5a12dd66d0e9e0b3",
 				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Default zero authored storage pose approved.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; current custom canonical pose accepted.",
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					90.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "93d6e0e5b9df34b5d0cf9b27275f1895e7cf85879bc60eac5a12dd66d0e9e0b3",
-				"status": "DEFAULT_POSE_APPROVED"
+				"status": "CUSTOM_POSE_APPROVED"
 			}
 		},
 		"loot_000036": {
@@ -2696,7 +2696,7 @@
 				"status": "APPROVED"
 			},
 			"footprint_review": {
-				"notes": "Current Footprint approved against posed geometry.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; authored X/Y matches the 0.10 m canonical posed-bounds suggestion.",
 				"reviewed_footprint": [
 					4,
 					1,
@@ -2737,7 +2737,7 @@
 				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Default zero authored storage pose approved.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; default approximately-zero canonical pose accepted.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
@@ -2757,13 +2757,13 @@
 					"reviewed_can_be_stacked": true,
 					"reviewed_can_support_stack": false,
 					"reviewed_footprint": [
-						3,
 						12,
+						3,
 						1
 					],
 					"reviewed_rotation_degrees": [
-						0.0,
-						0.0,
+						180.0,
+						-90.0,
 						90.0
 					],
 					"reviewed_source_fingerprint": "38598f0566dcb6bd0d338cc3a844ec9f9b68c4903a3ed6360c39ccf6f1dd4bb1"
@@ -2771,15 +2771,15 @@
 				"status": "APPROVED"
 			},
 			"footprint_review": {
-				"notes": "Current Footprint approved as a deliberate authored override.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; deliberate authored override retained; canonical posed-bounds suggestion was 12x4 cells.",
 				"reviewed_footprint": [
-					3,
 					12,
+					3,
 					1
 				],
 				"reviewed_rotation_degrees": [
-					0.0,
-					0.0,
+					180.0,
+					-90.0,
 					90.0
 				],
 				"reviewed_source_fingerprint": "38598f0566dcb6bd0d338cc3a844ec9f9b68c4903a3ed6360c39ccf6f1dd4bb1",
@@ -2799,23 +2799,23 @@
 				"reviewed_can_be_stacked": true,
 				"reviewed_can_support_stack": false,
 				"reviewed_footprint": [
-					3,
 					12,
+					3,
 					1
 				],
 				"reviewed_rotation_degrees": [
-					0.0,
-					0.0,
+					180.0,
+					-90.0,
 					90.0
 				],
 				"reviewed_source_fingerprint": "38598f0566dcb6bd0d338cc3a844ec9f9b68c4903a3ed6360c39ccf6f1dd4bb1",
 				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Default pose unsuitable; candidate Z +90 degrees lays the rifle on its side with the barrel horizontal.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; current custom canonical pose accepted.",
 				"reviewed_rotation_degrees": [
-					0.0,
-					0.0,
+					180.0,
+					-90.0,
 					90.0
 				],
 				"reviewed_source_fingerprint": "38598f0566dcb6bd0d338cc3a844ec9f9b68c4903a3ed6360c39ccf6f1dd4bb1",
@@ -2846,7 +2846,7 @@
 				"status": "APPROVED"
 			},
 			"footprint_review": {
-				"notes": "Current Footprint approved against posed geometry.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; authored X/Y matches the 0.10 m canonical posed-bounds suggestion.",
 				"reviewed_footprint": [
 					3,
 					2,
@@ -2887,7 +2887,7 @@
 				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Default pose unsuitable; candidate X -90 degrees lays the pistol naturally on its side.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; current custom canonical pose accepted.",
 				"reviewed_rotation_degrees": [
 					-90.0,
 					0.0,
@@ -2907,13 +2907,13 @@
 					"reviewed_can_be_stacked": true,
 					"reviewed_can_support_stack": false,
 					"reviewed_footprint": [
-						2,
 						10,
+						2,
 						1
 					],
 					"reviewed_rotation_degrees": [
 						0.0,
-						0.0,
+						-90.0,
 						90.0
 					],
 					"reviewed_source_fingerprint": "6c39da4730013101fa22348c90e8ce04d5be6fff5487f45255a8d0f37ffab352"
@@ -2921,15 +2921,15 @@
 				"status": "APPROVED"
 			},
 			"footprint_review": {
-				"notes": "Current Footprint approved as a deliberate authored override.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; deliberate authored override retained; canonical posed-bounds suggestion was 11x2 cells.",
 				"reviewed_footprint": [
-					2,
 					10,
+					2,
 					1
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					-90.0,
 					90.0
 				],
 				"reviewed_source_fingerprint": "6c39da4730013101fa22348c90e8ce04d5be6fff5487f45255a8d0f37ffab352",
@@ -2949,23 +2949,23 @@
 				"reviewed_can_be_stacked": true,
 				"reviewed_can_support_stack": false,
 				"reviewed_footprint": [
-					2,
 					10,
+					2,
 					1
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					-90.0,
 					90.0
 				],
 				"reviewed_source_fingerprint": "6c39da4730013101fa22348c90e8ce04d5be6fff5487f45255a8d0f37ffab352",
 				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Default pose unsuitable; candidate Z +90 degrees lays the shotgun on its side with the barrel horizontal.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; current custom canonical pose accepted.",
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					-90.0,
 					90.0
 				],
 				"reviewed_source_fingerprint": "6c39da4730013101fa22348c90e8ce04d5be6fff5487f45255a8d0f37ffab352",
@@ -2996,7 +2996,7 @@
 				"status": "APPROVED"
 			},
 			"footprint_review": {
-				"notes": "Current Footprint approved against posed geometry.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; authored X/Y matches the 0.10 m canonical posed-bounds suggestion.",
 				"reviewed_footprint": [
 					1,
 					1,
@@ -3037,7 +3037,7 @@
 				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Default pose unsuitable; candidate Z +180 degrees keeps the hammer upright with its metal head on the shelf.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; current custom canonical pose accepted.",
 				"reviewed_rotation_degrees": [
 					0.0,
 					0.0,
@@ -3057,13 +3057,13 @@
 					"reviewed_can_be_stacked": true,
 					"reviewed_can_support_stack": false,
 					"reviewed_footprint": [
-						3,
 						5,
+						3,
 						1
 					],
 					"reviewed_rotation_degrees": [
 						0.0,
-						0.0,
+						-90.0,
 						0.0
 					],
 					"reviewed_source_fingerprint": "65b52da2eee3f955d39fe045fbf2924364eae2291576899dded783d72b78fe69"
@@ -3071,15 +3071,15 @@
 				"status": "APPROVED"
 			},
 			"footprint_review": {
-				"notes": "Current Footprint approved as a deliberate authored override.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; deliberate authored override retained; canonical posed-bounds suggestion was 6x3 cells.",
 				"reviewed_footprint": [
-					3,
 					5,
+					3,
 					1
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					-90.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "65b52da2eee3f955d39fe045fbf2924364eae2291576899dded783d72b78fe69",
@@ -3099,27 +3099,27 @@
 				"reviewed_can_be_stacked": true,
 				"reviewed_can_support_stack": false,
 				"reviewed_footprint": [
-					3,
 					5,
+					3,
 					1
 				],
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					-90.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "65b52da2eee3f955d39fe045fbf2924364eae2291576899dded783d72b78fe69",
 				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Default zero authored storage pose approved.",
+				"notes": "Human-approved in the canonical item storage pose fixture on 2026-09-21; current custom canonical pose accepted.",
 				"reviewed_rotation_degrees": [
 					0.0,
-					0.0,
+					-90.0,
 					0.0
 				],
 				"reviewed_source_fingerprint": "65b52da2eee3f955d39fe045fbf2924364eae2291576899dded783d72b78fe69",
-				"status": "DEFAULT_POSE_APPROVED"
+				"status": "CUSTOM_POSE_APPROVED"
 			}
 		}
 	},

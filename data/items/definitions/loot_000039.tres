@@ -1,7 +1,7 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://bx2tktmqaf257"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_usql6"]
-[ext_resource type="PackedScene" path="res://assets/props/Weapons/SM_Gun_Pistol.glb" id="2_khl6m"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_usql6"]
+[ext_resource type="PackedScene" uid="uid://d2f5gxaaygr2h" path="res://assets/props/Weapons/SM_Gun_Pistol.glb" id="2_khl6m"]
 
 [resource]
 script = ExtResource("1_usql6")
@@ -10,5 +10,5 @@ display_name = "Pistol"
 storage_category = "Weapons"
 storage_footprint = Vector3i(3, 2, 1)
 can_be_stacked = true
-storage_rotation_degrees = Vector3(-90, 0, 0)
 visual_scene = ExtResource("2_khl6m")
+storage_rotation_degrees = Vector3(-90, 0, 0)
