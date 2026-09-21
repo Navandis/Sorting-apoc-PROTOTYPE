@@ -626,7 +626,7 @@ This historical v0.5 revision consolidated the accepted greybox, final Medical g
 | H16 | Developer round-one findings, expected/actual screenshots and walkthrough recording. Refine rather than rebuild; includes Kitchen-from-B-east and door-sized deeper closure. |
 | W16 / S16 | Supplied first-pass validation report and source-review artifacts. Reported technical checks and static/source/video findings are distinct from human spatial approval or new engine tests. |
 | D16P | Earlier approved sequence in this session: useful low-fidelity wing baseline, functional Receiving, then a small visual-construction proof. Art gates remain separate. |
-| G08 / P08 | Then-current GDD v0.8 and Findings v0.8, 17 September: accepted spatial baseline, bounded evidence and seeded-storage prerequisite. Current companions are GDD v0.9 and Findings v0.9. |
+| G08 / P08 | Then-current GDD v0.8 and Findings v0.8, 17 September: accepted spatial baseline, bounded evidence and seeded-storage prerequisite. GDD v0.9 and Findings v0.9 later superseded that checkpoint on 20 September; the current companions are GDD v0.10 and Findings v0.10. |
 | D16-R02 | Explicit developer decision to remove Workshop abandoned stub and defer later opportunistic stubs away from service-space adjacencies. |
 | W17 / H17 / A17 | Round-three and Medical evidence plus developer acceptance and the 17 September close-out record. Geometry source aeb1ef2; final documentation checkpoint 8d64086. |
 | D17B | Developer request to synchronize repository/docs, then integrate functional shelves and seeded loot before Receiving. Exact gameplay-scene wiring is subject to local preflight. |

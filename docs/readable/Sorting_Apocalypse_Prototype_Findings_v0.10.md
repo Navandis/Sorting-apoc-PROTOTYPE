@@ -38,7 +38,7 @@ Whole-wing construction continues as res://gameplay/logistics_wing/wing_gameplay
 | Receiving Stage A | Technically verified and merged; data-only lifecycle foundation complete. |
 | Environment relocation | Technically verified, merged and human-validated; ignored physical asset state is local. |
 | Receiving Stage B shell attempt 1 | Technical PASS under disclosed loot_000015 baseline exceptions; human visual NO-GO; do not merge composition. |
-| Historical visual/world direction v0.5 + service spaces | Service rooms, open Ops landing and three boundaries are retained in current Visual Direction v0.6; the accepted in-engine layout supplies dimensions. Historical schematics are not final construction drawings. |
+| Historical visual/world direction v0.5 + service spaces | Service rooms, open Ops landing and three boundaries are retained in current Visual Direction v0.7; the accepted in-engine layout supplies dimensions. Historical schematics are not final construction drawings. |
 | Full-wing topology greybox | PROMOTED after developer round-three and Medical-tuning walkthroughs. Preserve accepted geometry and stop general correction rounds; later specific gameplay findings may justify bounded revisions. |
 | Physical Stage B / Stage C / Systems MVP | Not yet passed. Physical pile/presenter work and economy-facing obligations remain pending. |
 | Storage Authoring Foundation | Review-scene supply reuse, reusable functional ModularRack authoring, Storage Unit Orientation & Zoning Basis, Canonical Item Storage Pose & Shelf-Front Alignment, and the 40-item human review are PROMOTED. Active gate: single-rack fixed-ladder proof, then human ladder decision, then Receiving unless blocked. |
@@ -210,7 +210,7 @@ A zone is implemented as category metadata over hidden deterministic cells on on
 
 ### Why this remains compatible with the GDD
 
-GDD v0.9 retains the zoning rules promoted in the earlier storage gate. The representative catalogue evidence supports preserving that policy; service-space, greybox and continuing-wing updates do not reopen storage mechanics.
+GDD v0.10 retains the zoning rules promoted in the earlier storage gate. The representative catalogue evidence supports preserving that policy; service-space, greybox and continuing-wing updates do not reopen storage mechanics.
 
 ## 7. Validated assumptions and unresolved questions
 
@@ -600,7 +600,7 @@ Hidden intersections are acceptable where unwanted geometry genuinely disappears
 
 ### 19.1 Resulting authority document
 
-Visual Direction v0.6 retains the established world/material grammar and dedicated service spaces, records the accepted in-engine layout, and adds the current storage-installation and ergonomics direction. The original V3/V2 images and v0.5 record remain historical references. Human spatial promotion applies to the accepted geometry, not final art, furnished production storage or physical Receiving. [V05, A17]
+Visual Direction v0.7 retains the established world/material grammar and dedicated service spaces, records the accepted in-engine layout, and adds the current storage-installation and ergonomics direction. The original V3/V2 images and v0.5 record remain historical references. Human spatial promotion applies to the accepted geometry, not final art, furnished production storage or physical Receiving. [V05, A17]
 
 ### 19.2 Universal design decisions
 
@@ -722,7 +722,7 @@ v0.8 preserved the earlier storage/content and visual-failure history, recorded 
 | D16-R02 | Approved removal of Workshop abandoned continuation and deferral of later opportunistic stubs away from service spaces. |
 | D17B | 17 September developer request: repository/documentation stability and synchronization, then seeded functional storage in the wing, then Receiving. Preserve original main scene intact. |
 | R17 | Read-only GitHub inspection at that checkpoint: the prototype repository listed only main at 8ee62bd3; the then-current tracked root/docs/player/storage bootstrap was inspected. No remote write or local-runtime verification was performed. |
-| G08 / V05 | GDD v0.8 and Visual Direction v0.5 were the then-current scope and spatial authorities at the 17 September checkpoint; they did not establish that the next bridge was implemented. Current companions are GDD v0.9 and Visual Direction v0.6. |
+| G08 / V05 | GDD v0.8 and Visual Direction v0.5 were the then-current scope and spatial authorities at the 17 September checkpoint; they did not establish that the next bridge was implemented. GDD v0.9 and Visual Direction v0.6 later superseded that checkpoint on 20 September; the current companions are GDD v0.10 and Visual Direction v0.7. |
 | SA20 | docs/testing/review-scene-supply-reuse-validation.md and docs/testing/modular-rack-authoring-validation.md: promoted review supply reuse, reusable rack workflow, Rack02 calibration and bounded scope. |
 | OZ21 | docs/testing/storage-unit-orientation-zoning-validation.md and its approved design spec: promoted four-state unit Front, semantic zoning mapping, persistence and physical-grid preservation. |
 | CP21 | docs/testing/canonical-item-storage-pose-validation.md and its approved design spec: canonical +Z Front, packing separation, footprint parity, workbench correction and final catalogue reconciliation. |
