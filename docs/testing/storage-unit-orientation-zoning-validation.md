@@ -1,6 +1,8 @@
 # Storage unit orientation and zoning basis validation
 
-**Status: IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN REVIEW PENDING**
+**Status: COMPLETE / TECHNICALLY VERIFIED / HUMAN PROMOTED**
+
+**Human disposition: PROMOTE — 21 September 2026.**
 
 **Date:** 21 September 2026  
 **Feature branch:** `codex/storage-unit-orientation-zoning`  
@@ -27,7 +29,7 @@ The inspector convention is:
 - `Rotate Storage Directions CW`: increment `0 → 1 → 2 → 3 → 0`;
 - `Rotate Storage Directions CCW`: decrement with wraparound.
 
-Automated authoring probes verified both tool-button labels, the state sequence and save/reload persistence. Human review should still confirm that the CW/CCW wording feels correct in Godot's top view. If wording is revised, only which action increments/decrements may change; the state table and serialized meanings must remain fixed.
+Automated authoring probes verified both tool-button labels, the state sequence and save/reload persistence. Human review accepted the CW/CCW convention. Any future wording-only revision must preserve the state table and serialized meanings.
 
 ## Semantic zoning behavior
 
@@ -56,7 +58,8 @@ The final authoring probe exercised one rectangular promoted review rack through
 - The review scene now saves exactly one functional `SM_MetalShelves_Ergonomics` and one functional `SM_ventilated_locker_Ergonomics` beneath `ReviewFixtures`. Each owns an editable `StorageUnitOrientation` context at state 0.
 - The controller reuses those saved units while preserving A/B/C scaling, clearance contexts, generated collision, eight legacy surfaces, three authored ModularRack surfaces, 11 total surfaces, supply reuse and F6/F7 behavior.
 - A real headless Godot editor round trip saved Metal Shelf state 1 and Locker state 3, reopened the scene in a separate editor process, confirmed both states persisted independently, and then saved both back to state 0.
-- Overall Storage Unit Orientation & Zoning Basis remains **HUMAN REVIEW PENDING** until the remaining Metal Shelf/Locker cross-family checks pass.
+- The remaining Metal Shelf/Locker cross-family checks passed human review. Overall Storage Unit Orientation & Zoning Basis is **HUMAN PROMOTED**.
+- **Item Facing / Packing Orientation** is the immediate follow-up and next active gate before the fixed-ladder proof. No packing implementation is part of this close-out.
 
 ## Focused verification
 
@@ -117,11 +120,11 @@ Default Run Project:
 & 'D:\AI Tools\Godot-4.7-Codex\Godot_v4.7-stable_win64_console.exe' --path 'D:\Godot Projects\Sorting-apoc-PROTOTYPE'
 ```
 
-## Human PROMOTE / REVISE checklist
+## Human acceptance record
 
-The ModularRack-only orientation/zoning sub-check is complete and promoted. The remaining gate is cross-family validation on the newly saved Metal Shelf and Locker fixtures.
+The ModularRack and saved Metal Shelf/Locker orientation and zoning checks are complete. The human disposition for this milestone is **PROMOTE**. The checklist below is retained as the accepted review scope.
 
-### A. Remaining per-unit authoring
+### A. Per-unit authoring
 
 - In `ReviewFixtures`, select `SM_MetalShelves_Ergonomics/StorageUnitOrientation` and `SM_ventilated_locker_Ergonomics/StorageUnitOrientation` directly in the saved scene.
 - Set the two units to different states, save, close and reopen; confirm both states persist independently and the ModularRack state is unchanged.
@@ -157,13 +160,9 @@ Confirm F6 has not rotated or moved, auto placement follows zones, manual placem
 
 ### F. Packing-orientation observation
 
-Observe default auto-placed item yaw for each tested family/state and report one of:
-
-- packing behavior acceptable;
-- packing needs an immediate follow-up before ladder;
-- packing imperfection can be recorded as later debt.
+Human review classified Item Facing / Packing Orientation as an immediate follow-up before the fixed-ladder proof. The tentative future rule is that canonical stored loot should face the storage unit's authored Front. This orientation milestone did not implement or formalize that separate packing design.
 
 ### Disposition
 
-- **PROMOTE**, or
-- **REVISE** with the orientation state, storage family, zoning action and observed physical result.
+- **PROMOTE — accepted by the human reviewer on 21 September 2026.**
+- Any future packing-orientation finding belongs to the separate **Item Facing / Packing Orientation** gate.
