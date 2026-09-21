@@ -5,6 +5,7 @@ const StoragePrototypeManagerScript = preload("res://storage_prototype_manager.g
 const StorageShelfClearanceContextScript = preload("res://storage_shelf_clearance_context.gd")
 const StorageSurfaceScript = preload("res://storage_surface.gd")
 const StorageUnitOrientationScript = preload("res://storage_unit_orientation.gd")
+const StorageZoneCanvasScript = preload("res://storage_zone_canvas.gd")
 const MetalShelfScene = preload("res://assets/environment/furniture/storage/SM_MetalShelves.glb")
 const LockerScene = preload("res://assets/environment/furniture/storage/SM_ventilated_locker.glb")
 const FunctionalFixturesScene = preload("res://gameplay/logistics_wing/functional_fixtures.tscn")
@@ -21,6 +22,7 @@ func _run() -> void:
 	_test_authoring_context()
 	_test_manager_orientation_propagation()
 	_test_continuing_fixture_contexts()
+	_test_semantic_canvas_path()
 	var surface := _make_surface()
 	var required_methods := [
 		"set_semantic_orientation_quarter_turns",
@@ -142,6 +144,90 @@ func _test_continuing_fixture_contexts() -> void:
 				"%s orientation context defaults to state 0" % unit_path
 			)
 	fixture.free()
+
+
+func _test_semantic_canvas_path() -> void:
+	var surface: StorageSurface = StorageSurfaceScript.new()
+	root.add_child(surface)
+	surface.configure(&"canvas_semantic_test", 0.801, 0.301, 0.10, 1.0)
+	_check(surface.get_grid_size() == Vector2i(8, 3), "canvas fixture physical grid is 8x3")
+	var canvas: StorageZoneCanvas = StorageZoneCanvasScript.new()
+	root.add_child(canvas)
+	canvas.size = Vector2(600.0, 600.0)
+	canvas.set_surface(surface)
+	var required_helpers := ["_apply_drag_selection", "_get_orientation_label_positions"]
+	for method_name: String in required_helpers:
+		_check(canvas.has_method(method_name), "StorageZoneCanvas exposes internal semantic path %s" % method_name)
+	if not canvas.has_method("_apply_drag_selection"):
+		canvas.free()
+		surface.free()
+		return
+
+	surface.set_semantic_orientation_quarter_turns(0)
+	var state_zero_size := surface.get_semantic_grid_size()
+	var state_zero_rect: Rect2 = canvas.call("_get_surface_rect", state_zero_size)
+	_check(state_zero_rect.size.x > state_zero_rect.size.y, "state 0 canvas shape is wide")
+	var probe_position := Vector2(300.0, 50.0)
+	_check(
+		canvas.call("_cell_from_position", probe_position, false) == Vector2i(-1, -1),
+		"wide state 0 canvas excludes the top-center probe"
+	)
+
+	surface.set_semantic_orientation_quarter_turns(1)
+	var state_one_size := surface.get_semantic_grid_size()
+	var state_one_rect: Rect2 = canvas.call("_get_surface_rect", state_one_size)
+	_check(state_one_size == Vector2i(3, 8), "state 1 semantic canvas size is 3x8")
+	_check(state_one_rect.size.y > state_one_rect.size.x, "state 1 canvas shape is tall")
+	_check(
+		canvas.call("_cell_from_position", probe_position, false) != Vector2i(-1, -1),
+		"canvas hit-testing uses the tall semantic grid"
+	)
+	_check(surface.get_grid_size() == Vector2i(8, 3), "canvas orientation never changes physical grid")
+
+	canvas.set_category(StorageCategoriesScript.FOOD)
+	var front_left := Vector2i(0, state_one_size.y - 1)
+	canvas.set("_drag_start", front_left)
+	canvas.set("_drag_current", front_left)
+	canvas.call("_apply_drag_selection")
+	_check(
+		surface.get_zone_category(Vector2i(7, 2)) == StorageCategoriesScript.FOOD,
+		"state 1 canvas paint maps semantic front-left to physical front-left corner"
+	)
+	surface.clear_all_zones()
+	surface.set_semantic_orientation_quarter_turns(3)
+	front_left = Vector2i(0, surface.get_semantic_grid_size().y - 1)
+	canvas.set("_drag_start", front_left)
+	canvas.set("_drag_current", front_left)
+	canvas.call("_apply_drag_selection")
+	_check(
+		surface.get_zone_category(Vector2i(0, 0)) == StorageCategoriesScript.FOOD,
+		"state 3 canvas paint maps semantic front-left to physical front-left corner"
+	)
+
+	var player_front := Node3D.new()
+	var player_back := Node3D.new()
+	player_front.position = Vector3(0.0, 1.7, 4.0)
+	player_back.position = Vector3(0.0, 1.7, -4.0)
+	var snapshot_front := _canvas_snapshot(canvas, surface)
+	canvas.set_surface(null)
+	canvas.set_surface(surface)
+	var snapshot_back := _canvas_snapshot(canvas, surface)
+	_check(snapshot_front == snapshot_back, "canvas geometry and labels are independent of player viewpoint")
+	player_front.free()
+	player_back.free()
+	canvas.free()
+	surface.free()
+
+
+func _canvas_snapshot(canvas: StorageZoneCanvas, surface: StorageSurface) -> Dictionary:
+	var grid := surface.get_semantic_grid_size()
+	var surface_rect: Rect2 = canvas.call("_get_surface_rect", grid)
+	var front_left := Vector2i(0, grid.y - 1)
+	return {
+		"grid": grid,
+		"front_left_rect": canvas.call("_cell_rect", front_left, grid, surface_rect),
+		"labels": canvas.call("_get_orientation_label_positions", surface_rect),
+	}
 
 
 func _surfaces_for_parent(

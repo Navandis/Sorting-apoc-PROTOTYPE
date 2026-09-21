@@ -101,10 +101,7 @@ func _input(event: InputEvent) -> void:
 			var local_position: Vector2 = get_local_mouse_position()
 			_drag_current = _cell_from_position(local_position, true)
 
-			if _category.is_empty():
-				_surface.clear_zone_rect(_drag_start, _drag_current)
-			else:
-				_surface.set_zone_rect(_category, _drag_start, _drag_current)
+			_apply_drag_selection()
 
 			_dragging = false
 			drag_percentage_changed.emit(0.0)
@@ -113,11 +110,24 @@ func _input(event: InputEvent) -> void:
 			get_viewport().set_input_as_handled()
 
 
+func _apply_drag_selection() -> void:
+	if _surface == null:
+		return
+	if _category.is_empty():
+		_surface.clear_semantic_zone_rect(_drag_start, _drag_current)
+	else:
+		_surface.set_semantic_zone_rect(
+			_category,
+			_drag_start,
+			_drag_current
+		)
+
+
 func _draw() -> void:
 	if _surface == null:
 		return
 
-	var grid_value: Variant = _surface.get_grid_size()
+	var grid_value: Variant = _surface.get_semantic_grid_size()
 	var grid: Vector2i = grid_value as Vector2i
 	if grid.x <= 0 or grid.y <= 0:
 		return
@@ -131,7 +141,7 @@ func _draw() -> void:
 	for row: int in range(grid.y):
 		for column: int in range(grid.x):
 			var cell: Vector2i = Vector2i(column, row)
-			var category: String = String(_surface.get_zone_category(cell))
+			var category: String = String(_surface.get_semantic_zone_category(cell))
 			if category.is_empty():
 				continue
 			var cell_rect: Rect2 = _cell_rect(cell, grid, surface_rect)
@@ -147,10 +157,11 @@ func _draw() -> void:
 func _draw_orientation_labels(surface_rect: Rect2) -> void:
 	var font: Font = ThemeDB.fallback_font
 	var font_size: int = 13
+	var positions := _get_orientation_label_positions(surface_rect)
 
 	draw_string(
 		font,
-		Vector2(surface_rect.position.x + 6.0, surface_rect.position.y - 9.0),
+		positions["back"],
 		"BACK",
 		HORIZONTAL_ALIGNMENT_LEFT,
 		-1.0,
@@ -160,13 +171,20 @@ func _draw_orientation_labels(surface_rect: Rect2) -> void:
 
 	draw_string(
 		font,
-		Vector2(surface_rect.position.x + 6.0, surface_rect.end.y + 20.0),
+		positions["front"],
 		"FRONT",
 		HORIZONTAL_ALIGNMENT_LEFT,
 		-1.0,
 		font_size,
 		FRONT_BACK_TEXT
 	)
+
+
+func _get_orientation_label_positions(surface_rect: Rect2) -> Dictionary:
+	return {
+		"back": Vector2(surface_rect.position.x + 6.0, surface_rect.position.y - 9.0),
+		"front": Vector2(surface_rect.position.x + 6.0, surface_rect.end.y + 20.0),
+	}
 
 
 func _draw_drag_preview(grid: Vector2i, surface_rect: Rect2) -> void:
@@ -198,7 +216,7 @@ func _draw_drag_preview(grid: Vector2i, surface_rect: Rect2) -> void:
 	draw_rect(preview_rect, PREVIEW_BORDER, false, 3.0)
 
 	var ratio: float = float(
-		_surface.get_zone_rect_percentage(_drag_start, _drag_current)
+		_surface.get_semantic_zone_rect_percentage(_drag_start, _drag_current)
 	)
 	var percent: float = ratio * 100.0
 	var category_text: String = (
@@ -318,7 +336,7 @@ func _cell_from_position(
 	if _surface == null:
 		return Vector2i(-1, -1)
 
-	var grid_value: Variant = _surface.get_grid_size()
+	var grid_value: Variant = _surface.get_semantic_grid_size()
 	var grid: Vector2i = grid_value as Vector2i
 	var surface_rect: Rect2 = _get_surface_rect(grid)
 
@@ -349,7 +367,7 @@ func _emit_drag_percentage() -> void:
 		return
 
 	var ratio: float = float(
-		_surface.get_zone_rect_percentage(_drag_start, _drag_current)
+		_surface.get_semantic_zone_rect_percentage(_drag_start, _drag_current)
 	)
 	drag_percentage_changed.emit(ratio * 100.0)
 
