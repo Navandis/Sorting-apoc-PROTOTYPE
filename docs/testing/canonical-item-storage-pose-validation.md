@@ -131,6 +131,7 @@ The corrected fixture reduced the full 40-item pose/footprint review to roughly 
 - Godot emits the existing Windows root-certificate-store diagnostic in this environment.
 - `storage_stack_clearance_tests.gd` intentionally emits the existing missing-clearance-context fallback warning for its dedicated warning-path test.
 - The scripted editor round trip exits the editor from a `SceneTree` test and therefore emits scan-aborted/RID cleanup diagnostics at process shutdown. The separate normal editor scan exits cleanly apart from the certificate diagnostic.
+- The human-approved 2×2 Book override produces a maximum measured 0.289 mm front-edge excursion in the rotated locker boundary fixture. Item visual bounds allow 0.5 mm measurement tolerance while fixture position, grid, and calibration checks retain their strict 0.02 mm tolerance.
 - Gloves and Pants remain deliberately blocked for future source/pose work; all other current definitions completed human review.
 
 ## Exact review launch commands

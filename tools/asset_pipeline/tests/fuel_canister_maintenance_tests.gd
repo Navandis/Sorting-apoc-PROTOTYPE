@@ -16,10 +16,10 @@ func _run() -> void:
 	var definition := Catalog.get_definition_by_id(&"loot_000015")
 	_check(definition != null and definition.visual_scene.resource_path == SOURCE, "Fuel resolves through catalogue to exact source")
 	_check(FileAccess.get_sha256(SOURCE) == SHA, "current source is measured maintenance export")
-	_check(definition.storage_rotation_degrees == Vector3.ZERO and definition.storage_footprint == Vector3i(4, 2, 1), "approved zero pose and 4x2x1 preserved")
+	_check(definition.storage_rotation_degrees == Vector3(0.0, 180.0, 0.0) and definition.storage_footprint == Vector3i(4, 2, 1), "approved canonical pose and 4x2x1 footprint preserved")
 	_check(definition.can_be_stacked and not definition.can_support_stack and definition.auto_stack_group == &"", "approved stack roles and explicit None preserved")
 	var record: Dictionary = Manifest.load_manifest("res://tools/asset_pipeline/item_authoring_review.json")["assets"]["loot_000015"]
-	var evidence := Manifest.review_evidence(record, {"has_item_definition": true, "source_fingerprint": SHA, "storage_rotation_degrees": [0.0, 0.0, 0.0], "storage_footprint": [4, 2, 1], "can_be_stacked": true, "can_support_stack": false, "auto_stack_group": ""})
+	var evidence := Manifest.review_evidence(record, {"has_item_definition": true, "source_fingerprint": SHA, "storage_rotation_degrees": [0.0, 180.0, 0.0], "storage_footprint": [4, 2, 1], "can_be_stacked": true, "can_support_stack": false, "auto_stack_group": ""})
 	for field: String in ["scale_review_current", "storage_pose_review_current", "footprint_review_current", "stack_role_review_current", "auto_group_review_current"]:
 		_check(evidence[field], "Fuel freshness: " + field)
 	var scene := (load("res://main.tscn") as PackedScene).instantiate()
