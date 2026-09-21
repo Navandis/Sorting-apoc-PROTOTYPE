@@ -3,6 +3,7 @@ extends SceneTree
 const GAMEPLAY_PATH := "res://gameplay/logistics_wing/wing_gameplay.tscn"
 const DEVELOPMENT_SETUP_PATH := "res://gameplay/logistics_wing/development/seeded_storage_setup.tscn"
 const StorageCategoriesScript = preload("res://storage_categories.gd")
+const StorageItemOrientationScript = preload("res://storage_item_orientation.gd")
 
 var _failed: bool = false
 
@@ -174,18 +175,26 @@ func _test_identity_stack_and_transfer_loop(packed: PackedScene) -> void:
 		var manual_physical_before := _surface_physical_signature(manual_surface)
 		manual_surface.set_semantic_orientation_quarter_turns(0)
 		var packing_before := _packing_orientation_signatures(
-			controller.call("_entry_orientations_for_item", hammer_item) as Array
+			controller.call("_entry_orientations_for_item", hammer_item, 0) as Array
 		)
 		manual_surface.set_semantic_orientation_quarter_turns(3)
 		var packing_after := _packing_orientation_signatures(
-			controller.call("_entry_orientations_for_item", hammer_item) as Array
+			controller.call("_entry_orientations_for_item", hammer_item, 3) as Array
 		)
-		_check(packing_after == packing_before, "semantic orientation adds no packing yaw or footprint change")
+		_check(
+			packing_before[0]["footprint"] != packing_after[0]["footprint"],
+			"canonical physical footprint follows unit orientation parity"
+		)
+		_check(
+			not bool(packing_before[0]["packing_rotated"])
+			and not bool(packing_after[0]["packing_rotated"]),
+			"front-facing candidate remains packing_rotated=false"
+		)
 		controller.set_manual_mode(true)
 		_check(not bool(controller.get("_rotated")), "Manual mode starts with native packing orientation")
 		controller.toggle_rotation()
 		_check(bool(controller.get("_rotated")), "Manual R rotation still selects the 90-degree packing entry")
-		var hammer_entry = controller.call("_entry_for_item", hammer_item, true)
+		var hammer_entry = controller.call("_entry_for_item", hammer_item, true, 3)
 		var manual_origin := Vector2i(1, 1)
 		var manual_fit := {
 			"valid": manual_surface.can_place_at(manual_origin, hammer_entry.footprint),
@@ -208,6 +217,25 @@ func _test_identity_stack_and_transfer_loop(packed: PackedScene) -> void:
 		if hammer_stack != null:
 			_check(hammer_stack.entries[0].item == hammer_item, "manual placement keeps exact hammer instance")
 			_check(hammer_stack.entries[0].packing_rotated, "manual placement records R rotation")
+			var stored_host: Node3D = hammer_stack.entries[0].host
+			var unit_yaw := stored_host.get_node("StoredUnitOrientationYaw") as Node3D
+			var packing_yaw := unit_yaw.get_node("StoredPackingYaw") as Node3D
+			_check(
+				unit_yaw.basis.is_equal_approx(Basis(
+					Vector3.UP,
+					StorageItemOrientationScript.unit_yaw_radians(3)
+				)),
+				"manual stored unit root records state 3"
+			)
+			_check(
+				packing_yaw.basis.is_equal_approx(Basis(Vector3.UP, deg_to_rad(90.0))),
+				"manual stored packing root records the additional turn"
+			)
+			_check(
+				manual_surface.get_reservation(hammer_item.instance_id).get("footprint")
+				== hammer_entry.footprint,
+				"manual reservation matches combined visual parity"
+			)
 			_check(
 				manual_surface.get_reservation(hammer_item.instance_id).get("origin") == manual_origin,
 				"manual placement keeps the physical nearest-cell origin under semantic state 3"
@@ -362,7 +390,11 @@ func _auto_place_selected(
 	var item: ItemInstance = carried.get_selected_item() as ItemInstance
 	if item == null:
 		return false
-	var orientations: Array = controller.call("_entry_orientations_for_item", item)
+	var orientations: Array = controller.call(
+		"_entry_orientations_for_item",
+		item,
+		surface.get_semantic_orientation_quarter_turns()
+	)
 	var fit: Dictionary = surface.find_zone_stack_or_empty_fit(
 		item.get_storage_category(),
 		orientations[0],

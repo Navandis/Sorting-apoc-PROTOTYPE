@@ -27,6 +27,8 @@ func _run() -> void:
 			return
 	probe.free()
 	_definitions = _definitions_by_id()
+	_test_canonical_first_and_alternate_only_at_nonzero_state()
+	_test_committed_item_orientation_is_stable()
 	_test_flat_media_and_pose_cache()
 	_test_real_flat_media_base_promotion()
 	_test_failed_base_promotion_restores_exact_carry_state()
@@ -43,6 +45,127 @@ func _run() -> void:
 		return
 	print("PASS: storage stacking interaction tests")
 	quit(0)
+
+
+func _test_canonical_first_and_alternate_only_at_nonzero_state() -> void:
+	var both_context := _context(Vector2i(5, 5), 1.0)
+	var both_surface := both_context["surface"] as StorageSurface
+	var both_controller := both_context["controller"] as StoragePlacementController
+	var both_carried := both_context["carried"] as CarriedItems
+	both_surface.set_semantic_orientation_quarter_turns(1)
+	both_surface.set_zone_rect(
+		StorageCategoriesScript.FOOD,
+		Vector2i.ZERO,
+		both_surface.get_grid_size() - Vector2i.ONE
+	)
+	var canonical_item := _item(&"loot_000005")
+	var both_orientations := both_controller.call(
+		"_entry_orientations_for_item",
+		canonical_item,
+		1
+	) as Array
+	var both_fit := both_surface.find_zone_stack_or_empty_fit(
+		canonical_item.get_storage_category(),
+		both_orientations[0],
+		both_orientations[1]
+	)
+	_check(bool(both_fit.get("valid", false)), "both orientation candidates fit")
+	_check(
+		not bool(both_fit.get("rotated", true)),
+		"auto placement prefers canonical/front-facing candidate"
+	)
+	_check(both_carried.add_item(canonical_item), "canonical-first item enters carry")
+	both_controller.set("_current_surface", both_surface)
+	both_controller.set("_current_fit", both_fit)
+	both_controller.set("_manual_mode", false)
+	_check(both_controller.place_selected(), "canonical-first fit commits")
+	_check(
+		both_surface.get_reservation(canonical_item.instance_id).get("footprint")
+		== both_orientations[0].footprint,
+		"canonical-first reservation matches selected footprint"
+	)
+	_free_context(both_context)
+
+	var alternate_context := _context(Vector2i(3, 1), 1.0)
+	var alternate_surface := alternate_context["surface"] as StorageSurface
+	var alternate_controller := alternate_context["controller"] as StoragePlacementController
+	var alternate_carried := alternate_context["carried"] as CarriedItems
+	alternate_surface.set_semantic_orientation_quarter_turns(1)
+	alternate_surface.set_zone_rect(
+		StorageCategoriesScript.FOOD,
+		Vector2i.ZERO,
+		alternate_surface.get_grid_size() - Vector2i.ONE
+	)
+	var alternate_item := _item(&"loot_000005")
+	var alternate_orientations := alternate_controller.call(
+		"_entry_orientations_for_item",
+		alternate_item,
+		1
+	) as Array
+	var alternate_fit := alternate_surface.find_zone_stack_or_empty_fit(
+		alternate_item.get_storage_category(),
+		alternate_orientations[0],
+		alternate_orientations[1]
+	)
+	_check(bool(alternate_fit.get("valid", false)), "alternate-only fit is valid")
+	_check(
+		bool(alternate_fit.get("rotated", false)),
+		"alternate 90-degree packing is selected when canonical cannot fit"
+	)
+	_check(alternate_carried.add_item(alternate_item), "alternate-only item enters carry")
+	alternate_controller.set("_current_surface", alternate_surface)
+	alternate_controller.set("_current_fit", alternate_fit)
+	alternate_controller.set("_manual_mode", false)
+	_check(alternate_controller.place_selected(), "alternate-only fit commits")
+	_check(
+		alternate_surface.get_reservation(alternate_item.instance_id).get("footprint")
+		== alternate_orientations[1].footprint,
+		"alternate reservation matches selected footprint"
+	)
+	_free_context(alternate_context)
+
+
+func _test_committed_item_orientation_is_stable() -> void:
+	var context := _context(Vector2i(8, 4), 1.0)
+	var surface := context["surface"] as StorageSurface
+	var controller := context["controller"] as StoragePlacementController
+	var carried := context["carried"] as CarriedItems
+	var first := _item(&"loot_000005")
+	surface.set_semantic_orientation_quarter_turns(0)
+	_check(
+		_place_manual_empty(controller, carried, surface, first, Vector2i.ZERO),
+		"state 0 item commits before orientation change"
+	)
+	var first_stack := surface.get_storage_stack(first.instance_id)
+	var first_host: Node3D = first_stack.entries[0].host
+	var first_transform := first_host.global_transform
+	var first_unit_yaw := first_host.get_node("StoredUnitOrientationYaw") as Node3D
+	var first_unit_basis := first_unit_yaw.basis
+
+	surface.set_semantic_orientation_quarter_turns(2)
+	_check(
+		first_host.global_transform.is_equal_approx(first_transform),
+		"existing item transform remains committed after Front changes"
+	)
+	_check(
+		first_unit_yaw.basis.is_equal_approx(first_unit_basis),
+		"existing item does not live-realign"
+	)
+
+	var second := _item(&"loot_000005")
+	_check(
+		_place_manual_empty(controller, carried, surface, second, Vector2i(4, 0)),
+		"new item commits after orientation change"
+	)
+	var second_stack := surface.get_storage_stack(second.instance_id)
+	var second_unit_yaw := (
+		second_stack.entries[0].host.get_node("StoredUnitOrientationYaw") as Node3D
+	)
+	_check(
+		second_unit_yaw.basis.is_equal_approx(Basis(Vector3.UP, deg_to_rad(180.0))),
+		"new item uses the updated state 2 Front"
+	)
+	_free_context(context)
 
 
 func _test_flat_media_and_pose_cache() -> void:
@@ -308,7 +431,8 @@ func _test_contextual_manual_orientation_preserves_preference() -> void:
 		"_find_manual_stack_target_fit",
 		surface,
 		stack_id,
-		incoming
+		incoming,
+		surface.get_semantic_orientation_quarter_turns()
 	) as Dictionary
 	_check(bool(fit.get("valid", false)), "invalid preferred MedKit orientation uses valid 90-degree alternative")
 	_check(not bool(fit.get("rotated", true)), "effective targeted orientation is separate from rotated preference")
@@ -326,7 +450,9 @@ func _test_contextual_manual_orientation_preserves_preference() -> void:
 	_check(controller.place_selected(), "contextual orientation placement commits")
 	var stack: StorageStack = surface.get_storage_stack(stack_id)
 	var committed = stack.entries[stack.entries.size() - 1]
-	var final_packing: Node3D = committed.host.get_node("StoredPackingYaw") as Node3D
+	var final_packing: Node3D = committed.host.get_node(
+		"StoredUnitOrientationYaw/StoredPackingYaw"
+	) as Node3D
 	_check(committed.host.transform.is_equal_approx(ghost_transform), "contextual orientation ghost and final host match")
 	_check(final_packing.basis.is_equal_approx(ghost_packing_basis), "contextual effective packing yaw matches ghost and final")
 	_check(not committed.packing_rotated, "committed entry records contextual effective orientation")
@@ -360,7 +486,9 @@ func _test_manual_terminal_and_ghost_final_parity(terminal_id: StringName) -> vo
 	_check(controller.place_selected(), "manual terminal commits")
 	var stack: StorageStack = surface.get_storage_stack(stack_id)
 	var committed = stack.entries[stack.entries.size() - 1]
-	var packing: Node3D = committed.host.get_node("StoredPackingYaw") as Node3D
+	var packing: Node3D = committed.host.get_node(
+		"StoredUnitOrientationYaw/StoredPackingYaw"
+	) as Node3D
 	var pose: Node3D = packing.get_node("StorageSeating/AuthoredStoragePose") as Node3D
 	_check(committed.host.transform.is_equal_approx(ghost_transform), "stack ghost transform equals final host")
 	_check(packing.basis.is_equal_approx(ghost_packing_basis), "manual R packing yaw preview equals final")
@@ -375,7 +503,11 @@ func _test_manual_terminal_and_ghost_final_parity(terminal_id: StringName) -> vo
 func _place_auto(controller: StoragePlacementController, carried: CarriedItems, surface: StorageSurface, item: ItemInstance) -> bool:
 	if not carried.add_item(item):
 		return false
-	var orientations: Array = controller.call("_entry_orientations_for_item", item)
+	var orientations: Array = controller.call(
+		"_entry_orientations_for_item",
+		item,
+		surface.get_semantic_orientation_quarter_turns()
+	)
 	var fit: Dictionary = surface.find_zone_stack_or_empty_fit(
 		item.get_storage_category(),
 		orientations[0],
@@ -408,7 +540,12 @@ func _manual_empty_fit(
 	origin: Vector2i,
 	rotated: bool
 ) -> Dictionary:
-	var entry = controller.call("_entry_for_item", item, rotated)
+	var entry = controller.call(
+		"_entry_for_item",
+		item,
+		rotated,
+		surface.get_semantic_orientation_quarter_turns()
+	)
 	return {
 		"valid": surface.can_place_at(origin, entry.footprint),
 		"placement_kind": "empty",
@@ -446,7 +583,12 @@ func _place_manual_empty(
 ) -> bool:
 	if not carried.add_item(item):
 		return false
-	var entry = controller.call("_entry_for_item", item, false)
+	var entry = controller.call(
+		"_entry_for_item",
+		item,
+		false,
+		surface.get_semantic_orientation_quarter_turns()
+	)
 	var fit: Dictionary = {
 		"valid": true,
 		"placement_kind": "empty",
