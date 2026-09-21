@@ -30,7 +30,8 @@ func _run() -> void:
 	_test_canonical_first_and_alternate_only_at_nonzero_state()
 	_test_committed_item_orientation_is_stable()
 	_test_flat_media_and_pose_cache()
-	_test_real_flat_media_base_promotion()
+	_test_real_flat_media_bidirectional_stack()
+	_test_expanded_flat_media_base_promotion()
 	_test_failed_base_promotion_restores_exact_carry_state()
 	_test_manual_larger_item_never_promotes_base()
 	_test_general_round_cans_and_visible_middle_retrieval()
@@ -196,22 +197,41 @@ func _test_flat_media_and_pose_cache() -> void:
 	_free_context(context)
 
 
-func _test_real_flat_media_base_promotion() -> void:
+func _test_real_flat_media_bidirectional_stack() -> void:
 	var context: Dictionary = _context(Vector2i(8, 8), 1.0)
 	var surface: StorageSurface = context["surface"] as StorageSurface
 	var controller: StoragePlacementController = context["controller"] as StoragePlacementController
 	var carried: CarriedItems = context["carried"] as CarriedItems
 	surface.set_zone_rect(StorageCategoriesScript.MORALE, Vector2i.ZERO, Vector2i(7, 7))
 	var cd: ItemInstance = _item(&"loot_000031")
-	_check(_place_manual_empty(controller, carried, surface, cd, Vector2i(3, 3)), "CD base placed for real promotion")
+	_check(_place_manual_empty(controller, carried, surface, cd, Vector2i(3, 3)), "CD base placed for reverse flat-media order")
 	var book: ItemInstance = _item(&"loot_000030")
+	_check(_place_auto(controller, carried, surface, book), "real 2x2 Book automatically stacks on real 2x2 CD")
+	var stack: StorageStack = surface.get_storage_stack(cd.instance_id)
+	_check(stack != null and stack.entries.size() == 2, "reverse flat-media stack has two members")
+	_check(stack != null and stack.entries[0].item == cd and stack.entries[1].item == book, "real CD then Book order is preserved")
+	_check(surface.get_storage_stack(book.instance_id) == null, "upper Book does not replace equal-footprint CD ownership")
+	_check(surface.get_reservation(cd.instance_id).get("footprint", Vector2i.ZERO) == Vector2i(2, 2), "reverse flat-media reservation remains 2x2")
+	_check(stack != null and stack.is_auto_coherent(), "reverse flat-media stack remains auto coherent")
+	_free_context(context)
+
+
+func _test_expanded_flat_media_base_promotion() -> void:
+	var context: Dictionary = _context(Vector2i(8, 8), 1.0)
+	var surface: StorageSurface = context["surface"] as StorageSurface
+	var controller: StoragePlacementController = context["controller"] as StoragePlacementController
+	var carried: CarriedItems = context["carried"] as CarriedItems
+	surface.set_zone_rect(StorageCategoriesScript.MORALE, Vector2i.ZERO, Vector2i(7, 7))
+	var cd: ItemInstance = _item(&"loot_000031")
+	_check(_place_manual_empty(controller, carried, surface, cd, Vector2i(3, 3)), "CD base placed for expanded-footprint promotion fixture")
+	var book: ItemInstance = _promotion_book()
 	_check(_place_auto(controller, carried, surface, book), "larger Book automatically promotes beneath CD")
 	var stack: StorageStack = surface.get_storage_stack(book.instance_id)
 	_check(stack != null, "incoming Book ID owns promoted flat-media stack")
-	_check(stack != null and stack.entries.size() == 2, "real promoted stack has two members")
-	_check(stack != null and stack.entries[0].item == book and stack.entries[1].item == cd, "real promoted order is Book then prior CD base")
+	_check(stack != null and stack.entries.size() == 2, "promoted fixture stack has two members")
+	_check(stack != null and stack.entries[0].item == book and stack.entries[1].item == cd, "promoted fixture order is expanded Book then prior CD base")
 	_check(surface.get_storage_stack(cd.instance_id) == null, "prior CD ID is not an ownership key")
-	_check(surface.get_reservation(book.instance_id).get("footprint", Vector2i.ZERO) == Vector2i(3, 2), "real promotion expands reservation to Book footprint")
+	_check(surface.get_reservation(book.instance_id).get("footprint", Vector2i.ZERO) == Vector2i(3, 2), "promotion fixture expands reservation to synthetic Book footprint")
 	_check(carried.get_item_count() == 0, "successful promotion consumes selected Book")
 	_free_context(context)
 
@@ -226,7 +246,7 @@ func _test_failed_base_promotion_restores_exact_carry_state() -> void:
 	_check(_place_manual_empty(controller, carried, surface, cd, Vector2i(3, 3)), "rollback fixture CD base placed")
 	var filler_left: ItemInstance = _item(&"loot_000022")
 	var filler_middle: ItemInstance = _item(&"loot_000023")
-	var book: ItemInstance = _item(&"loot_000030")
+	var book: ItemInstance = _promotion_book()
 	_check(carried.add_item(filler_left), "rollback filler left added")
 	_check(carried.add_item(filler_middle), "rollback filler middle added")
 	_check(carried.add_item(book), "rollback incoming Book added")
@@ -271,7 +291,7 @@ func _test_manual_larger_item_never_promotes_base() -> void:
 	surface.set_zone_rect(StorageCategoriesScript.MORALE, Vector2i.ZERO, Vector2i(7, 7))
 	var cd: ItemInstance = _item(&"loot_000031")
 	_check(_place_manual_empty(controller, carried, surface, cd, Vector2i(3, 3)), "manual non-promotion CD base placed")
-	var book: ItemInstance = _item(&"loot_000030")
+	var book: ItemInstance = _promotion_book()
 	var preferred = controller.call("_entry_for_item", book, false)
 	var alternate = controller.call("_entry_for_item", book, true)
 	var fit: Dictionary = surface.find_manual_stack_fit(cd.instance_id, preferred, alternate)
@@ -524,7 +544,7 @@ func _build_book_cd_stack(
 	carried: CarriedItems,
 	surface: StorageSurface
 ) -> ItemInstance:
-	var base: ItemInstance = _item(&"loot_000030")
+	var base: ItemInstance = _promotion_book()
 	var middle: ItemInstance = _item(&"loot_000031")
 	var top: ItemInstance = _item(&"loot_000031")
 	_check(_place_auto(controller, carried, surface, base), "removed-base fixture Book placed")
@@ -630,6 +650,13 @@ func _free_context(context: Dictionary) -> void:
 
 func _item(item_id: StringName) -> ItemInstance:
 	return ItemInstanceScript.new(_definitions[String(item_id)] as ItemDefinition)
+
+
+func _promotion_book() -> ItemInstance:
+	var source: ItemDefinition = _definitions["loot_000030"] as ItemDefinition
+	var definition: ItemDefinition = source.duplicate(true) as ItemDefinition
+	definition.storage_footprint = Vector3i(3, 2, 1)
+	return ItemInstanceScript.new(definition)
 
 
 func _definitions_by_id() -> Dictionary:
