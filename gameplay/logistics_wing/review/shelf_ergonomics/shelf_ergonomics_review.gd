@@ -2,8 +2,6 @@ extends Node3D
 
 const StorageManagerScript = preload("res://gameplay/logistics_wing/review/shelf_ergonomics/shelf_ergonomics_storage_manager.gd")
 const ClearanceContextScript = preload("res://storage_shelf_clearance_context.gd")
-const MetalScene = preload("res://assets/environment/furniture/storage/SM_MetalShelves.glb")
-const LockerScene = preload("res://assets/environment/furniture/storage/SM_ventilated_locker.glb")
 const CabinetScene = preload("res://assets/environment/furniture/storage/SM_ClothesCabinet.glb")
 const WingGameplayScene = preload("res://gameplay/logistics_wing/wing_gameplay.tscn")
 
@@ -147,19 +145,21 @@ func _build_fixtures() -> void:
 	_collision_root.name = "ReviewFixtureCollision"
 	add_child(_collision_root)
 	var y_scale := 1.0 if _case == "A" else LOWER_METAL_Y_SCALE
-	_metal = MetalScene.instantiate() as Node3D
-	_metal.name = "SM_MetalShelves_Ergonomics"
+	_metal = _fixtures.get_node_or_null("SM_MetalShelves_Ergonomics") as Node3D
+	if _metal == null:
+		push_error("Shelf ergonomics review requires its saved functional Metal Shelf")
+		return
 	_metal.position = METAL_REVIEW_POSITION
 	_metal.scale = Vector3(1.0, y_scale, 1.0)
-	_fixtures.add_child(_metal)
 	_add_clearance_context(_metal, maxf(0.05, _ceiling_y_m - 2.86 * y_scale))
 
 	y_scale = 1.0 if _case == "A" else LOWER_LOCKER_Y_SCALE
-	_locker = LockerScene.instantiate() as Node3D
-	_locker.name = "SM_ventilated_locker_Ergonomics"
+	_locker = _fixtures.get_node_or_null("SM_ventilated_locker_Ergonomics") as Node3D
+	if _locker == null:
+		push_error("Shelf ergonomics review requires its saved functional Ventilated Locker")
+		return
 	_locker.position = Vector3(13.15, 0.0, -11.90)
 	_locker.scale = Vector3(1.0, y_scale, 1.0)
-	_fixtures.add_child(_locker)
 	_add_clearance_context(_locker, 0.519 * y_scale)
 
 	y_scale = 1.0 if _case == "A" else LOWER_CABINET_Y_SCALE

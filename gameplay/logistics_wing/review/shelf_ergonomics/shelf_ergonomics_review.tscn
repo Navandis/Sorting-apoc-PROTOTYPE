@@ -7,6 +7,9 @@
 [ext_resource type="PackedScene" path="res://gameplay/logistics_wing/storage/modular_rack.tscn" id="5_modular_rack"]
 [ext_resource type="PackedScene" uid="uid://du775526cba45" path="res://assets/environment/furniture/storage/SM_Ind_War_Equipment_Ladder_Metal_Worn_01.glb" id="6_ladder"]
 [ext_resource type="PackedScene" path="res://assets/environment/furniture/storage/SM_Rack02.glb" id="7_rack02"]
+[ext_resource type="PackedScene" uid="uid://d3mlmnn3nikxt" path="res://assets/environment/furniture/storage/SM_MetalShelves.glb" id="8_metal"]
+[ext_resource type="PackedScene" uid="uid://c4pb7l6u1paus" path="res://assets/environment/furniture/storage/SM_ventilated_locker.glb" id="9_locker"]
+[ext_resource type="Script" uid="uid://dlp03r2pbywr4" path="res://storage_unit_orientation.gd" id="10_orientation"]
 
 [node name="ShelfErgonomicsReview" type="Node3D" unique_id=961672822]
 script = ExtResource("1_review")
@@ -43,6 +46,20 @@ position = Vector3(0, 1.24654, 0)
 position = Vector3(0, 1.75105, 0)
 
 [node name="Visual" parent="ReviewFixtures/ModularRack_Starter/Levels/Shelf_03" instance=ExtResource("7_rack02")]
+
+[node name="SM_MetalShelves_Ergonomics" parent="ReviewFixtures" instance=ExtResource("8_metal")]
+position = Vector3(10.1, 0, -10.95)
+
+[node name="StorageUnitOrientation" type="Node" parent="ReviewFixtures/SM_MetalShelves_Ergonomics"]
+script = ExtResource("10_orientation")
+storage_orientation_quarter_turns = 0
+
+[node name="SM_ventilated_locker_Ergonomics" parent="ReviewFixtures" instance=ExtResource("9_locker")]
+position = Vector3(13.15, 0, -11.9)
+
+[node name="StorageUnitOrientation" type="Node" parent="ReviewFixtures/SM_ventilated_locker_Ergonomics"]
+script = ExtResource("10_orientation")
+storage_orientation_quarter_turns = 0
 
 [node name="SM_Ind_War_Equipment_Ladder_Metal_Worn_01" parent="." unique_id=842094049 instance=ExtResource("6_ladder")]
 transform = Transform3D(-5.004954e-08, -1, 0, 1.145, -4.371139e-08, 0, 0, 0, 1, 10.146227, 1.467566, -3.8100755)

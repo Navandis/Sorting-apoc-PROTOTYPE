@@ -2,6 +2,8 @@ extends SceneTree
 
 const REVIEW_SCENE := "res://gameplay/logistics_wing/review/shelf_ergonomics/shelf_ergonomics_review.tscn"
 const GAMEPLAY_SCENE := "res://gameplay/logistics_wing/wing_gameplay.tscn"
+const METAL_SCENE := "res://assets/environment/furniture/storage/SM_MetalShelves.glb"
+const LOCKER_SCENE := "res://assets/environment/furniture/storage/SM_ventilated_locker.glb"
 const BLOCKED_ITEM_IDS: Array[StringName] = [&"loot_000034", &"loot_000036"]
 
 var _failed := false
@@ -30,12 +32,38 @@ func _check_case(case_id: String) -> void:
 	var saved_fixtures := scene.get_node_or_null("ReviewFixtures") as Node3D
 	_check(saved_fixtures != null, "%s review scene saves its ReviewFixtures root" % case_id)
 	var authored_racks := _direct_modular_racks(saved_fixtures)
-	_check(not authored_racks.is_empty(), "%s review scene contains at least one authored ModularRack" % case_id)
+	_check(authored_racks.size() == 1, "%s review scene contains its single delivered ModularRack starter" % case_id)
+	_check(_authored_modular_level_count(authored_racks) == 3, "%s delivered ModularRack starter contains three authored levels" % case_id)
+	var authored_legacy := _assert_saved_legacy_orientation_fixtures(
+		saved_fixtures,
+		authored_racks,
+		case_id
+	)
+	var expected_metal_state := 0
+	var expected_locker_state := 0
+	if case_id == "A" and not authored_legacy.is_empty():
+		var metal_context := authored_legacy.get("metal_context") as StorageUnitOrientation
+		var locker_context := authored_legacy.get("locker_context") as StorageUnitOrientation
+		var rack := authored_racks[0] if not authored_racks.is_empty() else null
+		metal_context.storage_orientation_quarter_turns = 2
+		_check(locker_context.get_storage_orientation_quarter_turns() == 0, "changing saved Metal Shelf orientation leaves Locker unchanged")
+		_check(rack == null or rack.get_storage_orientation_quarter_turns() == 0, "changing saved Metal Shelf orientation leaves ModularRack unchanged")
+		locker_context.storage_orientation_quarter_turns = 3
+		_check(metal_context.get_storage_orientation_quarter_turns() == 2, "changing saved Locker orientation leaves Metal Shelf unchanged")
+		_check(rack == null or rack.get_storage_orientation_quarter_turns() == 0, "changing saved Locker orientation leaves ModularRack unchanged")
+		expected_metal_state = 2
+		expected_locker_state = 3
 	scene.set("case_override", case_id)
 	root.add_child(scene)
 	current_scene = scene
 	await process_frame
 	await physics_frame
+	_assert_runtime_legacy_orientation_fixtures(
+		scene,
+		case_id,
+		expected_metal_state,
+		expected_locker_state
+	)
 	_assert_authoritative_supply(scene, case_id)
 	_assert_modular_review_scene(scene, case_id)
 	_check(scene.has_method("get_review_contract"), "%s exposes a review contract" % case_id)
@@ -76,6 +104,85 @@ func _check_case(case_id: String) -> void:
 	scene.free()
 	current_scene = null
 	await process_frame
+
+
+func _assert_saved_legacy_orientation_fixtures(
+	fixtures: Node3D,
+	authored_racks: Array[ModularRack],
+	case_id: String
+) -> Dictionary:
+	var metal_instances := _direct_scene_instances(fixtures, METAL_SCENE)
+	var locker_instances := _direct_scene_instances(fixtures, LOCKER_SCENE)
+	_check(metal_instances.size() == 1, "%s review scene saves exactly one functional Metal Shelf" % case_id)
+	_check(locker_instances.size() == 1, "%s review scene saves exactly one functional Ventilated Locker" % case_id)
+	if metal_instances.size() != 1 or locker_instances.size() != 1:
+		return {}
+
+	var metal := metal_instances[0]
+	var locker := locker_instances[0]
+	var metal_context := metal.get_node_or_null("StorageUnitOrientation") as StorageUnitOrientation
+	var locker_context := locker.get_node_or_null("StorageUnitOrientation") as StorageUnitOrientation
+	_check(metal.name == &"SM_MetalShelves_Ergonomics", "%s saved Metal Shelf retains its functional review identity" % case_id)
+	_check(locker.name == &"SM_ventilated_locker_Ergonomics", "%s saved Locker retains its functional review identity" % case_id)
+	_check(metal_context != null, "%s saved Metal Shelf exposes an editable StorageUnitOrientation" % case_id)
+	_check(locker_context != null, "%s saved Locker exposes an editable StorageUnitOrientation" % case_id)
+	if metal_context == null or locker_context == null:
+		return {}
+	_check(metal_context.get_storage_orientation_quarter_turns() == 0, "%s saved Metal Shelf defaults to orientation state 0" % case_id)
+	_check(locker_context.get_storage_orientation_quarter_turns() == 0, "%s saved Locker defaults to orientation state 0" % case_id)
+	if not authored_racks.is_empty():
+		_check(authored_racks[0].get_storage_orientation_quarter_turns() == 0, "%s delivered ModularRack starter remains orientation state 0" % case_id)
+	return {
+		"metal": metal,
+		"locker": locker,
+		"metal_context": metal_context,
+		"locker_context": locker_context,
+	}
+
+
+func _assert_runtime_legacy_orientation_fixtures(
+	scene: Node,
+	case_id: String,
+	expected_metal_state: int,
+	expected_locker_state: int
+) -> void:
+	var fixtures := scene.get_node_or_null("ReviewFixtures") as Node3D
+	var metal_instances := _direct_scene_instances(fixtures, METAL_SCENE)
+	var locker_instances := _direct_scene_instances(fixtures, LOCKER_SCENE)
+	_check(metal_instances.size() == 1, "%s runtime setup does not duplicate the saved Metal Shelf" % case_id)
+	_check(locker_instances.size() == 1, "%s runtime setup does not duplicate the saved Locker" % case_id)
+	if metal_instances.size() != 1 or locker_instances.size() != 1:
+		return
+
+	var metal_surfaces := _direct_storage_surfaces(metal_instances[0])
+	var locker_surfaces := _direct_storage_surfaces(locker_instances[0])
+	_check(metal_surfaces.size() == 4, "%s saved Metal Shelf still generates four legacy surfaces" % case_id)
+	_check(locker_surfaces.size() == 4, "%s saved Locker still generates four legacy surfaces" % case_id)
+	_check(metal_surfaces.size() + locker_surfaces.size() == 8, "%s saved legacy fixtures still generate eight surfaces total" % case_id)
+	for surface: StorageSurface in metal_surfaces:
+		_check(surface.get_semantic_orientation_quarter_turns() == expected_metal_state, "%s every Metal Shelf surface inherits its saved unit orientation" % case_id)
+	for surface: StorageSurface in locker_surfaces:
+		_check(surface.get_semantic_orientation_quarter_turns() == expected_locker_state, "%s every Locker surface inherits its saved unit orientation" % case_id)
+
+
+func _direct_scene_instances(fixtures: Node3D, scene_path: String) -> Array[Node3D]:
+	var result: Array[Node3D] = []
+	if fixtures == null:
+		return result
+	for child: Node in fixtures.get_children():
+		if child is Node3D and String(child.scene_file_path) == scene_path:
+			result.append(child as Node3D)
+	return result
+
+
+func _direct_storage_surfaces(unit: Node3D) -> Array[StorageSurface]:
+	var result: Array[StorageSurface] = []
+	if unit == null:
+		return result
+	for child: Node in unit.get_children():
+		if child is StorageSurface:
+			result.append(child as StorageSurface)
+	return result
 
 
 func _exercise_review_storage(scene: Node, case_id: String) -> void:
