@@ -165,18 +165,19 @@ func _test_attached_movement_and_yaw() -> void:
 	var functional_forward := _ladder.call("get_ladder_forward_world") as Vector3
 	var functional_centre := atan2(functional_forward.x, functional_forward.z)
 	var maximum := float(_ladder.call("get_yaw_clamp_radians"))
+	var camera := _player.get_node("Camera3D") as Camera3D
 	_check(_near(maximum, deg_to_rad(70.0)), "attached yaw clamp is the reviewed +/-70 degrees")
 	_check(absf(angle_difference(functional_centre, centre)) <= EPSILON, "yaw centre comes from functional root +Z rather than visual normalization")
 	var endpoint_mouse_motion := deg_to_rad(100.0) / float(_player.get("mouse_sensitivity"))
 	_player.rotation.y = centre
 	_player.call("_apply_mouse_look", Vector2(-endpoint_mouse_motion, 0.0))
-	var right_relative := wrapf(_player.rotation.y - centre, -PI, PI)
+	var right_relative := wrapf(_camera_back_yaw_world(camera) - centre, -PI, PI)
 	_player.rotation.y = centre
 	_player.call("_apply_mouse_look", Vector2(endpoint_mouse_motion, 0.0))
-	var left_relative := wrapf(_player.rotation.y - centre, -PI, PI)
+	var left_relative := wrapf(_camera_back_yaw_world(camera) - centre, -PI, PI)
 	print("YAW_SYMMETRY_METRIC centre=%.3f left=%.3f right=%.3f" % [rad_to_deg(centre), rad_to_deg(left_relative), rad_to_deg(right_relative)])
-	_check(_near(left_relative, -deg_to_rad(70.0)) and _near(right_relative, deg_to_rad(70.0)), "left and right yaw endpoints are exactly centre -/+70 degrees")
-	_check(_near(absf(left_relative), absf(right_relative)) and _near((left_relative + right_relative) * 0.5, 0.0), "yaw endpoints have equal magnitude and a zero-offset midpoint")
+	_check(_near(left_relative, -deg_to_rad(70.0)) and _near(right_relative, deg_to_rad(70.0)), "visible left and right yaw endpoints are exactly centre -/+70 degrees")
+	_check(_near(absf(left_relative), absf(right_relative)) and _near((left_relative + right_relative) * 0.5, 0.0), "visible yaw endpoints have equal magnitude and a zero-offset midpoint")
 	_player.rotation.y = centre
 
 
@@ -315,6 +316,11 @@ func _body_ray_hits_ladder(ray_from: Vector3, ray_to: Vector3) -> bool:
 
 func _near(actual: float, expected: float, epsilon: float = EPSILON) -> bool:
 	return absf(actual - expected) <= epsilon
+
+
+func _camera_back_yaw_world(camera: Camera3D) -> float:
+	var camera_back := camera.global_basis.z
+	return atan2(camera_back.x, camera_back.z)
 
 
 func _check(condition: bool, message: String) -> bool:

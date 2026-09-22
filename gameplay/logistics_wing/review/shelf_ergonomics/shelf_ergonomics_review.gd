@@ -299,7 +299,13 @@ func _place_player_at_review_entry() -> void:
 	var camera := player.get_node_or_null("Camera3D") as Camera3D
 	player.global_position = Vector3(12.90, 0.05, -9.10)
 	if camera != null:
-		camera.look_at(Vector3(13.20, 1.15, -11.90), Vector3.UP)
+		var review_target := Vector3(13.20, 1.15, -11.90)
+		player.look_at(
+			Vector3(review_target.x, player.global_position.y, review_target.z),
+			Vector3.UP
+		)
+		camera.look_at(review_target, Vector3.UP)
+		camera.rotation.y = 0.0
 		player.set("_pitch", camera.rotation.x)
 		_set_review_eye_height(REVIEW_EYE_HEIGHTS_M[0])
 

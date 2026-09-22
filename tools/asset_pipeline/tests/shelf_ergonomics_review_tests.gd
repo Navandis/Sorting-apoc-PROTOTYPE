@@ -732,7 +732,20 @@ func _highest_level_y(levels: Node3D) -> float:
 func _assert_ladder_proof_runtime(scene: Node, case_id: String) -> void:
 	var proof_rack := scene.get_node_or_null("ReviewFixtures/ModularRack_LadderProof") as ModularRack
 	var proof_ladder := scene.get_node_or_null("ReviewFixtures/FixedLadder_LadderProof") as Node3D
+	var player := scene.get_node_or_null("Player") as CharacterBody3D
+	var camera := scene.get_node_or_null("Player/Camera3D") as Camera3D
 	_check(proof_rack != null and proof_ladder != null, "%s keeps the ladder proof installed at runtime" % case_id)
+	_check(player != null and camera != null, "%s ladder proof uses the normal player camera" % case_id)
+	if player != null and camera != null:
+		var camera_local_yaw := wrapf(camera.rotation.y, -PI, PI)
+		print(
+			"REVIEW_VIEW_YAW_METRIC case=%s player=%.3f camera_local=%.3f"
+			% [case_id, rad_to_deg(player.rotation.y), rad_to_deg(camera_local_yaw)]
+		)
+		_check(
+			absf(camera_local_yaw) <= deg_to_rad(0.1),
+			"%s keeps horizontal review yaw on the player body so the attached visible view remains symmetric" % case_id
+		)
 	if proof_rack == null or proof_ladder == null:
 		return
 	var authored_levels := (proof_rack.get_node("Levels") as Node3D).get_child_count()
