@@ -7,6 +7,7 @@
 **Implementation checkpoint:** `e7e8036e718a477025cce22ea152c91b7ffc27c4`  
 **Round-1 correction checkpoint:** `c8fd13ff732890efb714613107edcc6e9743b986`
 **Round-2 correction checkpoint:** `872cbd1add4f824242648831e211c75895ad3625`
+**Round-2 visible-yaw follow-up checkpoint:** `a4fecadceab582e6ef3feb4dddbdf187b606b464`
 **Godot:** `4.7.stable.official.5b4e0cb0f`
 
 This record must not be changed to PROMOTE until the developer completes the final focused human re-review and makes a PROMOTE / REVISE decision.
@@ -98,6 +99,8 @@ midpoint offset = 0.000°
 
 Because the owning player-controller implementation already satisfies the requested symmetric behavior, no player-controller yaw code was changed. The regression now protects both signed endpoints, equal magnitude, zero-offset midpoint, and independence from the accepted 180° visual-source normalization. Final human re-review remains the gate for the reported visual feel.
 
+That conclusion was incomplete: it established symmetric player-body yaw in the isolated ladder fixture, but did not measure the visible camera axis in the actual shelf-ergonomics review setup. The fresh human recording supplied after round 2 is authoritative evidence that the visible asymmetry persisted; the follow-up below supersedes the no-change conclusion for the review setup while preserving this investigation history.
+
 ### Round-2 focused verification
 
 | Check | Result |
@@ -108,6 +111,29 @@ Because the owning player-controller implementation already satisfies the reques
 | Headless editor scan | exit 0; `FixedLadder` global class registered |
 
 Every command retained only the known Windows root-certificate-store diagnostic. No shared player-controller code changed, so the optional default-project smoke was not repeated.
+
+### Round-2 visible-yaw follow-up
+
+Fresh in-game recording confirmed that the left visible endpoint was narrower than the right. The ladder clamp itself remained symmetric, but the shelf-review entry setup called `look_at()` on the child camera. That left `-6.521°` of horizontal yaw on `Player/Camera3D` while the player body remained at `0°`. The clamp then limited only the player body to `±70°`, producing an approximately `63.479°` visible left range and `76.521°` visible right range around the ladder axis.
+
+Follow-up checkpoint `a4fecadceab582e6ef3feb4dddbdf187b606b464` moves the review entry's horizontal orientation onto the player body and leaves only pitch on the child camera. The corrected runtime metric is identical in cases A, B, and C:
+
+```text
+player body yaw = -6.116°
+camera local yaw = 0.000°
+visible attached endpoints = -70.000° / +70.000°
+```
+
+The shared player controller, ladder yaw centre, `±70°` limit, ladder geometry, review-scene composition, approach width, attach correction, and rearm distance are unchanged. The focused ladder regression now measures the world yaw of the visible camera axis rather than only `Player.rotation.y`; the shelf-review regression separately prevents review setup from reintroducing child-camera yaw.
+
+| Check | Result |
+| --- | --- |
+| `fixed_ladder_authoring_tests.gd` | PASS, exit 0 |
+| `fixed_ladder_player_tests.gd` | PASS, exit 0; visible camera endpoints exactly `-70°/+70°`, attach correction still `0.1077 m` under `0.12 m` |
+| `shelf_ergonomics_review_tests.gd` | PASS A/B/C, exit 0; player `-6.116°`, camera-local yaw `0.000°`, 15 surfaces retained |
+| Headless editor scan | exit 0; scripts and global classes registered |
+
+Every command retained only the known Windows root-certificate-store diagnostic. Final human re-review remains required for the corrected visible feel.
 
 ## Implemented scope
 
@@ -144,7 +170,7 @@ tools/asset_pipeline/tests/fixed_ladder_player_tests.gd.uid
 tools/asset_pipeline/tests/shelf_ergonomics_review_tests.gd
 ```
 
-Delivery documentation also includes the approved design, approved implementation plan, supplied validation template, and this record. The initial implementation did not change `shelf_ergonomics_review.gd`; round 1 later moved only its review entry as recorded above. `project.godot` and `wing_gameplay.tscn` remain unchanged.
+Delivery documentation also includes the approved design, approved implementation plan, supplied validation template, and this record. The initial implementation did not change `shelf_ergonomics_review.gd`; round 1 later moved its review entry, and the round-2 visible-yaw follow-up moved that entry's horizontal look from the child camera to the player body. `project.godot` and `wing_gameplay.tscn` remain unchanged.
 
 ## Proof installation values
 
