@@ -256,6 +256,7 @@ func _try_attach_to_ladder(ladder: Node3D, input_vector: Vector2) -> bool:
 	if (
 		ladder == null
 		or ladder.get_script() != FixedLadderScript
+		or not bool(ladder.call("is_authoring_valid"))
 		or not bool(ladder.call("is_player_in_approach_area", self))
 		or not bool(ladder.call("is_player_on_front_side", self))
 		or bool(ladder.call("is_attach_suppressed_for", self))

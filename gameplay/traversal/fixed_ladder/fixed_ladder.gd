@@ -157,6 +157,22 @@ func suppress_until_approach_exit(player: Node3D) -> void:
 		_suppressed_players[player.get_instance_id()] = true
 
 
+func is_authoring_valid() -> bool:
+	if (
+		ladder_height_m <= DIMENSION_EPSILON_M
+		or overhead_limit_local_y_m <= CEILING_SAFETY_MARGIN_M + MIN_CLIMB_RANGE_M
+		or not transform.basis.get_scale().is_equal_approx(Vector3.ONE)
+		or absf(rotation.x) > ROOT_TRANSFORM_EPSILON
+		or absf(rotation.z) > ROOT_TRANSFORM_EPSILON
+	):
+		return false
+	var visual_bounds := _get_source_bounds(get_node_or_null("Visual"))
+	if not bool(visual_bounds.get("valid", false)):
+		return false
+	var bounds := visual_bounds.get("bounds", AABB()) as AABB
+	return minf(bounds.size.x, minf(bounds.size.y, bounds.size.z)) > DIMENSION_EPSILON_M
+
+
 func _on_approach_body_entered(body: Node3D) -> void:
 	_approach_players[body.get_instance_id()] = weakref(body)
 

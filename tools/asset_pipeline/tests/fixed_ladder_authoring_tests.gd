@@ -36,6 +36,7 @@ func _test_scene_contract(ladder: Node3D) -> void:
 		and String(ladder.get_script().get_global_name()) == "FixedLadder",
 		"root is the global FixedLadder class"
 	)
+	_check(ladder.has_method("is_authoring_valid"), "FixedLadder exposes authoring validity")
 	for path: String in [
 		"Visual/Source",
 		"MovementCollision/Shape",
@@ -105,12 +106,18 @@ func _test_height_drives_visual_collision_and_markers(ladder: Node3D) -> void:
 func _test_invalid_authoring_states_report(ladder: Node3D) -> void:
 	ladder.scale = Vector3(1.1, 1.0, 1.0)
 	_check(not (ladder.call("_get_configuration_warnings") as PackedStringArray).is_empty(), "non-unit root scale warns")
+	if ladder.has_method("is_authoring_valid"):
+		_check(not bool(ladder.call("is_authoring_valid")), "non-unit root scale invalidates the ladder")
 	ladder.scale = Vector3.ONE
 	ladder.rotation.x = 0.1
 	_check(not (ladder.call("_get_configuration_warnings") as PackedStringArray).is_empty(), "root pitch warns")
+	if ladder.has_method("is_authoring_valid"):
+		_check(not bool(ladder.call("is_authoring_valid")), "root pitch invalidates the ladder")
 	ladder.rotation.x = 0.0
 	ladder.rotation.z = 0.1
 	_check(not (ladder.call("_get_configuration_warnings") as PackedStringArray).is_empty(), "root roll warns")
+	if ladder.has_method("is_authoring_valid"):
+		_check(not bool(ladder.call("is_authoring_valid")), "root roll invalidates the ladder")
 	ladder.rotation.z = 0.0
 	ladder.set("ladder_height_m", 2.60)
 	ladder.set("overhead_limit_local_y_m", 1.00)

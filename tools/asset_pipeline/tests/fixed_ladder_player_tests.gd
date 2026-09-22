@@ -65,6 +65,13 @@ func _test_attachment_conditions() -> void:
 	_player.call("_step_movement", 0.05, Vector2(0.0, -1.0), false)
 	_check(not bool(_player.call("is_ladder_attached")), "forward input while facing sideways does not attach")
 	_player.rotation.y = 0.0
+	_ladder.scale = Vector3(1.1, 1.0, 1.0)
+	_player.call("_step_movement", 0.05, Vector2(0.0, -1.0), false)
+	var invalid_attached := bool(_player.call("is_ladder_attached"))
+	_check(not invalid_attached, "invalid root transform cannot become an active ladder")
+	if invalid_attached:
+		_player.call("_detach_from_ladder", false)
+	_ladder.scale = Vector3.ONE
 	_player.position = Vector3(0.15, 0.0, 0.48)
 	_player.call("_step_movement", 0.05, Vector2(0.0, -1.0), false)
 	_check(bool(_player.call("is_ladder_attached")), "frontal W input attaches")
@@ -135,6 +142,22 @@ func _test_top_limit_uses_actual_player_body() -> void:
 	var clamped_y := _player.global_position.y
 	_player.call("_step_movement", physics_delta, Vector2(0.0, -1.0), false)
 	_check(_near(_player.global_position.y, clamped_y), "continued W at the top cannot climb higher")
+
+	_ladder.set("overhead_limit_local_y_m", 2.55)
+	var ceiling_limits := _ladder.call("get_player_root_climb_limits", eye_offset, body_top_offset) as Dictionary
+	var ceiling_preferred := float(ceiling_limits.get("preferred_player_root_y", INF))
+	var low_ceiling_safe := float(ceiling_limits.get("ceiling_safe_player_root_y", INF))
+	var ceiling_max := float(ceiling_limits.get("maximum_y", INF))
+	_check(low_ceiling_safe < ceiling_preferred, "low-overhead fixture makes body safety the limiting branch")
+	_player.global_position.y = ceiling_max - 0.01
+	_player.call("_step_movement", physics_delta, Vector2(0.0, -1.0), false)
+	_check(_near(_player.global_position.y, low_ceiling_safe), "low overhead clamps at the body-safe ceiling target")
+	_check(
+		_player.global_position.y + body_top_offset
+		<= float(_ladder.call("get_overhead_limit_world_y")) - 0.039,
+		"low-overhead branch keeps the full capsule below the authored limit"
+	)
+	_ladder.set("overhead_limit_local_y_m", 3.40)
 
 
 func _test_bottom_release_and_suppression() -> void:
