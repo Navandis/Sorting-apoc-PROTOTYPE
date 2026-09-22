@@ -1,6 +1,6 @@
 # Sorting Apocalypse current development state
 
-**Decision record:** 22 September 2026. The Storage Authoring and Testbed Foundation is consolidated. Review-scene supply reuse, reusable functional modular-rack authoring, **Storage Unit Orientation & Zoning Basis**, **Canonical Item Storage Pose & Shelf-Front Alignment**, and the **Single-Rack Fixed-Ladder Proof** are complete and human-promoted. Fixed ladders are approved only for selected taller storage installations. The next active gameplay/system gate is Receiving / physical Receiving Stage B unless a concrete storage blocker appears; this close-out does not start Receiving implementation. The retained shelf and ceiling review scene remains a mutable review tool rather than an active production scene.
+**Decision record:** 22 September 2026. The Storage Authoring and Testbed Foundation is consolidated. Review-scene supply reuse, reusable functional modular-rack authoring, **Storage Unit Orientation & Zoning Basis**, **Canonical Item Storage Pose & Shelf-Front Alignment**, the **Single-Rack Fixed-Ladder Proof**, and the **Wing Modular Rack + Ladder Integration bridge** are complete and human-promoted. Fixed ladders are approved only for selected taller storage installations. The next active gameplay/system gate is Receiving / physical Receiving Stage B unless a concrete storage blocker appears; this close-out does not start Receiving implementation. The retained shelf and ceiling review scene remains a mutable review tool rather than an active production scene.
 
 ## Current authorities
 
@@ -17,7 +17,7 @@ The versioned GDD v0.10, Prototype Findings v0.10 and VDD v0.7 remain the dated 
 
 - Representative deterministic storage, stacking and zoning remain human-validated in their recorded scope.
 - The accepted whole-wing geometry and Medical tuning remain the spatial baseline. General greybox correction is closed.
-- `res://gameplay/logistics_wing/wing_gameplay.tscn` is the normal development and playable composition. It preserves the accepted geometry, normal player and HUD, three functional storage units, twelve functional surfaces and the saved `DevelopmentSetup` authoring setup. F6 developer grids remain default off and F7 is suppressed in this composition.
+- `res://gameplay/logistics_wing/wing_gameplay.tscn` is the normal development and playable composition. It preserves the accepted geometry, normal player and HUD, three legacy functional storage units plus one scene-local four-level `ModularRack` with an independent promoted `FixedLadder` in temporary Gallery B, sixteen functional surfaces, and the saved `DevelopmentSetup` authoring setup. The Gallery B installation is a developer-movable Receiving Stage B storage-destination baseline, not final furnishing. F6 developer grids remain default off and F7 is suppressed in this composition.
 - `DevelopmentSetup/SeedItems` in `wing_gameplay.tscn` is the current palette authority. It has at least one direct editor-authored host for every approved eligible type and preserves the developer's table and item arrangement. The fixed twelve-host regression fixture remains separate.
 - Locker level 2 and Fuel maintenance are promoted. Fuel (`loot_000015`) is eligible for correctly authored development hosts. Gloves (`loot_000034`) and Pants (`loot_000036`) remain blocked.
 - The default-entry transition is closed. `project.godot` selects `wing_gameplay.tscn` through UID `uid://bljf1nlhijej`. `main.tscn` remains the legacy mechanics fixture and `greybox/logistics_wing/wing_review.tscn` remains the neutral spatial review scene.
@@ -41,7 +41,7 @@ The A, B and C shelf and ceiling experiment is complete. Keep `res://gameplay/lo
 
 ## Gate order
 
-Completed: Review-scene supply reuse; reusable functional modular-rack authoring; Storage Unit Orientation & Zoning Basis; Canonical Item Storage Pose & Shelf-Front Alignment; Single-Rack Fixed-Ladder Proof.
+Completed: Review-scene supply reuse; reusable functional modular-rack authoring; Storage Unit Orientation & Zoning Basis; Canonical Item Storage Pose & Shelf-Front Alignment; Single-Rack Fixed-Ladder Proof; Wing Modular Rack + Ladder Integration bridge.
 
 1. **Active gate: Resume Receiving / physical Receiving Stage B** unless a concrete new storage blocker appears.
 2. Receiving Stage A remains the existing technical foundation; physical Stage B is not yet human-promoted.
@@ -65,5 +65,6 @@ The Fuel-related legacy-audit failure and timeout are resolved. Historical repor
 - [Storage unit orientation and zoning basis](testing/storage-unit-orientation-zoning-validation.md) — complete, technically verified and human-promoted.
 - [Canonical item storage pose and shelf-Front alignment](testing/canonical-item-storage-pose-validation.md) — complete, technically verified and human-promoted.
 - [Fixed-ladder proof validation](testing/fixed-ladder-proof-validation.md) — complete, technically verified and human-promoted for selected taller storage installations.
+- [Wing Modular Rack + Ladder integration](testing/wing-modular-rack-ladder-integration-validation.md) — complete, technically verified and human-promoted as the real Receiving Stage B storage-destination baseline.
 
 Ignored reports and imported asset state remain local and are not GitHub backup. The curated accepted greybox evidence remains under `docs/testing/evidence/greybox-accepted-2026-09-17/`.

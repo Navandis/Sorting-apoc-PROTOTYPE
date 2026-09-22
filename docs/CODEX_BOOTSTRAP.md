@@ -12,9 +12,9 @@ Read in this order:
 
 Use one executor by default and match verification to risk. Reuse established commands and same-state evidence where appropriate. Do not create a new review hierarchy, evidence framework or broad regression loop for a bounded task.
 
-The normal playable composition is `res://gameplay/logistics_wing/wing_gameplay.tscn`. Its saved `DevelopmentSetup/SeedItems` composition is the palette authority. Preserve the legacy `main.tscn`, the neutral wing review scene, the shelf ergonomics review scene and the developer-authored modular-rack experiment.
+The normal playable composition is `res://gameplay/logistics_wing/wing_gameplay.tscn`. Its saved `DevelopmentSetup/SeedItems` composition is the palette authority. It also contains the human-promoted temporary Gallery B four-level `ModularRack` and independent `FixedLadder` as the real Receiving Stage B storage-destination baseline; the developer may move/refine that installation later. Preserve the legacy `main.tscn`, the neutral wing review scene, the shelf ergonomics review scene and the developer-authored modular-rack experiment.
 
-Review-scene supply reuse, reusable ModularRack authoring, Storage Unit Orientation & Zoning Basis, Canonical Item Storage Pose & Shelf-Front Alignment, and the standalone fixed-ladder architecture are promoted foundations, not pending work. Fixed ladders remain limited to selected taller storage installations; no general climbing, jumping, movable/sliding ladder or shelf-top traversal system is approved.
+Review-scene supply reuse, reusable ModularRack authoring, Storage Unit Orientation & Zoning Basis, Canonical Item Storage Pose & Shelf-Front Alignment, the standalone fixed-ladder architecture, and the Gallery B wing rack-and-ladder integration are promoted foundations, not pending work. Fixed ladders remain limited to selected taller storage installations; no general climbing, jumping, movable/sliding ladder or shelf-top traversal system is approved.
 
 Current gate order:
 

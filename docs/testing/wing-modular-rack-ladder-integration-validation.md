@@ -1,7 +1,7 @@
 # Wing Modular Rack + Ladder Integration Validation
 
 **Date:** 22 September 2026  
-**Status:** IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN REVIEW PENDING  
+**Status:** IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN PROMOTED
 **Purpose:** Pre-Receiving integration bridge — one real ladder-served `ModularRack` in `wing_gameplay.tscn`.
 
 ## Implementation
@@ -95,7 +95,7 @@ Accepted wing geometry and ceiling: unchanged
 Receiving: not started
 ```
 
-## Human review
+## Human review — PROMOTED
 
 Launch the normal project:
 
@@ -103,7 +103,9 @@ Launch the normal project:
 & 'D:\AI Tools\Godot-4.7-Codex\Godot_v4.7-stable_win64_console.exe' --path 'D:\Godot Projects\Sorting-apoc-PROTOTYPE'
 ```
 
-Please:
+The developer has confirmed: **Wing Modular Rack + Ladder Integration bridge is now HUMAN PROMOTED.**
+
+The completed review scope was:
 
 1. Walk to the temporary Gallery B rack and confirm it is easy to select/move later in the editor.
 2. Take one or more items from the existing DevelopmentSetup palette.
@@ -111,4 +113,4 @@ Please:
 4. Climb the ladder while carrying an item and interact with an upper level.
 5. Toggle F6 and confirm the four rack grids join the existing developer grids.
 
-Decision requested: **PROMOTE / REVISE** this rack-and-ladder bridge as the real storage-destination baseline for Receiving Stage B. This review does not revalidate ladder or ModularRack architecture and does not begin Receiving.
+Disposition: **PROMOTE** — the rack-and-ladder bridge is the real storage-destination baseline for Receiving Stage B. This review does not revalidate ladder or ModularRack architecture and does not itself begin Receiving.

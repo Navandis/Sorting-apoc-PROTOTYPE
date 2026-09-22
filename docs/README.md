@@ -31,9 +31,10 @@ The accepted in-engine builder, saved scene and [overview](testing/evidence/grey
 - [Storage unit orientation and zoning](testing/storage-unit-orientation-zoning-validation.md): promoted unit-owned Front semantics and authored-Front zoning view without physical-cell migration.
 - [Canonical item storage pose](testing/canonical-item-storage-pose-validation.md): promoted canonical +Z Front, separate packing turn and the full 40-eligible-item human reconciliation.
 - [Fixed-ladder proof validation](testing/fixed-ladder-proof-validation.md): technically verified and human-promoted standalone fixed ladders for selected taller storage installations.
+- [Wing Modular Rack + Ladder integration](testing/wing-modular-rack-ladder-integration-validation.md): technically verified and human-promoted temporary Gallery B storage-destination baseline for Receiving Stage B.
 - [Receiving and Elevator design](superpowers/specs/2026-09-12-receiving-elevator-mvp-design.md): subsystem contract; physical Receiving remains unvalidated.
 
-The fixed-ladder proof is human-promoted in its deliberately narrow scope. Receiving / physical Receiving Stage B is now the active gate unless a concrete new storage blocker appears; Receiving Stage A remains the technical foundation, and physical Stage B is not yet human-promoted. Ladder promotion does not approve universal coverage, general climbing/jumping, movable/sliding ladders or shelf-top traversal.
+The fixed-ladder proof and the temporary Gallery B wing integration are human-promoted in their deliberately narrow scopes. Receiving / physical Receiving Stage B is now the active gate unless a concrete new storage blocker appears; Receiving Stage A remains the technical foundation, and physical Stage B is not yet human-promoted. Ladder promotion does not approve universal coverage, general climbing/jumping, movable/sliding ladders or shelf-top traversal.
 
 GDD v0.10, Prototype Findings v0.10 and VDD v0.7 remain dated pre-ladder-proof masters. Their stale current-status wording is superseded by [Current project state](CURRENT_STATE.md) and the fixed-ladder validation record until the next broader master-document revision.
 
