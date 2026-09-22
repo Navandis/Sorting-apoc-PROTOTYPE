@@ -52,6 +52,16 @@ func _test_scene_contract(ladder: Node3D) -> void:
 		source != null and source.scene_file_path == LADDER_VISUAL,
 		"current ladder GLB is normalized beneath Visual"
 	)
+	var source_node := source as Node3D
+	_check(
+		source_node != null
+		and source_node.transform.basis.y.normalized().dot(Vector3.FORWARD) > 0.999,
+		"current visual source faces its mounting-hook side toward storage (-Z)"
+	)
+	_check(
+		(ladder.call("get_ladder_forward_world") as Vector3).dot(Vector3.BACK) > 0.999,
+		"visual normalization does not change functional approach/front (+Z)"
+	)
 	var movement := ladder.get_node("MovementCollision") as StaticBody3D
 	var approach := ladder.get_node("ApproachArea") as Area3D
 	_check(

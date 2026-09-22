@@ -297,7 +297,7 @@ func _place_player_at_review_entry() -> void:
 	if player == null:
 		return
 	var camera := player.get_node_or_null("Camera3D") as Camera3D
-	player.global_position = Vector3(12.90, 0.05, -8.65)
+	player.global_position = Vector3(12.90, 0.05, -9.10)
 	if camera != null:
 		camera.look_at(Vector3(13.20, 1.15, -11.90), Vector3.UP)
 		player.set("_pitch", camera.rotation.x)

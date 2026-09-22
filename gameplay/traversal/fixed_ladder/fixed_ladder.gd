@@ -5,12 +5,14 @@ class_name FixedLadder
 const FUNCTIONAL_WIDTH_M := 0.42
 const FUNCTIONAL_DEPTH_M := 0.14
 const PLAYER_STANDOFF_M := 0.46
+const MAX_ATTACH_CORRECTION_M := 0.12
+const REARM_AWAY_DISTANCE_M := 0.22
 const APPROACH_WIDTH_M := 0.90
 const APPROACH_DEPTH_M := 0.62
 const APPROACH_HEIGHT_M := 1.85
 const TOP_VIEW_MARGIN_M := 0.10
 const CEILING_SAFETY_MARGIN_M := 0.04
-const YAW_CLAMP_DEGREES := 80.0
+const YAW_CLAMP_DEGREES := 70.0
 const CLIMB_SPEED_M_S := 1.65
 const MIN_CLIMB_RANGE_M := 0.05
 const ROOT_TRANSFORM_EPSILON := 0.0001
@@ -104,6 +106,25 @@ func get_yaw_clamp_radians() -> float:
 	return deg_to_rad(YAW_CLAMP_DEGREES)
 
 
+func get_max_attach_correction_m() -> float:
+	return MAX_ATTACH_CORRECTION_M
+
+
+func get_rearm_away_distance_m() -> float:
+	return REARM_AWAY_DISTANCE_M
+
+
+func get_horizontal_climb_anchor_distance_m(player: Node3D) -> float:
+	if player == null or not is_instance_valid(player):
+		return INF
+	var player_local := to_local(player.global_position)
+	return Vector2(player_local.x, player_local.z - PLAYER_STANDOFF_M).length()
+
+
+func is_player_close_enough_to_attach(player: Node3D) -> bool:
+	return get_horizontal_climb_anchor_distance_m(player) <= MAX_ATTACH_CORRECTION_M
+
+
 func get_player_root_climb_limits(
 	player_eye_offset_from_root: float,
 	player_body_top_offset: float
@@ -149,7 +170,18 @@ func is_player_on_front_side(player: Node3D) -> bool:
 
 
 func is_attach_suppressed_for(player: Node3D) -> bool:
-	return player != null and _suppressed_players.has(player.get_instance_id())
+	if player == null or not is_instance_valid(player):
+		return false
+	var instance_id := player.get_instance_id()
+	if not _suppressed_players.has(instance_id):
+		return false
+	if (
+		not is_player_in_approach_area(player)
+		or get_horizontal_climb_anchor_distance_m(player) >= REARM_AWAY_DISTANCE_M
+	):
+		_suppressed_players.erase(instance_id)
+		return false
+	return true
 
 
 func suppress_until_approach_exit(player: Node3D) -> void:

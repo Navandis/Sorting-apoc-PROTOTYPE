@@ -46,7 +46,7 @@ func _run() -> void:
 		_finish()
 		return
 
-	_test_attachment_conditions()
+	await _test_attachment_conditions()
 	_test_attached_movement_and_yaw()
 	_test_top_limit_uses_actual_player_body()
 	await _test_bottom_release_and_suppression()
@@ -57,6 +57,14 @@ func _run() -> void:
 
 func _test_attachment_conditions() -> void:
 	_check(_ladder.call("is_player_in_approach_area", _player), "real ApproachArea overlaps the player at the front anchor")
+	var anchor := _ladder.call("get_climb_anchor_world_position") as Vector3
+	var capsule := (_player.get_node("CollisionShape3D") as CollisionShape3D).shape as CapsuleShape3D
+	var movement_box := (_ladder.get_node("MovementCollision/Shape") as CollisionShape3D).shape as BoxShape3D
+	var standoff_clearance := anchor.z - (movement_box.size.z * 0.5 + capsule.radius)
+	_check(
+		standoff_clearance >= 0.02 and standoff_clearance <= 0.10,
+		"climb anchor leaves only a small safety margin beyond ladder collision plus capsule radius"
+	)
 	_player.call("_step_movement", 0.05, Vector2.ZERO, false)
 	_check(not bool(_player.call("is_ladder_attached")), "overlap without forward input does not attach")
 	_player.call("_step_movement", 0.05, Vector2(1.0, 0.0), false)
@@ -72,10 +80,38 @@ func _test_attachment_conditions() -> void:
 	if invalid_attached:
 		_player.call("_detach_from_ladder", false)
 	_ladder.scale = Vector3.ONE
-	_player.position = Vector3(0.15, 0.0, 0.48)
+	_player.velocity = Vector3.ZERO
+	_player.position = Vector3(0.0, 0.0, 0.85)
+	_player.rotation.y = 0.0
+	await physics_frame
+	await physics_frame
+	_check(_ladder.call("is_player_in_approach_area", _player), "outer ApproachArea remains broad candidate context")
+	_player.call("_step_movement", 0.05, Vector2(0.0, -1.0), false)
+	_check(not bool(_player.call("is_ladder_attached")), "frontal W cannot attach from a visibly large X/Z correction")
+
+	_player.velocity = Vector3.ZERO
+	_player.position = Vector3(0.06, 0.0, 0.52)
+	_player.rotation.y = 0.0
+	await physics_frame
+	await physics_frame
+	var pre_attach_correction := Vector2(
+		_player.global_position.x - anchor.x,
+		_player.global_position.z - anchor.z
+	).length()
 	_player.call("_step_movement", 0.05, Vector2(0.0, -1.0), false)
 	_check(bool(_player.call("is_ladder_attached")), "frontal W input attaches")
-	var anchor := _ladder.call("get_climb_anchor_world_position") as Vector3
+	var maximum_correction := 0.12
+	_check(_ladder.has_method("get_max_attach_correction_m"), "ladder publishes its attach-correction bound")
+	if _ladder.has_method("get_max_attach_correction_m"):
+		maximum_correction = float(_ladder.call("get_max_attach_correction_m"))
+	_check(
+		pre_attach_correction <= maximum_correction + EPSILON,
+		"successful attachment starts within the bounded X/Z correction distance"
+	)
+	print(
+		"ATTACH_CORRECTION_METRIC accepted=%.4fm bound=%.4fm standoff_clearance=%.4fm"
+		% [pre_attach_correction, maximum_correction, standoff_clearance]
+	)
 	_check(_near(_player.global_position.x, anchor.x) and _near(_player.global_position.z, anchor.z), "attach fixes X/Z to the climb line")
 
 
@@ -117,6 +153,7 @@ func _test_attached_movement_and_yaw() -> void:
 	_player.call("_apply_mouse_look", Vector2(-100000.0, 0.0))
 	var centre := float(_player.call("get_ladder_yaw_center"))
 	var relative_yaw := wrapf(_player.rotation.y - centre, -PI, PI)
+	_check(_near(float(_ladder.call("get_yaw_clamp_radians")), deg_to_rad(70.0)), "attached yaw clamp is the reviewed +/-70 degrees")
 	_check(absf(relative_yaw) <= float(_ladder.call("get_yaw_clamp_radians")) + EPSILON, "attached yaw clamps around the ladder-facing centre")
 
 
@@ -173,16 +210,19 @@ func _test_bottom_release_and_suppression() -> void:
 	_player.call("_step_movement", 0.05, Vector2(0.0, -1.0), false)
 	_check(not bool(_player.call("is_ladder_attached")), "suppressed ladder cannot immediately reattach")
 
-	_player.global_position = Vector3(0.0, 0.0, 2.0)
+	_player.velocity = Vector3.ZERO
+	_player.global_position = Vector3(anchor.x, 0.0, anchor.z + 0.24)
 	await physics_frame
 	await physics_frame
-	_check(not bool(_ladder.call("is_attach_suppressed_for", _player)), "suppression clears after ApproachArea exit")
-	_player.global_position = Vector3(0.0, 0.0, 0.46)
+	_check(_ladder.call("is_player_in_approach_area", _player), "modest back-away remains inside the outer ApproachArea")
+	_check(not bool(_ladder.call("is_attach_suppressed_for", _player)), "inner back-away distance rearms before outer ApproachArea exit")
 	_player.rotation.y = 0.0
-	await physics_frame
-	await physics_frame
-	_player.call("_step_movement", 0.05, Vector2(0.0, -1.0), false)
-	_check(bool(_player.call("is_ladder_attached")), "ladder can attach again after exit and re-entry")
+	for attempt: int in range(12):
+		_player.call("_step_movement", 0.05, Vector2(0.0, -1.0), false)
+		if bool(_player.call("is_ladder_attached")):
+			break
+		await physics_frame
+	_check(bool(_player.call("is_ladder_attached")), "W reapproach can attach again after inner-distance rearm")
 
 
 func _test_carried_identity_and_zoning_hold() -> void:
