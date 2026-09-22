@@ -288,7 +288,7 @@ func _rebuild_authoring_preview() -> void:
 		return
 	for child: Node in preview.get_children():
 		child.free()
-	preview.visible = show_authoring_preview
+	preview.visible = show_authoring_preview and Engine.is_editor_hint()
 	if not show_authoring_preview:
 		return
 	var envelope := MeshInstance3D.new()

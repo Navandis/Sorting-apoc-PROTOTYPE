@@ -5,11 +5,15 @@
 [ext_resource type="PackedScene" path="res://gameplay/player/gameplay_player.tscn" id="3_player"]
 [ext_resource type="PackedScene" path="res://gameplay/ui/carried_items_hud.tscn" id="4_hud"]
 [ext_resource type="PackedScene" path="res://gameplay/logistics_wing/storage/modular_rack.tscn" id="5_modular_rack"]
-[ext_resource type="PackedScene" uid="uid://du775526cba45" path="res://assets/environment/furniture/storage/SM_Ind_War_Equipment_Ladder_Metal_Worn_01.glb" id="6_ladder"]
-[ext_resource type="PackedScene" path="res://assets/environment/furniture/storage/SM_Rack02.glb" id="7_rack02"]
+[ext_resource type="PackedScene" path="res://gameplay/traversal/fixed_ladder/fixed_ladder.tscn" id="6_ladder"]
+[ext_resource type="PackedScene" uid="uid://crhai3v0or4eb" path="res://assets/environment/furniture/storage/SM_Rack02.glb" id="7_rack02"]
 [ext_resource type="PackedScene" uid="uid://d3mlmnn3nikxt" path="res://assets/environment/furniture/storage/SM_MetalShelves.glb" id="8_metal"]
 [ext_resource type="PackedScene" uid="uid://c4pb7l6u1paus" path="res://assets/environment/furniture/storage/SM_ventilated_locker.glb" id="9_locker"]
 [ext_resource type="Script" uid="uid://dlp03r2pbywr4" path="res://storage_unit_orientation.gd" id="10_orientation"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_getyn"]
+resource_local_to_scene = true
+size = Vector3(3.994705, 2.552749, 0.928107)
 
 [node name="ShelfErgonomicsReview" type="Node3D" unique_id=961672822]
 script = ExtResource("1_review")
@@ -24,45 +28,85 @@ layer = 10
 
 [node name="CarriedItemsHUD" parent="HUD" unique_id=1652596386 instance=ExtResource("4_hud")]
 
-[node name="ReviewFixtures" type="Node3D" parent="."]
+[node name="ReviewFixtures" type="Node3D" parent="." unique_id=1369648274]
 
-[node name="ModularRack_Starter" parent="ReviewFixtures" instance=ExtResource("5_modular_rack")]
+[node name="ModularRack_Starter" parent="ReviewFixtures" unique_id=1881405697 instance=ExtResource("5_modular_rack")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 9.719639, 0, -3.833064)
 rack_length_m = 3.994705
 rack_depth_m = 0.928107
 frame_height_m = 2.552749
 
-[node name="Shelf_01" type="Node3D" parent="ReviewFixtures/ModularRack_Starter/Levels"]
-position = Vector3(0, 0.370333, 0)
+[node name="Visual" parent="ReviewFixtures/ModularRack_Starter/Frame" index="0"]
+transform = Transform3D(-3.2783543e-08, 0, 0.99999994, 0, 0.5299999, 0, -0.75000006, 0, -4.3711385e-08, 0, 0.008848805, 0)
 
-[node name="Visual" parent="ReviewFixtures/ModularRack_Starter/Levels/Shelf_01" instance=ExtResource("7_rack02")]
+[node name="Shelf_01" type="Node3D" parent="ReviewFixtures/ModularRack_Starter/Levels" index="0" unique_id=1776305226]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.370333, 0)
 
-[node name="Shelf_02" type="Node3D" parent="ReviewFixtures/ModularRack_Starter/Levels"]
-position = Vector3(0, 1.24654, 0)
+[node name="Visual" parent="ReviewFixtures/ModularRack_Starter/Levels/Shelf_01" unique_id=267912228 instance=ExtResource("7_rack02")]
+transform = Transform3D(-3.2783543e-08, 0, 0.99999994, 0, 1, 0, -0.75000006, 0, -4.3711385e-08, -1.1920928e-07, -0.113742, 5.210803e-15)
 
-[node name="Visual" parent="ReviewFixtures/ModularRack_Starter/Levels/Shelf_02" instance=ExtResource("7_rack02")]
+[node name="Shelf_02" type="Node3D" parent="ReviewFixtures/ModularRack_Starter/Levels" index="1" unique_id=88363298]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.24654, 0)
 
-[node name="Shelf_03" type="Node3D" parent="ReviewFixtures/ModularRack_Starter/Levels"]
-position = Vector3(0, 1.75105, 0)
+[node name="Visual" parent="ReviewFixtures/ModularRack_Starter/Levels/Shelf_02" unique_id=1726920066 instance=ExtResource("7_rack02")]
+transform = Transform3D(-3.2783543e-08, 0, 0.99999994, 0, 1, 0, -0.75000006, 0, -4.3711385e-08, -1.1920928e-07, -0.113742, 5.210803e-15)
 
-[node name="Visual" parent="ReviewFixtures/ModularRack_Starter/Levels/Shelf_03" instance=ExtResource("7_rack02")]
+[node name="Shelf_03" type="Node3D" parent="ReviewFixtures/ModularRack_Starter/Levels" index="2" unique_id=1615804549]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75105, 0)
 
-[node name="SM_MetalShelves_Ergonomics" parent="ReviewFixtures" instance=ExtResource("8_metal")]
-position = Vector3(10.1, 0, -10.95)
+[node name="Visual" parent="ReviewFixtures/ModularRack_Starter/Levels/Shelf_03" unique_id=1015090621 instance=ExtResource("7_rack02")]
+transform = Transform3D(-3.2783543e-08, 0, 0.99999994, 0, 1, 0, -0.75000006, 0, -4.3711385e-08, -1.1920928e-07, -0.113742, 5.210803e-15)
 
-[node name="StorageUnitOrientation" type="Node" parent="ReviewFixtures/SM_MetalShelves_Ergonomics"]
+[node name="OverheadLimit" parent="ReviewFixtures/ModularRack_Starter" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.4, 0)
+
+[node name="Shape" parent="ReviewFixtures/ModularRack_Starter/MovementCollision" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2763745, 0)
+shape = SubResource("BoxShape3D_getyn")
+
+[node name="ModularRack_LadderProof" parent="ReviewFixtures" instance=ExtResource("5_modular_rack")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 9.719639, 0, -8)
+rack_length_m = 3.6
+rack_depth_m = 0.82
+frame_height_m = 3.0
+overhead_limit_local_y_m = 3.4
+
+[node name="Shelf_01" type="Node3D" parent="ReviewFixtures/ModularRack_LadderProof/Levels"]
+position = Vector3(0, 0.3, 0)
+
+[node name="Visual" parent="ReviewFixtures/ModularRack_LadderProof/Levels/Shelf_01" instance=ExtResource("7_rack02")]
+
+[node name="Shelf_02" type="Node3D" parent="ReviewFixtures/ModularRack_LadderProof/Levels"]
+position = Vector3(0, 1.05, 0)
+
+[node name="Visual" parent="ReviewFixtures/ModularRack_LadderProof/Levels/Shelf_02" instance=ExtResource("7_rack02")]
+
+[node name="Shelf_03" type="Node3D" parent="ReviewFixtures/ModularRack_LadderProof/Levels"]
+position = Vector3(0, 1.82, 0)
+
+[node name="Visual" parent="ReviewFixtures/ModularRack_LadderProof/Levels/Shelf_03" instance=ExtResource("7_rack02")]
+
+[node name="Shelf_04" type="Node3D" parent="ReviewFixtures/ModularRack_LadderProof/Levels"]
+position = Vector3(0, 2.55, 0)
+
+[node name="Visual" parent="ReviewFixtures/ModularRack_LadderProof/Levels/Shelf_04" instance=ExtResource("7_rack02")]
+
+[node name="FixedLadder_LadderProof" parent="ReviewFixtures" instance=ExtResource("6_ladder")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 10.239639, 0, -8)
+ladder_height_m = 2.85
+overhead_limit_local_y_m = 3.4
+
+[node name="SM_MetalShelves_Ergonomics" parent="ReviewFixtures" unique_id=1745001729 instance=ExtResource("8_metal")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.1, 0, -10.95)
+
+[node name="StorageUnitOrientation" type="Node" parent="ReviewFixtures/SM_MetalShelves_Ergonomics" unique_id=1494529716]
 script = ExtResource("10_orientation")
-storage_orientation_quarter_turns = 0
 
-[node name="SM_ventilated_locker_Ergonomics" parent="ReviewFixtures" instance=ExtResource("9_locker")]
-position = Vector3(13.15, 0, -11.9)
+[node name="SM_ventilated_locker_Ergonomics" parent="ReviewFixtures" unique_id=2119456272 instance=ExtResource("9_locker")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.15, 0, -11.9)
 
-[node name="StorageUnitOrientation" type="Node" parent="ReviewFixtures/SM_ventilated_locker_Ergonomics"]
+[node name="StorageUnitOrientation" type="Node" parent="ReviewFixtures/SM_ventilated_locker_Ergonomics" unique_id=376088515]
 script = ExtResource("10_orientation")
-storage_orientation_quarter_turns = 0
-
-[node name="SM_Ind_War_Equipment_Ladder_Metal_Worn_01" parent="." unique_id=842094049 instance=ExtResource("6_ladder")]
-transform = Transform3D(-5.004954e-08, -1, 0, 1.145, -4.371139e-08, 0, 0, 0, 1, 10.146227, 1.467566, -3.8100755)
-visible = false
 
 [editable path="ReviewFixtures/ModularRack_Starter"]
+[editable path="ReviewFixtures/ModularRack_LadderProof"]

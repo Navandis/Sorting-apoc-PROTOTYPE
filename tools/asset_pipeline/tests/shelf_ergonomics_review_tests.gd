@@ -2,6 +2,7 @@ extends SceneTree
 
 const REVIEW_SCENE := "res://gameplay/logistics_wing/review/shelf_ergonomics/shelf_ergonomics_review.tscn"
 const GAMEPLAY_SCENE := "res://gameplay/logistics_wing/wing_gameplay.tscn"
+const FIXED_LADDER_SCENE := "res://gameplay/traversal/fixed_ladder/fixed_ladder.tscn"
 const METAL_SCENE := "res://assets/environment/furniture/storage/SM_MetalShelves.glb"
 const LOCKER_SCENE := "res://assets/environment/furniture/storage/SM_ventilated_locker.glb"
 const BLOCKED_ITEM_IDS: Array[StringName] = [&"loot_000034", &"loot_000036"]
@@ -33,8 +34,37 @@ func _check_case(case_id: String) -> void:
 	var saved_fixtures := scene.get_node_or_null("ReviewFixtures") as Node3D
 	_check(saved_fixtures != null, "%s review scene saves its ReviewFixtures root" % case_id)
 	var authored_racks := _direct_modular_racks(saved_fixtures)
-	_check(authored_racks.size() == 1, "%s review scene contains its single delivered ModularRack starter" % case_id)
-	_check(_authored_modular_level_count(authored_racks) == 3, "%s delivered ModularRack starter contains three authored levels" % case_id)
+	var starter := saved_fixtures.get_node_or_null("ModularRack_Starter") as ModularRack
+	var proof_rack := saved_fixtures.get_node_or_null("ModularRack_LadderProof") as ModularRack
+	var proof_ladder := saved_fixtures.get_node_or_null("FixedLadder_LadderProof") as Node3D
+	_check(starter != null, "%s retains the promoted ModularRack_Starter" % case_id)
+	_check(
+		starter != null and (starter.get_node("Levels") as Node3D).get_child_count() == 3,
+		"%s ground-access starter retains its three authored levels" % case_id
+	)
+	_check(proof_rack != null and proof_rack != starter, "%s saves one separate ladder-proof ModularRack" % case_id)
+	_check(
+		proof_rack != null and (proof_rack.get_node("Levels") as Node3D).get_child_count() > 0,
+		"%s ladder-proof rack owns ordinary scene-local levels" % case_id
+	)
+	_check(
+		proof_ladder != null and proof_ladder.scene_file_path == FIXED_LADDER_SCENE,
+		"%s saves one reusable FixedLadder proof instance" % case_id
+	)
+	_check(authored_racks.size() == 2, "%s contains only the starter and dedicated proof racks" % case_id)
+	if proof_rack != null and proof_ladder != null:
+		var proof_levels := proof_rack.get_node("Levels") as Node3D
+		var highest_support := _highest_level_y(proof_levels)
+		_check(highest_support > 2.0, "%s proof rack highest support is beyond comfortable standing access" % case_id)
+		_check(
+			float(proof_ladder.get("ladder_height_m")) > highest_support,
+			"%s proof ladder extends above the highest proof shelf" % case_id
+		)
+		_check(
+			is_equal_approx(float(proof_ladder.get("overhead_limit_local_y_m")), 3.40),
+			"%s proof ladder authors the 3.40 m overhead limit" % case_id
+		)
+		_check(is_zero_approx(proof_ladder.position.y), "%s proof ladder root is authored at floor level" % case_id)
 	var authored_legacy := _assert_saved_legacy_orientation_fixtures(
 		saved_fixtures,
 		authored_racks,
@@ -67,6 +97,7 @@ func _check_case(case_id: String) -> void:
 	)
 	_assert_authoritative_supply(scene, case_id)
 	_assert_modular_review_scene(scene, case_id)
+	_assert_ladder_proof_runtime(scene, case_id)
 	if case_id == "A":
 		_assert_existing_review_entry_orientation_parity(scene)
 		_assert_cross_family_item_orientation(scene)
@@ -686,6 +717,35 @@ func _direct_modular_racks(fixtures: Node3D) -> Array[ModularRack]:
 		if child is ModularRack:
 			result.append(child as ModularRack)
 	return result
+
+
+func _highest_level_y(levels: Node3D) -> float:
+	var result := -INF
+	if levels == null:
+		return result
+	for child: Node in levels.get_children():
+		if child is Node3D:
+			result = maxf(result, (child as Node3D).position.y)
+	return result
+
+
+func _assert_ladder_proof_runtime(scene: Node, case_id: String) -> void:
+	var proof_rack := scene.get_node_or_null("ReviewFixtures/ModularRack_LadderProof") as ModularRack
+	var proof_ladder := scene.get_node_or_null("ReviewFixtures/FixedLadder_LadderProof") as Node3D
+	_check(proof_rack != null and proof_ladder != null, "%s keeps the ladder proof installed at runtime" % case_id)
+	if proof_rack == null or proof_ladder == null:
+		return
+	var authored_levels := (proof_rack.get_node("Levels") as Node3D).get_child_count()
+	var proof_surfaces := 0
+	for value: Variant in scene.find_children("*", "StorageSurface", true, false):
+		var surface := value as StorageSurface
+		if surface != null and _modular_rack_ancestor(surface) == proof_rack:
+			proof_surfaces += 1
+	_check(proof_surfaces == authored_levels, "%s proof rack builds one real StorageSurface per authored level" % case_id)
+	_check(
+		(proof_ladder.get_node("MovementCollision") as StaticBody3D).collision_layer != 0,
+		"%s proof ladder retains ordinary movement collision" % case_id
+	)
 
 
 func _authored_modular_level_count(racks: Array[ModularRack]) -> int:

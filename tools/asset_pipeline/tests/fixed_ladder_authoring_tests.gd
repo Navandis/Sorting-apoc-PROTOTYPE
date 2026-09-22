@@ -84,6 +84,7 @@ func _test_height_drives_visual_collision_and_markers(ladder: Node3D) -> void:
 	_check(_near((ladder.get_node("OverheadLimit") as Marker3D).position.y, 3.40), "overhead marker follows authored overhead")
 	var preview_mesh := (ladder.get_node("AuthoringPreview/LadderEnvelope") as MeshInstance3D).mesh as BoxMesh
 	_check(_near(preview_mesh.size.y, 2.20), "authoring preview follows ladder height")
+	_check(not (ladder.get_node("AuthoringPreview") as Node3D).visible, "authoring preview stays hidden outside the editor")
 
 	ladder.set("ladder_height_m", 3.05)
 	ladder.call("refresh_authoring_state")
