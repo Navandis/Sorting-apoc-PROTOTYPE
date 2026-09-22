@@ -1,7 +1,7 @@
 # Fixed-Ladder Proof Validation and Human Playtest Handoff
 
 **Feature:** Single-rack fixed-ladder proof  
-**Status:** TECHNICALLY VERIFIED / FINAL HUMAN RE-REVIEW PENDING
+**Status:** IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN PROMOTED
 **Date:** 22 September 2026  
 **Feature branch:** `codex/fixed-ladder-proof`  
 **Implementation checkpoint:** `e7e8036e718a477025cce22ea152c91b7ffc27c4`  
@@ -10,7 +10,7 @@
 **Round-2 visible-yaw follow-up checkpoint:** `a4fecadceab582e6ef3feb4dddbdf187b606b464`
 **Godot:** `4.7.stable.official.5b4e0cb0f`
 
-This record must not be changed to PROMOTE until the developer completes the final focused human re-review and makes a PROMOTE / REVISE decision.
+The final focused human review is complete. The fixed-ladder architecture is promoted for selected taller storage installations within the limits recorded below.
 
 ## Human review round 1 — REVISE
 
@@ -66,7 +66,7 @@ The required bounded sweep ran on the correction checkpoint with the preserved h
 
 Every command retained the existing Windows root-certificate-store diagnostic. No additional parser, runtime, test, or editor error appeared.
 
-The human-authored uncommitted proof-rack/ladder scene adjustments were preserved and excluded from the correction commit. Their added proof-rack collision overlapped the old review entry, so the only ancillary change moves that review-only entry `0.45 m` farther back; this is the allowed small position adjustment needed for stable review and does not alter proof-rack or ladder architecture.
+The human-authored proof-rack/ladder scene adjustments were preserved outside the bounded correction commit and accepted during final human review. The promotion closure records that final scene state. Its added proof-rack collision overlapped the old review entry, so the only ancillary scripted change moves that review-only entry `0.45 m` farther back; this does not alter proof-rack or ladder architecture.
 
 ## Human review round 2 — REVISE, minor tuning
 
@@ -177,12 +177,12 @@ Delivery documentation also includes the approved design, approved implementatio
 | Property | Value |
 | --- | ---: |
 | Proof rack | `ReviewFixtures/ModularRack_LadderProof` |
-| Rack length / depth / frame | `3.60 / 0.82 / 3.00 m` |
+| Rack length / depth / frame | `4.04 / 0.82 / 3.00 m` |
 | Shelf support Y values | `0.30 / 1.05 / 1.82 / 2.55 m` |
 | Ladder | `ReviewFixtures/FixedLadder_LadderProof` |
-| Ladder height | `2.85 m` |
+| Ladder height | `2.92 m` |
 | Common functional width / depth | `0.42 / 0.14 m` |
-| Ladder placement relative to rack | local `+Z 0.52 m`; world `+X 0.52 m`, same Z |
+| Ladder placement relative to rack | approximately local `X +0.009 m / Z +0.418 m`; world delta `X +0.418 m / Z -0.009 m` |
 | Player standoff | `0.46 m` |
 | Approach width / depth / height | `1.12 / 0.62 / 1.85 m` |
 | Climb speed | `1.65 m/s` |
@@ -273,9 +273,9 @@ $godot = 'D:\AI Tools\Godot-4.7-Codex\Godot_v4.7-stable_win64_console.exe'
 
 The proof installation is along Gallery B's west-side run. Turn toward `ModularRack_LadderProof`; approach `FixedLadder_LadderProof` from its aisle/front side.
 
-## Final focused human re-review only
+## Final focused human re-review — completed
 
-Do not repeat the original ladder matrix or the complete round-1 re-review. Record PASS / REVISE and concise notes for these seven checks.
+The developer completed the focused re-review without repeating the original ladder matrix. The final disposition is PROMOTE.
 
 ### 1. Centre and near-edge frontal attachment
 
@@ -308,11 +308,36 @@ Perform one pickup/retrieve or storage placement while attached. Confirm the lad
 ## Developer disposition
 
 ```text
-PROMOTE / REVISE
+PROMOTE
 
-Date:
-Decision notes:
-Required corrections, if any:
+Date: 22 September 2026
+Decision notes: Promote the standalone fixed-ladder architecture for selected taller storage installations.
+Required corrections, if any: None.
 ```
 
 PROMOTE approves this fixed-line architecture only for selected taller installations. It does not approve universal ladder coverage, final ladder dimensions/assets, general climbing, movable/sliding ladders, or shelf-top traversal. REVISE should remain bounded to evidence from the scenarios above unless the fixed-line model itself fails.
+
+### Final human conclusions
+
+- Fixed vertical climb-line access is useful, intuitive and a major improvement to practical high-shelf ergonomics.
+- The player can choose the useful viewing height and angle, making upper storage comparable in usability to carefully authored lower levels rather than forcing every shelf into one standing-camera constraint.
+- Modest off-centre placement remained useful; per-instance height and installation authoring can manage extreme width, depth and top-height cases.
+- Ladder rails and rungs were not meaningfully obstructive, and the installed ladder read plausibly beside the storage installation.
+- Deliberately allowing normal item and storage interaction rays through ladder geometry remains the accepted simplification.
+- The final bounded tuning materially improved attachment, reattachment, lateral approach tolerance and visible look symmetry without broadening the architecture.
+
+### Promotion closure verification
+
+The final promotion sweep ran against the accepted `4.04 m` proof rack, `2.92 m` ladder, final tuning commits, preserved proof-scene state and closure documentation:
+
+| Check | Result |
+| --- | --- |
+| `fixed_ladder_authoring_tests.gd` | PASS, exit 0 |
+| `fixed_ladder_player_tests.gd` | PASS, exit 0; `0.1077 m` attach correction under `0.12 m`, visible yaw `-70°/+70°` |
+| `shelf_ergonomics_review_tests.gd` | PASS A/B/C, exit 0; 15 review surfaces, camera-local yaw `0.000°` |
+| Default-project smoke, `--quit-after 120` | PASS, exit 0; normal gameplay installed 12 surfaces, F6 off, F7 disabled |
+| Headless editor scan | PASS, exit 0 |
+
+All five commands emitted only the previously documented Windows root-certificate-store diagnostic. No parser, runtime, test, editor-shutdown or RID error was added.
+
+The next active gameplay/system gate is Receiving / physical Receiving Stage B unless a concrete new storage blocker appears. This ladder closure does not implement Receiving.

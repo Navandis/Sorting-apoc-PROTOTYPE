@@ -14,12 +14,14 @@ Use one executor by default and match verification to risk. Reuse established co
 
 The normal playable composition is `res://gameplay/logistics_wing/wing_gameplay.tscn`. Its saved `DevelopmentSetup/SeedItems` composition is the palette authority. Preserve the legacy `main.tscn`, the neutral wing review scene, the shelf ergonomics review scene and the developer-authored modular-rack experiment.
 
-Review-scene supply reuse, reusable ModularRack authoring, Storage Unit Orientation & Zoning Basis, and Canonical Item Storage Pose & Shelf-Front Alignment are promoted foundations, not pending work.
+Review-scene supply reuse, reusable ModularRack authoring, Storage Unit Orientation & Zoning Basis, Canonical Item Storage Pose & Shelf-Front Alignment, and the standalone fixed-ladder architecture are promoted foundations, not pending work. Fixed ladders remain limited to selected taller storage installations; no general climbing, jumping, movable/sliding ladder or shelf-top traversal system is approved.
 
 Current gate order:
 
-1. Single-rack fixed-ladder proof.
-2. Human ladder decision.
-3. Receiving unless a concrete storage blocker appears.
+1. Resume Receiving / physical Receiving Stage B unless a concrete new storage blocker appears.
+2. Receiving Stage A remains the technical foundation; physical Stage B is not human-promoted.
+3. Do not infer a general climbing or expanded ladder gate from the fixed-ladder promotion.
 
-Do not treat the 1.80 m eye-height or 2.8 m ceiling trials as production changes. Preserve the promoted storage foundations rather than reimplementing them. Do not implement ladder movement, gallery furnishing, Receiving, crouch, height-aware auto-placement or player-adjustable shelves unless a later handoff explicitly authorizes that gate.
+Do not treat the 1.80 m eye-height or 2.8 m ceiling trials as production changes. Preserve the promoted storage and fixed-ladder foundations rather than reimplementing them. Do not start Receiving, gallery furnishing, crouch, height-aware auto-placement, player-adjustable shelves or broader climbing work unless a later handoff explicitly authorizes that gate.
+
+The GDD v0.10, Prototype Findings v0.10 and VDD v0.7 are dated pre-ladder-proof masters. For current ladder status, use `docs/CURRENT_STATE.md` and `docs/testing/fixed-ladder-proof-validation.md` until the next broader master-document revision.

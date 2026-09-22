@@ -1,6 +1,6 @@
 # Sorting Apocalypse current development state
 
-**Decision record:** 21 September 2026. The Storage Authoring and Testbed Foundation is consolidated. Review-scene supply reuse, reusable functional modular-rack authoring, **Storage Unit Orientation & Zoning Basis**, and **Canonical Item Storage Pose & Shelf-Front Alignment** are complete and human-promoted. The single-rack fixed-ladder proof is now the active gate. This close-out does not start ladder or Receiving implementation. The retained shelf and ceiling review scene remains a mutable review tool rather than an active production scene.
+**Decision record:** 22 September 2026. The Storage Authoring and Testbed Foundation is consolidated. Review-scene supply reuse, reusable functional modular-rack authoring, **Storage Unit Orientation & Zoning Basis**, **Canonical Item Storage Pose & Shelf-Front Alignment**, and the **Single-Rack Fixed-Ladder Proof** are complete and human-promoted. Fixed ladders are approved only for selected taller storage installations. The next active gameplay/system gate is Receiving / physical Receiving Stage B unless a concrete storage blocker appears; this close-out does not start Receiving implementation. The retained shelf and ceiling review scene remains a mutable review tool rather than an active production scene.
 
 ## Current authorities
 
@@ -10,6 +10,8 @@
 - [AI working guidelines](AI_WORKING_GUIDELINES.md)
 
 The accepted in-engine wing builder, saved scene and overview govern working dimensions over the retained 15 September schematic pixels.
+
+The versioned GDD v0.10, Prototype Findings v0.10 and VDD v0.7 remain the dated pre-ladder-proof masters. Their stale current-status wording is superseded by this file and [Fixed-ladder proof validation](testing/fixed-ladder-proof-validation.md) until the next broader master-document revision.
 
 ## Promoted foundations
 
@@ -23,6 +25,7 @@ The accepted in-engine wing builder, saved scene and overview govern working dim
 - Reusable functional modular-rack authoring is complete and human-promoted. The reusable base scene is shelf-empty; review-scene-local Rack02 wrappers provide editable levels; runtime surfaces remain owned by the existing storage manager.
 - Storage Unit Orientation & Zoning Basis is complete and human-promoted. Orientation remains unit-owned, every generated surface inherits its unit state, zoning is presented from authored Front, and existing physical grids, zone arrays, F6 behavior and packing rules remain unchanged.
 - Canonical Item Storage Pose & Shelf-Front Alignment is complete and human-promoted. New placements align the ItemDefinition-authored canonical +Z Front to unit Front, retain the separate optional +90-degree packing turn, rotate reservation footprints with the final visual parity, and leave committed items stable. All 40 eligible definitions were human-reviewed in `res://gameplay/dev/item_storage_pose/item_storage_pose_authoring.tscn`; their saved `.tres` pose/footprint values are content authority. Gloves and Pants remain blocked.
+- The standalone fixed-ladder architecture is complete and human-promoted for selected taller storage installations. It provides per-instance height authoring, a fixed vertical climb line, coarse movement collision, bounded attach/rearm/look behavior, and deliberate WorldItem/StorageSurface interaction through ladder geometry. This does not approve universal ladder coverage, movable/sliding ladders, general climbing, jumping, mantling, shelf-top traversal, fall/sliding systems, rung collision, or a final production ladder art roster.
 
 ## Storage ergonomics disposition
 
@@ -33,16 +36,16 @@ The A, B and C shelf and ceiling experiment is complete. Keep `res://gameplay/lo
 - Open racks may tolerate greater depth with more approach sides. Wall and corner installations generally need shallower usable depth. Evaluate slim usable-area insets per edge; do not impose one universal percentage or silently remove useful front capacity.
 - Predominantly open modular storage remains the backbone. Cabinets and opaque storage are selective and lighting-aware.
 - The 1.80 m eye-height and 2.8 m ceiling results remain trial observations. They do not change the production camera or wing ceilings.
-- Ordinary ground-access storage should work without ladders. One fixed shelf-serving ladder proof is approved; no production ladder, general climbing or jumping, movable or sliding ladder, animation, visible hands, fall system or shelf-adjustment feature is approved.
+- Ordinary ground-access storage should work without ladders. Fixed ladders are now an approved authored option for selected taller installations; no universal coverage, general climbing or jumping, movable/sliding ladder, animation, visible hands, fall system or shelf-adjustment feature follows from that promotion.
 - The developer owns final functional storage authoring: model, installation placement, dimensions, level count and distribution, and ladder availability and placement. Codex may assist with tools, validation, decoration and later synthetic checks.
 
 ## Gate order
 
-Completed: Review-scene supply reuse; reusable functional modular-rack authoring; Storage Unit Orientation & Zoning Basis.
+Completed: Review-scene supply reuse; reusable functional modular-rack authoring; Storage Unit Orientation & Zoning Basis; Canonical Item Storage Pose & Shelf-Front Alignment; Single-Rack Fixed-Ladder Proof.
 
-1. **Active gate: Single-rack fixed-ladder proof.** Canonical Item Storage Pose & Shelf-Front Alignment is complete and human-promoted; ladder implementation does not begin during its close-out.
-2. Human ladder decision.
-3. Resume Receiving unless storage ergonomics exposes another concrete blocker; Receiving implementation also does not begin during this close-out.
+1. **Active gate: Resume Receiving / physical Receiving Stage B** unless a concrete new storage blocker appears.
+2. Receiving Stage A remains the existing technical foundation; physical Stage B is not yet human-promoted.
+3. Ladder promotion does not create a follow-on general climbing, jumping, movable-ladder or sliding-ladder gate.
 
 ## Explicitly deferred and known debt
 
@@ -61,5 +64,6 @@ The Fuel-related legacy-audit failure and timeout are resolved. Historical repor
 - [Modular rack authoring](testing/modular-rack-authoring-validation.md)
 - [Storage unit orientation and zoning basis](testing/storage-unit-orientation-zoning-validation.md) — complete, technically verified and human-promoted.
 - [Canonical item storage pose and shelf-Front alignment](testing/canonical-item-storage-pose-validation.md) — complete, technically verified and human-promoted.
+- [Fixed-ladder proof validation](testing/fixed-ladder-proof-validation.md) — complete, technically verified and human-promoted for selected taller storage installations.
 
 Ignored reports and imported asset state remain local and are not GitHub backup. The curated accepted greybox evidence remains under `docs/testing/evidence/greybox-accepted-2026-09-17/`.

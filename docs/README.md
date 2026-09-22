@@ -30,8 +30,11 @@ The accepted in-engine builder, saved scene and [overview](testing/evidence/grey
 - [ModularRack authoring](testing/modular-rack-authoring-validation.md): promoted shelf-empty reusable scaffold, scene-local editable levels and Rack02 calibration.
 - [Storage unit orientation and zoning](testing/storage-unit-orientation-zoning-validation.md): promoted unit-owned Front semantics and authored-Front zoning view without physical-cell migration.
 - [Canonical item storage pose](testing/canonical-item-storage-pose-validation.md): promoted canonical +Z Front, separate packing turn and the full 40-eligible-item human reconciliation.
+- [Fixed-ladder proof validation](testing/fixed-ladder-proof-validation.md): technically verified and human-promoted standalone fixed ladders for selected taller storage installations.
 - [Receiving and Elevator design](superpowers/specs/2026-09-12-receiving-elevator-mvp-design.md): subsystem contract; physical Receiving remains unvalidated.
 
-Single-rack fixed-ladder proof is the active gate. No ladder implementation is promoted; it is followed by the human ladder decision and then Receiving unless a concrete storage blocker appears.
+The fixed-ladder proof is human-promoted in its deliberately narrow scope. Receiving / physical Receiving Stage B is now the active gate unless a concrete new storage blocker appears; Receiving Stage A remains the technical foundation, and physical Stage B is not yet human-promoted. Ladder promotion does not approve universal coverage, general climbing/jumping, movable/sliding ladders or shelf-top traversal.
+
+GDD v0.10, Prototype Findings v0.10 and VDD v0.7 remain dated pre-ladder-proof masters. Their stale current-status wording is superseded by [Current project state](CURRENT_STATE.md) and the fixed-ladder validation record until the next broader master-document revision.
 
 Historical plans, validation reports and earlier master editions retain their original dates and evidence states. Later acceptance records and current authorities supersede stale pending conclusions without rewriting history.
