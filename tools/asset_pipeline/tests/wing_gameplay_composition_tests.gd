@@ -18,6 +18,17 @@ const FIXTURE_NAMES: Array[String] = [
 	"SM_MetalShelves_GalleryB_North",
 	"SM_ventilated_locker_GalleryC_West",
 ]
+const LEGACY_SURFACE_COUNT := 12
+const BRIDGE_RACK_NAME := "ModularRack_GalleryB_Initial"
+const BRIDGE_LADDER_NAME := "FixedLadder_GalleryB_Initial"
+const BRIDGE_LEVEL_NAMES: Array[String] = [
+	"Shelf_01",
+	"Shelf_02",
+	"Shelf_03",
+	"Shelf_04",
+]
+const BRIDGE_LEVEL_YS: Array[float] = [0.30, 1.05, 1.82, 2.55]
+const BRIDGE_RACK_FRONT := 3
 const PROXY_NAMES: Array[String] = [
 	"GalleryA_West",
 	"GalleryB_North",
@@ -507,7 +518,13 @@ func _assert_permanent_gameplay_survives_without_setup(scene: Node, context: Str
 	_check(fixtures != null, "%s setup keeps fixtures" % context)
 	if fixtures != null and fixtures.has_method("get_installed_surfaces"):
 		var surfaces := fixtures.call("get_installed_surfaces") as Array
-		_check(surfaces.size() == 12, "%s setup keeps twelve storage surfaces" % context)
+		var rack := fixtures.get_node_or_null(BRIDGE_RACK_NAME) as ModularRack
+		var authored_levels := rack.get_layout_contract().get("levels", []) as Array if rack != null else []
+		_check(rack != null, "%s setup keeps the intended ModularRack" % context)
+		_check(
+			surfaces.size() == LEGACY_SURFACE_COUNT + authored_levels.size(),
+			"%s setup keeps legacy plus authored ModularRack surfaces" % context
+		)
 		for value: Variant in surfaces:
 			var surface := value as StorageSurface
 			_check(surface != null and surface.get_stack_count() == 0, "%s surfaces remain empty" % context)
@@ -587,9 +604,44 @@ func _assert_fixture_contract(scene: Node, context: String) -> void:
 		_check(clearance_context != null, "%s %s has explicit clearance context" % [context, fixture_name])
 
 	var surfaces := fixtures.call("get_installed_surfaces") as Array
-	_check(surfaces.size() == 12, "%s installs twelve storage surfaces" % context)
+	var bridge_rack := fixtures.get_node_or_null(BRIDGE_RACK_NAME) as ModularRack
+	_check(bridge_rack != null, "%s has the intended Gallery B ModularRack" % context)
+	if bridge_rack == null:
+		return
+	_check(bridge_rack.get_parent() == fixtures, "%s ModularRack is a direct FunctionalFixtures child" % context)
+	_check(bridge_rack.scale.is_equal_approx(Vector3.ONE), "%s ModularRack keeps unit root scale" % context)
+	_check(
+		bridge_rack.get_storage_orientation_quarter_turns() == BRIDGE_RACK_FRONT,
+		"%s ModularRack saves its authored west-facing semantic Front" % context
+	)
+	var levels := bridge_rack.get_node_or_null("Levels") as Node3D
+	_check(levels != null, "%s ModularRack keeps its editable local Levels node" % context)
+	if levels == null:
+		return
+	_check(levels.get_child_count() == BRIDGE_LEVEL_NAMES.size(), "%s ModularRack saves four local level wrappers" % context)
+	for index: int in range(BRIDGE_LEVEL_NAMES.size()):
+		var level := levels.get_node_or_null(BRIDGE_LEVEL_NAMES[index]) as Node3D
+		_check(level != null, "%s ModularRack saves %s" % [context, BRIDGE_LEVEL_NAMES[index]])
+		if level != null:
+			_check(is_equal_approx(level.position.y, BRIDGE_LEVEL_YS[index]), "%s %s keeps its authored support height" % [context, BRIDGE_LEVEL_NAMES[index]])
+			_check(level.get_node_or_null("Visual") != null, "%s %s keeps its Rack02 visual wrapper" % [context, BRIDGE_LEVEL_NAMES[index]])
+	var layout := bridge_rack.get_layout_contract()
+	_check(bool(layout.get("valid", false)), "%s ModularRack layout is valid" % context)
+	var authored_levels := layout.get("levels", []) as Array
+	_check(authored_levels.size() == BRIDGE_LEVEL_NAMES.size(), "%s ModularRack layout includes every saved level" % context)
+	var expected_surface_count := LEGACY_SURFACE_COUNT + authored_levels.size()
+	_check(surfaces.size() == expected_surface_count, "%s installs legacy plus authored ModularRack surfaces" % context)
+
+	var bridge_ladder := fixtures.get_node_or_null(BRIDGE_LADDER_NAME) as FixedLadder
+	_check(bridge_ladder != null, "%s has the intended Gallery B FixedLadder" % context)
+	if bridge_ladder != null:
+		_check(bridge_ladder.get_parent() == fixtures, "%s FixedLadder is a direct FunctionalFixtures child" % context)
+		_check(not bridge_rack.is_ancestor_of(bridge_ladder), "%s FixedLadder is independent from the ModularRack" % context)
+		_check(bridge_ladder.scale.is_equal_approx(Vector3.ONE), "%s FixedLadder keeps unit root scale" % context)
+		_check(bridge_ladder.is_authoring_valid(), "%s FixedLadder retains valid promoted authoring" % context)
 	var surface_ids: Dictionary = {}
 	var top_surfaces: Dictionary = {}
+	var bridge_surfaces: Array[StorageSurface] = []
 	for value: Variant in surfaces:
 		var surface := value as StorageSurface
 		if not _check(surface != null, "%s surface census contains StorageSurface" % context):
@@ -601,10 +653,17 @@ func _assert_fixture_contract(scene: Node, context: String) -> void:
 		_check(surface.get_stack_count() == 0, "%s %s starts without stacks" % [context, surface_key])
 		_check(is_zero_approx(surface.get_occupancy_ratio()), "%s %s starts empty" % [context, surface_key])
 		_check(not surface.are_zones_initialized(), "%s %s starts unzoned" % [context, surface_key])
+		if bridge_rack.is_ancestor_of(surface):
+			bridge_surfaces.append(surface)
+			_check(
+				surface.get_semantic_orientation_quarter_turns() == BRIDGE_RACK_FRONT,
+				"%s ModularRack surface inherits its semantic Front" % context
+			)
 		if String(surface.name) == "StorageSurface_04":
 			top_surfaces[String(surface.get_parent().name)] = surface
 
-	_check(surface_ids.size() == 12, "%s has twelve distinct surface IDs" % context)
+	_check(surface_ids.size() == expected_surface_count, "%s has distinct legacy and ModularRack surface IDs" % context)
+	_check(bridge_surfaces.size() == authored_levels.size(), "%s builds one ModularRack surface per valid authored level" % context)
 	_check(top_surfaces.size() == 3, "%s exposes three top surfaces" % context)
 	for fixture_name: String in FIXTURE_NAMES:
 		var top := top_surfaces.get(fixture_name) as StorageSurface
@@ -637,7 +696,10 @@ func _assert_fixture_contract(scene: Node, context: String) -> void:
 	)
 
 	var all_surfaces := scene.find_children("*", "StorageSurface", true, false)
-	_check(all_surfaces.size() == 12, "%s no other asset gains a StorageSurface" % context)
+	_check(all_surfaces.size() == expected_surface_count, "%s adds StorageSurface nodes only for legacy fixtures and the intended rack" % context)
+	for index: int in range(LEGACY_SURFACE_COUNT):
+		var legacy_surface := surfaces[index] as StorageSurface
+		_check(not bridge_rack.is_ancestor_of(legacy_surface), "%s preserves legacy surface ordering before appended ModularRack surfaces" % context)
 	var occupancy_before: Array[float] = []
 	for surface: StorageSurface in surfaces:
 		occupancy_before.append(surface.get_occupancy_ratio())

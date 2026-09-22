@@ -4,6 +4,9 @@ const GAMEPLAY_PATH := "res://gameplay/logistics_wing/wing_gameplay.tscn"
 const DEVELOPMENT_SETUP_PATH := "res://gameplay/logistics_wing/development/seeded_storage_setup.tscn"
 const StorageCategoriesScript = preload("res://storage_categories.gd")
 const StorageItemOrientationScript = preload("res://storage_item_orientation.gd")
+const LEGACY_SURFACE_COUNT := 12
+const BRIDGE_RACK_NAME := "ModularRack_GalleryB_Initial"
+const BRIDGE_LADDER_NAME := "FixedLadder_GalleryB_Initial"
 
 var _failed: bool = false
 
@@ -21,6 +24,7 @@ func _run() -> void:
 		_finish()
 		return
 	await _test_semantic_orientation_handling(packed)
+	await _test_gallery_b_ladder_bridge(packed)
 	await _test_identity_stack_and_transfer_loop(packed)
 	await _test_rejection_and_rollback_loop(packed)
 	_finish()
@@ -89,6 +93,64 @@ func _test_semantic_orientation_handling(packed: PackedScene) -> void:
 	await process_frame
 
 
+func _test_gallery_b_ladder_bridge(packed: PackedScene) -> void:
+	var scene := _instantiate_with_regression_seed_fixture(packed)
+	# The held-item clone is unrelated to climbing and queries a dummy-renderer
+	# material in headless mode; the real carried-item state remains exercised.
+	scene.get_node("Player").set("enable_held_item_view", false)
+	root.add_child(scene)
+	current_scene = scene
+	await process_frame
+	await physics_frame
+	var player := scene.get_node("Player") as CharacterBody3D
+	var carried := scene.get_node("Player/CarriedItems") as CarriedItems
+	var rack := scene.get_node_or_null("FunctionalFixtures/%s" % BRIDGE_RACK_NAME) as ModularRack
+	var ladder := scene.get_node_or_null("FunctionalFixtures/%s" % BRIDGE_LADDER_NAME) as FixedLadder
+	var surfaces := scene.call("get_functional_surfaces") as Array
+	var upper_surface := _surface_for_rack_level(surfaces, rack, "Shelf_03")
+	_check(player != null and carried != null, "Gallery B bridge keeps the normal player and carried-items path")
+	_check(rack != null and ladder != null, "Gallery B bridge keeps the intended sibling rack and ladder")
+	_check(upper_surface != null, "Gallery B bridge builds a reachable upper rack surface")
+	if player == null or carried == null or rack == null or ladder == null or upper_surface == null:
+		scene.free()
+		current_scene = null
+		return
+
+	player.set_process(false)
+	player.set_physics_process(false)
+	var carried_item := ItemInstance.new(load("res://data/items/definitions/loot_000037.tres") as ItemDefinition)
+	_check(carried.add_item(carried_item), "Gallery B ladder check carries an existing item definition")
+	var anchor := ladder.get_climb_anchor_world_position()
+	var ladder_forward := ladder.get_ladder_forward_world()
+	player.global_position = anchor + ladder_forward * 0.04
+	player.rotation.y = ladder.get_ladder_yaw_world()
+	await physics_frame
+	await physics_frame
+	player.call("_step_movement", 0.10, Vector2(0.0, -1.0), false)
+	_check(player.is_ladder_attached(), "Gallery B ladder attaches through the normal player path")
+	var climb_start_y := player.global_position.y
+	player.call("_step_movement", 0.20, Vector2(0.0, -1.0), false)
+	_check(player.global_position.y > climb_start_y, "Gallery B ladder climbs at the promoted movement path")
+	_check(carried.get_selected_item() == carried_item, "carried item identity survives Gallery B ladder climbing")
+
+	var camera := player.get_node("Camera3D") as Camera3D
+	player.global_position.y = 0.0
+	camera.look_at(upper_surface.global_position, Vector3.UP)
+	await physics_frame
+	_check(
+		player.call("_get_looked_at_storage_surface") == upper_surface,
+		"attached player ray reaches the upper ModularRack surface through ladder collision"
+	)
+	player.call("_open_zone_editor_for_surface", upper_surface)
+	await process_frame
+	_check(bool(player.get("_zone_editor_open")), "attached player can interact with the upper ModularRack surface")
+	(player.get_node("StorageZoneEditor") as CanvasLayer).call("close_editor")
+	carried.remove_item(carried_item)
+	scene.free()
+	current_scene = null
+	await process_frame
+
+
 func _test_identity_stack_and_transfer_loop(packed: PackedScene) -> void:
 	var scene := _instantiate_with_regression_seed_fixture(packed)
 	root.add_child(scene)
@@ -108,8 +170,14 @@ func _test_identity_stack_and_transfer_loop(packed: PackedScene) -> void:
 	var controller := scene.get_node("Player/StoragePlacementController") as StoragePlacementController
 	var seeds := scene.get_node("DevelopmentSetup/SeedItems")
 	var surfaces := scene.call("get_functional_surfaces") as Array
-	_check(surfaces.size() == 12, "interaction loop sees twelve functional surfaces")
-	if surfaces.size() != 12:
+	var rack := scene.get_node_or_null("FunctionalFixtures/%s" % BRIDGE_RACK_NAME) as ModularRack
+	var authored_levels := rack.get_layout_contract().get("levels", []) as Array if rack != null else []
+	_check(rack != null, "interaction loop finds the intended wing ModularRack")
+	_check(
+		surfaces.size() == LEGACY_SURFACE_COUNT + authored_levels.size(),
+		"interaction loop sees legacy plus authored ModularRack surfaces"
+	)
+	if rack == null or surfaces.size() != LEGACY_SURFACE_COUNT + authored_levels.size():
 		scene.free()
 		current_scene = null
 		return
@@ -134,11 +202,34 @@ func _test_identity_stack_and_transfer_loop(packed: PackedScene) -> void:
 	_check(can_items.size() == 3, "round-can family preserves three identities")
 	_check(media_items.size() == 3, "flat-media family preserves three identities")
 	_check(medical_items.size() == 2, "medical-box family preserves two identities")
-
 	_assert_family_storage(surfaces[0] as StorageSurface, boxed_items, "boxed food", 2, 2)
 	_assert_family_storage(surfaces[4] as StorageSurface, can_items, "round cans", 1, 3)
 	_assert_family_storage(surfaces[1] as StorageSurface, media_items, "flat media", 1, 3)
 	_assert_family_storage(surfaces[8] as StorageSurface, medical_items, "medical boxes", 1, 2)
+	var rack_surface := _first_surface_for_rack(surfaces, rack)
+	_check(rack_surface != null, "interaction loop finds an installed ModularRack surface")
+	if rack_surface != null and not boxed_items.is_empty():
+		var source_stack_id := (surfaces[0] as StorageSurface).get_stack_id_for_item(boxed_items[0].instance_id)
+		var source_stack := (surfaces[0] as StorageSurface).get_storage_stack(source_stack_id)
+		_check(source_stack != null and not source_stack.entries.is_empty(), "legacy loop leaves a real palette item available for rack transfer")
+		if source_stack != null and not source_stack.entries.is_empty():
+			var rack_item: ItemInstance = source_stack.entries[0].item
+			var source_world := source_stack.entries[0].world_item as WorldItem
+			_check(source_world.pickup_into(carried), "existing palette item retrieves before ModularRack transfer")
+			_check(carried.get_selected_item() == rack_item, "palette item carry state survives transfer to ModularRack")
+			rack_surface.set_zone_rect("Food", Vector2i.ZERO, rack_surface.get_grid_size() - Vector2i.ONE)
+			_check(_auto_place_selected(controller, carried, rack_surface), "existing palette item auto-stores on the ModularRack")
+			var rack_stack_id := rack_surface.get_stack_id_for_item(rack_item.instance_id)
+			var rack_stack := rack_surface.get_storage_stack(rack_stack_id)
+			_check(rack_stack != null and rack_stack.entries.size() == 1, "ModularRack owns the stored palette item")
+			if rack_stack != null and not rack_stack.entries.is_empty():
+				var rack_world := rack_stack.entries[0].world_item as WorldItem
+				_check(rack_world.pickup_into(carried), "ModularRack stored item retrieves through WorldItem")
+				_check(carried.get_selected_item() == rack_item, "ModularRack retrieval preserves exact identity")
+				_check(
+					_auto_place_selected(controller, carried, surfaces[0] as StorageSurface),
+					"retrieved ModularRack item returns through the established legacy storage loop"
+				)
 
 	var media_surface := surfaces[1] as StorageSurface
 	var media_stack_id := media_surface.get_stack_id_for_item(media_items[0].instance_id)
@@ -404,6 +495,26 @@ func _auto_place_selected(
 	controller.set("_current_fit", fit)
 	controller.set("_manual_mode", false)
 	return controller.place_selected()
+
+
+func _first_surface_for_rack(surfaces: Array, rack: Node) -> StorageSurface:
+	for value: Variant in surfaces:
+		var surface := value as StorageSurface
+		if surface != null and rack.is_ancestor_of(surface):
+			return surface
+	return null
+
+
+func _surface_for_rack_level(surfaces: Array, rack: Node, level_name: String) -> StorageSurface:
+	for value: Variant in surfaces:
+		var surface := value as StorageSurface
+		if (
+			surface != null
+			and rack.is_ancestor_of(surface)
+			and String(surface.get_parent().name) == level_name
+		):
+			return surface
+	return null
 
 
 func _assert_family_storage(
