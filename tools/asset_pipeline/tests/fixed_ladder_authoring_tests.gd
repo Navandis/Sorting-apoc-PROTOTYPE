@@ -96,6 +96,9 @@ func _test_height_drives_visual_collision_and_markers(ladder: Node3D) -> void:
 	var preview_mesh := (ladder.get_node("AuthoringPreview/LadderEnvelope") as MeshInstance3D).mesh as BoxMesh
 	_check(_near(preview_mesh.size.y, 2.20), "authoring preview follows ladder height")
 	_check(not (ladder.get_node("AuthoringPreview") as Node3D).visible, "authoring preview stays hidden outside the editor")
+	_check(short_approach_size.x >= 1.10, "approach candidate area has the reviewed wider lateral extent")
+	_check(_near(short_approach_size.y, 1.85) and _near(short_approach_size.z, 0.62), "lateral tuning does not expand approach height or depth")
+	_check(_near(short_approach_position.x, 0.0), "wider approach candidate area remains centred on local X")
 
 	ladder.set("ladder_height_m", 3.05)
 	ladder.call("refresh_authoring_state")

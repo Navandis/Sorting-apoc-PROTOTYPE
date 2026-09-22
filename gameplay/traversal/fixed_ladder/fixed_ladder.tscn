@@ -9,7 +9,7 @@ size = Vector3(0.42, 2.6, 0.14)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_approach"]
 resource_local_to_scene = true
-size = Vector3(0.9, 1.85, 0.62)
+size = Vector3(1.12, 1.85, 0.62)
 
 [node name="FixedLadder" type="Node3D"]
 script = ExtResource("1_script")

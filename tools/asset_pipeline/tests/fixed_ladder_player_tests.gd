@@ -60,6 +60,17 @@ func _test_attachment_conditions() -> void:
 	var anchor := _ladder.call("get_climb_anchor_world_position") as Vector3
 	var capsule := (_player.get_node("CollisionShape3D") as CollisionShape3D).shape as CapsuleShape3D
 	var movement_box := (_ladder.get_node("MovementCollision/Shape") as CollisionShape3D).shape as BoxShape3D
+	var approach_shape := _ladder.get_node("ApproachArea/Shape") as CollisionShape3D
+	_check(_near(approach_shape.position.x, 0.0), "ApproachArea stays centred on ladder local X")
+	_player.velocity = Vector3.ZERO
+	_player.position = Vector3(0.85, 0.0, 0.46)
+	await physics_frame
+	await physics_frame
+	_check(_ladder.call("is_player_in_approach_area", _player), "wider ApproachArea recognizes a real player near its lateral candidate edge")
+	_player.velocity = Vector3.ZERO
+	_player.position = Vector3(0.0, 0.0, 0.46)
+	await physics_frame
+	await physics_frame
 	var standoff_clearance := anchor.z - (movement_box.size.z * 0.5 + capsule.radius)
 	_check(
 		standoff_clearance >= 0.02 and standoff_clearance <= 0.10,
@@ -90,7 +101,7 @@ func _test_attachment_conditions() -> void:
 	_check(not bool(_player.call("is_ladder_attached")), "frontal W cannot attach from a visibly large X/Z correction")
 
 	_player.velocity = Vector3.ZERO
-	_player.position = Vector3(0.06, 0.0, 0.52)
+	_player.position = Vector3(0.10, 0.0, 0.50)
 	_player.rotation.y = 0.0
 	await physics_frame
 	await physics_frame
@@ -99,7 +110,7 @@ func _test_attachment_conditions() -> void:
 		_player.global_position.z - anchor.z
 	).length()
 	_player.call("_step_movement", 0.05, Vector2(0.0, -1.0), false)
-	_check(bool(_player.call("is_ladder_attached")), "frontal W input attaches")
+	_check(bool(_player.call("is_ladder_attached")), "near-edge frontal W input attaches within the snap-safe correction cap")
 	var maximum_correction := 0.12
 	_check(_ladder.has_method("get_max_attach_correction_m"), "ladder publishes its attach-correction bound")
 	if _ladder.has_method("get_max_attach_correction_m"):
@@ -150,11 +161,23 @@ func _test_attached_movement_and_yaw() -> void:
 	var sprint_rise := _player.global_position.y - 0.30
 	_check(_near(normal_rise, sprint_rise), "Shift does not modify climb speed")
 
-	_player.call("_apply_mouse_look", Vector2(-100000.0, 0.0))
 	var centre := float(_player.call("get_ladder_yaw_center"))
-	var relative_yaw := wrapf(_player.rotation.y - centre, -PI, PI)
-	_check(_near(float(_ladder.call("get_yaw_clamp_radians")), deg_to_rad(70.0)), "attached yaw clamp is the reviewed +/-70 degrees")
-	_check(absf(relative_yaw) <= float(_ladder.call("get_yaw_clamp_radians")) + EPSILON, "attached yaw clamps around the ladder-facing centre")
+	var functional_forward := _ladder.call("get_ladder_forward_world") as Vector3
+	var functional_centre := atan2(functional_forward.x, functional_forward.z)
+	var maximum := float(_ladder.call("get_yaw_clamp_radians"))
+	_check(_near(maximum, deg_to_rad(70.0)), "attached yaw clamp is the reviewed +/-70 degrees")
+	_check(absf(angle_difference(functional_centre, centre)) <= EPSILON, "yaw centre comes from functional root +Z rather than visual normalization")
+	var endpoint_mouse_motion := deg_to_rad(100.0) / float(_player.get("mouse_sensitivity"))
+	_player.rotation.y = centre
+	_player.call("_apply_mouse_look", Vector2(-endpoint_mouse_motion, 0.0))
+	var right_relative := wrapf(_player.rotation.y - centre, -PI, PI)
+	_player.rotation.y = centre
+	_player.call("_apply_mouse_look", Vector2(endpoint_mouse_motion, 0.0))
+	var left_relative := wrapf(_player.rotation.y - centre, -PI, PI)
+	print("YAW_SYMMETRY_METRIC centre=%.3f left=%.3f right=%.3f" % [rad_to_deg(centre), rad_to_deg(left_relative), rad_to_deg(right_relative)])
+	_check(_near(left_relative, -deg_to_rad(70.0)) and _near(right_relative, deg_to_rad(70.0)), "left and right yaw endpoints are exactly centre -/+70 degrees")
+	_check(_near(absf(left_relative), absf(right_relative)) and _near((left_relative + right_relative) * 0.5, 0.0), "yaw endpoints have equal magnitude and a zero-offset midpoint")
+	_player.rotation.y = centre
 
 
 func _test_top_limit_uses_actual_player_body() -> void:
@@ -211,11 +234,11 @@ func _test_bottom_release_and_suppression() -> void:
 	_check(not bool(_player.call("is_ladder_attached")), "suppressed ladder cannot immediately reattach")
 
 	_player.velocity = Vector3.ZERO
-	_player.global_position = Vector3(anchor.x, 0.0, anchor.z + 0.24)
+	_player.global_position = Vector3(anchor.x, 0.0, anchor.z + 0.205)
 	await physics_frame
 	await physics_frame
 	_check(_ladder.call("is_player_in_approach_area", _player), "modest back-away remains inside the outer ApproachArea")
-	_check(not bool(_ladder.call("is_attach_suppressed_for", _player)), "inner back-away distance rearms before outer ApproachArea exit")
+	_check(not bool(_ladder.call("is_attach_suppressed_for", _player)), "90%-of-prior inner back-away threshold rearms before outer ApproachArea exit")
 	_player.rotation.y = 0.0
 	for attempt: int in range(12):
 		_player.call("_step_movement", 0.05, Vector2(0.0, -1.0), false)
