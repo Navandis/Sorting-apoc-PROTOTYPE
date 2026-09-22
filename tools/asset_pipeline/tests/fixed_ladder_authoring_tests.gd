@@ -26,6 +26,7 @@ func _run() -> void:
 	_test_invalid_authoring_states_report(ladder)
 	ladder.free()
 	_test_instance_independence(packed)
+	_test_normalized_visual_source_independence(packed)
 	_finish()
 
 
@@ -132,6 +133,32 @@ func _test_instance_independence(packed: PackedScene) -> void:
 	_check(_near(first_shape.size.y, 2.10) and _near(second_shape.size.y, 3.00), "instances retain independent authored heights")
 	first.free()
 	second.free()
+
+
+func _test_normalized_visual_source_independence(packed: PackedScene) -> void:
+	var ladder := packed.instantiate() as Node3D
+	root.add_child(ladder)
+	var visual := ladder.get_node("Visual") as Node3D
+	var current_source := visual.get_node("Source")
+	visual.remove_child(current_source)
+	current_source.free()
+	var alternate_source := Node3D.new()
+	alternate_source.name = "Source"
+	visual.add_child(alternate_source)
+	var mesh_node := MeshInstance3D.new()
+	var mesh := BoxMesh.new()
+	mesh.size = Vector3(0.60, 1.00, 0.20)
+	mesh.material = StandardMaterial3D.new()
+	mesh_node.mesh = mesh
+	mesh_node.position.y = 0.50
+	alternate_source.add_child(mesh_node)
+	ladder.set("ladder_height_m", 2.40)
+	ladder.call("refresh_authoring_state")
+	var bounds := _branch_bounds(ladder, visual)
+	_check(_near(bounds.size.x, 0.42), "alternate normalized skin uses the common functional width")
+	_check(_near(bounds.size.y, 2.40), "alternate normalized skin follows authored height")
+	_check(_near(bounds.size.z, 0.14), "alternate normalized skin uses the common functional depth")
+	ladder.free()
 
 
 func _branch_bounds(owner: Node3D, branch: Node3D) -> AABB:

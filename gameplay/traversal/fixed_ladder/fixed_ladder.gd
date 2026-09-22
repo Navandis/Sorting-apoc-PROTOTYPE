@@ -16,19 +16,6 @@ const MIN_CLIMB_RANGE_M := 0.05
 const ROOT_TRANSFORM_EPSILON := 0.0001
 const DIMENSION_EPSILON_M := 0.0001
 
-# One-time local bounds measured from the current GLB. The source is a
-# horizontal mesh (+X length, +Z width, +Y thickness); Source remaps it to the
-# normalized ladder frame, while this wrapper owns the common envelope.
-const SOURCE_LENGTH_M := 2.580219
-const SOURCE_WIDTH_M := 0.371379
-const SOURCE_DEPTH_M := 0.116823
-const SOURCE_NORMALIZED_ORIGIN := Vector3(-0.001263, 1.289414, -0.006477)
-const SOURCE_NORMALIZED_BASIS := Basis(
-	Vector3(0.0, 1.0, 0.0),
-	Vector3(0.0, 0.0, 1.0),
-	Vector3(1.0, 0.0, 0.0)
-)
-
 @export_range(0.10, 8.0, 0.01, "or_greater", "or_less") var ladder_height_m := 2.60:
 	set(value):
 		ladder_height_m = value
@@ -192,6 +179,9 @@ func _get_configuration_warnings() -> PackedStringArray:
 		result.append("ERROR: FixedLadder supports translation and yaw only; pitch and roll must remain zero.")
 	if overhead_limit_local_y_m <= CEILING_SAFETY_MARGIN_M + MIN_CLIMB_RANGE_M:
 		result.append("ERROR: Authored overhead leaves no positive climb range above the root.")
+	var visual_bounds := _get_source_bounds(get_node_or_null("Visual"))
+	if not bool(visual_bounds.get("valid", false)):
+		result.append("ERROR: Visual must contain a normalized mesh source.")
 	return result
 
 
@@ -207,15 +197,50 @@ func _ensure_instance_shape_resources() -> void:
 
 func _update_normalized_visual() -> void:
 	var visual := get_node_or_null("Visual") as Node3D
-	var source := get_node_or_null("Visual/Source") as Node3D
-	if visual == null or source == null:
+	if visual == null:
 		return
-	source.transform = Transform3D(SOURCE_NORMALIZED_BASIS, SOURCE_NORMALIZED_ORIGIN)
+	visual.scale = Vector3.ONE
+	var result := _get_source_bounds(visual)
+	if not bool(result.get("valid", false)):
+		return
+	var bounds := result.get("bounds", AABB()) as AABB
+	if minf(bounds.size.x, minf(bounds.size.y, bounds.size.z)) <= DIMENSION_EPSILON_M:
+		return
 	visual.scale = Vector3(
-		FUNCTIONAL_WIDTH_M / SOURCE_WIDTH_M,
-		maxf(ladder_height_m, DIMENSION_EPSILON_M) / SOURCE_LENGTH_M,
-		FUNCTIONAL_DEPTH_M / SOURCE_DEPTH_M
+		FUNCTIONAL_WIDTH_M / bounds.size.x,
+		maxf(ladder_height_m, DIMENSION_EPSILON_M) / bounds.size.y,
+		FUNCTIONAL_DEPTH_M / bounds.size.z
 	)
+
+
+func _get_source_bounds(branch: Node) -> Dictionary:
+	if not (branch is Node3D):
+		return {"valid": false, "bounds": AABB()}
+	var state := {"valid": false, "bounds": AABB()}
+	for child: Node in branch.get_children():
+		_scan_source_bounds(child, Transform3D.IDENTITY, state)
+	return state
+
+
+func _scan_source_bounds(
+	node: Node,
+	parent_transform: Transform3D,
+	state: Dictionary
+) -> void:
+	var transform_to_branch := parent_transform
+	if node is Node3D:
+		transform_to_branch = parent_transform * (node as Node3D).transform
+	if node is MeshInstance3D:
+		var mesh_node := node as MeshInstance3D
+		if mesh_node.mesh != null:
+			var bounds := transform_to_branch * mesh_node.get_aabb()
+			if bool(state["valid"]):
+				state["bounds"] = (state["bounds"] as AABB).merge(bounds)
+			else:
+				state["valid"] = true
+				state["bounds"] = bounds
+	for child: Node in node.get_children():
+		_scan_source_bounds(child, transform_to_branch, state)
 
 
 func _update_movement_collision() -> void:
