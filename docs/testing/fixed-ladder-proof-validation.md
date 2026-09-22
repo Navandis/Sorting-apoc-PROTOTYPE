@@ -1,14 +1,15 @@
 # Fixed-Ladder Proof Validation and Human Playtest Handoff
 
 **Feature:** Single-rack fixed-ladder proof  
-**Status:** TECHNICALLY VERIFIED / HUMAN RE-REVIEW PENDING
+**Status:** TECHNICALLY VERIFIED / FINAL HUMAN RE-REVIEW PENDING
 **Date:** 22 September 2026  
 **Feature branch:** `codex/fixed-ladder-proof`  
 **Implementation checkpoint:** `e7e8036e718a477025cce22ea152c91b7ffc27c4`  
-**Bounded correction checkpoint:** `c8fd13ff732890efb714613107edcc6e9743b986`
+**Round-1 correction checkpoint:** `c8fd13ff732890efb714613107edcc6e9743b986`
+**Round-2 correction checkpoint:** `872cbd1add4f824242648831e211c75895ad3625`
 **Godot:** `4.7.stable.official.5b4e0cb0f`
 
-This record must not be changed to PROMOTE until the developer completes the focused human re-review and makes a PROMOTE / REVISE decision.
+This record must not be changed to PROMOTE until the developer completes the final focused human re-review and makes a PROMOTE / REVISE decision.
 
 ## Human review round 1 — REVISE
 
@@ -66,6 +67,48 @@ Every command retained the existing Windows root-certificate-store diagnostic. N
 
 The human-authored uncommitted proof-rack/ladder scene adjustments were preserved and excluded from the correction commit. Their added proof-rack collision overlapped the old review entry, so the only ancillary change moves that review-only entry `0.45 m` farther back; this is the allowed small position adjustment needed for stable review and does not alter proof-rack or ladder architecture.
 
+## Human review round 2 — REVISE, minor tuning
+
+The first bounded revision removed the reported attachment jolt and substantially improved bottom reattachment. Round 2 retained the validated architecture and identified three small tuning concerns:
+
+1. the outer `ApproachArea` candidate volume was slightly too narrow laterally;
+2. the `±70°` yaw range appeared asymmetric during human review;
+3. the `0.22 m` inner rearm distance remained about 10% too long.
+
+Round-2 correction checkpoint `872cbd1add4f824242648831e211c75895ad3625` makes and verifies the following bounded changes:
+
+- `ApproachArea` width increases from `0.90 m` to `1.12 m` (`+0.11 m` per side), remains centred at local X `0`, and retains its `0.62 m` depth and `1.85 m` height;
+- the real `0.34 m`-radius player is now recognized at a representative `0.85 m` lateral candidate position;
+- the separate snap-safe attachment cap remains `0.12 m`, with a near-edge eligible approach attaching from `0.1077 m`; therefore widening candidate context does not restore the round-1 positional jolt;
+- lateral movement intent remains rejected by the existing facing/intent path;
+- the inner rearm distance decreases by exactly 10%, from `0.22 m` to `0.198 m`; the regression rearms at `0.205 m` while still inside the outer candidate area, preserves immediate suppression, and reattaches normally on W approach.
+
+### Yaw-centre investigation
+
+The production clamp already centres on `FixedLadder.get_ladder_yaw_world()`, which the current functional root contract and review-scene transform both resolve to the yaw of functional root `+Z`. It uses a wrap-safe signed relative angle and does not consult attach-time player yaw or `Visual/Source`.
+
+The previous automated check used an excessively large mouse delta; after angular wrapping it landed at approximately `±60.844°`, so it never exercised either clamp endpoint. The corrected behavioral regression drives a deliberate `100°` request from the same functional centre and measures:
+
+```text
+centre = 0.000°
+left   = -70.000°
+right  = +70.000°
+midpoint offset = 0.000°
+```
+
+Because the owning player-controller implementation already satisfies the requested symmetric behavior, no player-controller yaw code was changed. The regression now protects both signed endpoints, equal magnitude, zero-offset midpoint, and independence from the accepted 180° visual-source normalization. Final human re-review remains the gate for the reported visual feel.
+
+### Round-2 focused verification
+
+| Check | Result |
+| --- | --- |
+| `fixed_ladder_authoring_tests.gd` | PASS, exit 0; `1.12 m` centred lateral area, unchanged depth/height |
+| `fixed_ladder_player_tests.gd` | PASS, exit 0; real near-edge candidate overlap, lateral rejection, `0.1077 m` snap-safe attach, exact `-70°/+70°`, `0.198 m` rearm behavior |
+| `shelf_ergonomics_review_tests.gd` | PASS A/B/C, exit 0; 15 surfaces retained |
+| Headless editor scan | exit 0; `FixedLadder` global class registered |
+
+Every command retained only the known Windows root-certificate-store diagnostic. No shared player-controller code changed, so the optional default-project smoke was not repeated.
+
 ## Implemented scope
 
 - reusable standalone `FixedLadder`, independent of storage families;
@@ -101,7 +144,7 @@ tools/asset_pipeline/tests/fixed_ladder_player_tests.gd.uid
 tools/asset_pipeline/tests/shelf_ergonomics_review_tests.gd
 ```
 
-Delivery documentation also includes the approved design, approved implementation plan, supplied validation template, and this record. `shelf_ergonomics_review.gd`, `project.godot`, and `wing_gameplay.tscn` did not require changes.
+Delivery documentation also includes the approved design, approved implementation plan, supplied validation template, and this record. The initial implementation did not change `shelf_ergonomics_review.gd`; round 1 later moved only its review entry as recorded above. `project.godot` and `wing_gameplay.tscn` remain unchanged.
 
 ## Proof installation values
 
@@ -115,10 +158,10 @@ Delivery documentation also includes the approved design, approved implementatio
 | Common functional width / depth | `0.42 / 0.14 m` |
 | Ladder placement relative to rack | local `+Z 0.52 m`; world `+X 0.52 m`, same Z |
 | Player standoff | `0.46 m` |
-| Approach width / depth / height | `0.90 / 0.62 / 1.85 m` |
+| Approach width / depth / height | `1.12 / 0.62 / 1.85 m` |
 | Climb speed | `1.65 m/s` |
 | Maximum horizontal attach correction | `0.12 m` |
-| Bottom inner rearm distance | `0.22 m` |
+| Bottom inner rearm distance | `0.198 m` |
 | Yaw clamp | `±70°` |
 | Top-view margin | `0.10 m` |
 | Ceiling-safety margin | `0.04 m` |
@@ -204,33 +247,37 @@ $godot = 'D:\AI Tools\Godot-4.7-Codex\Godot_v4.7-stable_win64_console.exe'
 
 The proof installation is along Gallery B's west-side run. Turn toward `ModularRack_LadderProof`; approach `FixedLadder_LadderProof` from its aisle/front side.
 
-## Focused human re-review only
+## Final focused human re-review only
 
-Do not repeat the complete round-1 matrix. Record PASS / REVISE and concise notes for these six scenarios.
+Do not repeat the original ladder matrix or the complete round-1 re-review. Record PASS / REVISE and concise notes for these seven checks.
 
-### 1. Visual side
+### 1. Centre and near-edge frontal attachment
 
-Confirm the mounting hooks face the served storage unit and the functional aisle/player approach remains on the opposite side.
+Approach once near the ladder centre and once with roughly half the player body laterally in front of the ladder. Hold W and confirm both feel intentional; candidate recognition may be wider, but attachment still occurs only near the snap-safe climb line.
 
-### 2. Attach smoothness
+### 2. Lateral crossing
 
-Perform at least three ordinary frontal W approaches. Confirm the player reaches almost the final climb X/Z naturally and attachment has no noticeable snap or jolt.
+Cross the wider approach region laterally once. Confirm it does not attach.
 
-### 3. No side capture
+### 3. Left/right yaw-max symmetry
 
-Cross the approach region laterally once. Confirm the ladder does not attach.
+While attached, turn fully left and fully right. Confirm both endpoints feel equally distant from the ladder's functional forward centre and remain `±70°`.
 
-### 4. Bottom rearm
+### 4. Shorter bottom rearm
 
-Descend and detach, continue S briefly, back away enough to disengage while remaining inside the broad outer approach volume, then press W toward the ladder. Confirm normal reattachment and no immediate bottom bounce.
+Descend and detach, continue S for a short deliberate back-away while remaining inside the outer approach volume, then press W toward the ladder. Confirm reattachment becomes available sooner.
 
-### 5. Yaw `±70°`
+### 5. Immediate bottom bounce prevention
 
-Inspect useful left/right shelf range. Confirm the reduced yaw still serves the shelf while feeling mechanically attached.
+At bottom detach, reverse toward the ladder without first reaching the short rearm distance. Confirm immediate recapture remains blocked.
 
-### 6. Interaction smoke
+### 6. Attachment-jolt regression
 
-Perform one pickup/retrieve or storage placement while attached. Confirm the ladder visual still does not mechanically block the normal interaction ray.
+Perform one quick ordinary frontal W attachment and confirm the round-1 positional jolt remains fixed.
+
+### 7. Interaction smoke
+
+Perform one pickup/retrieve or storage placement while attached. Confirm the ladder still does not mechanically block the normal interaction ray.
 
 ## Developer disposition
 
