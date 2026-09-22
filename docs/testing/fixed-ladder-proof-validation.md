@@ -1,13 +1,70 @@
 # Fixed-Ladder Proof Validation and Human Playtest Handoff
 
 **Feature:** Single-rack fixed-ladder proof  
-**Status:** TECHNICALLY VERIFIED / HUMAN REVIEW PENDING  
+**Status:** TECHNICALLY VERIFIED / HUMAN RE-REVIEW PENDING
 **Date:** 22 September 2026  
 **Feature branch:** `codex/fixed-ladder-proof`  
 **Implementation checkpoint:** `e7e8036e718a477025cce22ea152c91b7ffc27c4`  
+**Bounded correction checkpoint:** `c8fd13ff732890efb714613107edcc6e9743b986`
 **Godot:** `4.7.stable.official.5b4e0cb0f`
 
-This record must not be changed to PROMOTE until the developer completes the human playtest and makes a PROMOTE / REVISE decision.
+This record must not be changed to PROMOTE until the developer completes the focused human re-review and makes a PROMOTE / REVISE decision.
+
+## Human review round 1 — REVISE
+
+**Disposition:** REVISE — bounded tuning; ladder architecture validated.
+
+The human review strongly validated the ladder's gameplay utility, fixed-line model, visual fit, and interaction-through-ladder decision. It did not identify an architectural failure. Four bounded corrections were requested:
+
+1. rotate only the current visual source normalization by 180° yaw so its mounting hooks face the served storage side (`-Z`) while functional approach remains `+Z`;
+2. remove the visible attachment jolt by allowing attach only when the player's X/Z is already close to the climb anchor;
+3. rearm bottom attachment after a short deliberate back-away inside the outer `ApproachArea`, while continuing to prevent immediate recapture;
+4. reduce attached yaw from `±80°` to `±70°` without changing pitch or wrap-safe relative-yaw behavior.
+
+All four are implemented in correction checkpoint `c8fd13ff732890efb714613107edcc6e9743b986`. Fixed-line climbing, storage-family independence, height authoring, interaction-ray behavior, storage range, and all promoted storage systems remain unchanged.
+
+### Correction measurements and behavior
+
+- ladder movement-collision front half-depth: `0.07 m`;
+- player capsule radius: `0.34 m`;
+- climb-anchor standoff: `0.46 m`;
+- resulting collision clearance: `0.05 m`;
+- maximum horizontal attach correction: `0.12 m`;
+- deterministic accepted test approach correction: `0.0849 m`;
+- former outer candidate position exercised by the regression: `0.39 m` from the anchor, now rejected;
+- bottom rearm distance: `0.22 m` horizontal from the local climb line;
+- regression back-away: `0.24 m`, still overlapping the outer `ApproachArea`, then normal W reapproach and reattachment;
+- attached yaw clamp: `±70°`.
+
+Suppression still clears on full outer-area exit as a fallback. Inside the outer area, the next attachment eligibility check clears the rearm requirement once local horizontal distance from the climb line reaches `0.22 m`.
+
+### Visual verification
+
+The current GLB normalization was rotated beneath `Visual/Source`; the `FixedLadder` root, movement collision, approach area, climb anchor, and functional `+Z` front were not flipped. A normal OpenGL compatibility runtime capture confirmed the mounting tabs project toward the rack/storage side in the side view while the aisle view remains the functional approach side.
+
+Local ignored captures (not Git backup):
+
+```text
+reports/logistics_wing/fixed_ladder_correction_approach.png
+reports/logistics_wing/fixed_ladder_correction_storage.png
+reports/logistics_wing/fixed_ladder_correction_hook_side.png
+```
+
+### Correction verification
+
+The required bounded sweep ran on the correction checkpoint with the preserved human-authored review-scene working changes present:
+
+| Check | Result |
+| --- | --- |
+| `fixed_ladder_authoring_tests.gd` | PASS, exit 0; visual source storage-side normalization and unchanged functional `+Z` front |
+| `fixed_ladder_player_tests.gd` | PASS, exit 0; `0.0849 m` accepted correction under `0.12 m`, far capture rejected, inner rearm and reattach verified, `±70°` verified |
+| `shelf_ergonomics_review_tests.gd` | PASS A/B/C, exit 0; 15 surfaces retained |
+| Headless editor scan | exit 0; `FixedLadder` global class registered |
+| Default project smoke, no explicit scene | exit 0; continuing gameplay retained 12 surfaces |
+
+Every command retained the existing Windows root-certificate-store diagnostic. No additional parser, runtime, test, or editor error appeared.
+
+The human-authored uncommitted proof-rack/ladder scene adjustments were preserved and excluded from the correction commit. Their added proof-rack collision overlapped the old review entry, so the only ancillary change moves that review-only entry `0.45 m` farther back; this is the allowed small position adjustment needed for stable review and does not alter proof-rack or ladder architecture.
 
 ## Implemented scope
 
@@ -20,12 +77,12 @@ This record must not be changed to PROMOTE until the developer completes the hum
 - fixed climb line, W/S vertical motion, release-to-hold, no A/D motion, and no sprint modifier while attached;
 - retained pitch and wrap-safe ladder-relative yaw clamp;
 - body- and eye-derived top stop using the lower of the visual target and authored overhead safety target;
-- no top dismount; bottom release resumes normal S movement and suppresses reattachment until approach-area exit;
+- no top dismount; bottom release resumes normal S movement and suppresses immediate reattachment until the inner rearm distance or outer-area exit;
 - carried identity and existing pickup/storage/HUD/zoning paths remain intact; zoning holds exact attached position;
 - WorldItem and StorageSurface rays pass through ladder movement collision through existing layer separation;
 - separate taller functional `ModularRack_LadderProof` and `FixedLadder_LadderProof` in the retained shelf-ergonomics review scene.
 
-Approved-plan deviations: none.
+Initial implementation approved-plan deviations: none. The later review-entry adjustment is recorded in the bounded correction section above.
 
 ## Files changed
 
@@ -60,7 +117,9 @@ Delivery documentation also includes the approved design, approved implementatio
 | Player standoff | `0.46 m` |
 | Approach width / depth / height | `0.90 / 0.62 / 1.85 m` |
 | Climb speed | `1.65 m/s` |
-| Yaw clamp | `±80°` |
+| Maximum horizontal attach correction | `0.12 m` |
+| Bottom inner rearm distance | `0.22 m` |
+| Yaw clamp | `±70°` |
 | Top-view margin | `0.10 m` |
 | Ceiling-safety margin | `0.04 m` |
 | Authored overhead limit | `3.40 m` |
@@ -145,64 +204,33 @@ $godot = 'D:\AI Tools\Godot-4.7-Codex\Godot_v4.7-stable_win64_console.exe'
 
 The proof installation is along Gallery B's west-side run. Turn toward `ModularRack_LadderProof`; approach `FixedLadder_LadderProof` from its aisle/front side.
 
-## Human playtest scenarios
+## Focused human re-review only
 
-Record PASS / REVISE and notes for each.
+Do not repeat the complete round-1 matrix. Record PASS / REVISE and concise notes for these six scenarios.
 
-### A. Frontal attach and no side capture
+### 1. Visual side
 
-1. Approach from the front while holding W; judge attach distance and X/Z correction.
-2. Cross the approach region laterally with A/D.
-3. Cross while facing sideways.
-4. Enter without W.
+Confirm the mounting hooks face the served storage unit and the functional aisle/player approach remains on the opposite side.
 
-Expected: frontal W attaches; the other cases do not.
+### 2. Attach smoothness
 
-### B. Climb, hold, lateral, sprint, and pitch
+Perform at least three ordinary frontal W approaches. Confirm the player reaches almost the final climb X/Z naturally and attachment has no noticeable snap or jolt.
 
-While attached, use W, S, release both, try A/D, hold Shift, and climb while looking sharply up/down.
+### 3. No side capture
 
-Expected: W/S moves vertically at one speed; release holds exact height; A/D and Shift do not move or accelerate; pitch does not change climb direction or speed.
+Cross the approach region laterally once. Confirm the ladder does not attach.
 
-### C. Yaw and fixed-line usefulness
+### 4. Bottom rearm
 
-Inspect both sides and the depth of every proof shelf. Judge whether `±80°` is suitable, whether one fixed line serves enough width/depth, and whether the player still feels attached.
+Descend and detach, continue S briefly, back away enough to disengage while remaining inside the broad outer approach volume, then press W toward the ladder. Confirm normal reattachment and no immediate bottom bounce.
 
-### D. Top stop and ceiling safety
+### 5. Yaw `±70°`
 
-Climb to maximum, keep W held, look up, and inspect the top shelf.
+Inspect useful left/right shelf range. Confirm the reduced yaw still serves the shelf while feeling mechanically attached.
 
-Expected: no further rise, camera/body stay clear of the ceiling, top visibility is useful, and no rack-top dismount occurs.
+### 6. Interaction smoke
 
-### E. Bottom release and suppression
-
-Descend while continuing to hold S. Confirm normal backward motion begins, no immediate recapture occurs, and attach becomes available only after leaving and re-entering the approach area.
-
-### F. Pickup, retrieval, auto/manual placement, and packing
-
-At useful ladder heights:
-
-- LMB retrieve through/behind the ladder visual;
-- E auto-store and hold-E where useful;
-- M manual mode and manual E placement;
-- R packing rotation;
-- mouse-wheel/number carried selection.
-
-Expected: normal interaction ranges and behavior remain intact; visual rails/rungs do not mechanically block the rays.
-
-### G. HUD and carried state
-
-Attach, climb, and detach with a carried item. Confirm exact carried identity, held-item presentation, selection, and HUD remain coherent.
-
-### H. Zoning while attached
-
-Open zoning for a reachable surface, hold W/S while the modal is open, and close it.
-
-Expected: exact position/height and logical attachment are preserved; ladder movement resumes after close.
-
-### I. Installation judgment
-
-Judge left/right coverage, useful depth, top-shelf visibility, rung/rail visual obstruction, installed-infrastructure readability, and whether the extra capacity is worth the interaction cost. The ladder may be moved modestly left/right in the editor for comparison; do not infer sliding traversal.
+Perform one pickup/retrieve or storage placement while attached. Confirm the ladder visual still does not mechanically block the normal interaction ray.
 
 ## Developer disposition
 
