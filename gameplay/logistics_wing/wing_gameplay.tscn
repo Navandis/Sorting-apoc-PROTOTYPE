@@ -46,6 +46,10 @@
 [ext_resource type="PackedScene" path="res://gameplay/traversal/fixed_ladder/fixed_ladder.tscn" id="42_ladder"]
 [ext_resource type="PackedScene" uid="uid://crhai3v0or4eb" path="res://assets/environment/furniture/storage/SM_Rack02.glb" id="43_rack02"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_f70e0"]
+resource_local_to_scene = true
+size = Vector3(4.04, 3, 0.82)
+
 [node name="WingGameplay" type="Node3D" unique_id=1126541559]
 script = ExtResource("1_gameplay")
 
@@ -54,7 +58,10 @@ script = ExtResource("1_gameplay")
 [node name="FunctionalFixtures" parent="." unique_id=1215529146 instance=ExtResource("5_fixtures")]
 
 [node name="SM_MetalShelves_GalleryA_West" parent="FunctionalFixtures" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.28, 0, -7.2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.28, 0, -3.816217)
+
+[node name="StorageUnitOrientation" parent="FunctionalFixtures/SM_MetalShelves_GalleryA_West" index="2"]
+storage_orientation_quarter_turns = 1
 
 [node name="SM_MetalShelves_GalleryB_North" parent="FunctionalFixtures" index="1"]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 14, 0, -13.78)
@@ -62,9 +69,8 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 14, 
 [node name="SM_ventilated_locker_GalleryC_West" parent="FunctionalFixtures" index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.35, 0, 9)
 
-[node name="ModularRack_GalleryB_Initial" parent="FunctionalFixtures" index="3" instance=ExtResource("41_modular_rack")]
-position = Vector3(15.85, 0, -9.75)
-storage_orientation_quarter_turns = 3
+[node name="ModularRack_GalleryB_Initial" parent="FunctionalFixtures" unique_id=887284394 instance=ExtResource("41_modular_rack")]
+transform = Transform3D(-4.3711385e-08, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, -4.3711385e-08, 0.6007464, 0, -8.520063)
 rack_length_m = 4.04
 rack_depth_m = 0.82
 frame_height_m = 3.0
@@ -72,37 +78,40 @@ frame_height_m = 3.0
 [node name="Visual" parent="FunctionalFixtures/ModularRack_GalleryB_Initial/Frame" index="0"]
 transform = Transform3D(-2.896488e-08, 0, 1.0113387, 0, 0.62285787, 0, -0.6626392, 0, -4.420702e-08, 0, 0.010399148, 0)
 
-[node name="Shelf_01" type="Node3D" parent="FunctionalFixtures/ModularRack_GalleryB_Initial/Levels" index="0"]
-position = Vector3(0, 0.3, 0)
+[node name="Shelf_01" type="Node3D" parent="FunctionalFixtures/ModularRack_GalleryB_Initial/Levels" index="0" unique_id=2070829563]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
 
-[node name="Visual" parent="FunctionalFixtures/ModularRack_GalleryB_Initial/Levels/Shelf_01" instance=ExtResource("43_rack02")]
+[node name="Visual" parent="FunctionalFixtures/ModularRack_GalleryB_Initial/Levels/Shelf_01" unique_id=948051852 instance=ExtResource("43_rack02")]
 transform = Transform3D(-2.896488e-08, 0, 1.0113387, 0, 1, 0, -0.6626392, 0, -4.420702e-08, -1.2056097e-07, -0.113742, 5.2698875e-15)
 
-[node name="Shelf_02" type="Node3D" parent="FunctionalFixtures/ModularRack_GalleryB_Initial/Levels" index="1"]
-position = Vector3(0, 1.05, 0)
+[node name="Shelf_02" type="Node3D" parent="FunctionalFixtures/ModularRack_GalleryB_Initial/Levels" index="1" unique_id=1210551415]
+transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 1.1643043, 0)
 
-[node name="Visual" parent="FunctionalFixtures/ModularRack_GalleryB_Initial/Levels/Shelf_02" instance=ExtResource("43_rack02")]
+[node name="Visual" parent="FunctionalFixtures/ModularRack_GalleryB_Initial/Levels/Shelf_02" unique_id=213442565 instance=ExtResource("43_rack02")]
 transform = Transform3D(-2.896488e-08, 0, 1.0113387, 0, 1, 0, -0.6626392, 0, -4.420702e-08, -1.2056097e-07, -0.113742, 5.2698875e-15)
 
-[node name="Shelf_03" type="Node3D" parent="FunctionalFixtures/ModularRack_GalleryB_Initial/Levels" index="2"]
-position = Vector3(0, 1.82, 0)
+[node name="Shelf_03" type="Node3D" parent="FunctionalFixtures/ModularRack_GalleryB_Initial/Levels" index="2" unique_id=341039216]
+transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 1.8968397, 0)
 
-[node name="Visual" parent="FunctionalFixtures/ModularRack_GalleryB_Initial/Levels/Shelf_03" instance=ExtResource("43_rack02")]
+[node name="Visual" parent="FunctionalFixtures/ModularRack_GalleryB_Initial/Levels/Shelf_03" unique_id=1385502379 instance=ExtResource("43_rack02")]
 transform = Transform3D(-2.896488e-08, 0, 1.0113387, 0, 1, 0, -0.6626392, 0, -4.420702e-08, -1.2056097e-07, -0.113742, 5.2698875e-15)
 
-[node name="Shelf_04" type="Node3D" parent="FunctionalFixtures/ModularRack_GalleryB_Initial/Levels" index="3"]
-position = Vector3(0, 2.55, 0)
+[node name="Shelf_04" type="Node3D" parent="FunctionalFixtures/ModularRack_GalleryB_Initial/Levels" index="3" unique_id=1386361220]
+transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 2.6355634, 0)
 
-[node name="Visual" parent="FunctionalFixtures/ModularRack_GalleryB_Initial/Levels/Shelf_04" instance=ExtResource("43_rack02")]
+[node name="Visual" parent="FunctionalFixtures/ModularRack_GalleryB_Initial/Levels/Shelf_04" unique_id=1017214077 instance=ExtResource("43_rack02")]
 transform = Transform3D(-2.896488e-08, 0, 1.0113387, 0, 1, 0, -0.6626392, 0, -4.420702e-08, -1.2056097e-07, -0.113742, 5.2698875e-15)
 
 [node name="OverheadLimit" parent="FunctionalFixtures/ModularRack_GalleryB_Initial" index="2"]
-position = Vector3(0, 3.4, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.4, 0)
 
-[node name="FixedLadder_GalleryB_Initial" parent="FunctionalFixtures" index="4" instance=ExtResource("42_ladder")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 15.3, 0, -9.75)
+[node name="Shape" parent="FunctionalFixtures/ModularRack_GalleryB_Initial/MovementCollision" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+shape = SubResource("BoxShape3D_f70e0")
+
+[node name="FixedLadder_GalleryB_Initial" parent="FunctionalFixtures" unique_id=806369216 instance=ExtResource("42_ladder")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 1.043639, 0, -8.665108)
 ladder_height_m = 2.92
-overhead_limit_local_y_m = 3.4
 
 [node name="DevelopmentSetup" parent="." unique_id=1793037051 instance=ExtResource("6_development")]
 
