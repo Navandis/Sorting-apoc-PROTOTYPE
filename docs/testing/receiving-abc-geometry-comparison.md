@@ -1,7 +1,7 @@
 # Receiving Stage B — A/B/C Geometry Comparison
 
 **Date:** 23 September 2026
-**Status:** IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN REVIEW PENDING
+**Status:** EXPERIMENT COMPLETE / TECHNICALLY VERIFIED / NO CASE PROMOTED AS FINAL PRODUCTION GEOMETRY
 
 ## Purpose
 
@@ -110,7 +110,15 @@ For each case inspect from several metres back, normal approach distance, direct
 - platform-versus-pit feel;
 - apparent useful vertical capacity.
 
-The human may select A, B, C, or an interpolated recess. Promotion establishes only the selected floor/recess baseline for the next Receiving Stage B pile proof.
+This was the original review question. The later real-item proof used Case B only as its working correspondence; the final human review did not promote A, B, C or an interpolated recess as production geometry.
+
+## Closure disposition
+
+The comparison was useful for making the barrier/deck relationship inspectable before real-item testing. Human review found that the recess differences were less decisive than the actual pile composition and the resulting visibility, support and TAKE behaviour.
+
+Case B therefore remains historical proof context only, not final geometry authority. The later corrected proof established the stronger ergonomic finding that approximately `3.87 m` usable depth is excessive because it requires extreme reach and hides small rear items while the player remains outside the lift. Approximately `2.0 m` usable depth is now the provisional hypothesis; it is not a promoted final dimension. Width remains open pending Expedition composition and deck-capacity work.
+
+The A/B/C scene, script and focused test are retained as isolated review history. Their instance has been removed from normal `wing_gameplay.tscn`, which carries no Receiving experiment overlay or presenter.
 
 ## Scope boundary
 

@@ -27,8 +27,8 @@ const BRIDGE_LEVEL_NAMES: Array[String] = [
 	"Shelf_03",
 	"Shelf_04",
 ]
-const BRIDGE_LEVEL_YS: Array[float] = [0.30, 1.05, 1.82, 2.55]
-const BRIDGE_RACK_FRONT := 3
+const BRIDGE_LEVEL_YS: Array[float] = [0.30, 1.1643043, 1.8968397, 2.6355634]
+const BRIDGE_RACK_FRONT := 0
 const PROXY_NAMES: Array[String] = [
 	"GalleryA_West",
 	"GalleryB_North",
@@ -182,6 +182,10 @@ func _assert_composition(scene: Node, context: String) -> void:
 	_check(
 		scene.find_child("ReviewPlayer", true, false) == null,
 		"%s composition omits neutral-review player" % context
+	)
+	_check(
+		scene.get_node_or_null("ReceivingGeometryComparison") == null,
+		"%s composition omits the experimental Receiving geometry comparison" % context
 	)
 	_check(
 		not _instances_scene(scene, "res://main.tscn"),
@@ -587,7 +591,7 @@ func _assert_fixture_contract(scene: Node, context: String) -> void:
 		return
 
 	var expected_positions := {
-		"SM_MetalShelves_GalleryA_West": Vector3(-2.28, 0.0, -7.20),
+		"SM_MetalShelves_GalleryA_West": Vector3(-2.28, 0.0, -3.816217),
 		"SM_MetalShelves_GalleryB_North": Vector3(14.00, 0.0, -13.78),
 		"SM_ventilated_locker_GalleryC_West": Vector3(-1.35, 0.0, 9.00),
 	}
@@ -612,7 +616,7 @@ func _assert_fixture_contract(scene: Node, context: String) -> void:
 	_check(bridge_rack.scale.is_equal_approx(Vector3.ONE), "%s ModularRack keeps unit root scale" % context)
 	_check(
 		bridge_rack.get_storage_orientation_quarter_turns() == BRIDGE_RACK_FRONT,
-		"%s ModularRack saves its authored west-facing semantic Front" % context
+		"%s ModularRack saves its authored semantic Front" % context
 	)
 	var levels := bridge_rack.get_node_or_null("Levels") as Node3D
 	_check(levels != null, "%s ModularRack keeps its editable local Levels node" % context)

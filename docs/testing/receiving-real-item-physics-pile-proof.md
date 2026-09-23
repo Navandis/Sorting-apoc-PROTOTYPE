@@ -1,13 +1,21 @@
 # Receiving Stage B — Real-Item Physics Pile Proof Validation
 
 **Date:** 23 September 2026
-**Status:** IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN REVIEW PENDING
+**Status:** EXPERIMENT COMPLETE / TECHNICALLY VERIFIED IN RECORDED SCOPE / HUMAN REVIEW COMPLETE / IRREGULAR FROZEN PILE REJECTED FOR PRODUCTION
+
+```text
+EXPERIMENT COMPLETE
+TECHNICALLY VERIFIED IN RECORDED SCOPE
+HUMAN REVIEW COMPLETE
+IRREGULAR FROZEN PILE: REJECTED FOR PRODUCTION
+NEXT DIRECTION: DETERMINISTIC SEEDED TAKE-ONLY DECK PRESENTER
+```
 
 ## 1. Purpose and boundary
 
 This isolated proof tests whether actual eligible loot visuals, represented by one automatically generated convex hull each, settle into frozen irregular piles that are credible enough to continue the irregular-pile Receiving approach.
 
-It does not promote Case B as final geometry, pile preparation or presentation into production Receiving, support/exposure behavior, post-TAKE physics, persistence, lift travel, doors, or audio. No production presenter, pile system, or support system was added. The approved ordered TAKE-only deck remains a fallback only; it was not implemented here.
+It does not promote Case B as final geometry, pile preparation or presentation into production Receiving, support/exposure behavior, post-TAKE physics, persistence, lift travel, doors, or audio. No production presenter, pile system, or support system was added. The deterministic seeded TAKE-only deck presenter was not implemented here; it is the selected next design direction after human review rejected the irregular frozen-pile presentation strategy.
 
 Human review must choose one outcome after inspecting all twelve piles:
 
@@ -17,7 +25,7 @@ DESIGN SMALL PILE-LOCAL SUPPORT/EXPOSURE RULE
 PIVOT TO ORDERED TAKE-ONLY DECK
 ```
 
-No outcome has been selected by the developer.
+This list records the decision options presented before human review. The final decision is recorded in section 11.
 
 ### Human-review preflight history
 
@@ -38,7 +46,7 @@ Correction:
 - A rendered C3 presentation preflight confirmed the visible `0.00 / 0.82 / 1.27 / 0.45 m` relationship and an unobstructed pile view. Its fixed-FPS render outcome is presentation-only and does not replace the locked headless technical metrics.
 
 ```text
-Current status: TECHNICALLY VERIFIED / HUMAN REVIEW PENDING
+Status after automated preflight: TECHNICALLY VERIFIED / HUMAN REVIEW PENDING
 ```
 
 The automated geometry, targeting, and pickup-click preflight is clear. A physical reticle/LMB interaction in the native Godot window remains part of the pending human review; it was not recorded as completed by this implementation pass.
@@ -313,6 +321,21 @@ Batch-family summary:
 | C — Long / Irregular | | | |
 | D — Small / Medium Dense | | | |
 
+The developer completed the twelve-scenario review qualitatively. Per-run cells remain blank because no trustworthy run-by-run scores were recorded; they are not backfilled after the fact. The cross-scenario findings below are the authoritative human evidence.
+
+### Final human findings
+
+- In almost all twelve reviewed scenarios, valid-looking TAKE sequences could leave items visibly floating or suspended.
+- Support-gating large, visibly reachable objects such as the pig, fuel canister, wood pile, computer tower or armour item would read as a bug.
+- Thin and awkward objects such as the hammer and racket exposed floor-clipping and single-convex-hull limitations.
+- Actual mesh physics improved initial plausibility in places but did not solve the frozen-removal problem.
+- Twelve returned items now appears conservative; mature Expedition balance may often produce closer to roughly twenty, although raw item count is not authoritative. More items are likely to increase support relationships and frozen-removal failures.
+- Expedition loot composition must never be skewed merely to improve Receiving visuals.
+- The support/collision machinery likely required to rescue the pile is disproportionate to its visual benefit. No support graph should be designed from this proof.
+- The corrected approximately `3.87 m` usable depth is excessive: it requires extreme interaction reach, makes small rear items difficult to see, and still leaves the player outside the lift. Approximately `2.0 m` usable depth is the current provisional ergonomic hypothesis, not a promoted final dimension.
+- Width remains intentionally open until Expedition and balance work bound presentation demand through Utility/value budgets, likely and maximum counts, Bulk distribution, footprints, legal stacking, composition extremes and catalogue expansion.
+- The proof-only `3.5 m` TAKE range remains diagnostic only. Production ordinary loose-item reach remains `1.4 m`; any future Receiving-specific reach must be derived from the selected deck depth and player stance.
+
 ## 11. Human decision
 
 Choose exactly one after completing the matrix:
@@ -333,10 +356,44 @@ or:
 PIVOT TO ORDERED TAKE-ONLY DECK
 ```
 
-Decision and notes:
+Final decision:
 
 ```text
-HUMAN REVIEW PENDING
+PIVOT TO ORDERED TAKE-ONLY DECK
 ```
 
-If irregular piles continue, use this evidence to decide whether a small pile-local rule is actually needed. If the result is a pivot, preserve the approved deterministic TAKE-only deck boundary rather than expanding this proof into item-specific collision or support machinery.
+The irregular frozen-pile presentation strategy is rejected for production. Receiving, physical loot presentation, the service-elevator fantasy and the isolated review tooling remain valid. This is successful research with a rejected production direction, not a technical failure.
+
+## 12. Successful research outcomes and next direction
+
+The experiment established that:
+
+- real catalogue visuals can be instantiated and represented with one mesh-derived convex hull each;
+- deterministic manifests, seeds and staged spawning are useful review tooling;
+- hidden settling and frozen presentation can be technically separated;
+- human review exposed important lift-cage size and interaction-reach constraints; and
+- a technically settled pile is not automatically a good gameplay presenter.
+
+Core ownership remains:
+
+```text
+Expedition owns WHAT loot exists.
+Receiving owns WHERE/HOW that exact batch is presented.
+```
+
+Receiving must not add filler, remove awkward items, replace large items or bias Expedition outcomes for visual reasons.
+
+The next active gate is **deterministic seeded TAKE-only deck presenter design**:
+
+```text
+ReceivingBatch
+→ ReceivingDeckLayout
+→ deterministic footprint reservations
+→ controlled supported stacking where legal
+→ ordinary WorldItems
+→ TAKE only
+```
+
+This is not a rigidly ordered cargo presentation. Seeded legal layout may create small items hidden behind bulky front items, partly obscured rear rows, stacks that hide items behind them, and front-to-back wrapper layers that the player peels away. No universal large-back/small-front ordering is approved, but every item must ultimately be retrievable.
+
+The presenter may reuse existing promoted support-stack behaviour where legal. Low, non-loot pallets, half-pallets, shallow industrial trays, low plastic boxes, open crates, freight plates or mats may later act as Receiving-only infrastructure with private internal placement surfaces. They are not player storage, loot, movable containers, PUT targets, zones, labels, manual-placement surfaces or visible grids. Neither the presenter nor those surfaces are implemented by this closure.

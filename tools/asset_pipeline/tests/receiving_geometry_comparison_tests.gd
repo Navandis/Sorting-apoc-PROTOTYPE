@@ -4,7 +4,6 @@ const COMPARISON_PATH := "res://gameplay/logistics_wing/receiving/receiving_geom
 const COMPARISON_SCRIPT_PATH := "res://gameplay/logistics_wing/receiving/receiving_geometry_comparison.gd"
 const GAMEPLAY_PATH := "res://gameplay/logistics_wing/wing_gameplay.tscn"
 const GEOMETRY_PATH := "res://greybox/logistics_wing/wing_geometry.tscn"
-const EXPECTED_ROOT_POSITION := Vector3(-39.0, 0.0, 0.0)
 const EXPECTED_BARRIER_REFERENCE_Y := 1.27
 const EXPECTED_DECK_SIZE := Vector3(4.55, 0.12, 6.55)
 const EXPECTED_PANEL_SIZE := Vector3(0.08, 1.27, 4.8)
@@ -134,16 +133,15 @@ func _assert_wing_composition() -> void:
 	await process_frame
 	await physics_frame
 
-	var comparison := gameplay.get_node_or_null("ReceivingGeometryComparison") as Node3D
-	_check(comparison != null, "wing gameplay contains the comparison instance")
-	if comparison != null:
-		_check(comparison.position.is_equal_approx(EXPECTED_ROOT_POSITION), "comparison instance aligns to the freight barrier centreline")
-		_check(comparison.scene_file_path == COMPARISON_PATH, "wing gameplay instances the reusable comparison scene")
+	_check(
+		gameplay.get_node_or_null("ReceivingGeometryComparison") == null,
+		"wing gameplay remains independent from the isolated comparison"
+	)
 	_check(gameplay.get_node_or_null("Player") is CharacterBody3D, "normal gameplay player instantiates")
 	_check(gameplay.get_node_or_null("HUD/CarriedItemsHUD") != null, "normal carried-items HUD instantiates")
 	var surfaces := gameplay.call("get_functional_surfaces") as Array[Node]
-	_check(surfaces.size() == EXPECTED_FUNCTIONAL_SURFACE_COUNT, "comparison preserves the promoted functional storage count")
-	_check(gameplay.find_children("*", "StorageSurface", true, false).size() == EXPECTED_FUNCTIONAL_SURFACE_COUNT, "wing creates no comparison storage surfaces")
+	_check(surfaces.size() == EXPECTED_FUNCTIONAL_SURFACE_COUNT, "normal gameplay preserves the promoted functional storage count")
+	_check(gameplay.find_children("*", "StorageSurface", true, false).size() == EXPECTED_FUNCTIONAL_SURFACE_COUNT, "isolated comparison creates no normal-gameplay storage surfaces")
 	gameplay.free()
 
 

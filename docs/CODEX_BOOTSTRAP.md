@@ -12,16 +12,18 @@ Read in this order:
 
 Use one executor by default and match verification to risk. Reuse established commands and same-state evidence where appropriate. Do not create a new review hierarchy, evidence framework or broad regression loop for a bounded task.
 
-The normal playable composition is `res://gameplay/logistics_wing/wing_gameplay.tscn`. Its saved `DevelopmentSetup/SeedItems` composition is the palette authority. It also contains the human-promoted temporary Gallery B four-level `ModularRack` and independent `FixedLadder` as the real Receiving Stage B storage-destination baseline; the developer may move/refine that installation later. Preserve the legacy `main.tscn`, the neutral wing review scene, the shelf ergonomics review scene and the developer-authored modular-rack experiment.
+The normal playable composition is `res://gameplay/logistics_wing/wing_gameplay.tscn`. Its saved `DevelopmentSetup/SeedItems` composition is the palette authority. It also contains the human-promoted temporary Gallery B four-level `ModularRack` and independent `FixedLadder` as the real Receiving Stage B storage-destination baseline; the developer may move/refine that installation later. It must not contain the isolated Receiving A/B/C comparison, physics-pile proof, proof player, proof-only reach or another experimental Receiving presenter. Preserve the legacy `main.tscn`, the neutral wing review scene, the shelf ergonomics review scene, the developer-authored modular-rack experiment and the cleanly isolated Receiving review history.
 
 Review-scene supply reuse, reusable ModularRack authoring, Storage Unit Orientation & Zoning Basis, Canonical Item Storage Pose & Shelf-Front Alignment, the standalone fixed-ladder architecture, and the Gallery B wing rack-and-ladder integration are promoted foundations, not pending work. Fixed ladders remain limited to selected taller storage installations; no general climbing, jumping, movable/sliding ladder or shelf-top traversal system is approved.
 
 Current gate order:
 
-1. Resume Receiving / physical Receiving Stage B unless a concrete new storage blocker appears.
-2. Receiving Stage A remains the technical foundation; physical Stage B is not human-promoted.
-3. Do not infer a general climbing or expanded ladder gate from the fixed-ladder promotion.
+1. Design the **deterministic seeded TAKE-only deck presenter** for Receiving Stage B; no production presenter exists yet.
+2. Receiving Stage A remains upstream batch/lifecycle authority. Expedition owns what exact loot exists; Receiving owns where and how that exact batch is presented. Receiving may not add filler, remove awkward items, replace large items or bias Expedition outcomes for visual reasons.
+3. Present ordinary `WorldItem`s for TAKE only. Do not add PUT, zoning, labels, manual placement or visible storage grids. Seeded front-to-back occlusion and existing legal support stacking are allowed; do not impose rigid large-back/small-front ordering, and keep every item ultimately retrievable.
+4. Treat approximately `2.0 m` usable depth as a provisional ergonomic hypothesis and keep width open pending Expedition/capacity evidence. Low Receiving-only pallets, trays, crates, plates or mats may be explored later as internal placement infrastructure, not player storage or loot.
+5. Do not infer a general climbing or expanded ladder gate from the fixed-ladder promotion.
 
-Do not treat the 1.80 m eye-height or 2.8 m ceiling trials as production changes. Preserve the promoted storage and fixed-ladder foundations rather than reimplementing them. Do not start Receiving, gallery furnishing, crouch, height-aware auto-placement, player-adjustable shelves or broader climbing work unless a later handoff explicitly authorizes that gate.
+Do not treat the 1.80 m eye-height, 2.8 m ceiling trials, approximately `3.87 m` proof cage, or proof-only `3.5 m` TAKE reach as production changes. The irregular frozen-pile direction is human-rejected; do not design a support graph to rescue it. Preserve the promoted storage and fixed-ladder foundations rather than reimplementing them. Do not implement the deterministic presenter, its private surfaces, gallery furnishing, crouch, height-aware auto-placement, player-adjustable shelves or broader climbing work unless a later handoff explicitly authorizes that implementation.
 
-The GDD v0.10, Prototype Findings v0.10 and VDD v0.7 are dated pre-ladder-proof masters. For current ladder status, use `docs/CURRENT_STATE.md` and `docs/testing/fixed-ladder-proof-validation.md` until the next broader master-document revision.
+The GDD v0.10, Prototype Findings v0.10 and VDD v0.7 are dated masters. For current ladder and Receiving status, use `docs/CURRENT_STATE.md` and the focused validation records until the next broader master-document revision.

@@ -45,8 +45,6 @@
 [ext_resource type="PackedScene" path="res://gameplay/logistics_wing/storage/modular_rack.tscn" id="41_modular_rack"]
 [ext_resource type="PackedScene" path="res://gameplay/traversal/fixed_ladder/fixed_ladder.tscn" id="42_ladder"]
 [ext_resource type="PackedScene" uid="uid://crhai3v0or4eb" path="res://assets/environment/furniture/storage/SM_Rack02.glb" id="43_rack02"]
-[ext_resource type="PackedScene" path="res://gameplay/logistics_wing/receiving/receiving_geometry_comparison.tscn" id="44_receiving_comparison"]
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_f70e0"]
 resource_local_to_scene = true
 size = Vector3(4.04, 3, 0.82)
@@ -55,9 +53,6 @@ size = Vector3(4.04, 3, 0.82)
 script = ExtResource("1_gameplay")
 
 [node name="Environment" parent="." unique_id=1856855740 instance=ExtResource("2_environment")]
-
-[node name="ReceivingGeometryComparison" parent="." instance=ExtResource("44_receiving_comparison")]
-position = Vector3(-39, 0, 0)
 
 [node name="FunctionalFixtures" parent="." unique_id=1215529146 instance=ExtResource("5_fixtures")]
 
