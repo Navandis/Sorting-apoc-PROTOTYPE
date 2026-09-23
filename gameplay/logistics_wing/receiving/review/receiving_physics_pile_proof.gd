@@ -5,8 +5,8 @@ const ItemInstanceScript = preload("res://item_instance.gd")
 const WorldItemScript = preload("res://world_item.gd")
 const ITEM_CATALOG: ItemCatalog = preload("res://data/items/item_catalog.tres")
 
-const PROOF_DEPTH_M := 3.60
-const PROOF_WIDTH_M := 4.80
+const PROOF_DEPTH_M := 3.872
+const PROOF_WIDTH_M := 5.75
 const REVIEW_HEIGHT_M := 1.50
 const CASE_B_RECESS_M := 0.45
 const CASE_B_LIVE_DECK_TOP_Y := 0.82
@@ -20,6 +20,7 @@ const INITIAL_VERTICAL_GAP_M := 0.18
 const INITIAL_BOTTOM_Y_M := 1.20
 const SPAWN_STAGGER_S := 0.25
 const REVIEW_PLAYER_X_M := 2.18
+const REVIEW_PRESENTATION_X_OFFSET_M := -0.136
 const RUN_ALL_FLAG := "--pile-proof-run-all"
 const BATCH_ARGUMENT_PREFIX := "--pile-proof-batch="
 const INSTANCE_ARGUMENT_PREFIX := "--pile-proof-instance="
@@ -160,7 +161,9 @@ func enter_human_review_presentation(bodies: Array) -> void:
 	var pile_items := get_node_or_null("PileItems") as Node3D
 	if containment == null or pile_items == null:
 		return
+	containment.position.x = REVIEW_PRESENTATION_X_OFFSET_M
 	containment.position.y = CASE_B_LIVE_DECK_TOP_Y
+	pile_items.position.x = REVIEW_PRESENTATION_X_OFFSET_M
 	pile_items.position.y = CASE_B_LIVE_DECK_TOP_Y
 	_set_front_wall_enabled(false)
 
@@ -175,9 +178,14 @@ func enter_human_review_presentation(bodies: Array) -> void:
 		return
 
 	player.global_position = Vector3(REVIEW_PLAYER_X_M, 0.0, target_point.z)
-	player.rotation = Vector3(0.0, -PI * 0.5, 0.0)
-	camera.look_at(target_point, Vector3.UP)
-	player.set("_pitch", camera.rotation.x)
+	var level_target := Vector3(target_point.x, player.global_position.y, target_point.z)
+	player.look_at(level_target, Vector3.UP)
+	camera.rotation = Vector3.ZERO
+	var target_offset := target_point - camera.global_position
+	var horizontal_distance := Vector2(target_offset.x, target_offset.z).length()
+	var camera_pitch := atan2(target_offset.y, horizontal_distance)
+	camera.rotation = Vector3(camera_pitch, 0.0, 0.0)
+	player.set("_pitch", camera_pitch)
 
 
 func place_body_above_current_pile(
@@ -429,8 +437,10 @@ func _set_preparation_frame() -> void:
 	var containment := get_node_or_null("Containment") as Node3D
 	var pile_items := get_node_or_null("PileItems") as Node3D
 	if containment != null:
+		containment.position.x = 0.0
 		containment.position.y = 0.0
 	if pile_items != null:
+		pile_items.position.x = 0.0
 		pile_items.position.y = 0.0
 
 

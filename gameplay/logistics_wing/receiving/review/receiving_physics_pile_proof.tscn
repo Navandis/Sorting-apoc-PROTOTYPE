@@ -30,31 +30,31 @@ albedo_color = Color(0.95, 0.55, 0.12, 0.32)
 
 [sub_resource type="BoxMesh" id="Mesh_floor"]
 material = SubResource("Material_floor")
-size = Vector3(3.6, 0.2, 4.8)
+size = Vector3(3.872, 0.2, 5.75)
 
 [sub_resource type="BoxShape3D" id="Shape_floor"]
-size = Vector3(3.6, 0.2, 4.8)
+size = Vector3(3.872, 0.2, 5.75)
 
 [sub_resource type="BoxMesh" id="Mesh_apron"]
 material = SubResource("Material_floor")
-size = Vector3(5, 0.2, 4.8)
+size = Vector3(5, 0.2, 5.75)
 
 [sub_resource type="BoxShape3D" id="Shape_apron"]
-size = Vector3(5, 0.2, 4.8)
+size = Vector3(5, 0.2, 5.75)
 
 [sub_resource type="BoxShape3D" id="Shape_x_wall"]
-size = Vector3(0.12, 24, 4.8)
+size = Vector3(0.12, 24, 5.75)
 
 [sub_resource type="BoxShape3D" id="Shape_z_wall"]
-size = Vector3(3.6, 24, 0.12)
+size = Vector3(3.872, 24, 0.12)
 
 [sub_resource type="BoxMesh" id="Mesh_envelope"]
 material = SubResource("Material_guide")
-size = Vector3(3.6, 1.5, 4.8)
+size = Vector3(3.872, 1.5, 5.75)
 
 [sub_resource type="BoxMesh" id="Mesh_height_guide"]
 material = SubResource("Material_guide")
-size = Vector3(3.64, 0.025, 4.84)
+size = Vector3(3.912, 0.025, 5.79)
 
 [sub_resource type="BoxMesh" id="Mesh_barrier"]
 material = SubResource("Material_barrier")
@@ -94,25 +94,25 @@ shape = SubResource("Shape_floor")
 [node name="FrontWall" type="StaticBody3D" parent="Containment"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Containment/FrontWall"]
-position = Vector3(1.86, 12, 0)
+position = Vector3(1.996, 12, 0)
 shape = SubResource("Shape_x_wall")
 
 [node name="RearWall" type="StaticBody3D" parent="Containment"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Containment/RearWall"]
-position = Vector3(-1.86, 12, 0)
+position = Vector3(-1.996, 12, 0)
 shape = SubResource("Shape_x_wall")
 
 [node name="LeftWall" type="StaticBody3D" parent="Containment"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Containment/LeftWall"]
-position = Vector3(0, 12, -2.46)
+position = Vector3(0, 12, -2.935)
 shape = SubResource("Shape_z_wall")
 
 [node name="RightWall" type="StaticBody3D" parent="Containment"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Containment/RightWall"]
-position = Vector3(0, 12, 2.46)
+position = Vector3(0, 12, 2.935)
 shape = SubResource("Shape_z_wall")
 
 [node name="ReviewEnvelope" type="MeshInstance3D" parent="Containment"]
@@ -138,7 +138,7 @@ shape = SubResource("Shape_apron")
 [node name="Player" parent="." instance=ExtResource("2_player")]
 position = Vector3(4.6, 0, 0)
 rotation_degrees = Vector3(0, -90, 0)
-interaction_distance = 1.8
+interaction_distance = 2.1
 enable_held_item_view = false
 
 [node name="BarrierReference" type="MeshInstance3D" parent="."]

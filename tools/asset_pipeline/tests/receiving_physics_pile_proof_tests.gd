@@ -5,12 +5,25 @@ const PROOF_SCRIPT_PATH := "res://gameplay/logistics_wing/receiving/review/recei
 const GAMEPLAY_PATH := "res://gameplay/logistics_wing/wing_gameplay.tscn"
 const CATALOG_PATH := "res://data/items/item_catalog.tres"
 const BLOCKED_IDS: Array[StringName] = [&"loot_000034", &"loot_000036"]
-const EXPECTED_CONTAINMENT := Vector3(3.6, 1.5, 4.8)
+const EXPECTED_CONTAINMENT := Vector3(3.872, 1.5, 5.75)
 const EXPECTED_APRON_TOP_Y := 0.0
 const EXPECTED_CASE_B_DECK_TOP_Y := 0.82
 const EXPECTED_BARRIER_TOP_Y := 1.27
 const EXPECTED_PRODUCTION_TAKE_REACH_M := 1.4
-const EXPECTED_PROOF_REVIEW_REACH_M := 1.8
+const EXPECTED_PROOF_REVIEW_REACH_M := 2.1
+const EXPECTED_LOCKED_PHYSICS_CONSTANTS := {
+	"CASE_B_RECESS_M": 0.45,
+	"CASE_B_LIVE_DECK_TOP_Y": 0.82,
+	"COMMON_PROOF_MASS_KG": 1.0,
+	"STABLE_INTERVAL_S": 0.90,
+	"SETTLE_TIMEOUT_S": 15.0,
+	"LINEAR_SPEED_THRESHOLD_MPS": 0.04,
+	"ANGULAR_SPEED_THRESHOLD_RPS": 0.08,
+	"OOB_CONTACT_TOLERANCE_M": 0.02,
+	"INITIAL_VERTICAL_GAP_M": 0.18,
+	"INITIAL_BOTTOM_Y_M": 1.20,
+	"SPAWN_STAGGER_S": 0.25,
+}
 const EXPECTED_SEEDS := {
 	"A1": 230901,
 	"A2": 230917,
@@ -66,6 +79,7 @@ func _run() -> void:
 	await process_frame
 
 	_assert_manifests(proof)
+	_assert_locked_physics_constants(proof)
 	_assert_cli_selection(proof)
 	_assert_runner_failure_classification(proof)
 	_assert_oob_boundaries(proof)
@@ -110,23 +124,34 @@ func _assert_runner_failure_classification(proof: Node) -> void:
 	_check(not proof.call("is_successful_run_metrics", invalid), "invalid-item metrics fail the batch runner")
 
 
+func _assert_locked_physics_constants(proof: Node) -> void:
+	var constant_map := proof.get_script().get_script_constant_map() as Dictionary
+	for constant_name: String in EXPECTED_LOCKED_PHYSICS_CONSTANTS:
+		_check(constant_map.has(constant_name), "proof still exposes locked physics constant %s" % constant_name)
+		if constant_map.has(constant_name):
+			_check(
+				is_equal_approx(float(constant_map[constant_name]), float(EXPECTED_LOCKED_PHYSICS_CONSTANTS[constant_name])),
+				"locked physics constant %s remains unchanged" % constant_name
+			)
+
+
 func _assert_oob_boundaries(proof: Node) -> void:
 	if not _check(proof.has_method("is_bounds_out_of_bounds"), "proof exposes its OOB boundary rule"):
 		return
 	_check(
-		not proof.call("is_bounds_out_of_bounds", AABB(Vector3(-1.7, 0.0, -2.3), Vector3(3.4, 0.5, 4.6))),
+		not proof.call("is_bounds_out_of_bounds", AABB(Vector3(-1.8, 0.0, -2.75), Vector3(3.6, 0.5, 5.5))),
 		"a hull wholly inside the usable floor is in bounds"
 	)
 	_check(
-		not proof.call("is_bounds_out_of_bounds", AABB(Vector3(-1.81, -0.01, -2.41), Vector3(3.62, 0.5, 4.82))),
+		not proof.call("is_bounds_out_of_bounds", AABB(Vector3(-1.946, -0.01, -2.885), Vector3(3.892, 0.5, 5.77))),
 		"small contact-tolerance penetration is not reported as OOB"
 	)
 	_check(
-		proof.call("is_bounds_out_of_bounds", AABB(Vector3(-1.84, 0.0, -0.1), Vector3(0.2, 0.2, 0.2))),
+		proof.call("is_bounds_out_of_bounds", AABB(Vector3(-1.97, 0.0, -0.1), Vector3(0.2, 0.2, 0.2))),
 		"a partially escaped X extent is OOB"
 	)
 	_check(
-		proof.call("is_bounds_out_of_bounds", AABB(Vector3(-0.1, 0.0, 2.25), Vector3(0.2, 0.2, 0.2))),
+		proof.call("is_bounds_out_of_bounds", AABB(Vector3(-0.1, 0.0, 2.9), Vector3(0.2, 0.2, 0.2))),
 		"a partially escaped Z extent is OOB"
 	)
 	_check(
@@ -167,7 +192,7 @@ func _assert_manifests(proof: Node) -> void:
 
 func _assert_containment(proof: Node3D) -> void:
 	var dimensions := proof.call("get_proof_dimensions") as Vector3
-	_check(dimensions.is_equal_approx(EXPECTED_CONTAINMENT), "proof exposes the Case-B 3.60 by 1.50 by 4.80 envelope")
+	_check(dimensions.is_equal_approx(EXPECTED_CONTAINMENT), "proof exposes the corrected 3.872 by 1.50 by 5.75 envelope")
 	var containment := proof.get_node_or_null("Containment") as Node3D
 	var pile_items := proof.get_node_or_null("PileItems") as Node3D
 	_check(containment != null and pile_items != null, "proof owns separate containment and pile preparation roots")
@@ -182,10 +207,25 @@ func _assert_containment(proof: Node3D) -> void:
 		var floor_shape := floor_shape_node.shape as BoxShape3D
 		_check(floor_shape != null, "containment floor uses a plain box")
 		if floor_shape != null:
-			_check(is_equal_approx(floor_shape.size.x, 3.6), "containment floor depth matches Case B")
-			_check(is_equal_approx(floor_shape.size.z, 4.8), "containment floor width matches Case B")
+			_check(is_equal_approx(floor_shape.size.x, 3.872), "containment floor preserves the 0.545 m front and 0.273 m rear allowances")
+			_check(is_equal_approx(floor_shape.size.z, 5.75), "containment floor preserves the two 0.475 m side allowances")
 	for wall_name: String in ["FrontWall", "RearWall", "LeftWall", "RightWall"]:
 		_check(proof.get_node_or_null("Containment/%s/CollisionShape3D" % wall_name) is CollisionShape3D, "%s provides plain static containment" % wall_name)
+	var front_wall := proof.get_node_or_null("Containment/FrontWall/CollisionShape3D") as CollisionShape3D
+	var rear_wall := proof.get_node_or_null("Containment/RearWall/CollisionShape3D") as CollisionShape3D
+	var left_wall := proof.get_node_or_null("Containment/LeftWall/CollisionShape3D") as CollisionShape3D
+	var right_wall := proof.get_node_or_null("Containment/RightWall/CollisionShape3D") as CollisionShape3D
+	if front_wall != null and rear_wall != null and left_wall != null and right_wall != null:
+		_check(is_equal_approx(front_wall.position.x, 1.996), "front containment wall follows the corrected local depth")
+		_check(is_equal_approx(rear_wall.position.x, -1.996), "rear containment wall follows the corrected local depth")
+		_check(is_equal_approx(left_wall.position.z, -2.935), "left containment wall follows the corrected local width")
+		_check(is_equal_approx(right_wall.position.z, 2.935), "right containment wall follows the corrected local width")
+	var envelope := proof.get_node_or_null("Containment/ReviewEnvelope") as MeshInstance3D
+	var apron := proof.get_node_or_null("ApronFloor/Mesh") as MeshInstance3D
+	var barrier := proof.get_node_or_null("BarrierReference") as MeshInstance3D
+	_check(envelope != null and (envelope.mesh as BoxMesh).size.is_equal_approx(EXPECTED_CONTAINMENT), "review envelope matches corrected cage dimensions")
+	_check(apron != null and is_equal_approx((apron.mesh as BoxMesh).size.z, 5.75), "review apron spans the corrected cage width for navigation")
+	_check(barrier != null and is_equal_approx((barrier.mesh as BoxMesh).size.z, 4.8), "barrier reference preserves its real 4.8 m span")
 
 
 func _assert_real_visual_hulls(proof: Node) -> void:
@@ -230,6 +270,9 @@ func _assert_spawn_separation(proof: Node) -> void:
 	proof.call("place_body_above_current_pile", second, [first], Vector2.ZERO, Basis.from_euler(Vector3(0.4, -0.8, 0.25)))
 	var first_bounds := _body_hull_aabb(first)
 	var second_bounds := _body_hull_aabb(second)
+	_check(is_equal_approx(first.mass, 1.0) and is_equal_approx(second.mass, 1.0), "temporary settling bodies keep the common 1.0 kg mass")
+	_check(is_equal_approx(first_bounds.position.y, 1.2), "first spawn keeps the 1.20 m minimum body bottom")
+	_check(is_equal_approx(second_bounds.position.y - first_bounds.end.y, 0.18), "successive spawn keeps the 0.18 m vertical gap")
 	_check(not first_bounds.intersects(second_bounds), "successive initial spawn hulls do not overlap")
 	_check(second_bounds.position.y > first_bounds.end.y, "successive spawn starts above the current pile with a gap")
 	first.free()
@@ -248,7 +291,7 @@ func _assert_human_review_presentation_and_take(proof: Node) -> void:
 	if not _check(body != null, "freeze/TAKE fixture builds from a real Fuel Canister visual"):
 		return
 	proof.get_node("PileItems").add_child(body)
-	body.position = Vector3(0.55, 0.45, 0.0)
+	body.position = Vector3(1.45, 0.45, -1.4)
 	body.collision_layer = 1
 	body.collision_mask = 1
 	body.linear_velocity = Vector3(1, 2, 3)
@@ -277,6 +320,7 @@ func _assert_human_review_presentation_and_take(proof: Node) -> void:
 			"proof uses only the bounded review-scene TAKE reach"
 		)
 		_check(not bool(player.get("enable_held_item_view")), "proof disables only the held 3D item renderer")
+		var proof_reach := float(player.get("interaction_distance"))
 
 		proof.call("enter_human_review_presentation", [body])
 		await physics_frame
@@ -296,33 +340,119 @@ func _assert_human_review_presentation_and_take(proof: Node) -> void:
 			is_equal_approx(_mesh_top_y(barrier_mesh) - _shape_top_y(deck_shape), 0.45),
 			"human review shows the Case-B 0.45 m barrier-to-deck drop"
 		)
+		var presented_deck_bounds := _shape_world_aabb(deck_shape)
+		_check(is_equal_approx(presented_deck_bounds.end.x, 1.8), "corrected presentation preserves the existing front usable edge")
+		_check(is_equal_approx(presented_deck_bounds.position.x, -2.072), "corrected presentation extends the reduced rear allowance into the recess")
+		_check(is_equal_approx(presented_deck_bounds.position.z, -2.875), "corrected presentation halves the left side gap")
+		_check(is_equal_approx(presented_deck_bounds.end.z, 2.875), "corrected presentation halves the right side gap")
 
 		var camera := player.get_node_or_null("Camera3D") as Camera3D
 		var pickup_shape := body.get_node_or_null("WorldItem/PickupArea/PickupShape") as CollisionShape3D
 		_check(camera != null and pickup_shape != null, "normal camera and frozen PickupArea exist")
 		if camera == null or pickup_shape == null:
 			return
-		var pickup_query := PhysicsRayQueryParameters3D.new()
-		pickup_query.from = camera.global_position
-		pickup_query.to = camera.global_position + (-camera.global_transform.basis.z.normalized() * EXPECTED_PROOF_REVIEW_REACH_M)
-		pickup_query.collide_with_areas = true
-		pickup_query.collide_with_bodies = false
-		pickup_query.collision_mask = WorldItem.PICKUP_COLLISION_LAYER
-		pickup_query.exclude = [player.get_rid()]
-		var pickup_hit: Dictionary = proof.get_world_3d().direct_space_state.intersect_ray(pickup_query)
+		var camera_forward := -camera.global_transform.basis.z
+		camera_forward.y = 0.0
+		camera_forward = camera_forward.normalized()
+		var camera_right := camera.global_transform.basis.x
+		camera_right.y = 0.0
+		camera_right = camera_right.normalized()
+		var w_direction := player.global_transform.basis * Vector3.FORWARD
+		w_direction.y = 0.0
+		w_direction = w_direction.normalized()
+		var d_direction := player.global_transform.basis * Vector3.RIGHT
+		d_direction.y = 0.0
+		d_direction = d_direction.normalized()
+		_check(w_direction.dot(camera_forward) > 0.999, "proof W movement aligns with horizontal camera forward")
+		_check(d_direction.dot(camera_right) > 0.999, "proof D movement aligns with horizontal camera right")
+		_check(is_zero_approx(camera.rotation.y), "proof camera keeps the normal gameplay local yaw")
+		var pickup_hit := _review_pickup_ray(proof, player, proof_reach)
+		var near_center_distance := camera.global_position.distance_to(pickup_shape.global_position)
+		var near_hit_distance := camera.global_position.distance_to(pickup_hit.get("position", camera.global_position))
 		_check(
 			not pickup_hit.is_empty()
-			and camera.global_position.distance_to(pickup_hit.get("position", camera.global_position)) <= EXPECTED_PROOF_REVIEW_REACH_M,
-			"frozen review target is within the bounded proof-review reach"
+			and near_hit_distance <= proof_reach,
+			"near exposed frozen target is within the bounded proof-review reach"
 		)
 		_check(
 			player.call("_get_looked_at_world_item") == world_item,
 			"production camera ray returns the frozen proof WorldItem"
 		)
 		player.call("_attempt_pickup_click")
-		_check(player_carried.get_selected_item() == preserved_instance, "normal TAKE preserves the exact ItemInstance")
+		_check(player_carried.get_selected_item() == preserved_instance, "near normal TAKE preserves the exact ItemInstance")
 		await process_frame
-		_check(not is_instance_valid(body), "normal TAKE removes the frozen host through the ordinary path")
+		_check(not is_instance_valid(body), "near normal TAKE removes the frozen host through the ordinary path")
+		_check(player_carried.remove_item(preserved_instance) == preserved_instance, "near TAKE fixture leaves carried state clean for the next sample")
+
+		var mid_body := proof.call("create_temporary_body", definition, "MidDepthTakeTest") as RigidBody3D
+		_check(mid_body != null, "mid-depth TAKE fixture builds from the same real visual")
+		if mid_body == null:
+			return
+		proof.get_node("PileItems").add_child(mid_body)
+		mid_body.position = Vector3(0.0, 0.45, 0.0)
+		proof.call("freeze_bodies_for_review", [mid_body], "TEST2")
+		var mid_world_item := mid_body.get_node_or_null("WorldItem") as WorldItem
+		var mid_instance := mid_world_item.get_item_instance() if mid_world_item != null else null
+		proof.call("enter_human_review_presentation", [mid_body])
+		await physics_frame
+		await physics_frame
+		var mid_pickup_shape := mid_body.get_node_or_null("WorldItem/PickupArea/PickupShape") as CollisionShape3D
+		_check(mid_world_item != null and mid_pickup_shape != null, "mid-depth frozen target exposes its normal pickup area")
+		if mid_world_item == null or mid_pickup_shape == null:
+			return
+		var mid_center_distance := camera.global_position.distance_to(mid_pickup_shape.global_position)
+		var mid_visibility_hit := _review_pickup_ray(proof, player, mid_center_distance + 1.0)
+		var mid_hit_distance := camera.global_position.distance_to(mid_visibility_hit.get("position", camera.global_position))
+		_check(
+			not mid_visibility_hit.is_empty()
+			and mid_visibility_hit.get("collider") == mid_body.get_node("WorldItem/PickupArea"),
+			"mid-depth sample is visibly exposed to the review camera"
+		)
+		_check(
+			proof_reach >= mid_hit_distance,
+			"proof-only reach %.3f m covers measured mid-depth hit %.3f m" % [proof_reach, mid_hit_distance]
+		)
+		_check(proof_reach - mid_hit_distance <= 0.1, "proof-only reach adds no more than 0.1 m beyond the measured mid-depth hit")
+		_check(player.call("_get_looked_at_world_item") == mid_world_item, "production camera ray returns the mid-depth frozen target")
+		player.call("_attempt_pickup_click")
+		_check(player_carried.get_selected_item() == mid_instance, "mid-depth normal TAKE preserves the exact ItemInstance")
+		await process_frame
+		_check(not is_instance_valid(mid_body), "mid-depth normal TAKE removes the frozen host through the ordinary path")
+		if mid_instance != null:
+			player_carried.remove_item(mid_instance)
+		if is_instance_valid(mid_body):
+			mid_body.free()
+
+		var far_body := proof.call("create_temporary_body", definition, "FarDepthMeasureTest") as RigidBody3D
+		_check(far_body != null, "far-depth reach fixture builds from the same real visual")
+		if far_body == null:
+			return
+		proof.get_node("PileItems").add_child(far_body)
+		far_body.position = Vector3(-1.45, 0.45, 1.4)
+		proof.call("freeze_bodies_for_review", [far_body], "TEST3")
+		proof.call("enter_human_review_presentation", [far_body])
+		await physics_frame
+		await physics_frame
+		var far_pickup_shape := far_body.get_node_or_null("WorldItem/PickupArea/PickupShape") as CollisionShape3D
+		_check(far_pickup_shape != null, "far-depth frozen target exposes its normal pickup area")
+		if far_pickup_shape == null:
+			return
+		var far_center_distance := camera.global_position.distance_to(far_pickup_shape.global_position)
+		var far_visibility_hit := _review_pickup_ray(proof, player, far_center_distance + 1.0)
+		var far_hit_distance := camera.global_position.distance_to(far_visibility_hit.get("position", camera.global_position))
+		_check(
+			not far_visibility_hit.is_empty()
+			and far_visibility_hit.get("collider") == far_body.get_node("WorldItem/PickupArea"),
+			"far-depth sample is visibly exposed and measurable without extending proof TAKE reach"
+		)
+		_check(near_hit_distance < mid_hit_distance and mid_hit_distance < far_hit_distance, "measured exposed samples progress from near to mid to far depth")
+		_check(proof_reach < far_hit_distance, "proof-only reach remains below the measured far-depth target")
+		print(
+			"PILE_PROOF_REACH_SAMPLE near_center=%.3f near_hit=%.3f mid_center=%.3f mid_hit=%.3f far_center=%.3f far_hit=%.3f reach=%.3f"
+			% [near_center_distance, near_hit_distance, mid_center_distance, mid_hit_distance, far_center_distance, far_hit_distance, proof_reach]
+		)
+		far_body.free()
+		await process_frame
 
 
 func _mesh_top_y(mesh_instance: MeshInstance3D) -> float:
@@ -338,6 +468,27 @@ func _shape_top_y(shape_node: CollisionShape3D) -> float:
 	if debug_mesh == null:
 		return -INF
 	return (shape_node.global_transform * debug_mesh.get_aabb()).end.y
+
+
+func _shape_world_aabb(shape_node: CollisionShape3D) -> AABB:
+	if shape_node == null or shape_node.shape == null:
+		return AABB()
+	var debug_mesh := shape_node.shape.get_debug_mesh()
+	if debug_mesh == null:
+		return AABB()
+	return shape_node.global_transform * debug_mesh.get_aabb()
+
+
+func _review_pickup_ray(proof: Node3D, player: CharacterBody3D, reach: float) -> Dictionary:
+	var camera := player.get_node("Camera3D") as Camera3D
+	var query := PhysicsRayQueryParameters3D.new()
+	query.from = camera.global_position
+	query.to = camera.global_position + (-camera.global_transform.basis.z.normalized() * reach)
+	query.collide_with_areas = true
+	query.collide_with_bodies = false
+	query.collision_mask = WorldItem.PICKUP_COLLISION_LAYER
+	query.exclude = [player.get_rid()]
+	return proof.get_world_3d().direct_space_state.intersect_ray(query)
 
 
 func _body_hull_aabb(body: RigidBody3D) -> AABB:

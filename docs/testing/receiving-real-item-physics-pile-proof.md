@@ -43,6 +43,22 @@ Current status: TECHNICALLY VERIFIED / HUMAN REVIEW PENDING
 
 The automated geometry, targeting, and pickup-click preflight is clear. A physical reticle/LMB interaction in the native Godot window remains part of the pending human review; it was not recorded as completed by this implementation pass.
 
+### Player-orientation and containment correction
+
+After the first human-review correction, the proof exposed a second setup defect: the child camera had been yawed independently from the `CharacterBody3D`, making W/S and A/D move opposite the visible camera frame. The intended freight-cage basis was also clarified after the initial `3.60 × 4.80 m` proof: preserve approximately `0.545 m` at the front, reduce the rear clearance to approximately `0.273 m`, and reduce each side clearance to approximately `0.475 m` within the accepted raw shell.
+
+Correction:
+
+- The functional cage is now `3.872 m` deep by `5.75 m` wide. Preparation remains centred in its local physics frame; after freeze and metric capture, containment and pile presentation shift `-0.136 m` in X so the previous front usable edge remains fixed while the added depth extends rearward.
+- The presentation edges are approximately local `X -2.072 .. +1.800` and `Z -2.875 .. +2.875`. The Case-B Y relationship remains unchanged.
+- The real barrier reference retains its existing `4.8 m` span. Only the functional cage containment/envelope and review apron width changed.
+- Horizontal facing now belongs to the player root. The camera retains normal local yaw and receives pitch only, so W aligns with camera forward and D aligns with camera right without any production movement-code change.
+- Corrected-geometry reach samples measured a near exposed hit at `0.587 m`, a middle-depth exposed hit at `2.021 m`, and a far exposed hit at `3.466 m` (`0.766 / 2.192 / 3.637 m` to target centres). The smallest practical rounded proof-only reach is therefore `2.1 m`: `0.079 m` beyond the middle hit and well short of the far sample. Production loose-item reach remains `1.4 m`.
+- Automated integration coverage performs ordinary camera-ray/pickup-click TAKE on both the near and middle-depth frozen targets. The far target is measured through an unobstructed pickup-layer ray but is intentionally outside proof TAKE reach.
+- A rendered corrected C3 presentation confirmed the wider/deeper deck, naturally spread pile, live interaction prompt on a frozen item, and unchanged Case-B vertical overlay. Its fixed-FPS result is presentation-only and is not included in the authoritative metric table.
+
+The available Windows control surface did not expose the native Godot window, so physical WASD/mouse/LMB input was not recorded. That representative native-window check remains the first step of human review; it is not reported as cleared by the automated evidence.
+
 ## 2. Proof configuration
 
 ```text
@@ -53,8 +69,12 @@ Proof scene: res://gameplay/logistics_wing/receiving/review/receiving_physics_pi
 Proof script: res://gameplay/logistics_wing/receiving/review/receiving_physics_pile_proof.gd
 Focused test: res://tools/asset_pipeline/tests/receiving_physics_pile_proof_tests.gd
 
-Containment depth X: 3.60 m
-Containment width Z: 4.80 m
+Previous containment depth X: 3.60 m
+Previous containment width Z: 4.80 m
+Corrected containment depth X: 3.872 m
+Corrected containment width Z: 5.75 m
+Corrected presentation edges: X -2.072 .. +1.800 m / Z -2.875 .. +2.875 m
+Preserved barrier-reference span Z: 4.80 m
 Review height guide: 1.50 m
 
 Working live geometry correspondence: Case B only
@@ -66,7 +86,8 @@ Initial minimum body bottom: 1.20 m
 Gap above current pile: 0.18 m
 Fixed spawn stagger: 0.25 s
 Post-freeze interactive presentation offset: +0.82 m
-Proof-only loose-item TAKE reach: 1.8 m
+Post-freeze front-edge-preserving X offset: -0.136 m
+Proof-only loose-item TAKE reach: 2.1 m
 Production loose-item TAKE reach: unchanged at 1.4 m
 ```
 
@@ -170,7 +191,7 @@ $godot = 'D:\AI Tools\Godot-4.7-Codex\Godot_v4.7-stable_win64_console.exe'
 & $godot --headless --path . --script res://tools/asset_pipeline/tests/receiving_physics_pile_proof_tests.gd
 ```
 
-Verified assertions cover the fixed manifests/seeds, CLI batch/instance selection, batch-runner failure classification, OOB boundary/tolerance behavior, all forty eligible visuals, one mesh-derived convex hull per item, absence of pickup components during settling, deterministic non-overlapping spawn placement, containment dimensions, freeze transition, authoritative `WorldItem` attachment, post-freeze Case-B world-space geometry, actual production camera-ray targeting, normal pickup-click dispatch, exact `ItemInstance` transfer, frozen-host removal, a visual-only barrier reference, the proof-only held-view override, and preservation of the normal gameplay 1.4 m reach. Result: `PASS: receiving physics pile proof tests` with exit code 0.
+Verified assertions cover the fixed manifests/seeds, CLI batch/instance selection, batch-runner failure classification, corrected OOB boundary/tolerance behavior, all forty eligible visuals, one mesh-derived convex hull per item, absence of pickup components during settling, deterministic non-overlapping spawn placement, corrected containment and presented edges, preserved `4.8 m` barrier span, unchanged Case-B world-space Y geometry, W/camera-forward and D/camera-right agreement, normal camera local yaw, actual production camera-ray targeting, ordinary near/mid pickup-click dispatch, exact `ItemInstance` transfer, frozen-host removal, measured near/mid/far exposed targets, the proof-only held-view override, and preservation of the normal gameplay `1.4 m` reach. Result: `PASS: receiving physics pile proof tests` with exit code 0.
 
 Project/editor scan:
 
@@ -190,7 +211,7 @@ Result: twelve `PILE_PROOF_METRIC` records, followed by `PILE_PROOF_ALL_COMPLETE
 
 Known unchanged diagnostic: Godot reports the existing non-fatal Windows root-certificate loading warning in headless/editor runs. It does not affect scene parsing, physics execution, or the focused assertions.
 
-## 7. Twelve-run technical metrics
+## 7. Previous `3.60 × 4.80 m` technical metrics (historical)
 
 | Batch | Instance | Seed | Status | Settle time | Max height | Escaped/OOB | Invalid | Technical notes |
 | --- | ---: | ---: | --- | ---: | ---: | --- | --- | --- |
@@ -219,7 +240,30 @@ The first preflight used simultaneous bodies in a tall vertical column. Five run
 
 The smallest proof-wide correction was applied in `4024eb35abfebdc7c56e966c5813718d7d37ee03`: fixed 0.25-second spawning, with each new hull placed 0.18 m above the current pile and at least 1.20 m above the floor. The exact manifests, seeds, seeded rotations, and seeded X/Z coordinates were unchanged. The table above contains only the clean evidence pass after that correction; the failed preflight was not relabelled as successful physics evidence.
 
-## 8. Human launch commands
+## 8. Corrected `3.872 × 5.75 m` technical metrics
+
+The same twelve manifests, seeds, physics architecture, mass, gravity, spawn stagger, placement rule, settle thresholds, timeout, freeze transition, and strict OOB predicate were rerun after correcting only the functional cage footprint and presentation setup.
+
+| Batch | Instance | Seed | Status | Settle time | Max height | Escaped/OOB | Invalid | Technical notes |
+| --- | ---: | ---: | --- | ---: | ---: | --- | --- | --- |
+| A | 1 | 230901 | SETTLED | 5.117 s | 0.324 m | loot_000001, loot_000030, loot_000042 | none | corrected containment |
+| A | 2 | 230917 | SETTLED | 5.933 s | 0.487 m | loot_000006, loot_000039 | none | corrected containment |
+| A | 3 | 230933 | SETTLED | 7.167 s | 0.400 m | loot_000041 | none | corrected containment |
+| B | 1 | 231101 | SETTLED | 6.450 s | 0.400 m | loot_000003, loot_000024 | none | corrected containment |
+| B | 2 | 231117 | SETTLED | 6.383 s | 0.497 m | loot_000042 | none | corrected containment |
+| B | 3 | 231133 | SETTLED | 6.083 s | 0.590 m | loot_000004 | none | corrected containment |
+| C | 1 | 231301 | SETTLED | 5.533 s | 0.398 m | loot_000013, loot_000038, loot_000040, loot_000041, loot_000042, loot_000011 | none | corrected containment |
+| C | 2 | 231317 | SETTLED | 5.917 s | 0.216 m | loot_000037, loot_000041, loot_000042 | none | corrected containment |
+| C | 3 | 231333 | SETTLED | 8.600 s | 0.337 m | loot_000013, loot_000004, loot_000026 | none | corrected containment |
+| D | 1 | 231501 | SETTLED | 5.750 s | 0.224 m | loot_000004 | none | corrected containment |
+| D | 2 | 231517 | SETTLED | 6.300 s | 0.235 m | loot_000001 | none | corrected containment |
+| D | 3 | 231533 | SETTLED | 5.750 s | 0.172 m | loot_000004 | none | corrected containment |
+
+All twelve corrected-containment runs settled within the unchanged timeout and had zero invalid items. All twelve reported at least one strict OOB body, for twenty-five run-item violations in total. The aggregate runner therefore correctly remained `FAIL` with exit code 1. The larger footprint is not treated as a reason to relax, hide, or reinterpret those failures.
+
+This table is the relevant technical evidence for the upcoming human pile review. The previous table remains historical preflight evidence; exact transforms are not compared across the two footprints.
+
+## 9. Human launch commands
 
 Run from the repository root:
 
@@ -240,7 +284,7 @@ D/1  D/2  D/3
 
 The status overlay reports the selected run, seed, settle status/duration, maximum height, and OOB count. Wait for the frozen-review status before performing TAKE checks.
 
-## 9. Human review matrix
+## 10. Human review matrix
 
 Review all twelve frozen piles. For each one, inspect the initial pile and, where possible, use normal LMB TAKE on one exposed top item, one middle item, and one visible low/supporting large item. Record the post-removal condition without expecting the pile to re-settle.
 
@@ -268,7 +312,7 @@ Batch-family summary:
 | C — Long / Irregular | | | |
 | D — Small / Medium Dense | | | |
 
-## 10. Human decision
+## 11. Human decision
 
 Choose exactly one after completing the matrix:
 
