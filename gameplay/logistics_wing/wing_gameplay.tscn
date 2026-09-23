@@ -45,6 +45,7 @@
 [ext_resource type="PackedScene" path="res://gameplay/logistics_wing/storage/modular_rack.tscn" id="41_modular_rack"]
 [ext_resource type="PackedScene" path="res://gameplay/traversal/fixed_ladder/fixed_ladder.tscn" id="42_ladder"]
 [ext_resource type="PackedScene" uid="uid://crhai3v0or4eb" path="res://assets/environment/furniture/storage/SM_Rack02.glb" id="43_rack02"]
+[ext_resource type="PackedScene" path="res://gameplay/logistics_wing/receiving/receiving_runtime.tscn" id="44_receiving"]
 [sub_resource type="BoxShape3D" id="BoxShape3D_f70e0"]
 resource_local_to_scene = true
 size = Vector3(4.04, 3, 0.82)
@@ -113,6 +114,9 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 1.04
 ladder_height_m = 2.92
 
 [node name="DevelopmentSetup" parent="." unique_id=1793037051 instance=ExtResource("6_development")]
+
+[node name="ReceivingRuntime" parent="." instance=ExtResource("44_receiving")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -40.705, 0.82, 0)
 
 [node name="SM_Table_SeedWest" parent="DevelopmentSetup/Tables" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.418461, 0, 3.8245745)
@@ -422,6 +426,7 @@ item_id = &"loot_000042"
 
 [node name="Player" parent="." unique_id=551360273 instance=ExtResource("3_player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0.05, -2.5)
+receiving_interaction_distance = 3.0
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=836250621]
 layer = 10

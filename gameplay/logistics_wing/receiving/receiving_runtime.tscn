@@ -1,0 +1,19 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://gameplay/logistics_wing/receiving/receiving_runtime.gd" id="1_runtime"]
+[ext_resource type="Script" path="res://receiving/receiving_manager.gd" id="2_manager"]
+[ext_resource type="PackedScene" path="res://gameplay/logistics_wing/receiving/receiving_deck_presenter.tscn" id="3_presenter"]
+[ext_resource type="Resource" path="res://data/items/item_catalog.tres" id="4_catalog"]
+[ext_resource type="Resource" path="res://data/receiving/prototype_loot_pool.tres" id="5_pool"]
+[ext_resource type="Resource" path="res://data/receiving/receiving_deck_stage_b_proof.tres" id="6_profile"]
+
+[node name="ReceivingRuntime" type="Node3D"]
+script = ExtResource("1_runtime")
+item_catalog = ExtResource("4_catalog")
+prototype_loot_pool = ExtResource("5_pool")
+deck_profile = ExtResource("6_profile")
+
+[node name="ReceivingManager" type="Node" parent="."]
+script = ExtResource("2_manager")
+
+[node name="ReceivingDeckPresenter" parent="." instance=ExtResource("3_presenter")]

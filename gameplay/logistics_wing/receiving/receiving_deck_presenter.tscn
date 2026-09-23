@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://gameplay/logistics_wing/receiving/receiving_deck_presenter.gd" id="1_presenter"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_deck"]
+albedo_color = Color(0.31, 0.33, 0.35, 1)
+metallic = 0.2
+roughness = 0.82
+
+[sub_resource type="BoxMesh" id="BoxMesh_deck"]
+material = SubResource("StandardMaterial3D_deck")
+size = Vector3(3, 0.05, 2)
+
+[node name="ReceivingDeckPresenter" type="Node3D"]
+script = ExtResource("1_presenter")
+
+[node name="DeckVisual" type="MeshInstance3D" parent="."]
+position = Vector3(0, -0.025, 0)
+mesh = SubResource("BoxMesh_deck")
+
+[node name="LootRoot" type="Node3D" parent="."]

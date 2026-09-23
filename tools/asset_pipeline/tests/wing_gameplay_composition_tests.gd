@@ -7,6 +7,9 @@ const CARRIED_SCRIPT_PATH := "res://carried_items.gd"
 const HUD_SCRIPT_PATH := "res://carried_items_hud.gd"
 const ENVIRONMENT_PATH := "res://gameplay/logistics_wing/wing_environment.tscn"
 const DEVELOPMENT_SETUP_PATH := "res://gameplay/logistics_wing/development/seeded_storage_setup.tscn"
+const RECEIVING_RUNTIME_PATH := "res://gameplay/logistics_wing/receiving/receiving_runtime.tscn"
+const RECEIVING_RUNTIME_SCRIPT_PATH := "res://gameplay/logistics_wing/receiving/receiving_runtime.gd"
+const RECEIVING_PRESENTER_SCRIPT_PATH := "res://gameplay/logistics_wing/receiving/receiving_deck_presenter.gd"
 const CATALOGUE_PATH := "res://data/items/item_catalog.tres"
 const LIVE_PALETTE_ROUND_TRIP_PATH := "user://wing_live_palette_transform_test.tscn"
 const BLOCKED_ITEM_IDS: Array[StringName] = [
@@ -89,12 +92,14 @@ func _assert_composition(scene: Node, context: String) -> void:
 	var hud := scene.get_node_or_null("HUD/CarriedItemsHUD")
 	var environment := scene.get_node_or_null("Environment") as Node3D
 	var development_setup := scene.get_node_or_null("DevelopmentSetup") as Node3D
+	var receiving_runtime := scene.get_node_or_null("ReceivingRuntime") as Node3D
 
 	_check(player != null, "%s composition has full gameplay player" % context)
 	_check(carried != null, "%s composition has carried-items container" % context)
 	_check(hud != null, "%s composition has carried-items HUD" % context)
 	_check(environment != null, "%s composition has environment wrapper" % context)
 	_check(development_setup != null, "%s composition includes authored development setup" % context)
+	_check(receiving_runtime != null, "%s composition includes permanent Receiving runtime" % context)
 	_check(
 		scene.has_method("is_development_setup_active")
 		and bool(scene.call("is_development_setup_active")),
@@ -138,6 +143,11 @@ func _assert_composition(scene: Node, context: String) -> void:
 		player.get("enable_held_item_view") == true,
 		"%s held-item view remains enabled" % context
 	)
+	_check(
+		is_equal_approx(float(player.get("receiving_interaction_distance")), 3.0),
+		"%s Receiving reach is separately configured" % context
+	)
+	_assert_receiving_runtime_contract(receiving_runtime, scene, context)
 
 	var collision := player.get_node_or_null("CollisionShape3D") as CollisionShape3D
 	var camera := player.get_node_or_null("Camera3D") as Camera3D
@@ -222,6 +232,28 @@ func _assert_composition(scene: Node, context: String) -> void:
 		)
 		_assert_live_palette_coverage(development_setup, seed_hosts, context)
 		await _assert_live_palette_handling(scene, context)
+
+
+func _assert_receiving_runtime_contract(runtime: Node3D, scene: Node, context: String) -> void:
+	if runtime == null:
+		return
+	_check(runtime.scene_file_path == RECEIVING_RUNTIME_PATH, "%s uses the Receiving runtime scene" % context)
+	_check(runtime.get_script() != null and runtime.get_script().resource_path == RECEIVING_RUNTIME_SCRIPT_PATH, "%s runtime uses the intended script" % context)
+	_check(runtime.position.is_equal_approx(Vector3(-40.705, 0.82, 0.0)), "%s deck top is installed at the approved provisional bay position" % context)
+	var manager := runtime.get_node_or_null("ReceivingManager")
+	var presenter := runtime.get_node_or_null("ReceivingDeckPresenter") as Node3D
+	_check(manager != null, "%s runtime owns one ReceivingManager" % context)
+	_check(presenter != null, "%s runtime owns one deck presenter" % context)
+	if presenter == null:
+		return
+	_check(presenter.get_script() != null and presenter.get_script().resource_path == RECEIVING_PRESENTER_SCRIPT_PATH, "%s presenter uses deterministic deck script" % context)
+	_check(presenter.get_child_count() >= 1, "%s presenter retains its neutral deck fixture" % context)
+	_check((presenter.call("get_materialized_world_items") as Array).is_empty(), "%s normal launch creates no synthetic Receiving batch" % context)
+	var functional_surfaces := scene.call("get_functional_surfaces") as Array
+	for surface: Node in presenter.call("get_private_storage_surfaces") as Array:
+		_check(not functional_surfaces.has(surface), "%s private deck surface is excluded from functional storage" % context)
+	for forbidden_name: String in ["ReceivingGeometryComparison", "ReceivingPhysicsPileProof", "ReceivingComparisonA", "ReceivingComparisonB", "ReceivingComparisonC"]:
+		_check(scene.find_child(forbidden_name, true, false) == null, "%s omits historical %s" % [context, forbidden_name])
 
 
 func _assert_live_palette_coverage(
@@ -700,7 +732,9 @@ func _assert_fixture_contract(scene: Node, context: String) -> void:
 	)
 
 	var all_surfaces := scene.find_children("*", "StorageSurface", true, false)
-	_check(all_surfaces.size() == expected_surface_count, "%s adds StorageSurface nodes only for legacy fixtures and the intended rack" % context)
+	_check(all_surfaces.size() == expected_surface_count + 1, "%s adds exactly one private Receiving backend beyond functional storage" % context)
+	var nonfunctional_surfaces := all_surfaces.filter(func(surface: Node) -> bool: return not surfaces.has(surface))
+	_check(nonfunctional_surfaces.size() == 1 and not (nonfunctional_surfaces[0] as StorageSurface).is_player_storage_interaction_enabled(), "%s sole nonfunctional surface is the TAKE-only Receiving deck" % context)
 	for index: int in range(LEGACY_SURFACE_COUNT):
 		var legacy_surface := surfaces[index] as StorageSurface
 		_check(not bridge_rack.is_ancestor_of(legacy_surface), "%s preserves legacy surface ordering before appended ModularRack surfaces" % context)

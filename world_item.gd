@@ -30,6 +30,7 @@ var _storage_surface: Node = null
 var _storage_stack_id: String = ""
 var _storage_item_key: String = ""
 var _pickup_reach_kind: PickupReachKind = PickupReachKind.LOOSE
+var _pickup_interaction_enabled: bool = true
 
 
 func configure(host: Node3D, definition: ItemDefinition) -> void:
@@ -40,6 +41,7 @@ func configure(host: Node3D, definition: ItemDefinition) -> void:
 	_storage_stack_id = ""
 	_storage_item_key = ""
 	_pickup_reach_kind = PickupReachKind.LOOSE
+	_pickup_interaction_enabled = true
 	_build_interaction_area()
 
 
@@ -98,6 +100,7 @@ func _configure_existing_with_reach(
 	if _storage_stack_id.is_empty():
 		_storage_stack_id = _storage_item_key
 	_pickup_reach_kind = pickup_reach_kind
+	_pickup_interaction_enabled = true
 	_build_interaction_area()
 
 
@@ -119,6 +122,15 @@ func get_bulk() -> int:
 
 func get_pickup_reach_kind() -> PickupReachKind:
 	return _pickup_reach_kind
+
+
+func set_pickup_interaction_enabled(enabled: bool) -> void:
+	_pickup_interaction_enabled = enabled
+	_apply_pickup_interaction_state()
+
+
+func is_pickup_interaction_enabled() -> bool:
+	return _pickup_interaction_enabled
 
 
 
@@ -227,11 +239,10 @@ func _build_interaction_area() -> void:
 	_interaction_area.name = "PickupArea"
 	# Use a dedicated layer in addition to the normal environment layers. The
 	# player's interaction ray still queries bodies too, so walls can occlude loot.
-	_interaction_area.collision_layer = PICKUP_COLLISION_LAYER
 	_interaction_area.collision_mask = 0
 	_interaction_area.monitoring = false
-	_interaction_area.monitorable = true
 	add_child(_interaction_area)
+	_apply_pickup_interaction_state()
 
 	var shape_node: CollisionShape3D = CollisionShape3D.new()
 	shape_node.name = "PickupShape"
@@ -245,6 +256,13 @@ func _build_interaction_area() -> void:
 	shape_node.shape = box_shape
 	shape_node.position = _bounds.position + (_bounds.size * 0.5)
 	_interaction_area.add_child(shape_node)
+
+
+func _apply_pickup_interaction_state() -> void:
+	if _interaction_area == null or not is_instance_valid(_interaction_area):
+		return
+	_interaction_area.collision_layer = PICKUP_COLLISION_LAYER if _pickup_interaction_enabled else 0
+	_interaction_area.monitorable = _pickup_interaction_enabled
 
 
 func _scan_mesh_bounds(node: Node, accumulated_transform: Transform3D) -> void:
