@@ -178,6 +178,7 @@ func commit_deck_layout(
 
 	var validated: Dictionary = {}
 	var indices_by_group: Dictionary = {}
+	var anchor_by_group: Dictionary = {}
 	for key_value: Variant in placements_by_entry_id:
 		if typeof(key_value) != TYPE_STRING and typeof(key_value) != TYPE_STRING_NAME:
 			return false
@@ -220,6 +221,14 @@ func commit_deck_layout(
 			return false
 		var group_indices: Dictionary = indices_by_group.get(stack_group_id, {}) as Dictionary
 		if group_indices.has(stack_index):
+			return false
+		var anchor: Dictionary = anchor_by_group.get(stack_group_id, {}) as Dictionary
+		if anchor.is_empty():
+			anchor_by_group[stack_group_id] = {
+				"surface_id": surface_id,
+				"cell_origin": cell_origin,
+			}
+		elif anchor.get("surface_id") != surface_id or anchor.get("cell_origin") != cell_origin:
 			return false
 		group_indices[stack_index] = true
 		indices_by_group[stack_group_id] = group_indices
@@ -460,6 +469,49 @@ static func _has_consistent_preparation_snapshot(
 	for entry: LootBatchEntry in restored_entries:
 		if entry.remaining_in_batch and not entry.has_frozen_transform:
 			return false
+	return _has_consistent_deck_snapshot(restored_entries)
+
+
+static func _has_consistent_deck_snapshot(restored_entries: Array[LootBatchEntry]) -> bool:
+	var deck_entry_count := 0
+	var remaining_count := 0
+	var remaining_deck_count := 0
+	var indices_by_group: Dictionary = {}
+	var anchor_by_group: Dictionary = {}
+	for entry: LootBatchEntry in restored_entries:
+		if entry.remaining_in_batch:
+			remaining_count += 1
+		if not entry.has_deck_layout:
+			continue
+		deck_entry_count += 1
+		if entry.remaining_in_batch:
+			remaining_deck_count += 1
+		var group_id := entry.presentation_stack_group_id
+		var indices: Dictionary = indices_by_group.get(group_id, {}) as Dictionary
+		if indices.has(entry.presentation_stack_index):
+			return false
+		indices[entry.presentation_stack_index] = true
+		indices_by_group[group_id] = indices
+		var anchor: Dictionary = anchor_by_group.get(group_id, {}) as Dictionary
+		if anchor.is_empty():
+			anchor_by_group[group_id] = {
+				"surface_id": entry.presentation_surface_id,
+				"cell_origin": entry.presentation_cell_origin,
+			}
+		elif (
+			anchor.get("surface_id") != entry.presentation_surface_id
+			or anchor.get("cell_origin") != entry.presentation_cell_origin
+		):
+			return false
+	if deck_entry_count == 0:
+		return true
+	if remaining_deck_count != remaining_count:
+		return false
+	for group_value: Variant in indices_by_group.values():
+		var indices: Dictionary = group_value as Dictionary
+		for expected_index: int in range(indices.size()):
+			if not indices.has(expected_index):
+				return false
 	return true
 
 
