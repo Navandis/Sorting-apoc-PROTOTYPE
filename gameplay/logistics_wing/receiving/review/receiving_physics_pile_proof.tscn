@@ -1,0 +1,146 @@
+[gd_scene load_steps=15 format=3]
+
+[ext_resource type="Script" path="res://gameplay/logistics_wing/receiving/review/receiving_physics_pile_proof.gd" id="1_proof"]
+[ext_resource type="PackedScene" path="res://gameplay/player/gameplay_player.tscn" id="2_player"]
+[ext_resource type="PackedScene" path="res://gameplay/ui/carried_items_hud.tscn" id="3_hud"]
+
+[sub_resource type="Environment" id="Environment_proof"]
+background_mode = 1
+background_color = Color(0.045, 0.05, 0.058, 1)
+ambient_light_source = 3
+ambient_light_color = Color(0.78, 0.82, 0.86, 1)
+ambient_light_energy = 0.8
+tonemap_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="Material_floor"]
+albedo_color = Color(0.22, 0.24, 0.27, 1)
+metallic = 0.25
+roughness = 0.72
+
+[sub_resource type="StandardMaterial3D" id="Material_guide"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0.15, 0.7, 0.9, 0.10)
+
+[sub_resource type="BoxMesh" id="Mesh_floor"]
+material = SubResource("Material_floor")
+size = Vector3(3.6, 0.2, 4.8)
+
+[sub_resource type="BoxShape3D" id="Shape_floor"]
+size = Vector3(3.6, 0.2, 4.8)
+
+[sub_resource type="BoxMesh" id="Mesh_apron"]
+material = SubResource("Material_floor")
+size = Vector3(5, 0.2, 4.8)
+
+[sub_resource type="BoxShape3D" id="Shape_apron"]
+size = Vector3(5, 0.2, 4.8)
+
+[sub_resource type="BoxShape3D" id="Shape_x_wall"]
+size = Vector3(0.12, 24, 4.8)
+
+[sub_resource type="BoxShape3D" id="Shape_z_wall"]
+size = Vector3(3.6, 24, 0.12)
+
+[sub_resource type="BoxMesh" id="Mesh_envelope"]
+material = SubResource("Material_guide")
+size = Vector3(3.6, 1.5, 4.8)
+
+[sub_resource type="BoxMesh" id="Mesh_height_guide"]
+material = SubResource("Material_guide")
+size = Vector3(3.64, 0.025, 4.84)
+
+[node name="ReceivingPhysicsPileProof" type="Node3D"]
+script = ExtResource("1_proof")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_proof")
+
+[node name="KeyLight" type="DirectionalLight3D" parent="."]
+rotation_degrees = Vector3(-56, -28, 0)
+light_color = Color(1, 0.96, 0.9, 1)
+light_energy = 1.25
+shadow_enabled = true
+
+[node name="FillLight" type="OmniLight3D" parent="."]
+position = Vector3(2.5, 3.5, 0)
+light_color = Color(0.82, 0.9, 1, 1)
+light_energy = 2.2
+omni_range = 12.0
+shadow_enabled = true
+
+[node name="Containment" type="Node3D" parent="."]
+
+[node name="Floor" type="StaticBody3D" parent="Containment"]
+
+[node name="Mesh" type="MeshInstance3D" parent="Containment/Floor"]
+position = Vector3(0, -0.1, 0)
+mesh = SubResource("Mesh_floor")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Containment/Floor"]
+position = Vector3(0, -0.1, 0)
+shape = SubResource("Shape_floor")
+
+[node name="FrontWall" type="StaticBody3D" parent="Containment"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Containment/FrontWall"]
+position = Vector3(1.86, 12, 0)
+shape = SubResource("Shape_x_wall")
+
+[node name="RearWall" type="StaticBody3D" parent="Containment"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Containment/RearWall"]
+position = Vector3(-1.86, 12, 0)
+shape = SubResource("Shape_x_wall")
+
+[node name="LeftWall" type="StaticBody3D" parent="Containment"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Containment/LeftWall"]
+position = Vector3(0, 12, -2.46)
+shape = SubResource("Shape_z_wall")
+
+[node name="RightWall" type="StaticBody3D" parent="Containment"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Containment/RightWall"]
+position = Vector3(0, 12, 2.46)
+shape = SubResource("Shape_z_wall")
+
+[node name="ReviewEnvelope" type="MeshInstance3D" parent="Containment"]
+position = Vector3(0, 0.75, 0)
+mesh = SubResource("Mesh_envelope")
+
+[node name="HeightGuide" type="MeshInstance3D" parent="Containment"]
+position = Vector3(0, 1.5, 0)
+mesh = SubResource("Mesh_height_guide")
+
+[node name="ReviewApron" type="StaticBody3D" parent="."]
+
+[node name="Mesh" type="MeshInstance3D" parent="ReviewApron"]
+position = Vector3(4.36, -0.1, 0)
+mesh = SubResource("Mesh_apron")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ReviewApron"]
+position = Vector3(4.36, -0.1, 0)
+shape = SubResource("Shape_apron")
+
+[node name="PileItems" type="Node3D" parent="."]
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+position = Vector3(4.6, 0, 0)
+rotation_degrees = Vector3(0, -90, 0)
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="CarriedItemsHUD" parent="HUD" instance=ExtResource("3_hud")]
+
+[node name="ProofStatus" type="Label" parent="HUD"]
+offset_left = 18.0
+offset_top = 18.0
+offset_right = 900.0
+offset_bottom = 112.0
+theme_override_colors/font_color = Color(0.92, 0.96, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.9)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 18
+text = "REAL-ITEM PILE PROOF\nSettling..."
