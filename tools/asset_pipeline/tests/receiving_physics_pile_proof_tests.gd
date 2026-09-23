@@ -61,6 +61,9 @@ func _run() -> void:
 	await process_frame
 
 	_assert_manifests(proof)
+	_assert_cli_selection(proof)
+	_assert_runner_failure_classification(proof)
+	_assert_oob_boundaries(proof)
 	_assert_containment(proof)
 	await _assert_real_visual_hulls(proof)
 	_assert_spawn_separation(proof)
@@ -68,6 +71,63 @@ func _run() -> void:
 	_assert_isolation_from_gameplay()
 	proof.free()
 	_finish()
+
+
+func _assert_cli_selection(proof: Node) -> void:
+	proof.call(
+		"_parse_arguments",
+		PackedStringArray(["--pile-proof-batch=C", "--pile-proof-instance=3"])
+	)
+	_check(String(proof.get("_selected_batch")) == "C", "CLI selects the requested batch family")
+	_check(int(proof.get("_selected_instance")) == 3, "CLI selects the requested batch instance")
+
+
+func _assert_runner_failure_classification(proof: Node) -> void:
+	if not _check(
+		proof.has_method("is_successful_run_metrics"),
+		"batch runner exposes its technical success classification"
+	):
+		return
+	var settled := {
+		"status": "SETTLED",
+		"escaped_or_oob": [],
+		"invalid_items": [],
+	}
+	_check(proof.call("is_successful_run_metrics", settled), "clean settled metrics are successful")
+	var timed_out := settled.duplicate(true)
+	timed_out["status"] = "NOT SETTLED"
+	_check(not proof.call("is_successful_run_metrics", timed_out), "timeout metrics fail the batch runner")
+	var escaped := settled.duplicate(true)
+	escaped["escaped_or_oob"] = ["loot_000001"]
+	_check(not proof.call("is_successful_run_metrics", escaped), "OOB metrics fail the batch runner")
+	var invalid := settled.duplicate(true)
+	invalid["invalid_items"] = ["loot_000001: missing mesh"]
+	_check(not proof.call("is_successful_run_metrics", invalid), "invalid-item metrics fail the batch runner")
+
+
+func _assert_oob_boundaries(proof: Node) -> void:
+	if not _check(proof.has_method("is_bounds_out_of_bounds"), "proof exposes its OOB boundary rule"):
+		return
+	_check(
+		not proof.call("is_bounds_out_of_bounds", AABB(Vector3(-1.7, 0.0, -2.3), Vector3(3.4, 0.5, 4.6))),
+		"a hull wholly inside the usable floor is in bounds"
+	)
+	_check(
+		not proof.call("is_bounds_out_of_bounds", AABB(Vector3(-1.81, -0.01, -2.41), Vector3(3.62, 0.5, 4.82))),
+		"small contact-tolerance penetration is not reported as OOB"
+	)
+	_check(
+		proof.call("is_bounds_out_of_bounds", AABB(Vector3(-1.84, 0.0, -0.1), Vector3(0.2, 0.2, 0.2))),
+		"a partially escaped X extent is OOB"
+	)
+	_check(
+		proof.call("is_bounds_out_of_bounds", AABB(Vector3(-0.1, 0.0, 2.25), Vector3(0.2, 0.2, 0.2))),
+		"a partially escaped Z extent is OOB"
+	)
+	_check(
+		proof.call("is_bounds_out_of_bounds", AABB(Vector3(-0.1, -0.04, -0.1), Vector3(0.2, 0.2, 0.2))),
+		"a hull penetrating below the floor tolerance is OOB"
+	)
 
 
 func _assert_manifests(proof: Node) -> void:

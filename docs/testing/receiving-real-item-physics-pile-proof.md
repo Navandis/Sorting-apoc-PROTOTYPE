@@ -1,0 +1,270 @@
+# Receiving Stage B — Real-Item Physics Pile Proof Validation
+
+**Date:** 23 September 2026
+**Status:** IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN REVIEW PENDING
+
+## 1. Purpose and boundary
+
+This isolated proof tests whether actual eligible loot visuals, represented by one automatically generated convex hull each, settle into frozen irregular piles that are credible enough to continue the irregular-pile Receiving approach.
+
+It does not promote Case B as final geometry, pile preparation or presentation into production Receiving, support/exposure behavior, post-TAKE physics, persistence, lift travel, doors, or audio. No production presenter, pile system, or support system was added. The approved ordered TAKE-only deck remains a fallback only; it was not implemented here.
+
+Human review must choose one outcome after inspecting all twelve piles:
+
+```text
+CONTINUE IRREGULAR PILE
+DESIGN SMALL PILE-LOCAL SUPPORT/EXPOSURE RULE
+PIVOT TO ORDERED TAKE-ONLY DECK
+```
+
+No outcome has been selected by the developer.
+
+## 2. Proof configuration
+
+```text
+Branch: codex/receiving-abc-geometry
+Initial implementation checkpoint: b98d069083596459de3eb3ad22db9e6ebe0a34bb
+Proof-wide spawn correction checkpoint: 4024eb35abfebdc7c56e966c5813718d7d37ee03
+Proof scene: res://gameplay/logistics_wing/receiving/review/receiving_physics_pile_proof.tscn
+Proof script: res://gameplay/logistics_wing/receiving/review/receiving_physics_pile_proof.gd
+Focused test: res://tools/asset_pipeline/tests/receiving_physics_pile_proof_tests.gd
+
+Containment depth X: 3.60 m
+Containment width Z: 4.80 m
+Review height guide: 1.50 m
+
+Working live geometry correspondence: Case B only
+Case B recess: 0.45 m
+Case B live deck top Y: 0.82 m
+
+Common proof mass: 1.0 kg
+Initial minimum body bottom: 1.20 m
+Gap above current pile: 0.18 m
+Fixed spawn stagger: 0.25 s
+```
+
+The spawn method is deterministic. Each item receives seeded X/Z coordinates and a seeded three-axis rotation, then is placed just above the highest current hull with a fixed gap and stagger. Gravity and collision determine the final transform; final transforms are not hand-authored.
+
+## 3. Collision and interaction representation
+
+Each temporary body is built as follows:
+
+```text
+authoritative ItemDefinition.visual_scene
+→ recursively collect every MeshInstance3D surface vertex
+→ apply accumulated child transforms into rigid-body local space
+→ combine all points into one PackedVector3Array
+→ exactly one ConvexPolygonShape3D
+→ exactly one CollisionShape3D
+```
+
+The proof does not use the `WorldItem` pickup AABB for settling, per-submesh hulls, convex decomposition, concave/trimesh dynamic collision, hand-authored pile collision, or per-item physics tuning. An item with no usable mesh points is reported as invalid rather than silently receiving a box.
+
+After settling, every body has zeroed linear/angular velocity, static freeze mode, `freeze = true`, and physics collision layer/mask zero. It then receives the normal `WorldItem` component backed by an authoritative `ItemInstance`. The interactive proof uses the normal player and HUD and supports ordinary LMB TAKE. Removed items do not trigger re-settling.
+
+## 4. Locked manifests and seeds
+
+These exact fixtures were committed in `b98d069083596459de3eb3ad22db9e6ebe0a34bb`, before the first physics result was reviewed. They were not changed after physics review began.
+
+### A — Mixed General
+
+```text
+A1 seed 230901
+loot_000001, loot_000005, loot_000011, loot_000015, loot_000019, loot_000024, loot_000028, loot_000030, loot_000032, loot_000037, loot_000038, loot_000042
+
+A2 seed 230917
+loot_000002, loot_000006, loot_000012, loot_000013, loot_000016, loot_000020, loot_000025, loot_000029, loot_000031, loot_000033, loot_000039, loot_000040
+
+A3 seed 230933
+loot_000003, loot_000004, loot_000007, loot_000010, loot_000014, loot_000017, loot_000018, loot_000021, loot_000026, loot_000027, loot_000035, loot_000041
+```
+
+### B — Bulky-Dominant
+
+```text
+B1 seed 231101
+loot_000002, loot_000003, loot_000011, loot_000014, loot_000015, loot_000017, loot_000028, loot_000032, loot_000038, loot_000005, loot_000019, loot_000024
+
+B2 seed 231117
+loot_000002, loot_000012, loot_000014, loot_000016, loot_000018, loot_000028, loot_000033, loot_000040, loot_000042, loot_000001, loot_000020, loot_000026
+
+B3 seed 231133
+loot_000003, loot_000011, loot_000013, loot_000015, loot_000017, loot_000032, loot_000035, loot_000038, loot_000040, loot_000004, loot_000022, loot_000030
+```
+
+### C — Long / Irregular
+
+```text
+C1 seed 231301
+loot_000013, loot_000014, loot_000037, loot_000038, loot_000040, loot_000041, loot_000042, loot_000011, loot_000005, loot_000019, loot_000024, loot_000031
+
+C2 seed 231317
+loot_000013, loot_000037, loot_000038, loot_000040, loot_000041, loot_000042, loot_000033, loot_000015, loot_000006, loot_000020, loot_000027, loot_000029
+
+C3 seed 231333
+loot_000011, loot_000013, loot_000014, loot_000037, loot_000038, loot_000040, loot_000041, loot_000042, loot_000004, loot_000012, loot_000026, loot_000030
+```
+
+### D — Small / Medium Dense
+
+```text
+D1 seed 231501
+loot_000001, loot_000004, loot_000005, loot_000006, loot_000019, loot_000020, loot_000022, loot_000024, loot_000025, loot_000030, loot_000002, loot_000012
+
+D2 seed 231517
+loot_000001, loot_000005, loot_000007, loot_000008, loot_000009, loot_000019, loot_000021, loot_000023, loot_000026, loot_000027, loot_000028, loot_000033
+
+D3 seed 231533
+loot_000004, loot_000006, loot_000008, loot_000009, loot_000010, loot_000020, loot_000022, loot_000024, loot_000025, loot_000029, loot_000015, loot_000035
+```
+
+The twelve fixtures collectively exercise all forty currently eligible definitions. No entry was invalid, blocked, missing, or replaced.
+
+## 5. Settling and metric rules
+
+A run is settled when every body is sleeping or all bodies remain below both thresholds for the full stable interval:
+
+```text
+linear speed threshold: 0.04 m/s
+angular speed threshold: 0.08 rad/s
+stable interval: 0.90 s
+timeout: 15.0 s, including fixed spawn-stagger time
+OOB contact tolerance: 0.02 m beyond any usable X/Z edge or below the floor
+```
+
+At timeout the status is `NOT SETTLED`; the runner does not retry or conceal failure. A body is OOB if any part of its final hull AABB exceeds the usable X/Z envelope or penetrates below the floor by more than the 0.02 m contact tolerance. Metrics include batch, instance, seed, the twelve IDs, status, duration, maximum final hull height, escaped/out-of-bounds IDs, and invalid item reports.
+
+## 6. Automated verification
+
+Focused structural/integration test:
+
+```powershell
+$godot = 'D:\AI Tools\Godot-4.7-Codex\Godot_v4.7-stable_win64_console.exe'
+& $godot --headless --path . --script res://tools/asset_pipeline/tests/receiving_physics_pile_proof_tests.gd
+```
+
+Verified assertions cover the fixed manifests/seeds, CLI batch/instance selection, batch-runner failure classification, OOB boundary/tolerance behavior, all forty eligible visuals, one mesh-derived convex hull per item, absence of pickup components during settling, deterministic non-overlapping spawn placement, containment dimensions, freeze transition, authoritative `WorldItem` attachment, and ordinary TAKE behavior. Result: `PASS: receiving physics pile proof tests` with exit code 0.
+
+Project/editor scan:
+
+```powershell
+& $godot --headless --editor --path . --quit
+```
+
+Result: exit code 0 with no parse/import errors.
+
+Twelve-run evidence command:
+
+```powershell
+& $godot --headless --path . res://gameplay/logistics_wing/receiving/review/receiving_physics_pile_proof.tscn -- --pile-proof-run-all
+```
+
+Result: twelve `PILE_PROOF_METRIC` records, followed by `PILE_PROOF_ALL_COMPLETE runs=12 status=FAIL`, exit code 1. This is the intended aggregate result because the stricter final OOB accounting found boundary violations even though every run settled. The runner exits nonzero if any run is not settled, has an escaped/OOB body, or has an invalid item.
+
+Known unchanged diagnostic: Godot reports the existing non-fatal Windows root-certificate loading warning in headless/editor runs. It does not affect scene parsing, physics execution, or the focused assertions.
+
+## 7. Twelve-run technical metrics
+
+| Batch | Instance | Seed | Status | Settle time | Max height | Escaped/OOB | Invalid | Technical notes |
+| --- | ---: | ---: | --- | ---: | ---: | --- | --- | --- |
+| A | 1 | 230901 | SETTLED | 5.467 s | 0.313 m | loot_000001, loot_000030, loot_000042 | none | strict boundary rerun |
+| A | 2 | 230917 | SETTLED | 5.633 s | 0.488 m | loot_000006, loot_000039 | none | strict boundary rerun |
+| A | 3 | 230933 | SETTLED | 6.850 s | 0.400 m | loot_000041 | none | strict boundary rerun |
+| B | 1 | 231101 | SETTLED | 5.717 s | 0.418 m | loot_000024 | none | strict boundary rerun |
+| B | 2 | 231117 | SETTLED | 4.917 s | 0.497 m | loot_000040, loot_000042 | none | strict boundary rerun |
+| B | 3 | 231133 | SETTLED | 5.783 s | 0.358 m | none | none | strict boundary rerun |
+| C | 1 | 231301 | SETTLED | 5.317 s | 0.398 m | loot_000013, loot_000038, loot_000040, loot_000042, loot_000011 | none | strict boundary rerun |
+| C | 2 | 231317 | SETTLED | 5.983 s | 0.216 m | loot_000041, loot_000042 | none | strict boundary rerun |
+| C | 3 | 231333 | SETTLED | 7.150 s | 0.341 m | loot_000013, loot_000041 | none | strict boundary rerun |
+| D | 1 | 231501 | SETTLED | 5.750 s | 0.224 m | loot_000004 | none | strict boundary rerun |
+| D | 2 | 231517 | SETTLED | 6.233 s | 0.235 m | loot_000001 | none | strict boundary rerun |
+| D | 3 | 231533 | SETTLED | 7.417 s | 0.193 m | none | none | strict boundary rerun |
+
+All twelve final evidence runs settled within the fixed timeout and had zero invalid items. Ten of twelve runs reported at least one OOB body; twenty run-item instances crossed a usable boundary beyond the 0.02 m tolerance. Spot inspection of A1 confirmed lower hull extents about 0.021–0.053 m below the floor, rather than side-wall escape. Human review should treat buried/sunk thin items as part of the evidence, not as a clean technical pass.
+
+### OOB-accounting correction during consolidated review
+
+The initial OOB predicate only reported a hull after its entire AABB had left the X/Z envelope or fallen entirely below the floor. That definition produced false-clean `none` values for partially protruding hulls. Consolidated code review caught the weakness. The predicate now reports any hull extent beyond X/Z or below the floor by more than the documented 0.02 m contact tolerance, and focused boundary tests cover in-bounds, tolerated contact, partial X/Z escape, and below-floor penetration. The table above is the stricter rerun and supersedes the earlier zero-OOB output.
+
+### Proof-wide correction before final evidence
+
+The first preflight used simultaneous bodies in a tall vertical column. Five runs timed out with out-of-bounds bodies because the artificial initial drop height produced high-impact tunnelling. This was an invalidating setup defect rather than evidence about ordinary pile settling.
+
+The smallest proof-wide correction was applied in `4024eb35abfebdc7c56e966c5813718d7d37ee03`: fixed 0.25-second spawning, with each new hull placed 0.18 m above the current pile and at least 1.20 m above the floor. The exact manifests, seeds, seeded rotations, and seeded X/Z coordinates were unchanged. The table above contains only the clean evidence pass after that correction; the failed preflight was not relabelled as successful physics evidence.
+
+## 8. Human launch commands
+
+Run from the repository root:
+
+```powershell
+$godot = 'D:\AI Tools\Godot-4.7-Codex\Godot_v4.7-stable_win64_console.exe'
+
+& $godot --path . --rendering-method gl_compatibility res://gameplay/logistics_wing/receiving/review/receiving_physics_pile_proof.tscn -- --pile-proof-batch=A --pile-proof-instance=1
+```
+
+Repeat with each selector:
+
+```text
+A/1  A/2  A/3
+B/1  B/2  B/3
+C/1  C/2  C/3
+D/1  D/2  D/3
+```
+
+The status overlay reports the selected run, seed, settle status/duration, maximum height, and OOB count. Wait for the frozen-review status before performing TAKE checks.
+
+## 9. Human review matrix
+
+Review all twelve frozen piles. For each one, inspect the initial pile and, where possible, use normal LMB TAKE on one exposed top item, one middle item, and one visible low/supporting large item. Record the post-removal condition without expecting the pile to re-settle.
+
+| Run | Initial pile credibility | Gap/void severity | Precarious balancing | Buried/unreachable items | Gross hull artifacts | Top TAKE | Middle TAKE | Low/supporting TAKE | Floating remnants: none/minor/obvious/severe | Notes |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| A1 | | | | | | | | | | |
+| A2 | | | | | | | | | | |
+| A3 | | | | | | | | | | |
+| B1 | | | | | | | | | | |
+| B2 | | | | | | | | | | |
+| B3 | | | | | | | | | | |
+| C1 | | | | | | | | | | |
+| C2 | | | | | | | | | | |
+| C3 | | | | | | | | | | |
+| D1 | | | | | | | | | | |
+| D2 | | | | | | | | | | |
+| D3 | | | | | | | | | | |
+
+Batch-family summary:
+
+| Family | Overall pile quality | Settling reliability | Frozen-removal concerns |
+| --- | --- | --- | --- |
+| A — Mixed General | | | |
+| B — Bulky-Dominant | | | |
+| C — Long / Irregular | | | |
+| D — Small / Medium Dense | | | |
+
+## 10. Human decision
+
+Choose exactly one after completing the matrix:
+
+```text
+CONTINUE IRREGULAR PILE
+```
+
+or:
+
+```text
+DESIGN SMALL PILE-LOCAL SUPPORT/EXPOSURE RULE
+```
+
+or:
+
+```text
+PIVOT TO ORDERED TAKE-ONLY DECK
+```
+
+Decision and notes:
+
+```text
+HUMAN REVIEW PENDING
+```
+
+If irregular piles continue, use this evidence to decide whether a small pile-local rule is actually needed. If the result is a pivot, preserve the approved deterministic TAKE-only deck boundary rather than expanding this proof into item-specific collision or support machinery.

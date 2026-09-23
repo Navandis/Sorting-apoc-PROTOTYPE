@@ -15,6 +15,7 @@ const STABLE_INTERVAL_S := 0.90
 const SETTLE_TIMEOUT_S := 15.0
 const LINEAR_SPEED_THRESHOLD_MPS := 0.04
 const ANGULAR_SPEED_THRESHOLD_RPS := 0.08
+const OOB_CONTACT_TOLERANCE_M := 0.02
 const INITIAL_VERTICAL_GAP_M := 0.18
 const INITIAL_BOTTOM_Y_M := 1.20
 const SPAWN_STAGGER_S := 0.25
@@ -185,18 +186,31 @@ func _start_proof() -> void:
 		var run_keys := MANIFEST_ITEM_IDS.keys()
 		run_keys.sort()
 		var completed := 0
+		var all_successful := true
 		for value: Variant in run_keys:
 			var metrics := await _run_manifest(String(value), false)
 			print("PILE_PROOF_METRIC %s" % JSON.stringify(metrics))
 			completed += 1
-		print("PILE_PROOF_ALL_COMPLETE runs=%d" % completed)
-		get_tree().quit(0)
+			all_successful = all_successful and is_successful_run_metrics(metrics)
+		print(
+			"PILE_PROOF_ALL_COMPLETE runs=%d status=%s"
+			% [completed, "PASS" if all_successful else "FAIL"]
+		)
+		get_tree().quit(0 if all_successful else 1)
 		return
 
 	var run_key := "%s%d" % [_selected_batch, _selected_instance]
 	var metrics := await _run_manifest(run_key, true)
 	print("PILE_PROOF_METRIC %s" % JSON.stringify(metrics))
 	_update_status_label(metrics)
+
+
+func is_successful_run_metrics(metrics: Dictionary) -> bool:
+	return (
+		String(metrics.get("status", "")) == "SETTLED"
+		and (metrics.get("escaped_or_oob", []) as Array).is_empty()
+		and (metrics.get("invalid_items", []) as Array).is_empty()
+	)
 
 
 func _run_manifest(run_key: String, interactive: bool) -> Dictionary:
@@ -336,15 +350,19 @@ func _out_of_bounds_bodies(bodies: Array[RigidBody3D]) -> PackedStringArray:
 	for body: RigidBody3D in bodies:
 		var hull := (body.get_node("PhysicsHull") as CollisionShape3D).shape as ConvexPolygonShape3D
 		var bounds := _points_aabb(hull.points, body.transform)
-		if (
-			bounds.end.x < -PROOF_DEPTH_M * 0.5
-			or bounds.position.x > PROOF_DEPTH_M * 0.5
-			or bounds.end.z < -PROOF_WIDTH_M * 0.5
-			or bounds.position.z > PROOF_WIDTH_M * 0.5
-			or bounds.end.y < -0.05
-		):
+		if is_bounds_out_of_bounds(bounds):
 			escaped.append(String(body.get_meta(&"pile_proof_item_id", body.name)))
 	return escaped
+
+
+func is_bounds_out_of_bounds(bounds: AABB) -> bool:
+	return (
+		bounds.position.x < -PROOF_DEPTH_M * 0.5 - OOB_CONTACT_TOLERANCE_M
+		or bounds.end.x > PROOF_DEPTH_M * 0.5 + OOB_CONTACT_TOLERANCE_M
+		or bounds.position.z < -PROOF_WIDTH_M * 0.5 - OOB_CONTACT_TOLERANCE_M
+		or bounds.end.z > PROOF_WIDTH_M * 0.5 + OOB_CONTACT_TOLERANCE_M
+		or bounds.position.y < -OOB_CONTACT_TOLERANCE_M
+	)
 
 
 func _clear_pile_items() -> void:
