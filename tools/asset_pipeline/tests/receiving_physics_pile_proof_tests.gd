@@ -63,6 +63,7 @@ func _run() -> void:
 	_assert_manifests(proof)
 	_assert_containment(proof)
 	await _assert_real_visual_hulls(proof)
+	_assert_spawn_separation(proof)
 	await _assert_freeze_and_ordinary_take(proof)
 	_assert_isolation_from_gameplay()
 	proof.free()
@@ -142,6 +143,26 @@ func _assert_real_visual_hulls(proof: Node) -> void:
 	await process_frame
 
 
+func _assert_spawn_separation(proof: Node) -> void:
+	if not _check(proof.has_method("place_body_above_current_pile"), "proof provides deterministic non-overlapping spawn placement"):
+		return
+	var catalog := load(CATALOG_PATH) as ItemCatalog
+	var first := proof.call("create_temporary_body", catalog.get_definition_by_id(&"loot_000011"), "SpawnFirst") as RigidBody3D
+	var second := proof.call("create_temporary_body", catalog.get_definition_by_id(&"loot_000038"), "SpawnSecond") as RigidBody3D
+	if not _check(first != null and second != null, "spawn-separation fixtures build from real bulky visuals"):
+		return
+	proof.get_node("PileItems").add_child(first)
+	proof.get_node("PileItems").add_child(second)
+	proof.call("place_body_above_current_pile", first, [], Vector2.ZERO, Basis.IDENTITY)
+	proof.call("place_body_above_current_pile", second, [first], Vector2.ZERO, Basis.from_euler(Vector3(0.4, -0.8, 0.25)))
+	var first_bounds := _body_hull_aabb(first)
+	var second_bounds := _body_hull_aabb(second)
+	_check(not first_bounds.intersects(second_bounds), "successive initial spawn hulls do not overlap")
+	_check(second_bounds.position.y > first_bounds.end.y, "successive spawn starts above the current pile with a gap")
+	first.free()
+	second.free()
+
+
 func _assert_freeze_and_ordinary_take(proof: Node) -> void:
 	var catalog := load(CATALOG_PATH) as ItemCatalog
 	var definition := catalog.get_definition_by_id(&"loot_000015")
@@ -175,6 +196,15 @@ func _assert_freeze_and_ordinary_take(proof: Node) -> void:
 		_check(world_item.pickup_into(carried), "frozen proof item supports ordinary TAKE")
 		_check(carried.get_item_count() == 1, "ordinary TAKE moves the proof item into carried state")
 	await process_frame
+
+
+func _body_hull_aabb(body: RigidBody3D) -> AABB:
+	var hull := (body.get_node("PhysicsHull") as CollisionShape3D).shape as ConvexPolygonShape3D
+	var first := body.transform * hull.points[0]
+	var bounds := AABB(first, Vector3.ZERO)
+	for index: int in range(1, hull.points.size()):
+		bounds = bounds.expand(body.transform * hull.points[index])
+	return bounds
 
 
 func _assert_isolation_from_gameplay() -> void:

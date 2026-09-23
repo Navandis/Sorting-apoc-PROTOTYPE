@@ -16,7 +16,8 @@ const SETTLE_TIMEOUT_S := 15.0
 const LINEAR_SPEED_THRESHOLD_MPS := 0.04
 const ANGULAR_SPEED_THRESHOLD_RPS := 0.08
 const INITIAL_VERTICAL_GAP_M := 0.18
-const INITIAL_BOTTOM_Y_M := 2.0
+const INITIAL_BOTTOM_Y_M := 1.20
+const SPAWN_STAGGER_S := 0.25
 const RUN_ALL_FLAG := "--pile-proof-run-all"
 const BATCH_ARGUMENT_PREFIX := "--pile-proof-batch="
 const INSTANCE_ARGUMENT_PREFIX := "--pile-proof-instance="
@@ -152,6 +153,32 @@ func freeze_bodies_for_review(bodies: Array, run_key: String) -> void:
 		world_item.configure_existing(body, item_instance)
 
 
+func place_body_above_current_pile(
+	body: RigidBody3D,
+	existing_bodies: Array,
+	horizontal_position: Vector2,
+	rotation_basis: Basis
+) -> Transform3D:
+	var hull := (body.get_node("PhysicsHull") as CollisionShape3D).shape as ConvexPolygonShape3D
+	var rotated_bounds := _points_aabb(hull.points, Transform3D(rotation_basis, Vector3.ZERO))
+	var current_maximum_y := 0.0
+	for value: Variant in existing_bodies:
+		var existing := value as RigidBody3D
+		if existing == null or not is_instance_valid(existing):
+			continue
+		current_maximum_y = maxf(current_maximum_y, _body_hull_aabb(existing).end.y)
+	var spawn_bottom_y := maxf(INITIAL_BOTTOM_Y_M, current_maximum_y + INITIAL_VERTICAL_GAP_M)
+	body.transform = Transform3D(
+		rotation_basis,
+		Vector3(
+			horizontal_position.x,
+			spawn_bottom_y - rotated_bounds.position.y,
+			horizontal_position.y
+		)
+	)
+	return body.transform
+
+
 func _start_proof() -> void:
 	await get_tree().physics_frame
 	if _run_all:
@@ -184,8 +211,10 @@ func _run_manifest(run_key: String, interactive: bool) -> Dictionary:
 	var invalid_items := PackedStringArray()
 	var generator := RandomNumberGenerator.new()
 	generator.seed = int(manifest["seed"])
-	var next_bottom_y := INITIAL_BOTTOM_Y_M
 	var items := manifest["items"] as PackedStringArray
+	var simulation_elapsed := 0.0
+	var step := 1.0 / float(Engine.physics_ticks_per_second)
+	var stagger_frames := maxi(1, ceili(SPAWN_STAGGER_S * float(Engine.physics_ticks_per_second)))
 
 	for index: int in range(items.size()):
 		var item_id := StringName(items[index])
@@ -211,21 +240,17 @@ func _run_manifest(run_key: String, interactive: bool) -> Dictionary:
 		var z_max := PROOF_WIDTH_M * 0.5 - rotated_bounds.end.z - 0.04
 		var x := clampf(generator.randf_range(-0.58, 0.58), x_min, x_max) if x_min <= x_max else 0.0
 		var z := clampf(generator.randf_range(-0.82, 0.82), z_min, z_max) if z_min <= z_max else 0.0
-		body.transform = Transform3D(
-			rotation_basis,
-			Vector3(x, next_bottom_y - rotated_bounds.position.y, z)
-		)
-		next_bottom_y += rotated_bounds.size.y + INITIAL_VERTICAL_GAP_M
+		place_body_above_current_pile(body, bodies, Vector2(x, z), rotation_basis)
 		bodies.append(body)
+		for frame_index: int in range(stagger_frames):
+			await get_tree().physics_frame
+			simulation_elapsed += step
 
-	await get_tree().physics_frame
-	var elapsed := 0.0
 	var stable_elapsed := 0.0
-	var step := 1.0 / float(Engine.physics_ticks_per_second)
 	var settled := false
-	while elapsed < SETTLE_TIMEOUT_S:
+	while simulation_elapsed < SETTLE_TIMEOUT_S:
 		await get_tree().physics_frame
-		elapsed += step
+		simulation_elapsed += step
 		if _all_bodies_stable(bodies):
 			stable_elapsed += step
 			if stable_elapsed >= STABLE_INTERVAL_S:
@@ -246,7 +271,7 @@ func _run_manifest(run_key: String, interactive: bool) -> Dictionary:
 		"seed": manifest["seed"],
 		"items": Array(items),
 		"status": "SETTLED" if settled else "NOT SETTLED",
-		"settle_duration_s": snappedf(elapsed, 0.001),
+		"settle_duration_s": snappedf(simulation_elapsed, 0.001),
 		"max_height_m": snappedf(max_height, 0.001),
 		"escaped_or_oob": Array(escaped),
 		"invalid_items": Array(invalid_items),
@@ -299,6 +324,11 @@ func _maximum_pile_height(bodies: Array[RigidBody3D]) -> float:
 		for point: Vector3 in hull.points:
 			maximum = maxf(maximum, (body.transform * point).y)
 	return maximum
+
+
+func _body_hull_aabb(body: RigidBody3D) -> AABB:
+	var hull := (body.get_node("PhysicsHull") as CollisionShape3D).shape as ConvexPolygonShape3D
+	return _points_aabb(hull.points, body.transform)
 
 
 func _out_of_bounds_bodies(bodies: Array[RigidBody3D]) -> PackedStringArray:
