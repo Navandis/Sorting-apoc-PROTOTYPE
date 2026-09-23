@@ -6,6 +6,11 @@ const GAMEPLAY_PATH := "res://gameplay/logistics_wing/wing_gameplay.tscn"
 const CATALOG_PATH := "res://data/items/item_catalog.tres"
 const BLOCKED_IDS: Array[StringName] = [&"loot_000034", &"loot_000036"]
 const EXPECTED_CONTAINMENT := Vector3(3.6, 1.5, 4.8)
+const EXPECTED_APRON_TOP_Y := 0.0
+const EXPECTED_CASE_B_DECK_TOP_Y := 0.82
+const EXPECTED_BARRIER_TOP_Y := 1.27
+const EXPECTED_PRODUCTION_TAKE_REACH_M := 1.4
+const EXPECTED_PROOF_REVIEW_REACH_M := 1.8
 const EXPECTED_SEEDS := {
 	"A1": 230901,
 	"A2": 230917,
@@ -67,7 +72,7 @@ func _run() -> void:
 	_assert_containment(proof)
 	await _assert_real_visual_hulls(proof)
 	_assert_spawn_separation(proof)
-	await _assert_freeze_and_ordinary_take(proof)
+	await _assert_human_review_presentation_and_take(proof)
 	_assert_isolation_from_gameplay()
 	proof.free()
 	_finish()
@@ -163,6 +168,14 @@ func _assert_manifests(proof: Node) -> void:
 func _assert_containment(proof: Node3D) -> void:
 	var dimensions := proof.call("get_proof_dimensions") as Vector3
 	_check(dimensions.is_equal_approx(EXPECTED_CONTAINMENT), "proof exposes the Case-B 3.60 by 1.50 by 4.80 envelope")
+	var containment := proof.get_node_or_null("Containment") as Node3D
+	var pile_items := proof.get_node_or_null("PileItems") as Node3D
+	_check(containment != null and pile_items != null, "proof owns separate containment and pile preparation roots")
+	if containment != null and pile_items != null:
+		_check(
+			is_zero_approx(containment.position.y) and is_zero_approx(pile_items.position.y),
+			"containment and pile items start in the local Y=0 preparation frame"
+		)
 	var floor_shape_node := proof.get_node_or_null("Containment/Floor/CollisionShape3D") as CollisionShape3D
 	_check(floor_shape_node != null, "proof has a static containment floor")
 	if floor_shape_node != null:
@@ -223,13 +236,19 @@ func _assert_spawn_separation(proof: Node) -> void:
 	second.free()
 
 
-func _assert_freeze_and_ordinary_take(proof: Node) -> void:
+func _assert_human_review_presentation_and_take(proof: Node) -> void:
+	if not _check(
+		proof.has_method("enter_human_review_presentation"),
+		"proof exposes a post-freeze Case-B human presentation transition"
+	):
+		return
 	var catalog := load(CATALOG_PATH) as ItemCatalog
 	var definition := catalog.get_definition_by_id(&"loot_000015")
 	var body := proof.call("create_temporary_body", definition, "FreezeTakeTest") as RigidBody3D
 	if not _check(body != null, "freeze/TAKE fixture builds from a real Fuel Canister visual"):
 		return
 	proof.get_node("PileItems").add_child(body)
+	body.position = Vector3(0.55, 0.45, 0.0)
 	body.collision_layer = 1
 	body.collision_mask = 1
 	body.linear_velocity = Vector3(1, 2, 3)
@@ -244,18 +263,81 @@ func _assert_freeze_and_ordinary_take(proof: Node) -> void:
 	_check(world_item != null, "frozen host receives the ordinary WorldItem component")
 	if world_item != null:
 		_check(world_item.get_definition() == definition, "WorldItem keeps the authoritative ItemDefinition")
-		var player_carried := proof.get_node_or_null("Player/CarriedItems")
+		var preserved_instance := world_item.get_item_instance()
+		var player := proof.get_node_or_null("Player") as CharacterBody3D
+		_check(player != null, "proof includes the normal gameplay player")
+		if player == null:
+			return
+		var player_carried := player.get_node_or_null("CarriedItems") as CarriedItems
 		_check(player_carried != null, "proof includes the normal player carried-items container")
 		var hud := proof.get_node_or_null("HUD/CarriedItemsHUD")
 		_check(hud != null, "proof includes the normal carried-items HUD")
-		# Exercise the same production CarriedItems class without renderer-bound
-		# HUD/held-view listeners; the scene assertions above separately prove that
-		# the interactive proof includes the normal player and HUD.
-		var carried := CarriedItems.new()
-		proof.add_child(carried)
-		_check(world_item.pickup_into(carried), "frozen proof item supports ordinary TAKE")
-		_check(carried.get_item_count() == 1, "ordinary TAKE moves the proof item into carried state")
-	await process_frame
+		_check(
+			is_equal_approx(float(player.get("interaction_distance")), EXPECTED_PROOF_REVIEW_REACH_M),
+			"proof uses only the bounded review-scene TAKE reach"
+		)
+		_check(not bool(player.get("enable_held_item_view")), "proof disables only the held 3D item renderer")
+
+		proof.call("enter_human_review_presentation", [body])
+		await physics_frame
+		await physics_frame
+
+		var apron_mesh := proof.get_node_or_null("ApronFloor/Mesh") as MeshInstance3D
+		var deck_shape := proof.get_node_or_null("Containment/Floor/CollisionShape3D") as CollisionShape3D
+		var barrier_mesh := proof.get_node_or_null("BarrierReference") as MeshInstance3D
+		_check(
+			proof.get_node_or_null("BarrierReference/CollisionShape3D") == null,
+			"barrier reference is visual-only and cannot block the pickup ray"
+		)
+		_check(is_equal_approx(_mesh_top_y(apron_mesh), EXPECTED_APRON_TOP_Y), "human review apron top is Y=0.00")
+		_check(is_equal_approx(_shape_top_y(deck_shape), EXPECTED_CASE_B_DECK_TOP_Y), "human review pile deck top is Y=0.82")
+		_check(is_equal_approx(_mesh_top_y(barrier_mesh), EXPECTED_BARRIER_TOP_Y), "human review barrier reference top is Y=1.27")
+		_check(
+			is_equal_approx(_mesh_top_y(barrier_mesh) - _shape_top_y(deck_shape), 0.45),
+			"human review shows the Case-B 0.45 m barrier-to-deck drop"
+		)
+
+		var camera := player.get_node_or_null("Camera3D") as Camera3D
+		var pickup_shape := body.get_node_or_null("WorldItem/PickupArea/PickupShape") as CollisionShape3D
+		_check(camera != null and pickup_shape != null, "normal camera and frozen PickupArea exist")
+		if camera == null or pickup_shape == null:
+			return
+		var pickup_query := PhysicsRayQueryParameters3D.new()
+		pickup_query.from = camera.global_position
+		pickup_query.to = camera.global_position + (-camera.global_transform.basis.z.normalized() * EXPECTED_PROOF_REVIEW_REACH_M)
+		pickup_query.collide_with_areas = true
+		pickup_query.collide_with_bodies = false
+		pickup_query.collision_mask = WorldItem.PICKUP_COLLISION_LAYER
+		pickup_query.exclude = [player.get_rid()]
+		var pickup_hit: Dictionary = proof.get_world_3d().direct_space_state.intersect_ray(pickup_query)
+		_check(
+			not pickup_hit.is_empty()
+			and camera.global_position.distance_to(pickup_hit.get("position", camera.global_position)) <= EXPECTED_PROOF_REVIEW_REACH_M,
+			"frozen review target is within the bounded proof-review reach"
+		)
+		_check(
+			player.call("_get_looked_at_world_item") == world_item,
+			"production camera ray returns the frozen proof WorldItem"
+		)
+		player.call("_attempt_pickup_click")
+		_check(player_carried.get_selected_item() == preserved_instance, "normal TAKE preserves the exact ItemInstance")
+		await process_frame
+		_check(not is_instance_valid(body), "normal TAKE removes the frozen host through the ordinary path")
+
+
+func _mesh_top_y(mesh_instance: MeshInstance3D) -> float:
+	if mesh_instance == null or mesh_instance.mesh == null:
+		return -INF
+	return (mesh_instance.global_transform * mesh_instance.mesh.get_aabb()).end.y
+
+
+func _shape_top_y(shape_node: CollisionShape3D) -> float:
+	if shape_node == null or shape_node.shape == null:
+		return -INF
+	var debug_mesh := shape_node.shape.get_debug_mesh()
+	if debug_mesh == null:
+		return -INF
+	return (shape_node.global_transform * debug_mesh.get_aabb()).end.y
 
 
 func _body_hull_aabb(body: RigidBody3D) -> AABB:
@@ -274,6 +356,12 @@ func _assert_isolation_from_gameplay() -> void:
 	var gameplay := packed.instantiate()
 	_check(gameplay.find_children("*", "ReceivingPhysicsPileProof", true, false).is_empty(), "normal gameplay has no production pile proof node")
 	_check(not _instances_scene(gameplay, PROOF_SCENE_PATH), "normal gameplay does not instance the isolated proof scene")
+	var production_player := gameplay.get_node_or_null("Player")
+	_check(
+		production_player != null
+		and is_equal_approx(float(production_player.get("interaction_distance")), EXPECTED_PRODUCTION_TAKE_REACH_M),
+		"normal gameplay keeps the production 1.4 m loose-item TAKE reach"
+	)
 	gameplay.free()
 
 

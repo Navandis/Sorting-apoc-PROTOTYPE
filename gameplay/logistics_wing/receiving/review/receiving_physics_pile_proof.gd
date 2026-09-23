@@ -19,6 +19,7 @@ const OOB_CONTACT_TOLERANCE_M := 0.02
 const INITIAL_VERTICAL_GAP_M := 0.18
 const INITIAL_BOTTOM_Y_M := 1.20
 const SPAWN_STAGGER_S := 0.25
+const REVIEW_PLAYER_X_M := 2.18
 const RUN_ALL_FLAG := "--pile-proof-run-all"
 const BATCH_ARGUMENT_PREFIX := "--pile-proof-batch="
 const INSTANCE_ARGUMENT_PREFIX := "--pile-proof-instance="
@@ -154,6 +155,31 @@ func freeze_bodies_for_review(bodies: Array, run_key: String) -> void:
 		world_item.configure_existing(body, item_instance)
 
 
+func enter_human_review_presentation(bodies: Array) -> void:
+	var containment := get_node_or_null("Containment") as Node3D
+	var pile_items := get_node_or_null("PileItems") as Node3D
+	if containment == null or pile_items == null:
+		return
+	containment.position.y = CASE_B_LIVE_DECK_TOP_Y
+	pile_items.position.y = CASE_B_LIVE_DECK_TOP_Y
+	_set_front_wall_enabled(false)
+
+	var player := get_node_or_null("Player") as CharacterBody3D
+	if player == null:
+		return
+	var camera := player.get_node_or_null("Camera3D") as Camera3D
+	if camera == null:
+		return
+	var target_point := _nearest_review_target_point(bodies, camera)
+	if not is_finite(target_point.x):
+		return
+
+	player.global_position = Vector3(REVIEW_PLAYER_X_M, 0.0, target_point.z)
+	player.rotation = Vector3(0.0, -PI * 0.5, 0.0)
+	camera.look_at(target_point, Vector3.UP)
+	player.set("_pitch", camera.rotation.x)
+
+
 func place_body_above_current_pile(
 	body: RigidBody3D,
 	existing_bodies: Array,
@@ -214,6 +240,7 @@ func is_successful_run_metrics(metrics: Dictionary) -> bool:
 
 
 func _run_manifest(run_key: String, interactive: bool) -> Dictionary:
+	_set_preparation_frame()
 	_clear_pile_items()
 	_set_front_wall_enabled(true)
 	await get_tree().physics_frame
@@ -276,7 +303,10 @@ func _run_manifest(run_key: String, interactive: bool) -> Dictionary:
 	var max_height := _maximum_pile_height(bodies)
 	var escaped := _out_of_bounds_bodies(bodies)
 	freeze_bodies_for_review(bodies, run_key)
-	_set_front_wall_enabled(not interactive)
+	if interactive:
+		enter_human_review_presentation(bodies)
+	else:
+		_set_front_wall_enabled(true)
 
 	return {
 		"run": run_key,
@@ -345,6 +375,27 @@ func _body_hull_aabb(body: RigidBody3D) -> AABB:
 	return _points_aabb(hull.points, body.transform)
 
 
+func _nearest_review_target_point(bodies: Array, camera: Camera3D) -> Vector3:
+	var nearest_point := Vector3(INF, INF, INF)
+	var nearest_distance := INF
+	for value: Variant in bodies:
+		var body := value as RigidBody3D
+		if body == null or not is_instance_valid(body):
+			continue
+		var pickup_shape := body.get_node_or_null("WorldItem/PickupArea/PickupShape") as CollisionShape3D
+		if pickup_shape == null:
+			continue
+		var target_point := pickup_shape.global_position
+		var distance_from_review_eye := Vector2(
+			REVIEW_PLAYER_X_M - target_point.x,
+			camera.position.y - target_point.y
+		).length()
+		if distance_from_review_eye < nearest_distance:
+			nearest_distance = distance_from_review_eye
+			nearest_point = target_point
+	return nearest_point
+
+
 func _out_of_bounds_bodies(bodies: Array[RigidBody3D]) -> PackedStringArray:
 	var escaped := PackedStringArray()
 	for body: RigidBody3D in bodies:
@@ -374,6 +425,15 @@ func _clear_pile_items() -> void:
 		child.free()
 
 
+func _set_preparation_frame() -> void:
+	var containment := get_node_or_null("Containment") as Node3D
+	var pile_items := get_node_or_null("PileItems") as Node3D
+	if containment != null:
+		containment.position.y = 0.0
+	if pile_items != null:
+		pile_items.position.y = 0.0
+
+
 func _set_front_wall_enabled(enabled: bool) -> void:
 	var front_shape := get_node_or_null("Containment/FrontWall/CollisionShape3D") as CollisionShape3D
 	if front_shape != null:
@@ -399,7 +459,7 @@ func _update_status_label(metrics: Dictionary) -> void:
 		return
 	label.text = (
 		"REAL-ITEM PILE PROOF  %s   seed %d\n%s in %.3f s   max height %.3f m   OOB %d\n"
-		+ "Case B correspondence: recess %.2f m / live deck top Y %.2f m\n"
+		+ "Review geometry: apron Y 0.00 / deck Y %.2f / barrier Y 1.27 / drop %.2f m\n"
 		+ "Frozen review: ordinary LMB TAKE; no re-settling after removal."
 	) % [
 		String(metrics.get("run", "?")),
@@ -408,6 +468,6 @@ func _update_status_label(metrics: Dictionary) -> void:
 		float(metrics.get("settle_duration_s", 0.0)),
 		float(metrics.get("max_height_m", 0.0)),
 		(metrics.get("escaped_or_oob", []) as Array).size(),
-		CASE_B_RECESS_M,
 		CASE_B_LIVE_DECK_TOP_Y,
+		CASE_B_RECESS_M,
 	]

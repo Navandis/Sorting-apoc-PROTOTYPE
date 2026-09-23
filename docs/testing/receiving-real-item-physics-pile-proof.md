@@ -19,6 +19,30 @@ PIVOT TO ORDERED TAKE-ONLY DECK
 
 No outcome has been selected by the developer.
 
+### Human-review preflight history
+
+```text
+Human-review preflight: BLOCKED
+```
+
+- The original standalone scene presented the preparation floor and apron at nearly the same visible height, so it did not reproduce the live Case-B apron/barrier/deck relationship.
+- Runtime LMB TAKE was not usable from the supplied review start despite component-level `WorldItem.pickup_into()` coverage. The starting camera was at least 2.8 m from the pile envelope while ordinary loose-item reach was 1.4 m, and the test bypassed the production camera-ray lookup.
+
+Correction:
+
+- Settling and strict OOB measurement still run against the unchanged local preparation floor at `Y = 0`.
+- Only after metrics are captured and bodies are frozen does interactive presentation translate the existing containment and frozen pile roots to deck top `Y = 0.82`.
+- The apron remains at top `Y = 0.00`; a translucent, non-colliding barrier reference has top `Y = 1.27`, making the `0.45 m` Case-B barrier-to-deck drop visible without blocking the pickup ray.
+- The review player is placed at the apron edge and aimed at the nearest frozen pickup target. The raised deck edge physically keeps the camera outside ordinary 1.4 m loose-item reach, so this isolated scene uses the smallest verified proof-only override, `1.8 m`. Normal gameplay remains `1.4 m`.
+- Focused integration coverage now queries `_get_looked_at_world_item()` through the real camera ray, invokes the normal pickup-click path, verifies exact `ItemInstance` identity, and verifies that ordinary pickup removes the frozen host.
+- A rendered C3 presentation preflight confirmed the visible `0.00 / 0.82 / 1.27 / 0.45 m` relationship and an unobstructed pile view. Its fixed-FPS render outcome is presentation-only and does not replace the locked headless technical metrics.
+
+```text
+Current status: TECHNICALLY VERIFIED / HUMAN REVIEW PENDING
+```
+
+The automated geometry, targeting, and pickup-click preflight is clear. A physical reticle/LMB interaction in the native Godot window remains part of the pending human review; it was not recorded as completed by this implementation pass.
+
 ## 2. Proof configuration
 
 ```text
@@ -41,6 +65,9 @@ Common proof mass: 1.0 kg
 Initial minimum body bottom: 1.20 m
 Gap above current pile: 0.18 m
 Fixed spawn stagger: 0.25 s
+Post-freeze interactive presentation offset: +0.82 m
+Proof-only loose-item TAKE reach: 1.8 m
+Production loose-item TAKE reach: unchanged at 1.4 m
 ```
 
 The spawn method is deterministic. Each item receives seeded X/Z coordinates and a seeded three-axis rotation, then is placed just above the highest current hull with a fixed gap and stagger. Gravity and collision determine the final transform; final transforms are not hand-authored.
@@ -60,7 +87,7 @@ authoritative ItemDefinition.visual_scene
 
 The proof does not use the `WorldItem` pickup AABB for settling, per-submesh hulls, convex decomposition, concave/trimesh dynamic collision, hand-authored pile collision, or per-item physics tuning. An item with no usable mesh points is reported as invalid rather than silently receiving a box.
 
-After settling, every body has zeroed linear/angular velocity, static freeze mode, `freeze = true`, and physics collision layer/mask zero. It then receives the normal `WorldItem` component backed by an authoritative `ItemInstance`. The interactive proof uses the normal player and HUD and supports ordinary LMB TAKE. Removed items do not trigger re-settling.
+After settling, every body has zeroed linear/angular velocity, static freeze mode, `freeze = true`, and physics collision layer/mask zero. It then receives the normal `WorldItem` component backed by an authoritative `ItemInstance`. The interactive proof uses the normal player, reticle, camera ray, pickup-click path, carried-items container, and HUD. The proof disables only the held 3D item renderer because dummy-renderer material state is not part of the pile review. Removed items do not trigger re-settling.
 
 ## 4. Locked manifests and seeds
 
@@ -143,7 +170,7 @@ $godot = 'D:\AI Tools\Godot-4.7-Codex\Godot_v4.7-stable_win64_console.exe'
 & $godot --headless --path . --script res://tools/asset_pipeline/tests/receiving_physics_pile_proof_tests.gd
 ```
 
-Verified assertions cover the fixed manifests/seeds, CLI batch/instance selection, batch-runner failure classification, OOB boundary/tolerance behavior, all forty eligible visuals, one mesh-derived convex hull per item, absence of pickup components during settling, deterministic non-overlapping spawn placement, containment dimensions, freeze transition, authoritative `WorldItem` attachment, and ordinary TAKE behavior. Result: `PASS: receiving physics pile proof tests` with exit code 0.
+Verified assertions cover the fixed manifests/seeds, CLI batch/instance selection, batch-runner failure classification, OOB boundary/tolerance behavior, all forty eligible visuals, one mesh-derived convex hull per item, absence of pickup components during settling, deterministic non-overlapping spawn placement, containment dimensions, freeze transition, authoritative `WorldItem` attachment, post-freeze Case-B world-space geometry, actual production camera-ray targeting, normal pickup-click dispatch, exact `ItemInstance` transfer, frozen-host removal, a visual-only barrier reference, the proof-only held-view override, and preservation of the normal gameplay 1.4 m reach. Result: `PASS: receiving physics pile proof tests` with exit code 0.
 
 Project/editor scan:
 

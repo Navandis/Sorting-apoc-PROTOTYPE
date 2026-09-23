@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3]
+[gd_scene load_steps=17 format=3]
 
 [ext_resource type="Script" path="res://gameplay/logistics_wing/receiving/review/receiving_physics_pile_proof.gd" id="1_proof"]
 [ext_resource type="PackedScene" path="res://gameplay/player/gameplay_player.tscn" id="2_player"]
@@ -21,6 +21,12 @@ roughness = 0.72
 transparency = 1
 shading_mode = 0
 albedo_color = Color(0.15, 0.7, 0.9, 0.10)
+
+[sub_resource type="StandardMaterial3D" id="Material_barrier"]
+resource_name = "Case B Barrier Reference"
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0.95, 0.55, 0.12, 0.32)
 
 [sub_resource type="BoxMesh" id="Mesh_floor"]
 material = SubResource("Material_floor")
@@ -49,6 +55,10 @@ size = Vector3(3.6, 1.5, 4.8)
 [sub_resource type="BoxMesh" id="Mesh_height_guide"]
 material = SubResource("Material_guide")
 size = Vector3(3.64, 0.025, 4.84)
+
+[sub_resource type="BoxMesh" id="Mesh_barrier"]
+material = SubResource("Material_barrier")
+size = Vector3(0.08, 1.27, 4.8)
 
 [node name="ReceivingPhysicsPileProof" type="Node3D"]
 script = ExtResource("1_proof")
@@ -113,13 +123,13 @@ mesh = SubResource("Mesh_envelope")
 position = Vector3(0, 1.5, 0)
 mesh = SubResource("Mesh_height_guide")
 
-[node name="ReviewApron" type="StaticBody3D" parent="."]
+[node name="ApronFloor" type="StaticBody3D" parent="."]
 
-[node name="Mesh" type="MeshInstance3D" parent="ReviewApron"]
+[node name="Mesh" type="MeshInstance3D" parent="ApronFloor"]
 position = Vector3(4.36, -0.1, 0)
 mesh = SubResource("Mesh_apron")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ReviewApron"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ApronFloor"]
 position = Vector3(4.36, -0.1, 0)
 shape = SubResource("Shape_apron")
 
@@ -128,6 +138,12 @@ shape = SubResource("Shape_apron")
 [node name="Player" parent="." instance=ExtResource("2_player")]
 position = Vector3(4.6, 0, 0)
 rotation_degrees = Vector3(0, -90, 0)
+interaction_distance = 1.8
+enable_held_item_view = false
+
+[node name="BarrierReference" type="MeshInstance3D" parent="."]
+position = Vector3(1.82, 0.635, 0)
+mesh = SubResource("Mesh_barrier")
 
 [node name="HUD" type="CanvasLayer" parent="."]
 
