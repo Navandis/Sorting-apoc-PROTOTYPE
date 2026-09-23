@@ -138,7 +138,7 @@ shape = SubResource("Shape_apron")
 [node name="Player" parent="." instance=ExtResource("2_player")]
 position = Vector3(4.6, 0, 0)
 rotation_degrees = Vector3(0, -90, 0)
-interaction_distance = 2.1
+interaction_distance = 3.5
 enable_held_item_view = false
 
 [node name="BarrierReference" type="MeshInstance3D" parent="."]

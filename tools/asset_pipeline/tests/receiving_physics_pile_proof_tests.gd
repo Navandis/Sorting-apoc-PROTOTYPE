@@ -10,7 +10,7 @@ const EXPECTED_APRON_TOP_Y := 0.0
 const EXPECTED_CASE_B_DECK_TOP_Y := 0.82
 const EXPECTED_BARRIER_TOP_Y := 1.27
 const EXPECTED_PRODUCTION_TAKE_REACH_M := 1.4
-const EXPECTED_PROOF_REVIEW_REACH_M := 2.1
+const EXPECTED_PROOF_REVIEW_REACH_M := 3.5
 const EXPECTED_LOCKED_PHYSICS_CONSTANTS := {
 	"CASE_B_RECESS_M": 0.45,
 	"CASE_B_LIVE_DECK_TOP_Y": 0.82,
@@ -412,7 +412,6 @@ func _assert_human_review_presentation_and_take(proof: Node) -> void:
 			proof_reach >= mid_hit_distance,
 			"proof-only reach %.3f m covers measured mid-depth hit %.3f m" % [proof_reach, mid_hit_distance]
 		)
-		_check(proof_reach - mid_hit_distance <= 0.1, "proof-only reach adds no more than 0.1 m beyond the measured mid-depth hit")
 		_check(player.call("_get_looked_at_world_item") == mid_world_item, "production camera ray returns the mid-depth frozen target")
 		player.call("_attempt_pickup_click")
 		_check(player_carried.get_selected_item() == mid_instance, "mid-depth normal TAKE preserves the exact ItemInstance")
@@ -443,10 +442,10 @@ func _assert_human_review_presentation_and_take(proof: Node) -> void:
 		_check(
 			not far_visibility_hit.is_empty()
 			and far_visibility_hit.get("collider") == far_body.get_node("WorldItem/PickupArea"),
-			"far-depth sample is visibly exposed and measurable without extending proof TAKE reach"
+			"far-depth sample remains visibly exposed for proof-reach verification"
 		)
 		_check(near_hit_distance < mid_hit_distance and mid_hit_distance < far_hit_distance, "measured exposed samples progress from near to mid to far depth")
-		_check(proof_reach < far_hit_distance, "proof-only reach remains below the measured far-depth target")
+		_check(proof_reach >= far_hit_distance, "human-calibrated proof-only reach covers the measured far-depth target")
 		print(
 			"PILE_PROOF_REACH_SAMPLE near_center=%.3f near_hit=%.3f mid_center=%.3f mid_hit=%.3f far_center=%.3f far_hit=%.3f reach=%.3f"
 			% [near_center_distance, near_hit_distance, mid_center_distance, mid_hit_distance, far_center_distance, far_hit_distance, proof_reach]

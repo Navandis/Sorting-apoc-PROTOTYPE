@@ -53,8 +53,9 @@ Correction:
 - The presentation edges are approximately local `X -2.072 .. +1.800` and `Z -2.875 .. +2.875`. The Case-B Y relationship remains unchanged.
 - The real barrier reference retains its existing `4.8 m` span. Only the functional cage containment/envelope and review apron width changed.
 - Horizontal facing now belongs to the player root. The camera retains normal local yaw and receives pitch only, so W aligns with camera forward and D aligns with camera right without any production movement-code change.
-- Corrected-geometry reach samples measured a near exposed hit at `0.587 m`, a middle-depth exposed hit at `2.021 m`, and a far exposed hit at `3.466 m` (`0.766 / 2.192 / 3.637 m` to target centres). The smallest practical rounded proof-only reach is therefore `2.1 m`: `0.079 m` beyond the middle hit and well short of the far sample. Production loose-item reach remains `1.4 m`.
-- Automated integration coverage performs ordinary camera-ray/pickup-click TAKE on both the near and middle-depth frozen targets. The far target is measured through an unobstructed pickup-layer ray but is intentionally outside proof TAKE reach.
+- Corrected-geometry reach samples measured a near exposed hit at `0.587 m`, a middle-depth exposed hit at `2.021 m`, and a far exposed hit at `3.466 m` (`0.766 / 2.192 / 3.637 m` to target centres). The initial automated-fixture calibration selected `2.1 m` to cover the middle sample.
+- Initial native testing subsequently showed that useful proof review needs approximately `3.5 m`. The isolated proof override is now `3.5 m`, which covers the measured far hit; this remains review calibration rather than production Receiving range authority. Production loose-item reach remains `1.4 m`, and human review remains pending.
+- Automated integration coverage performs ordinary camera-ray/pickup-click TAKE on both the near and middle-depth frozen targets and verifies that the human-calibrated proof reach covers the measured far-depth hit.
 - A rendered corrected C3 presentation confirmed the wider/deeper deck, naturally spread pile, live interaction prompt on a frozen item, and unchanged Case-B vertical overlay. Its fixed-FPS result is presentation-only and is not included in the authoritative metric table.
 
 The available Windows control surface did not expose the native Godot window, so physical WASD/mouse/LMB input was not recorded. That representative native-window check remains the first step of human review; it is not reported as cleared by the automated evidence.
@@ -87,7 +88,7 @@ Gap above current pile: 0.18 m
 Fixed spawn stagger: 0.25 s
 Post-freeze interactive presentation offset: +0.82 m
 Post-freeze front-edge-preserving X offset: -0.136 m
-Proof-only loose-item TAKE reach: 2.1 m
+Proof-only loose-item TAKE reach: 3.5 m
 Production loose-item TAKE reach: unchanged at 1.4 m
 ```
 
