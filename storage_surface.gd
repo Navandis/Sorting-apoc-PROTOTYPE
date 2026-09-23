@@ -57,6 +57,7 @@ var _debug_grid: MeshInstance3D = null
 var _debug_occupancy_root: Node3D = null
 var _debug_visible: bool = true
 var _developer_debug_visible: bool = false
+var _player_storage_interaction_enabled: bool = true
 
 
 func configure(
@@ -178,6 +179,15 @@ func get_cell_size_m() -> float:
 
 func get_usable_size_m() -> Vector2:
 	return usable_size_m
+
+
+func set_player_storage_interaction_enabled(enabled: bool) -> void:
+	_player_storage_interaction_enabled = enabled
+	_apply_player_storage_interaction_state()
+
+
+func is_player_storage_interaction_enabled() -> bool:
+	return _player_storage_interaction_enabled
 
 
 func get_reservation_count() -> int:
@@ -1645,11 +1655,10 @@ func _rebuild_interaction_area() -> void:
 
 	_interaction_area = Area3D.new()
 	_interaction_area.name = "StorageInteractionArea"
-	_interaction_area.collision_layer = STORAGE_INTERACTION_LAYER
 	_interaction_area.collision_mask = 0
 	_interaction_area.monitoring = false
-	_interaction_area.monitorable = true
 	add_child(_interaction_area)
+	_apply_player_storage_interaction_state()
 
 	var shape_node: CollisionShape3D = CollisionShape3D.new()
 	shape_node.name = "StorageInteractionShape"
@@ -1663,6 +1672,15 @@ func _rebuild_interaction_area() -> void:
 	shape_node.shape = box_shape
 	shape_node.position = Vector3(0.0, INTERACTION_THICKNESS_M * 0.5, 0.0)
 	_interaction_area.add_child(shape_node)
+
+
+func _apply_player_storage_interaction_state() -> void:
+	if _interaction_area == null or not is_instance_valid(_interaction_area):
+		return
+	_interaction_area.collision_layer = (
+		STORAGE_INTERACTION_LAYER if _player_storage_interaction_enabled else 0
+	)
+	_interaction_area.monitorable = _player_storage_interaction_enabled
 
 
 func _rebuild_debug_grid() -> void:

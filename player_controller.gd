@@ -14,6 +14,7 @@ extends CharacterBody3D
 @export var print_loot_registration: bool = true
 @export var enable_held_item_view: bool = true
 @export_range(0.5, 4.0, 0.1) var storage_interaction_distance: float = 1.8
+@export_range(0.5, 6.0, 0.1) var receiving_interaction_distance: float = 3.0
 
 # Zone-auto throughput tuning. The first E press acts immediately; if the key
 # remains held, repeated storage begins after this delay.
@@ -589,11 +590,11 @@ func _get_looked_at_world_item() -> WorldItem:
 	var ray_from: Vector3 = camera.global_position
 	var forward: Vector3 = -camera.global_transform.basis.z.normalized()
 
-	# Stored items deliberately share the more generous shelf interaction reach.
-	# Loose/Receiving loot remains limited to the shorter normal pickup reach.
+	# Trace once to the furthest item reach, then apply the hit item's semantic
+	# reach below. Receiving is independent from storage ownership.
 	var maximum_reach: float = maxf(
-		interaction_distance,
-		storage_interaction_distance
+		maxf(interaction_distance, storage_interaction_distance),
+		receiving_interaction_distance
 	)
 	var ray_to: Vector3 = ray_from + (forward * maximum_reach)
 
@@ -631,8 +632,11 @@ func _get_looked_at_world_item() -> WorldItem:
 	var hit_distance: float = ray_from.distance_to(hit_position)
 
 	var allowed_distance: float = interaction_distance
-	if world_item.is_stored_item():
-		allowed_distance = storage_interaction_distance
+	match world_item.get_pickup_reach_kind():
+		WorldItemScript.PickupReachKind.STORAGE:
+			allowed_distance = storage_interaction_distance
+		WorldItemScript.PickupReachKind.RECEIVING:
+			allowed_distance = receiving_interaction_distance
 
 	if hit_distance > allowed_distance:
 		return null

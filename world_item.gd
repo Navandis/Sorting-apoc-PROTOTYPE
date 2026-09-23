@@ -12,6 +12,14 @@ const ItemInstanceScript = preload("res://item_instance.gd")
 # colliders do not block interaction with loot resting on storage surfaces.
 const PICKUP_COLLISION_LAYER: int = 1 << 7
 
+enum PickupReachKind {
+	LOOSE,
+	STORAGE,
+	RECEIVING,
+}
+
+signal picked_up(item_instance: ItemInstance)
+
 var _host: Node3D
 var _definition: ItemDefinition
 var _item_instance: ItemInstance
@@ -21,12 +29,17 @@ var _bounds_valid: bool = false
 var _storage_surface: Node = null
 var _storage_stack_id: String = ""
 var _storage_item_key: String = ""
+var _pickup_reach_kind: PickupReachKind = PickupReachKind.LOOSE
 
 
 func configure(host: Node3D, definition: ItemDefinition) -> void:
 	_host = host
 	_definition = definition
 	_item_instance = ItemInstanceScript.new(definition)
+	_storage_surface = null
+	_storage_stack_id = ""
+	_storage_item_key = ""
+	_pickup_reach_kind = PickupReachKind.LOOSE
 	_build_interaction_area()
 
 
@@ -38,6 +51,42 @@ func configure_existing(
 	storage_item_key: String = ""
 ) -> void:
 	## Reuses the exact carried ItemInstance when it is placed on a shelf.
+	_configure_existing_with_reach(
+		host,
+		item_instance,
+		storage_surface,
+		storage_stack_id,
+		storage_item_key,
+		PickupReachKind.STORAGE
+	)
+
+
+func configure_receiving(
+	host: Node3D,
+	item_instance: ItemInstance,
+	storage_surface: Node,
+	storage_stack_id: String,
+	storage_item_key: String
+) -> void:
+	## Receiving deck members use storage mechanics without becoming PUT targets.
+	_configure_existing_with_reach(
+		host,
+		item_instance,
+		storage_surface,
+		storage_stack_id,
+		storage_item_key,
+		PickupReachKind.RECEIVING
+	)
+
+
+func _configure_existing_with_reach(
+	host: Node3D,
+	item_instance: ItemInstance,
+	storage_surface: Node,
+	storage_stack_id: String,
+	storage_item_key: String,
+	pickup_reach_kind: PickupReachKind
+) -> void:
 	_host = host
 	_item_instance = item_instance
 	_definition = item_instance.definition if item_instance != null else null
@@ -48,6 +97,7 @@ func configure_existing(
 	_storage_stack_id = storage_stack_id
 	if _storage_stack_id.is_empty():
 		_storage_stack_id = _storage_item_key
+	_pickup_reach_kind = pickup_reach_kind
 	_build_interaction_area()
 
 
@@ -65,6 +115,10 @@ func get_display_name() -> String:
 
 func get_bulk() -> int:
 	return _item_instance.get_bulk() if _item_instance != null else 0
+
+
+func get_pickup_reach_kind() -> PickupReachKind:
+	return _pickup_reach_kind
 
 
 
@@ -149,6 +203,7 @@ func pickup_into(carried_items: Node) -> bool:
 
 	if _host != null and is_instance_valid(_host):
 		_host.queue_free()
+	picked_up.emit(_item_instance)
 	return true
 
 
