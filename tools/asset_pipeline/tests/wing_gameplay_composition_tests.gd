@@ -144,7 +144,7 @@ func _assert_composition(scene: Node, context: String) -> void:
 		"%s held-item view remains enabled" % context
 	)
 	_check(
-		is_equal_approx(float(player.get("receiving_interaction_distance")), 3.0),
+		is_equal_approx(float(player.get("receiving_interaction_distance")), 3.6),
 		"%s Receiving reach is separately configured" % context
 	)
 	_assert_receiving_runtime_contract(receiving_runtime, scene, context)

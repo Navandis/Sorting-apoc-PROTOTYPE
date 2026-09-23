@@ -226,4 +226,3 @@
 - [ ] **Step 6: Commit**
 
   Commit message: `test: record deterministic Receiving deck validation`
-
