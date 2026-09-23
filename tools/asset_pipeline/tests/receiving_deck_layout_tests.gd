@@ -216,18 +216,42 @@ func _test_same_seed_reproduces_and_alternate_seed_changes_only_layout() -> void
 
 func _test_front_to_rear_scan_starts_at_frontmost_legal_row() -> void:
 	_pending_helpers += 1
+	# Receiving FRONT = local +Z / player-barrier side.
+	# Receiving REAR  = local -Z / lift interior.
+	# A one-cell-wide surface prevents two 1x2 mouse footprints sharing a row,
+	# making creation order an observable front-to-rear spatial contract.
 	var entries: Array[LootBatchEntry] = [
-		LootBatchEntryScript.new("front_entry", "front_batch:item", &"loot_000002"),
+		LootBatchEntryScript.new("first_entry", "front_batch:first", &"loot_000001"),
+		LootBatchEntryScript.new("second_entry", "front_batch:second", &"loot_000001"),
 	]
 	var batch: LootBatch = LootBatchScript.create_committed(
-		"front_batch", &"test", "front-scan", 1, 1, 11, 29, entries
+		"front_batch", &"test", "front-scan", 2, 2, 11, 29, entries
 	)
-	var result = DeckPlannerScript.new().prepare(batch, PersistentItemCatalog, ProofProfile)
-	_check(result.succeeded, "single real item plans")
-	var entry: LootBatchEntry = batch.entries[0]
-	var item: ItemInstance = batch.create_item_instance(entry.entry_id, PersistentItemCatalog)
-	var footprint: Vector2i = DeckPoseScript.footprint_for(item, entry.presentation_quarter_turns)
-	_check(entry.presentation_cell_origin.y == 20 - footprint.y, "first empty placement uses frontmost legal row")
+	var profile: Resource = DeckProfileScript.new()
+	profile.set("profile_id", &"front_to_rear_spatial_proof")
+	profile.set("revision", 1)
+	profile.set("layout_version", 1)
+	profile.set("cell_size_m", 0.10)
+	profile.set("max_layout_attempts", 1)
+	var surface: Resource = DeckSurfaceSpecScript.new()
+	surface.set("surface_id", &"DirectionDeck")
+	surface.set("usable_width_m", 0.10)
+	surface.set("usable_depth_m", 0.40)
+	surface.set("stack_clearance_m", 1.0)
+	var surfaces: Array[Resource] = [surface]
+	profile.set("surfaces", surfaces)
+	var result = DeckPlannerScript.new().prepare(batch, PersistentItemCatalog, profile)
+	_check(result.succeeded, "two simple non-overlapping placements plan")
+	var bases: Array[LootBatchEntry] = batch.entries
+	bases.sort_custom(
+		func(a: LootBatchEntry, b: LootBatchEntry) -> bool:
+			return a.presentation_stack_group_id < b.presentation_stack_group_id
+	)
+	_check(bases[0].presentation_cell_origin.y == 2, "first placement uses highest valid row H-d = 4-2 = 2")
+	_check(is_equal_approx(bases[0].frozen_transform.origin.z, 0.10), "first placement is nearest local +Z FRONT / player-barrier side")
+	_check(bases[1].presentation_cell_origin.y == 0, "next non-overlapping placement progresses to lower row 0")
+	_check(is_equal_approx(bases[1].frozen_transform.origin.z, -0.10), "next placement progresses toward local -Z REAR / lift interior")
+	_check(bases[0].frozen_transform.origin.z > bases[1].frozen_transform.origin.z, "creation order is spatially FRONT local +Z to REAR local -Z")
 	_pending_helpers -= 1
 
 

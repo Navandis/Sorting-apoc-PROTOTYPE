@@ -239,7 +239,8 @@ func _assert_receiving_runtime_contract(runtime: Node3D, scene: Node, context: S
 		return
 	_check(runtime.scene_file_path == RECEIVING_RUNTIME_PATH, "%s uses the Receiving runtime scene" % context)
 	_check(runtime.get_script() != null and runtime.get_script().resource_path == RECEIVING_RUNTIME_SCRIPT_PATH, "%s runtime uses the intended script" % context)
-	_check(runtime.position.is_equal_approx(Vector3(-40.705, 0.82, 0.0)), "%s deck top is installed at the approved provisional bay position" % context)
+	_check(runtime.position.is_equal_approx(Vector3(-40.905, 0.82, 0.0)), "%s deck root shifts exactly 0.20 m rearward in world -X" % context)
+	_check((runtime.basis * Vector3.BACK).is_equal_approx(Vector3.RIGHT), "%s Receiving FRONT local +Z maps to world +X / player-barrier side" % context)
 	var manager := runtime.get_node_or_null("ReceivingManager")
 	var presenter := runtime.get_node_or_null("ReceivingDeckPresenter") as Node3D
 	_check(manager != null, "%s runtime owns one ReceivingManager" % context)
@@ -248,10 +249,21 @@ func _assert_receiving_runtime_contract(runtime: Node3D, scene: Node, context: S
 		return
 	_check(presenter.get_script() != null and presenter.get_script().resource_path == RECEIVING_PRESENTER_SCRIPT_PATH, "%s presenter uses deterministic deck script" % context)
 	_check(presenter.get_child_count() >= 1, "%s presenter retains its neutral deck fixture" % context)
+	var deck_visual := presenter.get_node_or_null("DeckVisual") as MeshInstance3D
+	var deck_mesh := deck_visual.mesh as BoxMesh if deck_visual != null else null
+	_check(deck_mesh != null and deck_mesh.size.is_equal_approx(Vector3(3.10, 0.05, 2.10)), "%s physical/support deck is exactly 3.10 m × 2.10 m" % context)
 	_check((presenter.call("get_materialized_world_items") as Array).is_empty(), "%s normal launch creates no synthetic Receiving batch" % context)
 	var functional_surfaces := scene.call("get_functional_surfaces") as Array
-	for surface: Node in presenter.call("get_private_storage_surfaces") as Array:
+	var private_surfaces := presenter.call("get_private_storage_surfaces") as Array
+	_check(private_surfaces.size() == 1, "%s proof presenter owns one private functional grid" % context)
+	for surface: Node in private_surfaces:
 		_check(not functional_surfaces.has(surface), "%s private deck surface is excluded from functional storage" % context)
+		var storage_surface := surface as StorageSurface
+		_check(storage_surface.get_grid_size() == Vector2i(30, 20), "%s private grid remains exactly 30 × 20" % context)
+		_check(storage_surface.get_usable_size_m().is_equal_approx(Vector2(3.0, 2.0)), "%s functional usable area remains exactly 3.00 m × 2.00 m" % context)
+		if deck_mesh != null:
+			var margin := (Vector2(deck_mesh.size.x, deck_mesh.size.z) - storage_surface.get_usable_size_m()) * 0.5
+			_check(margin.is_equal_approx(Vector2(0.05, 0.05)), "%s support border is centered and non-reservable at 0.05 m per edge" % context)
 	for forbidden_name: String in ["ReceivingGeometryComparison", "ReceivingPhysicsPileProof", "ReceivingComparisonA", "ReceivingComparisonB", "ReceivingComparisonC"]:
 		_check(scene.find_child(forbidden_name, true, false) == null, "%s omits historical %s" % [context, forbidden_name])
 

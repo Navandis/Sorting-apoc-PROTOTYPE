@@ -116,7 +116,7 @@ ladder_height_m = 2.92
 [node name="DevelopmentSetup" parent="." unique_id=1793037051 instance=ExtResource("6_development")]
 
 [node name="ReceivingRuntime" parent="." instance=ExtResource("44_receiving")]
-transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -40.705, 0.82, 0)
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -40.905, 0.82, 0)
 
 [node name="SM_Table_SeedWest" parent="DevelopmentSetup/Tables" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.418461, 0, 3.8245745)
