@@ -14,7 +14,7 @@ extends CharacterBody3D
 @export var print_loot_registration: bool = true
 @export var enable_held_item_view: bool = true
 @export_range(0.5, 4.0, 0.1) var storage_interaction_distance: float = 1.8
-@export_range(0.5, 6.0, 0.1) var receiving_interaction_distance: float = 3.6
+@export_range(0.5, 6.0, 0.1) var receiving_interaction_distance: float = 2.1
 
 # Zone-auto throughput tuning. The first E press acts immediately; if the key
 # remains held, repeated storage begins after this delay.

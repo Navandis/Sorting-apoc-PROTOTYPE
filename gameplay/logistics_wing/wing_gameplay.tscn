@@ -426,7 +426,7 @@ item_id = &"loot_000042"
 
 [node name="Player" parent="." unique_id=551360273 instance=ExtResource("3_player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0.05, -2.5)
-receiving_interaction_distance = 3.6
+receiving_interaction_distance = 2.1
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=836250621]
 layer = 10
