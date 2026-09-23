@@ -159,6 +159,104 @@ func commit_arrangement(
 	return true
 
 
+func commit_deck_layout(
+	placements_by_entry_id: Dictionary,
+	profile_id: StringName,
+	profile_revision: int
+) -> bool:
+	if _preparation_state != STATE_CONTENT_COMMITTED:
+		return false
+	if profile_id == &"" or profile_revision <= 0:
+		return false
+
+	var remaining_by_id: Dictionary = {}
+	for entry: LootBatchEntry in _entries:
+		if entry.remaining_in_batch:
+			remaining_by_id[entry.entry_id] = entry
+	if placements_by_entry_id.size() != remaining_by_id.size():
+		return false
+
+	var validated: Dictionary = {}
+	var indices_by_group: Dictionary = {}
+	for key_value: Variant in placements_by_entry_id:
+		if typeof(key_value) != TYPE_STRING and typeof(key_value) != TYPE_STRING_NAME:
+			return false
+		var entry_id := String(key_value)
+		if entry_id.is_empty() or validated.has(entry_id) or not remaining_by_id.has(entry_id):
+			return false
+		var placement_value: Variant = placements_by_entry_id[key_value]
+		if typeof(placement_value) != TYPE_DICTIONARY:
+			return false
+		var placement: Dictionary = placement_value as Dictionary
+		var surface_value: Variant = placement.get("surface_id")
+		var cell_value: Variant = placement.get("cell_origin")
+		var quarter_value: Variant = placement.get("quarter_turns")
+		var group_value: Variant = placement.get("stack_group_id")
+		var index_value: Variant = placement.get("stack_index")
+		var transform_value: Variant = placement.get("frozen_transform")
+		if (
+			(typeof(surface_value) != TYPE_STRING_NAME and typeof(surface_value) != TYPE_STRING)
+			or typeof(cell_value) != TYPE_VECTOR2I
+			or typeof(quarter_value) != TYPE_INT
+			or typeof(group_value) != TYPE_STRING
+			or typeof(index_value) != TYPE_INT
+			or typeof(transform_value) != TYPE_TRANSFORM3D
+		):
+			return false
+		var surface_id := StringName(surface_value)
+		var cell_origin: Vector2i = cell_value as Vector2i
+		var quarter_turns: int = _normalize_quarter_turns(int(quarter_value))
+		var stack_group_id := String(group_value)
+		var stack_index := int(index_value)
+		var frozen_transform: Transform3D = transform_value as Transform3D
+		if (
+			surface_id == &""
+			or cell_origin.x < 0
+			or cell_origin.y < 0
+			or stack_group_id.is_empty()
+			or stack_index < 0
+			or not _is_finite_transform(frozen_transform)
+		):
+			return false
+		var group_indices: Dictionary = indices_by_group.get(stack_group_id, {}) as Dictionary
+		if group_indices.has(stack_index):
+			return false
+		group_indices[stack_index] = true
+		indices_by_group[stack_group_id] = group_indices
+		validated[entry_id] = {
+			"surface_id": surface_id,
+			"cell_origin": cell_origin,
+			"quarter_turns": quarter_turns,
+			"stack_group_id": stack_group_id,
+			"stack_index": stack_index,
+			"frozen_transform": frozen_transform,
+		}
+	if validated.size() != remaining_by_id.size():
+		return false
+	for group_value: Variant in indices_by_group.values():
+		var group_indices: Dictionary = group_value as Dictionary
+		for expected_index: int in range(group_indices.size()):
+			if not group_indices.has(expected_index):
+				return false
+
+	for entry: LootBatchEntry in _entries:
+		if not entry.remaining_in_batch:
+			continue
+		var placement: Dictionary = validated[entry.entry_id] as Dictionary
+		entry._commit_deck_layout(
+			placement["surface_id"] as StringName,
+			placement["cell_origin"] as Vector2i,
+			int(placement["quarter_turns"]),
+			String(placement["stack_group_id"]),
+			int(placement["stack_index"]),
+			placement["frozen_transform"] as Transform3D
+		)
+	_presentation_profile_id = profile_id
+	_presentation_profile_revision = profile_revision
+	_preparation_state = STATE_PREPARED
+	return true
+
+
 func create_item_instance(entry_id: String, catalog: ItemCatalog) -> ItemInstance:
 	if catalog == null:
 		return null
@@ -354,7 +452,7 @@ static func _has_consistent_preparation_snapshot(
 		if profile_id != &"" or profile_revision != 0:
 			return false
 		for entry: LootBatchEntry in restored_entries:
-			if entry.has_frozen_transform:
+			if entry.has_frozen_transform or entry.has_deck_layout:
 				return false
 		return true
 	if state != STATE_PREPARED or profile_id == &"" or profile_revision <= 0:
@@ -372,3 +470,7 @@ static func _is_finite_transform(value: Transform3D) -> bool:
 		and value.basis.y.is_finite()
 		and value.basis.z.is_finite()
 	)
+
+
+static func _normalize_quarter_turns(value: int) -> int:
+	return ((value % 4) + 4) % 4

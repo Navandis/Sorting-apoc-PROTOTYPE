@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="ReceivingDeckProfile" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://receiving/receiving_deck_profile.gd" id="1_profile"]
+[ext_resource type="Script" path="res://receiving/receiving_deck_surface_spec.gd" id="2_surface"]
+
+[sub_resource type="Resource" id="ReceivingDeckSurfaceSpec_main"]
+script = ExtResource("2_surface")
+surface_id = &"MainDeck"
+local_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+usable_width_m = 3.0
+usable_depth_m = 2.0
+stack_clearance_m = 1.5
+enabled = true
+
+[resource]
+script = ExtResource("1_profile")
+profile_id = &"receiving_deck_stage_b_proof"
+revision = 1
+layout_version = 1
+cell_size_m = 0.1
+max_layout_attempts = 4
+surfaces = Array[Resource]([SubResource("ReceivingDeckSurfaceSpec_main")])
