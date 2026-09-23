@@ -1,0 +1,186 @@
+[gd_scene load_steps=23 format=3]
+
+[ext_resource type="Script" path="res://gameplay/logistics_wing/receiving/receiving_geometry_comparison.gd" id="1_comparison"]
+
+[sub_resource type="StandardMaterial3D" id="Material_deck"]
+resource_name = "Review Deck"
+albedo_color = Color(0.24, 0.27, 0.3, 1)
+metallic = 0.35
+roughness = 0.68
+
+[sub_resource type="StandardMaterial3D" id="Material_panel"]
+resource_name = "Review Barrier Occlusion"
+albedo_color = Color(0.12, 0.135, 0.15, 1)
+roughness = 0.78
+
+[sub_resource type="StandardMaterial3D" id="Material_proxy_dark"]
+resource_name = "Review Proxy Dark"
+albedo_color = Color(0.34, 0.38, 0.4, 1)
+roughness = 0.82
+
+[sub_resource type="StandardMaterial3D" id="Material_proxy_mid"]
+resource_name = "Review Proxy Mid"
+albedo_color = Color(0.48, 0.43, 0.34, 1)
+roughness = 0.86
+
+[sub_resource type="StandardMaterial3D" id="Material_proxy_light"]
+resource_name = "Review Proxy Light"
+albedo_color = Color(0.54, 0.57, 0.55, 1)
+roughness = 0.8
+
+[sub_resource type="StandardMaterial3D" id="Material_envelope"]
+resource_name = "Review Envelope"
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0.18, 0.72, 0.88, 0.11)
+
+[sub_resource type="StandardMaterial3D" id="Material_guide"]
+resource_name = "Review Height Guide"
+transparency = 1
+shading_mode = 0
+albedo_color = Color(1, 0.66, 0.16, 0.28)
+
+[sub_resource type="BoxMesh" id="Mesh_deck"]
+material = SubResource("Material_deck")
+size = Vector3(4.55, 0.12, 6.55)
+
+[sub_resource type="BoxMesh" id="Mesh_panel"]
+material = SubResource("Material_panel")
+size = Vector3(0.08, 1.27, 4.8)
+
+[sub_resource type="BoxMesh" id="Mesh_envelope"]
+material = SubResource("Material_envelope")
+size = Vector3(3.6, 1.5, 4.8)
+
+[sub_resource type="BoxMesh" id="Mesh_guide"]
+material = SubResource("Material_guide")
+size = Vector3(3.64, 0.025, 4.84)
+
+[sub_resource type="BoxMesh" id="Mesh_small"]
+size = Vector3(0.34, 0.22, 0.42)
+
+[sub_resource type="BoxMesh" id="Mesh_medium"]
+size = Vector3(0.74, 0.48, 0.66)
+
+[sub_resource type="BoxMesh" id="Mesh_large"]
+size = Vector3(0.92, 0.64, 0.82)
+
+[sub_resource type="BoxMesh" id="Mesh_tall_box"]
+size = Vector3(0.42, 0.94, 0.44)
+
+[sub_resource type="CylinderMesh" id="Mesh_canister"]
+top_radius = 0.22
+bottom_radius = 0.25
+height = 0.92
+
+[sub_resource type="BoxMesh" id="Mesh_long_flat"]
+size = Vector3(1.72, 0.16, 0.48)
+
+[sub_resource type="BoxMesh" id="Mesh_upper"]
+size = Vector3(0.54, 0.38, 0.5)
+
+[node name="ReceivingGeometryComparison" type="Node3D"]
+script = ExtResource("1_comparison")
+
+[node name="LiftDeck" type="Node3D" parent="."]
+position = Vector3(-2.505, 0.76, 0)
+
+[node name="Mesh" type="MeshInstance3D" parent="LiftDeck"]
+mesh = SubResource("Mesh_deck")
+
+[node name="BarrierOcclusionMockup" type="Node3D" parent="."]
+
+[node name="Panel" type="MeshInstance3D" parent="BarrierOcclusionMockup"]
+position = Vector3(-0.2, 0.635, 0)
+mesh = SubResource("Mesh_panel")
+
+[node name="PileEnvelopePreview" type="Node3D" parent="."]
+position = Vector3(-2.505, 0.82, 0)
+
+[node name="Volume" type="MeshInstance3D" parent="PileEnvelopePreview"]
+position = Vector3(0, 0.75, 0)
+mesh = SubResource("Mesh_envelope")
+
+[node name="ProxyLoad" type="Node3D" parent="."]
+position = Vector3(-2.505, 0.82, 0)
+
+[node name="FrontSmallLeft" type="MeshInstance3D" parent="ProxyLoad"]
+position = Vector3(1.36, 0.11, -1.56)
+rotation_degrees = Vector3(0, -16, 0)
+material_override = SubResource("Material_proxy_light")
+mesh = SubResource("Mesh_small")
+
+[node name="FrontMedium" type="MeshInstance3D" parent="ProxyLoad"]
+position = Vector3(1.16, 0.24, -0.55)
+rotation_degrees = Vector3(0, 9, 0)
+material_override = SubResource("Material_proxy_mid")
+mesh = SubResource("Mesh_medium")
+
+[node name="FrontSmallRight" type="MeshInstance3D" parent="ProxyLoad"]
+position = Vector3(1.4, 0.11, 1.52)
+rotation_degrees = Vector3(0, 21, 0)
+material_override = SubResource("Material_proxy_dark")
+mesh = SubResource("Mesh_small")
+
+[node name="BaseLargeLeft" type="MeshInstance3D" parent="ProxyLoad"]
+position = Vector3(0.36, 0.32, -1.18)
+rotation_degrees = Vector3(0, -8, 0)
+material_override = SubResource("Material_proxy_dark")
+mesh = SubResource("Mesh_large")
+
+[node name="BaseLargeRight" type="MeshInstance3D" parent="ProxyLoad"]
+position = Vector3(0.18, 0.32, 1.16)
+rotation_degrees = Vector3(0, 13, 0)
+material_override = SubResource("Material_proxy_mid")
+mesh = SubResource("Mesh_large")
+
+[node name="TallBox" type="MeshInstance3D" parent="ProxyLoad"]
+position = Vector3(-0.72, 0.47, -1.48)
+rotation_degrees = Vector3(0, 12, -3)
+material_override = SubResource("Material_proxy_light")
+mesh = SubResource("Mesh_tall_box")
+
+[node name="Canister" type="MeshInstance3D" parent="ProxyLoad"]
+position = Vector3(-0.58, 0.46, 0.15)
+rotation_degrees = Vector3(3, 0, -5)
+material_override = SubResource("Material_proxy_dark")
+mesh = SubResource("Mesh_canister")
+
+[node name="LongFlat" type="MeshInstance3D" parent="ProxyLoad"]
+position = Vector3(-0.35, 0.72, 1.12)
+rotation_degrees = Vector3(2, -18, 5)
+material_override = SubResource("Material_proxy_mid")
+mesh = SubResource("Mesh_long_flat")
+
+[node name="MiddleBox" type="MeshInstance3D" parent="ProxyLoad"]
+position = Vector3(-0.2, 0.75, -0.55)
+rotation_degrees = Vector3(-4, 17, 2)
+material_override = SubResource("Material_proxy_mid")
+mesh = SubResource("Mesh_medium")
+
+[node name="UpperLeft" type="MeshInstance3D" parent="ProxyLoad"]
+position = Vector3(-0.18, 1.13, -0.72)
+rotation_degrees = Vector3(7, -9, -8)
+material_override = SubResource("Material_proxy_light")
+mesh = SubResource("Mesh_upper")
+
+[node name="UpperRight" type="MeshInstance3D" parent="ProxyLoad"]
+position = Vector3(-0.62, 1.18, 0.5)
+rotation_degrees = Vector3(-6, 14, 7)
+material_override = SubResource("Material_proxy_dark")
+mesh = SubResource("Mesh_upper")
+
+[node name="Guides" type="Node3D" parent="."]
+position = Vector3(-2.505, 0.82, 0)
+
+[node name="Height_0_5" type="MeshInstance3D" parent="Guides"]
+position = Vector3(0, 0.5, 0)
+mesh = SubResource("Mesh_guide")
+
+[node name="Height_1_0" type="MeshInstance3D" parent="Guides"]
+position = Vector3(0, 1, 0)
+mesh = SubResource("Mesh_guide")
+
+[node name="Height_1_5" type="MeshInstance3D" parent="Guides"]
+position = Vector3(0, 1.5, 0)
+mesh = SubResource("Mesh_guide")
