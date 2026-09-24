@@ -150,3 +150,90 @@ Replace only `--receiving-content-seed` in the commands above for these targeted
 Disposition: **PROMOTE / REVISE**
 
 Known diagnostics remain the Windows root-certificate warning and the two intentional duplicate-namespace errors in `wing_gameplay_composition_tests.gd`. No new Wave-2 diagnostic is known.
+
+## Human-review correction record
+
+Status after this technical pass: **WAVE 2 IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN RE-REVIEW PENDING**
+
+Human review found that manual placement could bypass the private Receiving surface contract by ray-targeting a mechanically stored WorldItem and asking its owning StorageSurface for a manual stack fit. This was not a WorldItem ownership defect: Receiving items must remain mechanically stored for ordinary TAKE, removal, base promotion, and compression.
+
+StoragePlacementController now applies the owning surface's generic is_player_storage_interaction_enabled() contract before accepting either a stored-item stack target or a direct surface target, and rechecks the same contract before commit. A real controller regression aims at a stored pickup Area3D and proves that a private stack exposes no target, valid fit, ghost, grid, prompt, placement, carry mutation, or stack mutation. Presenter integration coverage repeats that proof against both a reconstructed Receiving MainDeck stack and a fixture-private stack with a prevalidated compatible append. The same controller test re-enables an ordinary surface and proves manual stacking still succeeds.
+
+### Corrected freight depth order
+
+The proof profile is now revision 3, layout version 3. Only socket placement changed; every human-calibrated fixture resource value remains unchanged.
+
+| Socket ID | Family | MainDeck origin | Quarter turns | Rotated base range |
+|---|---|---:|---:|---|
+| crate_front_left | Crate | (1, 13) | 0 | 4–5 × 6–7; front edge reaches row 19 or 20 |
+| crate_middle_center | Crate | (12, 13) | 0 | 4–5 × 6–7; front edge reaches row 19 or 20 |
+| crate_rear_right | Crate | (24, 13) | 0 | 4–5 × 6–7; front edge reaches row 19 or 20 |
+| pallet_front_right | Pallet | (19, 0) | 0 | 8–10 × 11–13; rear anchored |
+| pallet_rear_left | Pallet | (1, 0) | 0 | 8–10 × 11–13; rear anchored |
+
+The names are retained as durable socket identities; coordinates and actual rotated footprints are the tested authority. Every enabled fixture definition fits every matching socket, every pair of candidates can coexist, and the complete three-crate/two-pallet candidate arrangement is legal. MainDeck's existing front-to-rear scan is unchanged.
+
+### Receiving-only reach remeasurement
+
+The previous promoted Receiving reach was **2.1 m**. It remains the historical result for the bare deterministic deck before rear freight fixtures were active; it has not been rewritten or reinterpreted as fixture evidence.
+
+The correction measurement used the live wing_gameplay, its normal CharacterBody3D, collision resolution against the permanent freight barrier, the real Camera3D, persisted fixture transforms, calibrated private surfaces, real WorldItem/PickupArea geometry, and the production pickup ray. Ordinary lateral movement was represented by three fixed apron-side stance lanes at world Z = -1.2, 0.0, +1.2; no stance entered the lift or aligned continuously to an item's exact lateral coordinate. Each scenario was progressively drained through the production ray so later-exposed items also entered the envelope.
+
+The table records the hardest progressively TAKEN target for each represented surface kind:
+
+| Scenario | Player position | Camera position | Entry / item | Surface / cell | Ray hit position | Hit distance |
+|---|---|---|---|---|---|---:|
+| 1842 / mixed | (-38.49946, 0.000684, -1.2) | (-38.50394, 1.716969, -1.336484) | entry_0018 / Milk Carton 1 | Crate_00 / (0, 0) | (-40.40707, 0.983680, -1.057037) | 2.059 m |
+| 1842 / mixed | (-38.49946, 0.000684, 0.0) | (-38.50394, 1.716969, -0.136484) | entry_0010 / Pistol | MainDeck / (18, 17) | (-40.00307, 0.883258, -0.391178) | 1.734 m |
+| 1842 / mixed | (-38.49946, 0.000684, -1.2) | (-38.50394, 1.716969, -1.336484) | entry_0023 / Computer Tower 01 | Pallet_01 / (5, 1) | (-41.20308, 1.232270, -1.165920) | 2.748 m |
+| 249 / crates | (-38.49946, 0.000684, -1.2) | (-38.50394, 1.716969, -1.336484) | entry_0016 / Dry Goods 01a | Crate_00 / (1, 0) | (-40.40320, 0.942132, -1.154951) | 2.059 m |
+| 249 / crates | (-38.49946, 0.000684, +1.2) | (-38.50394, 1.716969, 1.063516) | entry_0009 / Shotgun | MainDeck / (3, 10) | (-40.32277, 0.899419, 1.098422) | 1.994 m |
+| 142 / pallets | (-38.49946, 0.000684, 0.0) | (-38.50394, 1.716969, -0.136484) | entry_0016 / Assault Rifle | MainDeck / (16, 8) | (-40.37729, 0.932460, -0.242756) | 2.034 m |
+| 142 / pallets | (-38.49946, 0.000684, 0.0) | (-38.50394, 1.716969, -0.136484) | entry_0013 / Firewood 01 | Pallet_01 / (0, 0) | (-41.68300, 1.027210, -0.687521) | **3.299 m** |
+
+Dmax = 3.299374 m, therefore:
+
+ceil_to_0.1(Dmax + 0.10 m) = ceil_to_0.1(3.399374 m) = 3.4 m
+
+The saved wing_gameplay Receiving-only reach is now **3.4 m**. Loose remains **1.4 m** and ordinary storage/manual placement remains **2.3 m**. This value is new evidence from the current 2.0 m deterministic deck, barrier standoff, calibrated rear pallets, lateral player movement envelope, and real pickup-area hits; it does not restore or promote the rejected irregular physics-pile proof range.
+
+The limiting seed-142 Firewood target was replayed from a fresh scene. At **3.3 m** the ray technically touches the pickup area but has only **0.000626 m** headroom, so it fails the agreed 0.10 m tolerance. At **3.4 m** the same production ray resolves the exact WorldItem. All fixture items retain PickupReachKind.RECEIVING.
+
+### Crate ray and pallet occlusion rechecks
+
+Seed 249's 1×1 Dry Goods item at crate cell (1, 0) and seed 1842's Milk Carton at crate cell (0, 0) both resolve through their ordinary enabled WorldItem pickup areas after the range correction. The suspected crate-ray problem is therefore recorded as range-related; no X-ray, ray skipping, collision-layer exception, or fixture-specific targeting path was added.
+
+All persisted entries in each of the three requested scenarios—24/24 for mixed, 24/24 for crates, and 24/24 for pallets—became exposed and were progressively TAKEN from the three normal player-side stance lanes. No post-socket example remained completely concealed from all tested normal viewpoints, so no loose-cargo band/scoring algorithm was added. Fixture visual descendants own no WorldItem, loot PickupArea, or collision object on the pickup interaction layer.
+
+### Correction verification
+
+All commands used Godot 4.7.stable.official.5b4e0cb0f and exited 0:
+
+| Verification | Result |
+|---|---|
+| storage_stacking_interaction_tests.gd | PASS; private ray target rejects every PUT artifact and ordinary manual stack succeeds |
+| receiving_freight_fixture_runtime_tests.gd | PASS; revision-3 fixture snapshots and atomic validation |
+| receiving_freight_fixture_policy_tests.gd | PASS; every calibrated definition/socket footprint, depth band, bound, and coexistence contract |
+| receiving_deck_layout_tests.gd | PASS; revision/layout 3 and existing front-to-rear scan |
+| receiving_deck_presenter_tests.gd | PASS; actual MainDeck and fixture-private manual PUT rejection |
+| receiving_freight_reach_tests.gd | PASS; complete progressive envelope, 3.4/3.3 boundary, classification, crate ray, visibility, fixture collision invariant |
+| wing_gameplay_composition_tests.gd | PASS; 3.4 m Receiving override and exactly 16 ordinary functional surfaces |
+| headless editor scan | PASS |
+| default headless launch | PASS; no synthetic Receiving batch |
+| seed 1842 / mixed smoke | PASS |
+| seed 249 / crates smoke | PASS |
+| seed 142 / pallets smoke | PASS |
+
+The unchanged known diagnostics are the Windows root-certificate warning and the composition suite's two intentional duplicate seed-namespace rejection messages. No unexpected SCRIPT ERROR or FAIL: remains.
+
+### Human re-review commands
+
+~~~powershell
+& 'D:\AI Tools\Godot-4.7-Codex\Godot_v4.7-stable_win64_console.exe' --path . -- --receiving-deck-debug --receiving-content-seed=1842 --receiving-presentation-seed=9001 --receiving-target-bulk=24 --receiving-fixture-mode=mixed
+& 'D:\AI Tools\Godot-4.7-Codex\Godot_v4.7-stable_win64_console.exe' --path . -- --receiving-deck-debug --receiving-content-seed=249 --receiving-presentation-seed=9001 --receiving-target-bulk=24 --receiving-fixture-mode=crates
+& 'D:\AI Tools\Godot-4.7-Codex\Godot_v4.7-stable_win64_console.exe' --path . -- --receiving-deck-debug --receiving-content-seed=142 --receiving-presentation-seed=9001 --receiving-target-bulk=24 --receiving-fixture-mode=pallets
+~~~
+
+Re-review the critical manual PUT invariant on both MainDeck and a fixture stack, then confirm ordinary shelf stacking still works. Confirm front crates remain readable, rear pallets do not fully conceal loose cargo from normal lateral movement, and exposed crate, rear loose, and rear pallet cargo can be TAKEN comfortably. Specifically recheck the seed-142 Firewood/pig-type pallet case. If a visibly exposed crate item inside 3.4 m still fails, record its exact seed, fixture, item, camera, and collider rather than expanding collision behavior.
+
+Disposition: **PROMOTE / REVISE**

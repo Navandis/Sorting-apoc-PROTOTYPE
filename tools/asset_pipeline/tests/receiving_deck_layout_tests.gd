@@ -166,7 +166,7 @@ func _test_proof_profile_is_exact_30_by_20() -> void:
 		var profile: Resource = ProofProfile
 		_check(profile.validate().is_empty(), "proof profile validates")
 		_check(profile.profile_id == &"receiving_deck_stage_b_proof", "proof profile ID")
-		_check(profile.revision == 2 and profile.layout_version == 2, "fixture-capable proof profile versions")
+		_check(profile.revision == 3 and profile.layout_version == 3, "front-crate/rear-pallet proof profile versions")
 		_check(is_equal_approx(profile.cell_size_m, 0.10), "proof cell size")
 		_check(profile.max_layout_attempts == 4, "proof attempt bound")
 		_check(profile.surfaces.size() == 1, "proof uses one surface")

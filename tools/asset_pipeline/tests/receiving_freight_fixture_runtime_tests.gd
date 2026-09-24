@@ -35,10 +35,10 @@ func _test_fixture_instance_round_trip() -> void:
 		0,
 		&"crate_front_left",
 		&"Crate_00",
-		Vector2i(1, 14),
+		Vector2i(1, 13),
 		0,
 		Vector2i(5, 6),
-		Transform3D(Basis.IDENTITY, Vector3(-1.2, 0.0, 0.7))
+		Transform3D(Basis.IDENTITY, Vector3(-1.15, 0.0, 0.6))
 	)
 	_check(fixture != null, "valid fixture instance is created")
 	if fixture == null:
@@ -69,7 +69,7 @@ func _test_fixture_layout_round_trip_and_atomic_rejections() -> void:
 	var placements := _placements(&"Crate_00")
 	var before := var_to_bytes(batch.to_snapshot())
 	_check(
-		not batch.commit_deck_layout(placements, ProofProfile.profile_id, 2, [], ProofProfile),
+		not batch.commit_deck_layout(placements, ProofProfile.profile_id, int(ProofProfile.revision), [], ProofProfile),
 		"item placement cannot reference an inactive fixture surface"
 	)
 	_check(var_to_bytes(batch.to_snapshot()) == before, "inactive fixture surface rejection is byte-atomic")
@@ -77,35 +77,35 @@ func _test_fixture_layout_round_trip_and_atomic_rejections() -> void:
 	var two_fixture_placements := _two_fixture_placements()
 	var duplicate_instance: Array = [fixture, _second_proof_crate_fixture(fixture.instance_id)]
 	_check(
-		not batch.commit_deck_layout(two_fixture_placements, ProofProfile.profile_id, 2, duplicate_instance, ProofProfile),
+		not batch.commit_deck_layout(two_fixture_placements, ProofProfile.profile_id, int(ProofProfile.revision), duplicate_instance, ProofProfile),
 		"duplicate fixture instance ID is rejected"
 	)
 	_check(var_to_bytes(batch.to_snapshot()) == before, "duplicate instance rejection is byte-atomic")
 	var duplicate_surface: Array = [fixture, _second_proof_crate_fixture("fixture:crate:1", &"Crate_00")]
 	_check(
-		not batch.commit_deck_layout(two_fixture_placements, ProofProfile.profile_id, 2, duplicate_surface, ProofProfile),
+		not batch.commit_deck_layout(two_fixture_placements, ProofProfile.profile_id, int(ProofProfile.revision), duplicate_surface, ProofProfile),
 		"duplicate fixture surface ID is rejected"
 	)
 	_check(var_to_bytes(batch.to_snapshot()) == before, "duplicate surface rejection is byte-atomic")
 	var duplicate_socket: Array = [fixture, FixtureInstanceScript.create(
 		"fixture:crate:1", &"crate_plastic_06", 0, &"crate_front_left", &"Crate_01",
-		Vector2i(1, 14), 0, Vector2i(5, 7), Transform3D.IDENTITY
+		Vector2i(1, 13), 0, Vector2i(5, 7), Transform3D.IDENTITY
 	)]
 	_check(
-		not batch.commit_deck_layout(two_fixture_placements, ProofProfile.profile_id, 2, duplicate_socket, ProofProfile),
+		not batch.commit_deck_layout(two_fixture_placements, ProofProfile.profile_id, int(ProofProfile.revision), duplicate_socket, ProofProfile),
 		"duplicate fixture socket ID is rejected"
 	)
 	_check(var_to_bytes(batch.to_snapshot()) == before, "duplicate socket rejection is byte-atomic")
 
 	var empty_fixture_placements := _placements(&"MainDeck")
 	_check(
-		not batch.commit_deck_layout(empty_fixture_placements, ProofProfile.profile_id, 2, [fixture], ProofProfile),
+		not batch.commit_deck_layout(empty_fixture_placements, ProofProfile.profile_id, int(ProofProfile.revision), [fixture], ProofProfile),
 		"fixture with no assigned item is rejected"
 	)
 	_check(var_to_bytes(batch.to_snapshot()) == before, "empty fixture rejection is byte-atomic")
 
 	_check(
-		batch.commit_deck_layout(placements, ProofProfile.profile_id, 2, [fixture], ProofProfile),
+		batch.commit_deck_layout(placements, ProofProfile.profile_id, int(ProofProfile.revision), [fixture], ProofProfile),
 		"valid fixture-aware layout commits"
 	)
 	_check(batch.presentation_fixtures.size() == 1, "committed fixture is exposed through a read copy")
@@ -139,10 +139,10 @@ func _proof_crate_fixture(
 		0,
 		&"crate_front_left",
 		surface_id,
-		Vector2i(1, 14),
+		Vector2i(1, 13),
 		0,
 		Vector2i(5, 6),
-		Transform3D(Basis.IDENTITY, Vector3(-1.2, 0.0, 0.7))
+		Transform3D(Basis.IDENTITY, Vector3(-1.15, 0.0, 0.6))
 	)
 
 
@@ -156,10 +156,10 @@ func _second_proof_crate_fixture(
 		0,
 		&"crate_middle_center",
 		surface_id,
-		Vector2i(12, 7),
-		1,
-		Vector2i(7, 5),
-		Transform3D(Basis(Vector3.UP, PI * 0.5), Vector3.ZERO)
+		Vector2i(12, 13),
+		0,
+		Vector2i(5, 7),
+		Transform3D(Basis.IDENTITY, Vector3(-0.05, 0.0, 0.65))
 	)
 
 

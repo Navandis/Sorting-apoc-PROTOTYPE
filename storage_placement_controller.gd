@@ -187,7 +187,7 @@ func update_target() -> void:
 		var stack_target: WorldItem = _get_looked_at_stored_world_item()
 		if stack_target != null:
 			var stack_surface: Node = stack_target.get_storage_surface()
-			if stack_surface != null:
+			if _surface_accepts_player_storage_interaction(stack_surface):
 				_current_surface = stack_surface
 				_set_manual_debug_surface(stack_surface)
 				var stack_unit_state := int(
@@ -226,7 +226,7 @@ func update_target() -> void:
 		return
 
 	var surface: Node = _find_storage_surface(collider_value as Node)
-	if surface == null:
+	if not _surface_accepts_player_storage_interaction(surface):
 		_hide_ghost()
 		_set_manual_debug_surface(null)
 		return
@@ -282,7 +282,11 @@ func _storage_category_display_text(category: String) -> String:
 
 
 func place_selected() -> bool:
-	if not has_valid_placement() or _carried_items == null:
+	if (
+		not has_valid_placement()
+		or _carried_items == null
+		or not _surface_accepts_player_storage_interaction(_current_surface)
+	):
 		return false
 
 	var selected_item: Variant = _carried_items.get_selected_item()
@@ -820,6 +824,14 @@ func _find_storage_surface(node: Node) -> Node:
 			break
 		current = current.get_parent()
 	return null
+
+
+func _surface_accepts_player_storage_interaction(surface: Node) -> bool:
+	return (
+		surface != null
+		and surface.has_method("is_player_storage_interaction_enabled")
+		and bool(surface.is_player_storage_interaction_enabled())
+	)
 
 
 func _set_manual_debug_surface(surface: Node) -> void:

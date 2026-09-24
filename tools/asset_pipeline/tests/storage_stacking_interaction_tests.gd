@@ -27,6 +27,7 @@ func _run() -> void:
 			return
 	probe.free()
 	_definitions = _definitions_by_id()
+	await _test_manual_stack_target_respects_surface_interaction_opt_out()
 	_test_canonical_first_and_alternate_only_at_nonzero_state()
 	_test_committed_item_orientation_is_stable()
 	_test_flat_media_and_pose_cache()
@@ -46,6 +47,85 @@ func _run() -> void:
 		return
 	print("PASS: storage stacking interaction tests")
 	quit(0)
+
+
+func _test_manual_stack_target_respects_surface_interaction_opt_out() -> void:
+	var surface: StorageSurface = StorageSurfaceScript.new()
+	root.add_child(surface)
+	surface.configure(&"private_receiving_fixture", 0.801, 0.801, 0.10, 1.0)
+	surface.set_debug_visible(false)
+	var carried: CarriedItems = CarriedItemsScript.new()
+	carried.max_bulk = 999
+	root.add_child(carried)
+	var camera := Camera3D.new()
+	root.add_child(camera)
+	var controller: StoragePlacementController = StoragePlacementControllerScript.new()
+	root.add_child(controller)
+	controller.configure(camera, carried, 1.8)
+
+	var base: ItemInstance = _item(&"loot_000031")
+	_check(
+		_place_manual_empty(controller, carried, surface, base, Vector2i(3, 3)),
+		"private-target fixture starts with a real stored base"
+	)
+	var stack: StorageStack = surface.get_storage_stack(base.instance_id)
+	_check(stack != null and stack.entries.size() == 1, "private-target fixture owns one stack member")
+	if stack == null or stack.entries.is_empty():
+		controller.free()
+		camera.free()
+		carried.free()
+		surface.free()
+		return
+	var base_world_item: WorldItem = stack.entries[0].world_item as WorldItem
+	var pickup_shape := base_world_item.get_node_or_null("PickupArea/PickupShape") as CollisionShape3D
+	_check(pickup_shape != null, "private-target fixture exposes the real stored-item pickup shape")
+	if pickup_shape == null:
+		controller.free()
+		camera.free()
+		carried.free()
+		surface.free()
+		return
+
+	var target_position: Vector3 = pickup_shape.global_position
+	camera.global_position = target_position + Vector3(0.0, 0.15, 1.0)
+	camera.look_at(target_position)
+	var incoming: ItemInstance = _item(&"loot_000031")
+	_check(carried.add_item(incoming), "compatible private-target item enters carry")
+	surface.set_player_storage_interaction_enabled(false)
+	await physics_frame
+	await physics_frame
+	_check(
+		controller.call("_get_looked_at_stored_world_item") == base_world_item,
+		"private-target ray genuinely hits the stored WorldItem"
+	)
+	controller.set_manual_mode(true)
+	controller.update_target()
+
+	_check(not controller.is_targeting_surface(), "private stored item cannot expose a PUT target")
+	_check(not controller.has_valid_placement(), "private stored item cannot expose a valid fit")
+	var ghost := controller.get("_ghost_host") as Node3D
+	_check(ghost != null and not ghost.visible, "private stored item cannot expose a placement ghost")
+	_check(not surface.is_debug_visible(), "private stored item cannot expose a storage debug grid")
+	_check(controller.get_prompt_text().is_empty(), "private stored item cannot expose a PUT prompt")
+	_check(not controller.place_selected(), "private stored item rejects placement")
+	_check(carried.get_selected_item() == incoming, "rejected private PUT retains the carried item")
+	_check(stack.entries.size() == 1, "rejected private PUT leaves the existing stack unchanged")
+
+	surface.set_player_storage_interaction_enabled(true)
+	controller.update_target()
+	_check(controller.is_targeting_surface(), "ordinary stored item remains a manual PUT target")
+	_check(controller.has_valid_placement(), "ordinary stored item still accepts a compatible stack fit")
+	_check(ghost.visible, "ordinary stored item still exposes the placement ghost")
+	_check(surface.is_debug_visible(), "ordinary stored item still exposes the manual debug grid")
+	_check(not controller.get_prompt_text().is_empty(), "ordinary stored item still exposes the PUT prompt")
+	_check(controller.place_selected(), "ordinary stored item still accepts manual placement")
+	_check(carried.get_selected_item() == null, "successful ordinary PUT consumes the carried item")
+	_check(stack.entries.size() == 2, "successful ordinary PUT extends the existing stack")
+
+	controller.free()
+	camera.free()
+	carried.free()
+	surface.free()
 
 
 func _test_canonical_first_and_alternate_only_at_nonzero_state() -> void:

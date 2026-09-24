@@ -11,6 +11,7 @@ const LootBatchEntryScript = preload("res://receiving/loot_batch_entry.gd")
 const LootSourceScript = preload("res://receiving/prototype_loot_source.gd")
 const ReceivingManagerScript = preload("res://receiving/receiving_manager.gd")
 const StorageStackScript = preload("res://storage_stack.gd")
+const StoragePlacementControllerScript = preload("res://storage_placement_controller.gd")
 const StorageSurfaceScript = preload("res://storage_surface.gd")
 const WorldItemScript = preload("res://world_item.gd")
 const PersistentItemCatalog = preload("res://data/items/item_catalog.tres")
@@ -38,6 +39,7 @@ func _run_suite() -> void:
 	await _test_presenter_exact_identity_visibility_release_and_close_boundary()
 	await _test_reconstruction_after_released_base_compacts_without_replanning()
 	await _test_fixture_reconstruction_reservation_and_empty_persistence()
+	await _test_actual_main_deck_and_fixture_stacks_reject_manual_put()
 	_test_fixture_stack_base_take_compacts()
 	await _test_runtime_debug_delivery_is_explicit()
 	_pending_helpers -= 1
@@ -364,6 +366,110 @@ func _test_fixture_reconstruction_reservation_and_empty_persistence() -> void:
 	presenter.free()
 	manager.free()
 	_pending_helpers -= 1
+
+
+func _test_actual_main_deck_and_fixture_stacks_reject_manual_put() -> void:
+	_pending_helpers += 1
+	var runtime := RuntimeScene.instantiate()
+	root.add_child(runtime)
+	await process_frame
+	_check(
+		runtime.call("run_debug_delivery", 1842, 9001, 24, DeckPlannerScript.FixtureMode.MIXED),
+		"private PUT regression mixed delivery prepares"
+	)
+	await physics_frame
+	await physics_frame
+	var presenter = runtime.get_node("ReceivingDeckPresenter")
+	var carried := CarriedItemsScript.new()
+	carried.max_bulk = 99999
+	root.add_child(carried)
+	var camera := Camera3D.new()
+	root.add_child(camera)
+	var controller: StoragePlacementController = StoragePlacementControllerScript.new()
+	root.add_child(controller)
+	controller.configure(camera, carried, 2.3)
+	controller.set_manual_mode(true)
+
+	for surface_kind: String in ["MainDeck", "Fixture"]:
+		var target_context := await _compatible_private_stack_target(
+			presenter.call("get_materialized_world_items") as Array,
+			controller,
+			camera,
+			surface_kind
+		)
+		_check(not target_context.is_empty(), "%s exposes a ray-hit stack with a valid compatible append" % surface_kind)
+		if target_context.is_empty():
+			continue
+		var target := target_context["world_item"] as WorldItem
+		var surface := target.get_storage_surface() as StorageSurface
+		var incoming := target_context["incoming"] as ItemInstance
+		var stack: StorageStack = surface.get_storage_stack(target.get_storage_stack_id())
+		var stack_size_before := stack.entries.size()
+		_check(not surface.is_player_storage_interaction_enabled(), "%s target uses a private opt-out surface" % surface_kind)
+		_check(carried.add_item(incoming), "%s compatible item enters carry" % surface_kind)
+		controller.update_target()
+		_check(not controller.is_targeting_surface(), "%s stack cannot become a PUT target" % surface_kind)
+		_check(not controller.has_valid_placement(), "%s stack exposes no valid PUT fit" % surface_kind)
+		var ghost := controller.get("_ghost_host") as Node3D
+		_check(ghost != null and not ghost.visible, "%s stack exposes no placement ghost" % surface_kind)
+		_check(not surface.is_debug_visible(), "%s stack exposes no private debug grid" % surface_kind)
+		_check(controller.get_prompt_text().is_empty(), "%s stack exposes no PUT prompt" % surface_kind)
+		_check(not controller.place_selected(), "%s stack rejects manual PUT" % surface_kind)
+		_check(carried.get_selected_item() == incoming, "%s rejected PUT retains carried identity" % surface_kind)
+		_check(stack.entries.size() == stack_size_before, "%s rejected PUT leaves its stack unchanged" % surface_kind)
+		carried.remove_item(incoming)
+
+	controller.free()
+	camera.free()
+	carried.free()
+	runtime.free()
+	_pending_helpers -= 1
+
+
+func _compatible_private_stack_target(
+	world_items: Array,
+	controller: StoragePlacementController,
+	camera: Camera3D,
+	surface_kind: String
+) -> Dictionary:
+	for world_value: Variant in world_items:
+		var candidate := world_value as WorldItem
+		if candidate == null:
+			continue
+		var surface := candidate.get_storage_surface() as StorageSurface
+		if surface == null:
+			continue
+		var is_main := surface.surface_id == &"MainDeck"
+		if (surface_kind == "MainDeck") != is_main:
+			continue
+		var shape := candidate.get_node_or_null("PickupArea/PickupShape") as CollisionShape3D
+		if shape == null:
+			continue
+		camera.global_position = shape.global_position + Vector3(0.0, 0.12, 0.8)
+		camera.look_at(shape.global_position)
+		await physics_frame
+		var looked_at := controller.call("_get_looked_at_stored_world_item") as WorldItem
+		if looked_at == null or looked_at.get_storage_surface() != surface:
+			continue
+		var source_item := looked_at.get_item_instance()
+		var incoming := ItemInstanceScript.new(
+			source_item.definition,
+			"private_put_regression:%s" % surface_kind.to_lower()
+		)
+		var unit_state := surface.get_semantic_orientation_quarter_turns()
+		var preferred = controller.call("_entry_for_item", incoming, false, unit_state)
+		var alternate = null
+		var footprint: Vector3i = incoming.get_storage_footprint()
+		if footprint.x != footprint.y:
+			alternate = controller.call("_entry_for_item", incoming, true, unit_state)
+		var fit: Dictionary = surface.find_manual_stack_fit(
+			looked_at.get_storage_stack_id(),
+			preferred,
+			alternate
+		)
+		if bool(fit.get("valid", false)):
+			return {"world_item": looked_at, "incoming": incoming}
+	return {}
 
 
 func _test_fixture_stack_base_take_compacts() -> void:

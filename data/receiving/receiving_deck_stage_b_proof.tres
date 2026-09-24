@@ -25,7 +25,7 @@ enabled = true
 script = ExtResource("3_socket")
 socket_id = &"crate_front_left"
 allowed_family = 0
-main_deck_origin = Vector2i(1, 14)
+main_deck_origin = Vector2i(1, 13)
 quarter_turns = 0
 enabled = true
 
@@ -33,15 +33,15 @@ enabled = true
 script = ExtResource("3_socket")
 socket_id = &"crate_middle_center"
 allowed_family = 0
-main_deck_origin = Vector2i(12, 7)
-quarter_turns = 1
+main_deck_origin = Vector2i(12, 13)
+quarter_turns = 0
 enabled = true
 
 [sub_resource type="Resource" id="ReceivingFreightFixtureSocket_crate_rear_right"]
 script = ExtResource("3_socket")
 socket_id = &"crate_rear_right"
 allowed_family = 0
-main_deck_origin = Vector2i(24, 1)
+main_deck_origin = Vector2i(24, 13)
 quarter_turns = 0
 enabled = true
 
@@ -49,23 +49,23 @@ enabled = true
 script = ExtResource("3_socket")
 socket_id = &"pallet_front_right"
 allowed_family = 1
-main_deck_origin = Vector2i(16, 10)
-quarter_turns = 1
+main_deck_origin = Vector2i(19, 0)
+quarter_turns = 0
 enabled = true
 
 [sub_resource type="Resource" id="ReceivingFreightFixtureSocket_pallet_rear_left"]
 script = ExtResource("3_socket")
 socket_id = &"pallet_rear_left"
 allowed_family = 1
-main_deck_origin = Vector2i(1, 1)
+main_deck_origin = Vector2i(1, 0)
 quarter_turns = 0
 enabled = true
 
 [resource]
 script = ExtResource("1_profile")
 profile_id = &"receiving_deck_stage_b_proof"
-revision = 2
-layout_version = 2
+revision = 3
+layout_version = 3
 cell_size_m = 0.1
 max_layout_attempts = 4
 surfaces = Array[Resource]([SubResource("ReceivingDeckSurfaceSpec_main")])

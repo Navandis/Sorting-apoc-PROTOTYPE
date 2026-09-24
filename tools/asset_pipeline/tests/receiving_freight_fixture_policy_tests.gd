@@ -44,6 +44,7 @@ func _run_suite() -> void:
 	_test_all_fixture_resources_load_and_validate()
 	_test_profile_rejects_wrong_types_and_duplicate_ids()
 	_test_profile_backward_compatibility_and_proof_authoring()
+	_test_proof_socket_front_rear_contract_and_full_arrangement()
 	_test_calibration_scene_previews_fixture_and_item()
 	_pending_helpers -= 1
 
@@ -239,6 +240,88 @@ func _test_profile_backward_compatibility_and_proof_authoring() -> void:
 	_check(family_counts[0] >= 3, "proof profile provides at least three crate candidates")
 	_check(family_counts[1] >= 2, "proof profile provides at least two pallet candidates")
 	_pending_helpers -= 1
+
+
+# Catches sockets that are individually in bounds but put freight in the wrong
+# front/rear band, overlap another candidate, or fail for a calibrated variant.
+func _test_proof_socket_front_rear_contract_and_full_arrangement() -> void:
+	_pending_helpers += 1
+	var definitions := PROOF_PROFILE.get("freight_fixture_definitions") as Array[Resource]
+	var sockets := PROOF_PROFILE.get("freight_fixture_sockets") as Array[Resource]
+	var enabled_definitions: Array[Resource] = []
+	var enabled_sockets: Array[Resource] = []
+	for definition: Resource in definitions:
+		if definition != null and bool(definition.get("enabled")):
+			enabled_definitions.append(definition)
+	for socket: Resource in sockets:
+		if socket != null and bool(socket.get("enabled")):
+			enabled_sockets.append(socket)
+
+	var family_counts := [0, 0]
+	for socket: Resource in enabled_sockets:
+		var family := int(socket.get("allowed_family"))
+		family_counts[family] += 1
+		var origin := socket.get("main_deck_origin") as Vector2i
+		if family == 1:
+			_check(origin.y == 0, "%s anchors pallets at rear row 0" % String(socket.get("socket_id")))
+		for definition: Resource in enabled_definitions:
+			if int(definition.get("family")) != family:
+				continue
+			var footprint := _socket_footprint(socket, definition)
+			_check(
+				origin.x + footprint.x <= 30 and origin.y + footprint.y <= 20,
+				"%s fits calibrated %s inside MainDeck" % [String(socket.get("socket_id")), String(definition.get("fixture_id"))]
+			)
+			if family == 0:
+				_check(
+					origin.y + footprint.y >= 19,
+					"%s keeps calibrated %s in the front two rows" % [String(socket.get("socket_id")), String(definition.get("fixture_id"))]
+				)
+
+	_check(family_counts == [3, 2], "proof profile exposes exactly three crate and two pallet candidates")
+	for left_index: int in range(enabled_sockets.size()):
+		var left_socket := enabled_sockets[left_index]
+		for right_index: int in range(left_index + 1, enabled_sockets.size()):
+			var right_socket := enabled_sockets[right_index]
+			for left_definition: Resource in enabled_definitions:
+				if int(left_definition.get("family")) != int(left_socket.get("allowed_family")):
+					continue
+				for right_definition: Resource in enabled_definitions:
+					if int(right_definition.get("family")) != int(right_socket.get("allowed_family")):
+						continue
+					_check(
+						not _socket_rects_overlap(left_socket, left_definition, right_socket, right_definition),
+						"%s/%s and %s/%s can coexist" % [
+							String(left_socket.get("socket_id")),
+							String(left_definition.get("fixture_id")),
+							String(right_socket.get("socket_id")),
+							String(right_definition.get("fixture_id")),
+						]
+					)
+	_pending_helpers -= 1
+
+
+func _socket_footprint(socket: Resource, definition: Resource) -> Vector2i:
+	var footprint := definition.get("base_footprint") as Vector2i
+	return Vector2i(footprint.y, footprint.x) if int(socket.get("quarter_turns")) % 2 == 1 else footprint
+
+
+func _socket_rects_overlap(
+	left_socket: Resource,
+	left_definition: Resource,
+	right_socket: Resource,
+	right_definition: Resource
+) -> bool:
+	var left_origin := left_socket.get("main_deck_origin") as Vector2i
+	var right_origin := right_socket.get("main_deck_origin") as Vector2i
+	var left_size := _socket_footprint(left_socket, left_definition)
+	var right_size := _socket_footprint(right_socket, right_definition)
+	return (
+		left_origin.x < right_origin.x + right_size.x
+		and left_origin.x + left_size.x > right_origin.x
+		and left_origin.y < right_origin.y + right_size.y
+		and left_origin.y + left_size.y > right_origin.y
+	)
 
 
 # Catches the retained authoring scene failing to materialize the calibrated fixture or canonical item pose.
