@@ -64,8 +64,8 @@ enabled = true
 [resource]
 script = ExtResource("1_profile")
 profile_id = &"receiving_deck_stage_b_proof"
-revision = 1
-layout_version = 1
+revision = 2
+layout_version = 2
 cell_size_m = 0.1
 max_layout_attempts = 4
 surfaces = Array[Resource]([SubResource("ReceivingDeckSurfaceSpec_main")])

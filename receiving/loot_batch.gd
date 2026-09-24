@@ -3,6 +3,8 @@ class_name LootBatch
 
 const ItemInstanceScript = preload("res://item_instance.gd")
 const LootBatchEntryScript = preload("res://receiving/loot_batch_entry.gd")
+const FreightFixtureInstanceScript = preload("res://receiving/receiving_freight_fixture_instance.gd")
+const FreightFixturePolicyScript = preload("res://receiving/receiving_freight_fixture_policy.gd")
 
 const STATE_CONTENT_COMMITTED: StringName = &"CONTENT_COMMITTED"
 const STATE_PREPARED: StringName = &"PREPARED"
@@ -18,6 +20,7 @@ var _preparation_state: StringName = STATE_CONTENT_COMMITTED
 var _presentation_profile_id: StringName = &""
 var _presentation_profile_revision: int = 0
 var _entries: Array[LootBatchEntry] = []
+var _presentation_fixtures: Array[ReceivingFreightFixtureInstance] = []
 
 var batch_id: String:
 	set(_value):
@@ -76,6 +79,14 @@ var entries: Array[LootBatchEntry]:
 		var read_view: Array[LootBatchEntry] = []
 		for entry: LootBatchEntry in _entries:
 			read_view.append(LootBatchEntryScript.from_snapshot(entry.to_snapshot()))
+		return read_view
+var presentation_fixtures: Array[ReceivingFreightFixtureInstance]:
+	set(_value):
+		pass
+	get:
+		var read_view: Array[ReceivingFreightFixtureInstance] = []
+		for fixture: ReceivingFreightFixtureInstance in _presentation_fixtures:
+			read_view.append(FreightFixtureInstanceScript.from_snapshot(fixture.to_snapshot()))
 		return read_view
 
 
@@ -162,7 +173,9 @@ func commit_arrangement(
 func commit_deck_layout(
 	placements_by_entry_id: Dictionary,
 	profile_id: StringName,
-	profile_revision: int
+	profile_revision: int,
+	fixtures: Array = [],
+	profile: Resource = null
 ) -> bool:
 	if _preparation_state != STATE_CONTENT_COMMITTED:
 		return false
@@ -248,6 +261,22 @@ func commit_deck_layout(
 			if not group_indices.has(expected_index):
 				return false
 
+	var validated_fixtures: Array[ReceivingFreightFixtureInstance] = []
+	for fixture_value: Variant in fixtures:
+		if not fixture_value is ReceivingFreightFixtureInstance:
+			return false
+		var fixture: ReceivingFreightFixtureInstance = fixture_value as ReceivingFreightFixtureInstance
+		var owned_fixture: ReceivingFreightFixtureInstance = FreightFixtureInstanceScript.from_snapshot(
+			fixture.to_snapshot()
+		)
+		if owned_fixture == null:
+			return false
+		validated_fixtures.append(owned_fixture)
+	if not _validate_fixture_commit(
+		validated_fixtures, validated, profile_id, profile_revision, profile
+	):
+		return false
+
 	for entry: LootBatchEntry in _entries:
 		if not entry.remaining_in_batch:
 			continue
@@ -262,6 +291,7 @@ func commit_deck_layout(
 		)
 	_presentation_profile_id = profile_id
 	_presentation_profile_revision = profile_revision
+	_presentation_fixtures = validated_fixtures
 	_preparation_state = STATE_PREPARED
 	return true
 
@@ -299,6 +329,9 @@ func to_snapshot() -> Dictionary:
 	var entry_snapshots: Array[Dictionary] = []
 	for entry: LootBatchEntry in _entries:
 		entry_snapshots.append(entry.to_snapshot())
+	var fixture_snapshots: Array[Dictionary] = []
+	for fixture: ReceivingFreightFixtureInstance in _presentation_fixtures:
+		fixture_snapshots.append(fixture.to_snapshot())
 	return {
 		"batch_id": _batch_id,
 		"source_kind": _source_kind,
@@ -310,6 +343,7 @@ func to_snapshot() -> Dictionary:
 		"preparation_state": _preparation_state,
 		"presentation_profile_id": _presentation_profile_id,
 		"presentation_profile_revision": _presentation_profile_revision,
+		"presentation_fixtures": fixture_snapshots,
 		"entries": entry_snapshots,
 	}
 
@@ -329,6 +363,17 @@ static func from_snapshot(snapshot: Dictionary) -> LootBatch:
 		if entry == null:
 			return null
 		restored_entries.append(entry)
+	var restored_fixtures: Array[ReceivingFreightFixtureInstance] = []
+	var fixture_values: Array = snapshot.get("presentation_fixtures", []) as Array
+	for fixture_value: Variant in fixture_values:
+		if typeof(fixture_value) != TYPE_DICTIONARY:
+			return null
+		var fixture: ReceivingFreightFixtureInstance = FreightFixtureInstanceScript.from_snapshot(
+			fixture_value as Dictionary
+		)
+		if fixture == null:
+			return null
+		restored_fixtures.append(fixture)
 
 	var restored_batch_id: String = String(snapshot["batch_id"])
 	var restored_target_bulk: int = int(snapshot["target_bulk"])
@@ -344,7 +389,8 @@ static func from_snapshot(snapshot: Dictionary) -> LootBatch:
 	var restored_profile_id: StringName = StringName(snapshot["presentation_profile_id"])
 	var restored_profile_revision: int = int(snapshot["presentation_profile_revision"])
 	if not _has_consistent_preparation_snapshot(
-		restored_state, restored_profile_id, restored_profile_revision, restored_entries
+		restored_state, restored_profile_id, restored_profile_revision, restored_entries,
+		restored_fixtures
 	):
 		return null
 
@@ -359,7 +405,8 @@ static func from_snapshot(snapshot: Dictionary) -> LootBatch:
 		restored_state,
 		restored_profile_id,
 		restored_profile_revision,
-		restored_entries
+		restored_entries,
+		restored_fixtures
 	)
 
 
@@ -381,7 +428,8 @@ static func _create_from_validated_values(
 	new_preparation_state: StringName,
 	new_profile_id: StringName,
 	new_profile_revision: int,
-	owned_entries: Array[LootBatchEntry]
+	owned_entries: Array[LootBatchEntry],
+	owned_fixtures: Array[ReceivingFreightFixtureInstance] = []
 ) -> LootBatch:
 	var batch: LootBatch = LootBatch.new()
 	batch._batch_id = new_batch_id
@@ -395,6 +443,7 @@ static func _create_from_validated_values(
 	batch._presentation_profile_id = new_profile_id
 	batch._presentation_profile_revision = new_profile_revision
 	batch._entries = owned_entries
+	batch._presentation_fixtures = owned_fixtures
 	return batch
 
 
@@ -448,6 +497,8 @@ static func _has_valid_batch_snapshot_fields(snapshot: Dictionary) -> bool:
 		return false
 	if typeof(snapshot.get("presentation_profile_revision")) != TYPE_INT:
 		return false
+	if snapshot.has("presentation_fixtures") and typeof(snapshot.get("presentation_fixtures")) != TYPE_ARRAY:
+		return false
 	return typeof(snapshot.get("entries")) == TYPE_ARRAY
 
 
@@ -455,10 +506,11 @@ static func _has_consistent_preparation_snapshot(
 	state: StringName,
 	profile_id: StringName,
 	profile_revision: int,
-	restored_entries: Array[LootBatchEntry]
+	restored_entries: Array[LootBatchEntry],
+	restored_fixtures: Array[ReceivingFreightFixtureInstance]
 ) -> bool:
 	if state == STATE_CONTENT_COMMITTED:
-		if profile_id != &"" or profile_revision != 0:
+		if profile_id != &"" or profile_revision != 0 or not restored_fixtures.is_empty():
 			return false
 		for entry: LootBatchEntry in restored_entries:
 			if entry.has_frozen_transform or entry.has_deck_layout:
@@ -469,7 +521,10 @@ static func _has_consistent_preparation_snapshot(
 	for entry: LootBatchEntry in restored_entries:
 		if entry.remaining_in_batch and not entry.has_frozen_transform:
 			return false
-	return _has_consistent_deck_snapshot(restored_entries)
+	return (
+		_has_consistent_deck_snapshot(restored_entries)
+		and _has_consistent_fixture_snapshot(restored_entries, restored_fixtures)
+	)
 
 
 static func _has_consistent_deck_snapshot(restored_entries: Array[LootBatchEntry]) -> bool:
@@ -513,6 +568,181 @@ static func _has_consistent_deck_snapshot(restored_entries: Array[LootBatchEntry
 			if not indices.has(expected_index):
 				return false
 	return true
+
+
+static func _validate_fixture_commit(
+	fixtures: Array[ReceivingFreightFixtureInstance],
+	placements: Dictionary,
+	profile_id: StringName,
+	profile_revision: int,
+	profile: Resource
+) -> bool:
+	if profile == null:
+		return fixtures.is_empty()
+	if (
+		profile.get("profile_id") != profile_id
+		or int(profile.get("revision")) != profile_revision
+		or not (profile.call("validate") as PackedStringArray).is_empty()
+	):
+		return false
+
+	var allowed_surfaces: Dictionary = {}
+	var main_deck_spec: Resource = null
+	for surface: Resource in profile.get("surfaces") as Array[Resource]:
+		if surface == null or not bool(surface.get("enabled")):
+			continue
+		var surface_id: StringName = surface.get("surface_id") as StringName
+		allowed_surfaces[surface_id] = true
+		if surface_id == &"MainDeck":
+			main_deck_spec = surface
+
+	var definitions: Dictionary = {}
+	for definition: Resource in profile.get("freight_fixture_definitions") as Array[Resource]:
+		if definition != null and bool(definition.get("enabled")):
+			definitions[definition.get("fixture_id") as StringName] = definition
+	var sockets: Dictionary = {}
+	for socket: Resource in profile.get("freight_fixture_sockets") as Array[Resource]:
+		if socket != null and bool(socket.get("enabled")):
+			sockets[socket.get("socket_id") as StringName] = socket
+
+	var instance_ids: Dictionary = {}
+	var surface_ids: Dictionary = {}
+	var socket_ids: Dictionary = {}
+	var definition_keys: Dictionary = {}
+	var occupied_main_deck_cells: Dictionary = {}
+	var referenced_surfaces: Dictionary = {}
+	var crate_count := 0
+	var pallet_count := 0
+	var main_grid := Vector2i.ZERO
+	if main_deck_spec != null:
+		var cell_size_m := float(profile.get("cell_size_m"))
+		main_grid = Vector2i(
+			floori(float(main_deck_spec.get("usable_width_m")) / cell_size_m),
+			floori(float(main_deck_spec.get("usable_depth_m")) / cell_size_m)
+		)
+
+	for fixture: ReceivingFreightFixtureInstance in fixtures:
+		if fixture == null or not fixture.validate().is_empty():
+			return false
+		if (
+			instance_ids.has(fixture.instance_id)
+			or surface_ids.has(fixture.surface_id)
+			or socket_ids.has(fixture.socket_id)
+		):
+			return false
+		if not _is_stable_fixture_surface_id(fixture.surface_id, fixture.family):
+			return false
+		if not definitions.has(fixture.fixture_definition_id) or not sockets.has(fixture.socket_id):
+			return false
+		var definition: Resource = definitions[fixture.fixture_definition_id] as Resource
+		var socket: Resource = sockets[fixture.socket_id] as Resource
+		if (
+			int(definition.get("family")) != fixture.family
+			or int(socket.get("allowed_family")) != fixture.family
+			or socket.get("main_deck_origin") != fixture.main_deck_origin
+			or int(socket.get("quarter_turns")) != fixture.quarter_turns
+		):
+			return false
+		var expected_footprint: Vector2i = definition.get("base_footprint") as Vector2i
+		if fixture.quarter_turns % 2 == 1:
+			expected_footprint = Vector2i(expected_footprint.y, expected_footprint.x)
+		if fixture.base_footprint != expected_footprint:
+			return false
+		if main_deck_spec == null or fixture.main_deck_origin.x + fixture.base_footprint.x > main_grid.x or fixture.main_deck_origin.y + fixture.base_footprint.y > main_grid.y:
+			return false
+		var definition_key := "%d:%s" % [fixture.family, String(fixture.fixture_definition_id)]
+		if definition_keys.has(definition_key):
+			return false
+		for row: int in range(fixture.main_deck_origin.y, fixture.main_deck_origin.y + fixture.base_footprint.y):
+			for column: int in range(fixture.main_deck_origin.x, fixture.main_deck_origin.x + fixture.base_footprint.x):
+				var cell := Vector2i(column, row)
+				if occupied_main_deck_cells.has(cell):
+					return false
+				occupied_main_deck_cells[cell] = fixture.instance_id
+		instance_ids[fixture.instance_id] = true
+		surface_ids[fixture.surface_id] = true
+		socket_ids[fixture.socket_id] = true
+		definition_keys[definition_key] = true
+		allowed_surfaces[fixture.surface_id] = true
+		if fixture.family == ReceivingFreightFixtureDefinition.FixtureFamily.CRATE:
+			crate_count += 1
+		else:
+			pallet_count += 1
+	if crate_count > FreightFixturePolicyScript.MAX_CRATES or pallet_count > FreightFixturePolicyScript.MAX_PALLETS:
+		return false
+
+	for placement_value: Variant in placements.values():
+		var placement: Dictionary = placement_value as Dictionary
+		var surface_id: StringName = placement["surface_id"] as StringName
+		if not allowed_surfaces.has(surface_id):
+			return false
+		if surface_ids.has(surface_id):
+			referenced_surfaces[surface_id] = true
+	for fixture: ReceivingFreightFixtureInstance in fixtures:
+		if not referenced_surfaces.has(fixture.surface_id):
+			return false
+	return true
+
+
+static func _has_consistent_fixture_snapshot(
+	entries_to_check: Array[LootBatchEntry],
+	fixtures: Array[ReceivingFreightFixtureInstance]
+) -> bool:
+	if fixtures.is_empty():
+		return true
+	var instance_ids: Dictionary = {}
+	var surface_ids: Dictionary = {}
+	var socket_ids: Dictionary = {}
+	var definition_keys: Dictionary = {}
+	var occupied_cells: Dictionary = {}
+	var crate_count := 0
+	var pallet_count := 0
+	for fixture: ReceivingFreightFixtureInstance in fixtures:
+		if fixture == null or not fixture.validate().is_empty():
+			return false
+		if instance_ids.has(fixture.instance_id) or surface_ids.has(fixture.surface_id) or socket_ids.has(fixture.socket_id):
+			return false
+		if not _is_stable_fixture_surface_id(fixture.surface_id, fixture.family):
+			return false
+		var definition_key := "%d:%s" % [fixture.family, String(fixture.fixture_definition_id)]
+		if definition_keys.has(definition_key):
+			return false
+		for row: int in range(fixture.main_deck_origin.y, fixture.main_deck_origin.y + fixture.base_footprint.y):
+			for column: int in range(fixture.main_deck_origin.x, fixture.main_deck_origin.x + fixture.base_footprint.x):
+				var cell := Vector2i(column, row)
+				if occupied_cells.has(cell):
+					return false
+				occupied_cells[cell] = true
+		instance_ids[fixture.instance_id] = true
+		surface_ids[fixture.surface_id] = true
+		socket_ids[fixture.socket_id] = true
+		definition_keys[definition_key] = true
+		if fixture.family == ReceivingFreightFixtureDefinition.FixtureFamily.CRATE:
+			crate_count += 1
+		else:
+			pallet_count += 1
+	if crate_count > FreightFixturePolicyScript.MAX_CRATES or pallet_count > FreightFixturePolicyScript.MAX_PALLETS:
+		return false
+	var referenced_surfaces: Dictionary = {}
+	for entry: LootBatchEntry in entries_to_check:
+		if not entry.has_deck_layout:
+			continue
+		if entry.presentation_surface_id != &"MainDeck" and not surface_ids.has(entry.presentation_surface_id):
+			return false
+		if surface_ids.has(entry.presentation_surface_id):
+			referenced_surfaces[entry.presentation_surface_id] = true
+	for fixture: ReceivingFreightFixtureInstance in fixtures:
+		if not referenced_surfaces.has(fixture.surface_id):
+			return false
+	return true
+
+
+static func _is_stable_fixture_surface_id(surface_id: StringName, family: int) -> bool:
+	if family == ReceivingFreightFixtureDefinition.FixtureFamily.CRATE:
+		return surface_id in [&"Crate_00", &"Crate_01", &"Crate_02"]
+	if family == ReceivingFreightFixtureDefinition.FixtureFamily.PALLET:
+		return surface_id in [&"Pallet_00", &"Pallet_01"]
+	return false
 
 
 static func _is_finite_transform(value: Transform3D) -> bool:

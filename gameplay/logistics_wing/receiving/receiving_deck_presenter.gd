@@ -18,6 +18,7 @@ var _catalog: ItemCatalog = null
 var _profile: Resource = null
 var _state: PresentationState = PresentationState.HIDDEN
 var _surface_wrappers: Dictionary = {}
+var _fixture_roots: Dictionary = {}
 var _world_items_by_entry_id: Dictionary = {}
 var _released_callbacks: Dictionary = {}
 
@@ -52,7 +53,7 @@ func present_active_batch() -> bool:
 		or batch.presentation_profile_revision != int(_profile.get("revision"))
 	):
 		return false
-	if not _rebuild_private_surfaces():
+	if not _rebuild_private_surfaces(batch.presentation_fixtures):
 		return false
 	_world_items_by_entry_id.clear()
 	_released_callbacks.clear()
@@ -115,6 +116,15 @@ func get_private_storage_surfaces() -> Array[StorageSurface]:
 			var surface: StorageSurface = wrapper.call("get_storage_surface") as StorageSurface
 			if surface != null:
 				result.append(surface)
+	return result
+
+
+func get_materialized_fixture_nodes() -> Array[Node3D]:
+	var result: Array[Node3D] = []
+	for value: Variant in _fixture_roots.values():
+		var fixture_root := value as Node3D
+		if fixture_root != null and is_instance_valid(fixture_root):
+			result.append(fixture_root)
 	return result
 
 
@@ -245,12 +255,17 @@ func _release_picked_entry(batch_id: String, entry_id: String, item_instance_id:
 	return true
 
 
-func _rebuild_private_surfaces() -> bool:
+func _rebuild_private_surfaces(fixtures: Array = []) -> bool:
 	for value: Variant in _surface_wrappers.values():
 		var old_wrapper := value as Node3D
 		if old_wrapper != null and is_instance_valid(old_wrapper):
 			old_wrapper.free()
 	_surface_wrappers.clear()
+	for value: Variant in _fixture_roots.values():
+		var old_root := value as Node3D
+		if old_root != null and is_instance_valid(old_root):
+			old_root.free()
+	_fixture_roots.clear()
 	if _profile == null:
 		return false
 	for spec: Resource in _profile.get("surfaces") as Array[Resource]:
@@ -263,7 +278,67 @@ func _rebuild_private_surfaces() -> bool:
 			wrapper.free()
 			return false
 		_surface_wrappers[spec.get("surface_id") as StringName] = wrapper
+	if not fixtures.is_empty() and not _surface_wrappers.has(&"MainDeck"):
+		return false
+	var main_wrapper := _surface_wrappers.get(&"MainDeck") as Node3D
+	var main_surface: StorageSurface = null
+	if main_wrapper != null:
+		main_surface = main_wrapper.call("get_storage_surface") as StorageSurface
+	for fixture_value: Variant in fixtures:
+		if not fixture_value is ReceivingFreightFixtureInstance:
+			return false
+		var fixture: ReceivingFreightFixtureInstance = fixture_value as ReceivingFreightFixtureInstance
+		var definition: Resource = _fixture_definition(fixture.fixture_definition_id)
+		if definition == null or main_surface == null:
+			return false
+		if not main_surface.reserve_at(
+			"__fixture__:%s" % fixture.instance_id,
+			fixture.main_deck_origin,
+			fixture.base_footprint,
+			false
+		):
+			return false
+		var fixture_root := Node3D.new()
+		fixture_root.name = "FreightFixture_%s" % fixture.instance_id.validate_node_name()
+		fixture_root.transform = fixture.local_transform
+		add_child(fixture_root)
+		var visual: Node = (definition.get("visual_scene") as PackedScene).instantiate()
+		fixture_root.add_child(visual)
+		if visual is Node3D:
+			(visual as Node3D).transform = definition.get("visual_local_transform") as Transform3D
+		_fixture_roots[fixture.instance_id] = fixture_root
+
+		var fixture_wrapper: Node3D = DeckSurfaceScript.new()
+		fixture_wrapper.name = "DeckSurface_%s" % String(fixture.surface_id)
+		add_child(fixture_wrapper)
+		var surface_transform := (
+			fixture.local_transform
+			* (definition.get("item_surface_local_transform") as Transform3D)
+		)
+		if not fixture_wrapper.call(
+			"configure_private_surface",
+			fixture.surface_id,
+			surface_transform,
+			float(definition.get("item_surface_usable_width_m")),
+			float(definition.get("item_surface_usable_depth_m")),
+			float(_profile.get("cell_size_m")),
+			float(definition.get("item_surface_stack_clearance_m"))
+		):
+			fixture_wrapper.free()
+			return false
+		_surface_wrappers[fixture.surface_id] = fixture_wrapper
 	return not _surface_wrappers.is_empty()
+
+
+func _fixture_definition(fixture_definition_id: StringName) -> Resource:
+	for definition: Resource in _profile.get("freight_fixture_definitions") as Array[Resource]:
+		if (
+			definition != null
+			and bool(definition.get("enabled"))
+			and definition.get("fixture_id") == fixture_definition_id
+		):
+			return definition
+	return null
 
 
 func _set_materialized_available(available: bool) -> void:

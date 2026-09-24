@@ -26,16 +26,23 @@ func _ready() -> void:
 	var content_seed := _numeric_flag(arguments, "--receiving-content-seed", DEFAULT_CONTENT_SEED)
 	var presentation_seed := _numeric_flag(arguments, "--receiving-presentation-seed", DEFAULT_PRESENTATION_SEED)
 	var target_bulk := _numeric_flag(arguments, "--receiving-target-bulk", DEFAULT_TARGET_BULK)
-	if not run_debug_delivery(content_seed, presentation_seed, target_bulk):
+	var fixture_mode := _fixture_mode_flag(arguments)
+	if fixture_mode < 0:
+		push_error("Receiving debug delivery rejected unknown --receiving-fixture-mode value.")
+		return
+	if not run_debug_delivery(content_seed, presentation_seed, target_bulk, fixture_mode):
 		push_error("Receiving debug delivery failed before deposit.")
 
 
 func run_debug_delivery(
 	content_seed: int = DEFAULT_CONTENT_SEED,
 	presentation_seed: int = DEFAULT_PRESENTATION_SEED,
-	target_bulk: int = DEFAULT_TARGET_BULK
+	target_bulk: int = DEFAULT_TARGET_BULK,
+	fixture_mode: int = DeckPlannerScript.FixtureMode.BARE
 ) -> bool:
 	if item_catalog == null or prototype_loot_pool == null or deck_profile == null or target_bulk <= 0:
+		return false
+	if fixture_mode < DeckPlannerScript.FixtureMode.BARE or fixture_mode > DeckPlannerScript.FixtureMode.MIXED:
 		return false
 	if receiving_manager.get_active_batch() != null:
 		return false
@@ -52,7 +59,9 @@ func run_debug_delivery(
 	)
 	if batch == null:
 		return false
-	var diagnostics = DeckPlannerScript.new().prepare(batch, item_catalog, deck_profile)
+	var diagnostics = DeckPlannerScript.new().prepare(
+		batch, item_catalog, deck_profile, fixture_mode
+	)
 	if not diagnostics.succeeded:
 		push_error("Receiving deck preparation failed: %s" % String(diagnostics.failure_reason))
 		return false
@@ -70,3 +79,22 @@ func _numeric_flag(arguments: PackedStringArray, flag_name: String, fallback: in
 		if value_text.is_valid_int():
 			return int(value_text)
 	return fallback
+
+
+func _fixture_mode_flag(arguments: PackedStringArray) -> int:
+	var prefix := "--receiving-fixture-mode="
+	for argument: String in arguments:
+		if not argument.begins_with(prefix):
+			continue
+		match argument.trim_prefix(prefix).to_lower():
+			"bare":
+				return DeckPlannerScript.FixtureMode.BARE
+			"crates":
+				return DeckPlannerScript.FixtureMode.CRATES_ALLOWED
+			"pallets":
+				return DeckPlannerScript.FixtureMode.PALLETS_ALLOWED
+			"mixed":
+				return DeckPlannerScript.FixtureMode.MIXED
+			_:
+				return -1
+	return DeckPlannerScript.FixtureMode.BARE
