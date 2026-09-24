@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ReceivingFreightFixtureDefinition" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://receiving/receiving_freight_fixture_definition.gd" id="1_definition"]
+[ext_resource type="PackedScene" path="res://assets/environment/dressing/containers/SM_Ind_War_Storage_Pallet_Wood_Worn_07.glb" id="2_visual"]
+
+[resource]
+script = ExtResource("1_definition")
+fixture_id = &"pallet_industrial_worn_07"
+family = 1
+visual_scene = ExtResource("2_visual")
+visual_local_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.012479, 0)
+base_footprint = Vector2i(8, 11)
+item_surface_local_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.133952, 0)
+item_surface_usable_width_m = 0.68
+item_surface_usable_depth_m = 0.96
+item_surface_stack_clearance_m = 1.2
+enabled = true

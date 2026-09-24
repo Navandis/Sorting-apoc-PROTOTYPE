@@ -1,7 +1,16 @@
-[gd_resource type="Resource" script_class="ReceivingDeckProfile" load_steps=3 format=3]
+[gd_resource type="Resource" script_class="ReceivingDeckProfile" load_steps=18 format=3]
 
 [ext_resource type="Script" path="res://receiving/receiving_deck_profile.gd" id="1_profile"]
 [ext_resource type="Script" path="res://receiving/receiving_deck_surface_spec.gd" id="2_surface"]
+[ext_resource type="Script" path="res://receiving/receiving_freight_fixture_socket.gd" id="3_socket"]
+[ext_resource type="Resource" path="res://data/receiving/freight_fixtures/crate_plastic_01.tres" id="4_crate_plastic_01"]
+[ext_resource type="Resource" path="res://data/receiving/freight_fixtures/crate_plastic_06.tres" id="5_crate_plastic_06"]
+[ext_resource type="Resource" path="res://data/receiving/freight_fixtures/crate_palletcart_box.tres" id="6_crate_palletcart"]
+[ext_resource type="Resource" path="res://data/receiving/freight_fixtures/crate_wood_01.tres" id="7_crate_wood_01"]
+[ext_resource type="Resource" path="res://data/receiving/freight_fixtures/crate_wood_02.tres" id="8_crate_wood_02"]
+[ext_resource type="Resource" path="res://data/receiving/freight_fixtures/pallet_01.tres" id="9_pallet_01"]
+[ext_resource type="Resource" path="res://data/receiving/freight_fixtures/pallet_wood_03.tres" id="10_pallet_wood_03"]
+[ext_resource type="Resource" path="res://data/receiving/freight_fixtures/pallet_industrial_worn_07.tres" id="11_pallet_industrial"]
 
 [sub_resource type="Resource" id="ReceivingDeckSurfaceSpec_main"]
 script = ExtResource("2_surface")
@@ -12,6 +21,46 @@ usable_depth_m = 2.0
 stack_clearance_m = 1.5
 enabled = true
 
+[sub_resource type="Resource" id="ReceivingFreightFixtureSocket_crate_front_left"]
+script = ExtResource("3_socket")
+socket_id = &"crate_front_left"
+allowed_family = 0
+main_deck_origin = Vector2i(1, 14)
+quarter_turns = 0
+enabled = true
+
+[sub_resource type="Resource" id="ReceivingFreightFixtureSocket_crate_middle_center"]
+script = ExtResource("3_socket")
+socket_id = &"crate_middle_center"
+allowed_family = 0
+main_deck_origin = Vector2i(12, 7)
+quarter_turns = 1
+enabled = true
+
+[sub_resource type="Resource" id="ReceivingFreightFixtureSocket_crate_rear_right"]
+script = ExtResource("3_socket")
+socket_id = &"crate_rear_right"
+allowed_family = 0
+main_deck_origin = Vector2i(24, 1)
+quarter_turns = 0
+enabled = true
+
+[sub_resource type="Resource" id="ReceivingFreightFixtureSocket_pallet_front_right"]
+script = ExtResource("3_socket")
+socket_id = &"pallet_front_right"
+allowed_family = 1
+main_deck_origin = Vector2i(16, 10)
+quarter_turns = 1
+enabled = true
+
+[sub_resource type="Resource" id="ReceivingFreightFixtureSocket_pallet_rear_left"]
+script = ExtResource("3_socket")
+socket_id = &"pallet_rear_left"
+allowed_family = 1
+main_deck_origin = Vector2i(1, 1)
+quarter_turns = 0
+enabled = true
+
 [resource]
 script = ExtResource("1_profile")
 profile_id = &"receiving_deck_stage_b_proof"
@@ -20,3 +69,5 @@ layout_version = 1
 cell_size_m = 0.1
 max_layout_attempts = 4
 surfaces = Array[Resource]([SubResource("ReceivingDeckSurfaceSpec_main")])
+freight_fixture_definitions = Array[Resource]([ExtResource("4_crate_plastic_01"), ExtResource("5_crate_plastic_06"), ExtResource("6_crate_palletcart"), ExtResource("7_crate_wood_01"), ExtResource("8_crate_wood_02"), ExtResource("9_pallet_01"), ExtResource("10_pallet_wood_03"), ExtResource("11_pallet_industrial")])
+freight_fixture_sockets = Array[Resource]([SubResource("ReceivingFreightFixtureSocket_crate_front_left"), SubResource("ReceivingFreightFixtureSocket_crate_middle_center"), SubResource("ReceivingFreightFixtureSocket_crate_rear_right"), SubResource("ReceivingFreightFixtureSocket_pallet_front_right"), SubResource("ReceivingFreightFixtureSocket_pallet_rear_left")])

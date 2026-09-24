@@ -1,0 +1,98 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://gameplay/logistics_wing/receiving/review/receiving_freight_fixture_calibration.gd" id="1_script"]
+[ext_resource type="Resource" path="res://data/receiving/freight_fixtures/crate_plastic_01.tres" id="2_fixture"]
+[ext_resource type="Resource" path="res://data/items/definitions/loot_000022.tres" id="3_item"]
+
+[sub_resource type="Environment" id="Environment_review"]
+background_mode = 1
+background_color = Color(0.035, 0.04, 0.05, 1)
+ambient_light_source = 3
+ambient_light_color = Color(0.8, 0.84, 0.9, 1)
+ambient_light_energy = 0.8
+tonemap_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="Material_floor"]
+albedo_color = Color(0.16, 0.18, 0.21, 1)
+metallic = 0.15
+roughness = 0.82
+
+[sub_resource type="BoxMesh" id="Mesh_floor"]
+material = SubResource("Material_floor")
+size = Vector3(2.6, 0.04, 2.8)
+
+[node name="ReceivingFreightFixtureCalibration" type="Node3D"]
+script = ExtResource("1_script")
+fixture_definition = ExtResource("2_fixture")
+preview_item_definition = ExtResource("3_item")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_review")
+
+[node name="KeyLight" type="DirectionalLight3D" parent="."]
+rotation_degrees = Vector3(-52, -32, 0)
+light_color = Color(1, 0.96, 0.9, 1)
+light_energy = 1.3
+shadow_enabled = true
+
+[node name="FillLight" type="OmniLight3D" parent="."]
+position = Vector3(-1.4, 2.1, 1.6)
+light_color = Color(0.72, 0.84, 1, 1)
+light_energy = 2.0
+omni_range = 7.0
+
+[node name="ReviewFloor" type="MeshInstance3D" parent="."]
+position = Vector3(0, -0.022, 0)
+mesh = SubResource("Mesh_floor")
+
+[node name="FixtureVisualRoot" type="Node3D" parent="."]
+
+[node name="ItemPreviewRoot" type="Node3D" parent="."]
+
+[node name="Guides" type="Node3D" parent="."]
+
+[node name="BaseFootprint" type="MeshInstance3D" parent="Guides"]
+
+[node name="BaseGrid" type="Node3D" parent="Guides"]
+
+[node name="ItemSupportPlane" type="MeshInstance3D" parent="Guides"]
+
+[node name="ItemUsableArea" type="MeshInstance3D" parent="Guides"]
+
+[node name="StackClearance" type="MeshInstance3D" parent="Guides"]
+
+[node name="DirectionMarkers" type="Node3D" parent="."]
+
+[node name="Front" type="Label3D" parent="DirectionMarkers"]
+position = Vector3(0, 0.08, 1.0)
+modulate = Color(0.3, 1, 0.45, 1)
+text = "FRONT +Z / APRON"
+font_size = 34
+outline_size = 9
+
+[node name="Rear" type="Label3D" parent="DirectionMarkers"]
+position = Vector3(0, 0.08, -1.0)
+rotation = Vector3(0, 3.14159, 0)
+modulate = Color(1, 0.4, 0.35, 1)
+text = "REAR -Z / LIFT"
+font_size = 34
+outline_size = 9
+
+[node name="ReviewCamera" type="Camera3D" parent="."]
+position = Vector3(1.9, 1.45, 2.5)
+current = true
+fov = 48.0
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="DebugLabel" type="Label" parent="HUD"]
+offset_left = 18.0
+offset_top = 18.0
+offset_right = 980.0
+offset_bottom = 160.0
+theme_override_colors/font_color = Color(0.92, 0.96, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.9)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 17
+text = "Receiving freight fixture calibration"
