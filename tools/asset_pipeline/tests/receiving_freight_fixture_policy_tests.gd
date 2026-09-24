@@ -11,14 +11,14 @@ const POLICY_SCRIPT_PATH := "res://receiving/receiving_freight_fixture_policy.gd
 const CALIBRATION_SCENE_PATH := "res://gameplay/logistics_wing/receiving/review/receiving_freight_fixture_calibration.tscn"
 
 const FIXTURE_CASES: Array[Dictionary] = [
-	{"path": "res://data/receiving/freight_fixtures/crate_plastic_01.tres", "id": &"crate_plastic_01", "family": 0},
-	{"path": "res://data/receiving/freight_fixtures/crate_plastic_06.tres", "id": &"crate_plastic_06", "family": 0},
-	{"path": "res://data/receiving/freight_fixtures/crate_palletcart_box.tres", "id": &"crate_palletcart_box", "family": 0},
-	{"path": "res://data/receiving/freight_fixtures/crate_wood_01.tres", "id": &"crate_wood_01", "family": 0},
-	{"path": "res://data/receiving/freight_fixtures/crate_wood_02.tres", "id": &"crate_wood_02", "family": 0},
-	{"path": "res://data/receiving/freight_fixtures/pallet_01.tres", "id": &"pallet_01", "family": 1},
-	{"path": "res://data/receiving/freight_fixtures/pallet_wood_03.tres", "id": &"pallet_wood_03", "family": 1},
-	{"path": "res://data/receiving/freight_fixtures/pallet_industrial_worn_07.tres", "id": &"pallet_industrial_worn_07", "family": 1},
+	{"path": "res://data/receiving/freight_fixtures/crate_plastic_01.tres", "id": &"crate_plastic_01", "family": 0, "clearance": 0.52},
+	{"path": "res://data/receiving/freight_fixtures/crate_plastic_06.tres", "id": &"crate_plastic_06", "family": 0, "clearance": 0.52},
+	{"path": "res://data/receiving/freight_fixtures/crate_palletcart_box.tres", "id": &"crate_palletcart_box", "family": 0, "clearance": 0.52},
+	{"path": "res://data/receiving/freight_fixtures/crate_wood_01.tres", "id": &"crate_wood_01", "family": 0, "clearance": 0.52},
+	{"path": "res://data/receiving/freight_fixtures/crate_wood_02.tres", "id": &"crate_wood_02", "family": 0, "clearance": 0.52},
+	{"path": "res://data/receiving/freight_fixtures/pallet_01.tres", "id": &"pallet_01", "family": 1, "clearance": 0.96},
+	{"path": "res://data/receiving/freight_fixtures/pallet_wood_03.tres", "id": &"pallet_wood_03", "family": 1, "clearance": 0.96},
+	{"path": "res://data/receiving/freight_fixtures/pallet_industrial_worn_07.tres", "id": &"pallet_industrial_worn_07", "family": 1, "clearance": 0.96},
 ]
 
 var _failures := 0
@@ -161,6 +161,13 @@ func _test_all_fixture_resources_load_and_validate() -> void:
 		_check(not seen_ids.has(fixture_id), "%s is unique" % String(fixture_id))
 		seen_ids[fixture_id] = true
 		_check(int(fixture.get("family")) == int(fixture_case["family"]), "%s has expected family" % path)
+		_check(
+			is_equal_approx(
+				float(fixture.get("item_surface_stack_clearance_m")),
+				float(fixture_case["clearance"])
+			),
+			"%s has human-reviewed stack clearance" % path
+		)
 		var visual := fixture.get("visual_scene") as PackedScene
 		_check(visual != null, "%s resolves its local visual scene" % path)
 		if visual != null:

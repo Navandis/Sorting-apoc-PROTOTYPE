@@ -13,5 +13,5 @@ base_footprint = Vector2i(10, 13)
 item_surface_local_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.12, 0)
 item_surface_usable_width_m = 0.88
 item_surface_usable_depth_m = 1.18
-item_surface_stack_clearance_m = 1.2
+item_surface_stack_clearance_m = 0.96
 enabled = true
