@@ -1,12 +1,15 @@
 # Receiving deterministic deck presenter validation
 
-Status: **IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN RE-REVIEW PENDING**
+Status: **IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN REVIEW COMPLETE / HUMAN-PROMOTED IN TESTED STAGE B SCOPE**
 
 ## Validation identity
 
 - Branch: `codex/receiving-deterministic-deck`
 - Validated implementation HEAD: `5d355ed5cad137478ed2f06896b2e71640079ef7`
-- Promoted baseline: `f2ed1b019c9e07a57e51896a5603f5e213c2fb14`
+- Spatial-correction implementation commit: `d8d931b` (`fix: refine Receiving deck presentation geometry`)
+- Spatial-correction validation branch tip: `e2a79b137e54e82cc3a8eb525d72e9fb631d0cbd`
+- Final promotion/closure documentation commit: the commit containing the final human-promotion section below (`docs: promote deterministic Receiving deck presenter`)
+- Feature-branch base / previously promoted main: `f2ed1b019c9e07a57e51896a5603f5e213c2fb14`
 - Engine: `4.7.stable.official.5b4e0cb0f`
 - Profile: `receiving_deck_stage_b_proof`, revision 1, layout version 1
 
@@ -164,4 +167,37 @@ $godot = 'D:\AI Tools\Godot-4.7-Codex\Godot_v4.7-stable_win64_console.exe'
 & $godot --path . -- --receiving-deck-debug --receiving-content-seed=1842 --receiving-presentation-seed=9002 --receiving-target-bulk=24
 ```
 
-Re-review is limited to corrected front-to-rear fill, the 5 cm physical border, front-row visibility from the barrier, rear exposed targeting, representative base-TAKE compression, and continued absence of storage affordances. Disposition remains **PROMOTE / REVISE**.
+Re-review was limited to corrected front-to-rear fill, the 5 cm physical border, front-row visibility from the barrier, rear exposed targeting, representative base-TAKE compression, and continued absence of storage affordances. The resulting final human disposition is recorded below.
+
+## Final human promotion
+
+Human re-review disposition: **PROMOTE**.
+
+The deterministic seeded TAKE-only deck presenter is human-promoted in its tested Receiving Stage B scope. Review confirmed:
+
+- Selective unloading provides the intended planning loop instead of requiring blind batch drainage.
+- Natural foreground/rear occlusion preserves useful discovery and front-to-back wrapper layers.
+- Existing legal stacks provide useful occlusion while retaining the established storage-stack behavior.
+- All visible or exposed items tested were targetable, and the reviewed batches were drainable.
+- Receiving-specific TAKE reach is comfortable for the current geometry.
+- Presentation variety reads as irregular freight rather than ordinary player storage.
+- The **3.00 m × 2.00 m** functional area currently feels appropriate.
+- FRONT and REAR are now configured correctly: fill proceeds from local `+Z` / player-barrier-apron side toward local `-Z` / lift interior.
+- The centered **3.10 m × 2.10 m** support and **0.05 m** non-reservable border prevent the reviewed outer-row items from visibly bleeding over the platform edge.
+- Moving the deck 0.20 m rearward to origin `(-40.905, 0.82, 0.0)` made small items in the front-most usable row visible and pickable from the barrier.
+- The current **2.1 m** Receiving-only reach is accepted; it remains separate from **1.4 m** loose reach and **2.3 m** ordinary storage reach.
+- No Receiving PUT affordance, zoning, labels, manual placement, visible grid, or F6 Receiving grid is exposed.
+- The private Receiving surface remains excluded from the wing's **16** ordinary functional storage surfaces, and the deck remains TAKE-only.
+- Expedition/Receiving Stage A remains the authority for exact returned content; Stage B presents that exact batch without adding, removing, replacing, or biasing loot.
+
+### Promotion boundary and future checks
+
+This promotion accepts the architecture and current **3.00 m × 2.00 m usable / 3.10 m × 2.10 m support / 2.1 m Receiving reach** configuration as the working Stage B production baseline. These are authorable current values, not immutable final lift dimensions or balance constants.
+
+- Recheck rear-item readability when production elevator lighting exists.
+- Re-evaluate capacity, width, and depth as catalogue size and Expedition minimum/average/maximum return volumes become better understood; this proof does not establish final maximum loot volume.
+- Allow stack frequency to evolve naturally with catalogue stack-group metadata; do not increase it artificially as part of this closure.
+- Low functional freight pallets, shallow boxes, trays, crates, plates, or mats remain approved future presentation directions, but are not part of this promotion.
+- Reveal/shutter theatre, cue hooks, and Receiving Stage C physical queue pressure remain separately scoped future work.
+
+The prior irregular frozen-pile approach remains **REJECTED FOR PRODUCTION**. Its isolated scenes, tests, and records remain historical research evidence rather than current production authority.
