@@ -137,7 +137,8 @@ func _test_snapshot_round_trip_preserves_identity_state_and_transform() -> void:
 	_check(batch.mark_entry_released("entry_0000", "batch_a:item_0000"))
 
 	var snapshot: Dictionary = batch.to_snapshot()
-	_check(snapshot.keys().size() == 11)
+	_check(snapshot.keys().size() == 12)
+	_check((snapshot["presentation_fixtures"] as Array).is_empty())
 	_check(not snapshot.has("arranging"))
 	_check(not snapshot.has("preparation_job"))
 	_check(not snapshot.has("velocities"))

@@ -1,12 +1,12 @@
 # Receiving functional freight fixtures validation
 
-Status: **WAVE 1 IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN CALIBRATION REVIEW COMPLETE / REVISION APPLIED**
+Status: **WAVE 2 IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN REVIEW PENDING**
 
 ## Scope and authority
 
 Wave 1 adds Receiving-only freight-fixture definitions, candidate sockets, pure size/eligibility policy, focused tests, and a retained calibration scene. It does not activate fixtures in live deliveries, reserve fixture footprints in runtime layouts, place items on fixtures, persist fixture state, or change the planner, presenter, `LootBatch`, Expedition generation, ordinary storage, the 3.00 m × 2.00 m Receiving deck, or the 2.1 m Receiving reach.
 
-Human review accepted the fixture calibration and socket layout with one required revision: reduce every fixture's Y-axis stack-clearance guide by 20%. This record applies that revision. Wave 2 remains separate and has not begun.
+Human review accepted the fixture calibration and socket layout with one required revision: reduce every fixture's Y-axis stack-clearance guide by 20%. This record applies that revision. The Wave-1 history below remains authoritative; the Wave-2 implementation record is appended after it.
 
 ## Local asset preflight and provisional calibration
 
@@ -67,3 +67,86 @@ Known baseline diagnostics:
 
 - Windows reports `Failed to read the root certificate store.` during headless runs.
 - `wing_gameplay_composition_tests.gd` deliberately logs two duplicate seed-namespace rejection errors; the named negative tests pass.
+
+## Wave 2 implementation record
+
+Implementation checkpoint: `9b3847a` (`feat: integrate deterministic Receiving freight fixtures`)
+
+The proof profile is now `revision = 2`, `layout_version = 2`. All eight approved fixture resources, their calibrated visual/item-surface transforms, base footprints, usable dimensions, reduced stack clearances, and all five socket origins/orientations are unchanged from the approved Wave-1 checkpoint.
+
+### Persisted presentation schema
+
+`ReceivingFreightFixtureInstance` persists the durable instance ID, definition ID, family, socket ID, stable private-surface ID, rotated MainDeck footprint/origin, quarter turns, and presenter-local fixture transform. `LootBatch.presentation_fixtures` is a read-copy collection serialized under `presentation_fixtures`.
+
+Historical snapshots without that key restore an empty list. `CONTENT_COMMITTED` snapshots cannot carry fixtures. Prepared bare-deck snapshots remain valid. Fixture-aware deck commitment validates the entire placement and fixture collection before mutation, including unique instance/surface/socket identities, definition/socket family agreement, profile membership, limits, rotated MainDeck bounds, fixture-base overlap, initial fixture use, and active surface references.
+
+Stable fixture surfaces are `Crate_00` through `Crate_02` and `Pallet_00` through `Pallet_01`. Limits remain three crates and two pallets. Definition selection is without replacement within each family.
+
+### Deterministic planner behavior
+
+The planner exposes `BARE`, `CRATES_ALLOWED`, `PALLETS_ALLOWED`, and `MIXED`; the backward-compatible default is `BARE`. Fixture activation is lazy and attempt-local. A fixture base reserves MainDeck cells under a non-item owner before its triggering item is placed, and failed candidates roll back fully. No successful layout can contain an initially empty fixture.
+
+Surface preferences are:
+
+- eligible Small: crate, MainDeck, pallet;
+- blacklisted Small: MainDeck, pallet;
+- Medium: MainDeck, pallet;
+- Large: pallet, MainDeck.
+
+The crate blacklist remains Mouse (`loot_000001`), Antibiotics (`loot_000025`), and Book (`loot_000030`). The seeded mixed sequence is preserved except that entries already occupying Large positions are reordered by descending footprint area with a deterministic seed-derived equal-area tie-break. Small and Medium positions do not move.
+
+### Reconstruction and presentation
+
+The presenter reconstructs persisted fixtures before item groups and never invokes the planner. It reserves each fixture base on the private runtime MainDeck, instantiates the exact persisted visual using the approved transform, and creates a private `ReceivingDeckSurface` from the approved item-surface calibration. Fixture visuals have no `WorldItem`, pickup interaction, PUT target, zoning, label, or visible/F6 grid.
+
+Fixtures remain visible and reserved after their last item is TAKEN. A partially drained reconstruction recreates an empty historical fixture and its private surface until the delivery is explicitly closed. Fixture item stacks continue to use ordinary `StorageStack` append, TAKE, base-promotion, and compression behavior. Receiving reach remains 2.1 m; loose/storage reach remains 1.4/2.3 m.
+
+### Focused technical verification
+
+All commands used Godot `4.7.stable.official.5b4e0cb0f` and exited `0`:
+
+| Verification | Result |
+|---|---|
+| `receiving_freight_fixture_policy_tests.gd` | PASS; approved resource/policy calibration retained |
+| `receiving_freight_fixture_runtime_tests.gd` | PASS; persistence, atomic validation, modes, preferences, lazy activation, Large priority, reservations, and deterministic unique selection |
+| `receiving_loot_batch_tests.gd` | PASS; historical and existing snapshot behavior retained |
+| `receiving_deck_layout_tests.gd` | PASS; default bare planner and promoted spatial behavior retained |
+| `receiving_deck_presenter_tests.gd` | PASS; exact identity, private surfaces, fixture reconstruction, empty-fixture persistence, CLI parsing |
+| `wing_gameplay_composition_tests.gd` | PASS; exactly 16 ordinary functional surfaces retained |
+| `storage_stack_surface_tests.gd` | PASS |
+| `storage_stacking_interaction_tests.gd` | PASS |
+| four same-batch fixture-mode CLI smokes | PASS |
+| crate-heavy, bulky-pallet, and three blacklist CLI smokes | PASS |
+
+### Human proof commands and bounded seed evidence
+
+Run each from the project root with the same presentation seed and Bulk. These four compare the exact same generated batch (`content_seed=1842`) while changing presentation only:
+
+```powershell
+& 'D:\AI Tools\Godot-4.7-Codex\Godot_v4.7-stable_win64_console.exe' --path . -- --receiving-deck-debug --receiving-content-seed=1842 --receiving-presentation-seed=9001 --receiving-target-bulk=24 --receiving-fixture-mode=bare
+& 'D:\AI Tools\Godot-4.7-Codex\Godot_v4.7-stable_win64_console.exe' --path . -- --receiving-deck-debug --receiving-content-seed=1842 --receiving-presentation-seed=9001 --receiving-target-bulk=24 --receiving-fixture-mode=crates
+& 'D:\AI Tools\Godot-4.7-Codex\Godot_v4.7-stable_win64_console.exe' --path . -- --receiving-deck-debug --receiving-content-seed=1842 --receiving-presentation-seed=9001 --receiving-target-bulk=24 --receiving-fixture-mode=pallets
+& 'D:\AI Tools\Godot-4.7-Codex\Godot_v4.7-stable_win64_console.exe' --path . -- --receiving-deck-debug --receiving-content-seed=1842 --receiving-presentation-seed=9001 --receiving-target-bulk=24 --receiving-fixture-mode=mixed
+```
+
+A bounded scan of content seeds `1..500` identified:
+
+- crate-heavy: seed `249` (15 eligible Small entries), use `--receiving-fixture-mode=crates`;
+- bulky pallet: seed `142` (14 Large entries; maximum footprint area 50), use `--receiving-fixture-mode=pallets`;
+- blacklist coverage: seed `1` includes Book, seed `2` includes Mouse, and seed `3` includes Antibiotics; use crate mode and verify those exact items remain on an allowed fallback surface.
+
+Replace only `--receiving-content-seed` in the commands above for these targeted cases. The targeted headless smokes for seeds `249`, `142`, `1`, `2`, and `3` all exited `0`.
+
+### Human review checklist
+
+- Compare seed 1842 across all four modes and confirm exact loot/identity is unchanged.
+- Confirm crates group eligible Small items and never receive Mouse, Antibiotics, or Book.
+- Confirm bulky Large cargo gets pallet opportunity before thin Large cargo without global sorting.
+- Confirm the floor remains useful and fixture bases never overlap floor items or other fixtures.
+- TAKE items from fixture stacks, including a base item, and confirm familiar promotion/compression.
+- Empty a fixture and confirm its visual remains until the delivery closes.
+- Confirm fixtures expose no prompt, PUT, zoning, labels, grids, or F6 surface.
+
+Disposition: **PROMOTE / REVISE**
+
+Known diagnostics remain the Windows root-certificate warning and the two intentional duplicate-namespace errors in `wing_gameplay_composition_tests.gd`. No new Wave-2 diagnostic is known.

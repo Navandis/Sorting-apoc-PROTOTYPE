@@ -37,6 +37,8 @@ func _run_suite() -> void:
 	await _test_real_camera_ray_uses_receiving_range()
 	await _test_presenter_exact_identity_visibility_release_and_close_boundary()
 	await _test_reconstruction_after_released_base_compacts_without_replanning()
+	await _test_fixture_reconstruction_reservation_and_empty_persistence()
+	_test_fixture_stack_base_take_compacts()
 	await _test_runtime_debug_delivery_is_explicit()
 	_pending_helpers -= 1
 	_finish()
@@ -294,6 +296,124 @@ func _test_runtime_debug_delivery_is_explicit() -> void:
 	_check(presenter.call("get_presentation_state") == DeckPresenterScript.PresentationState.AVAILABLE, "debug delivery is immediately available")
 	_check(not (presenter.call("get_materialized_world_items") as Array).is_empty(), "debug delivery materializes real items")
 	runtime.free()
+
+	var mode_runtime := RuntimeScene.instantiate()
+	root.add_child(mode_runtime)
+	await process_frame
+	_check(mode_runtime.call("_fixture_mode_flag", PackedStringArray()) == DeckPlannerScript.FixtureMode.BARE, "missing fixture flag defaults to bare")
+	_check(mode_runtime.call("_fixture_mode_flag", PackedStringArray(["--receiving-fixture-mode=crates"])) == DeckPlannerScript.FixtureMode.CRATES_ALLOWED, "crate CLI mode parses")
+	_check(mode_runtime.call("_fixture_mode_flag", PackedStringArray(["--receiving-fixture-mode=pallets"])) == DeckPlannerScript.FixtureMode.PALLETS_ALLOWED, "pallet CLI mode parses")
+	_check(mode_runtime.call("_fixture_mode_flag", PackedStringArray(["--receiving-fixture-mode=mixed"])) == DeckPlannerScript.FixtureMode.MIXED, "mixed CLI mode parses")
+	_check(mode_runtime.call("_fixture_mode_flag", PackedStringArray(["--receiving-fixture-mode=unknown"])) == -1, "unknown fixture CLI mode is rejected")
+	_check(mode_runtime.call("run_debug_delivery", 1842, 9001, 24, DeckPlannerScript.FixtureMode.MIXED), "explicit mixed debug delivery prepares and reveals")
+	var mixed_manager := mode_runtime.get_node("ReceivingManager") as ReceivingManager
+	_check(not mixed_manager.get_active_batch().presentation_fixtures.is_empty(), "mixed debug delivery persists fixtures")
+	mode_runtime.free()
+	_pending_helpers -= 1
+
+
+func _test_fixture_reconstruction_reservation_and_empty_persistence() -> void:
+	_pending_helpers += 1
+	var batch: LootBatch = LootSourceScript.new().generate_committed_batch(
+		PersistentItemCatalog, PrototypeLootPool, "fixture_presenter", 1842, 9001, 24
+	)
+	var diagnostics = DeckPlannerScript.new().prepare(
+		batch, PersistentItemCatalog, ProofProfile, DeckPlannerScript.FixtureMode.MIXED
+	)
+	_check(diagnostics.succeeded, "mixed fixture batch prepares")
+	var fixtures := batch.presentation_fixtures
+	_check(not fixtures.is_empty(), "mixed fixture batch persists at least one fixture")
+	if fixtures.is_empty():
+		_pending_helpers -= 1
+		return
+	var emptied_surface: StringName = fixtures[0].surface_id
+	var released_fixture_items := 0
+	for entry: LootBatchEntry in batch.entries:
+		if entry.presentation_surface_id == emptied_surface:
+			_check(batch.mark_entry_released(entry.entry_id, entry.item_instance_id), "fixture entry can be released before reconstruction")
+			released_fixture_items += 1
+	_check(released_fixture_items > 0, "selected persisted fixture initially owned an item")
+
+	var manager: ReceivingManager = ReceivingManagerScript.new()
+	root.add_child(manager)
+	var presenter = DeckPresenterScript.new()
+	root.add_child(presenter)
+	_check(presenter.configure(manager, PersistentItemCatalog, ProofProfile), "fixture presenter configures")
+	_check(manager.deposit_batch(batch), "partially drained fixture batch deposits")
+	_check(presenter.present_active_batch(), "persisted fixtures reconstruct without planner")
+	_check((presenter.get_materialized_fixture_nodes() as Array).size() == fixtures.size(), "every persisted fixture visual reconstructs, including empty fixture")
+	var surfaces: Array[StorageSurface] = presenter.get_private_storage_surfaces()
+	_check(surfaces.size() == fixtures.size() + 1, "MainDeck plus every fixture private surface reconstructs")
+	var surfaces_by_id: Dictionary = {}
+	for surface: StorageSurface in surfaces:
+		surfaces_by_id[surface.surface_id] = surface
+		_check(not surface.is_player_storage_interaction_enabled(), "fixture presentation surfaces disable PUT")
+		_check(not surface.are_zones_initialized(), "fixture presentation surfaces have no zoning")
+		_check(not surface.is_debug_visible(), "fixture presentation surfaces hide normal and F6 grids")
+	var main_surface := surfaces_by_id.get(&"MainDeck") as StorageSurface
+	_check(main_surface != null, "runtime MainDeck reconstructs")
+	for fixture in fixtures:
+		_check(surfaces_by_id.has(fixture.surface_id), "persisted fixture surface ID resolves")
+		if main_surface != null:
+			var reservation := main_surface.get_reservation("__fixture__:%s" % fixture.instance_id)
+			_check(bool(reservation.get("valid", false)), "fixture base reservation reconstructs on MainDeck")
+			_check(reservation.get("origin") == fixture.main_deck_origin, "fixture reservation preserves calibrated socket origin")
+	for fixture_root: Node3D in presenter.get_materialized_fixture_nodes():
+		_check(fixture_root.find_children("*", "WorldItem", true, false).is_empty(), "fixture visual has no WorldItem interaction")
+	_check((surfaces_by_id[emptied_surface] as StorageSurface).get_stack_count() == 0, "now-empty fixture surface persists without rematerializing released items")
+	presenter.free()
+	manager.free()
+	_pending_helpers -= 1
+
+
+func _test_fixture_stack_base_take_compacts() -> void:
+	_pending_helpers += 1
+	var entries: Array[LootBatchEntry] = [
+		LootBatchEntryScript.new("soda_0", "fixture_stack:soda_0", &"loot_000022"),
+		LootBatchEntryScript.new("soda_1", "fixture_stack:soda_1", &"loot_000022"),
+	]
+	var batch: LootBatch = LootBatchScript.create_committed(
+		"fixture_stack", &"test", "fixture-stack", 2, 2, 1842, 9001, entries
+	)
+	var diagnostics = DeckPlannerScript.new().prepare(
+		batch, PersistentItemCatalog, ProofProfile, DeckPlannerScript.FixtureMode.CRATES_ALLOWED
+	)
+	_check(diagnostics.succeeded, "stackable eligible Small fixture prepares")
+	_check(batch.presentation_fixtures.size() == 1, "one crate serves the stackable pair")
+	var planned := batch.entries
+	_check(planned[0].presentation_surface_id == planned[1].presentation_surface_id, "stackable pair uses one fixture surface")
+	_check(planned[0].presentation_stack_group_id == planned[1].presentation_stack_group_id, "stackable pair uses one fixture stack")
+
+	var manager: ReceivingManager = ReceivingManagerScript.new()
+	root.add_child(manager)
+	var presenter = DeckPresenterScript.new()
+	root.add_child(presenter)
+	presenter.configure(manager, PersistentItemCatalog, ProofProfile)
+	manager.deposit_batch(batch)
+	_check(presenter.present_active_batch(), "fixture stack reconstructs")
+	presenter.reveal_active_batch()
+	var fixture_surface_id: StringName = batch.presentation_fixtures[0].surface_id
+	var fixture_surface: StorageSurface = null
+	for surface: StorageSurface in presenter.get_private_storage_surfaces():
+		if surface.surface_id == fixture_surface_id:
+			fixture_surface = surface
+			break
+	_check(fixture_surface != null and fixture_surface.get_stack_count() == 1, "fixture surface owns one live stack")
+	if fixture_surface != null:
+		var runtime_stack_id := fixture_surface.get_stack_id_for_item(planned[0].item_instance_id)
+		var stack := fixture_surface.get_storage_stack(runtime_stack_id)
+		_check(stack != null and stack.entries.size() == 2, "fixture stack materializes both entries")
+		if stack != null and stack.entries.size() == 2:
+			var promoted_item_id: String = stack.entries[1].item_key
+			var carried := CarriedItemsScript.new()
+			carried.max_bulk = 99
+			root.add_child(carried)
+			_check((stack.entries[0].world_item as WorldItem).pickup_into(carried), "fixture stack base TAKE succeeds")
+			_check(stack.entries.size() == 1 and stack.stack_id == promoted_item_id, "fixture stack base TAKE compacts and rekeys survivor")
+			_check((presenter.get_materialized_fixture_nodes() as Array).size() == 1, "fixture visual persists after stack base TAKE")
+			carried.free()
+	presenter.free()
+	manager.free()
 	_pending_helpers -= 1
 
 
