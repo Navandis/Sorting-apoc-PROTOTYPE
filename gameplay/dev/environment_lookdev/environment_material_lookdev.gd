@@ -122,10 +122,12 @@ func light_settings() -> Array:
 	var settings := []
 	for child in rig.get_children():
 		if child is Light3D:
+			var forward: Vector3 = -(child as Light3D).global_transform.basis.z.normalized()
 			var item := {
 				"name": child.name,
 				"type": child.get_class(),
 				"position": [child.position.x, child.position.y, child.position.z],
+				"direction": [forward.x, forward.y, forward.z],
 				"color": child.light_color.to_html(),
 				"energy": child.light_energy,
 				"shadow": child.shadow_enabled,

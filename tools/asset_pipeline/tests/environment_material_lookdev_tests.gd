@@ -121,6 +121,8 @@ func _test_review_and_scene() -> void:
 	var environment := scene.get_node_or_null("WorldEnvironment") as WorldEnvironment
 	_check(neutral != null and receiving != null and environment != null, "both rigs and one environment exist")
 	_check(neutral.visible != receiving.visible, "exactly one rig active")
+	var light_settings := scene.call("light_settings") as Array
+	_check(light_settings.size() == 3 and (light_settings[0] as Dictionary).get("direction", []).size() == 3, "light manifest settings include direction")
 	var camera := scene.call("get_active_camera") as Camera3D
 	var transform_before := camera.transform
 	var fov_before := camera.fov
