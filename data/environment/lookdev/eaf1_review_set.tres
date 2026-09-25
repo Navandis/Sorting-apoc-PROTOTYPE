@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="EnvironmentMaterialReviewSet" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://environment_authoring/environment_material_review_set.gd" id="1"]
+[ext_resource type="Resource" path="res://data/environment/lookdev/eaf1_bare_smooth_white_concrete.tres" id="2"]
+[ext_resource type="Resource" path="res://data/environment/lookdev/eaf1_concrete_sidewalk.tres" id="3"]
+[ext_resource type="Resource" path="res://data/environment/lookdev/eaf1_worn_metal_trim.tres" id="4"]
+[ext_resource type="Resource" path="res://data/environment/lookdev/eaf1_diagnostic_normal_y_wrong.tres" id="5"]
+
+[resource]
+script = ExtResource("1")
+specs = Array[Resource]([ExtResource("2"), ExtResource("3"), ExtResource("4"), ExtResource("5")])

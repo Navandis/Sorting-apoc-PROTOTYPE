@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="EnvironmentSurfaceMaterialSpec" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://environment_authoring/environment_surface_material_spec.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/environment/lookdev/kitbash_american_neighborhoods_1k/KB3D_AMN_COConcreteSidewalk_basecolor.png" id="2"]
+[ext_resource type="Texture2D" path="res://assets/environment/lookdev/kitbash_american_neighborhoods_1k/KB3D_AMN_COConcreteSidewalk_normal.png" id="3"]
+[ext_resource type="Texture2D" path="res://assets/environment/lookdev/kitbash_american_neighborhoods_1k/KB3D_AMN_COConcreteSidewalk_roughness.png" id="4"]
+[ext_resource type="Texture2D" path="res://assets/environment/lookdev/kitbash_american_neighborhoods_1k/KB3D_AMN_COConcreteSidewalk_metallic.png" id="5"]
+
+[resource]
+script = ExtResource("1")
+material_id = "diagnostic_sidewalk_wrong_normal_y"
+display_name = "DIAGNOSTIC / NOT A CANDIDATE — Wrong Normal Y"
+base_color_texture = ExtResource("2")
+normal_texture = ExtResource("3")
+roughness_texture = ExtResource("4")
+metallic_texture = ExtResource("5")
+meters_per_repeat = 1.5
+normal_y_flip = true
+surface_family = "concrete diagnostic"
+vdd_layer = "diagnostic"
+source_label = "KitBash3D American Neighborhoods 7.0.0 / png1k"
+source_path = "kb3d_americanneighborhoods.zip::kb3d_americanneighborhoods/7.0.0/Textures/png1k/KB3D_AMN_COConcreteSidewalk_*.png"
+review_notes = "DIAGNOSTIC / NOT A CANDIDATE. Same Sidewalk source and scale as prior specimen, with deliberately inverted normal Y for visual comparison."

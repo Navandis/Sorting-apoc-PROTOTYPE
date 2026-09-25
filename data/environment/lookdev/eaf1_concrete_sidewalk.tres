@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="EnvironmentSurfaceMaterialSpec" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://environment_authoring/environment_surface_material_spec.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/environment/lookdev/kitbash_american_neighborhoods_1k/KB3D_AMN_COConcreteSidewalk_basecolor.png" id="2"]
+[ext_resource type="Texture2D" path="res://assets/environment/lookdev/kitbash_american_neighborhoods_1k/KB3D_AMN_COConcreteSidewalk_normal.png" id="3"]
+[ext_resource type="Texture2D" path="res://assets/environment/lookdev/kitbash_american_neighborhoods_1k/KB3D_AMN_COConcreteSidewalk_roughness.png" id="4"]
+[ext_resource type="Texture2D" path="res://assets/environment/lookdev/kitbash_american_neighborhoods_1k/KB3D_AMN_COConcreteSidewalk_metallic.png" id="5"]
+
+[resource]
+script = ExtResource("1")
+material_id = "kb3d_concrete_sidewalk"
+display_name = "Concrete Sidewalk"
+base_color_texture = ExtResource("2")
+normal_texture = ExtResource("3")
+roughness_texture = ExtResource("4")
+metallic_texture = ExtResource("5")
+meters_per_repeat = 1.5
+surface_family = "concrete"
+vdd_layer = "structural substrate"
+source_label = "KitBash3D American Neighborhoods 7.0.0 / png1k"
+source_path = "kb3d_americanneighborhoods.zip::kb3d_americanneighborhoods/7.0.0/Textures/png1k/KB3D_AMN_COConcreteSidewalk_*.png"
+review_notes = "EAF1 workflow fixture; rougher, more patterned sample. Not approved bunker art. Source has EXR height; not imported or displaced."
