@@ -1,6 +1,6 @@
 # Receiving functional freight fixtures validation
 
-Status: **WAVE 2 IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN REVIEW PENDING**
+Status: **WAVE 2 IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN REVIEW COMPLETE / PROMOTED**
 
 ## Scope and authority
 
@@ -237,3 +237,29 @@ The unchanged known diagnostics are the Windows root-certificate warning and the
 Re-review the critical manual PUT invariant on both MainDeck and a fixture stack, then confirm ordinary shelf stacking still works. Confirm front crates remain readable, rear pallets do not fully conceal loose cargo from normal lateral movement, and exposed crate, rear loose, and rear pallet cargo can be TAKEN comfortably. Specifically recheck the seed-142 Firewood/pig-type pallet case. If a visibly exposed crate item inside 3.4 m still fails, record its exact seed, fixture, item, camera, and collider rather than expanding collision behavior.
 
 Disposition: **PROMOTE / REVISE**
+
+## Final human promotion
+
+Human re-review is complete. The reviewed implementation tip is `acab305bf23bbab0230ac98518fc277bb1c93b72`; the final promoted branch tip is the documentation close-out commit containing this section. Earlier Wave-1/Wave-2 checkpoints, provisional dispositions, bare-deck measurements, and correction evidence above remain historical records rather than rewritten final-state claims.
+
+The promoted operational foundation is Receiving Stage A batch/lifecycle authority plus the deterministic seeded TAKE-only presenter, private deterministic placement/stack surfaces, and functional Receiving-only crates and pallets. Expedition still owns the exact loot outcome, and Receiving presents that exact committed batch without filler, omission, replacement, or presentation-driven bias. Exact durable `ItemInstance` identity and `ReceivingManager` drain accounting remain authoritative.
+
+Human review confirmed:
+
+- exact loot remains unchanged by Receiving presentation;
+- front-to-rear distribution is legible and behaves as intended;
+- crates sensibly group eligible Small cargo, while Mouse, Antibiotics, and Book remain present but do not use crates;
+- pallets collect bulky Large cargo before thin Large cargo without global size sorting;
+- the MainDeck floor remains useful and visually breaks up fixture repetition;
+- fixtures improve freight variety and occlusion without reading as forced decoration, and no fixture is initially empty;
+- emptied fixture visuals remain visible until delivery close;
+- ordinary legal stack TAKE, base promotion, and compression remain familiar;
+- Receiving surfaces and fixtures expose no PUT, zoning, labels, visible grids, F6 grids, item ghosts, fixture prompts, or ordinary storage registration;
+- all tested deliveries drain normally, and rear pallet cargo is reachable with the fixture-integrated Receiving-only reach;
+- the fixture system achieves its intended role.
+
+The promoted proof remains a 3.00 m × 2.00 m usable deterministic deck. Fixture-integrated Receiving-only TAKE reach is **3.4 m**, loose reach remains **1.4 m**, and storage/manual reach remains **2.3 m**. The limiting fixture measurement remains the seed-142 Firewood target at approximately **3.299 m**; 3.4 m includes the agreed aiming/stance margin. The historical **2.1 m** value above remains bare-deck evidence and is not rewritten as fixture-integrated evidence.
+
+This promotion does not finalize Expedition returned-loot bounds, shipped lift dimensions, the fixture art roster, fixture counts for future profiles, elevator lighting, shutter/audio/theatre, Stage C queued-delivery presentation, full save/journal work, broader gallery furnishing, generalized player containers/storage, or production loot rebalance. No new implementation gate is authorized by this close-out; wait for the next explicit handoff.
+
+**FINAL HUMAN DISPOSITION: PROMOTE**
