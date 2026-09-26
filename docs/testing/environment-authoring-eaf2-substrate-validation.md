@@ -72,3 +72,53 @@ The same directory contains `focused_tests.log`, `editor_import.log` and `captur
 - **Extensibility:** inspect the two-opening wall's continuous center pier and independently raised sill; verify that its resource, tests and capture follow the original workflow.
 
 **Human disposition pending: PROMOTE EAF2 / REVISE EAF2.** No EAF3 work, Receiving C1 restart, GDD/VDD/Findings update, merge or push is part of this branch.
+
+## Human review revision — narrow proof pass, 26 September 2026
+
+- **Status remains:** IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN REVIEW PENDING.
+- **Review-proof source commit:** `d6bc91420ac9691257a23c11f6d98f7c044b89d4`.
+- **Scope:** fixed cameras and the isolated review composition only. The substrate spec, registry, builder, all three recipes, seeds, EAF1 binding, UV, collision, fingerprint and UV2 paths were unchanged.
+- The preceding five-capture section records the initial technical review snapshot. The six-capture matrix below supersedes it for current human review. Its PNGs, manifest and logs remain preserved under ignored `res://reports/environment_substrate/eaf2/initial_review_00abb54/`.
+
+### Opening verification and visual proof
+
+A direct scan of the generated `wall_opening_standard` mesh found the expected outer AABB **5.50 × 3.20 × 0.30 m**. Local opening X bounds are **-0.25 to +1.15 m** and Y bounds **-1.60 to +0.60 m**, leaving **2.50 m** of left pier, **1.60 m** of right pier and **1.00 m** of header. Front-face pier area below the header is **5.50 m² left** and **3.52 m² right**.
+
+Each jamb has two triangles and **0.66 m²** of reveal area across the complete **2.20 m height × 0.30 m thickness**. The left jamb normal is **+X**, the right jamb normal is **-X**, both pointing into the opening; direct triangle winding agrees with those normals with **zero reversed triangles**. The opening geometry fingerprint is unchanged from the initial manifest: `7280dfac8b5e1015b17e3d7377086efd2ae7967683d96f19244740457c5b8a5f`. The apparent missing post was **camera ambiguity, not a mesh defect**. No opening recipe change or regression test was needed.
+
+The current captures use opposite fixed obliques: `opening_detail_left_jamb.png` views the left reveal from camera X greater than the opening; `opening_detail_right_jamb.png` views the right reveal from camera X less than the opening. Together they show both physical piers and reveals. The direct scan output is in local `opening_mesh_inspection.log`.
+
+### Composition placement and contact audit
+
+The original scene had only a vertical edge touch between the walls at **X=3.90, Z=8.15 m**. Its column had a **0.09 m gap** to the front wall, the beam embedded only **0.075 m** into that wall while projecting **0.275 m**, and the threshold had a **0.225 m gap**. Those relationships caused the visual ambiguity.
+
+The corrected world-axis AABBs below are in metres. The side wall is rotated 90° about Y; all five roots retain unit scale. Root centres (X,Y,Z) are front wall (2.30,1.60,8.00), side wall (4.05,1.60,9.45), column (3.78,1.60,8.27), beam (2.24,3.025,8.14) and threshold (2.30,0.04,8.375).
+
+| Piece | X bounds | Y bounds | Z bounds |
+| --- | --- | --- | --- |
+| `composition_wall_front` | 0.70–3.90 | 0.00–3.20 | 7.85–8.15 |
+| `composition_wall_side` | 3.90–4.20 | 0.00–3.20 | 7.85–11.05 |
+| `composition_column` | 3.57–3.99 | 0.00–3.20 | 8.06–8.48 |
+| `composition_beam` | 0.70–3.78 | 2.85–3.20 | 7.965–8.315 |
+| `composition_threshold` | 1.60–3.00 | 0.00–0.08 | 8.15–8.60 |
+
+| Pair | Classification | Measured relationship |
+| --- | --- | --- |
+| Front wall / side wall | **BUTT JOINT** | Their X faces meet at 3.90 m over the full 3.20 m height and 0.30 m wall thickness. |
+| Front wall / column | **INTENTIONAL EMBEDMENT** | 0.09 m behind the front wall face; 0.33 m across the wall-end X region. |
+| Side wall / column | **INTENTIONAL EMBEDMENT** | 0.09 m into the side wall's inner X face; column spans 0.42 m along that wall. |
+| Front wall / beam | **INTENTIONAL EMBEDMENT** | The beam is an explicit projecting top member: 0.185 m in the wall, 0.165 m into the room, top flush at Y=3.20 m. |
+| Column / beam | **INTENTIONAL EMBEDMENT** | Beam end terminates 0.21 m inside the column in X, with 0.255 m Z overlap. |
+| Front wall / threshold | **BUTT JOINT** | Threshold back meets the wall front at Z=8.15 m, with no gap or wall penetration. |
+| Side wall / beam | **GAP** | 0.12 m in X; the beam deliberately terminates in the intervening column. |
+| Side wall / threshold | **GAP** | 0.90 m in X; threshold is a separate wall-base example, away from the corner. |
+| Column / threshold | **GAP** | 0.57 m in X; threshold does not collide with the corner column. |
+| Beam / threshold | **GAP** | 2.77 m in Y; beam and threshold serve top and base roles. |
+
+The column now projects into the inside corner while embedding **0.09 m into each wall face**, so its relationship to both solids is deliberate. The beam uses the requested projecting-member option and ends inside the column, without an unexplained free end or shallow sliver against the wall. The threshold is flush against the front wall and deliberately separate from the corner. All remain ordinary generated `rect_solid` pieces; no corner recipe was added.
+
+### Revised capture and verification
+
+The current formal matrix is **six** fixed neutral-light captures: `seed_overview.png`, `dimension_uv_comparison.png`, `opening_detail_left_jamb.png`, `opening_detail_right_jamb.png`, `composition.png` and `extensibility_proof.png`. Run the same capture command above to regenerate them in ignored `res://reports/environment_substrate/eaf2/`. The current manifest has **six records and 17 pieces**, all 17 at unit root scale, under the Compatibility renderer.
+
+The requested focused tests ran with **65 PASS, 0 FAIL, exit 0**; headless editor parse/import and rendered capture each exited **0**. The direct opening mesh scan exited **0**. Final test, editor and capture logs contain no `SCRIPT ERROR` or `FAIL:`; the host root-certificate warning persists without affecting them. The current six images were inspected after rendering. Human disposition remains **PROMOTE EAF2 / REVISE EAF2**; this technical revision does not promote the milestone.
