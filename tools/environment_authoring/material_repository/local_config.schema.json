@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["source_repository_root"],
+  "additionalProperties": false,
+  "properties": {
+    "source_repository_root": {
+      "type": "string",
+      "minLength": 1,
+      "description": "One absolute, deliberately configured source root. Runtime validation rejects missing directories, drive roots and the project tree; no fallback discovery."
+    }
+  }
+}
