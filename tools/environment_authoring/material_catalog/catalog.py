@@ -272,11 +272,17 @@ def _validate_decision(decision):
     if not isinstance(decision.get('approval_revision'), int) or decision['approval_revision'] < 1:
         raise ValueError('Positive human approval revision required')
     date.fromisoformat(decision['approval_date'])
-    if decision.get('mapping_mode') not in MAPPINGS or decision.get('surface_family') not in FAMILIES or decision.get('vdd_layer') not in LAYERS:
+    if decision.get('mapping_mode') not in MAPPINGS:
         raise ValueError('Invalid controlled vocabulary')
     roles = decision.get('approved_roles')
     if not isinstance(roles, list) or set(roles) - ROLES:
         raise ValueError('Invalid approved roles')
+    if decision['decision'] == 'APPROVED':
+        if decision.get('surface_family') not in FAMILIES or decision.get('vdd_layer') not in LAYERS or not roles:
+            raise ValueError('Approved material requires family, layer and roles')
+    elif ((decision.get('surface_family') is not None and decision['surface_family'] not in FAMILIES) or
+          (decision.get('vdd_layer') is not None and decision['vdd_layer'] not in LAYERS)):
+        raise ValueError('Invalid controlled vocabulary')
     validate_parameters({key: decision[key] for key in PARAMETERS})
     if not re.fullmatch('[0-9a-f]{64}', decision.get('reviewed_source_fingerprint', '')):
         raise ValueError('Reviewed strong fingerprint required')

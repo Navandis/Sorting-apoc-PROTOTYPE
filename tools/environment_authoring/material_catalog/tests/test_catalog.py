@@ -170,6 +170,19 @@ class CatalogTests(CatalogFixture, unittest.TestCase):
         with self.assertRaises(ValueError):
             catalog.reconcile(records + records, [], self.index, self.repo)
 
+    def test_nonapproved_decisions_need_no_approved_taxonomy(self):
+        for status in ('REJECTED', 'DEFERRED'):
+            with self.subTest(status=status):
+                decision = self._decision(self.candidate['stable_id'], status, 1)
+                decision.update(surface_family=None, vdd_layer=None, approved_roles=[])
+                records, _ = catalog.reconcile([], [decision], self.index, self.repo)
+                self.assertEqual(records[0]['effective_status'], status)
+                self.assertEqual(catalog.query(records), [])
+        approved = self._decision(self.candidate['stable_id'], 'APPROVED', 1)
+        approved.update(surface_family=None, vdd_layer=None, approved_roles=[])
+        with self.assertRaises(ValueError):
+            catalog.reconcile([], [approved], self.index, self.repo)
+
     def test_three_synthetic_statuses_and_approved_spec(self):
         rejected_candidate = deepcopy(self.candidate)
         rejected_candidate['stable_id'] += 'Rejected'

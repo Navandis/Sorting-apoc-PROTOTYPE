@@ -86,3 +86,42 @@ Synthetic fixtures produced simultaneous APPROVED, REJECTED and DEFERRED entries
 Godot printed the existing host root-certificate-store warning noted in earlier EAF validation; it did not prevent import, tests or capture.
 
 **No live KitBash material has been human-approved by Codex.** The human/ChatGPT reviewer should inspect paired Neutral and Receiving captures; compare scale, tiling, color, roughness and normal orientation; then mark candidates APPROVED, REJECTED, DEFERRED or request a parameter-only rerun. A later bounded task can reconcile those human decisions and seek EAF3B promotion. This record does not promote EAF3B or EAF3 and does not begin EAF4 or Receiving C1.
+
+## Human review iteration 01 — 26 September 2026
+
+**Status: IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN REVIEW PENDING.** This iteration applies nine human decisions and leaves the three parameter-rerun candidates pending. It does not promote EAF3B or EAF3.
+
+The project-local [human decision input](../../data/environment/material_catalog/decisions/foundation_mineral_01_human_review_01.json) retains the original 2K reviewed strong fingerprints and records revision 1, the human dispositions, exact notes, and approved classification/roles. Reconciliation from the initially empty catalog produced the preserved [initial change audit](../../reports/environment_material_catalog/human_review_01_reconciliation_diff.json): **2 new approved, 4 new rejected, 3 new deferred**, with no stale, missing, changed, or unchanged records. A repeat during restaging was idempotent: nine unchanged and no new changes. The [live catalog](../../data/environment/material_catalog/catalog.json) has exactly nine entries, each with matching current/reviewed strong fingerprints and effective status equal to its human status. The three pending candidates have no catalog entries.
+
+| Human status | Stable source IDs / result |
+| --- | --- |
+| APPROVED (2) | `kitbash:kb3d_brooklyn@7.0.2:KB3D_BRK_ConcreteFormed` → `eaf3b_1435ce254f04bb8e61bd3e96`, `structural_concrete` / `structural_substrate`, wall, ceiling, beam/column, opening reveal, UV 1.5 m; `kitbash:kb3d_brutalisttff@7.0.3:KB3D_BTL_ConcreteFloorPanelsRoughA` → `eaf3b_20c61bd1c85420be2f71a090`, `service_floor_concrete` / `structural_substrate`, floor and wall, UV 1.5 m. Both retain source normal Y and the human room-level caveats in the decision input. |
+| REJECTED (4) | `KB3D_AFT_ConcreteA`, `KB3D_ATP_ConcreteGrunge`, `KB3D_BTL_ConcreteFloorGrayA`, `KB3D_CPI_ConcreteFloorDGray`; their full stable IDs and reasons are in the decision input. |
+| DEFERRED (3) | `KB3D_BTL_ConcreteGrayIndustrial`, `KB3D_DPK_PlasterGray`, `KB3D_BYR_CODamagedPlasterWallA`; their full stable IDs and reasons are in the decision input. |
+| PENDING (3) | `KB3D_CSZ_ConcreteRoughBright`, `KB3D_DLA_ConcretePittedGrayMed`, `KB3D_AFT_PlasterA`; no disposition has been inferred from this rerun. |
+
+The live `restage-approved` command generated and Godot-imported both [approved specs](../../data/environment/material_catalog/approved_specs/) with **2 restaged, 0 refused** in the [restage report](../../reports/environment_material_catalog/approved_restage_report.json). The [live GDScript query test](../../tools/asset_pipeline/tests/environment_material_catalog_live_tests.gd) loaded the real catalog and both `.tres` resources with their texture maps. Its default query returned exactly the two current approvals. Family/layer/role filters returned the formed material for `beam_column` and the panel material for `floor`; they excluded formed `floor` and panel `ceiling`. Explicit noncurrent query returned all nine historical decisions. Rejected/deferred entries did not appear in the default approved query.
+
+The separate [rerun batch](../../data/environment/material_catalog/review_batches/foundation_mineral_01_rerun_01/batch.json) contains only the three pending IDs, and its [iteration input](../../data/environment/material_catalog/review_batches/foundation_mineral_01_rerun_01/iteration.json) changes parameters only:
+
+| Pending candidate | Mapping | Metres per repeat | Normal strength | Normal Y flip |
+| --- | --- | ---: | ---: | --- |
+| `KB3D_CSZ_ConcreteRoughBright` | TRIPLANAR | 1.5 | 0.5 | false |
+| `KB3D_DLA_ConcretePittedGrayMed` | TRIPLANAR | 1.5 | 0.5 | false |
+| `KB3D_AFT_PlasterA` | TRIPLANAR | 1.5 | 0.4 | false |
+
+`prepare --batch foundation_mineral_01_rerun_01 --iteration .../iteration.json` staged three specs. `capture --batch foundation_mineral_01_rerun_01` generated **12 decoded 1920×1080 PNGs**: Neutral/Hero, Neutral/WallGrazing, Receiving/Hero, and Receiving/WallGrazing for each candidate, using the unchanged EAF1 environment. The [rerun ZIP](../../reports/environment_material_catalog/reviews/foundation_mineral_01_rerun_01_review.zip) passes integrity and has exactly 15 entries: 12 PNGs, [manifest](../../reports/environment_material_catalog/reviews/foundation_mineral_01_rerun_01/manifest.json), [summary](../../reports/environment_material_catalog/reviews/foundation_mineral_01_rerun_01/batch_summary.md), and [three-entry pending template](../../reports/environment_material_catalog/reviews/foundation_mineral_01_rerun_01/decision_template.json). No commercial texture or `.import` file is included. Rerun ZIP SHA-256: `f8b1119a9508afdff11cd5a88d919f21b637c378056d3fc98affee092fc60de5`.
+
+All **59** existing staged source PNGs retained their SHA-256 hashes and nanosecond modification timestamps across approved restaging and rerun capture. Strong source fingerprints for all 12 original candidates still match their reviewed values. The original 48-capture package remains in place; its ZIP SHA-256 remains `a3694675b12124c85c929aeb2b77fe211d4bf327ea8b67673bc2e0d09cee2308`. No 4K source fetch or repository rescan occurred.
+
+| Focused check | Result |
+| --- | --- |
+| EAF3B Python suite, including nonapproved empty-taxonomy regression | 15 tests, 0 failures |
+| EAF3A synthetic regression suite | 22 tests, 0 failures |
+| EAF1 focused GDScript suite | `EAF1_TESTS failures=0` |
+| EAF3B synthetic GDScript query suite | `EAF3B_QUERY_TESTS failures=0` |
+| EAF3B live catalog/spec GDScript suite | `EAF3B_LIVE_CATALOG_TESTS failures=0` |
+| Godot 4.7 editor import/parse and rerun capture | exit 0; 12 records; 0 import-policy changes |
+| Rerun audit | 12 PNGs decoded; ZIP integrity and 15-entry allowlist passed; 59 cache hashes/timestamps unchanged; original package SHA-256 unchanged; 12 strong source fingerprints current |
+
+Godot again printed the host root-certificate-store warning without affecting the editor, tests, or capture. The remaining three material decisions require human comparison of the old and rerun evidence. EAF3B/EAF3 promotion and later EAF4/Receiving C1 remain outside this iteration.

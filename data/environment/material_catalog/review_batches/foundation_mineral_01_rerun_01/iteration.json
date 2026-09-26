@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "batch_id": "foundation_mineral_01_rerun_01",
+  "candidate_overrides": {
+    "kitbash:kb3d_constructionzone@7.0.3:KB3D_CSZ_ConcreteRoughBright": {
+      "mapping_mode": "TRIPLANAR",
+      "meters_per_repeat": 1.5,
+      "normal_strength": 0.5,
+      "normal_y_flip": false
+    },
+    "kitbash:kb3d_dtla@7.0.3:KB3D_DLA_ConcretePittedGrayMed": {
+      "mapping_mode": "TRIPLANAR",
+      "meters_per_repeat": 1.5,
+      "normal_strength": 0.5,
+      "normal_y_flip": false
+    },
+    "kitbash:kb3d_aftermath@7.0.2:KB3D_AFT_PlasterA": {
+      "mapping_mode": "TRIPLANAR",
+      "meters_per_repeat": 1.5,
+      "normal_strength": 0.4,
+      "normal_y_flip": false
+    }
+  }
+}

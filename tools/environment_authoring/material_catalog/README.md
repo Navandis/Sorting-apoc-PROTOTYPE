@@ -54,8 +54,10 @@ same batch replaces that batch's PNGs and decision template, so save an
 earlier review package if comparison history is needed.
 
 The live decision template is `PENDING`. A human reviews the captures and
-fills `APPROVED`, `REJECTED`, or `DEFERRED`, revision/date, controlled family,
-VDD layer, roles, and review parameters in a copy of that JSON. The template's
+fills `APPROVED`, `REJECTED`, or `DEFERRED`, revision/date, review parameters,
+and notes in a copy of that JSON. Approved decisions require controlled family,
+VDD layer, and at least one role; rejected and deferred decisions may leave
+those classification fields empty. The template's
 review resolution and strong fingerprint tie the decision to the captured
 source. Then run:
 
