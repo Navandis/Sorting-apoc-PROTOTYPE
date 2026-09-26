@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="EnvironmentSurfaceMaterialSpec" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://environment_authoring/environment_surface_material_spec.gd" id="1"]
+[ext_resource type="Texture2D" path="res://data/environment/substrate/diagnostic_metre_grid.svg" id="2"]
+
+[resource]
+script = ExtResource("1")
+material_id = "eaf2_diagnostic_metre_grid"
+display_name = "EAF2 Diagnostic Metre Grid"
+base_color_texture = ExtResource("2")
+mapping_mode = 0
+meters_per_repeat = 1.0
+surface_family = "technical diagnostic"
+vdd_layer = "structural substrate"
+source_label = "EAF2 tracked original technical SVG"
+source_path = "res://data/environment/substrate/diagnostic_metre_grid.svg"
+review_notes = "One full SVG repeat equals 1 m. Red top/left and blue bottom/right mark repeat boundaries; arrows show positive U and V. Diagnostic only, not bunker palette."

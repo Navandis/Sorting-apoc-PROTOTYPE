@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="EnvironmentSubstratePieceSpec" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://environment_authoring/substrate/environment_substrate_piece_spec.gd" id="1"]
+[ext_resource type="Resource" path="res://data/environment/substrate/diagnostic_metre_grid.tres" id="2"]
+
+[resource]
+script = ExtResource("1")
+piece_id = "column_standard"
+recipe_id = "rect_solid"
+semantic_role = "column"
+dimensions_m = Vector3(0.42, 3.0, 0.42)
+bevel_width_m = 0.02
+material_spec = ExtResource("2")
+authoring_notes = "Small bevel for freestanding column."

@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="EnvironmentSubstratePieceSpec" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://environment_authoring/substrate/environment_substrate_piece_spec.gd" id="1"]
+[ext_resource type="Resource" path="res://data/environment/substrate/diagnostic_metre_grid.tres" id="2"]
+
+[resource]
+script = ExtResource("1")
+piece_id = "wall_opening_standard"
+recipe_id = "wall_with_rect_opening"
+semantic_role = "opening_wall"
+dimensions_m = Vector3(5.5, 3.2, 0.30)
+bevel_width_m = 0
+opening_width_m = 1.4
+opening_height_m = 2.2
+opening_offset_x_m = 0.45
+opening_bottom_m = 0.0
+material_spec = ExtResource("2")
+authoring_notes = "Asymmetric through-opening with real reveals."
