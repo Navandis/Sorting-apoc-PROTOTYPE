@@ -2,7 +2,7 @@ extends Node3D
 
 const Piece = preload("res://environment_authoring/substrate/environment_substrate_piece.gd")
 const SEED_ROOT := "res://data/environment/substrate/seed/"
-const CAMERA_NAMES := ["SeedOverview", "DimensionUVComparison", "OpeningDetail", "Composition", "ExtensibilityProof"]
+const CAMERA_NAMES := ["SeedOverview", "DimensionUVComparison", "OpeningDetail_LeftJamb", "OpeningDetail_RightJamb", "Composition", "ExtensibilityProof"]
 
 var camera_index := 0
 var pieces: Array[Node3D] = []
@@ -30,7 +30,7 @@ func set_camera_index(index: int) -> void:
 	camera_index = posmod(index, CAMERA_NAMES.size())
 	for piece in pieces:
 		piece.visible = _visible_in_view(piece.name, camera_index)
-		(piece.get_node("Label") as Label3D).visible = camera_index != 3
+		(piece.get_node("Label") as Label3D).visible = camera_index != 4
 	get_active_camera().make_current()
 	var label := get_node_or_null("ReviewHUD/Label") as Label
 	if label != null:
@@ -41,9 +41,9 @@ func _visible_in_view(piece_name: String, view: int) -> bool:
 	match view:
 		0: return true
 		1: return piece_name.begins_with("wall_")
-		2: return piece_name == "asymmetric_opening"
-		3: return piece_name.begins_with("composition_")
-		4: return piece_name == "two_opening_extension"
+		2, 3: return piece_name == "asymmetric_opening"
+		4: return piece_name.begins_with("composition_")
+		5: return piece_name == "two_opening_extension"
 	return false
 
 
@@ -79,10 +79,10 @@ func _build_review() -> void:
 	_add("opening_return_standard", "opening_return", Vector3(0.30, 3.2, 0.55), Vector3(6.2, 1.6, 1.5), 0.0)
 	_add("wall_opening_standard", "asymmetric_opening", Vector3(5.5, 3.2, 0.30), Vector3(-5.3, 1.6, 8.0), 0.0)
 	_add("wall_standard", "composition_wall_front", Vector3(3.2, 3.2, 0.30), Vector3(2.3, 1.6, 8.0), 0.0)
-	_add("wall_standard", "composition_wall_side", Vector3(3.2, 3.2, 0.30), Vector3(4.05, 1.6, 9.75), PI * 0.5)
-	_add("column_standard", "composition_column", Vector3(0.42, 3.2, 0.42), Vector3(3.9, 1.6, 8.45), 0.0)
-	_add("beam_standard", "composition_beam", Vector3(3.2, 0.35, 0.35), Vector3(2.3, 3.025, 8.25), 0.0)
-	_add("threshold_standard", "composition_threshold", Vector3(1.4, 0.08, 0.45), Vector3(2.3, 0.04, 8.6), 0.0)
+	_add("wall_standard", "composition_wall_side", Vector3(3.2, 3.2, 0.30), Vector3(4.05, 1.6, 9.45), PI * 0.5)
+	_add("column_standard", "composition_column", Vector3(0.42, 3.2, 0.42), Vector3(3.78, 1.6, 8.27), 0.0)
+	_add("beam_standard", "composition_beam", Vector3(3.08, 0.35, 0.35), Vector3(2.24, 3.025, 8.14), 0.0)
+	_add("threshold_standard", "composition_threshold", Vector3(1.4, 0.08, 0.45), Vector3(2.3, 0.04, 8.375), 0.0)
 	_add("wall_two_openings_extension", "two_opening_extension", Vector3(7.0, 3.2, 0.30), Vector3(0.0, 1.6, -12.0), 0.0)
 
 
@@ -139,8 +139,9 @@ func _configure_lighting() -> void:
 func _configure_cameras() -> void:
 	_camera("SeedOverview", Vector3(2, 16, 19), Vector3(-0.3, 1.4, -1.0), 55.0)
 	_camera("DimensionUVComparison", Vector3(-0.2, 5.1, 4.7), Vector3(-0.1, 1.6, -4.5), 68.0)
-	_camera("OpeningDetail", Vector3(-3.3, 3.2, 12.3), Vector3(-5.3, 1.6, 8.0), 54.0)
-	_camera("Composition", Vector3(0.0, 4.8, 14.5), Vector3(2.7, 1.5, 9.0), 54.0)
+	_camera("OpeningDetail_LeftJamb", Vector3(-3.3, 3.2, 12.3), Vector3(-5.3, 1.6, 8.0), 54.0)
+	_camera("OpeningDetail_RightJamb", Vector3(-7.3, 3.2, 12.3), Vector3(-5.3, 1.6, 8.0), 54.0)
+	_camera("Composition", Vector3(1.2, 4.1, 13.2), Vector3(2.7, 1.5, 9.0), 54.0)
 	_camera("ExtensibilityProof", Vector3(1.0, 4.0, -5.6), Vector3(0, 1.6, -12.0), 62.0)
 
 

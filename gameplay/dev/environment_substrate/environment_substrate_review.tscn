@@ -19,7 +19,9 @@ script = ExtResource("1")
 
 [node name="DimensionUVComparison" type="Camera3D" parent="Cameras"]
 
-[node name="OpeningDetail" type="Camera3D" parent="Cameras"]
+[node name="OpeningDetail_LeftJamb" type="Camera3D" parent="Cameras"]
+
+[node name="OpeningDetail_RightJamb" type="Camera3D" parent="Cameras"]
 
 [node name="Composition" type="Camera3D" parent="Cameras"]
 

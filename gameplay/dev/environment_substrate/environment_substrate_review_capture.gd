@@ -18,9 +18,10 @@ func get_capture_records() -> Array:
 	return [
 		{"camera_index": 0, "camera": "SeedOverview", "filename": "seed_overview.png"},
 		{"camera_index": 1, "camera": "DimensionUVComparison", "filename": "dimension_uv_comparison.png"},
-		{"camera_index": 2, "camera": "OpeningDetail", "filename": "opening_detail.png"},
-		{"camera_index": 3, "camera": "Composition", "filename": "composition.png"},
-		{"camera_index": 4, "camera": "ExtensibilityProof", "filename": "extensibility_proof.png"},
+		{"camera_index": 2, "camera": "OpeningDetail_LeftJamb", "filename": "opening_detail_left_jamb.png"},
+		{"camera_index": 3, "camera": "OpeningDetail_RightJamb", "filename": "opening_detail_right_jamb.png"},
+		{"camera_index": 4, "camera": "Composition", "filename": "composition.png"},
+		{"camera_index": 5, "camera": "ExtensibilityProof", "filename": "extensibility_proof.png"},
 	]
 
 
