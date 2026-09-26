@@ -153,6 +153,20 @@ func _test_review_and_scene() -> void:
 	_check(String(scene.call("get_camera_name")) == "WallGrazing", "camera order deterministic")
 	scene.call("reset_review")
 	_check(int(scene.get("material_index")) == 0 and int(scene.get("light_mode")) == 0 and String(scene.call("get_camera_name")) == "Hero", "reset canonical")
+	_check(scene.call("get_review_set") == review_set, "no injected batch keeps promoted EAF1 set")
+	var injected := (load("res://environment_authoring/environment_material_review_set.gd") as GDScript).new() as Resource
+	var injected_specs: Array[Resource] = [specs[1]]
+	injected.set("specs", injected_specs)
+	var invariant_camera := (scene.call("get_active_camera") as Camera3D).transform
+	var invariant_fov := (scene.call("get_active_camera") as Camera3D).fov
+	var invariant_environment := environment.environment
+	var invariant_geometry := scene.call("geometry_snapshot") as Dictionary
+	scene.call("set_review_set", injected)
+	_check(scene.call("get_review_set") == injected and scene.call("get_active_spec") == specs[1], "injected batch selects alternate set")
+	_check((scene.call("get_active_camera") as Camera3D).transform.is_equal_approx(invariant_camera) and is_equal_approx((scene.call("get_active_camera") as Camera3D).fov, invariant_fov), "injection preserves camera and FOV")
+	_check(environment.environment == invariant_environment and scene.call("geometry_snapshot") == invariant_geometry, "injection preserves environment and geometry")
+	scene.call("set_review_set", null)
+	_check(scene.call("get_review_set") == review_set, "removing injected set restores EAF1 default")
 	scene.queue_free()
 
 
@@ -175,6 +189,13 @@ func _test_capture_contract() -> void:
 	_check(stable and paths.size() == records.size(), "filenames unique and records complete")
 	var fields := capture.call("get_manifest_static_fields") as Dictionary
 	_check(fields.has("scene") and fields.has("engine_version") and fields.has("renderer") and fields.has("exposure") and fields.has("tonemap"), "manifest static fields present")
+	var injected := (load("res://environment_authoring/environment_material_review_set.gd") as GDScript).new() as Resource
+	var injected_specs: Array[Resource] = [(load(SET_PATH) as Resource).get("specs")[0]]
+	injected.set("specs", injected_specs)
+	capture.call("set_review_set", injected)
+	_check((capture.call("get_capture_records") as Array).size() == 4, "injected capture has four ordered records")
+	capture.call("set_review_set", null)
+	_check((capture.call("get_capture_records") as Array).size() == 16, "capture default restores promoted matrix")
 	capture.free()
 
 

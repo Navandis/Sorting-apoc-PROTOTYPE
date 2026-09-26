@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "batch_id": "foundation_mineral_01",
+  "source_index_schema": 1,
+  "source_index_revision": "eaf3a-1",
+  "source_index_scan_id": "2026-09-26T17:57:39.580210+00:00",
+  "source_index_fingerprint": "0b59149d73e258b6edc112f2e6b3af963a0f7ea46c71f7769a73afaa7aafd600",
+  "candidate_ids": [
+    "kitbash:kb3d_aftermath@7.0.2:KB3D_AFT_ConcreteA",
+    "kitbash:kb3d_brooklyn@7.0.2:KB3D_BRK_ConcreteFormed",
+    "kitbash:kb3d_brutalisttff@7.0.3:KB3D_BTL_ConcreteGrayIndustrial",
+    "kitbash:kb3d_constructionzone@7.0.3:KB3D_CSZ_ConcreteRoughBright",
+    "kitbash:kb3d_dtla@7.0.3:KB3D_DLA_ConcretePittedGrayMed",
+    "kitbash:kb3d_atompunk@7.0.2:KB3D_ATP_ConcreteGrunge",
+    "kitbash:kb3d_brutalisttff@7.0.3:KB3D_BTL_ConcreteFloorGrayA",
+    "kitbash:kb3d_brutalisttff@7.0.3:KB3D_BTL_ConcreteFloorPanelsRoughA",
+    "kitbash:kb3d_cyberpunkinteriors@7.0.2:KB3D_CPI_ConcreteFloorDGray",
+    "kitbash:kb3d_aftermath@7.0.2:KB3D_AFT_PlasterA",
+    "kitbash:kb3d_dieselpunk@7.0.2:KB3D_DPK_PlasterGray",
+    "kitbash:kb3d_beyondrepair@7.0.0:KB3D_BYR_CODamagedPlasterWallA"
+  ],
+  "review_resolution_policy": "2K_THEN_4K_THEN_1K",
+  "candidate_overrides": {
+    "kitbash:kb3d_aftermath@7.0.2:KB3D_AFT_ConcreteA": {
+      "mapping_mode": "TRIPLANAR",
+      "meters_per_repeat": 1.0
+    },
+    "kitbash:kb3d_brooklyn@7.0.2:KB3D_BRK_ConcreteFormed": {
+      "mapping_mode": "UV",
+      "meters_per_repeat": 1.5
+    },
+    "kitbash:kb3d_brutalisttff@7.0.3:KB3D_BTL_ConcreteGrayIndustrial": {
+      "mapping_mode": "TRIPLANAR",
+      "meters_per_repeat": 1.0
+    },
+    "kitbash:kb3d_constructionzone@7.0.3:KB3D_CSZ_ConcreteRoughBright": {
+      "mapping_mode": "TRIPLANAR",
+      "meters_per_repeat": 1.0
+    },
+    "kitbash:kb3d_dtla@7.0.3:KB3D_DLA_ConcretePittedGrayMed": {
+      "mapping_mode": "TRIPLANAR",
+      "meters_per_repeat": 1.0
+    },
+    "kitbash:kb3d_atompunk@7.0.2:KB3D_ATP_ConcreteGrunge": {
+      "mapping_mode": "TRIPLANAR",
+      "meters_per_repeat": 1.0
+    },
+    "kitbash:kb3d_brutalisttff@7.0.3:KB3D_BTL_ConcreteFloorGrayA": {
+      "mapping_mode": "UV",
+      "meters_per_repeat": 1.5
+    },
+    "kitbash:kb3d_brutalisttff@7.0.3:KB3D_BTL_ConcreteFloorPanelsRoughA": {
+      "mapping_mode": "UV",
+      "meters_per_repeat": 1.5
+    },
+    "kitbash:kb3d_cyberpunkinteriors@7.0.2:KB3D_CPI_ConcreteFloorDGray": {
+      "mapping_mode": "UV",
+      "meters_per_repeat": 1.5
+    },
+    "kitbash:kb3d_aftermath@7.0.2:KB3D_AFT_PlasterA": {
+      "mapping_mode": "TRIPLANAR",
+      "meters_per_repeat": 1.0
+    },
+    "kitbash:kb3d_dieselpunk@7.0.2:KB3D_DPK_PlasterGray": {
+      "mapping_mode": "TRIPLANAR",
+      "meters_per_repeat": 1.0
+    },
+    "kitbash:kb3d_beyondrepair@7.0.0:KB3D_BYR_CODamagedPlasterWallA": {
+      "mapping_mode": "TRIPLANAR",
+      "meters_per_repeat": 1.0
+    }
+  },
+  "notes": "Source-triage batch only. Names, initial mapping and scale are machine review hints; no material is approved.",
+  "selection_rationale": {
+    "kitbash:kb3d_aftermath@7.0.2:KB3D_AFT_ConcreteA": "Baseline structural concrete from a mixed aftermath package.",
+    "kitbash:kb3d_brooklyn@7.0.2:KB3D_BRK_ConcreteFormed": "Formwork named concrete to inspect directional casting marks.",
+    "kitbash:kb3d_brutalisttff@7.0.3:KB3D_BTL_ConcreteGrayIndustrial": "Industrial gray structural candidate distinct from the formed sample.",
+    "kitbash:kb3d_constructionzone@7.0.3:KB3D_CSZ_ConcreteRoughBright": "Bright rough concrete for value and relief comparison.",
+    "kitbash:kb3d_dtla@7.0.3:KB3D_DLA_ConcretePittedGrayMed": "Medium gray pitted texture to inspect pore scale.",
+    "kitbash:kb3d_atompunk@7.0.2:KB3D_ATP_ConcreteGrunge": "Grungier source for rough concrete range.",
+    "kitbash:kb3d_brutalisttff@7.0.3:KB3D_BTL_ConcreteFloorGrayA": "Plain floor named concrete to compare with panelled service floors.",
+    "kitbash:kb3d_brutalisttff@7.0.3:KB3D_BTL_ConcreteFloorPanelsRoughA": "Directional rough floor panels to test UV seams and repeat.",
+    "kitbash:kb3d_cyberpunkinteriors@7.0.2:KB3D_CPI_ConcreteFloorDGray": "Dark gray interior floor for service-floor value range.",
+    "kitbash:kb3d_aftermath@7.0.2:KB3D_AFT_PlasterA": "Neutral plaster/render candidate alongside structural concrete.",
+    "kitbash:kb3d_dieselpunk@7.0.2:KB3D_DPK_PlasterGray": "Gray plaster from another package for render diversity.",
+    "kitbash:kb3d_beyondrepair@7.0.0:KB3D_BYR_CODamagedPlasterWallA": "Damaged wall plaster as a repair/finish stress case; source graph warning remains visible."
+  }
+}

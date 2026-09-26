@@ -11,11 +11,12 @@ var light_mode := 0
 var camera_index := 0
 var _active_material: StandardMaterial3D
 var _builder := MaterialBuilder.new()
+var _review_set: Resource = REVIEW_SET
 
 
 func _ready() -> void:
-	if not REVIEW_SET.validate().is_empty():
-		push_error("Invalid EAF1 review set: %s" % str(REVIEW_SET.validate()))
+	if not _review_set.validate().is_empty():
+		push_error("Invalid EAF1 review set: %s" % str(_review_set.validate()))
 		return
 	_build_geometry()
 	_configure_environment()
@@ -44,13 +45,26 @@ func _unhandled_key_input(event: InputEvent) -> void:
 
 
 func set_material_index(index: int) -> void:
-	material_index = REVIEW_SET.wrapped_index(index)
-	var spec: Resource = REVIEW_SET.get_spec(material_index)
+	material_index = _review_set.wrapped_index(index)
+	var spec: Resource = _review_set.get_spec(material_index)
 	_active_material = _builder.build(spec)
 	for surface_name in REVIEW_SURFACES:
 		var mesh := get_node("ReviewGeometry/%s" % surface_name) as MeshInstance3D
 		mesh.material_override = _active_material
 	_update_hud()
+
+
+func get_review_set() -> Resource:
+	return _review_set
+
+
+func set_review_set(review_set: Resource) -> void:
+	var selected: Resource = review_set if review_set != null else REVIEW_SET
+	if not selected.validate().is_empty():
+		push_error("Invalid injected EAF1 review set: %s" % str(selected.validate()))
+		return
+	_review_set = selected
+	set_material_index(0)
 
 
 func next_material() -> void:
@@ -107,7 +121,7 @@ func get_active_material() -> StandardMaterial3D:
 
 
 func get_active_spec() -> Resource:
-	return REVIEW_SET.get_spec(material_index)
+	return _review_set.get_spec(material_index)
 
 
 func geometry_snapshot() -> Dictionary:

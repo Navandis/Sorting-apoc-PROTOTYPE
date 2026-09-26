@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "batch_id": "foundation_mineral_01_rerun_01",
+  "source_index_schema": 1,
+  "source_index_revision": "eaf3a-1",
+  "source_index_scan_id": "2026-09-26T17:57:39.580210+00:00",
+  "source_index_fingerprint": "0b59149d73e258b6edc112f2e6b3af963a0f7ea46c71f7769a73afaa7aafd600",
+  "candidate_ids": [
+    "kitbash:kb3d_constructionzone@7.0.3:KB3D_CSZ_ConcreteRoughBright",
+    "kitbash:kb3d_dtla@7.0.3:KB3D_DLA_ConcretePittedGrayMed",
+    "kitbash:kb3d_aftermath@7.0.2:KB3D_AFT_PlasterA"
+  ],
+  "review_resolution_policy": "2K_THEN_4K_THEN_1K",
+  "candidate_overrides": {},
+  "notes": "Parameter-only rerun of three still-pending foundation mineral candidates. No human approval is implied.",
+  "selection_rationale": {
+    "kitbash:kb3d_constructionzone@7.0.3:KB3D_CSZ_ConcreteRoughBright": "Test reduced high-frequency directional/hatch response in brighter rough concrete.",
+    "kitbash:kb3d_dtla@7.0.3:KB3D_DLA_ConcretePittedGrayMed": "Test quieter grazing response in medium/darker pitted concrete.",
+    "kitbash:kb3d_aftermath@7.0.2:KB3D_AFT_PlasterA": "Test quieter fibrous/striated grazing response in clean plaster/render."
+  }
+}

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EnvironmentMaterialReviewSet" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://environment_authoring/environment_material_review_set.gd" id="1"]
+[ext_resource type="Resource" path="res://data/environment/material_catalog/review_batches/foundation_mineral_01_rerun_01/eaf3b_39b926e570fb3824019aade2.tres" id="2"]
+[ext_resource type="Resource" path="res://data/environment/material_catalog/review_batches/foundation_mineral_01_rerun_01/eaf3b_bd0940113f04f3d3784629e7.tres" id="3"]
+[ext_resource type="Resource" path="res://data/environment/material_catalog/review_batches/foundation_mineral_01_rerun_01/eaf3b_8d5f0cf5add98dfe0a58f18a.tres" id="4"]
+
+[resource]
+script = ExtResource("1")
+specs = Array[Resource]([ExtResource("2"), ExtResource("3"), ExtResource("4")])

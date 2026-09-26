@@ -6,15 +6,42 @@ const CAPTURE_SIZE := Vector2i(1920, 1080)
 const LOOKDEV_SCENE := "res://gameplay/dev/environment_lookdev/environment_material_lookdev.tscn"
 const CAPTURE_SCENE := "res://gameplay/dev/environment_lookdev/environment_material_lookdev_capture.tscn"
 
+var _review_set: Resource = REVIEW_SET
+var _output_directory := OUTPUT_DIRECTORY
+var _batch_id := ""
+
 
 func _ready() -> void:
-	if OS.get_cmdline_user_args().has("--capture"):
+	var args := OS.get_cmdline_user_args()
+	var batch_at := args.find("--eaf3b-batch")
+	if batch_at >= 0:
+		if batch_at + 1 >= args.size() or not _safe_batch_id(args[batch_at + 1]):
+			_fail("invalid EAF3B batch ID")
+			return
+		_batch_id = args[batch_at + 1]
+		var path := "res://data/environment/material_catalog/review_batches/%s/review_set.tres" % _batch_id
+		var selected := load(path) as Resource
+		if selected == null or not selected.validate().is_empty():
+			_fail("invalid EAF3B review set: %s" % path)
+			return
+		set_review_set(selected)
+		(get_node("Lookdev") as Node3D).call("set_review_set", selected)
+		_output_directory = "res://reports/environment_material_catalog/reviews/%s" % _batch_id
+	if args.has("--capture"):
 		_capture_all.call_deferred()
+
+
+func _safe_batch_id(value: String) -> bool:
+	return value.is_valid_identifier() and value == value.to_lower() and value.length() <= 64
+
+
+func set_review_set(review_set: Resource) -> void:
+	_review_set = review_set if review_set != null else REVIEW_SET
 
 
 func get_capture_records() -> Array:
 	var records := []
-	for spec in REVIEW_SET.specs:
+	for spec in _review_set.specs:
 		for mode in ["neutral", "receiving"]:
 			for view in ["hero", "grazing"]:
 				records.append({
@@ -43,7 +70,7 @@ func _capture_all() -> void:
 	if lookdev == null:
 		_fail("missing Lookdev scene")
 		return
-	var output := ProjectSettings.globalize_path(OUTPUT_DIRECTORY)
+	var output := ProjectSettings.globalize_path(_output_directory)
 	var error := DirAccess.make_dir_recursive_absolute(output)
 	if error != OK:
 		_fail("could not create output: %s" % error_string(error))
@@ -78,7 +105,7 @@ func _capture_all() -> void:
 		if error != OK:
 			_fail("could not save %s: %s" % [filename, error_string(error)])
 			return
-		var spec: Resource = REVIEW_SET.specs[spec_index]
+		var spec: Resource = _review_set.specs[spec_index]
 		var transform := camera.global_transform
 		var item := record.duplicate()
 		item["source_label"] = spec.source_label
@@ -104,6 +131,8 @@ func _capture_all() -> void:
 	manifest["ambient_light_color"] = environment.ambient_light_color.to_html()
 	manifest["ambient_light_energy"] = environment.ambient_light_energy
 	manifest["records"] = captured
+	if not _batch_id.is_empty():
+		manifest["batch_id"] = _batch_id
 	var manifest_path := output.path_join("manifest.json")
 	var file := FileAccess.open(manifest_path, FileAccess.WRITE)
 	if file == null:
@@ -116,8 +145,8 @@ func _capture_all() -> void:
 
 
 func _spec_index(material_id: String) -> int:
-	for index in REVIEW_SET.specs.size():
-		if REVIEW_SET.specs[index].material_id == material_id:
+	for index in _review_set.specs.size():
+		if _review_set.specs[index].material_id == material_id:
 			return index
 	return -1
 

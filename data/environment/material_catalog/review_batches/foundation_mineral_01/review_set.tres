@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="EnvironmentMaterialReviewSet" load_steps=14 format=3]
+
+[ext_resource type="Script" path="res://environment_authoring/environment_material_review_set.gd" id="1"]
+[ext_resource type="Resource" path="res://data/environment/material_catalog/review_batches/foundation_mineral_01/eaf3b_03eb0629e8556dffe97a588c.tres" id="2"]
+[ext_resource type="Resource" path="res://data/environment/material_catalog/review_batches/foundation_mineral_01/eaf3b_1435ce254f04bb8e61bd3e96.tres" id="3"]
+[ext_resource type="Resource" path="res://data/environment/material_catalog/review_batches/foundation_mineral_01/eaf3b_b1ec9758d12e4a66f2e2d394.tres" id="4"]
+[ext_resource type="Resource" path="res://data/environment/material_catalog/review_batches/foundation_mineral_01/eaf3b_39b926e570fb3824019aade2.tres" id="5"]
+[ext_resource type="Resource" path="res://data/environment/material_catalog/review_batches/foundation_mineral_01/eaf3b_bd0940113f04f3d3784629e7.tres" id="6"]
+[ext_resource type="Resource" path="res://data/environment/material_catalog/review_batches/foundation_mineral_01/eaf3b_b74c89b67d53ceaf61587885.tres" id="7"]
+[ext_resource type="Resource" path="res://data/environment/material_catalog/review_batches/foundation_mineral_01/eaf3b_46cbf3fa6a933a70e83e449f.tres" id="8"]
+[ext_resource type="Resource" path="res://data/environment/material_catalog/review_batches/foundation_mineral_01/eaf3b_20c61bd1c85420be2f71a090.tres" id="9"]
+[ext_resource type="Resource" path="res://data/environment/material_catalog/review_batches/foundation_mineral_01/eaf3b_6a508a792a0de7af8e027eb7.tres" id="10"]
+[ext_resource type="Resource" path="res://data/environment/material_catalog/review_batches/foundation_mineral_01/eaf3b_8d5f0cf5add98dfe0a58f18a.tres" id="11"]
+[ext_resource type="Resource" path="res://data/environment/material_catalog/review_batches/foundation_mineral_01/eaf3b_a4a36c2bb7350ea478045d5f.tres" id="12"]
+[ext_resource type="Resource" path="res://data/environment/material_catalog/review_batches/foundation_mineral_01/eaf3b_da3673139d6ad44b8939d3a8.tres" id="13"]
+
+[resource]
+script = ExtResource("1")
+specs = Array[Resource]([ExtResource("2"), ExtResource("3"), ExtResource("4"), ExtResource("5"), ExtResource("6"), ExtResource("7"), ExtResource("8"), ExtResource("9"), ExtResource("10"), ExtResource("11"), ExtResource("12"), ExtResource("13")])
