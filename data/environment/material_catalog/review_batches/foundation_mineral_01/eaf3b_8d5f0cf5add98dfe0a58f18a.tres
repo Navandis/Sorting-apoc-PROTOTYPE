@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="EnvironmentSurfaceMaterialSpec" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://environment_authoring/environment_surface_material_spec.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/environment/materials/kitbash_cache/eaf3b_8d5f0cf5add98dfe0a58f18a/2k/basecolor.png" id="2"]
+[ext_resource type="Texture2D" path="res://assets/environment/materials/kitbash_cache/eaf3b_8d5f0cf5add98dfe0a58f18a/2k/normal.png" id="3"]
+[ext_resource type="Texture2D" path="res://assets/environment/materials/kitbash_cache/eaf3b_8d5f0cf5add98dfe0a58f18a/2k/roughness.png" id="4"]
+[ext_resource type="Texture2D" path="res://assets/environment/materials/kitbash_cache/eaf3b_8d5f0cf5add98dfe0a58f18a/2k/metallic.png" id="5"]
+[ext_resource type="Texture2D" path="res://assets/environment/materials/kitbash_cache/eaf3b_8d5f0cf5add98dfe0a58f18a/2k/ao.png" id="6"]
+
+[resource]
+script = ExtResource("1")
+material_id = "eaf3b_8d5f0cf5add98dfe0a58f18a"
+display_name = "KB3D_AFT_PlasterA"
+base_color_texture = ExtResource("2")
+normal_texture = ExtResource("3")
+roughness_texture = ExtResource("4")
+metallic_texture = ExtResource("5")
+ao_texture = ExtResource("6")
+mapping_mode = 1
+meters_per_repeat = 1.0
+normal_strength = 1.0
+roughness_multiplier = 1.0
+metallic_multiplier = 1.0
+albedo_multiplier = 1.0
+normal_y_flip = false
+surface_family = "cement_render"
+vdd_layer = ""
+source_label = "kb3d_aftermath @ 7.0.2 / 2K"
+source_path = "kb3d_aftermath/7.0.2/KB3D_AFT_PlasterA"
+review_notes = "Initial review hint; normal Y and physical scale require human confirmation."

@@ -33,6 +33,7 @@ Thumbs.db
 /reports/environment_material_catalog/
 /tools/environment_authoring/material_repository/local_config.json
 /tools/environment_authoring/material_repository/**/__pycache__/
+/tools/environment_authoring/material_catalog/**/__pycache__/
 
 # Local Godot import metadata for committed documentation evidence images.
 /docs/readable/media/Sorting_Apocalypse_Visual_Design_Direction_v0.5_image_01.png.import
