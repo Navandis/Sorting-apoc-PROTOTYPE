@@ -1,11 +1,11 @@
 # EAF2 structural substrate authoring validation
 
-- **Status:** IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN REVIEW PENDING
+- **Status:** IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN REVIEW COMPLETE / PROMOTED
 - **Branch:** `codex/eaf2-structural-substrate`
 - **Implementation HEAD verified:** `ae721f2a5d9ff529cf15da4228eb8f93ccf23190`
 - **Base:** clean `main` and `origin/main` at `caf7fe9dcc5df617364ad88f903cfd7a2d8cb419`.
 - **Engine:** Godot 4.7 stable, Compatibility renderer (`gl_compatibility`). This branch was explicitly authorized for EAF2 implementation by the 26 September handoff; the earlier design-only wording on `main` predates that handoff.
-- **Disposition for human:** PROMOTE EAF2 / REVISE EAF2.
+- **Final disposition:** PROMOTE EAF2. Earlier pending review statements below are retained as historical evidence.
 
 ## Authoring contract
 
@@ -122,3 +122,17 @@ The column now projects into the inside corner while embedding **0.09 m into eac
 The current formal matrix is **six** fixed neutral-light captures: `seed_overview.png`, `dimension_uv_comparison.png`, `opening_detail_left_jamb.png`, `opening_detail_right_jamb.png`, `composition.png` and `extensibility_proof.png`. Run the same capture command above to regenerate them in ignored `res://reports/environment_substrate/eaf2/`. The current manifest has **six records and 17 pieces**, all 17 at unit root scale, under the Compatibility renderer.
 
 The requested focused tests ran with **65 PASS, 0 FAIL, exit 0**; headless editor parse/import and rendered capture each exited **0**. The direct opening mesh scan exited **0**. Final test, editor and capture logs contain no `SCRIPT ERROR` or `FAIL:`; the host root-certificate warning persists without affecting them. The current six images were inspected after rendering. Human disposition remains **PROMOTE EAF2 / REVISE EAF2**; this technical revision does not promote the milestone.
+
+## Final human review and promotion — 26 September 2026
+
+The initial geometry, material binding, UV1, collision, UV2 seam, seed and extensibility implementation was technically verified. The bounded review-proof revision then completed direct mesh inspection, which proved that both opening jambs existed with correct winding and inward-facing normals. Opposing fixed captures made both reveals visually verifiable. The 90° wall, corner column, beam and threshold contacts were measured, corrected and classified above. Human re-review found the three identified visual-proof concerns addressed and approved EAF2 in its designed structural-substrate scope.
+
+EAF2 now establishes project-standard authoring with exact metre dimensions, generated geometry rather than node-scale fitting, unit root scale, physical structural thickness, deterministic normals and tangents, metre-authored UV1 compatible with EAF1 metres per repeat, optional UV quarter-turn and phase, bounded bevels for exposed edges, EAF1 material binding, optional NONE/SIMPLE collision, deterministic generation fingerprints, a native Godot UV2/lightmap unwrap seam, and a recipe registry, seed presets and incremental extension workflow. The promoted recipes are `rect_solid`, `wall_with_rect_opening` and `wall_with_two_rect_openings`.
+
+The two-opening recipe demonstrates a new topology added through the established workflow with consistent mapping and material behavior and no core rewrite. EAF2's non-exhaustive closure condition is satisfied: the grammar, process, useful seed collection, deterministic validation and cheap incremental extension have been proven. The seed collection is a reusable starting set, not an exhaustive catalog. Later rooms should inspect accepted geometry, reuse recipes and presets, identify genuinely missing topology, extend and validate through this process, and add reusable results to the collection. A later missing shape does not reopen EAF2.
+
+Blender remains an available escalation path but was unnecessary here. Native Godot UV2 unwrap is a proven seam, not a LightmapGI adoption. This promotion does not approve a finished Receiving room or final environment materials. Receiving Stage C1 remains paused; the next active gate is EAF3 — External Material Ingestion + Curated Catalog DESIGN, with implementation not yet authorized.
+
+Final feature-state close-out verification repeated the focused tests (**65 PASS / 0 FAIL**), headless editor import (**exit 0**) and six-camera capture (**exit 0**). The manifest records **17/17 unit root scales** and **17/17 SHA-256 geometry fingerprints** under `gl_compatibility`; the three new logs have no `SCRIPT ERROR` or `FAIL:` markers.
+
+FINAL HUMAN DISPOSITION: PROMOTE EAF2
