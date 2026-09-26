@@ -1,13 +1,13 @@
 # EAF3B selective staging and curated catalog validation
 
-**Status: IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN REVIEW PENDING**
+**Status: IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN REVIEW COMPLETE / PROMOTED**
 
 - Date: 26 September 2026.
 - Branch: `codex/eaf3b-material-curated-catalog`.
 - Verified implementation HEAD: `b2145e34657442a35d4809125548962334c78775`.
 - Starting clean `main` and `origin/main`: `26d1a297f260c7a18b1c0d8a9d90683ac8159514` (EAF3A promotion merge).
 - EAF3A baseline: source-index schema 1, scanner `eaf3a-1`, profile `KITBASH_PROFILE_V1` revision 1; **HUMAN REVIEW COMPLETE / PROMOTED**.
-- EAF3 overall remains in progress. Receiving C1 remains paused. This branch has not been merged or pushed.
+- At initial implementation validation, EAF3 overall was in progress and this branch had not been merged or pushed. The final human disposition and promotion evidence are recorded below. Receiving C1 remains paused.
 
 ## Source snapshot and boundary
 
@@ -85,7 +85,7 @@ Synthetic fixtures produced simultaneous APPROVED, REJECTED and DEFERRED entries
 
 Godot printed the existing host root-certificate-store warning noted in earlier EAF validation; it did not prevent import, tests or capture.
 
-**No live KitBash material has been human-approved by Codex.** The human/ChatGPT reviewer should inspect paired Neutral and Receiving captures; compare scale, tiling, color, roughness and normal orientation; then mark candidates APPROVED, REJECTED, DEFERRED or request a parameter-only rerun. A later bounded task can reconcile those human decisions and seek EAF3B promotion. This record does not promote EAF3B or EAF3 and does not begin EAF4 or Receiving C1.
+**At the initial technical proof, no live KitBash material had been human-approved.** The human/ChatGPT reviewer should inspect paired Neutral and Receiving captures; compare scale, tiling, color, roughness and normal orientation; then mark candidates APPROVED, REJECTED, DEFERRED or request a parameter-only rerun. A later bounded task can reconcile those human decisions and seek EAF3B promotion. This initial proof did not promote EAF3B or EAF3 or begin EAF4 or Receiving C1.
 
 ## Human review iteration 01 — 26 September 2026
 
@@ -100,7 +100,7 @@ The project-local [human decision input](../../data/environment/material_catalog
 | DEFERRED (3) | `KB3D_BTL_ConcreteGrayIndustrial`, `KB3D_DPK_PlasterGray`, `KB3D_BYR_CODamagedPlasterWallA`; their full stable IDs and reasons are in the decision input. |
 | PENDING (3) | `KB3D_CSZ_ConcreteRoughBright`, `KB3D_DLA_ConcretePittedGrayMed`, `KB3D_AFT_PlasterA`; no disposition has been inferred from this rerun. |
 
-The live `restage-approved` command generated and Godot-imported both [approved specs](../../data/environment/material_catalog/approved_specs/) with **2 restaged, 0 refused** in the [restage report](../../reports/environment_material_catalog/approved_restage_report.json). The [live GDScript query test](../../tools/asset_pipeline/tests/environment_material_catalog_live_tests.gd) loaded the real catalog and both `.tres` resources with their texture maps. Its default query returned exactly the two current approvals. Family/layer/role filters returned the formed material for `beam_column` and the panel material for `floor`; they excluded formed `floor` and panel `ceiling`. Explicit noncurrent query returned all nine historical decisions. Rejected/deferred entries did not appear in the default approved query.
+The live `restage-approved` command generated and Godot-imported both initially [approved specs](../../data/environment/material_catalog/approved_specs/) with **2 restaged, 0 refused** in the [restage report](../../reports/environment_material_catalog/approved_restage_report.json). The [live GDScript query test](../../tools/asset_pipeline/tests/environment_material_catalog_live_tests.gd) loaded the real catalog and both `.tres` resources with their texture maps. Its default query returned exactly the two current approvals. Family/layer/role filters returned the formed material for `beam_column` and the panel material for `floor`; they excluded formed `floor` and panel `ceiling`. Explicit noncurrent query returned all nine historical decisions. Rejected/deferred entries did not appear in the default approved query.
 
 The separate [rerun batch](../../data/environment/material_catalog/review_batches/foundation_mineral_01_rerun_01/batch.json) contains only the three pending IDs, and its [iteration input](../../data/environment/material_catalog/review_batches/foundation_mineral_01_rerun_01/iteration.json) changes parameters only:
 
@@ -125,3 +125,35 @@ All **59** existing staged source PNGs retained their SHA-256 hashes and nanosec
 | Rerun audit | 12 PNGs decoded; ZIP integrity and 15-entry allowlist passed; 59 cache hashes/timestamps unchanged; original package SHA-256 unchanged; 12 strong source fingerprints current |
 
 Godot again printed the host root-certificate-store warning without affecting the editor, tests, or capture. The remaining three material decisions require human comparison of the old and rerun evidence. EAF3B/EAF3 promotion and later EAF4/Receiving C1 remain outside this iteration.
+
+## Final human review and EAF3 promotion — 26 September 2026
+
+The human reviewer approved the three rerun candidates at the reviewed 2K fingerprints and parameter values. The [final decision input](../../data/environment/material_catalog/decisions/foundation_mineral_01_rerun_01_human_review_02.json) records the exact notes, family, layer and roles. Reconciliation added **three approved** entries; the preserved [final change audit](../../reports/environment_material_catalog/final_human_review_reconciliation_diff.json) shows the prior nine unchanged, with no stale, missing, status-changed or parameter-changed records. The live Foundation Mineral catalog now has final human dispositions for **all 12** candidates: **5 APPROVED / 4 REJECTED / 3 DEFERRED**. No candidate remains pending in the catalog. Earlier sections of this record retain their time-local pending state as review history.
+
+| Newly approved source | Catalog ID | Human classification and role | Approved review parameters |
+| --- | --- | --- | --- |
+| `KB3D_CSZ_ConcreteRoughBright` | `eaf3b_39b926e570fb3824019aade2` | `structural_concrete` / `structural_substrate`; wall, ceiling, beam/column, opening reveal | TRIPLANAR; 1.5 m/repeat; normal 0.5; normal Y source |
+| `KB3D_DLA_ConcretePittedGrayMed` | `eaf3b_bd0940113f04f3d3784629e7` | `rough_poured_concrete` / `structural_substrate`; wall, ceiling, beam/column, opening reveal | TRIPLANAR; 1.5 m/repeat; normal 0.5; normal Y source |
+| `KB3D_AFT_PlasterA` | `eaf3b_8d5f0cf5add98dfe0a58f18a` | `cement_render` / `applied_finish`; wall only | TRIPLANAR; 1.5 m/repeat; normal 0.4; normal Y source |
+
+The earlier formed concrete and rough floor-panel approvals and their notes/role restrictions remain unchanged. Formed concrete still requires room-scale repetition judgment on large exposed walls. Rough floor panels remain approved for both floor and wall. PlasterA is an applied finish over older structural substrate, not a structural shell material. The newly approved pitted concrete can become too dark under Receiving lighting, and the lighter rough concrete still needs room-level repetition review on very large uninterrupted surfaces; those human caveats are stored in the decision input and catalog.
+
+`restage-approved` produced **5 current approved specs, 0 refused** in the [restage report](../../reports/environment_material_catalog/approved_restage_report.json). Godot editor import/parse exited 0, and the [live catalog test](../../tools/asset_pipeline/tests/environment_material_catalog_live_tests.gd) loaded all five `.tres` files and map resources. Its default query returned exactly five current approvals. Structural, rough-poured, service-floor and applied-finish family/layer/role filters returned the expected materials; formed structural floor, service-floor ceiling and plaster structural-substrate queries returned none. The explicit history query returned all 12 decisions, while rejected/deferred records were absent by default. All five approved entries have reviewed strong fingerprints matching current source fingerprints and effective `APPROVED` status.
+
+| Final close-out check | Result |
+| --- | --- |
+| EAF3B Python suite | 15 tests, 0 failures |
+| EAF3A Python regression suite | 22 tests, 0 failures |
+| EAF1 focused Godot regression suite | `EAF1_TESTS failures=0` |
+| EAF3B synthetic Godot query suite | `EAF3B_QUERY_TESTS failures=0` |
+| EAF3B live catalog/spec query suite | `EAF3B_LIVE_CATALOG_TESTS failures=0` |
+| Godot editor import/parse and approved restage | exit 0; 5/5 current specs; 0 refused; no new script error or test failure |
+| Source/review preservation | 59 cached source PNG hashes and nanosecond modification timestamps unchanged; 12/12 reviewed strong fingerprints current; original 48-capture and rerun 12-capture ZIP SHA-256 values unchanged; all decisions remain at 2K |
+
+The original and rerun evidence packages were preserved without capture regeneration. The old ZIP remains `a3694675b12124c85c929aeb2b77fe211d4bf327ea8b67673bc2e0d09cee2308`; the rerun ZIP remains `f8b1119a9508afdff11cd5a88d919f21b637c378056d3fc98affee092fc60de5`. No 4K source was fetched or inferred. Godot's existing Windows root-certificate-store warning remained non-blocking.
+
+Human review observed a fine diagonal hatch/grid in EAF1 WallGrazing captures across unrelated UV and triplanar materials. It is recorded as a shared, **non-blocking EAF1 lookdev/capture tooling issue**, not as source-specific evidence. It does not invalidate the EAF1 comparison method or these approvals: Hero views, macro pattern, color/value, room-scale repetition and Receiving response remain usable. Investigate only if it materially interferes with future material judgment; no rendering investigation is part of this close-out.
+
+EAF3 is promoted because its full material-authoring pipeline has been proven: safe single-root mixed-source indexing; stable IDs; source-level family/contact-sheet triage; selective PBR staging; strong fingerprints; deterministic EAF1 batch review; human decision reconciliation; tracked catalog; stale/source-missing semantics; approved-spec generation; restaging; and current-approved query. The five approved materials are an intentionally compact, non-exhaustive seed vocabulary. No supplemental masonry/brick/metal batch is required before EAF3 closure. Later material roles can be curated through the promoted EAF3A query/contact-sheet → shortlist → EAF3B stage → EAF1 review → human approve/reject/defer → catalog update workflow without reopening EAF3. EAF4 Wear / Overlay Foundation design is next; its implementation and Receiving C1 remain unauthorized/paused respectively.
+
+FINAL HUMAN DISPOSITION: PROMOTE EAF3B

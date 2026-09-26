@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "batch_id": "foundation_mineral_01_rerun_01",
+  "decisions": [
+    {
+      "source_stable_id": "kitbash:kb3d_constructionzone@7.0.3:KB3D_CSZ_ConcreteRoughBright",
+      "decision": "APPROVED",
+      "review_resolution": "2K",
+      "reviewed_source_fingerprint": "591f4ee6062ec7c63e43eec0abb8e234a86943047d33ee3b234888e53b9cfda5",
+      "approval_revision": 1,
+      "approval_date": "2026-09-26",
+      "display_name": "KB3D_CSZ_ConcreteRoughBright",
+      "surface_family": "structural_concrete",
+      "vdd_layer": "structural_substrate",
+      "approved_roles": [
+        "wall",
+        "ceiling",
+        "beam_column",
+        "opening_reveal"
+      ],
+      "mapping_mode": "TRIPLANAR",
+      "meters_per_repeat": 1.5,
+      "normal_y_flip": false,
+      "normal_strength": 0.5,
+      "roughness_multiplier": 1.0,
+      "metallic_multiplier": 1.0,
+      "albedo_multiplier": 1.0,
+      "review_notes": "Useful lighter rough structural concrete. The larger repeat and reduced normal strength make the broad mottling substantially calmer than the initial configuration. It responds well to Receiving Target lighting and provides a useful light-value structural option. Room-level review should still check repetition on very large uninterrupted surfaces.",
+      "preferred_runtime_resolution": null
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_dtla@7.0.3:KB3D_DLA_ConcretePittedGrayMed",
+      "decision": "APPROVED",
+      "review_resolution": "2K",
+      "reviewed_source_fingerprint": "bafa2dc0888ee00a55569b05acb3d9543a5e88d8e263ef6fa8caaa8f121c63e5",
+      "approval_revision": 1,
+      "approval_date": "2026-09-26",
+      "display_name": "KB3D_DLA_ConcretePittedGrayMed",
+      "surface_family": "rough_poured_concrete",
+      "vdd_layer": "structural_substrate",
+      "approved_roles": [
+        "wall",
+        "ceiling",
+        "beam_column",
+        "opening_reveal"
+      ],
+      "mapping_mode": "TRIPLANAR",
+      "meters_per_repeat": 1.5,
+      "normal_y_flip": false,
+      "normal_strength": 0.5,
+      "roughness_multiplier": 1.0,
+      "metallic_multiplier": 1.0,
+      "albedo_multiplier": 1.0,
+      "review_notes": "Strong medium/darker rough concrete option with restrained pitting and broad tonal variation. Useful as an older/rougher structural counterpart to the brighter concrete and formed concrete. Under Receiving lighting it becomes substantially darker, so room-level composition should avoid using it as the only dominant shell material where readability would suffer.",
+      "preferred_runtime_resolution": null
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_aftermath@7.0.2:KB3D_AFT_PlasterA",
+      "decision": "APPROVED",
+      "review_resolution": "2K",
+      "reviewed_source_fingerprint": "1ab21bb22025d65b580792b0dc0d8554d871f8028163bc5a5cea85b9db149795",
+      "approval_revision": 1,
+      "approval_date": "2026-09-26",
+      "display_name": "KB3D_AFT_PlasterA",
+      "surface_family": "cement_render",
+      "vdd_layer": "applied_finish",
+      "approved_roles": [
+        "wall"
+      ],
+      "mapping_mode": "TRIPLANAR",
+      "meters_per_repeat": 1.5,
+      "normal_y_flip": false,
+      "normal_strength": 0.4,
+      "roughness_multiplier": 1.0,
+      "metallic_multiplier": 1.0,
+      "albedo_multiplier": 1.0,
+      "review_notes": "Useful pale aged cement/render finish. The reduced normal strength and larger repeat calm the initial fibrous read enough for localized wall-finish use. It should remain an applied finish over older structural substrate rather than defining the whole bunker shell. Its broad mottling already supplies some baseline age, so later EAF4 wear should remain restrained.",
+      "preferred_runtime_resolution": null
+    }
+  ]
+}
