@@ -1,8 +1,9 @@
 # EAF1 material and lighting lookdev validation
 
-- **Status:** IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN REVIEW PENDING
+- **Status:** IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN REVIEW COMPLETE / PROMOTED
 - **Branch:** `codex/eaf1-material-lighting-lookdev`
 - **Implementation HEAD at validation:** `2b53a7355bddecd0ae6e3c52865cc98308f43f17`
+- **Reviewed EAF1 branch HEAD before promotion:** `3165f55914bcb70a8805a8abb7bcb2ddfcdb7bd3`
 - **Base:** local `main` `aa8d167f9f730546f6f8a5600712170fe2aed94a` (its docs-only transition commit was preserved).
 - **Engine:** Godot 4.7 stable, Compatibility renderer (`gl_compatibility`). No renderer migration or production scene edits.
 
@@ -82,4 +83,16 @@ Focused tests: **0 failures, exit 0**. Headless editor import/parse: **exit 0**.
 
 **Method:** hold material and camera fixed, toggle only **L**, then compare the paired capture files. Confirm the scene speeds future material decisions and that its 1 m scale is readily understood.
 
-Human disposition remains **PROMOTE EAF1 / REVISE EAF1**. No EAF2 work, Receiving C1 implementation, merge, or push was performed.
+At this validation snapshot, human disposition was pending between **PROMOTE EAF1 / REVISE EAF1**. No EAF2 work, Receiving C1 implementation, merge, or push had been performed.
+
+## Final human review and promotion — 26 September 2026
+
+Human review is complete. The **EAF1 lookdev system and material-review process are promoted**. The permanent scene resolves the prior apples-to-oranges comparison problem, makes Neutral/Receiving Target switching fast, keeps material, geometry, camera, FOV, exposure, tonemap, and physical scale stable between modes, and materially reduces manual setup. Fixed cameras and deterministic captures make the comparison repeatable.
+
+- **Neutral Calibration** is accepted as the technical material-inspection context.
+- **Receiving Target Preview** is accepted as the standardized warm, shadowed, Receiving-like material context. It is a preview standard, not final Receiving lighting.
+- The deterministic PNG matrix and manifest are accepted as preferred evidence for future material reviews.
+- The 1K KitBash fixture was sufficient to validate this workflow. The archive had no 2K variant; fine-resolution judgment of these specific materials was outside this gate. Normal 2K/4K source quality expected later remains to be evaluated.
+- No individual EAF1 sample material is globally production-approved. The final material palette remains EAF3/EAF5 work.
+
+FINAL HUMAN DISPOSITION: PROMOTE EAF1
