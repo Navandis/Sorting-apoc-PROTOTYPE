@@ -1,6 +1,6 @@
 # EAF3A repository indexing and source triage validation
 
-**Status: IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN REVIEW PENDING**
+**Status: IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN REVIEW COMPLETE / PROMOTED**
 
 - Date: 26 September 2026.
 - Branch: `codex/eaf3a-material-repository-index`.
@@ -133,4 +133,19 @@ Primary self-review covered guarded I/O, no source writes, profile/core separati
 
 Review boundary safety, mixed-content classification, understandable stable IDs, channel/resolution grouping, diff visibility and whether the four sheets/filter commands make triage practical. Filename families are not palette decisions. Normal-Y, physical scale, packed-map semantics, descriptor graph execution, full-resolution PBR quality and tileability remain unverified source facts for later work.
 
-**Disposition: PROMOTE EAF3A / REVISE EAF3A.** No disposition has been selected. No merge or push was performed. EAF3B, EAF4, approval-catalog construction, EAF1 review-batch creation, material staging into Godot and Receiving Stage C1 remain untouched/out of scope. Stop at this human gate.
+**Disposition: PROMOTE EAF3A / REVISE EAF3A.** No disposition had been selected at this technical snapshot. EAF3B, EAF4, approval-catalog construction, EAF1 review-batch creation, material staging into Godot and Receiving Stage C1 were untouched/out of scope.
+## Final human review and promotion — 26 September 2026
+
+Human review is complete. **EAF3A — Repository Indexing + Source Triage Foundation is promoted** in its designed source-discovery scope.
+
+The reviewed family and contact sheets make the large source repository useful for rapid visual triage. Stable IDs and per-page manifests make visually interesting candidates traceable into concrete future VDD shortlist discussions. Channel and map records are accepted as machine-oriented source facts that can support EAF3B; they are not intended as the primary human-facing review artifact.
+
+This promotion does not approve any source material, final bunker palette, PBR quality, physical scale, normal-Y direction, tileability, mapping, or room suitability. Those remain matters for EAF1 review, EAF3B selective staging and batch review, and later EAF5 context review.
+
+The current source snapshot contains only locally downloaded 2K texture variants, even where vendor descriptors advertise other resolutions. The source index correctly records files that actually exist rather than assuming advertised variants. If 4K variants are later downloaded beneath the same configured repository, a normal EAF3A rescan should discover the additional resolution while preserving each material's stable identity.
+
+The promoted repository boundary remains one machine-local configured source root, currently `D:\AssetPipeline\KitBash_repository`. Stable IDs and indexed source file paths remain repository-relative. No alternate drive/path scanning or automatic source-root discovery is allowed. A deliberate root migration is a local configuration action, not an identity change. The tracked example/schema remain the configuration contract; `local_config.json` remains ignored.
+
+This promotes single-root scanning, `KITBASH_PROFILE_V1`, mixed-content classification, candidate grouping, stable IDs, channel/resolution grouping, incremental index/diff, query/filter tooling, thumbnail/contact-sheet triage, and the synthetic scanner tests. It does not promote EAF3 overall.
+
+FINAL HUMAN DISPOSITION: PROMOTE EAF3A
