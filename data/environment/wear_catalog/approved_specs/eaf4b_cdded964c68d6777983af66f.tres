@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="EnvironmentWearOverlaySpec" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://environment_authoring/wear/environment_wear_overlay_spec.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/environment/wear/eaf4_cache/eaf4b_cdded964c68d6777983af66f/2k/basecolor.jpg" id="2"]
+[ext_resource type="Texture2D" path="res://assets/environment/wear/eaf4_cache/eaf4b_cdded964c68d6777983af66f/2k/opacity.jpg" id="3"]
+
+[resource]
+script = ExtResource("1")
+overlay_id = "eaf4b_cdded964c68d6777983af66f"
+display_name = "Concrete Leakage"
+source_stable_id = "eaf4:FAB_DECAL_PROFILE:concrete_leakage_tk3jej1c:tk3jej1c"
+source_fingerprint = "157f81acbf2321fb84525f48e4f641cd4e9a8ea3a9aa9e21cd7de8baae41071b"
+semantic_category = "WATER_MINERAL"
+cause_tags = PackedStringArray("moisture_leak", "mineral_deposit")
+surface_capabilities = PackedStringArray("WALL", "VERTICAL_PREFERRED")
+render_mode = 1
+physical_size_m = Vector2(0.25, 1.0)
+surface_offset_m = 0.002
+opacity_multiplier = 1.0
+albedo_strength = 0.45
+normal_strength = 0.8
+roughness_strength = 0.7
+normal_y_flip = false
+edge_feather = 0.035
+albedo_tint = Color(1.0, 1.0, 1.0, 1.0)
+embedded_alpha = false
+review_notes = "Source class: MASKED_DECAL; Deliberately narrow, low-amplitude vertical leak. Its subtlety is useful. Place directly beneath or behind a credible moisture source such as a pipe joint, penetration, fitting, vent, ceiling/service joint or similar infrastructure. Partial occlusion at the origin is preferable.; human-approved"
+base_color_texture = ExtResource("2")
+opacity_texture = ExtResource("3")

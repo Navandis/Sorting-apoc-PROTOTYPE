@@ -1,0 +1,441 @@
+{
+  "schema_version": 1,
+  "batch_id": "wear_foundation_01",
+  "source_index_revision": "eaf4a-1",
+  "source_index_fingerprint": "ac8a65aa3f0552e8c70824e842a5ac4716988785bf20125c17ddc4c65271944c",
+  "candidates": [
+    {
+      "stable_id": "eaf4:FAB_DECAL_PROFILE:concrete_crack_sf2moag:sf2moag",
+      "resolution": "2K",
+      "primitive": "OVERLAY",
+      "selection_rationale": "Narrow branched concrete crack with clean separated mask and full PBR; portable substrate stress case.",
+      "semantic_category": "crack",
+      "cause_tags": [
+        "settlement"
+      ],
+      "surface_capabilities": [
+        "WALL"
+      ],
+      "base_material_ids": [
+        "eaf3b_39b926e570fb3824019aade2",
+        "eaf3b_bd0940113f04f3d3784629e7"
+      ],
+      "resolution_rationale": "Routine localized review at available 2K.",
+      "initial_parameters": {
+        "render_mode": "CUTOUT",
+        "physical_size_m": [
+          0.5,
+          0.5
+        ],
+        "surface_offset_m": 0.002,
+        "opacity_multiplier": 0.85,
+        "albedo_strength": 0.35,
+        "normal_strength": 0.8,
+        "roughness_strength": 0.7,
+        "provenance": "machine-suggested; human-pending"
+      }
+    },
+    {
+      "stable_id": "eaf4:FAB_DECAL_PROFILE:concrete_crack_sfhmrfg:sfhmrfg",
+      "resolution": "2K",
+      "primitive": "OVERLAY",
+      "selection_rationale": "Long horizontal fracture suitable for a distinct physical aspect-ratio check.",
+      "semantic_category": "crack",
+      "cause_tags": [
+        "settlement"
+      ],
+      "surface_capabilities": [
+        "WALL"
+      ],
+      "base_material_ids": [
+        "eaf3b_39b926e570fb3824019aade2",
+        "eaf3b_bd0940113f04f3d3784629e7"
+      ],
+      "resolution_rationale": "Routine localized review at available 2K.",
+      "initial_parameters": {
+        "render_mode": "CUTOUT",
+        "physical_size_m": [
+          1.0,
+          0.25
+        ],
+        "surface_offset_m": 0.002,
+        "opacity_multiplier": 0.85,
+        "albedo_strength": 0.35,
+        "normal_strength": 0.8,
+        "roughness_strength": 0.7,
+        "provenance": "machine-suggested; human-pending"
+      }
+    },
+    {
+      "stable_id": "eaf4:FAB_DECAL_PROFILE:concrete_damage_sfcmkbg:sfcmkbg",
+      "resolution": "2K",
+      "primitive": "OVERLAY",
+      "selection_rationale": "Compact concrete chip with readable irregular silhouette and PBR relief.",
+      "semantic_category": "spall_damage",
+      "cause_tags": [
+        "impact"
+      ],
+      "surface_capabilities": [
+        "WALL"
+      ],
+      "base_material_ids": [
+        "eaf3b_39b926e570fb3824019aade2",
+        "eaf3b_bd0940113f04f3d3784629e7"
+      ],
+      "resolution_rationale": "Routine localized review at available 2K.",
+      "initial_parameters": {
+        "render_mode": "CUTOUT",
+        "physical_size_m": [
+          1.0,
+          0.5
+        ],
+        "surface_offset_m": 0.002,
+        "opacity_multiplier": 0.85,
+        "albedo_strength": 0.45,
+        "normal_strength": 0.8,
+        "roughness_strength": 0.7,
+        "provenance": "machine-suggested; human-pending"
+      }
+    },
+    {
+      "stable_id": "eaf4:FAB_DECAL_PROFILE:damaged_concrete_tbqmbayr:tbqmbayr",
+      "resolution": "2K",
+      "primitive": "OVERLAY",
+      "selection_rationale": "Broader broken concrete/rebar edge tests hard mask without introducing a source rectangle.",
+      "semantic_category": "spall_damage",
+      "cause_tags": [
+        "impact"
+      ],
+      "surface_capabilities": [
+        "WALL"
+      ],
+      "base_material_ids": [
+        "eaf3b_39b926e570fb3824019aade2",
+        "eaf3b_bd0940113f04f3d3784629e7"
+      ],
+      "resolution_rationale": "Routine localized review at available 2K.",
+      "initial_parameters": {
+        "render_mode": "CUTOUT",
+        "physical_size_m": [
+          1.0,
+          1.0
+        ],
+        "surface_offset_m": 0.002,
+        "opacity_multiplier": 0.85,
+        "albedo_strength": 0.45,
+        "normal_strength": 0.8,
+        "roughness_strength": 0.7,
+        "provenance": "machine-suggested; human-pending"
+      }
+    },
+    {
+      "stable_id": "eaf4:FAB_DECAL_PROFILE:concrete_leakage_tk3jej1c:tk3jej1c",
+      "resolution": "2K",
+      "primitive": "OVERLAY",
+      "selection_rationale": "Tight vertical dark leak mark, useful beneath a small service origin.",
+      "semantic_category": "water_mineral",
+      "cause_tags": [
+        "leak"
+      ],
+      "surface_capabilities": [
+        "WALL"
+      ],
+      "base_material_ids": [
+        "eaf3b_39b926e570fb3824019aade2",
+        "eaf3b_bd0940113f04f3d3784629e7"
+      ],
+      "resolution_rationale": "Routine localized review at available 2K.",
+      "initial_parameters": {
+        "render_mode": "SOFT_BLEND",
+        "physical_size_m": [
+          0.25,
+          1.0
+        ],
+        "surface_offset_m": 0.002,
+        "opacity_multiplier": 0.85,
+        "albedo_strength": 0.25,
+        "normal_strength": 0.8,
+        "roughness_strength": 0.7,
+        "provenance": "machine-suggested; human-pending"
+      }
+    },
+    {
+      "stable_id": "eaf4:FAB_DECAL_PROFILE:leakage_tculfbnc:tculfbnc",
+      "resolution": "2K",
+      "primitive": "OVERLAY",
+      "selection_rationale": "Soft descending mineral/water stain with differentiated taper.",
+      "semantic_category": "water_mineral",
+      "cause_tags": [
+        "leak"
+      ],
+      "surface_capabilities": [
+        "WALL"
+      ],
+      "base_material_ids": [
+        "eaf3b_39b926e570fb3824019aade2",
+        "eaf3b_bd0940113f04f3d3784629e7"
+      ],
+      "resolution_rationale": "Routine localized review at available 2K.",
+      "initial_parameters": {
+        "render_mode": "SOFT_BLEND",
+        "physical_size_m": [
+          0.25,
+          0.5
+        ],
+        "surface_offset_m": 0.002,
+        "opacity_multiplier": 0.85,
+        "albedo_strength": 0.25,
+        "normal_strength": 0.8,
+        "roughness_strength": 0.7,
+        "provenance": "machine-suggested; human-pending"
+      }
+    },
+    {
+      "stable_id": "eaf4:FAB_DECAL_PROFILE:leakage_skiubhzc:skiubhzc",
+      "resolution": "2K",
+      "primitive": "OVERLAY",
+      "selection_rationale": "Broad irregular orange mineral leak with enough area to evaluate imperfection breakup clearly.",
+      "semantic_category": "water_mineral",
+      "cause_tags": [
+        "leak"
+      ],
+      "surface_capabilities": [
+        "WALL"
+      ],
+      "base_material_ids": [
+        "eaf3b_39b926e570fb3824019aade2",
+        "eaf3b_bd0940113f04f3d3784629e7"
+      ],
+      "resolution_rationale": "Routine localized review at available 2K.",
+      "initial_parameters": {
+        "render_mode": "SOFT_BLEND",
+        "physical_size_m": [
+          1.0,
+          1.0
+        ],
+        "surface_offset_m": 0.002,
+        "opacity_multiplier": 0.85,
+        "albedo_strength": 0.45,
+        "normal_strength": 0.8,
+        "roughness_strength": 0.7,
+        "provenance": "machine-suggested; human-pending"
+      }
+    },
+    {
+      "stable_id": "eaf4:FAB_DECAL_PROFILE:road_dust_sgzh1so:sgzh1so",
+      "resolution": "2K",
+      "primitive": "OVERLAY",
+      "selection_rationale": "Sparse road dust reads as a restrained grime alternative; EAF4A grime page contains excluded fixtures.",
+      "semantic_category": "grime",
+      "cause_tags": [
+        "accumulation"
+      ],
+      "surface_capabilities": [
+        "FLOOR"
+      ],
+      "base_material_ids": [
+        "eaf3b_20c61bd1c85420be2f71a090"
+      ],
+      "resolution_rationale": "Routine localized review at available 2K.",
+      "initial_parameters": {
+        "render_mode": "SOFT_BLEND",
+        "physical_size_m": [
+          1.0,
+          1.0
+        ],
+        "surface_offset_m": 0.002,
+        "opacity_multiplier": 0.85,
+        "albedo_strength": 0.2,
+        "normal_strength": 0.8,
+        "roughness_strength": 0.7,
+        "provenance": "machine-suggested; human-pending"
+      }
+    },
+    {
+      "stable_id": "eaf4:FAB_DECAL_PROFILE:rust_debris_ugxhbh0h:ugxhbh0h",
+      "resolution": "2K",
+      "primitive": "OVERLAY",
+      "selection_rationale": "Sparse corrosion flecks rather than a full metal object.",
+      "semantic_category": "rust_corrosion",
+      "cause_tags": [
+        "corrosion"
+      ],
+      "surface_capabilities": [
+        "WALL",
+        "FLOOR"
+      ],
+      "base_material_ids": [
+        "eaf3b_39b926e570fb3824019aade2",
+        "eaf3b_bd0940113f04f3d3784629e7"
+      ],
+      "resolution_rationale": "Routine localized review at available 2K.",
+      "initial_parameters": {
+        "render_mode": "SOFT_BLEND",
+        "physical_size_m": [
+          0.5,
+          0.5
+        ],
+        "surface_offset_m": 0.002,
+        "opacity_multiplier": 0.85,
+        "albedo_strength": 0.6,
+        "normal_strength": 0.8,
+        "roughness_strength": 0.7,
+        "provenance": "machine-suggested; human-pending"
+      }
+    },
+    {
+      "stable_id": "eaf4:FAB_DECAL_PROFILE:oil_stain_semlsbi:semlsbi",
+      "resolution": "2K",
+      "primitive": "OVERLAY",
+      "selection_rationale": "Two irregular oil marks, suitable for a localized floor spill.",
+      "semantic_category": "oil_grease",
+      "cause_tags": [
+        "spill"
+      ],
+      "surface_capabilities": [
+        "FLOOR"
+      ],
+      "base_material_ids": [
+        "eaf3b_20c61bd1c85420be2f71a090"
+      ],
+      "resolution_rationale": "Routine localized review at available 2K.",
+      "initial_parameters": {
+        "render_mode": "SOFT_BLEND",
+        "physical_size_m": [
+          0.5,
+          0.5
+        ],
+        "surface_offset_m": 0.002,
+        "opacity_multiplier": 0.85,
+        "albedo_strength": 0.45,
+        "normal_strength": 0.8,
+        "roughness_strength": 0.7,
+        "provenance": "machine-suggested; human-pending"
+      }
+    },
+    {
+      "stable_id": "eaf4:FAB_DECAL_PROFILE:chipped_paint_patch_ui2ncdjfw:ui2ncdjfw",
+      "resolution": "2K",
+      "primitive": "OVERLAY",
+      "selection_rationale": "Hard fragmented old paint edge, useful for applied-finish contrast.",
+      "semantic_category": "paint_damage",
+      "cause_tags": [
+        "age"
+      ],
+      "surface_capabilities": [
+        "WALL"
+      ],
+      "base_material_ids": [
+        "eaf3b_39b926e570fb3824019aade2",
+        "eaf3b_bd0940113f04f3d3784629e7"
+      ],
+      "resolution_rationale": "Routine localized review at available 2K.",
+      "initial_parameters": {
+        "render_mode": "CUTOUT",
+        "physical_size_m": [
+          1.0,
+          1.0
+        ],
+        "surface_offset_m": 0.002,
+        "opacity_multiplier": 0.85,
+        "albedo_strength": 0.7,
+        "normal_strength": 0.8,
+        "roughness_strength": 0.7,
+        "provenance": "machine-suggested; human-pending"
+      }
+    },
+    {
+      "stable_id": "eaf4:FAB_DECAL_PROFILE:industrial_abandonedfactory_wall_concrete_painted_xetubap:xetubap",
+      "resolution": "4K",
+      "primitive": "EAF4_PATCH",
+      "selection_rationale": "Human EAF4A triage identifies a broad opaque paint remnant; review as patch while retaining MASKED_DECAL source fact.",
+      "semantic_category": "paint_remnant",
+      "cause_tags": [
+        "old_finish"
+      ],
+      "surface_capabilities": [
+        "WALL"
+      ],
+      "base_material_ids": [
+        "eaf3b_39b926e570fb3824019aade2",
+        "eaf3b_8d5f0cf5add98dfe0a58f18a"
+      ],
+      "resolution_rationale": "Only available indexed review resolution; broad paint patch warrants 4K.",
+      "initial_parameters": {
+        "render_mode": "SOFT_BLEND",
+        "physical_size_m": [
+          1.5,
+          2.0
+        ],
+        "surface_offset_m": 0.002,
+        "opacity_multiplier": 0.85,
+        "albedo_strength": 0.95,
+        "normal_strength": 0.8,
+        "roughness_strength": 0.7,
+        "provenance": "machine-suggested; human-pending"
+      }
+    },
+    {
+      "stable_id": "eaf4:IMPERFECTION_TEXTURE_PROFILE:grunge_tedxadjc:tedxadjc",
+      "resolution": "1K",
+      "primitive": "IMPERFECTION",
+      "selection_rationale": "Varied scalar grunge without strong directional lines for stain modulation.",
+      "semantic_category": "imperfection",
+      "cause_tags": [
+        "surface_variation"
+      ],
+      "surface_capabilities": [
+        "PLANAR_ANY"
+      ],
+      "base_material_ids": [
+        "eaf3b_39b926e570fb3824019aade2",
+        "eaf3b_bd0940113f04f3d3784629e7"
+      ],
+      "resolution_rationale": "One selected 1K scalar review variant; higher grunge variants excluded.",
+      "initial_parameters": {
+        "render_mode": "SOFT_BLEND",
+        "physical_size_m": [
+          1.0,
+          1.0
+        ],
+        "surface_offset_m": 0.002,
+        "opacity_multiplier": 0.85,
+        "albedo_strength": 0.0,
+        "normal_strength": 0.8,
+        "roughness_strength": 0.7,
+        "provenance": "machine-suggested; human-pending"
+      }
+    },
+    {
+      "stable_id": "eaf4:IMPERFECTION_TEXTURE_PROFILE:scratched_metal_vdekebbc:vdekebbc",
+      "resolution": "1K",
+      "primitive": "IMPERFECTION",
+      "selection_rationale": "Fine scratched mask for testing directional scuff modulation.",
+      "semantic_category": "imperfection",
+      "cause_tags": [
+        "abrasion"
+      ],
+      "surface_capabilities": [
+        "PLANAR_ANY"
+      ],
+      "base_material_ids": [
+        "eaf3b_39b926e570fb3824019aade2",
+        "eaf3b_bd0940113f04f3d3784629e7"
+      ],
+      "resolution_rationale": "One selected 1K scalar review variant; higher grunge variants excluded.",
+      "initial_parameters": {
+        "render_mode": "SOFT_BLEND",
+        "physical_size_m": [
+          0.5,
+          0.5
+        ],
+        "surface_offset_m": 0.002,
+        "opacity_multiplier": 0.85,
+        "albedo_strength": 0.0,
+        "normal_strength": 0.8,
+        "roughness_strength": 0.7,
+        "provenance": "machine-suggested; human-pending"
+      }
+    }
+  ]
+}

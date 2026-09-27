@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="EnvironmentWearOverlaySpec" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://environment_authoring/wear/environment_wear_overlay_spec.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/environment/wear/eaf4_cache/eaf4b_c3b63b5da3fbdda32be47bd0/2k/basecolor.jpg" id="2"]
+[ext_resource type="Texture2D" path="res://assets/environment/wear/eaf4_cache/eaf4b_c3b63b5da3fbdda32be47bd0/2k/opacity.jpg" id="3"]
+[ext_resource type="Texture2D" path="res://assets/environment/wear/eaf4_cache/eaf4b_c3b63b5da3fbdda32be47bd0/2k/normal.jpg" id="4"]
+[ext_resource type="Texture2D" path="res://assets/environment/wear/eaf4_cache/eaf4b_c3b63b5da3fbdda32be47bd0/2k/roughness.jpg" id="5"]
+
+[resource]
+script = ExtResource("1")
+overlay_id = "eaf4b_c3b63b5da3fbdda32be47bd0"
+display_name = "Concrete Crack"
+source_stable_id = "eaf4:FAB_DECAL_PROFILE:concrete_crack_sf2moag:sf2moag"
+source_fingerprint = "8da6c186f20805a003062c4c11e364a9b842ed715d202a6701195d1f891a864e"
+semantic_category = "CRACK"
+cause_tags = PackedStringArray("settlement")
+surface_capabilities = PackedStringArray("PLANAR_ANY")
+render_mode = 0
+physical_size_m = Vector2(0.5, 0.5)
+surface_offset_m = 0.002
+opacity_multiplier = 0.85
+albedo_strength = 0.35
+normal_strength = 0.8
+roughness_strength = 0.7
+normal_y_flip = false
+edge_feather = 0.035
+albedo_tint = Color(1.0, 1.0, 1.0, 1.0)
+embedded_alpha = false
+review_notes = "Source class: MASKED_DECAL; Good small branched crack. Prefer origins at corners, openings, structural joints, penetrations, impact points, or repair boundaries. Approval is for reusable source quality, not universal placement.; human-approved"
+base_color_texture = ExtResource("2")
+opacity_texture = ExtResource("3")
+normal_texture = ExtResource("4")
+roughness_texture = ExtResource("5")

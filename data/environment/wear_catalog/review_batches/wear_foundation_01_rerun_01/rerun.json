@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "rerun_id": "wear_foundation_01_rerun_01",
+  "original_batch_id": "wear_foundation_01",
+  "source_index_fingerprint": "ac8a65aa3f0552e8c70824e842a5ac4716988785bf20125c17ddc4c65271944c",
+  "candidates": [
+    {
+      "source_stable_id": "eaf4:FAB_DECAL_PROFILE:concrete_leakage_tk3jej1c:tk3jej1c",
+      "catalog_wear_id": "eaf4b_cdded964c68d6777983af66f",
+      "diagnostic_context": "WEAR_DIAGNOSTIC_LIGHT",
+      "calibrated_parameters": {
+        "opacity": 1.0,
+        "albedo_strength": 0.45
+      },
+      "rationale": "Expose a narrow low-amplitude leak against quiet wall while retaining the original EAF3 view."
+    },
+    {
+      "source_stable_id": "eaf4:FAB_DECAL_PROFILE:leakage_tculfbnc:tculfbnc",
+      "catalog_wear_id": "eaf4b_cd7701bd0cdb622c63628103",
+      "diagnostic_context": "WEAR_DIAGNOSTIC_LIGHT",
+      "calibrated_parameters": {
+        "opacity": 1.0,
+        "albedo_strength": 0.45
+      },
+      "rationale": "Expose the tapered streak and edge shape before judging its strength on textured concrete."
+    },
+    {
+      "source_stable_id": "eaf4:FAB_DECAL_PROFILE:road_dust_sgzh1so:sgzh1so",
+      "catalog_wear_id": "eaf4b_7efdf22029c82320d62147c7",
+      "diagnostic_context": "WEAR_DIAGNOSTIC_FLOOR",
+      "calibrated_parameters": {
+        "opacity": 1.0,
+        "albedo_strength": 0.4
+      },
+      "rationale": "Separate sparse dust from preexisting aggregate and floor panel marks."
+    },
+    {
+      "source_stable_id": "eaf4:FAB_DECAL_PROFILE:rust_debris_ugxhbh0h:ugxhbh0h",
+      "catalog_wear_id": "eaf4b_89c9cb7aa962b19eda21f278",
+      "diagnostic_context": "WEAR_DIAGNOSTIC_LIGHT",
+      "calibrated_parameters": {
+        "opacity": 1.0,
+        "albedo_strength": 0.75
+      },
+      "rationale": "Make individual corrosion flecks readable on a quiet wall."
+    },
+    {
+      "source_stable_id": "eaf4:FAB_DECAL_PROFILE:chipped_paint_patch_ui2ncdjfw:ui2ncdjfw",
+      "catalog_wear_id": "eaf4b_16c913a6a9cc1926bcc14833",
+      "diagnostic_context": "WEAR_DIAGNOSTIC_LIGHT",
+      "calibrated_parameters": {
+        "opacity": 0.85,
+        "albedo_strength": 0.35
+      },
+      "rationale": "Test whether reduced photographed color makes the fragmented paint portable."
+    },
+    {
+      "source_stable_id": "eaf4:FAB_DECAL_PROFILE:industrial_abandonedfactory_wall_concrete_painted_xetubap:xetubap",
+      "catalog_wear_id": "eaf4b_dc44a10776bc702874712334",
+      "diagnostic_context": "WEAR_DIAGNOSTIC_LIGHT",
+      "calibrated_parameters": {
+        "opacity": 0.75,
+        "albedo_strength": 0.55
+      },
+      "rationale": "Test a quieter paint remnant against its original bright source-color treatment."
+    }
+  ]
+}

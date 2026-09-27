@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="EnvironmentWearOverlaySpec" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://environment_authoring/wear/environment_wear_overlay_spec.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/environment/wear/eaf4_cache/eaf4b_2faa4471206d5eaf048558bb/2k/basecolor.jpg" id="2"]
+[ext_resource type="Texture2D" path="res://assets/environment/wear/eaf4_cache/eaf4b_2faa4471206d5eaf048558bb/2k/opacity.jpg" id="3"]
+[ext_resource type="Texture2D" path="res://assets/environment/wear/eaf4_cache/eaf4b_2faa4471206d5eaf048558bb/2k/normal.jpg" id="4"]
+[ext_resource type="Texture2D" path="res://assets/environment/wear/eaf4_cache/eaf4b_2faa4471206d5eaf048558bb/2k/roughness.jpg" id="5"]
+
+[resource]
+script = ExtResource("1")
+overlay_id = "eaf4b_2faa4471206d5eaf048558bb"
+display_name = "Damaged Concrete"
+source_stable_id = "eaf4:FAB_DECAL_PROFILE:damaged_concrete_tbqmbayr:tbqmbayr"
+source_fingerprint = "4e47b963ba867573afd41f0f9b36b76fb3a13d81798d1cd25e9cc8801b58d7ca"
+semantic_category = "SPALL"
+cause_tags = PackedStringArray("impact")
+surface_capabilities = PackedStringArray("PLANAR_ANY")
+render_mode = 0
+physical_size_m = Vector2(1.0, 1.0)
+surface_offset_m = 0.002
+opacity_multiplier = 0.85
+albedo_strength = 0.45
+normal_strength = 0.8
+roughness_strength = 0.7
+normal_y_flip = false
+edge_feather = 0.035
+albedo_tint = Color(1.0, 1.0, 1.0, 1.0)
+embedded_alpha = false
+review_notes = "Source class: MASKED_DECAL; Broad broken-concrete source with useful depth language. Use only where impact, opening/edge condition, structural interruption, or failed repair justifies it. Avoid scattering across maintained active rooms.; human-approved"
+base_color_texture = ExtResource("2")
+opacity_texture = ExtResource("3")
+normal_texture = ExtResource("4")
+roughness_texture = ExtResource("5")

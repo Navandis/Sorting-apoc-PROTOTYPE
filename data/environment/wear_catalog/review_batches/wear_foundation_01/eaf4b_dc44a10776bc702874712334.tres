@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="EnvironmentWearOverlaySpec" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://environment_authoring/wear/environment_wear_overlay_spec.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/environment/wear/eaf4_cache/eaf4b_dc44a10776bc702874712334/4k/basecolor.jpg" id="2"]
+[ext_resource type="Texture2D" path="res://assets/environment/wear/eaf4_cache/eaf4b_dc44a10776bc702874712334/4k/opacity.jpg" id="3"]
+[ext_resource type="Texture2D" path="res://assets/environment/wear/eaf4_cache/eaf4b_dc44a10776bc702874712334/4k/normal.jpg" id="4"]
+[ext_resource type="Texture2D" path="res://assets/environment/wear/eaf4_cache/eaf4b_dc44a10776bc702874712334/4k/roughness.jpg" id="5"]
+
+[resource]
+script = ExtResource("1")
+overlay_id = "eaf4b_dc44a10776bc702874712334"
+display_name = "xetubap"
+source_stable_id = "eaf4:FAB_DECAL_PROFILE:industrial_abandonedfactory_wall_concrete_painted_xetubap:xetubap"
+source_fingerprint = "e098cb1062052e1b5d9aa48d943ea879d9ec3a6d258855caba6b9420e80ef2b1"
+semantic_category = "paint_remnant"
+cause_tags = PackedStringArray("old_finish")
+surface_capabilities = PackedStringArray("WALL")
+render_mode = 1
+physical_size_m = Vector2(1.5, 2.0)
+surface_offset_m = 0.002
+opacity_multiplier = 0.85
+albedo_strength = 0.95
+normal_strength = 0.8
+roughness_strength = 0.7
+normal_y_flip = false
+edge_feather = 0.035
+albedo_tint = Color(1.0, 1.0, 1.0, 1.0)
+embedded_alpha = false
+review_notes = "Source class: MASKED_DECAL; Human EAF4A triage identifies a broad opaque paint remnant; review as patch while retaining MASKED_DECAL source fact.; machine-suggested; human-pending"
+base_color_texture = ExtResource("2")
+opacity_texture = ExtResource("3")
+normal_texture = ExtResource("4")
+roughness_texture = ExtResource("5")

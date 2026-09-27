@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "masks": [
+    {
+      "catalog_wear_id": "eaf4b_c8b0a5126abd42ebe766fd44",
+      "source_stable_id": "eaf4:IMPERFECTION_TEXTURE_PROFILE:grunge_tedxadjc:tedxadjc",
+      "source_fingerprint": "e71aaf2f2092f229536c4a8ffd8e28b52db2c0e9b3924ab6436852a38267504b",
+      "texture": "res://assets/environment/wear/eaf4_cache/eaf4b_c8b0a5126abd42ebe766fd44/1k/roughness.jpg",
+      "modulation_only": true
+    }
+  ]
+}
