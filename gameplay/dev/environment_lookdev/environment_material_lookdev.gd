@@ -167,6 +167,11 @@ func _build_geometry() -> void:
 	block.mesh = _box_mesh(Vector3(0.95, 0.95, 0.95), 0.08)
 	block.position = Vector3(0.55, 0.475, 0.15)
 	review.add_child(block)
+	# Large review planes receive deliberate shadows without grazing-angle
+	# self-shadow acne. Keep the block's cast shadow for shape and scale cues.
+	for surface_name in REVIEW_SURFACES:
+		var surface := review.get_node(surface_name) as MeshInstance3D
+		surface.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON if surface_name == "BeveledBlock" else GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	var shadow := get_node("ShadowStructure") as Node3D
 	var neutral_dark := _plain_material(Color(0.28, 0.29, 0.30))
 	_add_box(shadow, "OverheadBeam", Vector3(4.25, 0.32, 0.30), Vector3(0.15, 2.56, -0.52), neutral_dark)

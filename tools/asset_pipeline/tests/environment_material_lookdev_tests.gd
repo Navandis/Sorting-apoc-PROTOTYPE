@@ -116,6 +116,15 @@ func _test_review_and_scene() -> void:
 	var scene := packed.instantiate() as Node3D
 	root.add_child(scene)
 	await process_frame
+	var review_surfaces := ["Wall_A", "Wall_B_90Deg", "Floor", "Ceiling", "Column"]
+	for surface_name in review_surfaces:
+		var surface := scene.get_node("ReviewGeometry/%s" % surface_name) as MeshInstance3D
+		_check(surface.cast_shadow == GeometryInstance3D.SHADOW_CASTING_SETTING_OFF, "%s does not cast review-surface shadows" % surface_name)
+	var block := scene.get_node("ReviewGeometry/BeveledBlock") as MeshInstance3D
+	_check(block.cast_shadow == GeometryInstance3D.SHADOW_CASTING_SETTING_ON, "BeveledBlock keeps scale and shape shadow")
+	for caster_name in ["OverheadBeam", "PartialReturn"]:
+		var caster := scene.get_node("ShadowStructure/%s" % caster_name) as MeshInstance3D
+		_check(caster.cast_shadow == GeometryInstance3D.SHADOW_CASTING_SETTING_ON, "%s keeps intentional cast shadows" % caster_name)
 	var neutral := scene.get_node_or_null("NeutralLightingRig") as Node3D
 	var receiving := scene.get_node_or_null("ReceivingTargetLightingRig") as Node3D
 	var environment := scene.get_node_or_null("WorldEnvironment") as WorldEnvironment
