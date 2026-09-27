@@ -74,5 +74,4 @@ grouped sheets, City audit and Unreal summary. No Godot runtime or curation stat
   audit, 8/8 cache reuse, Godot editor integrity parse. EAF3 code was untouched.
 - Review: primary implementer performed the source-boundary/profile/index/preview
   review, consistent with the user limiting other agents to source exploration.
-- Remaining close-out: commit implementation and validation, assemble ignored
-  human-review ZIP, stop with HUMAN REVIEW PENDING. No merge/push or next gate.
+- Completed close-out: implementation committed at 926eb5985e1b0aa144808475f6fc94585a91c2c6; validation and the ignored 95-entry human-review ZIP are ready. Stop with HUMAN REVIEW PENDING. No merge/push or next gate.
