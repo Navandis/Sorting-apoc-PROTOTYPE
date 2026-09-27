@@ -57,6 +57,10 @@ class CatalogFixture:
 
 
 class CatalogTests(CatalogFixture, unittest.TestCase):
+    def test_kitbash_strong_fingerprint_anchor_is_stable(self):
+        self.assertEqual(catalog.fingerprint_candidate(self.repo, self.candidate, '2K')['source_fingerprint'],
+                         '555e9a03f1fa4668e38eaecdcc9aa16d878fa193861d82fe938867fcc62b88a6')
+
     def test_resolution_order_and_indexed_maps_only(self):
         self.assertEqual(catalog.choose_resolution(self.candidate, '2K'), ('2K', None))
         self.assertEqual(catalog.choose_resolution(self.candidate, '4K'), ('4K', None))

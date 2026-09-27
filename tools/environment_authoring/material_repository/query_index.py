@@ -31,7 +31,7 @@ def query(index, *, package=None, name=None, family=None, resolution=None,
                 continue
         resolutions = [resolution.upper()] if resolution else candidate['available_resolutions']
         if resolution or required_channels:
-            if not any(r in candidate['maps_by_resolution'] and all(
+            if not any(r in candidate['available_resolutions'] and r in candidate['maps_by_resolution'] and all(
                     candidate['channel_states_by_resolution'][r].get(c) in {'SUPPORTED', 'OPTIONAL'}
                     for c in required_channels) for r in resolutions):
                 continue

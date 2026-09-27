@@ -59,6 +59,16 @@ class ScannerTests(unittest.TestCase):
         self.assertEqual(self.index['material_candidates'], other['material_candidates'])
         self.assertNotIn(str(self.root), json.dumps(self.index['material_candidates']))
 
+    def test_kitbash_quick_fingerprint_anchor_is_stable(self):
+        fixed_time = 1700000000000000000
+        for path in self.root.rglob('*'):
+            if path.is_file():
+                os.utime(path, ns=(fixed_time, fixed_time))
+        candidate = next(c for c in scan(Repository(self.root))['material_candidates']
+                         if c['stable_id'] == 'kitbash:kb3d_alpha@1.0.0:Concrete')
+        self.assertEqual(candidate['quick_fingerprint'],
+                         '68a22ac82cffc85a2466ba762aa4c5d3e02d89b52666600229e112f0c63f926b')
+
     def test_duplicate_ids_rejected(self):
         broken = copy.deepcopy(self.index)
         broken['material_candidates'].append(broken['material_candidates'][0])

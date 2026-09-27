@@ -107,8 +107,9 @@ def fingerprint_candidate(repository, candidate, resolution, include_height=Fals
         result[channel] = {'source_relative': relative, 'sha256': digest.hexdigest(),
                            'channel_state': candidate['channel_states_by_resolution'][resolution][channel]}
     anchor = {'stable_id': candidate['stable_id'], 'resolution': resolution,
-              'maps': result, 'interpretation': {'profile': 'KITBASH_PROFILE_V1',
-                                                   'profile_revision': 1}}
+              'maps': result, 'interpretation': {
+                  'profile': candidate.get('source_profile_id', 'KITBASH_PROFILE_V1'),
+                  'profile_revision': candidate.get('source_profile_revision', 1)}}
     return {'source_fingerprint': fingerprint(anchor), 'maps': result}
 
 
@@ -154,10 +155,15 @@ def stage_candidate(repository, candidate, requested, cache_root, include_height
 
 
 def index_fingerprint(index):
-    return fingerprint({'schema_version': index['schema_version'], 'scanner_revision': index['scanner_revision'],
-                        'profile_id': index['profile_id'], 'profile_revision': index['profile_revision'],
-                        'candidates': [(c['stable_id'], c.get('quick_fingerprint'))
-                                       for c in index['material_candidates']]})
+    anchor = {'schema_version': index['schema_version'], 'scanner_revision': index['scanner_revision'],
+              'candidates': [(c['stable_id'], c.get('quick_fingerprint'))
+                             for c in index['material_candidates']]}
+    if 'profile_revisions' in index:
+        anchor['profile_revisions'] = index['profile_revisions']
+    else:
+        anchor['profile_id'] = index['profile_id']
+        anchor['profile_revision'] = index['profile_revision']
+    return fingerprint(anchor)
 
 
 def make_batch(batch_id, index, candidate_ids, notes='', overrides=None):

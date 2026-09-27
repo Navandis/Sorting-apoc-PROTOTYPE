@@ -9,13 +9,16 @@ from urllib.parse import quote
 
 try:
     from .repository_profile import KITBASH_PROFILE_V1, CATEGORIES, CHANNELS, OPTIONAL_CHANNELS
+    from . import fab_surface_profile
     from .path_guard import PROJECT_ROOT
 except ImportError:
     from repository_profile import KITBASH_PROFILE_V1, CATEGORIES, CHANNELS, OPTIONAL_CHANNELS
+    import fab_surface_profile
     from path_guard import PROJECT_ROOT
 
 SCHEMA_VERSION = 1
-SCANNER_REVISION = 'eaf3a-1'
+SCANNER_REVISION = 'eaf3a-2'
+KITBASH_FINGERPRINT_SCANNER_REVISION = 'eaf3a-1'
 REPORT_DIR = PROJECT_ROOT / 'reports/environment_material_catalog'
 INDEX_PATH = REPORT_DIR / 'source_index.json'
 DIFF_PATH = REPORT_DIR / 'scan_diff.json'
@@ -67,15 +70,21 @@ def scan(repository, profile=KITBASH_PROFILE_V1):
     groups = defaultdict(lambda: {'descriptors': [], 'maps': defaultdict(lambda: defaultdict(list)),
                                   'files': [], 'warnings': []})
     source_files = []
+    fab_files = []
     counts = Counter({kind: 0 for kind in CATEGORIES})
     for relative, info in repository.walk_files():
         parts = relative.split('/')
         root = '/'.join(parts[:2])
         package = by_root.get(root)
-        classification, material = profile.interpret('/'.join(parts[2:])) if package else ('UNKNOWN', None)
+        is_fab = parts[0].casefold() == 'fab' and len(parts) >= 3
+        classification, material = (profile.interpret('/'.join(parts[2:])) if package else
+                                    (fab_surface_profile.classify(relative), None) if is_fab else
+                                    ('UNKNOWN', None))
         signature = quick_signature(relative, info)
         source_files.append({**signature, 'classification': classification})
         counts[classification] += 1
+        if is_fab:
+            fab_files.append((relative, info))
         if not package:
             continue
         package_files[root].append(source_files[-1])
@@ -146,9 +155,12 @@ def scan(repository, profile=KITBASH_PROFILE_V1):
             'suggested_family': profile.suggested_family(stem, package),
             'warnings': sorted(set(warnings)),
         }
+        # Preserve promoted KitBash quick fingerprints for unchanged sources.
         record['quick_fingerprint'] = fingerprint({'record': record, 'profile': profile.profile_id,
-                                                    'profile_revision': profile.revision, 'scanner_revision': SCANNER_REVISION})
+                                                    'profile_revision': profile.revision,
+                                                    'scanner_revision': KITBASH_FINGERPRINT_SCANNER_REVISION})
         candidates.append(record)
+    candidates.extend(fab_surface_profile.candidates(repository, fab_files, quick_signature, fingerprint))
     for package in packages:
         files = package_files[package['relative_root']]
         package['content_summary'] = dict(sorted(Counter(f['classification'] for f in files).items()))
@@ -163,6 +175,8 @@ def scan(repository, profile=KITBASH_PROFILE_V1):
     index = {
         'schema_version': SCHEMA_VERSION, 'scanner_revision': SCANNER_REVISION,
         'profile_id': profile.profile_id, 'profile_revision': profile.revision,
+        'profile_revisions': {profile.profile_id: profile.revision,
+                              fab_surface_profile.PROFILE_ID: fab_surface_profile.REVISION},
         'scan_started_at': started, 'scan_finished_at': datetime.now(timezone.utc).isoformat(),
         'configured_root_diagnostic': str(repository.root),
         'scan_seconds': round(time.perf_counter() - start, 4),
@@ -189,6 +203,13 @@ def diff_indexes(previous, current):
             'changed': sorted(k for k in after.keys() & before.keys() if after[k] != before[k]),
             'unchanged': sorted(k for k in after.keys() & before.keys() if after[k] == before[k]),
         }
+    result['material_candidate_profiles'] = {
+        profile: {status: [identity for identity in result['material_candidates'][status]
+                           if identity.startswith(prefix)]
+                  for status in ('new', 'removed', 'changed', 'unchanged')}
+        for profile, prefix in (('KITBASH_PROFILE_V1', 'kitbash:'),
+                                ('FAB_SURFACE_PROFILE_V1', 'fab:'))
+    }
     return result
 
 
@@ -200,6 +221,8 @@ def summary_text(index, diff):
     lines.append('Incremental diff:')
     for collection in ('packages', 'material_candidates'):
         lines.append(f"  {collection}: " + ', '.join(f'{k}={len(v)}' for k, v in diff[collection].items()))
+    for profile, changes in diff['material_candidate_profiles'].items():
+        lines.append(f"  {profile}: " + ', '.join(f'{k}={len(v)}' for k, v in changes.items()))
     families = Counter(c['suggested_family'] for c in index['material_candidates'])
     warning_counts = Counter(w for c in index['material_candidates'] for w in c['warnings'])
     lines.extend(['Suggested families: ' + json.dumps(dict(sorted(families.items()))),
