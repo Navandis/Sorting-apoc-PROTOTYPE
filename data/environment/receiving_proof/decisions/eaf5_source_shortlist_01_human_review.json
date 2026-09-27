@@ -1,0 +1,483 @@
+{
+  "schema_version": 1,
+  "purpose": "EAF5 Pass-1 human source shortlist decision; only SHORTLIST enters PBR review",
+  "review_date": "2026-09-27",
+  "record_state": "PARTIAL_ID_DISPOSITIONS_AWAITING_HUMAN_DETAIL",
+  "pass1_shortlist_manifest": "data/environment/receiving_proof/eaf5_material_source_shortlist_01.json",
+  "pass1_shortlist_sha256": "68fa78d2c73f654bc130dc5d2e4ac4d5062e21881ad50717a0c59ffb2fa3ca8d",
+  "source_index_fingerprint": "e6398707ff5a1f47d1be2855ad04986a5ba39eb8fbc04fbc107f1a01479de23d",
+  "reported_human_counts": {
+    "SHORTLIST": 31,
+    "HOLD": 15,
+    "DROP": 11
+  },
+  "notes": "The handoff explicitly names all 31 SHORTLIST IDs and reports 15 HOLD / 11 DROP totals, but does not provide the remaining per-ID split. Those 26 IDs are preserved without invented assignments and excluded from staging. Update their decisions from the human review before calling this record complete. SHORTLIST is not EAF3 APPROVED.",
+  "existing_eaf3_approved_source_ids": [
+    "kitbash:kb3d_aftermath@7.0.2:KB3D_AFT_PlasterA",
+    "kitbash:kb3d_brooklyn@7.0.2:KB3D_BRK_ConcreteFormed",
+    "kitbash:kb3d_brutalisttff@7.0.3:KB3D_BTL_ConcreteFloorPanelsRoughA",
+    "kitbash:kb3d_constructionzone@7.0.3:KB3D_CSZ_ConcreteRoughBright",
+    "kitbash:kb3d_dtla@7.0.3:KB3D_DLA_ConcretePittedGrayMed"
+  ],
+  "decisions": [
+    {
+      "source_stable_id": "fab:pjBkT0",
+      "proposed_eaf5_roles": [
+        "APPLIED_FINISH"
+      ],
+      "decision": "SHORTLIST",
+      "notes": "Authorized for EAF3B/EAF1 PBR review; not a material approval."
+    },
+    {
+      "source_stable_id": "fab:pkngj0",
+      "proposed_eaf5_roles": [
+        "WALL_CEILING_MINERAL"
+      ],
+      "decision": "HOLD_OR_DROP_UNSPECIFIED",
+      "notes": "Handoff reports aggregate HOLD/DROP counts but does not identify this source disposition."
+    },
+    {
+      "source_stable_id": "fab:sl2qedtp",
+      "proposed_eaf5_roles": [
+        "SERVICE_FLOOR"
+      ],
+      "decision": "SHORTLIST",
+      "notes": "Authorized for EAF3B/EAF1 PBR review; not a material approval."
+    },
+    {
+      "source_stable_id": "fab:tixmdgdcw",
+      "proposed_eaf5_roles": [
+        "SERVICE_FLOOR"
+      ],
+      "decision": "SHORTLIST",
+      "notes": "Authorized for EAF3B/EAF1 PBR review; not a material approval."
+    },
+    {
+      "source_stable_id": "fab:uc2jcdgg",
+      "proposed_eaf5_roles": [
+        "SERVICE_FLOOR"
+      ],
+      "decision": "HOLD_OR_DROP_UNSPECIFIED",
+      "notes": "Handoff reports aggregate HOLD/DROP counts but does not identify this source disposition."
+    },
+    {
+      "source_stable_id": "fab:ueydffrdy",
+      "proposed_eaf5_roles": [
+        "WALL_CEILING_MINERAL"
+      ],
+      "decision": "HOLD_OR_DROP_UNSPECIFIED",
+      "notes": "Handoff reports aggregate HOLD/DROP counts but does not identify this source disposition."
+    },
+    {
+      "source_stable_id": "fab:ueypchdcw",
+      "proposed_eaf5_roles": [
+        "WALL_CEILING_MINERAL"
+      ],
+      "decision": "SHORTLIST",
+      "notes": "Authorized for EAF3B/EAF1 PBR review; not a material approval."
+    },
+    {
+      "source_stable_id": "fab:ufmgaccg",
+      "proposed_eaf5_roles": [
+        "SERVICE_FLOOR"
+      ],
+      "decision": "SHORTLIST",
+      "notes": "Authorized for EAF3B/EAF1 PBR review; not a material approval."
+    },
+    {
+      "source_stable_id": "fab:ufvpdcxfw",
+      "proposed_eaf5_roles": [
+        "SERVICE_FLOOR"
+      ],
+      "decision": "SHORTLIST",
+      "notes": "Authorized for EAF3B/EAF1 PBR review; not a material approval."
+    },
+    {
+      "source_stable_id": "fab:ug4qdjro",
+      "proposed_eaf5_roles": [
+        "APPLIED_FINISH"
+      ],
+      "decision": "HOLD_OR_DROP_UNSPECIFIED",
+      "notes": "Handoff reports aggregate HOLD/DROP counts but does not identify this source disposition."
+    },
+    {
+      "source_stable_id": "fab:ugkkedvlw",
+      "proposed_eaf5_roles": [
+        "APPLIED_FINISH"
+      ],
+      "decision": "SHORTLIST",
+      "notes": "Authorized for EAF3B/EAF1 PBR review; not a material approval."
+    },
+    {
+      "source_stable_id": "fab:ugtkadmg",
+      "proposed_eaf5_roles": [
+        "SERVICE_FLOOR"
+      ],
+      "decision": "HOLD_OR_DROP_UNSPECIFIED",
+      "notes": "Handoff reports aggregate HOLD/DROP counts but does not identify this source disposition."
+    },
+    {
+      "source_stable_id": "fab:ugtmehro",
+      "proposed_eaf5_roles": [
+        "WALL_CEILING_MINERAL"
+      ],
+      "decision": "HOLD_OR_DROP_UNSPECIFIED",
+      "notes": "Handoff reports aggregate HOLD/DROP counts but does not identify this source disposition."
+    },
+    {
+      "source_stable_id": "fab:uhriddhlw",
+      "proposed_eaf5_roles": [
+        "SERVICE_FLOOR"
+      ],
+      "decision": "HOLD_OR_DROP_UNSPECIFIED",
+      "notes": "Handoff reports aggregate HOLD/DROP counts but does not identify this source disposition."
+    },
+    {
+      "source_stable_id": "fab:uikpbgjdy",
+      "proposed_eaf5_roles": [
+        "SERVICE_FLOOR"
+      ],
+      "decision": "SHORTLIST",
+      "notes": "Authorized for EAF3B/EAF1 PBR review; not a material approval."
+    },
+    {
+      "source_stable_id": "fab:uirleimn",
+      "proposed_eaf5_roles": [
+        "WALL_CEILING_MINERAL"
+      ],
+      "decision": "SHORTLIST",
+      "notes": "Authorized for EAF3B/EAF1 PBR review; not a material approval."
+    },
+    {
+      "source_stable_id": "fab:vi4idbm",
+      "proposed_eaf5_roles": [
+        "WALL_CEILING_MINERAL"
+      ],
+      "decision": "SHORTLIST",
+      "notes": "Authorized for EAF3B/EAF1 PBR review; not a material approval."
+    },
+    {
+      "source_stable_id": "fab:vi4idez",
+      "proposed_eaf5_roles": [
+        "WALL_CEILING_MINERAL"
+      ],
+      "decision": "HOLD_OR_DROP_UNSPECIFIED",
+      "notes": "Handoff reports aggregate HOLD/DROP counts but does not identify this source disposition."
+    },
+    {
+      "source_stable_id": "fab:virrebs",
+      "proposed_eaf5_roles": [
+        "SERVICE_FLOOR"
+      ],
+      "decision": "SHORTLIST",
+      "notes": "Authorized for EAF3B/EAF1 PBR review; not a material approval."
+    },
+    {
+      "source_stable_id": "fab:viyjde3",
+      "proposed_eaf5_roles": [
+        "SERVICE_FLOOR"
+      ],
+      "decision": "SHORTLIST",
+      "notes": "Authorized for EAF3B/EAF1 PBR review; not a material approval."
+    },
+    {
+      "source_stable_id": "fab:vizbefe",
+      "proposed_eaf5_roles": [
+        "SERVICE_FLOOR"
+      ],
+      "decision": "HOLD_OR_DROP_UNSPECIFIED",
+      "notes": "Handoff reports aggregate HOLD/DROP counts but does not identify this source disposition."
+    },
+    {
+      "source_stable_id": "fab:vjyifef",
+      "proposed_eaf5_roles": [
+        "APPLIED_FINISH"
+      ],
+      "decision": "HOLD_OR_DROP_UNSPECIFIED",
+      "notes": "Handoff reports aggregate HOLD/DROP counts but does not identify this source disposition."
+    },
+    {
+      "source_stable_id": "fab:xevkfgos",
+      "proposed_eaf5_roles": [
+        "WALL_CEILING_MINERAL"
+      ],
+      "decision": "HOLD_OR_DROP_UNSPECIFIED",
+      "notes": "Handoff reports aggregate HOLD/DROP counts but does not identify this source disposition."
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_aftermath@7.0.2:KB3D_AFT_ConcreteB",
+      "proposed_eaf5_roles": [
+        "WALL_CEILING_MINERAL"
+      ],
+      "decision": "SHORTLIST",
+      "notes": "Authorized for EAF3B/EAF1 PBR review; not a material approval."
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_aftermath@7.0.2:KB3D_AFT_ConcreteC",
+      "proposed_eaf5_roles": [
+        "WALL_CEILING_MINERAL"
+      ],
+      "decision": "HOLD_OR_DROP_UNSPECIFIED",
+      "notes": "Handoff reports aggregate HOLD/DROP counts but does not identify this source disposition."
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_aftermath@7.0.2:KB3D_AFT_PlasterB",
+      "proposed_eaf5_roles": [
+        "APPLIED_FINISH"
+      ],
+      "decision": "HOLD_OR_DROP_UNSPECIFIED",
+      "notes": "Handoff reports aggregate HOLD/DROP counts but does not identify this source disposition."
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_aftermath@7.0.2:KB3D_AFT_PlasterC",
+      "proposed_eaf5_roles": [
+        "APPLIED_FINISH"
+      ],
+      "decision": "HOLD_OR_DROP_UNSPECIFIED",
+      "notes": "Handoff reports aggregate HOLD/DROP counts but does not identify this source disposition."
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_americana@7.0.2:KB3D_AMC_ConcreteWhite",
+      "proposed_eaf5_roles": [
+        "WALL_CEILING_MINERAL"
+      ],
+      "decision": "SHORTLIST",
+      "notes": "Authorized for EAF3B/EAF1 PBR review; not a material approval."
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_americanneighborhoods@7.0.0:KB3D_AMN_COBareSmoothWhiteConcrete",
+      "proposed_eaf5_roles": [
+        "WALL_CEILING_MINERAL"
+      ],
+      "decision": "HOLD_OR_DROP_UNSPECIFIED",
+      "notes": "Handoff reports aggregate HOLD/DROP counts but does not identify this source disposition."
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_apartmentinteriors@7.0.2:KB3D_API_ConcreteWallA",
+      "proposed_eaf5_roles": [
+        "WALL_CEILING_MINERAL"
+      ],
+      "decision": "SHORTLIST",
+      "notes": "Authorized for EAF3B/EAF1 PBR review; not a material approval."
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_archvogue@7.0.3:KB3D_ARV_ConcreteGray",
+      "proposed_eaf5_roles": [
+        "WALL_CEILING_MINERAL"
+      ],
+      "decision": "SHORTLIST",
+      "notes": "Authorized for EAF3B/EAF1 PBR review; not a material approval."
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_beyondrepair@7.0.0:KB3D_BYR_COReinforcedConcreteSlabs",
+      "proposed_eaf5_roles": [
+        "STRUCTURAL_SECONDARY"
+      ],
+      "decision": "SHORTLIST",
+      "notes": "Authorized for EAF3B/EAF1 PBR review; not a material approval."
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_brooklyn@7.0.2:KB3D_BRK_ConcreteGrey",
+      "proposed_eaf5_roles": [
+        "STRUCTURAL_SECONDARY",
+        "WALL_CEILING_MINERAL"
+      ],
+      "decision": "SHORTLIST",
+      "notes": "Authorized for EAF3B/EAF1 PBR review; not a material approval."
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_brooklyn@7.0.2:KB3D_BRK_ConcreteWarmGrey",
+      "proposed_eaf5_roles": [
+        "WALL_CEILING_MINERAL"
+      ],
+      "decision": "SHORTLIST",
+      "notes": "Authorized for EAF3B/EAF1 PBR review; not a material approval."
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_brutalisttff@7.0.3:KB3D_BTL_ConcreteBlocksA",
+      "proposed_eaf5_roles": [
+        "STRUCTURAL_SECONDARY",
+        "WALL_CEILING_MINERAL"
+      ],
+      "decision": "SHORTLIST",
+      "notes": "Authorized for EAF3B/EAF1 PBR review; not a material approval."
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_brutalisttff@7.0.3:KB3D_BTL_ConcreteBlocksB",
+      "proposed_eaf5_roles": [
+        "STRUCTURAL_SECONDARY"
+      ],
+      "decision": "SHORTLIST",
+      "notes": "Authorized for EAF3B/EAF1 PBR review; not a material approval."
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_brutalisttff@7.0.3:KB3D_BTL_ConcreteBlocksC",
+      "proposed_eaf5_roles": [
+        "STRUCTURAL_SECONDARY"
+      ],
+      "decision": "HOLD_OR_DROP_UNSPECIFIED",
+      "notes": "Handoff reports aggregate HOLD/DROP counts but does not identify this source disposition."
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_brutalisttff@7.0.3:KB3D_BTL_ConcreteFloorPath",
+      "proposed_eaf5_roles": [
+        "SERVICE_FLOOR"
+      ],
+      "decision": "HOLD_OR_DROP_UNSPECIFIED",
+      "notes": "Handoff reports aggregate HOLD/DROP counts but does not identify this source disposition."
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_brutalisttff@7.0.3:KB3D_BTL_ConcreteLightWall",
+      "proposed_eaf5_roles": [
+        "WALL_CEILING_MINERAL"
+      ],
+      "decision": "SHORTLIST",
+      "notes": "Authorized for EAF3B/EAF1 PBR review; not a material approval."
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_brutalisttff@7.0.3:KB3D_BTL_ConcreteNoiseFlat",
+      "proposed_eaf5_roles": [
+        "WALL_CEILING_MINERAL"
+      ],
+      "decision": "SHORTLIST",
+      "notes": "Authorized for EAF3B/EAF1 PBR review; not a material approval."
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_brutalisttff@7.0.3:KB3D_BTL_ConcreteNoiseFlatGrey",
+      "proposed_eaf5_roles": [
+        "SERVICE_FLOOR"
+      ],
+      "decision": "SHORTLIST",
+      "notes": "Authorized for EAF3B/EAF1 PBR review; not a material approval."
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_brutalisttff@7.0.3:KB3D_BTL_ConcreteRoughPanelBright",
+      "proposed_eaf5_roles": [
+        "STRUCTURAL_SECONDARY"
+      ],
+      "decision": "SHORTLIST",
+      "notes": "Authorized for EAF3B/EAF1 PBR review; not a material approval."
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_brutalisttff@7.0.3:KB3D_BTL_ConcreteRoughPanelDark",
+      "proposed_eaf5_roles": [
+        "STRUCTURAL_SECONDARY"
+      ],
+      "decision": "HOLD_OR_DROP_UNSPECIFIED",
+      "notes": "Handoff reports aggregate HOLD/DROP counts but does not identify this source disposition."
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_brutalisttff@7.0.3:KB3D_BTL_ConcreteRoughPanelGray",
+      "proposed_eaf5_roles": [
+        "WALL_CEILING_MINERAL"
+      ],
+      "decision": "HOLD_OR_DROP_UNSPECIFIED",
+      "notes": "Handoff reports aggregate HOLD/DROP counts but does not identify this source disposition."
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_constructionzone@7.0.3:KB3D_CSZ_ConcreteBlocksBPanels",
+      "proposed_eaf5_roles": [
+        "STRUCTURAL_SECONDARY"
+      ],
+      "decision": "SHORTLIST",
+      "notes": "Authorized for EAF3B/EAF1 PBR review; not a material approval."
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_constructionzone@7.0.3:KB3D_CSZ_ConcreteFloorPanelsRoughA",
+      "proposed_eaf5_roles": [
+        "SERVICE_FLOOR"
+      ],
+      "decision": "HOLD_OR_DROP_UNSPECIFIED",
+      "notes": "Handoff reports aggregate HOLD/DROP counts but does not identify this source disposition."
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_cyberpunkinteriors@7.0.2:KB3D_CPI_CinderBlocksPDGray",
+      "proposed_eaf5_roles": [
+        "WALL_CEILING_MINERAL"
+      ],
+      "decision": "SHORTLIST",
+      "notes": "Authorized for EAF3B/EAF1 PBR review; not a material approval."
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_dieselpunk@7.0.2:KB3D_DPK_BrickDarkDirtB",
+      "proposed_eaf5_roles": [
+        "STRUCTURAL_SECONDARY"
+      ],
+      "decision": "HOLD_OR_DROP_UNSPECIFIED",
+      "notes": "Handoff reports aggregate HOLD/DROP counts but does not identify this source disposition."
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_everycitypolicedept@7.0.2:KB3D_ECP_StuccoWhite",
+      "proposed_eaf5_roles": [
+        "APPLIED_FINISH"
+      ],
+      "decision": "SHORTLIST",
+      "notes": "Authorized for EAF3B/EAF1 PBR review; not a material approval."
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_neonyc@7.0.2:KB3D_NNY_ConcretePlasterWhite",
+      "proposed_eaf5_roles": [
+        "APPLIED_FINISH"
+      ],
+      "decision": "SHORTLIST",
+      "notes": "Authorized for EAF3B/EAF1 PBR review; not a material approval."
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_newdelhi@7.0.3:KB3D_NWD_COWornWhiteLimePlaster",
+      "proposed_eaf5_roles": [
+        "APPLIED_FINISH"
+      ],
+      "decision": "HOLD_OR_DROP_UNSPECIFIED",
+      "notes": "Handoff reports aggregate HOLD/DROP counts but does not identify this source disposition."
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_refineries@7.0.2:KB3D_RFS_ConcretePlasterWhite",
+      "proposed_eaf5_roles": [
+        "APPLIED_FINISH"
+      ],
+      "decision": "SHORTLIST",
+      "notes": "Authorized for EAF3B/EAF1 PBR review; not a material approval."
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_warfare@7.0.2:KB3D_WAR_FloorTile",
+      "proposed_eaf5_roles": [
+        "SERVICE_FLOOR"
+      ],
+      "decision": "HOLD_OR_DROP_UNSPECIFIED",
+      "notes": "Handoff reports aggregate HOLD/DROP counts but does not identify this source disposition."
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_washingtondc@7.0.3:KB3D_WDC_ConcreteBlocksA",
+      "proposed_eaf5_roles": [
+        "WALL_CEILING_MINERAL"
+      ],
+      "decision": "SHORTLIST",
+      "notes": "Authorized for EAF3B/EAF1 PBR review; not a material approval."
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_washingtondc@7.0.3:KB3D_WDC_FloorTilesB",
+      "proposed_eaf5_roles": [
+        "SERVICE_FLOOR"
+      ],
+      "decision": "HOLD_OR_DROP_UNSPECIFIED",
+      "notes": "Handoff reports aggregate HOLD/DROP counts but does not identify this source disposition."
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_worldwartwo@7.0.2:KB3D_WWT_BrickwallDamagedB",
+      "proposed_eaf5_roles": [
+        "STRUCTURAL_SECONDARY"
+      ],
+      "decision": "HOLD_OR_DROP_UNSPECIFIED",
+      "notes": "Handoff reports aggregate HOLD/DROP counts but does not identify this source disposition."
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_worldwartwo@7.0.2:KB3D_WWT_ConcreteBlockBunker",
+      "proposed_eaf5_roles": [
+        "STRUCTURAL_SECONDARY",
+        "WALL_CEILING_MINERAL"
+      ],
+      "decision": "HOLD_OR_DROP_UNSPECIFIED",
+      "notes": "Handoff reports aggregate HOLD/DROP counts but does not identify this source disposition."
+    }
+  ]
+}

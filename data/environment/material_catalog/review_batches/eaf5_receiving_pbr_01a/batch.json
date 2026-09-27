@@ -1,0 +1,112 @@
+{
+  "schema_version": 1,
+  "batch_id": "eaf5_receiving_pbr_01a",
+  "source_index_schema": 1,
+  "source_index_revision": "eaf3a-2",
+  "source_index_scan_id": "2026-09-27T20:01:04.531065+00:00",
+  "source_index_fingerprint": "a408ac2c421ebfbccd5a64ac302779b1187fef4ce1789cb4061ee859d8a15954",
+  "candidate_ids": [
+    "fab:ueypchdcw",
+    "fab:uirleimn",
+    "fab:vi4idbm",
+    "kitbash:kb3d_aftermath@7.0.2:KB3D_AFT_ConcreteB",
+    "kitbash:kb3d_americana@7.0.2:KB3D_AMC_ConcreteWhite",
+    "kitbash:kb3d_apartmentinteriors@7.0.2:KB3D_API_ConcreteWallA",
+    "kitbash:kb3d_archvogue@7.0.3:KB3D_ARV_ConcreteGray",
+    "kitbash:kb3d_beyondrepair@7.0.0:KB3D_BYR_COReinforcedConcreteSlabs",
+    "kitbash:kb3d_brooklyn@7.0.2:KB3D_BRK_ConcreteGrey",
+    "kitbash:kb3d_brooklyn@7.0.2:KB3D_BRK_ConcreteWarmGrey",
+    "kitbash:kb3d_brutalisttff@7.0.3:KB3D_BTL_ConcreteBlocksA",
+    "kitbash:kb3d_brutalisttff@7.0.3:KB3D_BTL_ConcreteLightWall",
+    "kitbash:kb3d_brutalisttff@7.0.3:KB3D_BTL_ConcreteNoiseFlat",
+    "kitbash:kb3d_brutalisttff@7.0.3:KB3D_BTL_ConcreteRoughPanelBright",
+    "kitbash:kb3d_cyberpunkinteriors@7.0.2:KB3D_CPI_CinderBlocksPDGray",
+    "kitbash:kb3d_washingtondc@7.0.3:KB3D_WDC_ConcreteBlocksA"
+  ],
+  "review_resolution_policy": "2K_THEN_4K_THEN_1K",
+  "candidate_overrides": {
+    "fab:ueypchdcw": {
+      "mapping_mode": "TRIPLANAR",
+      "meters_per_repeat": 1.5
+    },
+    "fab:uirleimn": {
+      "mapping_mode": "UV",
+      "meters_per_repeat": 1.5
+    },
+    "fab:vi4idbm": {
+      "mapping_mode": "UV",
+      "meters_per_repeat": 1.5
+    },
+    "kitbash:kb3d_aftermath@7.0.2:KB3D_AFT_ConcreteB": {
+      "mapping_mode": "TRIPLANAR",
+      "meters_per_repeat": 1.5
+    },
+    "kitbash:kb3d_americana@7.0.2:KB3D_AMC_ConcreteWhite": {
+      "mapping_mode": "TRIPLANAR",
+      "meters_per_repeat": 1.5
+    },
+    "kitbash:kb3d_apartmentinteriors@7.0.2:KB3D_API_ConcreteWallA": {
+      "mapping_mode": "TRIPLANAR",
+      "meters_per_repeat": 1.5
+    },
+    "kitbash:kb3d_archvogue@7.0.3:KB3D_ARV_ConcreteGray": {
+      "mapping_mode": "TRIPLANAR",
+      "meters_per_repeat": 1.5
+    },
+    "kitbash:kb3d_brooklyn@7.0.2:KB3D_BRK_ConcreteGrey": {
+      "mapping_mode": "TRIPLANAR",
+      "meters_per_repeat": 1.5
+    },
+    "kitbash:kb3d_brooklyn@7.0.2:KB3D_BRK_ConcreteWarmGrey": {
+      "mapping_mode": "TRIPLANAR",
+      "meters_per_repeat": 1.5
+    },
+    "kitbash:kb3d_brutalisttff@7.0.3:KB3D_BTL_ConcreteBlocksA": {
+      "mapping_mode": "UV",
+      "meters_per_repeat": 1.5
+    },
+    "kitbash:kb3d_brutalisttff@7.0.3:KB3D_BTL_ConcreteLightWall": {
+      "mapping_mode": "TRIPLANAR",
+      "meters_per_repeat": 1.5
+    },
+    "kitbash:kb3d_brutalisttff@7.0.3:KB3D_BTL_ConcreteNoiseFlat": {
+      "mapping_mode": "TRIPLANAR",
+      "meters_per_repeat": 1.5
+    },
+    "kitbash:kb3d_cyberpunkinteriors@7.0.2:KB3D_CPI_CinderBlocksPDGray": {
+      "mapping_mode": "UV",
+      "meters_per_repeat": 1.5
+    },
+    "kitbash:kb3d_washingtondc@7.0.3:KB3D_WDC_ConcreteBlocksA": {
+      "mapping_mode": "UV",
+      "meters_per_repeat": 1.5
+    },
+    "kitbash:kb3d_beyondrepair@7.0.0:KB3D_BYR_COReinforcedConcreteSlabs": {
+      "mapping_mode": "UV",
+      "meters_per_repeat": 1.5
+    },
+    "kitbash:kb3d_brutalisttff@7.0.3:KB3D_BTL_ConcreteRoughPanelBright": {
+      "mapping_mode": "UV",
+      "meters_per_repeat": 1.5
+    }
+  },
+  "notes": "EAF5 Pass-1 human SHORTLIST source PBR review only. EAF5 proposed roles and scale/mapping are initial review hints. Inspect color/value, roughness, normal orientation and strength, repetition, directionality, baked history, and Neutral versus Receiving response. Room-scale role suitability and EAF3 approval remain pending.",
+  "selection_rationale": {
+    "fab:ueypchdcw": "Indexed concrete source and name suggest broad mineral wall/ceiling comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+    "fab:uirleimn": "Indexed concrete source and name suggest broad mineral wall/ceiling comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+    "fab:vi4idbm": "Indexed concrete source and name suggest broad mineral wall/ceiling comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+    "kitbash:kb3d_aftermath@7.0.2:KB3D_AFT_ConcreteB": "Indexed concrete source and name suggest broad mineral wall/ceiling comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+    "kitbash:kb3d_americana@7.0.2:KB3D_AMC_ConcreteWhite": "Indexed concrete source and name suggest broad mineral wall/ceiling comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+    "kitbash:kb3d_apartmentinteriors@7.0.2:KB3D_API_ConcreteWallA": "Indexed concrete source and name suggest broad mineral wall/ceiling comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+    "kitbash:kb3d_archvogue@7.0.3:KB3D_ARV_ConcreteGray": "Indexed concrete source and name suggest broad mineral wall/ceiling comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+    "kitbash:kb3d_beyondrepair@7.0.0:KB3D_BYR_COReinforcedConcreteSlabs": "Indexed concrete source and name suggest bounded structural/reveal comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+    "kitbash:kb3d_brooklyn@7.0.2:KB3D_BRK_ConcreteGrey": "Indexed concrete source and name suggest bounded structural/reveal comparison; broad mineral wall/ceiling comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+    "kitbash:kb3d_brooklyn@7.0.2:KB3D_BRK_ConcreteWarmGrey": "Indexed concrete source and name suggest broad mineral wall/ceiling comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+    "kitbash:kb3d_brutalisttff@7.0.3:KB3D_BTL_ConcreteBlocksA": "Indexed masonry_block source and name suggest bounded structural/reveal comparison; broad mineral wall/ceiling comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+    "kitbash:kb3d_brutalisttff@7.0.3:KB3D_BTL_ConcreteLightWall": "Indexed concrete source and name suggest broad mineral wall/ceiling comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+    "kitbash:kb3d_brutalisttff@7.0.3:KB3D_BTL_ConcreteNoiseFlat": "Indexed concrete source and name suggest broad mineral wall/ceiling comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+    "kitbash:kb3d_brutalisttff@7.0.3:KB3D_BTL_ConcreteRoughPanelBright": "Indexed concrete source and name suggest bounded structural/reveal comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+    "kitbash:kb3d_cyberpunkinteriors@7.0.2:KB3D_CPI_CinderBlocksPDGray": "Indexed masonry_block source and name suggest broad mineral wall/ceiling comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+    "kitbash:kb3d_washingtondc@7.0.3:KB3D_WDC_ConcreteBlocksA": "Indexed masonry_block source and name suggest broad mineral wall/ceiling comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging."
+  }
+}
