@@ -10,9 +10,11 @@ except ImportError:
 
 
 def query(index, *, package=None, name=None, family=None, resolution=None,
-          required_channels=(), warnings=None, status=None, diff=None, limit=None):
+          required_channels=(), warnings=None, exclude_warnings=(), status=None, diff=None, limit=None):
     if status and (not diff or diff.get('current_scan') != index['scan_finished_at']):
         raise ValueError('Status filtering requires a diff for this exact index scan')
+    if any(not isinstance(warning, str) or not warning.strip() for warning in exclude_warnings):
+        raise ValueError('Excluded warning tokens must be nonempty strings')
     status_ids = set(diff['material_candidates'][status]) if status else None
     result = []
     for candidate in sorted(index['material_candidates'], key=lambda c: c['stable_id']):
@@ -29,6 +31,9 @@ def query(index, *, package=None, name=None, family=None, resolution=None,
         if warnings and warnings != 'none':
             if not candidate['warnings'] or (warnings != 'any' and not any(warnings.casefold() in w.casefold() for w in candidate['warnings'])):
                 continue
+        if any(token.casefold() in warning.casefold()
+               for token in exclude_warnings for warning in candidate['warnings']):
+            continue
         resolutions = [resolution.upper()] if resolution else candidate['available_resolutions']
         if resolution or required_channels:
             if not any(r in candidate['available_resolutions'] and r in candidate['maps_by_resolution'] and all(
@@ -77,6 +82,8 @@ def add_filters(parser):
     parser.add_argument('--resolution')
     parser.add_argument('--required-channel', action='append', default=[], dest='required_channels')
     parser.add_argument('--warnings', nargs='?', const='any', help='any, none, or warning substring')
+    parser.add_argument('--exclude-warning', action='append', default=[], dest='exclude_warnings',
+                        help='exclude candidates carrying this warning substring; repeatable')
     parser.add_argument('--status', choices=['new', 'changed', 'unchanged'])
     parser.add_argument('--limit', type=int)
 
@@ -84,7 +91,8 @@ def add_filters(parser):
 def filter_arguments(args):
     if args.limit is not None and args.limit < 0:
         raise ValueError('limit must be non-negative')
-    return {k: getattr(args, k) for k in ('package', 'name', 'family', 'resolution', 'required_channels', 'warnings', 'status', 'limit')}
+    return {k: getattr(args, k) for k in ('package', 'name', 'family', 'resolution',
+                                          'required_channels', 'warnings', 'exclude_warnings', 'status', 'limit')}
 
 
 def main():

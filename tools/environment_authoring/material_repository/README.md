@@ -26,10 +26,13 @@ Run from the Godot project root:
 & $py "$tool/query_index.py" --family concrete --limit 24 --format batch --output reports/environment_material_catalog/concrete_batch.json
 & $py "$tool/query_index.py" --warnings any --format json
 & $py "$tool/query_index.py" --status changed --format ids
+& $py "$tool/query_index.py" --family cement_render --exclude-warning atlas_trim_or_object_specific_name --format ids
 & $py "$tool/build_triage_sheets.py" --batch reports/environment_material_catalog/concrete_batch.json --output reports/environment_material_catalog/concrete
 ```
 
 Repeat `--required-channel` to require several unambiguous supported/optional channels at the same resolution. `--warnings` accepts `any`, `none`, or a substring. Status accepts new/changed/unchanged; removed IDs are in the diff because they have no current candidate. Outputs are sorted by stable ID; `--limit` is applied last. The default query output is JSON; `ids` prints one identity per line; `batch` contains stable IDs and a source-index fingerprint, never source paths. Stale/unknown/duplicate batches and stale status diffs fail explicitly. CLI index/batch/output paths must stay inside the project's report directory.
+
+`--exclude-warning` is a repeatable query/sheet filter. The EAF5 structural-facing sheets use it with `atlas_trim_or_object_specific_name`, keeping object atlases and trims out of the general wall/floor/ceiling review pool. Raw EAF3 discovery and explicit warning queries retain those candidates; this filter does not change catalog eligibility or human decisions.
 
 Sheets accept the same query filters directly, or a batch. Default pagination is 24 materials; maximum 40. Full identities, preview paths and warning details are in each page JSON and combined manifest. Basecolor previews use the lowest available unambiguous decodable resolution; EXR and ambiguous basecolors receive placeholders. Only the selected basecolor is decoded. The 256-square cache key includes stable ID, candidate quick fingerprint, preview path/resolution, size and thumbnail revision. Every request checks the source stat signature before reusing its cache; changed/missing source previews require a rescan. Sheets are source triage only, never final PBR evidence.
 

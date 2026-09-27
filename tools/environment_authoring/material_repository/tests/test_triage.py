@@ -1,3 +1,4 @@
+import argparse
 import copy
 from pathlib import Path
 import shutil
@@ -7,7 +8,8 @@ import unittest
 from PIL import Image
 from tools.environment_authoring.material_repository.path_guard import Repository, BoundaryError
 from tools.environment_authoring.material_repository.source_index import scan, diff_indexes
-from tools.environment_authoring.material_repository.query_index import query, batch_manifest, select_batch
+from tools.environment_authoring.material_repository.query_index import (
+    query, batch_manifest, select_batch, add_filters, filter_arguments)
 from tools.environment_authoring.material_repository.build_triage_sheets import thumbnail, build_sheets
 
 
@@ -31,6 +33,39 @@ class TriageTests(unittest.TestCase):
         self.assertEqual(len(query(self.index, required_channels=['ao', 'height'])), 1)
         ids = [c['stable_id'] for c in query(self.index)]
         self.assertEqual(ids, sorted(ids))
+
+    def test_object_specific_exclusion_preserves_raw_source_discovery(self):
+        root = self.repo.root / 'kb3d_mixed/2.0.0/Materials/CementBagsAtlas'
+        root.mkdir(parents=True)
+        (root / 'CementBagsAtlas.usda').write_text('#usda 1.0\ndef Material "CementBagsAtlas" {}')
+        index = scan(self.repo)
+        identity = 'kitbash:kb3d_mixed@2.0.0:CementBagsAtlas'
+        raw = {c['stable_id']: c for c in index['material_candidates']}
+        self.assertIn(identity, raw)
+        self.assertIn('atlas_trim_or_object_specific_name;tileability_unverified', raw[identity]['warnings'])
+        self.assertIn(identity, [c['stable_id'] for c in query(index, family='cement_render')])
+        self.assertIn(identity, [c['stable_id'] for c in query(index, family='cement_render',
+                                                              warnings='atlas_trim')])
+        eligible = query(index, family='cement_render', exclude_warnings=['atlas_trim_or_object_specific_name'])
+        self.assertNotIn(identity, [c['stable_id'] for c in eligible])
+        self.assertIn(self.concrete['stable_id'], [c['stable_id'] for c in query(
+            index, family='concrete', exclude_warnings=['atlas_trim_or_object_specific_name'])])
+        self.assertEqual(query(index, family='cement_render', warnings='atlas_trim',
+                               exclude_warnings=['atlas_trim_or_object_specific_name']), [])
+        self.assertEqual([c['stable_id'] for c in query(index, family='concrete',
+                         exclude_warnings=['atlas_trim_or_object_specific_name'], limit=1)],
+                         sorted(c['stable_id'] for c in query(index, family='concrete',
+                         exclude_warnings=['atlas_trim_or_object_specific_name']))[:1])
+
+    def test_exclude_warning_cli_filter_combines_with_family(self):
+        parser = argparse.ArgumentParser()
+        add_filters(parser)
+        args = parser.parse_args(['--family', 'cement_render', '--exclude-warning',
+                                  'atlas_trim_or_object_specific_name'])
+        filters = filter_arguments(args)
+        self.assertEqual(filters['exclude_warnings'], ['atlas_trim_or_object_specific_name'])
+        self.assertEqual(query(self.index, **filters), query(self.index, family='cement_render',
+                         exclude_warnings=['atlas_trim_or_object_specific_name']))
 
     def test_status_query_requires_matching_diff(self):
         diff = diff_indexes(None, self.index)
@@ -90,6 +125,15 @@ class TriageTests(unittest.TestCase):
         for page in manifest['pages']:
             with Image.open(self.base / 'sheets' / page['image']) as image:
                 image.verify()
+
+    def test_regenerated_sheet_removes_old_extra_pages(self):
+        output = self.base / 'sheets'
+        candidates = query(self.index)
+        build_sheets(self.repo, self.index, candidates, output, self.base / 'cache', page_size=3)
+        self.assertTrue((output / 'page_02.png').is_file())
+        build_sheets(self.repo, self.index, candidates[:1], output, self.base / 'cache', page_size=3)
+        self.assertFalse((output / 'page_02.png').exists())
+        self.assertFalse((output / 'page_02.json').exists())
 
 
 if __name__ == '__main__':

@@ -110,6 +110,12 @@ def build_sheets(repository, index, candidates, output_dir, cache_dir, page_size
     manifest['generation_seconds'] = round(time.perf_counter() - start, 4)
     write_json(output / 'batch.json', manifest['batch'])
     write_json(output / 'manifest.json', manifest)
+    current_pages = {name for page in manifest['pages']
+                     for name in (page['image'], f"page_{page['page']:02d}.json")}
+    for pattern in ('page_*.png', 'page_*.json'):
+        for old_page in output.glob(pattern):
+            if old_page.name not in current_pages:
+                old_page.unlink()
     return manifest
 
 
