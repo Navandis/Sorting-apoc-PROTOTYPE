@@ -94,6 +94,58 @@ def validate_batch(batch, index):
     return [candidate_by_id(index, e["stable_id"]) for e in entries]
 
 
+
+def validate_rerun(config, batch, stage, catalog):
+    """Require an exact, bounded rerun of sources without final decisions."""
+    _reject_external_paths(config)
+    if config.get("schema_version") != SCHEMA_VERSION or config.get("original_batch_id") != batch.get("batch_id"):
+        raise ValueError("Rerun does not identify the original batch")
+    if config.get("rerun_id") == batch.get("batch_id") or not re.fullmatch(
+        r"[a-z][a-z0-9_]{2,63}", config.get("rerun_id", "")
+    ):
+        raise ValueError("Rerun needs a distinct safe ID")
+    identity = batch.get("source_index_fingerprint")
+    if config.get("source_index_fingerprint") != identity or stage.get("source_index_fingerprint") != identity:
+        raise ValueError("Rerun source index identity differs")
+    if stage.get("batch_id") != batch.get("batch_id"):
+        raise ValueError("Staged sources belong to another batch")
+    batch_by_id = {item["stable_id"]: item for item in batch["candidates"]}
+    stage_by_id = {item["source_stable_id"]: item for item in stage["candidates"]}
+    if set(batch_by_id) != set(stage_by_id):
+        raise ValueError("Rerun stage differs from source batch")
+    decided = {item["source_stable_id"] for item in catalog["wear"]}
+    expected = set(batch_by_id) - decided
+    entries = config.get("candidates")
+    if not isinstance(entries, list) or not entries:
+        raise ValueError("Rerun needs unresolved candidates")
+    selected = [item.get("source_stable_id") for item in entries]
+    if len(set(selected)) != len(selected) or set(selected) != expected:
+        raise ValueError("Rerun must select exactly the unresolved sources")
+    result = []
+    for item in entries:
+        if set(item) != {"source_stable_id", "catalog_wear_id", "diagnostic_context",
+                         "calibrated_parameters", "rationale"}:
+            raise ValueError("Unsupported rerun field")
+        source_id = item["source_stable_id"]
+        original = batch_by_id[source_id]
+        staged = stage_by_id[source_id]
+        if item["catalog_wear_id"] != staged["catalog_wear_id"] or original["resolution"] != staged["selected_resolution"]:
+            raise ValueError("Rerun source mapping changed")
+        floor = original["surface_capabilities"] == ["FLOOR"]
+        expected_context = "WEAR_DIAGNOSTIC_FLOOR" if floor else "WEAR_DIAGNOSTIC_LIGHT"
+        if item["diagnostic_context"] != expected_context:
+            raise ValueError("Diagnostic surface differs from original review placement")
+        controls = item["calibrated_parameters"]
+        if set(controls) != {"opacity", "albedo_strength"} or any(
+            not isinstance(value, (int, float)) or isinstance(value, bool) or not 0.0 <= value <= 1.0
+            for value in controls.values()
+        ):
+            raise ValueError("Rerun may change only bounded opacity and albedo strength")
+        if not isinstance(item["rationale"], str) or not item["rationale"].strip():
+            raise ValueError("Rerun parameter rationale required")
+        result.append(staged)
+    return result
+
 def select_maps(candidate, resolution):
     if resolution not in ("1K", "2K", "4K") or resolution not in candidate["available_resolutions"]:
         raise ValueError("Resolution unavailable or outside review policy")

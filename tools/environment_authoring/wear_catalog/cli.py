@@ -59,9 +59,19 @@ def restage_approved():
     target_dir = authoring.DATA / "approved_specs"
     target_dir.mkdir(parents=True, exist_ok=True)
     count = 0
+    approved_masks = []
     for record in workflow.query(updated):
         candidate = workflow.candidate_by_id(index, record["source_stable_id"])
         staged = workflow.stage_current_approved(repository, index, record, authoring.CACHE)
+        if candidate["source_class"] == "IMPERFECTION_MASK":
+            scalar = staged["maps"].get("roughness", staged["maps"].get("opacity"))
+            approved_masks.append({"catalog_wear_id": record["catalog_wear_id"],
+                                   "source_stable_id": record["source_stable_id"],
+                                   "source_fingerprint": staged["source_fingerprint"],
+                                   "texture": workflow.CACHE_RESOURCE_ROOT + "/" + scalar["cache_relative"],
+                                   "modulation_only": True})
+            count += 1
+            continue
         entry = {"semantic_category": record["semantic_category"], "cause_tags": record["cause_tags"],
                  "surface_capabilities": record["surface_capabilities"],
                  "selection_rationale": record.get("review_notes", ""),
@@ -92,6 +102,8 @@ def restage_approved():
         (target_dir / (staged["catalog_wear_id"] + ".tres")).write_text(
             authoring.spec_text(entry, staged, candidate, imperfection_resource), encoding="utf-8")
         count += 1
+    authoring.write_json(target_dir / "approved_masks.json",
+                         {"schema_version": 1, "masks": approved_masks})
     print("EAF4B_RESTAGE_APPROVED", count, "freshness_changes", len(audit))
 
 
@@ -104,6 +116,8 @@ def main(argv=None):
     command = commands.add_parser("reconcile")
     command.add_argument("--decisions", required=True, help="Project-local human decision file")
     commands.add_parser("restage-approved")
+    rerun = commands.add_parser("capture-rerun")
+    rerun.add_argument("--rerun", required=True)
     query = commands.add_parser("query")
     query.add_argument("--category", default="")
     query.add_argument("--cause", default="")
@@ -132,6 +146,14 @@ def main(argv=None):
         run_godot("--path", str(PROJECT_ROOT), REVIEW_SCENE, "--", "--eaf4b-capture")
         archive = authoring.package_review(batch_id)
         print("EAF4B_CAPTURE_PACKAGE", archive)
+    elif args.command == "capture-rerun":
+        config = authoring.prepare_rerun(args.rerun)
+        if config["rerun_id"] != "wear_foundation_01_rerun_01":
+            raise ValueError("Review scene is configured for wear_foundation_01_rerun_01")
+        run_godot("--headless", "--editor", "--path", str(PROJECT_ROOT), "--quit")
+        run_godot("--path", str(PROJECT_ROOT), REVIEW_SCENE, "--", "--eaf4b-rerun")
+        archive = authoring.package_review(config["rerun_id"])
+        print("EAF4B_RERUN_CAPTURE_PACKAGE", archive)
     elif args.command == "reconcile":
         reconcile_decisions(args.decisions)
     elif args.command == "restage-approved":

@@ -154,6 +154,51 @@ def prepare(batch_id):
     return result
 
 
+
+def prepare_rerun(rerun_id):
+    rerun_id = _safe_batch(rerun_id)
+    config = json.loads((BATCHES / rerun_id / "rerun.json").read_text(encoding="utf-8"))
+    if config.get("rerun_id") != rerun_id:
+        raise ValueError("Rerun config ID differs from requested output")
+    original_id = _safe_batch(config["original_batch_id"])
+    batch = json.loads((BATCHES / original_id / "batch.json").read_text(encoding="utf-8"))
+    index = load_index()
+    workflow.validate_batch(batch, index)
+    original_report = REPORTS / original_id
+    stage = json.loads((original_report / "stage_manifest.json").read_text(encoding="utf-8"))
+    catalog = json.loads(CATALOG.read_text(encoding="utf-8"))
+    selected = workflow.validate_rerun(config, batch, stage, catalog)
+    current = workflow.current_fingerprints(load_repository(), index, selected)
+    if any(current[item["source_stable_id"]] != item["source_fingerprint"] for item in selected):
+        raise ValueError("Rerun source bytes changed since original staging")
+    selected_ids = {item["source_stable_id"] for item in selected}
+    original_decisions = json.loads((original_report / "decision_template.json").read_text(encoding="utf-8"))
+    pending = [item for item in original_decisions["decisions"]
+               if item["source_stable_id"] in selected_ids]
+    if len(pending) != len(selected) or any(item["decision"] != "PENDING" for item in pending):
+        raise ValueError("Rerun decisions must remain pending")
+    destination = REPORTS / rerun_id
+    destination.mkdir(parents=True, exist_ok=True)
+    write_json(destination / "stage_manifest.json",
+               {"schema_version": 1, "batch_id": rerun_id,
+                "original_batch_id": original_id,
+                "source_index_revision": stage["source_index_revision"],
+                "source_index_fingerprint": stage["source_index_fingerprint"],
+                "candidates": selected})
+    write_json(destination / "decision_template.json",
+               {"schema_version": 1, "batch_id": rerun_id, "decisions": pending})
+    lines = [f"# EAF4B diagnostic rerun: {rerun_id}", "",
+             "These six sources remain PENDING. This package compares a quiet diagnostic substrate with an approved EAF3 context.",
+             "The original wear_foundation_01 batch and review package are preserved.", ""]
+    for item in config["candidates"]:
+        lines += [f"## {item['source_stable_id']}", "",
+                  f"- Diagnostic context: {item['diagnostic_context']}",
+                  f"- Calibrated controls: {json.dumps(item['calibrated_parameters'], sort_keys=True)}",
+                  f"- Rationale: {item['rationale']}", ""]
+    (destination / "batch_summary.md").write_text("\n".join(lines), encoding="utf-8")
+    print("EAF4B_PREPARE_RERUN", len(selected), destination)
+    return config
+
 def package_review(batch_id):
     directory = REPORTS / _safe_batch(batch_id)
     allowed = ["manifest.json", "batch_summary.md", "decision_template.json"]

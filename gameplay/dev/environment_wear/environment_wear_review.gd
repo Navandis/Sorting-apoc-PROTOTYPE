@@ -6,6 +6,9 @@ const Overlay = preload("res://environment_authoring/wear/environment_wear_overl
 const Spec = preload("res://environment_authoring/wear/environment_wear_overlay_spec.gd")
 const Patch = preload("res://environment_authoring/wear/environment_material_patch.gd")
 const BATCH_ID := "wear_foundation_01"
+const RERUN_ID := "wear_foundation_01_rerun_01"
+const RERUN_CONFIG_PATH := "res://data/environment/wear_catalog/review_batches/wear_foundation_01_rerun_01/rerun.json"
+const RERUN_STAGE_PATH := "res://reports/environment_wear_catalog/reviews/wear_foundation_01_rerun_01/stage_manifest.json"
 const STAGE_PATH := "res://reports/environment_wear_catalog/reviews/wear_foundation_01/stage_manifest.json"
 const SPEC_ROOT := "res://data/environment/wear_catalog/review_batches/wear_foundation_01/"
 const CACHE_ROOT := "res://assets/environment/wear/eaf4_cache/"
@@ -30,6 +33,8 @@ var _original_opacity := 1.0
 var _original_albedo := 0.5
 var _original_normal := 1.0
 var _capture_running := false
+var _diagnostic_base := false
+var _diagnostic_material: StandardMaterial3D
 
 func _ready() -> void:
     _review_node = get_node("Lookdev")
@@ -66,6 +71,9 @@ func _ready() -> void:
     if OS.get_cmdline_user_args().has("--eaf4b-capture"):
         _capture_running = true
         capture_all.call_deferred()
+    elif OS.get_cmdline_user_args().has("--eaf4b-rerun"):
+        _capture_running = true
+        capture_rerun.call_deferred()
 
 func _create_review_cameras() -> void:
     for name in ["WearHero", "WearGrazing"]:
@@ -78,11 +86,11 @@ func _wear_camera(index: int) -> Camera3D:
     return get_node("WearHero" if index == 0 else "WearGrazing") as Camera3D
 
 func _position_review_cameras(floor_surface: bool) -> void:
-    var target := Vector3(-0.25, 0.0, 0.45) if floor_surface else Vector3(-0.55, 1.45, -2.34)
+    var target := Vector3(-0.85, 0.0, 0.15) if floor_surface else Vector3(-0.55, 1.45, -2.34)
     var hero := _wear_camera(0)
     var graze := _wear_camera(1)
-    hero.position = Vector3(1.0, 1.85, 2.15) if floor_surface else Vector3(1.0, 2.05, 0.7)
-    graze.position = Vector3(0.55, 0.55, 1.7) if floor_surface else Vector3(0.85, 1.48, -1.18)
+    hero.position = Vector3(0.45, 1.85, 1.95) if floor_surface else Vector3(1.0, 2.05, 0.7)
+    graze.position = Vector3(0.05, 0.55, 1.45) if floor_surface else Vector3(0.85, 1.48, -1.18)
     hero.look_at(target, Vector3.UP)
     graze.look_at(target, Vector3.UP)
 
@@ -100,6 +108,11 @@ func _unhandled_key_input(event: InputEvent) -> void:
             _review_node.call("next_camera")
         KEY_B:
             set_base(base_index + 1)
+        KEY_D:
+            if _diagnostic_base:
+                set_base(base_index)
+            else:
+                set_diagnostic_base()
         KEY_EQUAL, KEY_KP_ADD:
             set_opacity(_spec.opacity_multiplier + 0.1)
         KEY_MINUS, KEY_KP_SUBTRACT:
@@ -159,7 +172,7 @@ func set_candidate(index: int) -> void:
     _overlay.spec = _spec
     _overlay.imperfection_enabled = true
     var floor_surface: bool = _base_ids.size() == 1 and _base_ids[0] == BASE_IDS[2]
-    _overlay.position = Vector3(-0.25, 0.0, 0.45) if floor_surface else Vector3(-0.55, 1.45, -2.34)
+    _overlay.position = Vector3(-0.85, 0.0, 0.15) if floor_surface else Vector3(-0.55, 1.45, -2.34)
     _overlay.rotation_degrees.x = -90.0 if floor_surface else 0.0
     _overlay.regenerate()
     _position_review_cameras(floor_surface)
@@ -183,6 +196,7 @@ func _find_record(fragment: String) -> Dictionary:
 func set_base(index: int) -> void:
     if _base_ids.is_empty():
         return
+    _diagnostic_base = false
     base_index = posmod(index, _base_ids.size())
     var base_id: String = _base_ids[base_index]
     _review_node.call("set_material_index", BASE_IDS.find(base_id))
@@ -198,6 +212,28 @@ func set_base(index: int) -> void:
         _overlay.regenerate()
         _patch.regenerate()
     _update_hud()
+
+func set_diagnostic_base() -> void:
+    if _spec == null:
+        return
+    if _diagnostic_material == null:
+        _diagnostic_material = StandardMaterial3D.new()
+        _diagnostic_material.albedo_color = Color(0.48, 0.49, 0.50)
+        _diagnostic_material.roughness = 0.75
+        _diagnostic_material.metallic = 0.0
+    for surface_name in ["Wall_A", "Wall_B_90Deg", "Floor", "Ceiling", "Column", "BeveledBlock"]:
+        var surface := _review_node.get_node("ReviewGeometry/%s" % surface_name) as MeshInstance3D
+        surface.material_override = _diagnostic_material
+    _diagnostic_base = true
+    _spec.albedo_tint = _diagnostic_material.albedo_color
+    _overlay.regenerate()
+    _patch.regenerate()
+    _update_hud()
+
+func get_review_context() -> String:
+    if _diagnostic_base:
+        return "WEAR_DIAGNOSTIC_FLOOR" if _overlay.rotation_degrees.x == -90.0 else "WEAR_DIAGNOSTIC_LIGHT"
+    return String(_base_ids[base_index]) if not _base_ids.is_empty() else ""
 
 func set_opacity(value: float) -> void:
     _spec.opacity_multiplier = clampf(value, 0.0, 1.0)
@@ -227,9 +263,9 @@ func _update_hud() -> void:
     label.text = "EAF4B WEAR REVIEW (human pending)\n%d/%d %s\n%s / %s\nBase %s | opacity %.2f | color %.2f | normal %.2f\nN/P candidate  L light  C camera  B base  +/- opacity\nA color  K normal  O rotate  M mirror  I imperfection  R reset" % [
         candidate_index + 1, candidates.size(), String(record["source_stable_id"]),
         String(record["review_primitive"]), String(record["selected_resolution"]),
-        String(_base_ids[base_index]), _spec.opacity_multiplier, _spec.albedo_strength, _spec.normal_strength]
+        get_review_context(), _spec.opacity_multiplier, _spec.albedo_strength, _spec.normal_strength]
 
-func _capture_image(filename: String) -> void:
+func _capture_image(filename: String, output_batch_id: String = BATCH_ID) -> void:
     await get_tree().process_frame
     await get_tree().process_frame
     await RenderingServer.frame_post_draw
@@ -239,7 +275,7 @@ func _capture_image(filename: String) -> void:
         return
     if image.get_size() != Vector2i(1920, 1080):
         image.resize(1920, 1080, Image.INTERPOLATE_LANCZOS)
-    var output := ProjectSettings.globalize_path("res://reports/environment_wear_catalog/reviews/%s/" % BATCH_ID)
+    var output := ProjectSettings.globalize_path("res://reports/environment_wear_catalog/reviews/%s/" % output_batch_id)
     image.save_png(output.path_join(filename))
 
 func _capture_record(record: Dictionary, filename: String, base_id: String, mode: String, camera_name: String, variant: String) -> Dictionary:
@@ -250,7 +286,8 @@ func _capture_record(record: Dictionary, filename: String, base_id: String, mode
         "review_primitive": record["review_primitive"],
         "patch_mode": "EAF4_SOURCE" if record["review_primitive"] == "EAF4_PATCH" else "",
         "rendered_overlay_source_id": _find_record("leakage_skiubhzc").get("source_stable_id", "") if record["review_primitive"] == "IMPERFECTION" else record["source_stable_id"],
-        "base_eaf3_material_id": base_id, "render_mode": "CUTOUT" if _spec.render_mode == Spec.RenderMode.CUTOUT else "SOFT_BLEND",
+        "base_eaf3_material_id": base_id, "review_context": get_review_context(),
+        "render_mode": "CUTOUT" if _spec.render_mode == Spec.RenderMode.CUTOUT else "SOFT_BLEND",
         "physical_size_m": [_spec.physical_size_m.x, _spec.physical_size_m.y],
         "surface": "FLOOR" if _overlay.rotation_degrees.x == -90.0 else "WALL",
         "surface_offset_m": _spec.surface_offset_m,
@@ -429,3 +466,113 @@ func _capture_proofs(records: Array) -> void:
                     "soft_planes_overlap": false, "camera": "EAF1 Hero", "light_mode": "NEUTRAL"})
     second.queue_free()
     origin.queue_free()
+
+
+func _candidate_index_for_source(source_id: String) -> int:
+    for i in candidates.size():
+        if String(candidates[i]["source_stable_id"]) == source_id:
+            return i
+    return -1
+
+func _rerun_capture_matrix(records: Array, item: Dictionary, index: int, context_name: String) -> void:
+    set_candidate(index)
+    var candidate: Dictionary = candidates[index]
+    var base_id: String = _base_ids[0]
+    var original_opacity: float = _spec.opacity_multiplier
+    var original_albedo: float = _spec.albedo_strength
+    if context_name == "DIAGNOSTIC":
+        set_diagnostic_base()
+    else:
+        set_base(0)
+    for parameter_index in 2:
+        var parameter_name := "original" if parameter_index == 0 else "calibrated"
+        var controls: Dictionary = item["calibrated_parameters"]
+        set_opacity(original_opacity if parameter_index == 0 else float(controls["opacity"]))
+        set_albedo(original_albedo if parameter_index == 0 else float(controls["albedo_strength"]))
+        for light in 2:
+            _review_node.call("set_light_mode", light)
+            for camera_index in 2:
+                _wear_camera(camera_index).make_current()
+                var filename := "%s__%s__%s__%s__%s.png" % [
+                    candidate["catalog_wear_id"], context_name.to_lower(), parameter_name,
+                    "neutral" if light == 0 else "receiving",
+                    "hero" if camera_index == 0 else "grazing"]
+                await _capture_image(filename, RERUN_ID)
+                var capture_record := _capture_record(candidate, filename, base_id,
+                    "NEUTRAL" if light == 0 else "RECEIVING", CAMERA_NAMES[camera_index],
+                    "RERUN_" + parameter_name.to_upper())
+                capture_record["parameter_variant"] = parameter_name
+                capture_record["calibration_rationale"] = item["rationale"] if parameter_index == 1 else ""
+                records.append(capture_record)
+
+func _rerun_base_reference(records: Array, index: int, diagnostic: bool) -> void:
+    set_candidate(index)
+    var base_id: String = _base_ids[0]
+    if diagnostic:
+        set_diagnostic_base()
+    else:
+        set_base(0)
+    _overlay.visible = false
+    _patch.visible = false
+    var context := get_review_context()
+    for light in 2:
+        _review_node.call("set_light_mode", light)
+        for camera_index in 2:
+            _wear_camera(camera_index).make_current()
+            var filename := "base__%s__%s__%s.png" % [
+                context.to_lower(), "neutral" if light == 0 else "receiving",
+                "hero" if camera_index == 0 else "grazing"]
+            await _capture_image(filename, RERUN_ID)
+            records.append({"filename": filename, "variant": "BASE_ONLY",
+                "review_context": context, "base_eaf3_material_id": base_id,
+                "surface": "FLOOR" if _overlay.rotation_degrees.x == -90.0 else "WALL",
+                "camera": CAMERA_NAMES[camera_index],
+                "light_mode": "NEUTRAL" if light == 0 else "RECEIVING"})
+
+func capture_rerun() -> void:
+    var config: Variant = JSON.parse_string(FileAccess.get_file_as_string(RERUN_CONFIG_PATH))
+    var stage: Variant = JSON.parse_string(FileAccess.get_file_as_string(RERUN_STAGE_PATH))
+    if not config is Dictionary or not stage is Dictionary or config.get("rerun_id") != RERUN_ID:
+        push_error("EAF4B rerun configuration missing")
+        get_tree().quit(1)
+        return
+    var output := ProjectSettings.globalize_path("res://reports/environment_wear_catalog/reviews/%s/" % RERUN_ID)
+    DirAccess.make_dir_recursive_absolute(output)
+    get_window().size = Vector2i(1920, 1080)
+    get_node("ReviewHUD").visible = false
+    await get_tree().process_frame
+    var records := []
+    var diagnostic_references := {}
+    var real_references := {}
+    for item in config["candidates"]:
+        var index := _candidate_index_for_source(String(item["source_stable_id"]))
+        if index < 0:
+            push_error("EAF4B rerun source missing from original batch")
+            get_tree().quit(1)
+            return
+        await _rerun_capture_matrix(records, item, index, "DIAGNOSTIC")
+        await _rerun_capture_matrix(records, item, index, "EAF3")
+        var reference: Dictionary = candidates[index]
+        diagnostic_references[String(item["diagnostic_context"])] = index
+        real_references[String(reference["base_material_ids"][0])] = index
+        print("EAF4B_RERUN_CAPTURE", item["source_stable_id"])
+    for index in diagnostic_references.values():
+        await _rerun_base_reference(records, index, true)
+    for index in real_references.values():
+        await _rerun_base_reference(records, index, false)
+    var manifest := {"schema_version": 1, "batch_id": RERUN_ID,
+        "original_batch_id": BATCH_ID,
+        "scene": "res://gameplay/dev/environment_wear/environment_wear_review.tscn",
+        "eaf1_scene": "res://gameplay/dev/environment_lookdev/environment_material_lookdev.tscn",
+        "renderer": RenderingServer.get_current_rendering_method(),
+        "engine_version": Engine.get_version_info().string, "capture_size": [1920, 1080],
+        "source_index_revision": stage["source_index_revision"],
+        "source_index_fingerprint": stage["source_index_fingerprint"],
+        "diagnostic_material": {"albedo": [0.48, 0.49, 0.50], "roughness": 0.75,
+            "textures": false, "normal_map": false, "catalogued_in_eaf3": false},
+        "rerun_config": config, "records": records}
+    var file := FileAccess.open(output.path_join("manifest.json"), FileAccess.WRITE)
+    file.store_string(JSON.stringify(manifest, "  "))
+    file.close()
+    print("EAF4B_RERUN_CAPTURE_COMPLETE records=%d" % records.size())
+    get_tree().quit(0)

@@ -210,5 +210,64 @@ class WearWorkflowTests(unittest.TestCase):
         self.assertEqual(workflow.query(stale_catalog), [])
 
 
+    def test_approved_imperfection_restages_as_modulation_only(self):
+        candidate = {**self.candidate, "stable_id": "eaf4:mask:grunge",
+                     "source_class": "IMPERFECTION_MASK", "profile": "IMPERFECTION_TEXTURE_PROFILE",
+                     "available_resolutions": ["1K"],
+                     "maps_by_resolution": {"1K": {"roughness": [{"relative_path": "other.png"}]}}}
+        index = {**self.index, "logical_candidates": [candidate]}
+        staged = workflow.stage_candidate(self.repo, candidate, "1K", self.root / "cache")
+        decision = workflow.decision_template(staged, {"semantic_category": "IMPERFECTION_MASK",
+                                                        "surface_capabilities": ["PLANAR_ANY"]})
+        decision["decision"] = "APPROVED"
+        decision["decision_revision"] = 1
+        catalog, _ = workflow.reconcile({"schema_version": 1, "wear": []}, [decision],
+                                         {candidate["stable_id"]: staged["source_fingerprint"]})
+        catalog_path = self.root / "catalog.json"
+        catalog_path.write_text(json.dumps(catalog), encoding="utf-8")
+        with patch.object(authoring, "DATA", self.root), patch.object(authoring, "CATALOG", catalog_path), \
+             patch.object(authoring, "CACHE", self.root / "approved_cache"), \
+             patch.object(cli, "load_index", return_value=index), \
+             patch.object(cli, "load_repository", return_value=self.repo):
+            cli.restage_approved()
+        approved = self.root / "approved_specs"
+        masks = json.loads((approved / "approved_masks.json").read_text(encoding="utf-8"))
+        self.assertEqual(len(masks["masks"]), 1)
+        self.assertEqual(masks["masks"][0]["source_stable_id"], candidate["stable_id"])
+        self.assertEqual(masks["masks"][0]["source_fingerprint"], staged["source_fingerprint"])
+        self.assertEqual(masks["masks"][0]["texture"], "res://assets/environment/wear/eaf4_cache/" +
+                         staged["maps"]["roughness"]["cache_relative"])
+        self.assertFalse((approved / (staged["catalog_wear_id"] + ".tres")).exists())
+
+
+    def test_rerun_selects_exactly_unresolved_sources(self):
+        second = {**self.candidate, "stable_id": "eaf4:test:pending"}
+        first_stage = workflow.stage_candidate(self.repo, self.candidate, "2K", self.root / "cache")
+        second_stage = workflow.stage_candidate(self.repo, second, "2K", self.root / "cache")
+        batch = workflow.make_batch("wear_foundation_01", {**self.index,
+            "logical_candidates": [self.candidate, second]}, [
+            {"stable_id": self.candidate["stable_id"], "resolution": "2K", "surface_capabilities": ["WALL"]},
+            {"stable_id": second["stable_id"], "resolution": "2K", "surface_capabilities": ["WALL"]}])
+        stage = {"batch_id": "wear_foundation_01", "source_index_fingerprint": batch["source_index_fingerprint"],
+                 "candidates": [first_stage, second_stage]}
+        catalog = {"schema_version": 1, "wear": [{"source_stable_id": self.candidate["stable_id"],
+                                                    "effective_status": "APPROVED"}]}
+        entry = {"source_stable_id": second["stable_id"], "catalog_wear_id": second_stage["catalog_wear_id"],
+                 "diagnostic_context": "WEAR_DIAGNOSTIC_LIGHT",
+                 "calibrated_parameters": {"opacity": 1.0, "albedo_strength": 0.45},
+                 "rationale": "Show the subtle mark clearly."}
+        config = {"schema_version": 1, "rerun_id": "wear_foundation_01_rerun_01",
+                  "original_batch_id": "wear_foundation_01",
+                  "source_index_fingerprint": batch["source_index_fingerprint"], "candidates": [entry]}
+        selected = workflow.validate_rerun(config, batch, stage, catalog)
+        self.assertEqual(len(selected), 1)
+        self.assertEqual(selected[0]["source_stable_id"], second["stable_id"])
+        with self.assertRaises(ValueError):
+            workflow.validate_rerun({**config, "candidates": []}, batch, stage, catalog)
+        with self.assertRaises(ValueError):
+            workflow.validate_rerun({**config, "candidates": [{**entry,
+                "source_stable_id": self.candidate["stable_id"]}]}, batch, stage, catalog)
+
+
 if __name__ == "__main__":
     unittest.main()

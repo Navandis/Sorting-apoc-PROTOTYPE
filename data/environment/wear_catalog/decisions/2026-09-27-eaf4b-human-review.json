@@ -1,48 +1,13 @@
 {
   "schema_version": 1,
-  "wear": [
-    {
-      "source_stable_id": "eaf4:FAB_DECAL_PROFILE:concrete_crack_sf2moag:sf2moag",
-      "catalog_wear_id": "eaf4b_c3b63b5da3fbdda32be47bd0",
-      "reviewed_source_fingerprint": "8da6c186f20805a003062c4c11e364a9b842ed715d202a6701195d1f891a864e",
-      "selected_resolution": "2K",
-      "decision_revision": 1,
-      "semantic_category": "CRACK",
-      "cause_tags": [
-        "settlement"
-      ],
-      "surface_capabilities": [
-        "PLANAR_ANY"
-      ],
-      "render_mode": "CUTOUT",
-      "patch_mode": "",
-      "eaf3_material_id": "",
-      "default_size": [
-        0.5,
-        0.5
-      ],
-      "surface_offset": 0.002,
-      "opacity": 0.85,
-      "albedo_strength": 0.35,
-      "albedo_tint": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "normal_strength": 0.8,
-      "normal_y_flip": false,
-      "roughness_strength": 0.7,
-      "imperfection": {},
-      "review_notes": "Good small branched crack. Prefer origins at corners, openings, structural joints, penetrations, impact points, or repair boundaries. Approval is for reusable source quality, not universal placement.",
-      "status": "APPROVED",
-      "current_source_fingerprint": "8da6c186f20805a003062c4c11e364a9b842ed715d202a6701195d1f891a864e",
-      "effective_status": "APPROVED"
-    },
+  "batch_id": "wear_foundation_01",
+  "decisions": [
     {
       "source_stable_id": "eaf4:FAB_DECAL_PROFILE:concrete_crack_sfhmrfg:sfhmrfg",
       "catalog_wear_id": "eaf4b_1215035d1f7cf36ee4b9f3eb",
       "reviewed_source_fingerprint": "a7330f981b7aff1efd0c325aaaddf538bcbddac30e908ffa5769bc44f9d482f8",
       "selected_resolution": "2K",
+      "decision": "APPROVED",
       "decision_revision": 1,
       "semantic_category": "CRACK",
       "cause_tags": [
@@ -72,16 +37,14 @@
       "normal_y_flip": false,
       "roughness_strength": 0.7,
       "imperfection": {},
-      "review_notes": "Strong long fracture. Clean silhouette and restrained source color. Place only where a plausible stress origin exists: opening/corner/junction/penetration/repair boundary/impact. Do not float arbitrarily in the middle of otherwise sound structure.",
-      "status": "APPROVED",
-      "current_source_fingerprint": "a7330f981b7aff1efd0c325aaaddf538bcbddac30e908ffa5769bc44f9d482f8",
-      "effective_status": "APPROVED"
+      "review_notes": "Strong long fracture. Clean silhouette and restrained source color. Place only where a plausible stress origin exists: opening/corner/junction/penetration/repair boundary/impact. Do not float arbitrarily in the middle of otherwise sound structure."
     },
     {
       "source_stable_id": "eaf4:FAB_DECAL_PROFILE:concrete_damage_sfcmkbg:sfcmkbg",
       "catalog_wear_id": "eaf4b_5858bd2916c3227c201ec5a4",
       "reviewed_source_fingerprint": "3fb58ceb71f076f5aea11de0b7968857970385962d4af4295a3831d219bca54b",
       "selected_resolution": "2K",
+      "decision": "APPROVED",
       "decision_revision": 1,
       "semantic_category": "SPALL",
       "cause_tags": [
@@ -109,16 +72,14 @@
       "normal_y_flip": false,
       "roughness_strength": 0.7,
       "imperfection": {},
-      "review_notes": "Strong compact concrete damage/spall source. Use sparsely as localized damage rather than baseline age. Prefer plausible impact, failed repair, opening/edge, or other local cause.",
-      "status": "APPROVED",
-      "current_source_fingerprint": "3fb58ceb71f076f5aea11de0b7968857970385962d4af4295a3831d219bca54b",
-      "effective_status": "APPROVED"
+      "review_notes": "Strong compact concrete damage/spall source. Use sparsely as localized damage rather than baseline age. Prefer plausible impact, failed repair, opening/edge, or other local cause."
     },
     {
       "source_stable_id": "eaf4:FAB_DECAL_PROFILE:damaged_concrete_tbqmbayr:tbqmbayr",
       "catalog_wear_id": "eaf4b_2faa4471206d5eaf048558bb",
       "reviewed_source_fingerprint": "4e47b963ba867573afd41f0f9b36b76fb3a13d81798d1cd25e9cc8801b58d7ca",
       "selected_resolution": "2K",
+      "decision": "APPROVED",
       "decision_revision": 1,
       "semantic_category": "SPALL",
       "cause_tags": [
@@ -146,16 +107,87 @@
       "normal_y_flip": false,
       "roughness_strength": 0.7,
       "imperfection": {},
-      "review_notes": "Broad broken-concrete source with useful depth language. Use only where impact, opening/edge condition, structural interruption, or failed repair justifies it. Avoid scattering across maintained active rooms.",
-      "status": "APPROVED",
-      "current_source_fingerprint": "4e47b963ba867573afd41f0f9b36b76fb3a13d81798d1cd25e9cc8801b58d7ca",
-      "effective_status": "APPROVED"
+      "review_notes": "Broad broken-concrete source with useful depth language. Use only where impact, opening/edge condition, structural interruption, or failed repair justifies it. Avoid scattering across maintained active rooms."
+    },
+    {
+      "source_stable_id": "eaf4:FAB_DECAL_PROFILE:concrete_crack_sf2moag:sf2moag",
+      "catalog_wear_id": "eaf4b_c3b63b5da3fbdda32be47bd0",
+      "reviewed_source_fingerprint": "8da6c186f20805a003062c4c11e364a9b842ed715d202a6701195d1f891a864e",
+      "selected_resolution": "2K",
+      "decision": "APPROVED",
+      "decision_revision": 1,
+      "semantic_category": "CRACK",
+      "cause_tags": [
+        "settlement"
+      ],
+      "surface_capabilities": [
+        "PLANAR_ANY"
+      ],
+      "render_mode": "CUTOUT",
+      "patch_mode": "",
+      "eaf3_material_id": "",
+      "default_size": [
+        0.5,
+        0.5
+      ],
+      "surface_offset": 0.002,
+      "opacity": 0.85,
+      "albedo_strength": 0.35,
+      "albedo_tint": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "normal_strength": 0.8,
+      "normal_y_flip": false,
+      "roughness_strength": 0.7,
+      "imperfection": {},
+      "review_notes": "Good small branched crack. Prefer origins at corners, openings, structural joints, penetrations, impact points, or repair boundaries. Approval is for reusable source quality, not universal placement."
+    },
+    {
+      "source_stable_id": "eaf4:FAB_DECAL_PROFILE:oil_stain_semlsbi:semlsbi",
+      "catalog_wear_id": "eaf4b_16f72d4cb37ef4ee74a9073c",
+      "reviewed_source_fingerprint": "9c797ce2e4279562325c6d9000bb975a58d39c3a6c3cfe2fe6f94846f3f198f2",
+      "selected_resolution": "2K",
+      "decision": "APPROVED",
+      "decision_revision": 1,
+      "semantic_category": "OIL_GREASE",
+      "cause_tags": [
+        "oil_grease",
+        "maintenance",
+        "freight_service"
+      ],
+      "surface_capabilities": [
+        "FLOOR",
+        "HORIZONTAL_PREFERRED"
+      ],
+      "render_mode": "SOFT_BLEND",
+      "patch_mode": "",
+      "eaf3_material_id": "",
+      "default_size": [
+        0.5,
+        0.5
+      ],
+      "surface_offset": 0.002,
+      "opacity": 0.85,
+      "albedo_strength": 0.45,
+      "albedo_tint": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "normal_strength": 0.8,
+      "normal_y_flip": false,
+      "roughness_strength": 0.7,
+      "imperfection": {},
+      "review_notes": "Readable localized spill. Appropriate near machinery, maintenance points, containers, freight/service activity, or equipment. Avoid generic circulation placement."
     },
     {
       "source_stable_id": "eaf4:FAB_DECAL_PROFILE:leakage_skiubhzc:skiubhzc",
       "catalog_wear_id": "eaf4b_e890439d8e117d36ac05e55c",
       "reviewed_source_fingerprint": "4fb69b29c659eb1f564ada1144c0df2f7f99330836d34aea4a1e159cafd315dc",
       "selected_resolution": "2K",
+      "decision": "APPROVED",
       "decision_revision": 1,
       "semantic_category": "WATER_MINERAL",
       "cause_tags": [
@@ -196,57 +228,14 @@
         "contrast": 1.35,
         "strength": 0.55
       },
-      "review_notes": "Strong broad mineral/water source. Normally begin behind/below a pipe, penetration, vent, ceiling/service joint, drain, fitting, or other plausible moisture source. Partial occlusion behind infrastructure is desirable.",
-      "status": "APPROVED",
-      "current_source_fingerprint": "4fb69b29c659eb1f564ada1144c0df2f7f99330836d34aea4a1e159cafd315dc",
-      "current_imperfection_fingerprint": "e71aaf2f2092f229536c4a8ffd8e28b52db2c0e9b3924ab6436852a38267504b",
-      "effective_status": "APPROVED"
-    },
-    {
-      "source_stable_id": "eaf4:FAB_DECAL_PROFILE:oil_stain_semlsbi:semlsbi",
-      "catalog_wear_id": "eaf4b_16f72d4cb37ef4ee74a9073c",
-      "reviewed_source_fingerprint": "9c797ce2e4279562325c6d9000bb975a58d39c3a6c3cfe2fe6f94846f3f198f2",
-      "selected_resolution": "2K",
-      "decision_revision": 1,
-      "semantic_category": "OIL_GREASE",
-      "cause_tags": [
-        "oil_grease",
-        "maintenance",
-        "freight_service"
-      ],
-      "surface_capabilities": [
-        "FLOOR",
-        "HORIZONTAL_PREFERRED"
-      ],
-      "render_mode": "SOFT_BLEND",
-      "patch_mode": "",
-      "eaf3_material_id": "",
-      "default_size": [
-        0.5,
-        0.5
-      ],
-      "surface_offset": 0.002,
-      "opacity": 0.85,
-      "albedo_strength": 0.45,
-      "albedo_tint": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "normal_strength": 0.8,
-      "normal_y_flip": false,
-      "roughness_strength": 0.7,
-      "imperfection": {},
-      "review_notes": "Readable localized spill. Appropriate near machinery, maintenance points, containers, freight/service activity, or equipment. Avoid generic circulation placement.",
-      "status": "APPROVED",
-      "current_source_fingerprint": "9c797ce2e4279562325c6d9000bb975a58d39c3a6c3cfe2fe6f94846f3f198f2",
-      "effective_status": "APPROVED"
+      "review_notes": "Strong broad mineral/water source. Normally begin behind/below a pipe, penetration, vent, ceiling/service joint, drain, fitting, or other plausible moisture source. Partial occlusion behind infrastructure is desirable."
     },
     {
       "source_stable_id": "eaf4:IMPERFECTION_TEXTURE_PROFILE:grunge_tedxadjc:tedxadjc",
       "catalog_wear_id": "eaf4b_c8b0a5126abd42ebe766fd44",
       "reviewed_source_fingerprint": "e71aaf2f2092f229536c4a8ffd8e28b52db2c0e9b3924ab6436852a38267504b",
       "selected_resolution": "1K",
+      "decision": "APPROVED",
       "decision_revision": 1,
       "semantic_category": "IMPERFECTION_MASK",
       "cause_tags": [
@@ -274,16 +263,14 @@
       "normal_y_flip": false,
       "roughness_strength": 0.7,
       "imperfection": {},
-      "review_notes": "Approved as modulation source only, not visible standalone grime. Existing OFF/ON proof shows useful localized breakup without turning the wear silhouette into generic random noise.",
-      "status": "APPROVED",
-      "current_source_fingerprint": "e71aaf2f2092f229536c4a8ffd8e28b52db2c0e9b3924ab6436852a38267504b",
-      "effective_status": "APPROVED"
+      "review_notes": "Approved as modulation source only, not visible standalone grime. Existing OFF/ON proof shows useful localized breakup without turning the wear silhouette into generic random noise."
     },
     {
       "source_stable_id": "eaf4:IMPERFECTION_TEXTURE_PROFILE:scratched_metal_vdekebbc:vdekebbc",
       "catalog_wear_id": "eaf4b_e1cf2067e3efcd02296f1f79",
       "reviewed_source_fingerprint": "a857787b71a6fcc65be5a84cdf2e36ff06f3d1346598bd90c09dbb921b4095cd",
       "selected_resolution": "1K",
+      "decision": "DEFERRED",
       "decision_revision": 1,
       "semantic_category": "IMPERFECTION_MASK",
       "cause_tags": [
@@ -311,10 +298,7 @@
       "normal_y_flip": false,
       "roughness_strength": 0.7,
       "imperfection": {},
-      "review_notes": "Potentially useful directional scratch mask, but current mineral-wall review does not establish a convincing role. Revisit after an approved service-metal material/fixture context exists.",
-      "status": "DEFERRED",
-      "current_source_fingerprint": "a857787b71a6fcc65be5a84cdf2e36ff06f3d1346598bd90c09dbb921b4095cd",
-      "effective_status": "DEFERRED"
+      "review_notes": "Potentially useful directional scratch mask, but current mineral-wall review does not establish a convincing role. Revisit after an approved service-metal material/fixture context exists."
     }
   ]
 }
