@@ -8,12 +8,12 @@
 
 ## Tasks
 
-- [ ] Select 10–14 candidates from contact sheets and record rationale, source facts, and review hints.
-- [ ] Test then implement guarded staging, SHA-256 fingerprints, resolution selection, and import normalization.
-- [ ] Test then implement wear spec, cutout/soft shaders, physical overlay node, material patches, and synthetic atlas.
-- [ ] Compose EAF1 review, bounded controls, capture matrix, base references, manifest, and allowlist ZIP.
-- [ ] Test then implement catalog decisions, stale/missing/current query, and synthetic approved restaging.
-- [ ] Run focused and regression tests, inspect images, record validation, and stop at human review.
+- [x] Select 10–14 candidates from contact sheets and record rationale, source facts, and review hints.
+- [x] Test then implement guarded staging, SHA-256 fingerprints, resolution selection, and import normalization.
+- [x] Test then implement wear spec, cutout/soft shaders, physical overlay node, material patches, and synthetic atlas.
+- [x] Compose EAF1 review, bounded controls, capture matrix, base references, manifest, and allowlist ZIP.
+- [x] Test then implement catalog decisions, stale/missing/current query, and synthetic approved restaging.
+- [x] Run focused and regression tests, inspect images, record validation, and stop at human review.
 
 ## Constraints
 
