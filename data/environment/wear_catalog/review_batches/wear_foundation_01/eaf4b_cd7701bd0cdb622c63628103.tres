@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="EnvironmentWearOverlaySpec" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://environment_authoring/wear/environment_wear_overlay_spec.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/environment/wear/eaf4_cache/eaf4b_cd7701bd0cdb622c63628103/2k/basecolor.jpg" id="2"]
+[ext_resource type="Texture2D" path="res://assets/environment/wear/eaf4_cache/eaf4b_cd7701bd0cdb622c63628103/2k/opacity.jpg" id="3"]
+[ext_resource type="Texture2D" path="res://assets/environment/wear/eaf4_cache/eaf4b_c8b0a5126abd42ebe766fd44/1k/roughness.jpg" id="4"]
+
+[resource]
+script = ExtResource("1")
+overlay_id = "eaf4b_cd7701bd0cdb622c63628103"
+display_name = "Leakage"
+source_stable_id = "eaf4:FAB_DECAL_PROFILE:leakage_tculfbnc:tculfbnc"
+source_fingerprint = "1e37850ee5fd45ceba6a5619e92bc6703d0eea4028f7593bd7fafda35458fe4c"
+semantic_category = "water_mineral"
+cause_tags = PackedStringArray("leak")
+surface_capabilities = PackedStringArray("WALL")
+render_mode = 1
+physical_size_m = Vector2(0.25, 0.5)
+surface_offset_m = 0.002
+opacity_multiplier = 0.85
+albedo_strength = 0.25
+normal_strength = 0.8
+roughness_strength = 0.7
+normal_y_flip = false
+edge_feather = 0.035
+albedo_tint = Color(1.0, 1.0, 1.0, 1.0)
+embedded_alpha = false
+review_notes = "Source class: MASKED_DECAL; Soft descending mineral/water stain with differentiated taper.; machine-suggested; human-pending"
+base_color_texture = ExtResource("2")
+opacity_texture = ExtResource("3")
+imperfection_mask_texture = ExtResource("4")
+imperfection_scale = Vector2(1.7, 1.3)
+imperfection_rotation = 18.0
+imperfection_contrast = 1.35
+imperfection_strength = 0.55

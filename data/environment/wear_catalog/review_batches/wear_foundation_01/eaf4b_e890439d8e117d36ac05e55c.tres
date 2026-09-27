@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="EnvironmentWearOverlaySpec" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://environment_authoring/wear/environment_wear_overlay_spec.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/environment/wear/eaf4_cache/eaf4b_e890439d8e117d36ac05e55c/2k/basecolor.jpg" id="2"]
+[ext_resource type="Texture2D" path="res://assets/environment/wear/eaf4_cache/eaf4b_e890439d8e117d36ac05e55c/2k/opacity.jpg" id="3"]
+[ext_resource type="Texture2D" path="res://assets/environment/wear/eaf4_cache/eaf4b_c8b0a5126abd42ebe766fd44/1k/roughness.jpg" id="4"]
+
+[resource]
+script = ExtResource("1")
+overlay_id = "eaf4b_e890439d8e117d36ac05e55c"
+display_name = "Leakage"
+source_stable_id = "eaf4:FAB_DECAL_PROFILE:leakage_skiubhzc:skiubhzc"
+source_fingerprint = "4fb69b29c659eb1f564ada1144c0df2f7f99330836d34aea4a1e159cafd315dc"
+semantic_category = "water_mineral"
+cause_tags = PackedStringArray("leak")
+surface_capabilities = PackedStringArray("WALL")
+render_mode = 1
+physical_size_m = Vector2(1.0, 1.0)
+surface_offset_m = 0.002
+opacity_multiplier = 0.85
+albedo_strength = 0.45
+normal_strength = 0.8
+roughness_strength = 0.7
+normal_y_flip = false
+edge_feather = 0.035
+albedo_tint = Color(1.0, 1.0, 1.0, 1.0)
+embedded_alpha = false
+review_notes = "Source class: MASKED_DECAL; Broad irregular orange mineral leak with enough area to evaluate imperfection breakup clearly.; machine-suggested; human-pending"
+base_color_texture = ExtResource("2")
+opacity_texture = ExtResource("3")
+imperfection_mask_texture = ExtResource("4")
+imperfection_scale = Vector2(1.7, 1.3)
+imperfection_rotation = 18.0
+imperfection_contrast = 1.35
+imperfection_strength = 0.55
