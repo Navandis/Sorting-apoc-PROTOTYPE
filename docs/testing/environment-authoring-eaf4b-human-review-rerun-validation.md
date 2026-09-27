@@ -64,3 +64,8 @@ The command verifies that the configuration selects exactly the six undecided so
 - Godot printed its local Windows certificate-store warning at startup; local tests and captures completed.
 
 The remaining six sources require human review of the new diagnostic-versus-EAF3 evidence. EAF4B/EAF4 promotion, EAF5, Receiving C1, merge, and push remain outside this task.
+
+
+## Subsequent disposition — 27 September 2026
+
+The six sources described as pending above were subsequently resolved by the final human decision record `data/environment/wear_catalog/decisions/2026-09-27-eaf4b-final-six-human-review.json`: five APPROVED and xetubap DEFERRED. The current catalog has 12 APPROVED and 2 DEFERRED entries, with no pending or rejected entries. The earlier sections remain the time-local review-calibration record. The reproduction command above belongs to that pending-decision state; its exact-unresolved-source guard now correctly refuses a new capture after final reconciliation. The original and rerun package hashes above remain unchanged.

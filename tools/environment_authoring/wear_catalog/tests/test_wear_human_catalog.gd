@@ -7,12 +7,15 @@ const Overlay = preload("res://environment_authoring/wear/environment_wear_overl
 func _initialize() -> void:
     var all_records := Query.load_catalog()
     var approved := Query.query()
-    assert(all_records.size() == 8)
-    assert(approved.size() == 7)
+    assert(all_records.size() == 14)
+    assert(approved.size() == 12)
     assert(Query.query("CRACK").size() == 2)
     assert(Query.query("SPALL").size() == 2)
-    assert(Query.query("WATER_MINERAL", "moisture_leak", "WALL", "SOFT_BLEND").size() == 1)
+    assert(Query.query("WATER_MINERAL", "moisture_leak", "WALL", "SOFT_BLEND").size() == 3)
     assert(Query.query("OIL_GREASE", "maintenance", "FLOOR", "SOFT_BLEND").size() == 1)
+    assert(Query.query("GRIME", "cart_freight", "FLOOR", "SOFT_BLEND").size() == 1)
+    assert(Query.query("RUST_CORROSION", "corrosion").size() == 1)
+    assert(Query.query("PAINT_DAMAGE").size() == 1)
     assert(Query.query("IMPERFECTION_MASK").size() == 1)
     for entry in approved:
         assert(entry["current_source_fingerprint"] == entry["reviewed_source_fingerprint"])
@@ -29,9 +32,12 @@ func _initialize() -> void:
     var mask: Dictionary = masks["masks"][0]
     assert(mask["modulation_only"])
     assert(load(mask["texture"]) is Texture2D)
+    var deferred_count := 0
     for entry in all_records:
         if entry["status"] == "DEFERRED":
+            deferred_count += 1
             assert(entry["effective_status"] == "DEFERRED")
             assert(entry not in approved)
+    assert(deferred_count == 2)
     print("EAF4B_HUMAN_CATALOG_TEST_PASS")
     quit(0)

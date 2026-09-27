@@ -1,6 +1,8 @@
 # EAF4B — Wear Overlay, Review, and Curated Catalog Validation
 
-Status: **IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN REVIEW PENDING**
+Status: **IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN REVIEW COMPLETE / PROMOTED**
+
+The implementation-stage counts and pending statements below are retained as historical evidence. The final human disposition and current catalog state are recorded at the end of this document.
 
 - Branch: codex/eaf4b-wear-overlay-catalog
 - Baseline main/origin/main: 06153075bb77564c2ac12161bce62ca60439a4a0
@@ -104,3 +106,31 @@ Synthetic fixtures proved APPROVED → guarded restaging → generated WearOverl
 Human review must decide the final source set, sizes, categories, strengths, and approvals. In particular, xetubap's bright paint region and subtle floor grime/oil need artistic judgment. Soft transparent planes should stay sparse and separated; prefer CUTOUT for hard masks, avoid coincident soft planes, and retest any production placement under its actual lighting. The 0.002 m default is technically stable in the review scene, but tight production geometry may need a local offset check.
 
 The tracked .tres review specs reference ignored staged assets. A fresh checkout needs the EAF4A root/config and a prepare/import run before those specs can load. The review ZIP contains captures and decisions only, so it can be shared without the commercial map cache. No live wear entry was approved, no EAF4B or overall EAF4 promotion occurred, and Receiving C1 and EAF5 remain untouched.
+
+
+## Final human promotion — 27 September 2026
+
+The final six decisions are recorded in `data/environment/wear_catalog/decisions/2026-09-27-eaf4b-final-six-human-review.json` at decision revision 2. The catalog has **12 current APPROVED, 2 DEFERRED, 0 REJECTED, and 0 PENDING** entries. All 12 approved reviewed source fingerprints match their current source fingerprints. The two deferred entries remain current as DEFERRED and are excluded from the default query. The catalog's lack of rejections is intentional: the 14-source shortlist was filtered from the larger EAF4A repository before live review.
+
+| Final source | Decision | Category | Size (m) | Opacity | Albedo strength | Other approved controls |
+| --- | --- | --- | --- | ---: | ---: | --- |
+| concrete_leakage_tk3jej1c | APPROVED | WATER_MINERAL | 0.25 × 1.0 | 1.0 | 0.45 | SOFT_BLEND; normal 0.8; roughness 0.7; offset 0.002 |
+| leakage_tculfbnc | APPROVED | WATER_MINERAL | 0.25 × 0.5 | 1.0 | 0.45 | SOFT_BLEND; reviewed grunge dependency retained; normal 0.8; roughness 0.7; offset 0.002 |
+| road_dust_sgzh1so | APPROVED | GRIME | 1.0 × 1.0 | 1.0 | 0.40 | SOFT_BLEND; normal 0.8; roughness 0.7; offset 0.002 |
+| rust_debris_ugxhbh0h | APPROVED | RUST_CORROSION | 0.5 × 0.5 | 1.0 | 0.75 | SOFT_BLEND; normal 0.8; roughness 0.7; offset 0.002 |
+| chipped_paint_patch_ui2ncdjfw | APPROVED | PAINT_DAMAGE | 1.0 × 1.0 | 0.85 | 0.35 | CUTOUT; normal 0.8; roughness 0.7; offset 0.002 |
+| xetubap paint remnant | DEFERRED | PAINT_REMNANT | 1.5 × 2.0 review probe | 0.75 probe | 0.55 probe | EAF4 material patch; roughness 0.7; offset 0.002; room-context review required |
+
+The five newly approved sources have normal-Y flip disabled. Their surface capabilities and cause tags are in the decision record and catalog. The xetubap values are retained calibrated review probes, not universal placement defaults. Its broad finish needs a compatible room-scale painted/rendered wall composition, so it remains deferred without rejection. The previously deferred scratched-metal imperfection mask awaits a suitable service-metal context.
+
+Approved restaging produced 11 valid overlay specs and one modulation-only grunge mask entry; grunge has no standalone overlay spec. The default catalog query returned all 12 current approvals and excluded both deferred entries. Category checks returned CRACK 2, SPALL 2, WATER_MINERAL 3, OIL_GREASE 1, GRIME 1, RUST_CORROSION 1, PAINT_DAMAGE 1, and IMPERFECTION_MASK 1. Cause/surface checks returned three moisture_leak walls, one cart_freight floor, and one corrosion source.
+
+Final close-out verification: EAF4B Python 12/12, EAF4A Python 23/23, EAF3B Python 15/15, EAF4B Godot overlay/rerun/live-catalog tests passed, EAF3B Godot query/live-catalog failures=0, EAF1 focused Godot failures=0, and Godot editor parse exited 0 without script errors. Approved restaging reported 12 and zero freshness changes; repeating reconciliation produced zero audit changes. The local Windows certificate-store warning remained non-blocking.
+
+The accepted review method uses a quiet **WEAR_DIAGNOSTIC_LIGHT** wall or **WEAR_DIAGNOSTIC_FLOOR** plane to isolate the overlay's contribution, followed by the real EAF3 base to judge it in a contextual production material. These bases are review tooling only; neither is an EAF3 catalog or production room material. Both the original 81-capture package and the separate 112-capture diagnostic rerun are preserved, with SHA-256 hashes recorded in the human-review rerun validation. No capture was regenerated during this promotion.
+
+APPROVED means reusable source quality, subject to causal placement. Water/mineral marks need a moisture or service origin; cracks need a plausible stress, joint, opening, impact or repair origin; rust needs nearby metal; oil needs equipment, maintenance or freight-service activity; spall needs localized impact, repair or edge cause; road dust belongs in traffic/accumulation zones; and paint damage requires a historically applied finish. These notes remain in the live catalog.
+
+EAF4 is closed by the proven workflow, not an exhaustive initial vocabulary. Guarded single-root indexing, source profiles and stable IDs, archive exclusion, contact-sheet triage, masked-decal and imperfection-mask classification, selective staging and strong fingerprints, CUTOUT and SOFT_BLEND overlays, metre sizing and offset, albedo/normal/roughness controls, imperfection modulation, EAF3 and EAF4 material patches, EAF1 diagnostic/contextual review, causal human curation, tracked catalog status, stale/source-missing semantics, restaging and query are promoted. Later room-specific wear follows this workflow without reopening EAF4. Missing soot/smoke, safety-mark remnants or additional paint history do not block closure.
+
+FINAL HUMAN DISPOSITION: PROMOTE EAF4B

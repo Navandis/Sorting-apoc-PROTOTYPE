@@ -1,0 +1,237 @@
+{
+  "schema_version": 1,
+  "batch_id": "wear_foundation_01",
+  "decisions": [
+    {
+      "source_stable_id": "eaf4:FAB_DECAL_PROFILE:concrete_leakage_tk3jej1c:tk3jej1c",
+      "catalog_wear_id": "eaf4b_cdded964c68d6777983af66f",
+      "reviewed_source_fingerprint": "157f81acbf2321fb84525f48e4f641cd4e9a8ea3a9aa9e21cd7de8baae41071b",
+      "selected_resolution": "2K",
+      "decision": "APPROVED",
+      "decision_revision": 2,
+      "semantic_category": "WATER_MINERAL",
+      "cause_tags": [
+        "moisture_leak",
+        "mineral_deposit"
+      ],
+      "surface_capabilities": [
+        "WALL",
+        "VERTICAL_PREFERRED"
+      ],
+      "render_mode": "SOFT_BLEND",
+      "patch_mode": "",
+      "eaf3_material_id": "",
+      "default_size": [
+        0.25,
+        1.0
+      ],
+      "surface_offset": 0.002,
+      "opacity": 1.0,
+      "albedo_strength": 0.45,
+      "albedo_tint": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "normal_strength": 0.8,
+      "normal_y_flip": false,
+      "roughness_strength": 0.7,
+      "imperfection": {},
+      "review_notes": "Deliberately narrow, low-amplitude vertical leak. Its subtlety is useful. Place directly beneath or behind a credible moisture source such as a pipe joint, penetration, fitting, vent, ceiling/service joint or similar infrastructure. Partial occlusion at the origin is preferable."
+    },
+    {
+      "source_stable_id": "eaf4:FAB_DECAL_PROFILE:leakage_tculfbnc:tculfbnc",
+      "catalog_wear_id": "eaf4b_cd7701bd0cdb622c63628103",
+      "reviewed_source_fingerprint": "1e37850ee5fd45ceba6a5619e92bc6703d0eea4028f7593bd7fafda35458fe4c",
+      "selected_resolution": "2K",
+      "decision": "APPROVED",
+      "decision_revision": 2,
+      "semantic_category": "WATER_MINERAL",
+      "cause_tags": [
+        "moisture_leak",
+        "mineral_deposit"
+      ],
+      "surface_capabilities": [
+        "WALL",
+        "VERTICAL_PREFERRED"
+      ],
+      "render_mode": "SOFT_BLEND",
+      "patch_mode": "",
+      "eaf3_material_id": "",
+      "default_size": [
+        0.25,
+        0.5
+      ],
+      "surface_offset": 0.002,
+      "opacity": 1.0,
+      "albedo_strength": 0.45,
+      "albedo_tint": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "normal_strength": 0.8,
+      "normal_y_flip": false,
+      "roughness_strength": 0.7,
+      "imperfection": {
+        "source_stable_id": "eaf4:IMPERFECTION_TEXTURE_PROFILE:grunge_tedxadjc:tedxadjc",
+        "source_fingerprint": "e71aaf2f2092f229536c4a8ffd8e28b52db2c0e9b3924ab6436852a38267504b",
+        "selected_resolution": "1K",
+        "scale": [
+          1.7,
+          1.3
+        ],
+        "rotation": 18.0,
+        "contrast": 1.35,
+        "strength": 0.55
+      },
+      "review_notes": "Useful smaller tapered leak/mineral mark. Place below a plausible service/moisture origin rather than freestanding on a wall."
+    },
+    {
+      "source_stable_id": "eaf4:FAB_DECAL_PROFILE:road_dust_sgzh1so:sgzh1so",
+      "catalog_wear_id": "eaf4b_7efdf22029c82320d62147c7",
+      "reviewed_source_fingerprint": "c470c5179d1907452e27be387f2ba5ba53f19aa253a7166df6fed2b0103b3342",
+      "selected_resolution": "2K",
+      "decision": "APPROVED",
+      "decision_revision": 2,
+      "semantic_category": "GRIME",
+      "cause_tags": [
+        "traffic",
+        "accumulation",
+        "cart_freight"
+      ],
+      "surface_capabilities": [
+        "FLOOR",
+        "HORIZONTAL_PREFERRED"
+      ],
+      "render_mode": "SOFT_BLEND",
+      "patch_mode": "",
+      "eaf3_material_id": "",
+      "default_size": [
+        1.0,
+        1.0
+      ],
+      "surface_offset": 0.002,
+      "opacity": 1.0,
+      "albedo_strength": 0.4,
+      "albedo_tint": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "normal_strength": 0.8,
+      "normal_y_flip": false,
+      "roughness_strength": 0.7,
+      "imperfection": {},
+      "review_notes": "Sparse, subtle accumulation layer appropriate for an occupied/maintained bunker. Use along traffic paths, freight/cart turning areas, wall edges, thresholds or service accumulation zones; do not blanket floors uniformly."
+    },
+    {
+      "source_stable_id": "eaf4:FAB_DECAL_PROFILE:rust_debris_ugxhbh0h:ugxhbh0h",
+      "catalog_wear_id": "eaf4b_89c9cb7aa962b19eda21f278",
+      "reviewed_source_fingerprint": "672077321a4479887bfbfed7969e846b1099c9d02fda0ae0e2eca05b8e583c21",
+      "selected_resolution": "2K",
+      "decision": "APPROVED",
+      "decision_revision": 2,
+      "semantic_category": "RUST_CORROSION",
+      "cause_tags": [
+        "corrosion"
+      ],
+      "surface_capabilities": [
+        "WALL",
+        "FLOOR"
+      ],
+      "render_mode": "SOFT_BLEND",
+      "patch_mode": "",
+      "eaf3_material_id": "",
+      "default_size": [
+        0.5,
+        0.5
+      ],
+      "surface_offset": 0.002,
+      "opacity": 1.0,
+      "albedo_strength": 0.75,
+      "albedo_tint": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "normal_strength": 0.8,
+      "normal_y_flip": false,
+      "roughness_strength": 0.7,
+      "imperfection": {},
+      "review_notes": "Sparse corrosion flecks. Use only with a nearby plausible corrosion source—fastener, bracket, pipe, plate, barrier, vent, rail or other metal fitting. Do not use as generic orange dirt."
+    },
+    {
+      "source_stable_id": "eaf4:FAB_DECAL_PROFILE:chipped_paint_patch_ui2ncdjfw:ui2ncdjfw",
+      "catalog_wear_id": "eaf4b_16c913a6a9cc1926bcc14833",
+      "reviewed_source_fingerprint": "cd2d8519a93efeca95e4fcb15967de297cf5581959be5955865f87e97ea7af0f",
+      "selected_resolution": "2K",
+      "decision": "APPROVED",
+      "decision_revision": 2,
+      "semantic_category": "PAINT_DAMAGE",
+      "cause_tags": [
+        "paint_history",
+        "surface_age"
+      ],
+      "surface_capabilities": [
+        "WALL"
+      ],
+      "render_mode": "CUTOUT",
+      "patch_mode": "",
+      "eaf3_material_id": "",
+      "default_size": [
+        1.0,
+        1.0
+      ],
+      "surface_offset": 0.002,
+      "opacity": 0.85,
+      "albedo_strength": 0.35,
+      "albedo_tint": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "normal_strength": 0.8,
+      "normal_y_flip": false,
+      "roughness_strength": 0.7,
+      "imperfection": {},
+      "review_notes": "Approve as localized paint/finish damage, not damage to bare concrete. Use where an old painted/rendered institutional finish is historically plausible—paint bands, painted wall sections, repaired/overpainted areas or similar applied finish."
+    },
+    {
+      "source_stable_id": "eaf4:FAB_DECAL_PROFILE:industrial_abandonedfactory_wall_concrete_painted_xetubap:xetubap",
+      "catalog_wear_id": "eaf4b_dc44a10776bc702874712334",
+      "reviewed_source_fingerprint": "e098cb1062052e1b5d9aa48d943ea879d9ec3a6d258855caba6b9420e80ef2b1",
+      "selected_resolution": "4K",
+      "decision": "DEFERRED",
+      "decision_revision": 2,
+      "semantic_category": "PAINT_REMNANT",
+      "cause_tags": [
+        "paint_history",
+        "old_finish"
+      ],
+      "surface_capabilities": [
+        "WALL"
+      ],
+      "render_mode": "SOFT_BLEND",
+      "patch_mode": "EAF4_SOURCE",
+      "eaf3_material_id": "",
+      "default_size": [
+        1.5,
+        2.0
+      ],
+      "surface_offset": 0.002,
+      "opacity": 0.75,
+      "albedo_strength": 0.55,
+      "albedo_tint": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "normal_strength": 0.8,
+      "normal_y_flip": false,
+      "roughness_strength": 0.7,
+      "imperfection": {},
+      "review_notes": "Calibrated treatment is substantially better and the source remains promising as a broad paint-remnant asset. However, it is inherently a large historical finish patch and the current review lacks a truly compatible room-scale painted/rendered wall composition. Defer until EAF5 or a later room provides that context. Do not reject it and do not force a universal default now."
+    }
+  ]
+}
