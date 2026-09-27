@@ -1,9 +1,10 @@
 # EAF1 WallGrazing shadow artifact validation
 
-- **Status:** FIX IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN REVIEW PENDING
+- **Status:** FIX IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN REVIEW COMPLETE / PROMOTED
 - **Baseline:** main / origin/main a48135892b31d7872abe2b773b7864b838be6b1f
 - **Branch:** codex/eaf1-wallgrazing-artifact
 - **Implementation commit:** 797a8634543660abf12868059f7e607487a7df8c
+- **Feature branch HEAD at human review:** 1e1c941fcc0c80f84974cfe53725c36a5d4d3b3e
 - **Engine:** Godot 4.7 stable, Compatibility renderer (gl_compatibility)
 
 ## Reproduction and controlled diagnosis
@@ -42,7 +43,7 @@ Before this patch all six review surfaces used Godot's shadow-casting default, O
 - [Baseline captures](../../reports/environment_lookdev/eaf1_wallgrazing_fix/baseline/) and [final captures](../../reports/environment_lookdev/eaf1_wallgrazing_fix/final/): ten PNGs each.
 - [Shadow isolation variants](../../reports/environment_lookdev/eaf1_wallgrazing_fix/): all_off, neutral_key, neutral_graze, receiving_key, receiving_side, receiving_support, casters_off, and block_cast.
 
-The shared diagonal hatch is absent in the final plain, UV, and triplanar WallGrazing captures. Triplanar source detail remains visible and should be judged separately from the removed shadow artifact. Hero and Receiving retain the warm pools, darker corners, beam/return shadows, and block floor shadow. Removing wall/ceiling/column casting changes some mutual-shadow composition, so human review of the contact sheet and interactive Hero view is still required.
+The shared diagonal hatch is absent in the final plain, UV, and triplanar WallGrazing captures. Triplanar source detail remains visible and should be judged separately from the removed shadow artifact. Hero and Receiving retain the warm pools, darker corners, beam/return shadows, and block floor shadow. Human review accepted the brighter large review surfaces and confirmed the composition remains useful.
 
 ## Automated and parse verification
 
@@ -53,4 +54,8 @@ The shared diagonal hatch is absent in the final plain, UV, and triplanar WallGr
 - Final bounded diagnostic capture: ten decoded PNGs at 1920 × 1080, exit 0; same material/camera/light states as baseline.
 - Godot emitted its existing Windows root certificate store startup warning. No script or test failure accompanied it.
 
-Human disposition remains pending. No merge, push, EAF4 implementation, or Receiving Stage C1 work is part of this patch.
+## Final human review and promotion
+
+The before/after evidence was reviewed and the patch is promoted. The diagonal hatch is removed from plain, UV, and triplanar WallGrazing views. Hero and Receiving composition remains useful; deliberate beam, partial-return, and beveled-block shadows remain. The brighter large review surfaces are accepted as the correct result after removing false self-shadowing. This patch becomes the new EAF1 lookdev baseline.
+
+FINAL HUMAN DISPOSITION: PROMOTE EAF1 WALLGRAZING PATCH
