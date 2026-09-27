@@ -347,7 +347,7 @@ def aggregate_statistics(index):
 
 def summary_text(index, diff):
     stats = aggregate_statistics(index)
-    lines = ['EAF4A SOURCE TRIAGE - HUMAN REVIEW PENDING',
+    lines = ['EAF4A SOURCE TRIAGE',
              'Configured root: ' + index['configured_root_diagnostic'],
              f"Files excluding archives: {stats['repository_files_excluding_archives']} | Archives ignored: {index['archives_ignored']['count']}",
              f"Families: {stats['source_family_count']} | Logical candidates: {stats['logical_candidate_count']}",

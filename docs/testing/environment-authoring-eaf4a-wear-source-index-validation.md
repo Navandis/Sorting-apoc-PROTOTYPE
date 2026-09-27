@@ -1,6 +1,6 @@
 # EAF4A wear source index and triage validation
 
-**Status: IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN REVIEW PENDING**
+**Status: IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN REVIEW COMPLETE / PROMOTED**
 
 - Date: 27 September 2026.
 - Branch: `codex/eaf4a-wear-source-index`.
@@ -133,7 +133,7 @@ The bounded audit checks **22 entries**, all 13 Unreal notes, all three atlas al
 | --- | --- |
 | Synthetic Python suite | **23 tests, zero failures, exit 0** |
 | Live scan / unchanged rescan | exit 0; all 160/170 unchanged |
-| Query/batch CLI | eight crack selections; changed query empty |
+| Query/batch CLI | ten crack selections; changed query empty |
 | Contact sheets/cache | 26 pages decoded; zero failed previews; 8/8 cache reuse |
 | Bounded audit | PASS, 22 entries |
 | Godot 4.7 headless editor parse | exit 0; no SCRIPT ERROR or FAIL |
@@ -144,8 +144,19 @@ The bounded audit checks **22 entries**, all 13 Unreal notes, all three atlas al
 
 Known limitations: City/other surface tileability, all live atlas regions, Unreal units/defaults, unknown RSMO/MR packing, two EXR headers, supplemental glTF/bin interpretation, one unitless scan area, and weak semantic suggestions. These remain explicit facts/warnings, not inferred approval.
 
-Human review must assess source safety/archive exclusion, classification, None/zero/missing semantics, understandable triage and the City result. No artistic wear approval state exists.
+The technical review above was recorded before human disposition. No artistic wear approval state exists.
 
-**Disposition: PROMOTE EAF4A / REVISE EAF4A. Neither selected.**
+Close-out reran the 23-test suite, live scan and unchanged rescan (160/170 unchanged), representative ten-ID crack query/contact sheet (8 cached previews), and Godot 4.7 headless editor parse (exit 0; the known Windows certificate warning only). No shared EAF3 utility changed.
 
-No merge/push, EAF4B, Godot wear staging, EAF5 or Receiving C1 work is authorized by this technical close-out.
+## Final human review and promotion
+
+Human review accepted the guarded single-root source scan, archive exclusion, conservative source classification, stable IDs, map and alpha facts, Unreal atlas-family discovery, query workflow, and readable contact sheets. These support source-level triage without browsing the repository manually. The human disposition promotes the EAF4A discovery and indexing system, **not individual artistic wear assets**. UNKNOWN, NEEDS MORE PROFILE SUPPORT, weak semantic suggestions, unresolved packed-map semantics and unresolved Unreal atlas regions remain valid outcomes when evidence is insufficient.
+
+- `eaf4:FAB_DECAL_PROFILE:industrial_abandonedfactory_wall_concrete_painted_xetubap:xetubap` remains technically **MASKED_DECAL**: source metadata calls it a decal and a separate opacity map exists. Human review found a mostly opaque, broad painted/weathered wall region. For EAF4B curation, retain it as a useful `candidate_use: MATERIAL_PATCH / PAINT_REMNANT_PATCH`, `semantic_family: paint_remnant / aged_painted_finish` recommendation. Use it as a large localized applied-finish patch: its basecolor replaces substantial underlying surface inside the patch, rather than acting as a sparse crack or stain. The EAF4A source class is unchanged; human curation may select a different practical authoring primitive.
+- **Metal Drain Cover** and **Truncated Domes Pad** are human-classified `NOT_WEAR / OTHER` and excluded from the EAF4B grime/wear shortlist. Their weak machine semantic suggestions do not warrant a scanner revision or source deletion.
+- The four City contact sheets were human-reviewed. Their 63 coherent opaque PBR sets overwhelmingly appear to be full-surface material content without localized opacity. Machine evidence remains **0 proven EAF4, 0 definite EAF3 routes, 63 UNKNOWN**, so City retains **NEEDS MORE PROFILE SUPPORT**. Human triage is **ROUTE TO FUTURE EAF3 FAB/SURFACE PROFILE** and **EXCLUDE FROM EAF4B WEAR SHORTLIST** for now. Future source relocation/profile work is separate; no external files were changed. This unresolved machine route does not block EAF4A.
+- The **3 Unreal atlas families / 13 logical entries** remain `NEEDS_MANUAL_METADATA`. Missing parent UV equations, cell origin, defaults and units forbid guessed regions. This conservative limitation is accepted for EAF4A; EAF4B may obtain explicit metadata or prove a bounded convention.
+
+EAF4A is closed in its designed scope. EAF4 overall remains in progress. The next gate is **EAF4B Overlay Authoring + Review + Curated Wear Catalog design / implementation plan**; this close-out authorizes no EAF4B implementation, EAF5 or Receiving C1 work.
+
+FINAL HUMAN DISPOSITION: PROMOTE EAF4A
