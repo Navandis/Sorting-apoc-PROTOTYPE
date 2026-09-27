@@ -1,9 +1,9 @@
 # EAF3 FAB surface profile refresh validation
 
-**Status: FAB PROFILE EXTENSION IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN REVIEW PENDING**
+**Status: FAB PROFILE EXTENSION IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN REVIEW COMPLETE / PROMOTED**
 
 - Date: 27 September 2026.
-- Branch: codex/eaf3-fab-surface-profile-refresh. Implementation started from HEAD 0903e776604c6495b25c65a23635ed177f8c3a51; final branch HEAD is in the handoff.
+- Branch: codex/eaf3-fab-surface-profile-refresh. Implementation started from HEAD 0903e776604c6495b25c65a23635ed177f8c3a51; reviewed feature HEAD b2896a5e709913298ddee96ba523c6747d933c64; promotion close-out is a later commit.
 - Baseline main and origin/main: 0903e776604c6495b25c65a23635ed177f8c3a51.
 - Source-index schema 1; scanner revision eaf3a-2; KITBASH_PROFILE_V1 revision 1; FAB_SURFACE_PROFILE_V1 revision 1.
 - The single read-only source root remained D:\AssetPipeline\KitBash_repository.
@@ -40,7 +40,7 @@ Technical smoke IDs: fab:pkngj0, fab:vi4idbm, fab:pjBkT0. Each resolved, staged 
 
 Ignored source-triage sheets under reports/environment_material_catalog/fab_refresh/ use 24 candidates per page: FAB overview 2 pages, concrete 14, cement_render 4, masonry_block 2, brick 2, tile 1, metal 6 and FAB warnings 2. Every folder has page and batch manifests. These are basecolor triage, not final PBR evidence.
 
-The ignored reports/environment_material_catalog/eaf5_source_refresh_review.zip includes scan summaries, refreshed statistics, diff summary, FAB and Receiving-relevant family sheets/manifests, FAB smoke summary and this validation record. It contains no commercial maps or staged cache. Human review of FAB recognition and refreshed triage remains pending before promotion. No EAF5 palette or Receiving C1 work was performed.
+The ignored reports/environment_material_catalog/eaf5_source_refresh_review.zip includes scan summaries, refreshed statistics, diff summary, FAB and Receiving-relevant family sheets/manifests, FAB smoke summary and this validation record. It contains no commercial maps or staged cache. At technical handoff, human review of FAB recognition and refreshed triage was pending. No EAF5 palette or Receiving C1 work was performed. The final disposition is recorded below.
 
 ## Verification
 
@@ -65,4 +65,14 @@ The reusable --exclude-warning query/sheet filter now removes that warning class
 
 The refreshed index contains 132 warned candidates. The six structural-facing family sheets exclude 41 of them: concrete 8, cement_render 4, masonry_block 0, brick 0, tile 1, metal 28. CementBagsAtlas remains in the raw index with its warning and in the separate object_specific_trim sheet, and is absent from the corrected cement_render sheet. The corrected sheets contain concrete 322 (14 pages), cement_render 94 (4), masonry_block 30 (2), brick 39 (2), tile 22 (1) and metal 121 (6), at 24 candidates per page. The FAB overview and FAB warnings sheets remain unchanged. The refreshed ZIP includes the eligibility summary and corrected manifests.
 
-Status remains FAB PROFILE EXTENSION IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN REVIEW PENDING until the corrected package is reviewed. No approved EAF3 decision, FAB interpretation, EAF5 palette or Receiving C1 work changed.
+At this correction checkpoint, status remained FAB PROFILE EXTENSION IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN REVIEW PENDING until review of the corrected package. No approved EAF3 decision, FAB interpretation, EAF5 palette or Receiving C1 work changed at that checkpoint. The final disposition follows below.
+
+## Final human-review disposition
+
+The corrected source sheets and review ZIP were inspected and accepted for EAF5 source shortlisting. The human reviewer accepted FAB_SURFACE_PROFILE_V1 recognition under the same single EAF3 root and the structural review filter for warned trim/object-specific candidates. Raw discovery retains those records. CementBagsAtlas remains indexed with its warning, appears in the explicit warning query and separate object_specific_trim sheet, and is absent from the cement_render structural sheet.
+
+All five existing EAF3 approvals remain current with matching reviewed strong fingerprints; no FAB material is automatically approved. The 28 FAB candidates remain source facts for later review. Their generic normal filenames leave normal-Y orientation for EAF1 visual review. Four non-approved KitBash descriptors had timestamp-only signature differences with unchanged recorded sizes and interpretation; historical byte equality remains unverified. The unchanged second scan was stable.
+
+The accepted contact sheets are source triage for EAF5 candidate shortlisting. This maintenance promotion makes no Receiving palette choice, does not authorize EAF5 implementation, and does not resume Receiving C1. The review ZIP retains its pre-promotion evidence state; this tracked record carries the final disposition.
+
+FINAL HUMAN DISPOSITION: PROMOTE EAF3 FAB PROFILE REFRESH
