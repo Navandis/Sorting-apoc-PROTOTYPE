@@ -1,0 +1,11 @@
+MI_A
+Parent=M_Leaks
+BaseColor=T_Atlas_BCO
+SelectX=0
+SelectY=0
+CellSizeX=0.5
+CellSizeY=1
+AtlasRegionConvention=normalized_offset_size_top_left
+HeightOverride=true
+Height=None
+Length=2

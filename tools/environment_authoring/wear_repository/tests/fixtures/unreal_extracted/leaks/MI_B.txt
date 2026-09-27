@@ -1,0 +1,10 @@
+MI_B
+Parent=M_Leaks
+BaseColor=T_Atlas_BCO
+SelectX=1
+SelectY=0
+CellSizeX=1
+CellSizeY=1
+Height=0
+OpacityLevel=0
+OpacityOverride=true

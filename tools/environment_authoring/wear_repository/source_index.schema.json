@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "EAF4A wear source facts, schema 1",
+  "type": "object",
+  "required": ["schema_version", "scanner_revision", "profile_revisions", "scan_started_at", "scan_finished_at", "configured_root_diagnostic", "source_families", "logical_candidates", "source_class_summary", "archives_ignored", "warnings"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "scanner_revision": {"type": "string"},
+    "profile_revisions": {"type": "object", "additionalProperties": {"type": "integer", "minimum": 1}},
+    "configured_root_diagnostic": {"type": "string", "description": "Diagnostic only; excluded from identities and quick fingerprints."},
+    "scan_started_at": {"type": "string"},
+    "scan_finished_at": {"type": "string"},
+    "archives_ignored": {"type": "object", "required": ["count", "by_extension"], "properties": {"count": {"type": "integer", "minimum": 0}, "by_extension": {"type": "object"}}},
+    "source_families": {"type": "array", "items": {"type": "object", "required": ["stable_id", "profile", "relative_group", "logical_ids", "source_files", "quick_fingerprint"]}},
+    "logical_candidates": {"type": "array", "items": {"$ref": "#/$defs/candidate"}},
+    "warnings": {"type": "array", "items": {"type": "string"}}
+  },
+  "$defs": {
+    "candidate": {
+      "type": "object",
+      "required": ["stable_id", "display_name", "source_class", "profile", "relative_group", "family_id", "available_resolutions", "maps_by_resolution", "opacity_source", "alpha_stats", "source_physical_width_m", "source_physical_height_m", "tileable", "suggested_family", "warnings", "quick_fingerprint"],
+      "properties": {
+        "stable_id": {"type": "string", "pattern": "^eaf4:"},
+        "source_class": {"enum": ["MASKED_DECAL", "IMPERFECTION_MASK", "UNREAL_ATLAS_DECAL_FAMILY", "MATERIAL_PATCH_SOURCE", "PHYSICAL_DAMAGE_MODEL", "FULL_SURFACE_MATERIAL", "UNKNOWN"]},
+        "route": {"enum": ["EAF3", null]},
+        "tileable": {"type": ["boolean", "null"]},
+        "source_physical_width_m": {"type": ["number", "null"], "exclusiveMinimum": 0},
+        "source_physical_height_m": {"type": ["number", "null"], "exclusiveMinimum": 0},
+        "opacity_source": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"enum": ["SEPARATE_MASK", "EMBEDDED_ALPHA", "ATLAS_ALPHA", "MATERIAL_SCALAR", "NONE", "UNKNOWN"]}},
+        "available_resolutions": {"type": "array", "items": {"type": "string"}},
+        "maps_by_resolution": {"type": "object", "description": "Actual files only. Unreal entries reference family atlas_textures instead."},
+        "atlas_region_status": {"enum": ["DERIVED", "NEEDS_MANUAL_METADATA"]},
+        "quick_fingerprint": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+      }
+    }
+  }
+}

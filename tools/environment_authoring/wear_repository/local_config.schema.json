@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "EAF4 machine-local single source repository",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["source_repository_root"],
+  "properties": {"source_repository_root": {"type": "string", "minLength": 1}}
+}

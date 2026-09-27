@@ -1,0 +1,1 @@
+{"id": "FloorCrack", "name": "FloorCrack", "semanticTags": {"asset_type": "decal"}, "assetCategories": {"decal": {"crack": {}}}, "meta": [{"key": "scanArea", "value": "0.5x1 m"}, {"key": "tileable", "value": false}], "maps": [{"type": "albedo", "uri": "absent_8K.png", "resolution": "8192x8192"}]}

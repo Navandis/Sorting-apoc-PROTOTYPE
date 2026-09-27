@@ -1,0 +1,1 @@
+{"id": "grunge", "name": "grunge", "semanticTags": {"asset_type": "imperfection"}, "assetCategories": {"imperfection": {"grunge": {}}}, "meta": [{"key": "scanArea", "value": "2x1 m"}, {"key": "tileable", "value": true}], "maps": [{"type": "albedo", "uri": "absent_8K.png", "resolution": "8192x8192"}]}

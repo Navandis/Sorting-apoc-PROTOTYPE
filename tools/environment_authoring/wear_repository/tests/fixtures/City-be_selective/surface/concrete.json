@@ -1,0 +1,1 @@
+{"id": "concrete", "name": "concrete", "semanticTags": {"asset_type": "surface"}, "assetCategories": {"surface": {"grunge": {}}}, "meta": [{"key": "scanArea", "value": "0.5x1 m"}, {"key": "tileable", "value": true}], "maps": [{"type": "albedo", "uri": "absent_8K.png", "resolution": "8192x8192"}]}
