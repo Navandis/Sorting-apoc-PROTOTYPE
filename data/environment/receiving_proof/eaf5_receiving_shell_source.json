@@ -1,0 +1,1007 @@
+{
+  "schema_version": 1,
+  "purpose": "EAF5 pass-1 read-only Receiving source and EAF2 mapping; no proof scene or generated pieces",
+  "authority": {
+    "composition": [
+      "gameplay/logistics_wing/wing_gameplay.tscn",
+      "gameplay/logistics_wing/wing_environment.tscn",
+      "greybox/logistics_wing/wing_geometry.tscn"
+    ],
+    "builder": "greybox/logistics_wing/build_wing_geometry.gd",
+    "baseline_commit": "ac12a51ce431f94c9a65a4e84edbf2f73bdf5c2c",
+    "source_blobs": {
+      "gameplay/logistics_wing/wing_gameplay.tscn": "326fb656ae7c66e60d7b873dc54384466443c4e5",
+      "gameplay/logistics_wing/wing_environment.tscn": "261a0dc52e5193b46890691a40845e3e0f4e1288",
+      "greybox/logistics_wing/wing_geometry.tscn": "48c2d4f159a82938c552779c51afe5495dc6d350",
+      "greybox/logistics_wing/build_wing_geometry.gd": "25d0a3ea0b1d1e81c3dca0304cf897d9db42e1f0"
+    },
+    "layout_revision": "logistics-wing-greybox-medical-tuning-revision-04"
+  },
+  "coordinate_system": {
+    "origin_world_m": [
+      -39,
+      0,
+      0
+    ],
+    "axes": "+X east, +Z south, Y up; Y=0 finished floor; local metres = world X + 39, world Y, world Z"
+  },
+  "dimensions": {
+    "main_apron": {
+      "x_bounds_local_m": [
+        0,
+        10.5
+      ],
+      "z_bounds_local_m": [
+        -5,
+        5
+      ],
+      "width_m": 10.5,
+      "depth_m": 10.0,
+      "clear_height_m": 4.2
+    },
+    "freight_enclosure": {
+      "x_bounds_local_m": [
+        -5,
+        0
+      ],
+      "z_bounds_local_m": [
+        -3.5,
+        3.5
+      ],
+      "depth_m": 5.0,
+      "width_m": 7.0,
+      "clear_height_m": 4.2
+    },
+    "dispatch_annex_context": {
+      "x_bounds_local_m": [
+        1,
+        10.5
+      ],
+      "z_bounds_local_m": [
+        -8.5,
+        -5
+      ],
+      "width_m": 9.5,
+      "depth_m": 3.5,
+      "clear_height_m": 4.2
+    },
+    "structural_thickness_m": 0.3,
+    "floor_thickness_m": 0.3,
+    "ceiling_thickness_m": 0.3
+  },
+  "openings": [
+    {
+      "id": "west_freight",
+      "plane": "local X=0",
+      "nominal_width_m": 5.0,
+      "clear_height_m": 4.2,
+      "vertical_condition": "full height, no header",
+      "horizontal_bounds_local_m": [
+        -2.5,
+        2.5
+      ],
+      "return_lengths_m": [
+        2.5,
+        2.5
+      ],
+      "source_components": [
+        "ReceivingWestNorthReturn",
+        "ReceivingWestSouthReturn"
+      ],
+      "classification": "SUPPORTED_BY_COMPOSITION"
+    },
+    {
+      "id": "east_backlog",
+      "plane": "local X=10.5",
+      "nominal_width_m": 3.84,
+      "clear_height_m": 3.4,
+      "upper_closure_height_m": 0.8,
+      "horizontal_bounds_local_m": [
+        -1.92,
+        1.92
+      ],
+      "source_components": [
+        "ReceivingCeilingTransition",
+        "ReceivingEastNorth",
+        "ReceivingEastSouth"
+      ],
+      "classification": "SUPPORTED_BY_EXISTING_RECIPE"
+    },
+    {
+      "id": "dispatch",
+      "plane": "local Z=-5",
+      "nominal_width_m": 2.4,
+      "clear_height_m": 4.2,
+      "vertical_condition": "full height, no header",
+      "horizontal_bounds_local_m": [
+        4.8,
+        7.2
+      ],
+      "source_components": [
+        "DispatchSouthWest",
+        "DispatchSouthEast"
+      ],
+      "classification": "SUPPORTED_BY_COMPOSITION"
+    }
+  ],
+  "source_elements": [
+    {
+      "id": "Floor_ReceivingApron",
+      "source_node_path": "Districts/Receiving/Floor_ReceivingApron",
+      "kind": "floor",
+      "center_local_m": [
+        5.25,
+        -0.15,
+        0.0
+      ],
+      "saved_box_dimensions_m": [
+        10.5,
+        0.3,
+        10.0
+      ]
+    },
+    {
+      "id": "Floor_FreightEnclosure",
+      "source_node_path": "Districts/Receiving/Floor_FreightEnclosure",
+      "kind": "floor",
+      "center_local_m": [
+        -2.5,
+        -0.15,
+        0.0
+      ],
+      "saved_box_dimensions_m": [
+        5.0,
+        0.3,
+        7.0
+      ]
+    },
+    {
+      "id": "Floor_DispatchAnnex",
+      "source_node_path": "Districts/Receiving/Floor_DispatchAnnex",
+      "kind": "floor",
+      "center_local_m": [
+        5.75,
+        -0.15,
+        -6.75
+      ],
+      "saved_box_dimensions_m": [
+        9.5,
+        0.3,
+        3.5
+      ]
+    },
+    {
+      "id": "ReceivingWestNorthReturn",
+      "source_node_path": "Districts/Receiving/ReceivingWestNorthReturn",
+      "kind": "wall",
+      "center_local_m": [
+        0.0,
+        2.1,
+        -3.75
+      ],
+      "saved_box_dimensions_m": [
+        0.3,
+        4.2,
+        2.5
+      ]
+    },
+    {
+      "id": "ReceivingWestSouthReturn",
+      "source_node_path": "Districts/Receiving/ReceivingWestSouthReturn",
+      "kind": "wall",
+      "center_local_m": [
+        0.0,
+        2.1,
+        3.75
+      ],
+      "saved_box_dimensions_m": [
+        0.3,
+        4.2,
+        2.5
+      ]
+    },
+    {
+      "id": "ReceivingSouth",
+      "source_node_path": "Districts/Receiving/ReceivingSouth",
+      "kind": "wall",
+      "center_local_m": [
+        5.25,
+        2.1,
+        5.0
+      ],
+      "saved_box_dimensions_m": [
+        10.8,
+        4.2,
+        0.3
+      ]
+    },
+    {
+      "id": "ReceivingNorthWest",
+      "source_node_path": "Districts/Receiving/ReceivingNorthWest",
+      "kind": "wall",
+      "center_local_m": [
+        0.425,
+        2.1,
+        -5.0
+      ],
+      "saved_box_dimensions_m": [
+        1.15,
+        4.2,
+        0.3
+      ]
+    },
+    {
+      "id": "ReceivingEastNorth",
+      "source_node_path": "Districts/Receiving/ReceivingEastNorth",
+      "kind": "wall",
+      "center_local_m": [
+        10.5,
+        2.1,
+        -3.46
+      ],
+      "saved_box_dimensions_m": [
+        0.3,
+        4.2,
+        3.08
+      ]
+    },
+    {
+      "id": "ReceivingEastSouth",
+      "source_node_path": "Districts/Receiving/ReceivingEastSouth",
+      "kind": "wall",
+      "center_local_m": [
+        10.5,
+        2.1,
+        3.46
+      ],
+      "saved_box_dimensions_m": [
+        0.3,
+        4.2,
+        3.08
+      ]
+    },
+    {
+      "id": "FreightNorth",
+      "source_node_path": "Districts/Receiving/FreightNorth",
+      "kind": "wall",
+      "center_local_m": [
+        -2.575,
+        2.1,
+        -3.5
+      ],
+      "saved_box_dimensions_m": [
+        5.15,
+        4.2,
+        0.3
+      ]
+    },
+    {
+      "id": "FreightSouth",
+      "source_node_path": "Districts/Receiving/FreightSouth",
+      "kind": "wall",
+      "center_local_m": [
+        -2.575,
+        2.1,
+        3.5
+      ],
+      "saved_box_dimensions_m": [
+        5.15,
+        4.2,
+        0.3
+      ]
+    },
+    {
+      "id": "FreightRear",
+      "source_node_path": "Districts/Receiving/FreightRear",
+      "kind": "wall",
+      "center_local_m": [
+        -5.0,
+        2.1,
+        0.0
+      ],
+      "saved_box_dimensions_m": [
+        0.3,
+        4.2,
+        7.0
+      ]
+    },
+    {
+      "id": "DispatchWest",
+      "source_node_path": "Districts/Receiving/DispatchWest",
+      "kind": "wall",
+      "center_local_m": [
+        1.0,
+        2.1,
+        -6.75
+      ],
+      "saved_box_dimensions_m": [
+        0.3,
+        4.2,
+        3.8
+      ]
+    },
+    {
+      "id": "DispatchNorth",
+      "source_node_path": "Districts/Receiving/DispatchNorth",
+      "kind": "wall",
+      "center_local_m": [
+        5.75,
+        2.1,
+        -8.5
+      ],
+      "saved_box_dimensions_m": [
+        9.8,
+        4.2,
+        0.3
+      ]
+    },
+    {
+      "id": "DispatchEast",
+      "source_node_path": "Districts/Receiving/DispatchEast",
+      "kind": "wall",
+      "center_local_m": [
+        10.5,
+        2.1,
+        -6.825
+      ],
+      "saved_box_dimensions_m": [
+        0.3,
+        4.2,
+        3.65
+      ]
+    },
+    {
+      "id": "DispatchSouthWest",
+      "source_node_path": "Districts/Receiving/DispatchSouthWest",
+      "kind": "wall",
+      "center_local_m": [
+        2.9,
+        2.1,
+        -5.0
+      ],
+      "saved_box_dimensions_m": [
+        3.8,
+        4.2,
+        0.3
+      ]
+    },
+    {
+      "id": "DispatchSouthEast",
+      "source_node_path": "Districts/Receiving/DispatchSouthEast",
+      "kind": "wall",
+      "center_local_m": [
+        8.925,
+        2.1,
+        -5.0
+      ],
+      "saved_box_dimensions_m": [
+        3.45,
+        4.2,
+        0.3
+      ]
+    },
+    {
+      "id": "ReceivingCeilingTransition",
+      "source_node_path": "Districts/Receiving/ReceivingCeilingTransition",
+      "kind": "wall",
+      "center_local_m": [
+        10.5,
+        3.8,
+        0.0
+      ],
+      "saved_box_dimensions_m": [
+        0.3,
+        0.8,
+        3.84
+      ]
+    },
+    {
+      "id": "Ceiling_ReceivingApron",
+      "source_node_path": "RoofVisuals/Ceiling_ReceivingApron",
+      "kind": "ceiling",
+      "center_local_m": [
+        5.25,
+        4.35,
+        0.0
+      ],
+      "saved_box_dimensions_m": [
+        10.5,
+        0.3,
+        10.0
+      ]
+    },
+    {
+      "id": "Ceiling_FreightEnclosure",
+      "source_node_path": "RoofVisuals/Ceiling_FreightEnclosure",
+      "kind": "ceiling",
+      "center_local_m": [
+        -2.5,
+        4.35,
+        0.0
+      ],
+      "saved_box_dimensions_m": [
+        5.0,
+        0.3,
+        7.0
+      ]
+    },
+    {
+      "id": "Ceiling_DispatchAnnex",
+      "source_node_path": "RoofVisuals/Ceiling_DispatchAnnex",
+      "kind": "ceiling",
+      "center_local_m": [
+        5.75,
+        4.35,
+        -6.75
+      ],
+      "saved_box_dimensions_m": [
+        9.5,
+        0.3,
+        3.5
+      ]
+    }
+  ],
+  "eaf2_recipe_mapping": [
+    {
+      "piece_id": "Ceiling_DispatchAnnex",
+      "semantic_role": "ceiling",
+      "source_components": [
+        "Ceiling_DispatchAnnex"
+      ],
+      "recipe_id": "rect_solid",
+      "dimensions_m": [
+        9.5,
+        0.3,
+        3.5
+      ],
+      "center_local_m": [
+        5.75,
+        4.35,
+        -6.75
+      ],
+      "rotation_y_degrees": 0,
+      "opening_parameters": null,
+      "collision_policy": "NONE",
+      "classification": "SUPPORTED_BY_EXISTING_RECIPE",
+      "seed": "ceiling_slab"
+    },
+    {
+      "piece_id": "Ceiling_FreightEnclosure",
+      "semantic_role": "ceiling",
+      "source_components": [
+        "Ceiling_FreightEnclosure"
+      ],
+      "recipe_id": "rect_solid",
+      "dimensions_m": [
+        5.0,
+        0.3,
+        7.0
+      ],
+      "center_local_m": [
+        -2.5,
+        4.35,
+        0.0
+      ],
+      "rotation_y_degrees": 0,
+      "opening_parameters": null,
+      "collision_policy": "NONE",
+      "classification": "SUPPORTED_BY_EXISTING_RECIPE",
+      "seed": "ceiling_slab"
+    },
+    {
+      "piece_id": "Ceiling_ReceivingApron",
+      "semantic_role": "ceiling",
+      "source_components": [
+        "Ceiling_ReceivingApron"
+      ],
+      "recipe_id": "rect_solid",
+      "dimensions_m": [
+        10.5,
+        0.3,
+        10.0
+      ],
+      "center_local_m": [
+        5.25,
+        4.35,
+        0.0
+      ],
+      "rotation_y_degrees": 0,
+      "opening_parameters": null,
+      "collision_policy": "NONE",
+      "classification": "SUPPORTED_BY_EXISTING_RECIPE",
+      "seed": "ceiling_slab"
+    },
+    {
+      "piece_id": "DispatchEast",
+      "semantic_role": "wall",
+      "source_components": [
+        "DispatchEast"
+      ],
+      "recipe_id": "rect_solid",
+      "dimensions_m": [
+        3.65,
+        4.2,
+        0.3
+      ],
+      "center_local_m": [
+        10.5,
+        2.1,
+        -6.825
+      ],
+      "rotation_y_degrees": 90,
+      "opening_parameters": null,
+      "collision_policy": "SIMPLE",
+      "classification": "SUPPORTED_BY_EXISTING_RECIPE",
+      "seed": "wall_standard"
+    },
+    {
+      "piece_id": "DispatchNorth",
+      "semantic_role": "wall",
+      "source_components": [
+        "DispatchNorth"
+      ],
+      "recipe_id": "rect_solid",
+      "dimensions_m": [
+        9.8,
+        4.2,
+        0.3
+      ],
+      "center_local_m": [
+        5.75,
+        2.1,
+        -8.5
+      ],
+      "rotation_y_degrees": 0,
+      "opening_parameters": null,
+      "collision_policy": "SIMPLE",
+      "classification": "SUPPORTED_BY_EXISTING_RECIPE",
+      "seed": "wall_standard"
+    },
+    {
+      "piece_id": "DispatchSouthEast",
+      "semantic_role": "wall",
+      "source_components": [
+        "DispatchSouthEast"
+      ],
+      "recipe_id": "rect_solid",
+      "dimensions_m": [
+        3.45,
+        4.2,
+        0.3
+      ],
+      "center_local_m": [
+        8.925,
+        2.1,
+        -5.0
+      ],
+      "rotation_y_degrees": 0,
+      "opening_parameters": null,
+      "collision_policy": "SIMPLE",
+      "classification": "SUPPORTED_BY_EXISTING_RECIPE",
+      "seed": "wall_standard"
+    },
+    {
+      "piece_id": "DispatchSouthWest",
+      "semantic_role": "wall",
+      "source_components": [
+        "DispatchSouthWest"
+      ],
+      "recipe_id": "rect_solid",
+      "dimensions_m": [
+        3.8,
+        4.2,
+        0.3
+      ],
+      "center_local_m": [
+        2.9,
+        2.1,
+        -5.0
+      ],
+      "rotation_y_degrees": 0,
+      "opening_parameters": null,
+      "collision_policy": "SIMPLE",
+      "classification": "SUPPORTED_BY_EXISTING_RECIPE",
+      "seed": "wall_standard"
+    },
+    {
+      "piece_id": "DispatchWest",
+      "semantic_role": "wall",
+      "source_components": [
+        "DispatchWest"
+      ],
+      "recipe_id": "rect_solid",
+      "dimensions_m": [
+        3.8,
+        4.2,
+        0.3
+      ],
+      "center_local_m": [
+        1.0,
+        2.1,
+        -6.75
+      ],
+      "rotation_y_degrees": 90,
+      "opening_parameters": null,
+      "collision_policy": "SIMPLE",
+      "classification": "SUPPORTED_BY_EXISTING_RECIPE",
+      "seed": "wall_standard"
+    },
+    {
+      "piece_id": "Floor_DispatchAnnex",
+      "semantic_role": "floor",
+      "source_components": [
+        "Floor_DispatchAnnex"
+      ],
+      "recipe_id": "rect_solid",
+      "dimensions_m": [
+        9.5,
+        0.3,
+        3.5
+      ],
+      "center_local_m": [
+        5.75,
+        -0.15,
+        -6.75
+      ],
+      "rotation_y_degrees": 0,
+      "opening_parameters": null,
+      "collision_policy": "SIMPLE",
+      "classification": "SUPPORTED_BY_EXISTING_RECIPE",
+      "seed": "floor_slab"
+    },
+    {
+      "piece_id": "Floor_FreightEnclosure",
+      "semantic_role": "floor",
+      "source_components": [
+        "Floor_FreightEnclosure"
+      ],
+      "recipe_id": "rect_solid",
+      "dimensions_m": [
+        5.0,
+        0.3,
+        7.0
+      ],
+      "center_local_m": [
+        -2.5,
+        -0.15,
+        0.0
+      ],
+      "rotation_y_degrees": 0,
+      "opening_parameters": null,
+      "collision_policy": "SIMPLE",
+      "classification": "SUPPORTED_BY_EXISTING_RECIPE",
+      "seed": "floor_slab"
+    },
+    {
+      "piece_id": "Floor_ReceivingApron",
+      "semantic_role": "floor",
+      "source_components": [
+        "Floor_ReceivingApron"
+      ],
+      "recipe_id": "rect_solid",
+      "dimensions_m": [
+        10.5,
+        0.3,
+        10.0
+      ],
+      "center_local_m": [
+        5.25,
+        -0.15,
+        0.0
+      ],
+      "rotation_y_degrees": 0,
+      "opening_parameters": null,
+      "collision_policy": "SIMPLE",
+      "classification": "SUPPORTED_BY_EXISTING_RECIPE",
+      "seed": "floor_slab"
+    },
+    {
+      "piece_id": "FreightNorth",
+      "semantic_role": "wall",
+      "source_components": [
+        "FreightNorth"
+      ],
+      "recipe_id": "rect_solid",
+      "dimensions_m": [
+        5.15,
+        4.2,
+        0.3
+      ],
+      "center_local_m": [
+        -2.575,
+        2.1,
+        -3.5
+      ],
+      "rotation_y_degrees": 0,
+      "opening_parameters": null,
+      "collision_policy": "SIMPLE",
+      "classification": "SUPPORTED_BY_EXISTING_RECIPE",
+      "seed": "wall_standard"
+    },
+    {
+      "piece_id": "FreightRear",
+      "semantic_role": "wall",
+      "source_components": [
+        "FreightRear"
+      ],
+      "recipe_id": "rect_solid",
+      "dimensions_m": [
+        7.0,
+        4.2,
+        0.3
+      ],
+      "center_local_m": [
+        -5.0,
+        2.1,
+        0.0
+      ],
+      "rotation_y_degrees": 90,
+      "opening_parameters": null,
+      "collision_policy": "SIMPLE",
+      "classification": "SUPPORTED_BY_EXISTING_RECIPE",
+      "seed": "wall_standard"
+    },
+    {
+      "piece_id": "FreightSouth",
+      "semantic_role": "wall",
+      "source_components": [
+        "FreightSouth"
+      ],
+      "recipe_id": "rect_solid",
+      "dimensions_m": [
+        5.15,
+        4.2,
+        0.3
+      ],
+      "center_local_m": [
+        -2.575,
+        2.1,
+        3.5
+      ],
+      "rotation_y_degrees": 0,
+      "opening_parameters": null,
+      "collision_policy": "SIMPLE",
+      "classification": "SUPPORTED_BY_EXISTING_RECIPE",
+      "seed": "wall_standard"
+    },
+    {
+      "piece_id": "ReceivingEastOpeningWall",
+      "semantic_role": "east_backlog_transition_wall",
+      "source_components": [
+        "ReceivingCeilingTransition",
+        "ReceivingEastNorth",
+        "ReceivingEastSouth"
+      ],
+      "recipe_id": "wall_with_rect_opening",
+      "dimensions_m": [
+        10.0,
+        4.2,
+        0.3
+      ],
+      "center_local_m": [
+        10.5,
+        2.1,
+        0
+      ],
+      "rotation_y_degrees": 90,
+      "opening_parameters": {
+        "opening_width_m": 3.84,
+        "opening_height_m": 3.4,
+        "opening_offset_x_m": 0,
+        "opening_bottom_m": 0
+      },
+      "collision_policy": "SIMPLE",
+      "classification": "SUPPORTED_BY_EXISTING_RECIPE",
+      "seed": "wall_opening_standard"
+    },
+    {
+      "piece_id": "ReceivingNorthWest",
+      "semantic_role": "wall",
+      "source_components": [
+        "ReceivingNorthWest"
+      ],
+      "recipe_id": "rect_solid",
+      "dimensions_m": [
+        1.15,
+        4.2,
+        0.3
+      ],
+      "center_local_m": [
+        0.425,
+        2.1,
+        -5.0
+      ],
+      "rotation_y_degrees": 0,
+      "opening_parameters": null,
+      "collision_policy": "SIMPLE",
+      "classification": "SUPPORTED_BY_EXISTING_RECIPE",
+      "seed": "wall_standard"
+    },
+    {
+      "piece_id": "ReceivingSouth",
+      "semantic_role": "wall",
+      "source_components": [
+        "ReceivingSouth"
+      ],
+      "recipe_id": "rect_solid",
+      "dimensions_m": [
+        10.8,
+        4.2,
+        0.3
+      ],
+      "center_local_m": [
+        5.25,
+        2.1,
+        5.0
+      ],
+      "rotation_y_degrees": 0,
+      "opening_parameters": null,
+      "collision_policy": "SIMPLE",
+      "classification": "SUPPORTED_BY_EXISTING_RECIPE",
+      "seed": "wall_standard"
+    },
+    {
+      "piece_id": "ReceivingWestNorthReturn",
+      "semantic_role": "wall",
+      "source_components": [
+        "ReceivingWestNorthReturn"
+      ],
+      "recipe_id": "rect_solid",
+      "dimensions_m": [
+        2.5,
+        4.2,
+        0.3
+      ],
+      "center_local_m": [
+        0.0,
+        2.1,
+        -3.75
+      ],
+      "rotation_y_degrees": 90,
+      "opening_parameters": null,
+      "collision_policy": "SIMPLE",
+      "classification": "SUPPORTED_BY_EXISTING_RECIPE",
+      "seed": "wall_standard"
+    },
+    {
+      "piece_id": "ReceivingWestSouthReturn",
+      "semantic_role": "wall",
+      "source_components": [
+        "ReceivingWestSouthReturn"
+      ],
+      "recipe_id": "rect_solid",
+      "dimensions_m": [
+        2.5,
+        4.2,
+        0.3
+      ],
+      "center_local_m": [
+        0.0,
+        2.1,
+        3.75
+      ],
+      "rotation_y_degrees": 90,
+      "opening_parameters": null,
+      "collision_policy": "SIMPLE",
+      "classification": "SUPPORTED_BY_EXISTING_RECIPE",
+      "seed": "wall_standard"
+    }
+  ],
+  "freight_barrier_context": {
+    "classification": "NONSTRUCTURAL_CONTEXT_ONLY",
+    "envelope_local_m": {
+      "x": [
+        -0.17,
+        0.17
+      ],
+      "y": [
+        0,
+        1.5
+      ],
+      "z": [
+        -2.4,
+        2.4
+      ]
+    },
+    "source_elements": [
+      {
+        "id": "LowerRail",
+        "source_node_path": "Boundaries/FreightBarrier/LowerRail",
+        "kind": "barrier_context",
+        "center_local_m": [
+          0.0,
+          0.35,
+          0.0
+        ],
+        "saved_box_dimensions_m": [
+          0.32,
+          0.28,
+          4.8
+        ]
+      },
+      {
+        "id": "UpperRail",
+        "source_node_path": "Boundaries/FreightBarrier/UpperRail",
+        "kind": "barrier_context",
+        "center_local_m": [
+          0.0,
+          1.15,
+          0.0
+        ],
+        "saved_box_dimensions_m": [
+          0.32,
+          0.24,
+          4.8
+        ]
+      },
+      {
+        "id": "Post00",
+        "source_node_path": "Boundaries/FreightBarrier/Post00",
+        "kind": "barrier_context",
+        "center_local_m": [
+          0.0,
+          0.75,
+          -2.25
+        ],
+        "saved_box_dimensions_m": [
+          0.34,
+          1.5,
+          0.24
+        ]
+      },
+      {
+        "id": "Post01",
+        "source_node_path": "Boundaries/FreightBarrier/Post01",
+        "kind": "barrier_context",
+        "center_local_m": [
+          0.0,
+          0.75,
+          -0.75
+        ],
+        "saved_box_dimensions_m": [
+          0.34,
+          1.5,
+          0.24
+        ]
+      },
+      {
+        "id": "Post02",
+        "source_node_path": "Boundaries/FreightBarrier/Post02",
+        "kind": "barrier_context",
+        "center_local_m": [
+          0.0,
+          0.75,
+          0.75
+        ],
+        "saved_box_dimensions_m": [
+          0.34,
+          1.5,
+          0.24
+        ]
+      },
+      {
+        "id": "Post03",
+        "source_node_path": "Boundaries/FreightBarrier/Post03",
+        "kind": "barrier_context",
+        "center_local_m": [
+          0.0,
+          0.75,
+          2.25
+        ],
+        "saved_box_dimensions_m": [
+          0.34,
+          1.5,
+          0.24
+        ]
+      }
+    ],
+    "note": "Existing four posts and two rails; context envelope is not an EAF2 shell element."
+  },
+  "join_notes": [
+    "Joined wall boxes extend 0.15 m into accepted perpendicular corners; mapped exact saved box dimensions retain those intentional joins.",
+    "East transition maps three saved solids to one EAF2 wall_with_rect_opening for one structural owner and no coplanar duplicate.",
+    "West freight and Dispatch full-height openings use separated rect_solid segments because EAF2 opening recipes require a positive header.",
+    "Floor and ceiling slabs meet at nominal zone boundaries; no duplicate slab ownership is introduced."
+  ],
+  "missing_topology": []
+}

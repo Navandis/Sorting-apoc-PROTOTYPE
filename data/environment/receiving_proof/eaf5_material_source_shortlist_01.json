@@ -1,0 +1,1218 @@
+{
+  "schema_version": 1,
+  "purpose": "EAF5 source triage proposal; no PBR or room-role approval",
+  "source_index_fingerprint": "e6398707ff5a1f47d1be2855ad04986a5ba39eb8fbc04fbc107f1a01479de23d",
+  "source_index_scan_finished_at": "2026-09-27T20:01:04.531065+00:00",
+  "structural_excluded_warning": "atlas_trim_or_object_specific_name",
+  "role_order": [
+    "WALL_CEILING_MINERAL",
+    "SERVICE_FLOOR",
+    "APPLIED_FINISH",
+    "STRUCTURAL_SECONDARY"
+  ],
+  "candidates": [
+    {
+      "source_stable_id": "fab:pjBkT0",
+      "display_name": "Construction Plaster",
+      "source_family": "cement_render",
+      "source_profile": "FAB_SURFACE_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "APPLIED_FINISH"
+      ],
+      "selection_rationale": "Indexed cement_render source and name suggest historical applied finish comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [
+        "normal_convention_unverified",
+        "unsupported_channel:bump",
+        "unsupported_channel:cavity",
+        "unsupported_channel:gloss",
+        "unsupported_channel:specular"
+      ],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "fab:pkngj0",
+      "display_name": "Concrete Damaged",
+      "source_family": "concrete",
+      "source_profile": "FAB_SURFACE_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "WALL_CEILING_MINERAL"
+      ],
+      "selection_rationale": "Indexed concrete source and name suggest broad mineral wall/ceiling comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [
+        "normal_convention_unverified",
+        "unsupported_channel:bump",
+        "unsupported_channel:cavity",
+        "unsupported_channel:gloss",
+        "unsupported_channel:specular"
+      ],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "fab:sl2qedtp",
+      "display_name": "Industrial Concrete Floor",
+      "source_family": "concrete",
+      "source_profile": "FAB_SURFACE_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "SERVICE_FLOOR"
+      ],
+      "selection_rationale": "Indexed concrete source and name suggest service-floor surface comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [
+        "normal_convention_unverified",
+        "unsupported_channel:bump",
+        "unsupported_channel:cavity",
+        "unsupported_channel:gloss",
+        "unsupported_channel:specular"
+      ],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "fab:tixmdgdcw",
+      "display_name": "Concrete Floor",
+      "source_family": "concrete",
+      "source_profile": "FAB_SURFACE_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "SERVICE_FLOOR"
+      ],
+      "selection_rationale": "Indexed concrete source and name suggest service-floor surface comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [
+        "normal_convention_unverified",
+        "unsupported_channel:bump",
+        "unsupported_channel:cavity",
+        "unsupported_channel:gloss",
+        "unsupported_channel:specular"
+      ],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "fab:uc2jcdgg",
+      "display_name": "Cracked Concrete Floor",
+      "source_family": "concrete",
+      "source_profile": "FAB_SURFACE_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "SERVICE_FLOOR"
+      ],
+      "selection_rationale": "Indexed concrete source and name suggest service-floor surface comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [
+        "normal_convention_unverified",
+        "unsupported_channel:bump",
+        "unsupported_channel:cavity",
+        "unsupported_channel:gloss",
+        "unsupported_channel:specular"
+      ],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "fab:ueydffrdy",
+      "display_name": "Stained Concrete Ceiling",
+      "source_family": "concrete",
+      "source_profile": "FAB_SURFACE_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "WALL_CEILING_MINERAL"
+      ],
+      "selection_rationale": "Indexed concrete source and name suggest broad mineral wall/ceiling comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [
+        "normal_convention_unverified",
+        "unsupported_channel:bump",
+        "unsupported_channel:cavity",
+        "unsupported_channel:gloss",
+        "unsupported_channel:specular"
+      ],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "fab:ueypchdcw",
+      "display_name": "Dirty Concrete",
+      "source_family": "concrete",
+      "source_profile": "FAB_SURFACE_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "WALL_CEILING_MINERAL"
+      ],
+      "selection_rationale": "Indexed concrete source and name suggest broad mineral wall/ceiling comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [
+        "normal_convention_unverified",
+        "unsupported_channel:bump",
+        "unsupported_channel:cavity",
+        "unsupported_channel:gloss",
+        "unsupported_channel:specular"
+      ],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "fab:ufmgaccg",
+      "display_name": "Concrete Floor",
+      "source_family": "concrete",
+      "source_profile": "FAB_SURFACE_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "SERVICE_FLOOR"
+      ],
+      "selection_rationale": "Indexed concrete source and name suggest service-floor surface comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [
+        "normal_convention_unverified",
+        "unsupported_channel:bump",
+        "unsupported_channel:cavity",
+        "unsupported_channel:gloss",
+        "unsupported_channel:specular"
+      ],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "fab:ufvpdcxfw",
+      "display_name": "Dusty Concrete Floor",
+      "source_family": "concrete",
+      "source_profile": "FAB_SURFACE_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "SERVICE_FLOOR"
+      ],
+      "selection_rationale": "Indexed concrete source and name suggest service-floor surface comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [
+        "normal_convention_unverified",
+        "unsupported_channel:bump",
+        "unsupported_channel:cavity",
+        "unsupported_channel:gloss",
+        "unsupported_channel:specular"
+      ],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "fab:ug4qdjro",
+      "display_name": "Flaked Paint Wall",
+      "source_family": "cement_render",
+      "source_profile": "FAB_SURFACE_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "APPLIED_FINISH"
+      ],
+      "selection_rationale": "Indexed cement_render source and name suggest historical applied finish comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [
+        "normal_convention_unverified",
+        "unsupported_channel:bump",
+        "unsupported_channel:cavity",
+        "unsupported_channel:gloss",
+        "unsupported_channel:specular"
+      ],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "fab:ugkkedvlw",
+      "display_name": "Painted Concrete Wall",
+      "source_family": "concrete",
+      "source_profile": "FAB_SURFACE_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "APPLIED_FINISH"
+      ],
+      "selection_rationale": "Indexed concrete source and name suggest historical applied finish comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [
+        "normal_convention_unverified",
+        "unsupported_channel:bump",
+        "unsupported_channel:cavity",
+        "unsupported_channel:gloss",
+        "unsupported_channel:specular"
+      ],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "fab:ugtkadmg",
+      "display_name": "Dusty Concrete Floor",
+      "source_family": "concrete",
+      "source_profile": "FAB_SURFACE_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "SERVICE_FLOOR"
+      ],
+      "selection_rationale": "Indexed concrete source and name suggest service-floor surface comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [
+        "normal_convention_unverified",
+        "unsupported_channel:bump",
+        "unsupported_channel:cavity",
+        "unsupported_channel:gloss",
+        "unsupported_channel:specular"
+      ],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "fab:ugtmehro",
+      "display_name": "Worn Concrete Ceiling",
+      "source_family": "concrete",
+      "source_profile": "FAB_SURFACE_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "WALL_CEILING_MINERAL"
+      ],
+      "selection_rationale": "Indexed concrete source and name suggest broad mineral wall/ceiling comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [
+        "normal_convention_unverified",
+        "unsupported_channel:bump",
+        "unsupported_channel:cavity",
+        "unsupported_channel:gloss",
+        "unsupported_channel:specular"
+      ],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "fab:uhriddhlw",
+      "display_name": "Dusty Concrete Floor",
+      "source_family": "concrete",
+      "source_profile": "FAB_SURFACE_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "SERVICE_FLOOR"
+      ],
+      "selection_rationale": "Indexed concrete source and name suggest service-floor surface comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [
+        "normal_convention_unverified",
+        "unsupported_channel:bump",
+        "unsupported_channel:cavity",
+        "unsupported_channel:gloss",
+        "unsupported_channel:specular"
+      ],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "fab:uikpbgjdy",
+      "display_name": "Rough Concrete Floor",
+      "source_family": "concrete",
+      "source_profile": "FAB_SURFACE_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "SERVICE_FLOOR"
+      ],
+      "selection_rationale": "Indexed concrete source and name suggest service-floor surface comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [
+        "normal_convention_unverified",
+        "unsupported_channel:bump",
+        "unsupported_channel:cavity",
+        "unsupported_channel:gloss",
+        "unsupported_channel:specular"
+      ],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "fab:uirleimn",
+      "display_name": "Shuttered Concrete Wall",
+      "source_family": "concrete",
+      "source_profile": "FAB_SURFACE_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "WALL_CEILING_MINERAL"
+      ],
+      "selection_rationale": "Indexed concrete source and name suggest broad mineral wall/ceiling comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [
+        "normal_convention_unverified",
+        "unsupported_channel:bump",
+        "unsupported_channel:cavity",
+        "unsupported_channel:gloss",
+        "unsupported_channel:specular"
+      ],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "fab:vi4idbm",
+      "display_name": "Weathered Concrete Wall",
+      "source_family": "concrete",
+      "source_profile": "FAB_SURFACE_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "WALL_CEILING_MINERAL"
+      ],
+      "selection_rationale": "Indexed concrete source and name suggest broad mineral wall/ceiling comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [
+        "normal_convention_unverified",
+        "unsupported_channel:bump",
+        "unsupported_channel:cavity",
+        "unsupported_channel:gloss",
+        "unsupported_channel:specular"
+      ],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "fab:vi4idez",
+      "display_name": "Worn Concrete",
+      "source_family": "concrete",
+      "source_profile": "FAB_SURFACE_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "WALL_CEILING_MINERAL"
+      ],
+      "selection_rationale": "Indexed concrete source and name suggest broad mineral wall/ceiling comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [
+        "normal_convention_unverified",
+        "unsupported_channel:bump",
+        "unsupported_channel:cavity",
+        "unsupported_channel:gloss",
+        "unsupported_channel:specular"
+      ],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "fab:virrebs",
+      "display_name": "Concrete Floor",
+      "source_family": "concrete",
+      "source_profile": "FAB_SURFACE_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "SERVICE_FLOOR"
+      ],
+      "selection_rationale": "Indexed concrete source and name suggest service-floor surface comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [
+        "normal_convention_unverified",
+        "unsupported_channel:bump",
+        "unsupported_channel:cavity",
+        "unsupported_channel:gloss",
+        "unsupported_channel:specular"
+      ],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "fab:viyjde3",
+      "display_name": "Worn Concrete Floor",
+      "source_family": "concrete",
+      "source_profile": "FAB_SURFACE_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "SERVICE_FLOOR"
+      ],
+      "selection_rationale": "Indexed concrete source and name suggest service-floor surface comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [
+        "normal_convention_unverified",
+        "unsupported_channel:bump",
+        "unsupported_channel:cavity",
+        "unsupported_channel:gloss",
+        "unsupported_channel:specular"
+      ],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "fab:vizbefe",
+      "display_name": "Damaged Concrete Floor",
+      "source_family": "concrete",
+      "source_profile": "FAB_SURFACE_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "SERVICE_FLOOR"
+      ],
+      "selection_rationale": "Indexed concrete source and name suggest service-floor surface comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [
+        "normal_convention_unverified",
+        "unsupported_channel:bump",
+        "unsupported_channel:cavity",
+        "unsupported_channel:gloss",
+        "unsupported_channel:specular"
+      ],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "fab:vjyifef",
+      "display_name": "Worn Painted Wall",
+      "source_family": "concrete",
+      "source_profile": "FAB_SURFACE_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "APPLIED_FINISH"
+      ],
+      "selection_rationale": "Indexed concrete source and name suggest historical applied finish comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [
+        "normal_convention_unverified",
+        "unsupported_channel:bump",
+        "unsupported_channel:cavity",
+        "unsupported_channel:gloss",
+        "unsupported_channel:specular"
+      ],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "fab:xevkfgos",
+      "display_name": "Dirty Concrete Wall",
+      "source_family": "concrete",
+      "source_profile": "FAB_SURFACE_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "WALL_CEILING_MINERAL"
+      ],
+      "selection_rationale": "Indexed concrete source and name suggest broad mineral wall/ceiling comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [
+        "normal_convention_unverified",
+        "unsupported_channel:bump",
+        "unsupported_channel:cavity",
+        "unsupported_channel:gloss",
+        "unsupported_channel:specular"
+      ],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_aftermath@7.0.2:KB3D_AFT_ConcreteB",
+      "display_name": "KB3D_AFT_ConcreteB",
+      "source_family": "concrete",
+      "source_profile": "KITBASH_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "WALL_CEILING_MINERAL"
+      ],
+      "selection_rationale": "Indexed concrete source and name suggest broad mineral wall/ceiling comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_aftermath@7.0.2:KB3D_AFT_ConcreteC",
+      "display_name": "KB3D_AFT_ConcreteC",
+      "source_family": "concrete",
+      "source_profile": "KITBASH_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "WALL_CEILING_MINERAL"
+      ],
+      "selection_rationale": "Indexed concrete source and name suggest broad mineral wall/ceiling comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_aftermath@7.0.2:KB3D_AFT_PlasterA",
+      "display_name": "KB3D_AFT_PlasterA",
+      "source_family": "cement_render",
+      "source_profile": "KITBASH_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "APPLIED_FINISH"
+      ],
+      "selection_rationale": "Already approved by EAF3B; included as the current PBR-reviewed seed for room-role review.",
+      "current_eaf3_catalog_state": "APPROVED",
+      "existing_catalog_material_id": "eaf3b_8d5f0cf5add98dfe0a58f18a",
+      "warnings": [],
+      "review_state": "EXISTING_EAF3_APPROVED"
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_aftermath@7.0.2:KB3D_AFT_PlasterB",
+      "display_name": "KB3D_AFT_PlasterB",
+      "source_family": "cement_render",
+      "source_profile": "KITBASH_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "APPLIED_FINISH"
+      ],
+      "selection_rationale": "Indexed cement_render source and name suggest historical applied finish comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_aftermath@7.0.2:KB3D_AFT_PlasterC",
+      "display_name": "KB3D_AFT_PlasterC",
+      "source_family": "cement_render",
+      "source_profile": "KITBASH_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "APPLIED_FINISH"
+      ],
+      "selection_rationale": "Indexed cement_render source and name suggest historical applied finish comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_americana@7.0.2:KB3D_AMC_ConcreteWhite",
+      "display_name": "KB3D_AMC_ConcreteWhite",
+      "source_family": "concrete",
+      "source_profile": "KITBASH_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "WALL_CEILING_MINERAL"
+      ],
+      "selection_rationale": "Indexed concrete source and name suggest broad mineral wall/ceiling comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_americanneighborhoods@7.0.0:KB3D_AMN_COBareSmoothWhiteConcrete",
+      "display_name": "KB3D_AMN_COBareSmoothWhiteConcrete",
+      "source_family": "concrete",
+      "source_profile": "KITBASH_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "WALL_CEILING_MINERAL"
+      ],
+      "selection_rationale": "Indexed concrete source and name suggest broad mineral wall/ceiling comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [
+        "unsupported_substance_graph"
+      ],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_apartmentinteriors@7.0.2:KB3D_API_ConcreteWallA",
+      "display_name": "KB3D_API_ConcreteWallA",
+      "source_family": "concrete",
+      "source_profile": "KITBASH_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "WALL_CEILING_MINERAL"
+      ],
+      "selection_rationale": "Indexed concrete source and name suggest broad mineral wall/ceiling comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_archvogue@7.0.3:KB3D_ARV_ConcreteGray",
+      "display_name": "KB3D_ARV_ConcreteGray",
+      "source_family": "concrete",
+      "source_profile": "KITBASH_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "WALL_CEILING_MINERAL"
+      ],
+      "selection_rationale": "Indexed concrete source and name suggest broad mineral wall/ceiling comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_beyondrepair@7.0.0:KB3D_BYR_COReinforcedConcreteSlabs",
+      "display_name": "KB3D_BYR_COReinforcedConcreteSlabs",
+      "source_family": "concrete",
+      "source_profile": "KITBASH_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "STRUCTURAL_SECONDARY"
+      ],
+      "selection_rationale": "Indexed concrete source and name suggest bounded structural/reveal comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [
+        "unsupported_substance_graph"
+      ],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_brooklyn@7.0.2:KB3D_BRK_ConcreteFormed",
+      "display_name": "KB3D_BRK_ConcreteFormed",
+      "source_family": "concrete",
+      "source_profile": "KITBASH_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "STRUCTURAL_SECONDARY",
+        "WALL_CEILING_MINERAL"
+      ],
+      "selection_rationale": "Already approved by EAF3B; included as the current PBR-reviewed seed for room-role review.",
+      "current_eaf3_catalog_state": "APPROVED",
+      "existing_catalog_material_id": "eaf3b_1435ce254f04bb8e61bd3e96",
+      "warnings": [],
+      "review_state": "EXISTING_EAF3_APPROVED"
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_brooklyn@7.0.2:KB3D_BRK_ConcreteGrey",
+      "display_name": "KB3D_BRK_ConcreteGrey",
+      "source_family": "concrete",
+      "source_profile": "KITBASH_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "STRUCTURAL_SECONDARY",
+        "WALL_CEILING_MINERAL"
+      ],
+      "selection_rationale": "Indexed concrete source and name suggest bounded structural/reveal comparison; broad mineral wall/ceiling comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_brooklyn@7.0.2:KB3D_BRK_ConcreteWarmGrey",
+      "display_name": "KB3D_BRK_ConcreteWarmGrey",
+      "source_family": "concrete",
+      "source_profile": "KITBASH_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "WALL_CEILING_MINERAL"
+      ],
+      "selection_rationale": "Indexed concrete source and name suggest broad mineral wall/ceiling comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_brutalisttff@7.0.3:KB3D_BTL_ConcreteBlocksA",
+      "display_name": "KB3D_BTL_ConcreteBlocksA",
+      "source_family": "masonry_block",
+      "source_profile": "KITBASH_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "STRUCTURAL_SECONDARY",
+        "WALL_CEILING_MINERAL"
+      ],
+      "selection_rationale": "Indexed masonry_block source and name suggest bounded structural/reveal comparison; broad mineral wall/ceiling comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_brutalisttff@7.0.3:KB3D_BTL_ConcreteBlocksB",
+      "display_name": "KB3D_BTL_ConcreteBlocksB",
+      "source_family": "masonry_block",
+      "source_profile": "KITBASH_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "STRUCTURAL_SECONDARY"
+      ],
+      "selection_rationale": "Indexed masonry_block source and name suggest bounded structural/reveal comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_brutalisttff@7.0.3:KB3D_BTL_ConcreteBlocksC",
+      "display_name": "KB3D_BTL_ConcreteBlocksC",
+      "source_family": "masonry_block",
+      "source_profile": "KITBASH_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "STRUCTURAL_SECONDARY"
+      ],
+      "selection_rationale": "Indexed masonry_block source and name suggest bounded structural/reveal comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_brutalisttff@7.0.3:KB3D_BTL_ConcreteFloorPanelsRoughA",
+      "display_name": "KB3D_BTL_ConcreteFloorPanelsRoughA",
+      "source_family": "concrete",
+      "source_profile": "KITBASH_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "SERVICE_FLOOR",
+        "WALL_CEILING_MINERAL"
+      ],
+      "selection_rationale": "Already approved by EAF3B; included as the current PBR-reviewed seed for room-role review.",
+      "current_eaf3_catalog_state": "APPROVED",
+      "existing_catalog_material_id": "eaf3b_20c61bd1c85420be2f71a090",
+      "warnings": [],
+      "review_state": "EXISTING_EAF3_APPROVED"
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_brutalisttff@7.0.3:KB3D_BTL_ConcreteFloorPath",
+      "display_name": "KB3D_BTL_ConcreteFloorPath",
+      "source_family": "concrete",
+      "source_profile": "KITBASH_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "SERVICE_FLOOR"
+      ],
+      "selection_rationale": "Indexed concrete source and name suggest service-floor surface comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_brutalisttff@7.0.3:KB3D_BTL_ConcreteLightWall",
+      "display_name": "KB3D_BTL_ConcreteLightWall",
+      "source_family": "concrete",
+      "source_profile": "KITBASH_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "WALL_CEILING_MINERAL"
+      ],
+      "selection_rationale": "Indexed concrete source and name suggest broad mineral wall/ceiling comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_brutalisttff@7.0.3:KB3D_BTL_ConcreteNoiseFlat",
+      "display_name": "KB3D_BTL_ConcreteNoiseFlat",
+      "source_family": "concrete",
+      "source_profile": "KITBASH_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "WALL_CEILING_MINERAL"
+      ],
+      "selection_rationale": "Indexed concrete source and name suggest broad mineral wall/ceiling comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_brutalisttff@7.0.3:KB3D_BTL_ConcreteNoiseFlatGrey",
+      "display_name": "KB3D_BTL_ConcreteNoiseFlatGrey",
+      "source_family": "concrete",
+      "source_profile": "KITBASH_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "SERVICE_FLOOR"
+      ],
+      "selection_rationale": "Indexed concrete source and name suggest service-floor surface comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_brutalisttff@7.0.3:KB3D_BTL_ConcreteRoughPanelBright",
+      "display_name": "KB3D_BTL_ConcreteRoughPanelBright",
+      "source_family": "concrete",
+      "source_profile": "KITBASH_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "STRUCTURAL_SECONDARY"
+      ],
+      "selection_rationale": "Indexed concrete source and name suggest bounded structural/reveal comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_brutalisttff@7.0.3:KB3D_BTL_ConcreteRoughPanelDark",
+      "display_name": "KB3D_BTL_ConcreteRoughPanelDark",
+      "source_family": "concrete",
+      "source_profile": "KITBASH_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "STRUCTURAL_SECONDARY"
+      ],
+      "selection_rationale": "Indexed concrete source and name suggest bounded structural/reveal comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_brutalisttff@7.0.3:KB3D_BTL_ConcreteRoughPanelGray",
+      "display_name": "KB3D_BTL_ConcreteRoughPanelGray",
+      "source_family": "concrete",
+      "source_profile": "KITBASH_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "WALL_CEILING_MINERAL"
+      ],
+      "selection_rationale": "Indexed concrete source and name suggest broad mineral wall/ceiling comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_constructionzone@7.0.3:KB3D_CSZ_ConcreteBlocksBPanels",
+      "display_name": "KB3D_CSZ_ConcreteBlocksBPanels",
+      "source_family": "masonry_block",
+      "source_profile": "KITBASH_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "STRUCTURAL_SECONDARY"
+      ],
+      "selection_rationale": "Indexed masonry_block source and name suggest bounded structural/reveal comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_constructionzone@7.0.3:KB3D_CSZ_ConcreteFloorPanelsRoughA",
+      "display_name": "KB3D_CSZ_ConcreteFloorPanelsRoughA",
+      "source_family": "concrete",
+      "source_profile": "KITBASH_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "SERVICE_FLOOR"
+      ],
+      "selection_rationale": "Indexed concrete source and name suggest service-floor surface comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_constructionzone@7.0.3:KB3D_CSZ_ConcreteRoughBright",
+      "display_name": "KB3D_CSZ_ConcreteRoughBright",
+      "source_family": "concrete",
+      "source_profile": "KITBASH_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "STRUCTURAL_SECONDARY",
+        "WALL_CEILING_MINERAL"
+      ],
+      "selection_rationale": "Already approved by EAF3B; included as the current PBR-reviewed seed for room-role review.",
+      "current_eaf3_catalog_state": "APPROVED",
+      "existing_catalog_material_id": "eaf3b_39b926e570fb3824019aade2",
+      "warnings": [],
+      "review_state": "EXISTING_EAF3_APPROVED"
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_cyberpunkinteriors@7.0.2:KB3D_CPI_CinderBlocksPDGray",
+      "display_name": "KB3D_CPI_CinderBlocksPDGray",
+      "source_family": "masonry_block",
+      "source_profile": "KITBASH_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "WALL_CEILING_MINERAL"
+      ],
+      "selection_rationale": "Indexed masonry_block source and name suggest broad mineral wall/ceiling comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_dieselpunk@7.0.2:KB3D_DPK_BrickDarkDirtB",
+      "display_name": "KB3D_DPK_BrickDarkDirtB",
+      "source_family": "brick",
+      "source_profile": "KITBASH_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "STRUCTURAL_SECONDARY"
+      ],
+      "selection_rationale": "Indexed brick source and name suggest bounded structural/reveal comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_dtla@7.0.3:KB3D_DLA_ConcretePittedGrayMed",
+      "display_name": "KB3D_DLA_ConcretePittedGrayMed",
+      "source_family": "concrete",
+      "source_profile": "KITBASH_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "STRUCTURAL_SECONDARY",
+        "WALL_CEILING_MINERAL"
+      ],
+      "selection_rationale": "Already approved by EAF3B; included as the current PBR-reviewed seed for room-role review.",
+      "current_eaf3_catalog_state": "APPROVED",
+      "existing_catalog_material_id": "eaf3b_bd0940113f04f3d3784629e7",
+      "warnings": [],
+      "review_state": "EXISTING_EAF3_APPROVED"
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_everycitypolicedept@7.0.2:KB3D_ECP_StuccoWhite",
+      "display_name": "KB3D_ECP_StuccoWhite",
+      "source_family": "cement_render",
+      "source_profile": "KITBASH_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "APPLIED_FINISH"
+      ],
+      "selection_rationale": "Indexed cement_render source and name suggest historical applied finish comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_neonyc@7.0.2:KB3D_NNY_ConcretePlasterWhite",
+      "display_name": "KB3D_NNY_ConcretePlasterWhite",
+      "source_family": "cement_render",
+      "source_profile": "KITBASH_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "APPLIED_FINISH"
+      ],
+      "selection_rationale": "Indexed cement_render source and name suggest historical applied finish comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_newdelhi@7.0.3:KB3D_NWD_COWornWhiteLimePlaster",
+      "display_name": "KB3D_NWD_COWornWhiteLimePlaster",
+      "source_family": "cement_render",
+      "source_profile": "KITBASH_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "APPLIED_FINISH"
+      ],
+      "selection_rationale": "Indexed cement_render source and name suggest historical applied finish comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_refineries@7.0.2:KB3D_RFS_ConcretePlasterWhite",
+      "display_name": "KB3D_RFS_ConcretePlasterWhite",
+      "source_family": "cement_render",
+      "source_profile": "KITBASH_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "APPLIED_FINISH"
+      ],
+      "selection_rationale": "Indexed cement_render source and name suggest historical applied finish comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_warfare@7.0.2:KB3D_WAR_FloorTile",
+      "display_name": "KB3D_WAR_FloorTile",
+      "source_family": "tile",
+      "source_profile": "KITBASH_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "SERVICE_FLOOR"
+      ],
+      "selection_rationale": "Indexed tile source and name suggest service-floor surface comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_washingtondc@7.0.3:KB3D_WDC_ConcreteBlocksA",
+      "display_name": "KB3D_WDC_ConcreteBlocksA",
+      "source_family": "masonry_block",
+      "source_profile": "KITBASH_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "WALL_CEILING_MINERAL"
+      ],
+      "selection_rationale": "Indexed masonry_block source and name suggest broad mineral wall/ceiling comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_washingtondc@7.0.3:KB3D_WDC_FloorTilesB",
+      "display_name": "KB3D_WDC_FloorTilesB",
+      "source_family": "tile",
+      "source_profile": "KITBASH_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "SERVICE_FLOOR"
+      ],
+      "selection_rationale": "Indexed tile source and name suggest service-floor surface comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_worldwartwo@7.0.2:KB3D_WWT_BrickwallDamagedB",
+      "display_name": "KB3D_WWT_BrickwallDamagedB",
+      "source_family": "brick",
+      "source_profile": "KITBASH_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "STRUCTURAL_SECONDARY"
+      ],
+      "selection_rationale": "Indexed brick source and name suggest bounded structural/reveal comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    },
+    {
+      "source_stable_id": "kitbash:kb3d_worldwartwo@7.0.2:KB3D_WWT_ConcreteBlockBunker",
+      "display_name": "KB3D_WWT_ConcreteBlockBunker",
+      "source_family": "masonry_block",
+      "source_profile": "KITBASH_PROFILE_V1",
+      "available_resolutions": [
+        "2K"
+      ],
+      "proposed_eaf5_roles": [
+        "STRUCTURAL_SECONDARY",
+        "WALL_CEILING_MINERAL"
+      ],
+      "selection_rationale": "Indexed masonry_block source and name suggest bounded structural/reveal comparison; broad mineral wall/ceiling comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+      "current_eaf3_catalog_state": "UNREVIEWED",
+      "existing_catalog_material_id": null,
+      "warnings": [],
+      "review_state": "SOURCE_SHORTLIST_PROPOSED"
+    }
+  ]
+}

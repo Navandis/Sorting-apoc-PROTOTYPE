@@ -10,7 +10,7 @@ from tools.environment_authoring.material_repository.path_guard import Repositor
 from tools.environment_authoring.material_repository.source_index import scan, diff_indexes
 from tools.environment_authoring.material_repository.query_index import (
     query, batch_manifest, select_batch, add_filters, filter_arguments)
-from tools.environment_authoring.material_repository.build_triage_sheets import thumbnail, build_sheets
+from tools.environment_authoring.material_repository.build_triage_sheets import thumbnail, build_sheets, compact_stable_id
 
 
 class TriageTests(unittest.TestCase):
@@ -134,6 +134,22 @@ class TriageTests(unittest.TestCase):
         build_sheets(self.repo, self.index, candidates[:1], output, self.base / 'cache', page_size=3)
         self.assertFalse((output / 'page_02.png').exists())
         self.assertFalse((output / 'page_02.json').exists())
+
+    def test_role_sheet_carries_catalog_state_and_source_profile(self):
+        identity = self.concrete['stable_id']
+        manifest = build_sheets(
+            self.repo, self.index, [self.concrete], self.base / 'role', self.base / 'cache',
+            sheet_label='WALL_CEILING_MINERAL', catalog_states={identity: 'APPROVED'},
+        )
+        self.assertEqual(manifest['sheet_label'], 'WALL_CEILING_MINERAL')
+        tile = manifest['pages'][0]['tiles'][0]
+        self.assertEqual(tile['catalog_state'], 'APPROVED')
+        self.assertEqual(tile['source_profile'], 'KITBASH_PROFILE_V1')
+        self.assertTrue(tile['compact_stable_id'].endswith('Concrete'))
+
+    def test_compact_id_keeps_distinguishing_material_suffix(self):
+        identity = 'kitbash:kb3d_longpackagename@7.0.2:KB3D_LON_ConcreteFormed'
+        self.assertEqual(compact_stable_id(identity, 28), '...:KB3D_LON_ConcreteFormed')
 
 
 if __name__ == '__main__':

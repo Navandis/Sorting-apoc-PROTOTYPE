@@ -20,6 +20,15 @@ except ImportError:
 PREVIEW_EXTENSIONS = {'.png', '.jpg', '.jpeg', '.tif', '.tiff', '.tga', '.bmp', '.webp'}
 
 
+def compact_stable_id(identity, limit=41):
+    if len(identity) <= limit:
+        return identity
+    stem = identity.rsplit(':', 1)[-1]
+    if len(stem) + 4 <= limit:
+        return '...:' + stem
+    return '...' + identity[-(limit - 3):]
+
+
 def thumbnail(repository, candidate, cache_dir):
     selected = None
     resolution = None
@@ -53,15 +62,17 @@ def thumbnail(repository, candidate, cache_dir):
         return {**empty, 'warning': f'preview_decode_or_read_failed:{type(error).__name__}'}
 
 
-def build_sheets(repository, index, candidates, output_dir, cache_dir, page_size=24):
+def build_sheets(repository, index, candidates, output_dir, cache_dir, page_size=24,
+                 sheet_label=None, catalog_states=None):
     if not 1 <= page_size <= 40:
         raise ValueError('page_size must be between 1 and 40')
     start = time.perf_counter()
     output = Path(output_dir)
     output.mkdir(parents=True, exist_ok=True)
     ordered = select_batch(index, batch_manifest(index, candidates))
+    catalog_states = catalog_states or {}
     manifest = {'schema_version': 1, 'purpose': 'SOURCE TRIAGE ONLY; not PBR quality evidence or material approval',
-                'batch': batch_manifest(index, ordered), 'pages': []}
+                'sheet_label': sheet_label, 'batch': batch_manifest(index, ordered), 'pages': []}
     font = ImageFont.load_default(size=14)
     small = ImageFont.load_default(size=12)
     heading = ImageFont.load_default(size=22)
@@ -71,7 +82,8 @@ def build_sheets(repository, index, candidates, output_dir, cache_dir, page_size
         rows = math.ceil(len(records) / columns)
         sheet = Image.new('RGB', (columns * tile_width + 32, rows * tile_height + 100), (21, 25, 31))
         draw = ImageDraw.Draw(sheet)
-        draw.text((20, 16), f'EAF3A / SOURCE TRIAGE / PAGE {page_number}', font=heading, fill=(237, 240, 245))
+        draw.text((20, 16), f'EAF3A / {sheet_label or "SOURCE TRIAGE"} / PAGE {page_number}',
+                  font=heading, fill=(237, 240, 245))
         draw.text((20, 48), 'Basecolor only - source discovery, not material approval or final PBR evidence', font=font, fill=(155, 170, 186))
         page = {'page': page_number, 'image': f'page_{page_number:02d}.png', 'tiles': []}
         for number, candidate in enumerate(records):
@@ -86,12 +98,15 @@ def build_sheets(repository, index, candidates, output_dir, cache_dir, page_size
                 draw.rectangle((x + 38, y + 10, x + 294, y + 266), fill=(48, 53, 61))
                 draw.text((x + 65, y + 125), 'NO BASECOLOR PREVIEW', font=font, fill=(225, 177, 110))
             label = candidate['display_name']
+            source_profile = candidate.get('source_profile_id', 'KITBASH_PROFILE_V1')
+            catalog_state = catalog_states.get(candidate['stable_id'], 'UNREVIEWED')
             text_lines = textwrap.wrap(label, width=37, break_long_words=True)[:2]
             while len(text_lines) < 2:
                 text_lines.append('')
             text_lines += [f"#{offset + number + 1:03d}  {candidate['package_id']}@{candidate['package_version']}",
-                           'ID: ' + candidate['stable_id'][:41] + ('...' if len(candidate['stable_id']) > 41 else ''),
-                           'Res: ' + ', '.join(candidate['available_resolutions']) + ' | ' + candidate['suggested_family']]
+                           'ID: ' + compact_stable_id(candidate['stable_id']),
+                           'Res: ' + ', '.join(candidate['available_resolutions']) + ' | ' + candidate['suggested_family'],
+                           f'{source_profile} | EAF3: {catalog_state}']
             present = sorted({c for m in candidate['maps_by_resolution'].values() for c in m})
             abbreviations = {'basecolor': 'BC', 'normal': 'N', 'roughness': 'R', 'metallic': 'M', 'ao': 'AO', 'height': 'H', 'opacity': 'O', 'emissive': 'E'}
             text_lines += ['Maps: ' + ' '.join(abbreviations.get(c, '?') for c in present),
@@ -100,7 +115,9 @@ def build_sheets(repository, index, candidates, output_dir, cache_dir, page_size
                 draw.text((x + 10, y + 277 + line_number * 18), line, font=small,
                           fill=(240, 187, 110) if line.startswith('!') else (224, 230, 237))
             page['tiles'].append({'tile_index': number + 1, 'batch_index': offset + number + 1,
-                                  'stable_id': candidate['stable_id'], 'display_name': candidate['display_name'],
+                                  'stable_id': candidate['stable_id'], 'compact_stable_id': compact_stable_id(candidate['stable_id']),
+                                  'display_name': candidate['display_name'],
+                                  'source_profile': source_profile, 'catalog_state': catalog_state,
                                   'preview_source': preview['source_relative_path'], 'preview_resolution': preview['resolution'],
                                   'preview_warning': preview['warning'], 'thumbnail_reused': preview['reused'],
                                   'warnings': candidate['warnings']})

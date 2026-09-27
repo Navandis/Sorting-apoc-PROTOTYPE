@@ -35,6 +35,8 @@ Thumbs.db
 /tools/environment_authoring/material_repository/**/__pycache__/
 /tools/environment_authoring/material_catalog/**/__pycache__/
 /reports/environment_wear_catalog/
+/reports/environment_receiving_proof/
+/tools/environment_authoring/receiving_proof/**/__pycache__/
 /tools/environment_authoring/wear_repository/local_config.json
 /tools/environment_authoring/wear_repository/**/__pycache__/
 
