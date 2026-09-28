@@ -336,6 +336,27 @@ func set_wall_floor_pair(wall_id: String, floor_id: String) -> bool:
             (piece.get_node("GeneratedMesh") as MeshInstance3D).material_override = floor_material
     return true
 
+func set_structural_palette(wall_id: String, floor_id: String, ceiling_id: String) -> bool:
+    var ceiling_record: Dictionary = {}
+    for candidate in _candidates["CEILING_PRIMARY"]:
+        if candidate["catalog_material_id"] == ceiling_id:
+            ceiling_record = candidate
+            break
+    if ceiling_record.is_empty() or ceiling_record["mapping_mode"] != "UV":
+        return false
+    var ceiling_spec := load("res://data/environment/material_catalog/approved_specs/" + ceiling_id + ".tres") as EnvironmentSurfaceMaterialSpec
+    if ceiling_spec == null or ceiling_spec.material_id != ceiling_id or not ceiling_spec.validate().is_empty() or ceiling_spec.mapping_mode != EnvironmentSurfaceMaterialSpec.MappingMode.UV:
+        return false
+    if not set_wall_floor_pair(wall_id, floor_id):
+        return false
+    var ceiling_material := _builder.build(ceiling_spec)
+    if ceiling_material == null:
+        set_control()
+        return false
+    for piece in _pieces.values():
+        if piece.piece_spec.semantic_role == "CEILING_PRIMARY":
+            (piece.get_node("GeneratedMesh") as MeshInstance3D).material_override = ceiling_material
+    return true
 func active_review_spec() -> EnvironmentSurfaceMaterialSpec:
     return _active_spec
 

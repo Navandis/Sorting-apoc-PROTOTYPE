@@ -13,6 +13,11 @@ const LIGHT_MODES := ["NEUTRAL_ARCHITECTURAL", "RECEIVING_TARGET"]
 const PAIR_WALL_IDS := ["eaf3b_d335d94fd85c2c95c26b6b8b", "eaf3b_20c61bd1c85420be2f71a090", "eaf3b_5a797fbdc766d7e3dc475abf", "eaf3b_6bcd8f817ca2993433e217cc", "eaf3b_2dc87647fd382ad8287a0280"]
 const PAIR_FLOOR_IDS := ["eaf3b_f10d218d1e8b7f09b7c2689c", "eaf3b_bb32071987faae156ff2d4e8", "eaf3b_20e1005f19f39efb82251916"]
 const PAIR_SANITY_IDS := ["W01_F01", "W03_F02", "W05_F03"]
+const PALETTE_PAIRS := ["W01_F02", "W01_F03", "W02_F02", "W03_F01", "W03_F02", "W04_F01", "W04_F02"]
+const PALETTE_CEILING_IDS := ["eaf3b_2dc87647fd382ad8287a0280", "eaf3b_6bcd8f817ca2993433e217cc", "eaf3b_71edb3fc983ed8f7655d9523", "eaf3b_d335d94fd85c2c95c26b6b8b", "eaf3b_800060297ab83f24c0fb0d75"]
+const PALETTE_SANITY_IDS := ["P01_C03", "P04_C01", "P07_C02"]
+const PAIR_DECISIONS := "res://data/environment/receiving_proof/decisions/eaf5_wall_floor_pairs_01_human_review_01.json"
+const PAIR_PACKAGE_SHA256 := "fa32ebd095eddf14a3218740b089f61b8c83db8ae73a3b266e1fe1194e3f6353"
 const ROLE_DECISIONS := "res://data/environment/receiving_proof/decisions/eaf5_role_isolation_02_human_review_01.json"
 const ROLE_PACKAGE_HASHES := {"wall": "2fbb4a646b2e48c742a901c0e650178ebb5e89e2c39bd3c964fcc32566946dcb", "floor": "75ccd8600d1f15e9030b87284bbda0bae1f3f5c362dfe35be02d3c0f80df538e", "ceiling": "a666f59876a6b35112803f9c8a30995aac06cc9da81f4fe3f1a42c53c5e57c37"}
 
@@ -28,6 +33,10 @@ func _ready() -> void:
         _capture_roles.call_deferred(false)
     elif args.has("--eaf5-capture-pairs-sanity"):
         _capture_pairs.call_deferred(true)
+    elif args.has("--eaf5-capture-palettes-sanity"):
+        _capture_palettes.call_deferred(true)
+    elif args.has("--eaf5-capture-palettes"):
+        _capture_palettes.call_deferred(false)
     elif args.has("--eaf5-capture-pairs"):
         _capture_pairs.call_deferred(false)
 
@@ -285,6 +294,169 @@ func _capture_pairs(sample_only: bool) -> void:
     print("EAF5_PAIR_CAPTURE_COMPLETE records=", records.size(), " sample=", sample_only)
     get_tree().quit(0)
 
+func palette_capture_records(sample_only: bool = false) -> Array:
+    var records := []
+    for pair_index in PALETTE_PAIRS.size():
+        var source_pair: String = PALETTE_PAIRS[pair_index]
+        var parts := source_pair.split("_")
+        var wi := int(parts[0].trim_prefix("W")) - 1
+        var fi := int(parts[1].trim_prefix("F")) - 1
+        for ceiling_index in PALETTE_CEILING_IDS.size():
+            var palette_id := "P%02d_C%02d" % [pair_index + 1, ceiling_index + 1]
+            if sample_only and not PALETTE_SANITY_IDS.has(palette_id):
+                continue
+            for view in [
+                {"light_mode": "NEUTRAL_ARCHITECTURAL", "camera": "EastApproachOverview"},
+                {"light_mode": "RECEIVING_TARGET", "camera": "EastApproachOverview"},
+                {"light_mode": "NEUTRAL_ARCHITECTURAL", "camera": "CeilingRead"},
+                {"light_mode": "RECEIVING_TARGET", "camera": "CeilingRead"}
+            ]:
+                records.append({
+                    "structural_palette_id": palette_id,
+                    "source_pair_id": source_pair,
+                    "wall_catalog_material_id": PAIR_WALL_IDS[wi],
+                    "floor_catalog_material_id": PAIR_FLOOR_IDS[fi],
+                    "ceiling_catalog_material_id": PALETTE_CEILING_IDS[ceiling_index],
+                    "same_wall_ceiling_material": PAIR_WALL_IDS[wi] == PALETTE_CEILING_IDS[ceiling_index],
+                    "light_mode": view["light_mode"],
+                    "camera": view["camera"],
+                    "filename": "%s__%s__%s.png" % [palette_id, String(view["light_mode"]).to_lower(), view["camera"]]
+                })
+    return records
+
+func validate_palette_source() -> bool:
+    if not validate_pair_source() or not validate_accepted_shell():
+        return false
+    var pair_zip := ProjectSettings.globalize_path(OUTPUT + "/eaf5_wall_floor_pair_review_01.zip")
+    if not FileAccess.file_exists(pair_zip) or FileAccess.get_sha256(pair_zip) != PAIR_PACKAGE_SHA256:
+        return false
+    var source := _json_file(PAIR_DECISIONS)
+    if source.get("accepted_shell_composition_sha256") != ACCEPTED_COMPOSITION_SHA256 or source.get("pair_review_package_sha256") != PAIR_PACKAGE_SHA256:
+        return false
+    var counts := {"KEEP_PAIR": 0, "HOLD_PAIR": 0, "DROP_PAIR": 0}
+    var seen := {}
+    var kept := []
+    for entry in source.get("pairs", []):
+        var pair_id: String = entry.get("pair_id", "")
+        var decision: String = entry.get("decision", "")
+        if seen.has(pair_id) or not _pair_ids().has(pair_id) or not counts.has(decision):
+            return false
+        seen[pair_id] = true
+        counts[decision] += 1
+        if decision == "KEEP_PAIR":
+            kept.append(pair_id)
+    if seen.size() != 15 or counts != {"KEEP_PAIR": 7, "HOLD_PAIR": 2, "DROP_PAIR": 6} or kept != PALETTE_PAIRS:
+        return false
+    var ceilings := _kept_ceiling_ids()
+    if ceilings.size() != 5:
+        return false
+    for ceiling_id in PALETTE_CEILING_IDS:
+        if not ceilings.has(ceiling_id):
+            return false
+    var sets: Dictionary = get_node("Proof").call("role_candidates")
+    for role in ROLES:
+        for material_id in (PAIR_WALL_IDS if role == "WALL_PRIMARY" else PAIR_FLOOR_IDS if role == "FLOOR_PRIMARY" else PALETTE_CEILING_IDS):
+            var matching: Dictionary = {}
+            for candidate in sets[role]:
+                if candidate["catalog_material_id"] == material_id:
+                    matching = candidate
+                    break
+            if matching.is_empty() or matching["effective_status"] != "APPROVED" or matching["mapping_mode"] != "UV":
+                return false
+            var spec := load("res://data/environment/material_catalog/approved_specs/" + material_id + ".tres") as EnvironmentSurfaceMaterialSpec
+            if not catalog_spec_matches(matching, spec):
+                return false
+    return palette_capture_records().size() == 140 and palette_capture_records(true).size() == 12
+
+func _capture_palettes(sample_only: bool) -> void:
+    var proof := get_node("Proof")
+    if not validate_palette_source():
+        _fail("palette source differs from human pair decisions, approved UV specs, or accepted shell")
+        return
+    var folder := ProjectSettings.globalize_path(OUTPUT + ("/structural_palettes_01/sanity" if sample_only else "/structural_palettes_01"))
+    if not _make_directory(folder):
+        return
+    get_window().size = CAPTURE_SIZE
+    await get_tree().process_frame
+    await get_tree().process_frame
+    var records := []
+    var fingerprints := _piece_fingerprints(proof)
+    var sets: Dictionary = proof.call("role_candidates")
+    for planned in palette_capture_records(sample_only):
+        var wall_id: String = planned["wall_catalog_material_id"]
+        var floor_id: String = planned["floor_catalog_material_id"]
+        var ceiling_id: String = planned["ceiling_catalog_material_id"]
+        if not proof.call("set_structural_palette", wall_id, floor_id, ceiling_id):
+            _fail("could not apply palette " + String(planned["structural_palette_id"]))
+            return
+        proof.call("set_light_mode", String(planned["light_mode"]))
+        proof.call("set_camera", String(planned["camera"]))
+        await _settle_frame()
+        var record: Dictionary = planned.duplicate(true)
+        var ingredients := {}
+        for role in ROLES:
+            var material_id: String = wall_id if role == "WALL_PRIMARY" else floor_id if role == "FLOOR_PRIMARY" else ceiling_id
+            for candidate in sets[role]:
+                if candidate["catalog_material_id"] == material_id:
+                    ingredients[role.to_lower().trim_suffix("_primary")] = candidate
+                    break
+        record["wall"] = {"catalog_material_id": wall_id, "display_name": ingredients["wall"]["display_name"]}
+        record["floor"] = {"catalog_material_id": floor_id, "display_name": ingredients["floor"]["display_name"]}
+        record["ceiling"] = {"catalog_material_id": ceiling_id, "display_name": ingredients["ceiling"]["display_name"]}
+        record["material_parameters"] = {"wall": _pair_parameters(ingredients["wall"]), "floor": _pair_parameters(ingredients["floor"]), "ceiling": _pair_parameters(ingredients["ceiling"])}
+        record["effective_mapping"] = {"wall": "UV", "floor": "UV", "ceiling": "UV"}
+        record["transient_uv_review_override"] = false
+        record["wall_reveal_uses_candidate"] = "opening_reveal" in ingredients["wall"]["approved_roles"]
+        record["east_opening_wall_controlled_for_unapproved_reveal"] = not record["wall_reveal_uses_candidate"]
+        record["review_context_material"] = "eaf5_review_control_only"
+        record.merge(_camera_metadata(proof, String(record["camera"])))
+        record["light_settings"] = proof.call("light_settings")
+        record["shell_source_sha256"] = proof.call("shell_source_sha256")
+        record["proof_composition_sha256"] = proof.call("proof_composition_sha256")
+        record["piece_geometry_fingerprints"] = fingerprints
+        if not _save_image(folder.path_join(String(record["filename"]))):
+            return
+        records.append(record)
+        print("EAF5_PALETTE_CAPTURE palette=%s mode=%s camera=%s" % [record["structural_palette_id"], record["light_mode"], record["camera"]])
+    var manifest := _base_manifest(proof)
+    manifest["capture_type"] = "STRUCTURAL_PALETTE_SANITY" if sample_only else "STRUCTURAL_PALETTE"
+    manifest["control_material"] = "eaf5_review_control_only"
+    manifest["pair_decision_source"] = PAIR_DECISIONS
+    manifest["pair_decision_sha256"] = FileAccess.get_sha256(PAIR_DECISIONS)
+    manifest["pair_review_package_sha256"] = PAIR_PACKAGE_SHA256
+    manifest["source_pair_ids"] = PALETTE_PAIRS
+    manifest["ceiling_survivor_ids"] = PALETTE_CEILING_IDS
+    manifest["structural_palette_ids"] = PALETTE_SANITY_IDS if sample_only else _palette_ids()
+    manifest["structural_secondary_enabled"] = false
+    manifest["transient_uv_override_count"] = 0
+    manifest["records"] = records
+    manifest["palettes"] = []
+    var seen := {}
+    for record in records:
+        var palette_id: String = record["structural_palette_id"]
+        if seen.has(palette_id):
+            continue
+        seen[palette_id] = true
+        manifest["palettes"].append({
+            "structural_palette_id": palette_id,
+            "source_pair_id": record["source_pair_id"],
+            "wall": record["wall"], "floor": record["floor"], "ceiling": record["ceiling"],
+            "same_wall_ceiling_material": record["same_wall_ceiling_material"],
+            "accepted_shell_composition_sha256": record["proof_composition_sha256"],
+            "material_parameters": record["material_parameters"],
+            "effective_mapping": record["effective_mapping"]
+        })
+    if not _write_json(folder.path_join("manifest.json"), manifest):
+        return
+    print("EAF5_PALETTE_CAPTURE_COMPLETE records=", records.size(), " sample=", sample_only)
+    get_tree().quit(0)
+
+func _palette_ids() -> Array:
+    var ids := []
+    for pair_index in PALETTE_PAIRS.size():
+        for ceiling_index in PALETTE_CEILING_IDS.size():
+            ids.append("P%02d_C%02d" % [pair_index + 1, ceiling_index + 1])
+    return ids
 func _pair_parameters(candidate: Dictionary) -> Dictionary:
     var result := {}
     for field in ["meters_per_repeat", "normal_y_flip", "normal_strength", "roughness_multiplier", "metallic_multiplier", "albedo_multiplier"]:

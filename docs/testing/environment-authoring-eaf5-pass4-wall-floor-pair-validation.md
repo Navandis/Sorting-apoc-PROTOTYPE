@@ -1,6 +1,6 @@
 # EAF5 Pass 4 — Receiving wall/floor pair review validation
 
-**Status: EAF5 PASS 4 IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN WALL-FLOOR PAIR REVIEW PENDING.** EAF5 overall remains in progress.
+**Status: EAF5 PASS 4 — HUMAN WALL/FLOOR PAIR REVIEW COMPLETE.** EAF5 overall remains in progress.
 
 ## Authority
 
@@ -14,6 +14,10 @@ Floor order: F01 Concrete Floor (eaf3b_f10d218d1e8b7f09b7c2689c); F02 Worn Concr
 
 The ceiling KEEP candidates retained for the next pass are eaf3b_2dc87647fd382ad8287a0280, eaf3b_6bcd8f817ca2993433e217cc, eaf3b_71edb3fc983ed8f7655d9523, eaf3b_d335d94fd85c2c95c26b6b8b and eaf3b_800060297ab83f24c0fb0d75. None is applied in Pass 4.
 
+## Final human pair dispositions
+
+The room-specific decision record is `data/environment/receiving_proof/decisions/eaf5_wall_floor_pairs_01_human_review_01.json`. The human review assigned 7 KEEP_PAIR, 2 HOLD_PAIR and 6 DROP_PAIR. The KEEP_PAIR survivors, in deterministic review order rather than rank order, are W01_F02, W01_F03, W02_F02, W03_F01, W03_F02, W04_F01 and W04_F02. HOLD_PAIR reserves are W03_F03 and W04_F03. DROP_PAIR excludes W01_F01, W02_F01, W02_F03, W05_F01, W05_F02 and W05_F03. The decision record retains the supplied notes for each HOLD and DROP. Only the seven KEEP pairs advance to Pass 5.
+
 ## Pair matrix and sanity gate
 
 The 15 pair IDs are W01_F01, W01_F02, W01_F03, W02_F01, W02_F02, W02_F03, W03_F01, W03_F02, W03_F03, W04_F01, W04_F02, W04_F03, W05_F01, W05_F02 and W05_F03. No same-ID wall/floor collision exists.
@@ -26,7 +30,7 @@ Full capture generated 60 PNGs: Neutral/EastApproachOverview, Receiving/EastAppr
 
 The local review folder is reports/environment_receiving_proof/eaf5/wall_floor_pairs_01. It has the 60 full-resolution captures, three five-pair contact sheets, manifest, summary and a fresh all-PENDING pair decision template. The sanity subfolder holds the 12 gate images.
 
-The shareable local ZIP is reports/environment_receiving_proof/eaf5/eaf5_wall_floor_pair_review_01.zip. SHA-256: fa32ebd095eddf14a3218740b089f61b8c83db8ae73a3b266e1fe1194e3f6353. ZIP integrity passed. Its allowlist is 60 PNGs, three sheets, manifest.json, summary.md and decision_template.json, with no commercial maps, caches or import sidecars. All 15 decisions are PENDING; approximately 4–8 KEEP_PAIR choices is a soft target, not a quota.
+The shareable local ZIP is reports/environment_receiving_proof/eaf5/eaf5_wall_floor_pair_review_01.zip. SHA-256: fa32ebd095eddf14a3218740b089f61b8c83db8ae73a3b266e1fe1194e3f6353. ZIP integrity passed. Its allowlist is 60 PNGs, three sheets, manifest.json, summary.md and decision_template.json, with no commercial maps, caches or import sidecars. The archived package retains its original all-PENDING template as the evidence presented for human review; final dispositions are in the tracked room-specific decision record.
 
 ## Verification
 
@@ -37,4 +41,4 @@ The shareable local ZIP is reports/environment_receiving_proof/eaf5/eaf5_wall_fl
 - Protected production wing paths, EAF3 catalog and accepted shell composition are unchanged.
 - Captures and ZIP are local ignored review artifacts; source, tests and this validation are tracked on codex/eaf5-receiving-proof. No merge or push.
 
-**EAF5 PASS 4 READY — HUMAN WALL/FLOOR PAIR REVIEW PENDING.**
+**EAF5 PASS 4 — HUMAN WALL/FLOOR PAIR REVIEW COMPLETE.**

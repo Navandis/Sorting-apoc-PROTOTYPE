@@ -1,0 +1,118 @@
+{
+  "review": "EAF5 Pass 4 human wall/floor pair review 01",
+  "accepted_shell_composition_sha256": "8361ed7d1d211f40c253cc7bf76821b9d141ab303b0fe7a6573208216f05339d",
+  "pair_review_package": "reports/environment_receiving_proof/eaf5/eaf5_wall_floor_pair_review_01.zip",
+  "pair_review_package_sha256": "fa32ebd095eddf14a3218740b089f61b8c83db8ae73a3b266e1fe1194e3f6353",
+  "allowed_decisions": [
+    "KEEP_PAIR",
+    "HOLD_PAIR",
+    "DROP_PAIR"
+  ],
+  "pairs": [
+    {
+      "pair_id": "W01_F01",
+      "wall_catalog_material_id": "eaf3b_d335d94fd85c2c95c26b6b8b",
+      "floor_catalog_material_id": "eaf3b_f10d218d1e8b7f09b7c2689c",
+      "decision": "DROP_PAIR",
+      "notes": "Too monochromatic in the same warm/light mineral range."
+    },
+    {
+      "pair_id": "W01_F02",
+      "wall_catalog_material_id": "eaf3b_d335d94fd85c2c95c26b6b8b",
+      "floor_catalog_material_id": "eaf3b_bb32071987faae156ff2d4e8",
+      "decision": "KEEP_PAIR",
+      "notes": ""
+    },
+    {
+      "pair_id": "W01_F03",
+      "wall_catalog_material_id": "eaf3b_d335d94fd85c2c95c26b6b8b",
+      "floor_catalog_material_id": "eaf3b_20e1005f19f39efb82251916",
+      "decision": "KEEP_PAIR",
+      "notes": ""
+    },
+    {
+      "pair_id": "W02_F01",
+      "wall_catalog_material_id": "eaf3b_20c61bd1c85420be2f71a090",
+      "floor_catalog_material_id": "eaf3b_f10d218d1e8b7f09b7c2689c",
+      "decision": "DROP_PAIR",
+      "notes": "Mottled wall + warmer floor becomes harsher and busier than W02_F02."
+    },
+    {
+      "pair_id": "W02_F02",
+      "wall_catalog_material_id": "eaf3b_20c61bd1c85420be2f71a090",
+      "floor_catalog_material_id": "eaf3b_bb32071987faae156ff2d4e8",
+      "decision": "KEEP_PAIR",
+      "notes": ""
+    },
+    {
+      "pair_id": "W02_F03",
+      "wall_catalog_material_id": "eaf3b_20c61bd1c85420be2f71a090",
+      "floor_catalog_material_id": "eaf3b_20e1005f19f39efb82251916",
+      "decision": "DROP_PAIR",
+      "notes": "Cool flat floor exaggerates the separation from an already active wall."
+    },
+    {
+      "pair_id": "W03_F01",
+      "wall_catalog_material_id": "eaf3b_5a797fbdc766d7e3dc475abf",
+      "floor_catalog_material_id": "eaf3b_f10d218d1e8b7f09b7c2689c",
+      "decision": "KEEP_PAIR",
+      "notes": ""
+    },
+    {
+      "pair_id": "W03_F02",
+      "wall_catalog_material_id": "eaf3b_5a797fbdc766d7e3dc475abf",
+      "floor_catalog_material_id": "eaf3b_bb32071987faae156ff2d4e8",
+      "decision": "KEEP_PAIR",
+      "notes": ""
+    },
+    {
+      "pair_id": "W03_F03",
+      "wall_catalog_material_id": "eaf3b_5a797fbdc766d7e3dc475abf",
+      "floor_catalog_material_id": "eaf3b_20e1005f19f39efb82251916",
+      "decision": "HOLD_PAIR",
+      "notes": "Coherent but too uniformly cool/grey and austere for the first ceiling expansion."
+    },
+    {
+      "pair_id": "W04_F01",
+      "wall_catalog_material_id": "eaf3b_6bcd8f817ca2993433e217cc",
+      "floor_catalog_material_id": "eaf3b_f10d218d1e8b7f09b7c2689c",
+      "decision": "KEEP_PAIR",
+      "notes": ""
+    },
+    {
+      "pair_id": "W04_F02",
+      "wall_catalog_material_id": "eaf3b_6bcd8f817ca2993433e217cc",
+      "floor_catalog_material_id": "eaf3b_bb32071987faae156ff2d4e8",
+      "decision": "KEEP_PAIR",
+      "notes": ""
+    },
+    {
+      "pair_id": "W04_F03",
+      "wall_catalog_material_id": "eaf3b_6bcd8f817ca2993433e217cc",
+      "floor_catalog_material_id": "eaf3b_20e1005f19f39efb82251916",
+      "decision": "HOLD_PAIR",
+      "notes": "Clean and stable, but comparatively sterile and low-hierarchy."
+    },
+    {
+      "pair_id": "W05_F01",
+      "wall_catalog_material_id": "eaf3b_2dc87647fd382ad8287a0280",
+      "floor_catalog_material_id": "eaf3b_f10d218d1e8b7f09b7c2689c",
+      "decision": "DROP_PAIR",
+      "notes": "WarmGrey becomes too mauve/brown under target lighting."
+    },
+    {
+      "pair_id": "W05_F02",
+      "wall_catalog_material_id": "eaf3b_2dc87647fd382ad8287a0280",
+      "floor_catalog_material_id": "eaf3b_bb32071987faae156ff2d4e8",
+      "decision": "DROP_PAIR",
+      "notes": "Same lighting-dependent hue problem."
+    },
+    {
+      "pair_id": "W05_F03",
+      "wall_catalog_material_id": "eaf3b_2dc87647fd382ad8287a0280",
+      "floor_catalog_material_id": "eaf3b_20e1005f19f39efb82251916",
+      "decision": "DROP_PAIR",
+      "notes": "Same issue, plus a weaker floor/wall hierarchy."
+    }
+  ]
+}

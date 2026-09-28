@@ -48,6 +48,23 @@ func _run() -> void:
     _check(pair_keys.size() == 60, "pair captures are unique")
     _check(capture.get_node("Proof").call("set_wall_floor_pair", "eaf3b_d335d94fd85c2c95c26b6b8b", "eaf3b_f10d218d1e8b7f09b7c2689c"), "approved pair applies")
     _check(not capture.get_node("Proof").call("set_wall_floor_pair", "eaf3b_20c61bd1c85420be2f71a090", "eaf3b_20c61bd1c85420be2f71a090"), "same-material pair rejected")
+    _check(capture.get_node("Proof").call("set_structural_palette", "eaf3b_6bcd8f817ca2993433e217cc", "eaf3b_bb32071987faae156ff2d4e8", "eaf3b_6bcd8f817ca2993433e217cc"), "same wall and ceiling material applies")
+    _check(not capture.get_node("Proof").call("set_structural_palette", "eaf3b_6bcd8f817ca2993433e217cc", "eaf3b_bb32071987faae156ff2d4e8", "missing"), "unknown ceiling rejected")
+    _check(capture.call("validate_palette_source"), "human pair decisions and approved UV specs authorize palettes")
+    var palettes: Array = capture.call("palette_capture_records")
+    var palette_sanity: Array = capture.call("palette_capture_records", true)
+    _check(palettes.size() == 140, "35 palettes have four captures each")
+    _check(palette_sanity.size() == 12, "three palette sanity cases have four captures each")
+    var palette_ids := {}
+    var palette_keys := {}
+    var same_count := 0
+    for record in palettes:
+        palette_ids[record["structural_palette_id"]] = true
+        palette_keys[String(record["structural_palette_id"]) + "/" + String(record["light_mode"]) + "/" + String(record["camera"])] = true
+        if record["same_wall_ceiling_material"]:
+            same_count += 1
+    _check(palette_ids.size() == 35 and palette_keys.size() == 140, "palette records are unique")
+    _check(same_count == 16, "four same-wall-ceiling palettes have four captures each")
     _finish()
 
 func _check(condition: bool, label: String) -> void:
