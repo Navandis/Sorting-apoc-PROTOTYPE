@@ -32,6 +32,12 @@ class Pass3PackageTests(unittest.TestCase):
                 self.assertFalse(any('commercial_map' in name for name in names))
                 decisions = json.loads(zip_file.read('decision_template.json'))
                 self.assertEqual([item['decision'] for item in decisions['candidates']], ['PENDING', 'PENDING'])
+                summary = zip_file.read('summary.md').decode()
+                self.assertIn('ACCEPTED', summary)
+                self.assertIn('NON-BLOCKING DEFERRED FOLLOW-UP', summary)
+                self.assertIn('wear is OFF', summary)
+                self.assertIn('applied finish is OFF', summary)
+                self.assertIn('do not judge whether wear could fix a weak material', summary)
 
     def test_v2_shell_package_contains_only_eight_fixed_views_and_review_files(self):
         cameras = ('EastApproachOverview', 'FreightAperture', 'FreightRecess', 'EastOpening', 'DispatchOpening', 'UpperCeilingContext', 'JoinAudit_Apron', 'JoinAudit_Dispatch')

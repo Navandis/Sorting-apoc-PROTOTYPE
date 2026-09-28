@@ -2,6 +2,9 @@ extends Node3D
 
 const CAPTURE_SIZE := Vector2i(1920, 1080)
 const OUTPUT := "res://reports/environment_receiving_proof/eaf5"
+const ACCEPTED_SHELL_ZIP_SHA256 := "5b2d343a3b80689364fe087e528fd2eba3d6983efa3d5426509b8460217ebd2e"
+const ACCEPTED_COMPOSITION_SHA256 := "8361ed7d1d211f40c253cc7bf76821b9d141ab303b0fe7a6573208216f05339d"
+const ACCEPTED_SOURCE_SHA256 := "12cf8f93024e833f5c16932a1d963b3986258a7661cff3e246a2db525d4d4fc9"
 const SHELL_VIEWS := ["EastApproachOverview", "FreightAperture", "FreightRecess", "EastOpening", "DispatchOpening", "UpperCeilingContext", "JoinAudit_Apron", "JoinAudit_Dispatch"]
 const DEBUG_VIEWS := ["JoinAudit_Apron", "JoinAudit_Freight", "JoinAudit_Dispatch", "FreightAperture", "UpperCeilingContext", "DispatchOpening"]
 const ROLES := ["WALL_PRIMARY", "FLOOR_PRIMARY", "CEILING_PRIMARY"]
@@ -14,8 +17,10 @@ func _ready() -> void:
         _capture_shell.call_deferred()
     elif args.has("--eaf5-capture-joins"):
         _capture_join_debug.call_deferred()
+    elif args.has("--eaf5-capture-roles-sanity"):
+        _capture_roles.call_deferred(true)
     elif args.has("--eaf5-capture-roles"):
-        _reject_role_recapture.call_deferred()
+        _capture_roles.call_deferred(false)
 
 func shell_capture_records() -> Array:
     var records := []
@@ -23,12 +28,15 @@ func shell_capture_records() -> Array:
         records.append({"camera": SHELL_VIEWS[index], "light_mode": LIGHT_MODES[0], "filename": "%02d_%s.png" % [index + 1, SHELL_VIEWS[index]]})
     return records
 
-func role_capture_records() -> Array:
+func role_capture_records(sample_only: bool = false) -> Array:
     var records := []
     var proof := get_node("Proof")
     var sets: Dictionary = proof.call("role_candidates")
     for role in ROLES:
-        for candidate in sets[role]:
+        var candidates: Array = sets[role]
+        if sample_only:
+            candidates = candidates.slice(0, 1)
+        for candidate in candidates:
             var material_id := String(candidate["catalog_material_id"])
             for light in LIGHT_MODES:
                 for camera in ["EastApproachOverview", ROLE_VIEW[role]]:
@@ -75,9 +83,6 @@ func _capture_shell() -> void:
     print("EAF5_SHELL_CAPTURE_COMPLETE records=", records.size())
     get_tree().quit(0)
 
-func _reject_role_recapture() -> void:
-    _fail("Role recapture is on hold until human acceptance of shell review 02")
-
 func _capture_join_debug() -> void:
     var proof := get_node("Proof")
     proof.call("set_control")
@@ -108,9 +113,76 @@ func _capture_join_debug() -> void:
     print("EAF5_JOIN_DEBUG_COMPLETE records=", records.size())
     get_tree().quit(0)
 
-func _capture_roles() -> void:
+func role_capture_directory(sample_only: bool = false) -> String:
+    return OUTPUT + ("/role_isolation_02/sanity" if sample_only else "/role_isolation_02")
+
+func _json_file(path: String) -> Dictionary:
+    var content := FileAccess.get_file_as_string(ProjectSettings.globalize_path(path))
+    var parsed: Variant = JSON.parse_string(content)
+    return parsed if parsed is Dictionary else {}
+
+func validate_role_candidates() -> bool:
     var proof := get_node("Proof")
-    var output := ProjectSettings.globalize_path(OUTPUT + "/role_isolation_01")
+    var sets: Dictionary = proof.call("role_candidates")
+    for role in ROLES:
+        var folder: String = role.to_lower().trim_suffix("_primary")
+        var old := _json_file(OUTPUT + "/role_isolation_01/" + folder + "/manifest.json")
+        if old.is_empty() or not old.has("candidate_ids"):
+            return false
+        var ids := _ids(sets[role])
+        if ids != old["candidate_ids"]:
+            return false
+        for candidate in sets[role]:
+            if candidate.get("effective_status") != "APPROVED" or not candidate.get("current_source_matches_review", false):
+                return false
+            var material_id := String(candidate["catalog_material_id"])
+            var spec := load("res://data/environment/material_catalog/approved_specs/" + material_id + ".tres") as EnvironmentSurfaceMaterialSpec
+            if not catalog_spec_matches(candidate, spec):
+                return false
+    return true
+
+func catalog_spec_matches(record: Dictionary, spec: EnvironmentSurfaceMaterialSpec) -> bool:
+    if spec == null or spec.material_id != record.get("catalog_material_id") or not spec.validate().is_empty():
+        return false
+    if spec.surface_family != record.get("surface_family") or spec.vdd_layer != record.get("vdd_layer") or spec.mapping_name() != record.get("mapping_mode") or spec.normal_y_flip != record.get("normal_y_flip"):
+        return false
+    for field in ["meters_per_repeat", "normal_strength", "roughness_multiplier", "metallic_multiplier", "albedo_multiplier"]:
+        if not is_equal_approx(float(spec.get(field)), float(record.get(field, -1000.0))):
+            return false
+    return true
+
+func validate_accepted_shell(package_path: String = OUTPUT + "/eaf5_shell_review_02.zip") -> bool:
+    var proof := get_node("Proof")
+    var absolute := ProjectSettings.globalize_path(package_path)
+    if not FileAccess.file_exists(absolute) or FileAccess.get_sha256(absolute) != ACCEPTED_SHELL_ZIP_SHA256:
+        return false
+    var archive := ZIPReader.new()
+    if archive.open(absolute) != OK:
+        return false
+    var manifest_bytes := archive.read_file("manifest.json")
+    archive.close()
+    var parsed: Variant = JSON.parse_string(manifest_bytes.get_string_from_utf8())
+    if not parsed is Dictionary:
+        return false
+    var accepted: Dictionary = parsed
+    if accepted.get("proof_composition_sha256") != ACCEPTED_COMPOSITION_SHA256 or accepted.get("shell_source_sha256") != ACCEPTED_SOURCE_SHA256:
+        return false
+    if proof.call("proof_composition_sha256") != ACCEPTED_COMPOSITION_SHA256 or proof.call("shell_source_sha256") != ACCEPTED_SOURCE_SHA256:
+        return false
+    var pieces: Array = accepted.get("pieces", [])
+    if pieces.size() != 14:
+        return false
+    var expected := {}
+    for piece in pieces:
+        expected[piece["piece_id"]] = piece["geometry_fingerprint"]
+    return expected == _piece_fingerprints(proof)
+
+func _capture_roles(sample_only: bool) -> void:
+    var proof := get_node("Proof")
+    if not validate_role_candidates() or not validate_accepted_shell():
+        _fail("v2 role capture preflight differs from accepted catalog or shell")
+        return
+    var output := ProjectSettings.globalize_path(role_capture_directory(sample_only))
     if not _make_directory(output):
         return
     get_window().size = CAPTURE_SIZE
@@ -119,7 +191,7 @@ func _capture_roles() -> void:
     var sets: Dictionary = proof.call("role_candidates")
     var grouped := {"WALL_PRIMARY": [], "FLOOR_PRIMARY": [], "CEILING_PRIMARY": []}
     var fingerprints := _piece_fingerprints(proof)
-    for planned in role_capture_records():
+    for planned in role_capture_records(sample_only):
         var role := String(planned["role"])
         var material_id := String(planned["catalog_material_id"])
         var folder := output.path_join(role.to_lower().trim_suffix("_primary"))
@@ -167,11 +239,11 @@ func _capture_roles() -> void:
         manifest["capture_type"] = "ROLE_ISOLATION"
         manifest["role"] = role
         manifest["control_material"] = "eaf5_review_control_only"
-        manifest["candidate_ids"] = _ids(sets[role])
+        manifest["candidate_ids"] = _ids(sets[role].slice(0, 1) if sample_only else sets[role])
         manifest["records"] = grouped[role]
         if not _write_json(folder.path_join("manifest.json"), manifest):
             return
-    print("EAF5_ROLE_CAPTURE_COMPLETE records=", role_capture_records().size())
+    print("EAF5_ROLE_CAPTURE_COMPLETE records=", role_capture_records(sample_only).size(), " sample=", sample_only)
     get_tree().quit(0)
 
 func _piece_fingerprints(proof: Node) -> Dictionary:

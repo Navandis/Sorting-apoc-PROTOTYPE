@@ -11,9 +11,9 @@ REPORT = ROOT / 'reports/environment_receiving_proof/eaf5'
 ROLE_VIEW = {'WALL_PRIMARY': 'WallDominant', 'FLOOR_PRIMARY': 'FloorRead', 'CEILING_PRIMARY': 'CeilingRead'}
 MODES = ('NEUTRAL_ARCHITECTURAL', 'RECEIVING_TARGET')
 CRITERIA = {
-    'WALL_PRIMARY': 'Room-scale repetition, quiet area, mineral identity, value, baked damage, opening and freight continuity, future signage bandwidth.',
-    'FLOOR_PRIMARY': 'Panel/grid repetition, baked traffic, value, loot contrast, floor continuity, physical scale.',
-    'CEILING_PRIMARY': 'Overhead repetition, darkness, compression, mineral slab identity, future service readability.',
+    'WALL_PRIMARY': 'Room-scale repetition, large quiet-area potential, baked localized wear, value under both rigs, mineral/service-infrastructure identity, opening/reveal behavior, and visual bandwidth for later fixtures/signage.',
+    'FLOOR_PRIMARY': 'Grid/panel repetition, loot contrast, baked traffic patterns, value, noise level, and freight-floor continuity.',
+    'CEILING_PRIMARY': 'Overhead repetition, value/darkness, visual compression, future service readability, and mineral slab identity.',
 }
 
 
@@ -61,17 +61,21 @@ def _role_sheets(folder: Path, manifest: dict) -> list[Path]:
     pages = []
     for start in range(0, len(manifest['candidate_ids']), 4):
         ids = manifest['candidate_ids'][start:start + 4]
-        page = Image.new('RGB', (1480, 95 + len(ids) * 870), (244, 244, 242))
+        page = Image.new('RGB', (1480, 125 + len(ids) * 920), (244, 244, 242))
         draw = ImageDraw.Draw(page)
         draw.text((24, 20), f'EAF5 {role}   {start // 4 + 1}', fill=(25, 25, 25), font=_font(36))
         for row, material_id in enumerate(ids):
             records = by_id[material_id]
-            y = 90 + row * 870
-            name = next(iter(records.values()))['display_name']
+            y = 90 + row * 920
+            representative = next(iter(records.values()))
+            name = representative['display_name']
             draw.text((24, y), f'{name}   {material_id}', fill=(20, 20, 20), font=_font(28))
+            marker = ' | TRANSIENT UV OVERRIDE' if representative.get('transient_uv_review_override') else ''
+            details = f"{role} | {representative.get('surface_family', 'unknown family')} | {representative.get('meters_per_repeat', '?')} m/repeat | {representative.get('effective_review_mapping', '?')}{marker}"
+            draw.text((24, y + 33), details, fill=(35, 35, 35), font=_font(20))
             for col, (light, camera) in enumerate(((MODES[0], 'EastApproachOverview'), (MODES[1], 'EastApproachOverview'), (MODES[0], ROLE_VIEW[role]), (MODES[1], ROLE_VIEW[role]))):
                 x = 24 + (col % 2) * 730
-                top = y + 43 + (col // 2) * 410
+                top = y + 74 + (col // 2) * 410
                 thumb = _thumbnail(folder / records[(light, camera)]['filename'])
                 page.paste(thumb, (x, top + 23))
                 label = ('Neutral' if light == MODES[0] else 'Receiving') + ' / ' + ('Overall' if camera == 'EastApproachOverview' else camera)
@@ -115,7 +119,7 @@ def build_role_package(folder: Path, output: Path) -> dict:
         first = next(item for item in records if item['catalog_material_id'] == material_id)
         decisions['candidates'].append({'catalog_material_id': material_id, 'display_name': first['display_name'], 'decision': 'PENDING', 'notes': ''})
     (folder / 'decision_template.json').write_text(json.dumps(decisions, indent=2) + '\n', encoding='utf-8')
-    summary = f'# EAF5 {role} room role isolation\n\n{len(ids)} current APPROVED candidates, four captures each. Other major roles use the EAF5 tooling-only grey control. No palette pairing, applied finish, or wear.\n\nJudge: {CRITERIA[role]}\n\nHuman shell acceptance precedes any promotion of role evidence. Decisions remain PENDING. DROP_FOR_RECEIVING does not revoke EAF3 approval.\n\n'
+    summary = f'# EAF5 {role} room role isolation - accepted Pass-3A v2 shell\n\n{len(ids)} current APPROVED candidates, four captures each. Other major roles use the EAF5 tooling-only grey control. The Pass 3A shell is HUMAN-ACCEPTED for role review; role-survivor decisions remain PENDING.\n\nJudge: {CRITERIA[role]}\n\nReview conditions: wear is OFF; applied finish is OFF; do not judge whether wear could fix a weak material. Structural secondary and palette pairing are OFF. DROP_FOR_RECEIVING does not revoke EAF3 approval.\n\nKnown freight/elevator enclosure oddity: NON-BLOCKING DEFERRED FOLLOW-UP. It is not resolved in this package.\n\n'
     if role == 'WALL_PRIMARY':
         summary += 'The east EAF2 opening is one mesh with piers and reveals. For a wall candidate without opening_reveal approval, that entire composite wall stays on control; the manifest flags this per capture.\n\n'
     summary += '\n'.join(f'- {item["display_name"]} — {item["catalog_material_id"]}' for item in decisions['candidates']) + '\n'
@@ -161,9 +165,13 @@ def build_shell_package(folder: Path, output: Path) -> dict:
 
 
 def main() -> None:
-    result = build_shell_package(REPORT / 'shell_review_02', REPORT / 'eaf5_shell_review_02.zip')
-    (REPORT / 'package_results_02.json').write_text(json.dumps(result, indent=2) + '\n', encoding='utf-8')
-    print(json.dumps(result, indent=2))
+    results = {}
+    for role in ('wall', 'floor', 'ceiling'):
+        folder = REPORT / 'role_isolation_02' / role
+        output = REPORT / f'eaf5_{role}_role_review_02.zip'
+        results[role] = build_role_package(folder, output)
+    (REPORT / 'package_results_03.json').write_text(json.dumps(results, indent=2) + '\n', encoding='utf-8')
+    print(json.dumps(results, indent=2))
 
 if __name__ == '__main__':
     main()

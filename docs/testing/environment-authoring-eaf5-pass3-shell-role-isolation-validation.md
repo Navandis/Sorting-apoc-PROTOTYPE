@@ -1,6 +1,6 @@
 # EAF5 Pass 3 — Receiving shell and role isolation validation
 
-**Current status: EAF5 PASS 3A SHELL REVISION IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN SHELL RE-REVIEW PENDING.** The Pass 3 v1 shell was given a human REVISE disposition; its role packages remain diagnostic history only.
+**Current status: EAF5 PASS 3 SHELL ACCEPTED / HUMAN ROLE-ISOLATION REVIEW PENDING.** The accepted Pass-3A v2 shell is the authority for the Pass-3B role packages below. No role survivor decision has been made.
 
 **Historical Pass 3 v1 status:** EAF5 PASS 3 IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN SHELL + ROLE REVIEW PENDING. Shell acceptance was the first human gate; the v1 role captures are not promotion evidence.
 
@@ -94,7 +94,7 @@ These current-approved materials are recorded for structural-secondary or applie
 
 ## Pass 3A — bounded Receiving shell revision (2026-09-28)
 
-**Status: EAF5 PASS 3A SHELL REVISION IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN SHELL RE-REVIEW PENDING.** Human v1 disposition: **REVISE**. The four v1 ZIPs above are **SUPERSEDED FOR PROMOTION EVIDENCE — SHELL REVISION REQUIRED**. Their checksums remain exactly as recorded above; no role capture was regenerated and no KEEP / DROP_FOR_RECEIVING / HOLD decision was made.
+**Historical Pass-3A technical gate: SHELL REVISION IMPLEMENTED / TECHNICALLY VERIFIED.** The subsequent human disposition is recorded in Pass 3B below. Human v1 disposition: **REVISE**. The four v1 ZIPs above are **SUPERSEDED FOR PROMOTION EVIDENCE — SHELL REVISION REQUIRED**. Their checksums remain exactly as recorded above; no role capture was regenerated and no KEEP / DROP_FOR_RECEIVING / HOLD decision was made.
 
 ### Artifact diagnosis and correction
 
@@ -135,7 +135,7 @@ The `ReviewContext` inventory has six barrier proxies, two distant backdrops and
 
 | Package | Views | SHA-256 | Status |
 | --- | ---: | --- | --- |
-| [eaf5_shell_review_02.zip](../../reports/environment_receiving_proof/eaf5/eaf5_shell_review_02.zip) | 8 neutral PNGs + contact sheet | `5b2d343a3b80689364fe087e528fd2eba3d6983efa3d5426509b8460217ebd2e` | Human shell re-review pending |
+| [eaf5_shell_review_02.zip](../../reports/environment_receiving_proof/eaf5/eaf5_shell_review_02.zip) | 8 neutral PNGs + contact sheet | `5b2d343a3b80689364fe087e528fd2eba3d6983efa3d5426509b8460217ebd2e` | HUMAN-ACCEPTED for role-isolation review |
 
 The v2 ZIP contains only eight capture PNGs, the contact sheet, manifest, summary and pending shell decision template (12 files); ZIP integrity passed. The v1 ZIPs and their checksums above were verified unchanged. The v2 manifest records source/composition hashes, all 14 generation records/fingerprints, camera transforms, lighting, and review-only context.
 
@@ -164,3 +164,36 @@ The v2 ZIP contains only eight capture PNGs, the contact sheet, manifest, summar
 - EAF5 Python suite: **32 passed**. EAF2 Godot substrate suite: **0 failures**, including default closed geometry and optional concealed lateral faces. EAF5 Godot proof and capture suites: **0 failures** each. Godot 4.7 headless editor import/parse: **exit 0**. The recurring Windows certificate-store message did not fail any run.
 - Final shell capture: **8/8** neutral 1920×1080 views. The analytical audit passed against its final manifest before packaging. The neutral screenshots still expose floor-contact value changes for human judgement; technical acceptance does not substitute for human visual acceptance.
 - No role packages were regenerated, no survivor/material palette/applied finish/EAF4 wear decision was made, and Receiving C1 remains paused. All modified tracked paths are confined to the EAF5 proof data/tooling/tests, the generic EAF2 face option, and this validation; production wing paths have no diff. No merge or push is authorized or performed.
+
+## Pass 3B - human shell acceptance and v2 role recapture (2026-09-28)
+
+**Pass 3A shell human disposition: ACCEPTED.** This acceptance applies to the main Receiving apron, freight aperture, east opening, Dispatch opening, floor, ceiling, wall joins, and overall proof-shell proportions. The accepted evidence remains `eaf5_shell_review_02.zip` (SHA-256 `5b2d343a3b80689364fe087e528fd2eba3d6983efa3d5426509b8460217ebd2e`). The known oddity inside the inaccessible freight/elevator enclosure is **NON-BLOCKING DEFERRED FOLLOW-UP** for later freight-enclosure/C1 refinement; it has not been resolved. It does not interfere with the primary fixed role-review cameras. EAF5 overall is not promoted.
+
+The three Pass-3 v1 role ZIPs (`eaf5_wall_role_review_01.zip`, `eaf5_floor_role_review_01.zip`, `eaf5_ceiling_role_review_01.zip`) are **SUPERSEDED FOR HUMAN ROLE DECISIONS** because they were captured against the rejected Pass-3 v1 shell. They remain diagnostic/history evidence only; their pending templates are not decision authority. Their hashes above remain unchanged.
+
+### Accepted shell and catalog lineage
+
+- Pass-3A composition v2 SHA-256: `8361ed7d1d211f40c253cc7bf76821b9d141ab303b0fe7a6573208216f05339d`. Source manifest SHA-256: `12cf8f93024e833f5c16932a1d963b3986258a7661cff3e246a2db525d4d4fc9`. Both files are unchanged in this pass.
+- The accepted 14 EAF2 geometry fingerprints listed in Pass 3A above remain unchanged. Recipe breakdown is 13 `rect_solid` plus one `wall_with_rect_opening`; missing topology is zero. Capture preflight verifies the accepted shell ZIP SHA-256 and reads its embedded manifest before comparing source/composition hashes and all 14 live fingerprints. Each v2 role manifest and every capture record reference that same source, composition and fingerprint set.
+- Live EAF3 catalog: 30 APPROVED, 7 DEFERRED, 6 REJECTED. The live query returned the same sorted v1 membership: 14 WALL_PRIMARY, 8 FLOOR_PRIMARY, 11 CEILING_PRIMARY. All candidates are effectively APPROVED, their approved specs validate, their mapping and material parameters match the current catalog, and their current source matches the reviewed fingerprint. The two historical triplanar candidates use transient UV review clones. Approved catalog/spec files were not changed.
+- Existing NEUTRAL_ARCHITECTURAL and RECEIVING_TARGET rigs, WorldEnvironment, exposure, filmic tonemap, cameras, and structural shell were used without recalibration or movement. Exactly one primary role is active per capture. EAF4 wear, applied finish, structural secondary, palette pairing, and Receiving C1 remain off/paused.
+
+### Sanity gate and new role packages
+
+The first sorted candidate of each role was captured in both light modes and both required cameras: 12 PNGs total. Visual inspection of the three four-view sanity contact sheets found candidate mapping on the intended surfaces, neutral control roles and context, and no recurrence of the v1 strips/slivers or a new primary-camera artifact. The freight-enclosure oddity remains deferred. The same capture path then produced all 132 full role PNGs.
+
+| v2 shareable package | Candidates | Captures | Contact sheets | SHA-256 |
+| --- | ---: | ---: | ---: | --- |
+| [eaf5_wall_role_review_02.zip](../../reports/environment_receiving_proof/eaf5/eaf5_wall_role_review_02.zip) | 14 | 56 | 4 | `2fbb4a646b2e48c742a901c0e650178ebb5e89e2c39bd3c964fcc32566946dcb` |
+| [eaf5_floor_role_review_02.zip](../../reports/environment_receiving_proof/eaf5/eaf5_floor_role_review_02.zip) | 8 | 32 | 2 | `75ccd8600d1f15e9030b87284bbda0bae1f3f5c362dfe35be02d3c0f80df538e` |
+| [eaf5_ceiling_role_review_02.zip](../../reports/environment_receiving_proof/eaf5/eaf5_ceiling_role_review_02.zip) | 11 | 44 | 3 | `a666f59876a6b35112803f9c8a30995aac06cc9da81f4fe3f1a42c53c5e57c37` |
+
+Each candidate has Neutral/Receiving overall and role-specific views. Contact sheets show display name, catalog ID, role, surface family, metres per repeat, effective UV mapping, and a transient-override marker when applicable. Manifests contain material/source provenance, approved roles, mapping and parameters, camera/lighting data, the accepted shell hashes, and 14 geometry fingerprints. The known one-mesh east opening remains entirely on control when `opening_reveal` is not approved; no EAF2 recipe was redesigned. Opening-reveal authority comes from the current EAF3 approved roles, while the preflight freezes candidate ID membership to v1 as required. Each ZIP passed integrity and allowlist checks: only capture PNGs, contact sheets, manifest, summary, and a fresh all-PENDING decision template are included. No commercial maps or staging data are shared.
+
+### Pass 3B verification and handoff
+
+- EAF5 Python suite: 34 passed. EAF3B material catalog Python suite: 17 passed. EAF5 Godot proof/capture and EAF3B Godot query/live catalog suites: zero failures. Godot 4.7 headless editor import/parse exited 0. The recurring Windows certificate-store warning did not fail tests or import.
+- `eaf5_shell_review_01.zip`, accepted `eaf5_shell_review_02.zip`, and all three v1 role ZIPs retain their recorded SHA-256 hashes. Package inspection confirmed 56/32/44 captures, four combinations per candidate, 4/2/3 contact sheets, fresh PENDING templates, and ZIP integrity. All three v2 role manifests refer to the accepted composition and fingerprints.
+- No protected production Receiving/wing file changed. No KEEP / DROP_FOR_RECEIVING / HOLD decision was selected. Human review now selects role survivors; Pass 3 is not complete and EAF5 is not promoted.
+
+**Handoff status: EAF5 PASS 3B READY — HUMAN ROLE-SURVIVOR REVIEW PENDING.**

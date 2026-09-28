@@ -12,6 +12,13 @@ APPROVED_ROLE = {'WALL_PRIMARY': 'wall', 'FLOOR_PRIMARY': 'floor', 'CEILING_PRIM
 VIEW = {'WALL_PRIMARY': 'WallDominant', 'FLOOR_PRIMARY': 'FloorRead', 'CEILING_PRIMARY': 'CeilingRead'}
 
 class Pass3EvidenceTests(unittest.TestCase):
+    def test_sanity_manifest_names_only_the_captured_candidate(self):
+        base = ROOT / 'reports/environment_receiving_proof/eaf5/role_isolation_02/sanity'
+        for role in ('wall', 'floor', 'ceiling'):
+            manifest = json.loads((base / role / 'manifest.json').read_text(encoding='utf-8'))
+            self.assertEqual(manifest['candidate_ids'], sorted({row['catalog_material_id'] for row in manifest['records']}))
+            self.assertEqual(len(manifest['candidate_ids']), 1)
+
     def test_live_catalog_candidates_and_locked_matrix(self):
         catalog = json.loads(CATALOG.read_text(encoding='utf-8'))['materials']
         transforms, rigs = {}, {}
@@ -37,6 +44,31 @@ class Pass3EvidenceTests(unittest.TestCase):
                 if key in rigs:
                     self.assertEqual(record['light_settings'], rigs[key])
                 rigs[key] = record['light_settings']
+
+    def test_v2_role_evidence_matches_accepted_shell_and_v1_membership(self):
+        base = ROOT / 'reports/environment_receiving_proof/eaf5'
+        shell = json.loads((base / 'shell_review_02/manifest.json').read_text(encoding='utf-8'))
+        fingerprints = {piece['piece_id']: piece['geometry_fingerprint'] for piece in shell['pieces']}
+        self.assertEqual(len(fingerprints), 14)
+        expected_counts = {'wall': 56, 'floor': 32, 'ceiling': 44}
+        override_ids = set()
+        for role, count in expected_counts.items():
+            manifest = json.loads((base / 'role_isolation_02' / role / 'manifest.json').read_text(encoding='utf-8'))
+            old = json.loads((base / 'role_isolation_01' / role / 'manifest.json').read_text(encoding='utf-8'))
+            self.assertEqual(manifest['candidate_ids'], old['candidate_ids'])
+            self.assertEqual(len(manifest['records']), count)
+            self.assertEqual(manifest['proof_composition_sha256'], shell['proof_composition_sha256'])
+            self.assertEqual({piece['piece_id']: piece['geometry_fingerprint'] for piece in manifest['pieces']}, fingerprints)
+            self.assertFalse(manifest['wear_enabled'])
+            self.assertFalse(manifest['applied_finish_enabled'])
+            for record in manifest['records']:
+                self.assertEqual(record['proof_composition_sha256'], shell['proof_composition_sha256'])
+                self.assertEqual(record['piece_geometry_fingerprints'], fingerprints)
+                self.assertEqual(record['effective_review_mapping'], 'UV')
+                self.assertTrue((base / 'role_isolation_02' / role / record['filename']).is_file())
+                if record['transient_uv_review_override']:
+                    override_ids.add(record['catalog_material_id'])
+        self.assertEqual(len(override_ids), 2)
 
     def test_each_capture_record_carries_shell_and_geometry_provenance(self):
         source_hash = hashlib.sha256((ROOT / 'data/environment/receiving_proof/eaf5_receiving_shell_source.json').read_bytes()).hexdigest()
