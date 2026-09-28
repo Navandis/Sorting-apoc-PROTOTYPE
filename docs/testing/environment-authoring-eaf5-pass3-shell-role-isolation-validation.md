@@ -1,0 +1,91 @@
+# EAF5 Pass 3 — Receiving shell and role isolation validation
+
+**Status: EAF5 PASS 3 IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN SHELL + ROLE REVIEW PENDING.** Shell acceptance is the first human gate. If the shell is rejected, the role captures are not promotion evidence.
+
+- Branch: `codex/eaf5-receiving-proof`; pre-edit HEAD `718ca191bbe8ec0d754b53b5c466e97e334dd6b7`; promoted `main` / `origin/main` baseline `ac12a51ce431f94c9a65a4e84edbf2f73bdf5c2c`. Pre-edit tree was clean. The final local commit HEAD is reported in the task handoff. No merge or push.
+- Isolated proof scene: `gameplay/dev/environment_receiving_proof/environment_receiving_proof.tscn`; capture scene: `gameplay/dev/environment_receiving_proof/environment_receiving_proof_capture.tscn`. Neither is referenced by the production wing.
+- Accepted layout authority: `data/environment/receiving_proof/eaf5_receiving_shell_source.json`; source SHA-256 `12cf8f93024e833f5c16932a1d963b3986258a7661cff3e246a2db525d4d4fc9`. The tracked `substrate/*.tres` files are ordinary EAF2 `EnvironmentSubstratePieceSpec` resources generated from that manifest by `build_pass3_specs.py`.
+
+## Shell geometry and UV
+
+- 19 generated pieces through `EnvironmentSubstratePiece.regenerate()` and `EnvironmentSubstrateBuilder`: 18 `rect_solid`, one `wall_with_rect_opening`; no EAF5 mesh recipe. All 19 specs validate, roots are unit scale, collision is NONE, bevel is zero, and each has a 64-character deterministic geometry fingerprint.
+- Main apron: 10.50 × 10.00 m, 4.20 m clear height, 0.30 m structural thickness. Freight enclosure: 5.00 × 7.00 m, 4.20 m clear height. Apertures: west freight 5.00 m full height; east Backlog 3.84 × 3.40 m with 0.80 m header; Dispatch 2.40 m full height.
+- Automated audit compared all EAF2 dimensions, positions, recipes, opening parameters, unit roots, fingerprints and UV metadata against the accepted mapping. It checked apron/freight floor and ceiling AABBs, 11 intended contact pairs, the two explicit 0.15 m freight joins, absence of duplicate coplanar wall ownership and overlapping slabs. Result: zero errors.
+- UV1 is metre-authored by EAF2. Each spec sets `uv_origin_m` from its accepted world-space lower edge so coplanar runs preserve metre-space phase; `uv_quarter_turns=0` keeps an upright wall orientation. The east one-piece opening uses EAF2 reveal UVs. The shell audit compares each actual phase to the manifest-derived policy.
+
+| EAF2 piece | Geometry fingerprint |
+| --- | --- |
+| `Ceiling_DispatchAnnex` | `1dd56534d4c65845adb96b497ff0e0240f565e040c92eb162f6f5597d326d4b4` |
+| `Ceiling_FreightEnclosure` | `3202a42d8f718e5baae95342835a601576c581bef708627dbdbc6e154e75f057` |
+| `Ceiling_ReceivingApron` | `3dd29e69ad1f5e388f274929d426322768d1ff4d82277818ec5cafb2fd5ad983` |
+| `DispatchEast` | `b354b08d7a2877a5115ac8d2d215db89e4a27e10e838c0fecf450e7337ccdacf` |
+| `DispatchNorth` | `bd0e187f4e08e7fb60c2a055427af050250ad22dab2d2ce238f416a220a45496` |
+| `DispatchSouthEast` | `fc41bf1032e36de45c66d1df481bffa2fa8f689ab8624ff5f26103f875ae8c84` |
+| `DispatchSouthWest` | `78c5d446a51d9e5df62d20f6badf5cb4652ea6e808b742031594fbaad9ac91a1` |
+| `DispatchWest` | `c5fb2b0e868dd9d7bf800883055d9bfc01f2151da1466f673b8d22c9507c26bb` |
+| `Floor_DispatchAnnex` | `1dd56534d4c65845adb96b497ff0e0240f565e040c92eb162f6f5597d326d4b4` |
+| `Floor_FreightEnclosure` | `3202a42d8f718e5baae95342835a601576c581bef708627dbdbc6e154e75f057` |
+| `Floor_ReceivingApron` | `3dd29e69ad1f5e388f274929d426322768d1ff4d82277818ec5cafb2fd5ad983` |
+| `FreightNorth` | `bd191f3de660b824a61a2cbe45b9124cebd85531c40ebd94a52f1ce0c6428564` |
+| `FreightRear` | `7b22099f31c1145596cbb5c5fe6e3f95c1aaca3175dcd1e421a84eedd6d9c6fa` |
+| `FreightSouth` | `bd191f3de660b824a61a2cbe45b9124cebd85531c40ebd94a52f1ce0c6428564` |
+| `ReceivingEastOpeningWall` | `ec8d803d21e1c4aab0c9ee695d43fd320944ea6ae3311eb669fc25be0c96d6bf` |
+| `ReceivingNorthWest` | `319627a489b7edf3cda09d09b2936998b73a6bdfb1b85132f1e9e6043248a6f3` |
+| `ReceivingSouth` | `824fbf25acde521f6681a7b8d83b932bb5237fa24dd82bfd50189a24ba80ba42` |
+| `ReceivingWestNorthReturn` | `6e6304e4ef66167168b9772c58c0fac8f4ca2a896fbee137ea9e179520db95a7` |
+| `ReceivingWestSouthReturn` | `312e6736247824cc19e762ab5b5283d35988f937ba013f6c73660d7335a40dc5` |
+
+## Review controls and catalog authority
+
+- `data/environment/receiving_proof/eaf5_review_control.tres` is a textureless-looking medium grey EAF1 spec at roughness 0.75. It is EAF5 review tooling only, outside the EAF3 catalog and production palette.
+- Two fixed Compatibility-renderer rigs: NEUTRAL_ARCHITECTURAL (white room-scale bounce plus local task spots) and RECEIVING_TARGET (warm/neutral room-scale bounce and bounded industrial task spots). WorldEnvironment, exposure and filmic tonemap remain fixed. The distant east spots have shadows off to avoid repeated large-plane bands; freight/task key spots keep architectural shadows. This was calibrated once before role capture.
+- Nine locked camera transforms: EastApproachOverview, FreightAperture, FreightRecess, EastOpening, DispatchOpening, UpperCeilingContext, WallDominant, FloorRead, CeilingRead. Switching a role or lighting mode does not move a camera.
+- Live EAF3 catalog at capture: 30 APPROVED, 7 DEFERRED, 6 REJECTED. The proof queries current approvals via `EnvironmentMaterialCatalogQuery`; every candidate loads its EAF3 approved spec and is built via `EnvironmentMaterialBuilder`. No room code reads raw source maps.
+- One major role is active per capture; other shell roles remain on control. Freight recess inherits the wall candidate. Opening returns receive a wall candidate only if `opening_reveal` is approved. The east EAF2 opening is a composite mesh containing piers and reveals, so the entire east opening wall stays on control for a wall candidate without reveal approval; each manifest record flags this limitation.
+- UV is the effective mapping in all role captures. Existing UV specs are used as approved. Historical triplanar IDs `eaf3b_39b926e570fb3824019aade2` (ConcreteRoughBright) and `eaf3b_bd0940113f04f3d3784629e7` (ConcretePittedGrayMed) use temporary duplicate specs whose only altered property is mapping mode. Their source textures, scale, normal settings and multipliers remain identical; the catalog and approved specs are unchanged. If either survives a final room palette, a later explicit EAF3 mapping revision is required.
+
+| Role | Current candidates | Catalog IDs (sorted) |
+| --- | ---: | --- |
+| `WALL_PRIMARY` | 14 | `eaf3b_1435ce254f04bb8e61bd3e96`, `eaf3b_1beac3a311a480af8844ea89`, `eaf3b_20c61bd1c85420be2f71a090`, `eaf3b_2dc87647fd382ad8287a0280`, `eaf3b_39b926e570fb3824019aade2`, `eaf3b_42a2691272218b9a18a53418`, `eaf3b_50ad83f394c2da7652cd6e50`, `eaf3b_5a797fbdc766d7e3dc475abf`, `eaf3b_6bcd8f817ca2993433e217cc`, `eaf3b_71edb3fc983ed8f7655d9523`, `eaf3b_800060297ab83f24c0fb0d75`, `eaf3b_bd0940113f04f3d3784629e7`, `eaf3b_d335d94fd85c2c95c26b6b8b`, `eaf3b_d9c263b19df244e0c6417edb` |
+| `FLOOR_PRIMARY` | 8 | `eaf3b_20c61bd1c85420be2f71a090`, `eaf3b_20e1005f19f39efb82251916`, `eaf3b_58622aae11bf1d5d20cee763`, `eaf3b_59351fb0f6850a3489e57c4e`, `eaf3b_66101106e84c33eb3874b1ba`, `eaf3b_af97cff72d3204f723d8e38f`, `eaf3b_bb32071987faae156ff2d4e8`, `eaf3b_f10d218d1e8b7f09b7c2689c` |
+| `CEILING_PRIMARY` | 11 | `eaf3b_1435ce254f04bb8e61bd3e96`, `eaf3b_1beac3a311a480af8844ea89`, `eaf3b_2dc87647fd382ad8287a0280`, `eaf3b_39b926e570fb3824019aade2`, `eaf3b_42a2691272218b9a18a53418`, `eaf3b_6bcd8f817ca2993433e217cc`, `eaf3b_71edb3fc983ed8f7655d9523`, `eaf3b_800060297ab83f24c0fb0d75`, `eaf3b_bd0940113f04f3d3784629e7`, `eaf3b_d335d94fd85c2c95c26b6b8b`, `eaf3b_d9c263b19df244e0c6417edb` |
+
+## Later-only inventory
+
+These current-approved materials are recorded for structural-secondary or applied-finish review after primary role survivors. None was composited as an additional layer here.
+
+| Later layer | Catalog ID | Display name | Family | Approved roles | Note |
+| --- | --- | --- | --- | --- | --- |
+| structural_secondary | `eaf3b_193e61e22156c9dbe801f0ea` | KB3D_CPI_CinderBlocksPDGray | `masonry_block` | wall, opening_reveal | Masonry/block possibility. |
+| structural_secondary | `eaf3b_1beac3a311a480af8844ea89` | KB3D_BYR_COReinforcedConcreteSlabs | `structural_concrete` | wall, ceiling, beam_column, opening_reveal | Strong panel or reinforced slab possibility. |
+| structural_secondary | `eaf3b_20c61bd1c85420be2f71a090` | KB3D_BTL_ConcreteFloorPanelsRoughA | `service_floor_concrete` | floor, wall | Also in primary floor review; secondary use is later-only. |
+| structural_secondary | `eaf3b_5a797fbdc766d7e3dc475abf` | KB3D_BTL_ConcreteRoughPanelBright | `structural_concrete` | wall, beam_column, opening_reveal | Strong panel or reinforced slab possibility. |
+| structural_secondary | `eaf3b_cb2bc1880df9d4b7d55cf348` | KB3D_BTL_ConcreteBlocksB | `masonry_block` | wall, opening_reveal | Masonry/block possibility. |
+| structural_secondary | `eaf3b_e1a15a7af45c82b781600501` | KB3D_CSZ_ConcreteBlocksBPanels | `masonry_block` | wall, opening_reveal | Masonry/block possibility. |
+| structural_secondary | `eaf3b_e7d641639f5d230a5d21ecbd` | KB3D_WDC_ConcreteBlocksA | `masonry_block` | wall, opening_reveal | Masonry/block possibility. |
+| applied_finish | `eaf3b_7b12b8b3a2e05c502801d22f` | KB3D_RFS_ConcretePlasterWhite | `cement_render` | wall | Layer-2 wall finish only. |
+| applied_finish | `eaf3b_8d5f0cf5add98dfe0a58f18a` | KB3D_AFT_PlasterA | `cement_render` | wall | Layer-2 wall finish only. |
+| applied_finish | `eaf3b_9297ffec71774317b0627951` | Painted Concrete Wall | `applied_paint` | wall | Layer-2 wall finish only. |
+| applied_finish | `eaf3b_b395eb3943870fbfd262e8ce` | KB3D_ECP_StuccoWhite | `cement_render` | wall | Layer-2 wall finish only. |
+| applied_finish | `eaf3b_c29826cd934f1534ecfb48c5` | KB3D_NNY_ConcretePlasterWhite | `cement_render` | wall | Layer-2 wall finish only. |
+
+## Captures and review packages
+
+- Shell: six neutral 1920×1080 captures and one contact sheet. Role isolation: four 1920×1080 captures per candidate (Neutral/Receiving × Overall/role view), totaling 132 role captures. All candidate IDs and records are sorted deterministically. Each record includes source ID/fingerprint, approved and effective mapping, PBR settings, camera transform, light settings, shell source/version and all 19 geometry fingerprints.
+- ZIP contents are allowlisted to capture PNGs, contact sheets, manifest, summary and pending decision template. All four ZIP integrity checks passed; no commercial maps, staged cache or `.import` files are included.
+
+| Package | Captures | Sheets | SHA-256 |
+| --- | ---: | ---: | --- |
+| [eaf5_shell_review_01.zip](../../reports/environment_receiving_proof/eaf5/eaf5_shell_review_01.zip) | 6 | 1 | `9cb51061bab8f2d5abc999c10fe734855c01406ce5a6ede07f1842b2fb545c64` |
+| [eaf5_wall_role_review_01.zip](../../reports/environment_receiving_proof/eaf5/eaf5_wall_role_review_01.zip) | 56 | 4 | `377210a717c20b1de2b7dff3f133e185a593f4907e2de7fad18057422385a3a6` |
+| [eaf5_floor_role_review_01.zip](../../reports/environment_receiving_proof/eaf5/eaf5_floor_role_review_01.zip) | 32 | 2 | `51ab9c6477f8677d962c678484ffc3a02887bbbfe4e6adbdd87f863fef6be043` |
+| [eaf5_ceiling_role_review_01.zip](../../reports/environment_receiving_proof/eaf5/eaf5_ceiling_role_review_01.zip) | 44 | 3 | `24caacf6ffa48dab4eb33536cf8979359a385b09d0967467ee9e77de753e9e69` |
+
+## Verification and handoff
+
+- `audit_pass3_shell.py`: 19 pieces, 18/1 recipes, 11 contact pairs, accepted openings, zero errors.
+- EAF5 Python suite: 25 tests passed, covering Pass 1/2 authority plus specs, shell audit, live candidate matrix, provenance, package allowlist and visual readability.
+- EAF3B Python suite: 17 tests passed. Godot EAF2 substrate, EAF3B query and live catalog, EAF1 lookdev, EAF5 proof and capture tests: all exit 0, zero reported failures.
+- Godot 4.7 headless editor import/parse exited 0. A platform certificate-store warning appeared on all Godot invocations; it did not fail tests or imports.
+- `git diff --name-only --` against the protected wing paths returned no files. No EAF4 overlay, patch or wear query is instantiated. No wall/floor/ceiling pair, applied finish, survivor selection, production migration or Receiving C1 work was performed.
+- Human gate: review the shell ZIP first for proportion, contacts, apertures and freight enclosure. If accepted, record KEEP / DROP_FOR_RECEIVING / HOLD decisions separately in the three role ZIP templates. Decisions remain PENDING; no EAF3 status is revoked by a room-role drop.

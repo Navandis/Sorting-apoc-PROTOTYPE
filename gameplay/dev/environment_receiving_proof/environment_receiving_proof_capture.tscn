@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://gameplay/dev/environment_receiving_proof/environment_receiving_proof_capture.gd" id="1"]
+[ext_resource type="PackedScene" path="res://gameplay/dev/environment_receiving_proof/environment_receiving_proof.tscn" id="2"]
+
+[node name="EnvironmentReceivingProofCapture" type="Node3D"]
+script = ExtResource("1")
+
+[node name="Proof" parent="." instance=ExtResource("2")]

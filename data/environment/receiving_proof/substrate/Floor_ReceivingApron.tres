@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="EnvironmentSubstratePieceSpec" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://environment_authoring/substrate/environment_substrate_piece_spec.gd" id="1"]
+[ext_resource type="Resource" path="res://data/environment/receiving_proof/eaf5_review_control.tres" id="2"]
+
+[resource]
+script = ExtResource("1")
+piece_id = "Floor_ReceivingApron"
+recipe_id = "rect_solid"
+semantic_role = "FLOOR_PRIMARY"
+dimensions_m = Vector3(10.5, 0.3, 10.0)
+bevel_width_m = 0.0
+uv_quarter_turns = 0
+uv_origin_m = Vector2(0.0, -5.0)
+collision_policy = 0
+material_spec = ExtResource("2")
+generation_revision = 1
+authoring_notes = "EAF5 accepted shell source; FLOOR_PRIMARY; review tooling only."

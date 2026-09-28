@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="EnvironmentSurfaceMaterialSpec" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://environment_authoring/environment_surface_material_spec.gd" id="1"]
+[ext_resource type="Texture2D" path="res://data/environment/receiving_proof/eaf5_review_control.png" id="2"]
+
+[resource]
+script = ExtResource("1")
+material_id = "eaf5_review_control_only"
+display_name = "EAF5 neutral review control"
+base_color_texture = ExtResource("2")
+meters_per_repeat = 1.0
+roughness_multiplier = 0.75
+surface_family = "review_tooling_only"
+vdd_layer = "review_tooling_only"
+review_notes = "EAF5 review tooling only. Not EAF3 approved and not a production palette material."

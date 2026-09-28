@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="EnvironmentSubstratePieceSpec" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://environment_authoring/substrate/environment_substrate_piece_spec.gd" id="1"]
+[ext_resource type="Resource" path="res://data/environment/receiving_proof/eaf5_review_control.tres" id="2"]
+
+[resource]
+script = ExtResource("1")
+piece_id = "DispatchNorth"
+recipe_id = "rect_solid"
+semantic_role = "CONTEXT_ONLY"
+dimensions_m = Vector3(9.8, 4.2, 0.3)
+bevel_width_m = 0.0
+uv_quarter_turns = 0
+uv_origin_m = Vector2(0.85, 0.0)
+collision_policy = 0
+material_spec = ExtResource("2")
+generation_revision = 1
+authoring_notes = "EAF5 accepted shell source; CONTEXT_ONLY; review tooling only."
