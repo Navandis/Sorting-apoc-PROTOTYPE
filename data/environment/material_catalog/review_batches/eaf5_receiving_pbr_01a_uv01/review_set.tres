@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="EnvironmentMaterialReviewSet" load_steps=18 format=3]
+
+[ext_resource type="Script" path="res://environment_authoring/environment_material_review_set.gd" id="1"]
+[ext_resource type="Resource" path="res://data/environment/material_catalog/review_batches/eaf5_receiving_pbr_01a_uv01/eaf3b_d335d94fd85c2c95c26b6b8b.tres" id="2"]
+[ext_resource type="Resource" path="res://data/environment/material_catalog/review_batches/eaf5_receiving_pbr_01a_uv01/eaf3b_6bcd8f817ca2993433e217cc.tres" id="3"]
+[ext_resource type="Resource" path="res://data/environment/material_catalog/review_batches/eaf5_receiving_pbr_01a_uv01/eaf3b_d5661cbdbd0eb8391630debd.tres" id="4"]
+[ext_resource type="Resource" path="res://data/environment/material_catalog/review_batches/eaf5_receiving_pbr_01a_uv01/eaf3b_ad740710d009de8d795c0d8c.tres" id="5"]
+[ext_resource type="Resource" path="res://data/environment/material_catalog/review_batches/eaf5_receiving_pbr_01a_uv01/eaf3b_71edb3fc983ed8f7655d9523.tres" id="6"]
+[ext_resource type="Resource" path="res://data/environment/material_catalog/review_batches/eaf5_receiving_pbr_01a_uv01/eaf3b_e7f6e811984da5e79f6d86c0.tres" id="7"]
+[ext_resource type="Resource" path="res://data/environment/material_catalog/review_batches/eaf5_receiving_pbr_01a_uv01/eaf3b_42a2691272218b9a18a53418.tres" id="8"]
+[ext_resource type="Resource" path="res://data/environment/material_catalog/review_batches/eaf5_receiving_pbr_01a_uv01/eaf3b_1beac3a311a480af8844ea89.tres" id="9"]
+[ext_resource type="Resource" path="res://data/environment/material_catalog/review_batches/eaf5_receiving_pbr_01a_uv01/eaf3b_800060297ab83f24c0fb0d75.tres" id="10"]
+[ext_resource type="Resource" path="res://data/environment/material_catalog/review_batches/eaf5_receiving_pbr_01a_uv01/eaf3b_2dc87647fd382ad8287a0280.tres" id="11"]
+[ext_resource type="Resource" path="res://data/environment/material_catalog/review_batches/eaf5_receiving_pbr_01a_uv01/eaf3b_d7650ac990b84e9886aec757.tres" id="12"]
+[ext_resource type="Resource" path="res://data/environment/material_catalog/review_batches/eaf5_receiving_pbr_01a_uv01/eaf3b_50ad83f394c2da7652cd6e50.tres" id="13"]
+[ext_resource type="Resource" path="res://data/environment/material_catalog/review_batches/eaf5_receiving_pbr_01a_uv01/eaf3b_d9c263b19df244e0c6417edb.tres" id="14"]
+[ext_resource type="Resource" path="res://data/environment/material_catalog/review_batches/eaf5_receiving_pbr_01a_uv01/eaf3b_5a797fbdc766d7e3dc475abf.tres" id="15"]
+[ext_resource type="Resource" path="res://data/environment/material_catalog/review_batches/eaf5_receiving_pbr_01a_uv01/eaf3b_193e61e22156c9dbe801f0ea.tres" id="16"]
+[ext_resource type="Resource" path="res://data/environment/material_catalog/review_batches/eaf5_receiving_pbr_01a_uv01/eaf3b_e7d641639f5d230a5d21ecbd.tres" id="17"]
+
+[resource]
+script = ExtResource("1")
+specs = Array[Resource]([ExtResource("2"), ExtResource("3"), ExtResource("4"), ExtResource("5"), ExtResource("6"), ExtResource("7"), ExtResource("8"), ExtResource("9"), ExtResource("10"), ExtResource("11"), ExtResource("12"), ExtResource("13"), ExtResource("14"), ExtResource("15"), ExtResource("16"), ExtResource("17")])

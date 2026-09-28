@@ -1,6 +1,6 @@
 # EAF5 Pass 2 — Receiving material PBR review
 
-**Status: 31 SOURCES STAGED / 124 CAPTURES VERIFIED / HUMAN PBR REVIEW PENDING.** The source-shortlist record preserves an unresolved per-ID HOLD/DROP split because the handoff provided counts but not the 26 identities.
+**Status: INITIAL CAPTURES SUPERSEDED BEFORE HUMAN REVIEW / UV01 RECAPTURE TECHNICALLY VERIFIED / HUMAN PBR REVIEW PENDING.** The source-shortlist record preserves an unresolved per-ID HOLD/DROP split because the handoff provided counts but not the 26 identities.
 
 - Branch: `codex/eaf5-receiving-proof`; pre-edit HEAD `64d99fc884c5d19b42b7b334cab97d3a3d457304`; `main` and `origin/main` `ac12a51ce431f94c9a65a4e84edbf2f73bdf5c2c`; pre-edit tree clean. No merge or push.
 - Pass-1 accepted. [Shortlist manifest](../../data/environment/receiving_proof/eaf5_material_source_shortlist_01.json) and [human decision record](../../data/environment/receiving_proof/decisions/eaf5_source_shortlist_01_human_review.json) anchor the reviewed source snapshot. EAF3A index fingerprint `e6398707ff5a1f47d1be2855ad04986a5ba39eb8fbc04fbc107f1a01479de23d` still matches; 31/31 IDs exist and have no EAF3 catalog decision.
@@ -36,6 +36,22 @@ Both tracked batches were generated through promoted `catalog.make_batch` and st
 - EAF5 Pass-2 focused Python tests: 4 passed. EAF3A repository: 36 passed. EAF3B catalog/workflow: 16 passed. EAF1 Godot: `EAF1_TESTS failures=0`. EAF3B synthetic/live Godot: `EAF3B_QUERY_TESTS failures=0`, `EAF3B_LIVE_CATALOG_TESTS failures=0`. Godot 4.7 editor import/parse exited 0.
 - The existing Windows root-certificate-store startup warning appeared; tests, import and captures exited 0. Production wing scene/builder paths and Receiving runtime paths were not edited. No proof room, palette combination, wear or C1 work began.
 
+
+## Supersession and UV01 review lineage
+
+The initial 22 triplanar / 9 UV review mix showed a systemic high-frequency grid on large EAF1 surfaces. The original Pass-2 packages above are **SUPERSEDED — TRIPLANAR ARTIFACT INVESTIGATION EVIDENCE**. Keep their exact ZIP bytes and hashes; do not use their pending decision templates for human material decisions. The [UV-default maintenance validation](environment-authoring-triplanar-uv-default-maintenance.md) records the controlled diagnostic.
+
+All 31 sources were recaptured under UV with the same strong source fingerprints and unchanged starting parameters other than mapping. Both new packages have wholly regenerated screenshots and fresh PENDING templates.
+
+| Batch | Capture count | ZIP SHA-256 |
+| --- | ---: | --- |
+| [eaf5_receiving_pbr_01a_uv01](../../reports/environment_material_catalog/reviews/eaf5_receiving_pbr_01a_uv01_review.zip) | 64 | d42265553a950158efc614f66962257e5ce5729636df14d528e34f43ef1cb875 |
+| [eaf5_receiving_pbr_01b_uv01](../../reports/environment_material_catalog/reviews/eaf5_receiving_pbr_01b_uv01_review.zip) | 60 | dd8ce4481e1540254c5ba96daf516505daa44b138b03d10955ee35e6aed4f0be |
+
+The three current triplanar-approved EAF3 seeds were separately captured with only mapping changed to UV in [eaf5_seed_uv_policy_check_01](../../reports/environment_material_catalog/reviews/eaf5_seed_uv_policy_check_01_review.zip): 12 images, SHA-256 f601859c09285bf7f3859076e5a62cf704da84e8202c9c2c98029cb5378aa0d8. Their catalog mappings remain unchanged. No material decision was reconciled.
+
+**EAF5 Pass-2 disposition: IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN PBR REVIEW PENDING.**
+
 ## Human gate
 
-All 31 EAF3B decision templates remain PENDING. Review color/value, roughness, normal direction and strength, physical repeat, visible tiling, directionality, baked history and Neutral versus Receiving response. Wall and ceiling candidates need quiet large-area coverage; floors need to avoid dominant grids and baked traffic motifs; applied finishes should read over structure; patterned structural secondary materials may still suit reveals/recesses. Decide APPROVE/REJECT/DEFER or request a parameter-only rerun through the promoted EAF3B mechanism. EAF5 proposed roles are not EAF3 approved roles; Receiving room-scale suitability is a later gate.
+All 31 UV01 EAF3B decision templates remain PENDING. Review color/value, roughness, normal direction and strength, physical repeat, visible tiling, directionality, baked history and Neutral versus Receiving response. Wall and ceiling candidates need quiet large-area coverage; floors need to avoid dominant grids and baked traffic motifs; applied finishes should read over structure; patterned structural secondary materials may still suit reveals/recesses. Decide APPROVE/REJECT/DEFER or request a parameter-only rerun through the promoted EAF3B mechanism. EAF5 proposed roles are not EAF3 approved roles; Receiving room-scale suitability is a later gate.

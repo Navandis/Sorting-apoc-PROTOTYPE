@@ -16,6 +16,8 @@ class WorkflowTests(CatalogFixture, unittest.TestCase):
         result = workflow.prepare(batch, self.index, self.repo, self.cache, spec_dir, review_dir)
         self.assertEqual(len(result['candidates']), 1)
         self.assertEqual(result['candidates'][0]['actual_review_resolution'], '2K')
+        self.assertEqual(result['candidates'][0]['mapping_mode'], 'UV')
+        self.assertIn('mapping_mode = 0', next(spec_dir.glob('eaf3b_*.tres')).read_text())
         self.assertTrue((spec_dir / 'review_set.tres').exists())
         self.assertIn('PENDING', (review_dir / 'decision_template.json').read_text())
         self.assertIn('Strong fingerprint', (review_dir / 'batch_summary.md').read_text())
@@ -32,6 +34,22 @@ class WorkflowTests(CatalogFixture, unittest.TestCase):
         workflow.prepare(batch, self.index, self.repo, self.cache, spec_dir, review_dir, iteration)
         self.assertEqual(staged_map.stat().st_mtime_ns, source_mtime)
         self.assertIn('meters_per_repeat = 2.5', next(spec_dir.glob('eaf3b_*.tres')).read_text())
+
+    def test_explicit_batch_and_iteration_mapping_overrides(self):
+        stable_id = self.candidate['stable_id']
+        batch = catalog.make_batch('mapping_policy_01', self.index, [stable_id],
+                                   overrides={stable_id: {'mapping_mode': 'TRIPLANAR'}})
+        spec_dir = self.root / 'data' / batch['batch_id']
+        review_dir = self.root / 'reports' / batch['batch_id']
+        staged = workflow.prepare(batch, self.index, self.repo, self.cache, spec_dir, review_dir)
+        self.assertEqual(staged['candidates'][0]['mapping_mode'], 'TRIPLANAR')
+        self.assertIn('mapping_mode = 1', next(spec_dir.glob('eaf3b_*.tres')).read_text())
+        iteration = {'schema_version': 1, 'batch_id': batch['batch_id'],
+                     'candidate_overrides': {stable_id: {'mapping_mode': 'WORLD_TRIPLANAR'}}}
+        staged = workflow.prepare(batch, self.index, self.repo, self.cache,
+                                  spec_dir, review_dir, iteration)
+        self.assertEqual(staged['candidates'][0]['mapping_mode'], 'WORLD_TRIPLANAR')
+        self.assertIn('mapping_mode = 2', next(spec_dir.glob('eaf3b_*.tres')).read_text())
 
     def test_import_policy_normalizes_generated_records(self):
         staged = catalog.stage_candidate(self.repo, self.candidate, '2K', self.cache)

@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "batch_id": "eaf5_receiving_pbr_01b_uv01",
+  "source_index_schema": 1,
+  "source_index_revision": "eaf3a-2",
+  "source_index_scan_id": "2026-09-27T20:01:04.531065+00:00",
+  "source_index_fingerprint": "a408ac2c421ebfbccd5a64ac302779b1187fef4ce1789cb4061ee859d8a15954",
+  "candidate_ids": [
+    "fab:pjBkT0",
+    "fab:sl2qedtp",
+    "fab:tixmdgdcw",
+    "fab:ufmgaccg",
+    "fab:ufvpdcxfw",
+    "fab:ugkkedvlw",
+    "fab:uikpbgjdy",
+    "fab:virrebs",
+    "fab:viyjde3",
+    "kitbash:kb3d_brutalisttff@7.0.3:KB3D_BTL_ConcreteBlocksB",
+    "kitbash:kb3d_brutalisttff@7.0.3:KB3D_BTL_ConcreteNoiseFlatGrey",
+    "kitbash:kb3d_constructionzone@7.0.3:KB3D_CSZ_ConcreteBlocksBPanels",
+    "kitbash:kb3d_everycitypolicedept@7.0.2:KB3D_ECP_StuccoWhite",
+    "kitbash:kb3d_neonyc@7.0.2:KB3D_NNY_ConcretePlasterWhite",
+    "kitbash:kb3d_refineries@7.0.2:KB3D_RFS_ConcretePlasterWhite"
+  ],
+  "review_resolution_policy": "2K_THEN_4K_THEN_1K",
+  "candidate_overrides": {
+    "fab:pjBkT0": {
+      "mapping_mode": "UV",
+      "meters_per_repeat": 1.0
+    },
+    "fab:sl2qedtp": {
+      "mapping_mode": "UV",
+      "meters_per_repeat": 1.5
+    },
+    "fab:tixmdgdcw": {
+      "mapping_mode": "UV",
+      "meters_per_repeat": 1.5
+    },
+    "fab:ufmgaccg": {
+      "mapping_mode": "UV",
+      "meters_per_repeat": 1.5
+    },
+    "fab:ufvpdcxfw": {
+      "mapping_mode": "UV",
+      "meters_per_repeat": 1.5
+    },
+    "fab:ugkkedvlw": {
+      "mapping_mode": "UV",
+      "meters_per_repeat": 1.5
+    },
+    "fab:uikpbgjdy": {
+      "mapping_mode": "UV",
+      "meters_per_repeat": 1.5
+    },
+    "fab:virrebs": {
+      "mapping_mode": "UV",
+      "meters_per_repeat": 1.5
+    },
+    "fab:viyjde3": {
+      "mapping_mode": "UV",
+      "meters_per_repeat": 1.5
+    },
+    "kitbash:kb3d_brutalisttff@7.0.3:KB3D_BTL_ConcreteBlocksB": {
+      "mapping_mode": "UV",
+      "meters_per_repeat": 1.5
+    },
+    "kitbash:kb3d_brutalisttff@7.0.3:KB3D_BTL_ConcreteNoiseFlatGrey": {
+      "mapping_mode": "UV",
+      "meters_per_repeat": 1.5
+    },
+    "kitbash:kb3d_constructionzone@7.0.3:KB3D_CSZ_ConcreteBlocksBPanels": {
+      "mapping_mode": "UV",
+      "meters_per_repeat": 1.5
+    },
+    "kitbash:kb3d_everycitypolicedept@7.0.2:KB3D_ECP_StuccoWhite": {
+      "mapping_mode": "UV",
+      "meters_per_repeat": 1.5
+    },
+    "kitbash:kb3d_neonyc@7.0.2:KB3D_NNY_ConcretePlasterWhite": {
+      "mapping_mode": "UV",
+      "meters_per_repeat": 1.5
+    },
+    "kitbash:kb3d_refineries@7.0.2:KB3D_RFS_ConcretePlasterWhite": {
+      "mapping_mode": "UV",
+      "meters_per_repeat": 1.5
+    }
+  },
+  "notes": "EAF5 Pass-2 clean UV01 recapture. Supersedes the triplanar-artifact review package eaf5_receiving_pbr_01b. All source parameters except mapping retain the Pass-2 hints. Human material decisions remain pending.",
+  "selection_rationale": {
+    "fab:pjBkT0": "Indexed cement_render source and name suggest historical applied finish comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+    "fab:sl2qedtp": "Indexed concrete source and name suggest service-floor surface comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+    "fab:tixmdgdcw": "Indexed concrete source and name suggest service-floor surface comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+    "fab:ufmgaccg": "Indexed concrete source and name suggest service-floor surface comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+    "fab:ufvpdcxfw": "Indexed concrete source and name suggest service-floor surface comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+    "fab:ugkkedvlw": "Indexed concrete source and name suggest historical applied finish comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+    "fab:uikpbgjdy": "Indexed concrete source and name suggest service-floor surface comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+    "fab:virrebs": "Indexed concrete source and name suggest service-floor surface comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+    "fab:viyjde3": "Indexed concrete source and name suggest service-floor surface comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+    "kitbash:kb3d_brutalisttff@7.0.3:KB3D_BTL_ConcreteBlocksB": "Indexed masonry_block source and name suggest bounded structural/reveal comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+    "kitbash:kb3d_brutalisttff@7.0.3:KB3D_BTL_ConcreteNoiseFlatGrey": "Indexed concrete source and name suggest service-floor surface comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+    "kitbash:kb3d_constructionzone@7.0.3:KB3D_CSZ_ConcreteBlocksBPanels": "Indexed masonry_block source and name suggest bounded structural/reveal comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+    "kitbash:kb3d_everycitypolicedept@7.0.2:KB3D_ECP_StuccoWhite": "Indexed cement_render source and name suggest historical applied finish comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+    "kitbash:kb3d_neonyc@7.0.2:KB3D_NNY_ConcretePlasterWhite": "Indexed cement_render source and name suggest historical applied finish comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging.",
+    "kitbash:kb3d_refineries@7.0.2:KB3D_RFS_ConcretePlasterWhite": "Indexed cement_render source and name suggest historical applied finish comparison. Basecolor/contact-sheet review must check repetition and baked wear before staging."
+  }
+}

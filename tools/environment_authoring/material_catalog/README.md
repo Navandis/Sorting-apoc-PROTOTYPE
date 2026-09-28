@@ -24,6 +24,19 @@ resolution. A source change repairs the same cache location after strong
 SHA-256 verification. Height and unsupported maps remain source facts; height
 is not staged or included in the normal review fingerprint.
 
+New EAF3B reviews default to `UV`, matching `EnvironmentSurfaceMaterialSpec`
+and the metre-authored EAF2 geometry UVs. Batch or iteration parameters may
+explicitly choose `TRIPLANAR` or `WORLD_TRIPLANAR`; existing human-approved
+catalog mapping values are never rewritten by this default. Use triplanar only
+for a documented geometry/source need, such as irregular geometry without
+usable UVs, impractical planar continuity for a seamless mineral surface, or
+a deliberately verified multi-axis case. Concrete, plaster, quiet color, or
+non-directionality alone do not justify it. Before human approval, inspect any
+triplanar choice on a large plane, a corner or other multi-axis form, and the
+EAF1 WallGrazing camera. The Godot 4.7 Compatibility triplanar path currently
+shows a fine grid on some large review surfaces; see the EAF5 UV-default
+maintenance validation for the controlled comparison.
+
 `capture` imports textures in Godot 4.7, normalizes the local `.png.import`
 records, reimports, and invokes the unchanged EAF1 capture matrix with an
 injected review set. The package at

@@ -33,7 +33,7 @@ HUMAN_FIELDS = ('display_name', 'surface_family', 'vdd_layer', 'approved_roles',
 PARAMETERS = ('mapping_mode', 'meters_per_repeat', 'normal_y_flip', 'normal_strength',
               'roughness_multiplier', 'metallic_multiplier', 'albedo_multiplier')
 CACHE_RESOURCE_ROOT = 'res://assets/environment/materials/kitbash_cache'
-DEFAULT_PARAMETERS = {'mapping_mode': 'TRIPLANAR', 'meters_per_repeat': 1.0,
+DEFAULT_PARAMETERS = {'mapping_mode': 'UV', 'meters_per_repeat': 1.0,
                       'normal_y_flip': False, 'normal_strength': 1.0,
                       'roughness_multiplier': 1.0, 'metallic_multiplier': 1.0,
                       'albedo_multiplier': 1.0}
