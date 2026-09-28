@@ -306,6 +306,36 @@ func set_review(role: String, catalog_material_id: String) -> bool:
             (piece.get_node("GeneratedMesh") as MeshInstance3D).material_override = material
     return true
 
+func set_wall_floor_pair(wall_id: String, floor_id: String) -> bool:
+    if wall_id == floor_id:
+        return false
+    var wall_record: Dictionary = {}
+    var floor_record: Dictionary = {}
+    for candidate in _candidates["WALL_PRIMARY"]:
+        if candidate["catalog_material_id"] == wall_id:
+            wall_record = candidate
+            break
+    for candidate in _candidates["FLOOR_PRIMARY"]:
+        if candidate["catalog_material_id"] == floor_id:
+            floor_record = candidate
+            break
+    if wall_record.is_empty() or floor_record.is_empty() or wall_record["mapping_mode"] != "UV" or floor_record["mapping_mode"] != "UV":
+        return false
+    if not set_review("WALL_PRIMARY", wall_id):
+        return false
+    var floor_spec := load("res://data/environment/material_catalog/approved_specs/" + floor_id + ".tres") as EnvironmentSurfaceMaterialSpec
+    if floor_spec == null or floor_spec.material_id != floor_id or not floor_spec.validate().is_empty() or floor_spec.mapping_mode != EnvironmentSurfaceMaterialSpec.MappingMode.UV:
+        set_control()
+        return false
+    var floor_material := _builder.build(floor_spec)
+    if floor_material == null:
+        set_control()
+        return false
+    for piece in _pieces.values():
+        if piece.piece_spec.semantic_role == "FLOOR_PRIMARY":
+            (piece.get_node("GeneratedMesh") as MeshInstance3D).material_override = floor_material
+    return true
+
 func active_review_spec() -> EnvironmentSurfaceMaterialSpec:
     return _active_spec
 

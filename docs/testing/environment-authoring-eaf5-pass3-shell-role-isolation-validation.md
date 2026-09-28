@@ -1,6 +1,6 @@
 # EAF5 Pass 3 — Receiving shell and role isolation validation
 
-**Current status: EAF5 PASS 3 SHELL ACCEPTED / HUMAN ROLE-ISOLATION REVIEW PENDING.** The accepted Pass-3A v2 shell is the authority for the Pass-3B role packages below. No role survivor decision has been made.
+**Current status: EAF5 PASS 3 — HUMAN ROLE-ISOLATION REVIEW COMPLETE.** The accepted Pass-3A v2 shell and Pass-3B role packages remain the authority. EAF5 overall remains in progress; Pass 4 wall/floor pair review is pending.
 
 **Historical Pass 3 v1 status:** EAF5 PASS 3 IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN SHELL + ROLE REVIEW PENDING. Shell acceptance was the first human gate; the v1 role captures are not promotion evidence.
 
@@ -197,3 +197,17 @@ Each candidate has Neutral/Receiving overall and role-specific views. Contact sh
 - No protected production Receiving/wing file changed. No KEEP / DROP_FOR_RECEIVING / HOLD decision was selected. Human review now selects role survivors; Pass 3 is not complete and EAF5 is not promoted.
 
 **Handoff status: EAF5 PASS 3B READY — HUMAN ROLE-SURVIVOR REVIEW PENDING.**
+
+## Pass 3B human role decisions (2026-09-28)
+
+The [room-specific human decision record](../../data/environment/receiving_proof/decisions/eaf5_role_isolation_02_human_review_01.json) records all 33 Pass-3B decisions against the unchanged v2 role evidence. Empty individual notes mean the available handoff gave no specific rationale; none was inferred. These room decisions do not change EAF3 catalog approval.
+
+| Role | KEEP | HOLD | DROP_FOR_RECEIVING |
+| --- | ---: | ---: | ---: |
+| WALL_PRIMARY | 5 | 7 | 2 |
+| FLOOR_PRIMARY | 3 | 3 | 2 |
+| CEILING_PRIMARY | 5 | 3 | 3 |
+
+The five wall and three floor KEEP candidates are the only sources for the 15 Pass-4 wall/floor pairs. Five ceiling KEEP candidates are retained for a later review; the ceiling remains the neutral EAF5 control in Pass 4. The known freight/elevator enclosure oddity remains a non-blocking deferred follow-up.
+
+**EAF5 PASS 3 — HUMAN ROLE-ISOLATION REVIEW COMPLETE.** EAF5 overall remains in progress.

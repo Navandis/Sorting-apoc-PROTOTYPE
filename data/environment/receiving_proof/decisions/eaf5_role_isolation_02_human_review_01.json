@@ -1,0 +1,310 @@
+{
+  "schema_version": 1,
+  "scope": "Receiving role isolation only; EAF3 approvals unchanged",
+  "accepted_composition_sha256": "8361ed7d1d211f40c253cc7bf76821b9d141ab303b0fe7a6573208216f05339d",
+  "allowed_decisions": [
+    "KEEP",
+    "HOLD",
+    "DROP_FOR_RECEIVING"
+  ],
+  "note_policy": "Empty human_note means no individual rationale was supplied in the available human handoff; no artistic reason was inferred.",
+  "decisions": [
+    {
+      "role": "WALL_PRIMARY",
+      "catalog_material_id": "eaf3b_1435ce254f04bb8e61bd3e96",
+      "display_name": "KB3D_BRK_ConcreteFormed",
+      "decision": "HOLD",
+      "human_note": "",
+      "review_package_sha256": "2fbb4a646b2e48c742a901c0e650178ebb5e89e2c39bd3c964fcc32566946dcb",
+      "review_package": "reports/environment_receiving_proof/eaf5/eaf5_wall_role_review_02.zip"
+    },
+    {
+      "role": "WALL_PRIMARY",
+      "catalog_material_id": "eaf3b_1beac3a311a480af8844ea89",
+      "display_name": "KB3D_BYR_COReinforcedConcreteSlabs",
+      "decision": "HOLD",
+      "human_note": "",
+      "review_package_sha256": "2fbb4a646b2e48c742a901c0e650178ebb5e89e2c39bd3c964fcc32566946dcb",
+      "review_package": "reports/environment_receiving_proof/eaf5/eaf5_wall_role_review_02.zip"
+    },
+    {
+      "role": "WALL_PRIMARY",
+      "catalog_material_id": "eaf3b_20c61bd1c85420be2f71a090",
+      "display_name": "KB3D_BTL_ConcreteFloorPanelsRoughA",
+      "decision": "KEEP",
+      "human_note": "Broad mottled service concrete works well at room scale on walls. Keep for pairing, but do not pair it with the same material on the floor.",
+      "review_package_sha256": "2fbb4a646b2e48c742a901c0e650178ebb5e89e2c39bd3c964fcc32566946dcb",
+      "review_package": "reports/environment_receiving_proof/eaf5/eaf5_wall_role_review_02.zip"
+    },
+    {
+      "role": "WALL_PRIMARY",
+      "catalog_material_id": "eaf3b_2dc87647fd382ad8287a0280",
+      "display_name": "KB3D_BRK_ConcreteWarmGrey",
+      "decision": "KEEP",
+      "human_note": "Quiet warm-grey structural concrete with low repetition and good target-light response. Useful darker/warm structural option.",
+      "review_package_sha256": "2fbb4a646b2e48c742a901c0e650178ebb5e89e2c39bd3c964fcc32566946dcb",
+      "review_package": "reports/environment_receiving_proof/eaf5/eaf5_wall_role_review_02.zip"
+    },
+    {
+      "role": "WALL_PRIMARY",
+      "catalog_material_id": "eaf3b_39b926e570fb3824019aade2",
+      "display_name": "KB3D_CSZ_ConcreteRoughBright",
+      "decision": "HOLD",
+      "human_note": "",
+      "review_package_sha256": "2fbb4a646b2e48c742a901c0e650178ebb5e89e2c39bd3c964fcc32566946dcb",
+      "review_package": "reports/environment_receiving_proof/eaf5/eaf5_wall_role_review_02.zip"
+    },
+    {
+      "role": "WALL_PRIMARY",
+      "catalog_material_id": "eaf3b_42a2691272218b9a18a53418",
+      "display_name": "KB3D_ARV_ConcreteGray",
+      "decision": "DROP_FOR_RECEIVING",
+      "human_note": "",
+      "review_package_sha256": "2fbb4a646b2e48c742a901c0e650178ebb5e89e2c39bd3c964fcc32566946dcb",
+      "review_package": "reports/environment_receiving_proof/eaf5/eaf5_wall_role_review_02.zip"
+    },
+    {
+      "role": "WALL_PRIMARY",
+      "catalog_material_id": "eaf3b_50ad83f394c2da7652cd6e50",
+      "display_name": "KB3D_BTL_ConcreteLightWall",
+      "decision": "HOLD",
+      "human_note": "",
+      "review_package_sha256": "2fbb4a646b2e48c742a901c0e650178ebb5e89e2c39bd3c964fcc32566946dcb",
+      "review_package": "reports/environment_receiving_proof/eaf5/eaf5_wall_role_review_02.zip"
+    },
+    {
+      "role": "WALL_PRIMARY",
+      "catalog_material_id": "eaf3b_5a797fbdc766d7e3dc475abf",
+      "display_name": "KB3D_BTL_ConcreteRoughPanelBright",
+      "decision": "KEEP",
+      "human_note": "Distinct horizontal panel/seam language is credible in Receiving and worth combination testing. Final suitability depends on how the seams align with the room composition.",
+      "review_package_sha256": "2fbb4a646b2e48c742a901c0e650178ebb5e89e2c39bd3c964fcc32566946dcb",
+      "review_package": "reports/environment_receiving_proof/eaf5/eaf5_wall_role_review_02.zip"
+    },
+    {
+      "role": "WALL_PRIMARY",
+      "catalog_material_id": "eaf3b_6bcd8f817ca2993433e217cc",
+      "display_name": "Shuttered Concrete Wall",
+      "decision": "KEEP",
+      "human_note": "Very restrained shuttered/formwork concrete. Quiet enough for large wall fields and leaves strong visual bandwidth for later services and freight equipment.",
+      "review_package_sha256": "2fbb4a646b2e48c742a901c0e650178ebb5e89e2c39bd3c964fcc32566946dcb",
+      "review_package": "reports/environment_receiving_proof/eaf5/eaf5_wall_role_review_02.zip"
+    },
+    {
+      "role": "WALL_PRIMARY",
+      "catalog_material_id": "eaf3b_71edb3fc983ed8f7655d9523",
+      "display_name": "KB3D_AMC_ConcreteWhite",
+      "decision": "HOLD",
+      "human_note": "",
+      "review_package_sha256": "2fbb4a646b2e48c742a901c0e650178ebb5e89e2c39bd3c964fcc32566946dcb",
+      "review_package": "reports/environment_receiving_proof/eaf5/eaf5_wall_role_review_02.zip"
+    },
+    {
+      "role": "WALL_PRIMARY",
+      "catalog_material_id": "eaf3b_800060297ab83f24c0fb0d75",
+      "display_name": "KB3D_BRK_ConcreteGrey",
+      "decision": "HOLD",
+      "human_note": "",
+      "review_package_sha256": "2fbb4a646b2e48c742a901c0e650178ebb5e89e2c39bd3c964fcc32566946dcb",
+      "review_package": "reports/environment_receiving_proof/eaf5/eaf5_wall_role_review_02.zip"
+    },
+    {
+      "role": "WALL_PRIMARY",
+      "catalog_material_id": "eaf3b_bd0940113f04f3d3784629e7",
+      "display_name": "KB3D_DLA_ConcretePittedGrayMed",
+      "decision": "DROP_FOR_RECEIVING",
+      "human_note": "",
+      "review_package_sha256": "2fbb4a646b2e48c742a901c0e650178ebb5e89e2c39bd3c964fcc32566946dcb",
+      "review_package": "reports/environment_receiving_proof/eaf5/eaf5_wall_role_review_02.zip"
+    },
+    {
+      "role": "WALL_PRIMARY",
+      "catalog_material_id": "eaf3b_d335d94fd85c2c95c26b6b8b",
+      "display_name": "Dirty Concrete",
+      "decision": "KEEP",
+      "human_note": "Excellent quiet rough-poured wall base with enough fine mineral texture to avoid sterility. Strong canvas for later architecture/services/wear without baked motifs.",
+      "review_package_sha256": "2fbb4a646b2e48c742a901c0e650178ebb5e89e2c39bd3c964fcc32566946dcb",
+      "review_package": "reports/environment_receiving_proof/eaf5/eaf5_wall_role_review_02.zip"
+    },
+    {
+      "role": "WALL_PRIMARY",
+      "catalog_material_id": "eaf3b_d9c263b19df244e0c6417edb",
+      "display_name": "KB3D_BTL_ConcreteNoiseFlat",
+      "decision": "HOLD",
+      "human_note": "",
+      "review_package_sha256": "2fbb4a646b2e48c742a901c0e650178ebb5e89e2c39bd3c964fcc32566946dcb",
+      "review_package": "reports/environment_receiving_proof/eaf5/eaf5_wall_role_review_02.zip"
+    },
+    {
+      "role": "FLOOR_PRIMARY",
+      "catalog_material_id": "eaf3b_20c61bd1c85420be2f71a090",
+      "display_name": "KB3D_BTL_ConcreteFloorPanelsRoughA",
+      "decision": "HOLD",
+      "human_note": "",
+      "review_package_sha256": "75ccd8600d1f15e9030b87284bbda0bae1f3f5c362dfe35be02d3c0f80df538e",
+      "review_package": "reports/environment_receiving_proof/eaf5/eaf5_floor_role_review_02.zip"
+    },
+    {
+      "role": "FLOOR_PRIMARY",
+      "catalog_material_id": "eaf3b_20e1005f19f39efb82251916",
+      "display_name": "Concrete Floor",
+      "decision": "KEEP",
+      "human_note": "Very quiet neutral service floor. Low visual noise makes it a strong pairing control and preserves maximum contrast for incoming objects.",
+      "review_package_sha256": "75ccd8600d1f15e9030b87284bbda0bae1f3f5c362dfe35be02d3c0f80df538e",
+      "review_package": "reports/environment_receiving_proof/eaf5/eaf5_floor_role_review_02.zip"
+    },
+    {
+      "role": "FLOOR_PRIMARY",
+      "catalog_material_id": "eaf3b_58622aae11bf1d5d20cee763",
+      "display_name": "Concrete Floor",
+      "decision": "HOLD",
+      "human_note": "",
+      "review_package_sha256": "75ccd8600d1f15e9030b87284bbda0bae1f3f5c362dfe35be02d3c0f80df538e",
+      "review_package": "reports/environment_receiving_proof/eaf5/eaf5_floor_role_review_02.zip"
+    },
+    {
+      "role": "FLOOR_PRIMARY",
+      "catalog_material_id": "eaf3b_59351fb0f6850a3489e57c4e",
+      "display_name": "Dusty Concrete Floor",
+      "decision": "DROP_FOR_RECEIVING",
+      "human_note": "",
+      "review_package_sha256": "75ccd8600d1f15e9030b87284bbda0bae1f3f5c362dfe35be02d3c0f80df538e",
+      "review_package": "reports/environment_receiving_proof/eaf5/eaf5_floor_role_review_02.zip"
+    },
+    {
+      "role": "FLOOR_PRIMARY",
+      "catalog_material_id": "eaf3b_66101106e84c33eb3874b1ba",
+      "display_name": "KB3D_BTL_ConcreteNoiseFlatGrey",
+      "decision": "HOLD",
+      "human_note": "",
+      "review_package_sha256": "75ccd8600d1f15e9030b87284bbda0bae1f3f5c362dfe35be02d3c0f80df538e",
+      "review_package": "reports/environment_receiving_proof/eaf5/eaf5_floor_role_review_02.zip"
+    },
+    {
+      "role": "FLOOR_PRIMARY",
+      "catalog_material_id": "eaf3b_af97cff72d3204f723d8e38f",
+      "display_name": "Industrial Concrete Floor",
+      "decision": "DROP_FOR_RECEIVING",
+      "human_note": "",
+      "review_package_sha256": "75ccd8600d1f15e9030b87284bbda0bae1f3f5c362dfe35be02d3c0f80df538e",
+      "review_package": "reports/environment_receiving_proof/eaf5/eaf5_floor_role_review_02.zip"
+    },
+    {
+      "role": "FLOOR_PRIMARY",
+      "catalog_material_id": "eaf3b_bb32071987faae156ff2d4e8",
+      "display_name": "Worn Concrete Floor",
+      "decision": "KEEP",
+      "human_note": "Restrained worn floor with low-amplitude history. Reads naturally across the open apron and should leave later freight wear room to work.",
+      "review_package_sha256": "75ccd8600d1f15e9030b87284bbda0bae1f3f5c362dfe35be02d3c0f80df538e",
+      "review_package": "reports/environment_receiving_proof/eaf5/eaf5_floor_role_review_02.zip"
+    },
+    {
+      "role": "FLOOR_PRIMARY",
+      "catalog_material_id": "eaf3b_f10d218d1e8b7f09b7c2689c",
+      "display_name": "Concrete Floor",
+      "decision": "KEEP",
+      "human_note": "Best balanced service-floor option: quiet broad mineral variation, no dominant grid, and enough tonal complexity to avoid sterility without competing with loot.",
+      "review_package_sha256": "75ccd8600d1f15e9030b87284bbda0bae1f3f5c362dfe35be02d3c0f80df538e",
+      "review_package": "reports/environment_receiving_proof/eaf5/eaf5_floor_role_review_02.zip"
+    },
+    {
+      "role": "CEILING_PRIMARY",
+      "catalog_material_id": "eaf3b_1435ce254f04bb8e61bd3e96",
+      "display_name": "KB3D_BRK_ConcreteFormed",
+      "decision": "DROP_FOR_RECEIVING",
+      "human_note": "",
+      "review_package_sha256": "a666f59876a6b35112803f9c8a30995aac06cc9da81f4fe3f1a42c53c5e57c37",
+      "review_package": "reports/environment_receiving_proof/eaf5/eaf5_ceiling_role_review_02.zip"
+    },
+    {
+      "role": "CEILING_PRIMARY",
+      "catalog_material_id": "eaf3b_1beac3a311a480af8844ea89",
+      "display_name": "KB3D_BYR_COReinforcedConcreteSlabs",
+      "decision": "DROP_FOR_RECEIVING",
+      "human_note": "",
+      "review_package_sha256": "a666f59876a6b35112803f9c8a30995aac06cc9da81f4fe3f1a42c53c5e57c37",
+      "review_package": "reports/environment_receiving_proof/eaf5/eaf5_ceiling_role_review_02.zip"
+    },
+    {
+      "role": "CEILING_PRIMARY",
+      "catalog_material_id": "eaf3b_2dc87647fd382ad8287a0280",
+      "display_name": "KB3D_BRK_ConcreteWarmGrey",
+      "decision": "KEEP",
+      "human_note": "",
+      "review_package_sha256": "a666f59876a6b35112803f9c8a30995aac06cc9da81f4fe3f1a42c53c5e57c37",
+      "review_package": "reports/environment_receiving_proof/eaf5/eaf5_ceiling_role_review_02.zip"
+    },
+    {
+      "role": "CEILING_PRIMARY",
+      "catalog_material_id": "eaf3b_39b926e570fb3824019aade2",
+      "display_name": "KB3D_CSZ_ConcreteRoughBright",
+      "decision": "HOLD",
+      "human_note": "",
+      "review_package_sha256": "a666f59876a6b35112803f9c8a30995aac06cc9da81f4fe3f1a42c53c5e57c37",
+      "review_package": "reports/environment_receiving_proof/eaf5/eaf5_ceiling_role_review_02.zip"
+    },
+    {
+      "role": "CEILING_PRIMARY",
+      "catalog_material_id": "eaf3b_42a2691272218b9a18a53418",
+      "display_name": "KB3D_ARV_ConcreteGray",
+      "decision": "DROP_FOR_RECEIVING",
+      "human_note": "",
+      "review_package_sha256": "a666f59876a6b35112803f9c8a30995aac06cc9da81f4fe3f1a42c53c5e57c37",
+      "review_package": "reports/environment_receiving_proof/eaf5/eaf5_ceiling_role_review_02.zip"
+    },
+    {
+      "role": "CEILING_PRIMARY",
+      "catalog_material_id": "eaf3b_6bcd8f817ca2993433e217cc",
+      "display_name": "Shuttered Concrete Wall",
+      "decision": "KEEP",
+      "human_note": "",
+      "review_package_sha256": "a666f59876a6b35112803f9c8a30995aac06cc9da81f4fe3f1a42c53c5e57c37",
+      "review_package": "reports/environment_receiving_proof/eaf5/eaf5_ceiling_role_review_02.zip"
+    },
+    {
+      "role": "CEILING_PRIMARY",
+      "catalog_material_id": "eaf3b_71edb3fc983ed8f7655d9523",
+      "display_name": "KB3D_AMC_ConcreteWhite",
+      "decision": "KEEP",
+      "human_note": "",
+      "review_package_sha256": "a666f59876a6b35112803f9c8a30995aac06cc9da81f4fe3f1a42c53c5e57c37",
+      "review_package": "reports/environment_receiving_proof/eaf5/eaf5_ceiling_role_review_02.zip"
+    },
+    {
+      "role": "CEILING_PRIMARY",
+      "catalog_material_id": "eaf3b_800060297ab83f24c0fb0d75",
+      "display_name": "KB3D_BRK_ConcreteGrey",
+      "decision": "KEEP",
+      "human_note": "",
+      "review_package_sha256": "a666f59876a6b35112803f9c8a30995aac06cc9da81f4fe3f1a42c53c5e57c37",
+      "review_package": "reports/environment_receiving_proof/eaf5/eaf5_ceiling_role_review_02.zip"
+    },
+    {
+      "role": "CEILING_PRIMARY",
+      "catalog_material_id": "eaf3b_bd0940113f04f3d3784629e7",
+      "display_name": "KB3D_DLA_ConcretePittedGrayMed",
+      "decision": "HOLD",
+      "human_note": "",
+      "review_package_sha256": "a666f59876a6b35112803f9c8a30995aac06cc9da81f4fe3f1a42c53c5e57c37",
+      "review_package": "reports/environment_receiving_proof/eaf5/eaf5_ceiling_role_review_02.zip"
+    },
+    {
+      "role": "CEILING_PRIMARY",
+      "catalog_material_id": "eaf3b_d335d94fd85c2c95c26b6b8b",
+      "display_name": "Dirty Concrete",
+      "decision": "KEEP",
+      "human_note": "",
+      "review_package_sha256": "a666f59876a6b35112803f9c8a30995aac06cc9da81f4fe3f1a42c53c5e57c37",
+      "review_package": "reports/environment_receiving_proof/eaf5/eaf5_ceiling_role_review_02.zip"
+    },
+    {
+      "role": "CEILING_PRIMARY",
+      "catalog_material_id": "eaf3b_d9c263b19df244e0c6417edb",
+      "display_name": "KB3D_BTL_ConcreteNoiseFlat",
+      "decision": "HOLD",
+      "human_note": "",
+      "review_package_sha256": "a666f59876a6b35112803f9c8a30995aac06cc9da81f4fe3f1a42c53c5e57c37",
+      "review_package": "reports/environment_receiving_proof/eaf5/eaf5_ceiling_role_review_02.zip"
+    }
+  ]
+}

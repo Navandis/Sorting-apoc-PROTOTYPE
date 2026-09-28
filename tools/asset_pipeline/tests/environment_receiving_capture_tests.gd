@@ -36,6 +36,18 @@ func _run() -> void:
     _check(not capture.call("catalog_spec_matches", catalog_record, altered_spec), "parameter drift fails role preflight")
     _check(capture.call("validate_accepted_shell"), "current shell matches accepted v2 manifest")
     _check(not capture.call("validate_accepted_shell", "res://reports/environment_receiving_proof/eaf5/eaf5_shell_review_01.zip"), "rejected v1 ZIP cannot authorize role capture")
+    _check(capture.call("validate_pair_source"), "human role decisions, live UV specs and evidence authorize pairs")
+    var pairs: Array = capture.call("pair_capture_records")
+    var pair_sanity: Array = capture.call("pair_capture_records", true)
+    _check(pairs.size() == 60, "15 pairs have four captures each")
+    _check(pair_sanity.size() == 12, "three designated sanity pairs have four captures each")
+    var pair_keys := {}
+    for record in pairs:
+        pair_keys[String(record["pair_id"]) + "/" + String(record["light_mode"]) + "/" + String(record["camera"])] = true
+        _check(record["wall_catalog_material_id"] != record["floor_catalog_material_id"], "no same-material pair")
+    _check(pair_keys.size() == 60, "pair captures are unique")
+    _check(capture.get_node("Proof").call("set_wall_floor_pair", "eaf3b_d335d94fd85c2c95c26b6b8b", "eaf3b_f10d218d1e8b7f09b7c2689c"), "approved pair applies")
+    _check(not capture.get_node("Proof").call("set_wall_floor_pair", "eaf3b_20c61bd1c85420be2f71a090", "eaf3b_20c61bd1c85420be2f71a090"), "same-material pair rejected")
     _finish()
 
 func _check(condition: bool, label: String) -> void:

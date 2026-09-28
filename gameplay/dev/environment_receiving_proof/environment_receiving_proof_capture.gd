@@ -10,6 +10,11 @@ const DEBUG_VIEWS := ["JoinAudit_Apron", "JoinAudit_Freight", "JoinAudit_Dispatc
 const ROLES := ["WALL_PRIMARY", "FLOOR_PRIMARY", "CEILING_PRIMARY"]
 const ROLE_VIEW := {"WALL_PRIMARY": "WallDominant", "FLOOR_PRIMARY": "FloorRead", "CEILING_PRIMARY": "CeilingRead"}
 const LIGHT_MODES := ["NEUTRAL_ARCHITECTURAL", "RECEIVING_TARGET"]
+const PAIR_WALL_IDS := ["eaf3b_d335d94fd85c2c95c26b6b8b", "eaf3b_20c61bd1c85420be2f71a090", "eaf3b_5a797fbdc766d7e3dc475abf", "eaf3b_6bcd8f817ca2993433e217cc", "eaf3b_2dc87647fd382ad8287a0280"]
+const PAIR_FLOOR_IDS := ["eaf3b_f10d218d1e8b7f09b7c2689c", "eaf3b_bb32071987faae156ff2d4e8", "eaf3b_20e1005f19f39efb82251916"]
+const PAIR_SANITY_IDS := ["W01_F01", "W03_F02", "W05_F03"]
+const ROLE_DECISIONS := "res://data/environment/receiving_proof/decisions/eaf5_role_isolation_02_human_review_01.json"
+const ROLE_PACKAGE_HASHES := {"wall": "2fbb4a646b2e48c742a901c0e650178ebb5e89e2c39bd3c964fcc32566946dcb", "floor": "75ccd8600d1f15e9030b87284bbda0bae1f3f5c362dfe35be02d3c0f80df538e", "ceiling": "a666f59876a6b35112803f9c8a30995aac06cc9da81f4fe3f1a42c53c5e57c37"}
 
 func _ready() -> void:
     var args := OS.get_cmdline_user_args()
@@ -21,6 +26,10 @@ func _ready() -> void:
         _capture_roles.call_deferred(true)
     elif args.has("--eaf5-capture-roles"):
         _capture_roles.call_deferred(false)
+    elif args.has("--eaf5-capture-pairs-sanity"):
+        _capture_pairs.call_deferred(true)
+    elif args.has("--eaf5-capture-pairs"):
+        _capture_pairs.call_deferred(false)
 
 func shell_capture_records() -> Array:
     var records := []
@@ -115,6 +124,186 @@ func _capture_join_debug() -> void:
 
 func role_capture_directory(sample_only: bool = false) -> String:
     return OUTPUT + ("/role_isolation_02/sanity" if sample_only else "/role_isolation_02")
+
+func pair_capture_records(sample_only: bool = false) -> Array:
+    var records := []
+    for wi in PAIR_WALL_IDS.size():
+        for fi in PAIR_FLOOR_IDS.size():
+            var pair_id := "W%02d_F%02d" % [wi + 1, fi + 1]
+            if sample_only and not PAIR_SANITY_IDS.has(pair_id):
+                continue
+            for view in [
+                {"light_mode": "NEUTRAL_ARCHITECTURAL", "camera": "EastApproachOverview"},
+                {"light_mode": "RECEIVING_TARGET", "camera": "EastApproachOverview"},
+                {"light_mode": "NEUTRAL_ARCHITECTURAL", "camera": "WallDominant"},
+                {"light_mode": "NEUTRAL_ARCHITECTURAL", "camera": "FloorRead"}
+            ]:
+                records.append({
+                    "pair_id": pair_id,
+                    "wall_catalog_material_id": PAIR_WALL_IDS[wi],
+                    "floor_catalog_material_id": PAIR_FLOOR_IDS[fi],
+                    "light_mode": view["light_mode"],
+                    "camera": view["camera"],
+                    "filename": "%s__%s__%s.png" % [pair_id, String(view["light_mode"]).to_lower(), view["camera"]]
+                })
+    return records
+
+func validate_pair_source() -> bool:
+    if not validate_role_candidates() or not validate_accepted_shell():
+        return false
+    var decisions := _json_file(ROLE_DECISIONS)
+    if decisions.get("accepted_composition_sha256") != ACCEPTED_COMPOSITION_SHA256:
+        return false
+    var counts := {"WALL_PRIMARY": {"KEEP": 0, "HOLD": 0, "DROP_FOR_RECEIVING": 0}, "FLOOR_PRIMARY": {"KEEP": 0, "HOLD": 0, "DROP_FOR_RECEIVING": 0}, "CEILING_PRIMARY": {"KEEP": 0, "HOLD": 0, "DROP_FOR_RECEIVING": 0}}
+    var kept := {"WALL_PRIMARY": [], "FLOOR_PRIMARY": [], "CEILING_PRIMARY": []}
+    var seen := {}
+    var proof := get_node("Proof")
+    var sets: Dictionary = proof.call("role_candidates")
+    for folder in ROLE_PACKAGE_HASHES:
+        var path := ProjectSettings.globalize_path(OUTPUT + "/eaf5_" + folder + "_role_review_02.zip")
+        if not FileAccess.file_exists(path) or FileAccess.get_sha256(path) != ROLE_PACKAGE_HASHES[folder]:
+            return false
+    for entry in decisions.get("decisions", []):
+        var role: String = entry.get("role", "")
+        var material_id: String = entry.get("catalog_material_id", "")
+        var decision: String = entry.get("decision", "")
+        var key := role + "/" + material_id
+        if not counts.has(role) or not counts[role].has(decision) or seen.has(key):
+            return false
+        var evidence_folder := role.to_lower().trim_suffix("_primary")
+        if entry.get("review_package_sha256") != ROLE_PACKAGE_HASHES[evidence_folder] or entry.get("review_package") != "reports/environment_receiving_proof/eaf5/eaf5_" + evidence_folder + "_role_review_02.zip":
+            return false
+        seen[key] = true
+        counts[role][decision] += 1
+        var matching: Dictionary = {}
+        for candidate in sets[role]:
+            if candidate["catalog_material_id"] == material_id:
+                matching = candidate
+                break
+        if matching.is_empty() or matching["display_name"] != entry.get("display_name"):
+            return false
+        if decision == "KEEP":
+            if matching["mapping_mode"] != "UV":
+                return false
+            kept[role].append(material_id)
+    if seen.size() != 33 or counts["WALL_PRIMARY"] != {"KEEP": 5, "HOLD": 7, "DROP_FOR_RECEIVING": 2} or counts["FLOOR_PRIMARY"] != {"KEEP": 3, "HOLD": 3, "DROP_FOR_RECEIVING": 2} or counts["CEILING_PRIMARY"] != {"KEEP": 5, "HOLD": 3, "DROP_FOR_RECEIVING": 3}:
+        return false
+    if kept["WALL_PRIMARY"].size() != 5 or kept["FLOOR_PRIMARY"].size() != 3:
+        return false
+    for material_id in PAIR_WALL_IDS:
+        if not kept["WALL_PRIMARY"].has(material_id):
+            return false
+    for material_id in PAIR_FLOOR_IDS:
+        if not kept["FLOOR_PRIMARY"].has(material_id):
+            return false
+    for wall_id in PAIR_WALL_IDS:
+        if PAIR_FLOOR_IDS.has(wall_id):
+            return false
+    return pair_capture_records(false).size() == 60 and pair_capture_records(true).size() == 12
+
+func _capture_pairs(sample_only: bool) -> void:
+    var proof := get_node("Proof")
+    if not validate_pair_source():
+        _fail("pair source differs from approved role decisions, live catalog, or accepted shell")
+        return
+    var folder := ProjectSettings.globalize_path(OUTPUT + ("/wall_floor_pairs_01/sanity" if sample_only else "/wall_floor_pairs_01"))
+    if not _make_directory(folder):
+        return
+    get_window().size = CAPTURE_SIZE
+    await get_tree().process_frame
+    await get_tree().process_frame
+    var records := []
+    var fingerprints := _piece_fingerprints(proof)
+    var sets: Dictionary = proof.call("role_candidates")
+    for planned in pair_capture_records(sample_only):
+        var wall_id: String = planned["wall_catalog_material_id"]
+        var floor_id: String = planned["floor_catalog_material_id"]
+        if not proof.call("set_wall_floor_pair", wall_id, floor_id):
+            _fail("could not apply pair " + String(planned["pair_id"]))
+            return
+        proof.call("set_light_mode", String(planned["light_mode"]))
+        proof.call("set_camera", String(planned["camera"]))
+        await _settle_frame()
+        var record: Dictionary = planned.duplicate(true)
+        var wall: Dictionary = {}
+        var floor: Dictionary = {}
+        for candidate in sets["WALL_PRIMARY"]:
+            if candidate["catalog_material_id"] == wall_id:
+                wall = candidate
+                break
+        for candidate in sets["FLOOR_PRIMARY"]:
+            if candidate["catalog_material_id"] == floor_id:
+                floor = candidate
+                break
+        record["wall_display_name"] = wall["display_name"]
+        record["floor_display_name"] = floor["display_name"]
+        record["wall_source_fingerprint"] = wall["reviewed_source_fingerprint"]
+        record["floor_source_fingerprint"] = floor["reviewed_source_fingerprint"]
+        record["wall_reveal_uses_candidate"] = "opening_reveal" in wall["approved_roles"]
+        record["east_opening_wall_controlled_for_unapproved_reveal"] = not record["wall_reveal_uses_candidate"]
+        record["effective_mapping"] = {"wall": "UV", "floor": "UV"}
+        record["material_parameters"] = {"wall": _pair_parameters(wall), "floor": _pair_parameters(floor)}
+        record["ceiling_material"] = "eaf5_review_control_only"
+        record["review_context_material"] = "eaf5_review_control_only"
+        record.merge(_camera_metadata(proof, String(record["camera"])))
+        record["light_settings"] = proof.call("light_settings")
+        record["shell_source_sha256"] = proof.call("shell_source_sha256")
+        record["proof_composition_sha256"] = proof.call("proof_composition_sha256")
+        record["piece_geometry_fingerprints"] = fingerprints
+        if not _save_image(folder.path_join(String(record["filename"]))):
+            return
+        records.append(record)
+        print("EAF5_PAIR_CAPTURE pair=%s mode=%s camera=%s" % [record["pair_id"], record["light_mode"], record["camera"]])
+    var manifest := _base_manifest(proof)
+    manifest["capture_type"] = "WALL_FLOOR_PAIR_SANITY" if sample_only else "WALL_FLOOR_PAIR"
+    manifest["palette_pairs_generated"] = true
+    manifest["control_material"] = "eaf5_review_control_only"
+    manifest["role_decision_source"] = ROLE_DECISIONS
+    manifest["role_decision_sha256"] = FileAccess.get_sha256(ROLE_DECISIONS)
+    manifest["pair_ids"] = PAIR_SANITY_IDS if sample_only else _pair_ids()
+    manifest["ceiling_survivor_ids_for_later"] = _kept_ceiling_ids()
+    var by_pair := {}
+    for record in records:
+        var pair_id: String = record["pair_id"]
+        if not by_pair.has(pair_id):
+            by_pair[pair_id] = {
+                "pair_id": pair_id,
+                "wall_catalog_material_id": record["wall_catalog_material_id"],
+                "wall_display_name": record["wall_display_name"],
+                "floor_catalog_material_id": record["floor_catalog_material_id"],
+                "floor_display_name": record["floor_display_name"],
+                "accepted_shell_composition_sha256": record["proof_composition_sha256"],
+                "effective_uv_mapping": record["effective_mapping"],
+                "material_parameters": record["material_parameters"]
+            }
+    manifest["pairs"] = []
+    for pair_id in manifest["pair_ids"]:
+        manifest["pairs"].append(by_pair[pair_id])
+    manifest["records"] = records
+    if not _write_json(folder.path_join("manifest.json"), manifest):
+        return
+    print("EAF5_PAIR_CAPTURE_COMPLETE records=", records.size(), " sample=", sample_only)
+    get_tree().quit(0)
+
+func _pair_parameters(candidate: Dictionary) -> Dictionary:
+    var result := {}
+    for field in ["meters_per_repeat", "normal_y_flip", "normal_strength", "roughness_multiplier", "metallic_multiplier", "albedo_multiplier"]:
+        result[field] = candidate[field]
+    return result
+
+func _pair_ids() -> Array:
+    var result := []
+    for wi in PAIR_WALL_IDS.size():
+        for fi in PAIR_FLOOR_IDS.size():
+            result.append("W%02d_F%02d" % [wi + 1, fi + 1])
+    return result
+
+func _kept_ceiling_ids() -> Array:
+    var result := []
+    for entry in _json_file(ROLE_DECISIONS).get("decisions", []):
+        if entry["role"] == "CEILING_PRIMARY" and entry["decision"] == "KEEP":
+            result.append(entry["catalog_material_id"])
+    return result
 
 func _json_file(path: String) -> Dictionary:
     var content := FileAccess.get_file_as_string(ProjectSettings.globalize_path(path))
