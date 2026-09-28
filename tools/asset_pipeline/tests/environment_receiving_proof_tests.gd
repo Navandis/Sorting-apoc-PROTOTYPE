@@ -16,7 +16,7 @@ func _run() -> void:
     root.add_child(room)
     await process_frame
     var generation: Array = room.call("generation_records")
-    _check(generation.size() == 19, "exactly 19 EAF2 generated pieces")
+    _check(generation.size() == 14, "exactly 14 EAF2 generated pieces")
     var recipes := {"rect_solid": 0, "wall_with_rect_opening": 0}
     for record in generation:
         var piece := room.get_node("Shell/" + record["piece_id"]) as Node3D
@@ -24,7 +24,14 @@ func _run() -> void:
         _check(String(record["geometry_fingerprint"]).length() == 64, "fingerprint: " + record["piece_id"])
         _check(record["spec_errors"].is_empty(), "valid EAF2 spec: " + record["piece_id"])
         recipes[record["recipe_id"]] += 1
-    _check(recipes == {"rect_solid": 18, "wall_with_rect_opening": 1}, "accepted recipe breakdown")
+    _check(recipes == {"rect_solid": 13, "wall_with_rect_opening": 1}, "accepted recipe breakdown")
+    for excluded in ["Floor_DispatchAnnex", "Ceiling_DispatchAnnex", "DispatchWest", "DispatchNorth", "DispatchEast"]:
+        _check(room.get_node_or_null("Shell/" + excluded) == null, "Dispatch annex context excluded: " + excluded)
+    _check((room.get_node("Shell/ReceivingSouth") as Node3D).get("piece_spec").concealed_faces == PackedStringArray(["POS_X"]), "internal butt cap omitted")
+    var context: Array = room.call("review_context_inventory")
+    _check(context.size() >= 4, "distant context and barrier are separate from EAF2 shell")
+    for item in context:
+        _check(item["scope"] == "CONTEXT_ONLY / REVIEW_ONLY", "context tag: " + item["name"])
     var sets: Dictionary = room.call("role_candidates")
     _check(sets["WALL_PRIMARY"].size() == 14, "14 current wall candidates")
     _check(sets["FLOOR_PRIMARY"].size() == 8, "8 current floor candidates")

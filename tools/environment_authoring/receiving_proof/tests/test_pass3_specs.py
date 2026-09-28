@@ -7,21 +7,28 @@ from tools.environment_authoring.receiving_proof.build_pass3_specs import build_
 
 ROOT = Path(__file__).resolve().parents[4]
 SOURCE = ROOT / 'data/environment/receiving_proof/eaf5_receiving_shell_source.json'
+COMPOSITION = ROOT / 'data/environment/receiving_proof/eaf5_receiving_proof_composition_v2.json'
 
 
 class Pass3SpecTests(unittest.TestCase):
-    def test_accepted_shell_generates_nineteen_standard_specs(self):
-        manifest = json.loads(SOURCE.read_text(encoding='utf-8'))
+    def test_revised_proof_generates_fourteen_eaf2_specs(self):
+        historical = json.loads(SOURCE.read_text(encoding='utf-8'))
+        composition = json.loads(COMPOSITION.read_text(encoding='utf-8'))
+        self.assertEqual(len(historical['eaf2_recipe_mapping']), 19)
         with tempfile.TemporaryDirectory() as folder:
-            paths = build_specs(manifest, Path(folder))
-            self.assertEqual(len(paths), 19)
+            paths = build_specs(composition, Path(folder))
+            self.assertEqual(len(paths), 14)
             text = {p.stem: p.read_text(encoding='utf-8') for p in paths}
-        self.assertEqual(sum('recipe_id = "rect_solid"' in v for v in text.values()), 18)
+        self.assertEqual(sum('recipe_id = "rect_solid"' in v for v in text.values()), 13)
         self.assertEqual(sum('recipe_id = "wall_with_rect_opening"' in v for v in text.values()), 1)
+        self.assertFalse(set(composition['source_piece_exclusions']) & set(text))
         self.assertIn('dimensions_m = Vector3(10.5, 0.3, 10.0)', text['Floor_ReceivingApron'])
-        self.assertIn('dimensions_m = Vector3(10.0, 4.2, 0.3)', text['ReceivingEastOpeningWall'])
+        self.assertIn('dimensions_m = Vector3(10.3, 4.8, 0.3)', text['ReceivingEastOpeningWall'])
         self.assertIn('opening_width_m = 3.84', text['ReceivingEastOpeningWall'])
         self.assertIn('opening_height_m = 3.4', text['ReceivingEastOpeningWall'])
+        self.assertIn('concealed_faces = PackedStringArray("POS_X")', text['ReceivingSouth'])
+        self.assertIn('concealed_faces = PackedStringArray("NEG_X", "POS_X")', text['FreightNorth'])
+        self.assertIn('concealed_faces = PackedStringArray("NEG_X", "POS_X", "NEG_Z", "POS_Z")', text['Floor_ReceivingApron'])
         self.assertTrue(all('bevel_width_m = 0.0' in v and 'collision_policy = 0' in v for v in text.values()))
         self.assertTrue(all('EnvironmentSubstratePieceSpec' in v for v in text.values()))
 

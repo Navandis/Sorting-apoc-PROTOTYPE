@@ -128,13 +128,21 @@ def build_role_package(folder: Path, output: Path) -> dict:
 def build_shell_package(folder: Path, output: Path) -> dict:
     manifest = _load_manifest(folder)
     records = manifest['records']
-    if manifest.get('capture_type') != 'NEUTRAL_SHELL' or len(records) != 6 or len({x['camera'] for x in records}) != 6:
-        raise ValueError('shell requires six fixed neutral views')
+    v2 = manifest.get('schema_version') == 2
+    expected_cameras = ('EastApproachOverview', 'FreightAperture', 'FreightRecess', 'EastOpening', 'DispatchOpening', 'UpperCeilingContext')
+    if v2:
+        expected_cameras += ('JoinAudit_Apron', 'JoinAudit_Dispatch')
+    if manifest.get('capture_type') != 'NEUTRAL_SHELL' or tuple(x.get('camera') for x in records) != expected_cameras:
+        raise ValueError('shell capture list differs from fixed review views')
+    if v2 and (len(manifest.get('pieces', [])) != 14 or not manifest.get('proof_composition_sha256')):
+        raise ValueError('v2 shell capture lacks proof composition evidence')
     names = [item['filename'] for item in records]
+    if len(names) != len(set(names)):
+        raise ValueError('duplicate shell capture filenames')
     _check_images(folder, names)
-    page = Image.new('RGB', (1450, 1320), (244, 244, 242))
+    page = Image.new('RGB', (1450, 85 + ((len(records) + 1) // 2) * 410), (244, 244, 242))
     draw = ImageDraw.Draw(page)
-    draw.text((24, 15), 'EAF5 neutral Receiving shell', fill=(20, 20, 20), font=_font(36))
+    draw.text((24, 15), 'EAF5 neutral Receiving shell v2' if v2 else 'EAF5 neutral Receiving shell', fill=(20, 20, 20), font=_font(36))
     for index, record in enumerate(records):
         x = 24 + (index % 2) * 720
         y = 75 + (index // 2) * 410
@@ -143,18 +151,19 @@ def build_shell_package(folder: Path, output: Path) -> dict:
     sheet = folder / 'contact_sheet_01.png'
     page.save(sheet, optimize=True)
     (folder / 'decision_template.json').write_text(json.dumps({'shell_decision': 'PENDING', 'allowed_decisions': ['ACCEPT', 'REJECT'], 'notes': ''}, indent=2) + '\n', encoding='utf-8')
-    (folder / 'summary.md').write_text('# EAF5 neutral shell review\n\nCheck Receiving proportions, freight enclosure, west/east/Dispatch apertures, ceiling transition, and piece contacts. Barrier and distant blockers are review-only context. Human shell acceptance is required before role evidence can promote materials.\n', encoding='utf-8')
+    if v2:
+        summary = '# EAF5 Pass 3A neutral shell re-review\n\nEight neutral views: six unchanged principal camera transforms and two join views. The 14 EAF2 pieces derive from the unchanged accepted shell source through proof composition v2. Distant backdrop and floor continuation are review-only context. Inspect closed wall/floor and wall/ceiling contact, corner ownership, and the west, east, and Dispatch apertures. Human shell re-review is pending. The v1 role packages are diagnostic history and remain superseded for promotion; do not make role decisions yet.\n'
+    else:
+        summary = '# EAF5 neutral shell review\n\nCheck Receiving proportions, freight enclosure, west/east/Dispatch apertures, ceiling transition, and piece contacts. Barrier and distant blockers are review-only context. Human shell acceptance is required before role evidence can promote materials.\n'
+    (folder / 'summary.md').write_text(summary, encoding='utf-8')
     _write_zip(output, folder, names + [sheet.name, 'manifest.json', 'summary.md', 'decision_template.json'])
     return {'captures': len(records), 'contact_sheets': 1, 'zip': str(output), 'sha256': _sha256(output)}
 
 
 def main() -> None:
-    results = [build_shell_package(REPORT / 'shell_review_01', REPORT / 'eaf5_shell_review_01.zip')]
-    for role in ('wall', 'floor', 'ceiling'):
-        folder = REPORT / 'role_isolation_01' / role
-        results.append(build_role_package(folder, REPORT / f'eaf5_{role}_role_review_01.zip'))
-    (REPORT / 'package_results.json').write_text(json.dumps(results, indent=2) + '\n', encoding='utf-8')
-    print(json.dumps(results, indent=2))
+    result = build_shell_package(REPORT / 'shell_review_02', REPORT / 'eaf5_shell_review_02.zip')
+    (REPORT / 'package_results_02.json').write_text(json.dumps(result, indent=2) + '\n', encoding='utf-8')
+    print(json.dumps(result, indent=2))
 
 if __name__ == '__main__':
     main()

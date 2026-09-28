@@ -1,9 +1,11 @@
-"""Render the accepted EAF5 room manifest as ordinary tracked EAF2 piece specs."""
+"""Render the revised Receiving proof composition as tracked EAF2 piece specs."""
+import hashlib
 import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
-SOURCE = ROOT / 'data/environment/receiving_proof/eaf5_receiving_shell_source.json'
+SOURCE = ROOT / 'data/environment/receiving_proof/eaf5_receiving_proof_composition_v2.json'
+HISTORICAL = ROOT / 'data/environment/receiving_proof/eaf5_receiving_shell_source.json'
 OUTPUT = ROOT / 'data/environment/receiving_proof/substrate'
 CONTROL = 'res://data/environment/receiving_proof/eaf5_review_control.tres'
 
@@ -40,8 +42,10 @@ def _number(value: float) -> str:
 
 def build_specs(manifest: dict, output: Path) -> list[Path]:
     mapping = manifest['eaf2_recipe_mapping']
-    if len(mapping) != 19 or len({p['piece_id'] for p in mapping}) != 19:
-        raise ValueError('accepted EAF5 mapping must contain 19 distinct pieces')
+    if len(mapping) != 14 or len({p['piece_id'] for p in mapping}) != 14:
+        raise ValueError('revised EAF5 composition must contain 14 distinct pieces')
+    if manifest['source_manifest_sha256'] != hashlib.sha256(HISTORICAL.read_bytes()).hexdigest():
+        raise ValueError('historical EAF5 source changed since proof composition')
     if {p['recipe_id'] for p in mapping} != {'rect_solid', 'wall_with_rect_opening'}:
         raise ValueError('unexpected EAF2 recipe')
     output.mkdir(parents=True, exist_ok=True)
@@ -66,12 +70,13 @@ def build_specs(manifest: dict, output: Path) -> list[Path]:
             f'semantic_role = "{role}"',
             f'dimensions_m = Vector3({", ".join(_number(v) for v in size)})',
             'bevel_width_m = 0.0',
+            *([f'concealed_faces = PackedStringArray({", ".join(json.dumps(face) for face in piece["concealed_faces"])})'] if piece.get('concealed_faces') else []),
             'uv_quarter_turns = 0',
             f'uv_origin_m = Vector2({_number(phase[0])}, {_number(phase[1])})',
             'collision_policy = 0',
             'material_spec = ExtResource("2")',
             'generation_revision = 1',
-            f'authoring_notes = "EAF5 accepted shell source; {role}; review tooling only."',
+            f'authoring_notes = "EAF5 Pass 3A proof composition; {role}; review tooling only."',
         ]
         if piece['recipe_id'] == 'wall_with_rect_opening':
             opening = piece['opening_parameters']

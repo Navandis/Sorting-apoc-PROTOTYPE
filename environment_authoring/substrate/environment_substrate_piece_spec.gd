@@ -11,6 +11,7 @@ enum CollisionPolicy { NONE, SIMPLE }
 @export var semantic_role := ""
 @export var dimensions_m := Vector3.ONE
 @export var bevel_width_m := 0.0
+@export var concealed_faces: PackedStringArray = PackedStringArray()
 @export_range(0, 3, 1) var uv_quarter_turns := 0
 @export var uv_origin_m := Vector2.ZERO
 @export var collision_policy: CollisionPolicy = CollisionPolicy.NONE
@@ -52,6 +53,16 @@ func validate() -> PackedStringArray:
 		errors.append("bevel_width_m exceeds conservative edge limit")
 	elif recipe_id != "rect_solid" and bevel_width_m != 0.0:
 		errors.append("wall opening recipes do not support bevel")
+	if not concealed_faces.is_empty():
+		if recipe_id != "rect_solid" or bevel_width_m != 0.0:
+			errors.append("concealed faces require an unbeveled rect_solid")
+		if concealed_faces.size() > 4:
+			errors.append("concealed faces must be at most four")
+		for face in concealed_faces:
+			if face not in ["NEG_X", "POS_X", "NEG_Z", "POS_Z"]:
+				errors.append("concealed face must be a lateral face")
+			if concealed_faces.count(face) > 1:
+				errors.append("concealed faces must be unique")
 	if uv_quarter_turns < 0 or uv_quarter_turns > 3:
 		errors.append("uv_quarter_turns must be 0..3")
 	if not is_finite(uv_origin_m.x) or not is_finite(uv_origin_m.y):
@@ -83,6 +94,8 @@ func exact_parameters() -> Dictionary:
 		"dimensions_m": [dimensions_m.x, dimensions_m.y, dimensions_m.z],
 		"bevel_width_m": bevel_width_m,
 	}
+	if not concealed_faces.is_empty():
+		values["concealed_faces"] = Array(concealed_faces)
 	if recipe_id != "rect_solid":
 		values["opening_width_m"] = opening_width_m
 		values["opening_height_m"] = opening_height_m

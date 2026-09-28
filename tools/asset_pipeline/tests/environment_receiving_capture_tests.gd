@@ -15,7 +15,7 @@ func _run() -> void:
     root.add_child(capture)
     await process_frame
     var shell: Array = capture.call("shell_capture_records")
-    _check(shell.size() == 6, "six fixed shell views")
+    _check(shell.size() == 8, "six principal and two join shell views")
     var roles: Array = capture.call("role_capture_records")
     _check(roles.size() == 132, "four records per 33 current role candidates")
     var keys := {}

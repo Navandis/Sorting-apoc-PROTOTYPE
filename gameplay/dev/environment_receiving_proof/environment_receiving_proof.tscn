@@ -36,3 +36,9 @@ current = true
 [node name="FloorRead" type="Camera3D" parent="Cameras"]
 
 [node name="CeilingRead" type="Camera3D" parent="Cameras"]
+
+[node name="JoinAudit_Apron" type="Camera3D" parent="Cameras"]
+
+[node name="JoinAudit_Freight" type="Camera3D" parent="Cameras"]
+
+[node name="JoinAudit_Dispatch" type="Camera3D" parent="Cameras"]

@@ -2,7 +2,8 @@ extends Node3D
 
 const CAPTURE_SIZE := Vector2i(1920, 1080)
 const OUTPUT := "res://reports/environment_receiving_proof/eaf5"
-const SHELL_VIEWS := ["EastApproachOverview", "FreightAperture", "FreightRecess", "EastOpening", "DispatchOpening", "UpperCeilingContext"]
+const SHELL_VIEWS := ["EastApproachOverview", "FreightAperture", "FreightRecess", "EastOpening", "DispatchOpening", "UpperCeilingContext", "JoinAudit_Apron", "JoinAudit_Dispatch"]
+const DEBUG_VIEWS := ["JoinAudit_Apron", "JoinAudit_Freight", "JoinAudit_Dispatch", "FreightAperture", "UpperCeilingContext", "DispatchOpening"]
 const ROLES := ["WALL_PRIMARY", "FLOOR_PRIMARY", "CEILING_PRIMARY"]
 const ROLE_VIEW := {"WALL_PRIMARY": "WallDominant", "FLOOR_PRIMARY": "FloorRead", "CEILING_PRIMARY": "CeilingRead"}
 const LIGHT_MODES := ["NEUTRAL_ARCHITECTURAL", "RECEIVING_TARGET"]
@@ -11,8 +12,10 @@ func _ready() -> void:
     var args := OS.get_cmdline_user_args()
     if args.has("--eaf5-capture-shell"):
         _capture_shell.call_deferred()
+    elif args.has("--eaf5-capture-joins"):
+        _capture_join_debug.call_deferred()
     elif args.has("--eaf5-capture-roles"):
-        _capture_roles.call_deferred()
+        _reject_role_recapture.call_deferred()
 
 func shell_capture_records() -> Array:
     var records := []
@@ -42,7 +45,7 @@ func _capture_shell() -> void:
     var proof := get_node("Proof")
     proof.call("set_control")
     proof.call("set_light_mode", LIGHT_MODES[0])
-    var folder := ProjectSettings.globalize_path(OUTPUT + "/shell_review_01")
+    var folder := ProjectSettings.globalize_path(OUTPUT + "/shell_review_02")
     if not _make_directory(folder):
         return
     get_window().size = CAPTURE_SIZE
@@ -57,7 +60,8 @@ func _capture_shell() -> void:
         record.merge(_camera_metadata(proof, String(record["camera"])))
         record["light_settings"] = proof.call("light_settings")
         record["shell_source_sha256"] = proof.call("shell_source_sha256")
-        record["shell_manifest_version"] = 1
+        record["proof_composition_sha256"] = proof.call("proof_composition_sha256")
+        record["shell_manifest_version"] = 2
         record["piece_geometry_fingerprints"] = fingerprints
         if not _save_image(folder.path_join(String(record["filename"]))):
             return
@@ -69,6 +73,39 @@ func _capture_shell() -> void:
     if not _write_json(folder.path_join("manifest.json"), manifest):
         return
     print("EAF5_SHELL_CAPTURE_COMPLETE records=", records.size())
+    get_tree().quit(0)
+
+func _reject_role_recapture() -> void:
+    _fail("Role recapture is on hold until human acceptance of shell review 02")
+
+func _capture_join_debug() -> void:
+    var proof := get_node("Proof")
+    proof.call("set_control")
+    if not OS.get_cmdline_user_args().has("--eaf5-neutral-debug"):
+        proof.call("set_join_debug_colors")
+    for argument in OS.get_cmdline_user_args():
+        if argument.begins_with("--eaf5-hide-piece="):
+            var piece_id: String = argument.trim_prefix("--eaf5-hide-piece=")
+            proof.get_node("Shell/" + piece_id + "/GeneratedMesh").visible = false
+    proof.call("set_light_mode", LIGHT_MODES[0])
+    for light in proof.get_node("NeutralLightingRig").get_children():
+        (light as Light3D).shadow_enabled = false
+    var folder := ProjectSettings.globalize_path(OUTPUT + "/join_debug_02")
+    if not _make_directory(folder):
+        return
+    get_window().size = CAPTURE_SIZE
+    await get_tree().process_frame
+    await get_tree().process_frame
+    var records := []
+    for camera in DEBUG_VIEWS:
+        proof.call("set_camera", camera)
+        await _settle_frame()
+        var filename: String = String(camera) + ".png"
+        if not _save_image(folder.path_join(filename)):
+            return
+        records.append({"camera": camera, "filename": filename, "camera_transform": _camera_metadata(proof, camera)})
+    _write_json(folder.path_join("manifest.json"), {"review_only": true, "proof_composition_sha256": proof.call("proof_composition_sha256"), "records": records})
+    print("EAF5_JOIN_DEBUG_COMPLETE records=", records.size())
     get_tree().quit(0)
 
 func _capture_roles() -> void:
@@ -117,7 +154,8 @@ func _capture_roles() -> void:
         record.merge(_camera_metadata(proof, String(record["camera"])))
         record["light_settings"] = proof.call("light_settings")
         record["shell_source_sha256"] = proof.call("shell_source_sha256")
-        record["shell_manifest_version"] = 1
+        record["proof_composition_sha256"] = proof.call("proof_composition_sha256")
+        record["shell_manifest_version"] = 2
         record["piece_geometry_fingerprints"] = fingerprints
         if not _save_image(folder.path_join(String(record["filename"]))):
             return
@@ -145,9 +183,11 @@ func _piece_fingerprints(proof: Node) -> Dictionary:
 func _base_manifest(proof: Node) -> Dictionary:
     var environment := (proof.get_node("WorldEnvironment") as WorldEnvironment).environment
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "shell_source": "data/environment/receiving_proof/eaf5_receiving_shell_source.json",
         "shell_source_sha256": proof.call("shell_source_sha256"),
+        "proof_composition": "data/environment/receiving_proof/eaf5_receiving_proof_composition_v2.json",
+        "proof_composition_sha256": proof.call("proof_composition_sha256"),
         "scene": "res://gameplay/dev/environment_receiving_proof/environment_receiving_proof.tscn",
         "capture_scene": "res://gameplay/dev/environment_receiving_proof/environment_receiving_proof_capture.tscn",
         "engine_version": Engine.get_version_info().string,
@@ -155,6 +195,7 @@ func _base_manifest(proof: Node) -> Dictionary:
         "capture_size": [CAPTURE_SIZE.x, CAPTURE_SIZE.y],
         "environment": {"background_color": environment.background_color.to_html(), "ambient_color": environment.ambient_light_color.to_html(), "ambient_energy": environment.ambient_light_energy, "exposure": environment.tonemap_exposure, "tonemap": environment.tonemap_mode, "tonemap_name": "FILMIC"},
         "pieces": proof.call("generation_records"),
+        "review_context": proof.call("review_context_inventory"),
         "later_inventory": proof.call("later_inventory"),
         "wear_enabled": false,
         "applied_finish_enabled": false,

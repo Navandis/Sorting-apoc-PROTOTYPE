@@ -4,14 +4,16 @@ const Query = preload("res://environment_authoring/environment_material_catalog_
 const MaterialBuilder = preload("res://environment_authoring/environment_material_builder.gd")
 const Piece = preload("res://environment_authoring/substrate/environment_substrate_piece.gd")
 const CONTROL = preload("res://data/environment/receiving_proof/eaf5_review_control.tres")
-const SOURCE := "res://data/environment/receiving_proof/eaf5_receiving_shell_source.json"
+const SOURCE := "res://data/environment/receiving_proof/eaf5_receiving_proof_composition_v2.json"
+const HISTORICAL_SOURCE := "res://data/environment/receiving_proof/eaf5_receiving_shell_source.json"
 const SPECS := "res://data/environment/receiving_proof/substrate/"
 const WALL_FAMILIES := ["structural_concrete", "rough_poured_concrete", "service_floor_concrete"]
 const CEILING_FAMILIES := ["structural_concrete", "rough_poured_concrete"]
 const LIGHT_MODES := ["NEUTRAL_ARCHITECTURAL", "RECEIVING_TARGET"]
-const CAMERA_NAMES := ["EastApproachOverview", "FreightAperture", "FreightRecess", "EastOpening", "DispatchOpening", "UpperCeilingContext", "WallDominant", "FloorRead", "CeilingRead"]
+const CAMERA_NAMES := ["EastApproachOverview", "FreightAperture", "FreightRecess", "EastOpening", "DispatchOpening", "UpperCeilingContext", "WallDominant", "FloorRead", "CeilingRead", "JoinAudit_Apron", "JoinAudit_Freight", "JoinAudit_Dispatch"]
 
 var _source: Dictionary = {}
+var _historical_source: Dictionary = {}
 var _pieces: Dictionary = {}
 var _candidates: Dictionary = {}
 var _active_spec: EnvironmentSurfaceMaterialSpec
@@ -27,6 +29,11 @@ func _ready() -> void:
         push_error("EAF5 shell source is invalid")
         return
     _source = parsed
+    var historical: Variant = JSON.parse_string(FileAccess.get_file_as_string(HISTORICAL_SOURCE))
+    if not historical is Dictionary or String(_source.get("source_manifest_sha256", "")) != FileAccess.get_sha256(HISTORICAL_SOURCE):
+        push_error("EAF5 proof composition has stale historical source")
+        return
+    _historical_source = historical
     _control_material = _builder.build(CONTROL)
     _build_shell()
     _build_context()
@@ -59,11 +66,20 @@ func _build_context() -> void:
     var dark := StandardMaterial3D.new()
     dark.albedo_color = Color(0.10, 0.11, 0.12)
     dark.roughness = 0.8
-    for box in _source["freight_barrier_context"]["source_elements"]:
+    for box in _historical_source["freight_barrier_context"]["source_elements"]:
         _add_context_box("BarrierProxy_" + String(box["id"]), _vec3(box["saved_box_dimensions_m"]), _vec3(box["center_local_m"]), dark)
-    # Dark surfaces beyond real apertures; they are nonstructural and sit beyond the clear openings.
-    _add_context_box("BacklogDarkDistance", Vector3(0.05, 3.4, 3.84), Vector3(13.5, 1.7, 0.0), dark)
-    _add_context_box("DispatchDarkDistance", Vector3(2.4, 4.2, 0.05), Vector3(6.0, 2.1, -10.5), dark)
+    # Oversized, distant review-only backdrops have no edge in either opening.
+    var backdrop := StandardMaterial3D.new()
+    backdrop.albedo_color = Color(0.18, 0.19, 0.21)
+    backdrop.roughness = 0.9
+    backdrop.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+    _add_context_box("BacklogDarkDistance", Vector3(0.05, 20.0, 30.0), Vector3(15.0, 2.1, 0.0), backdrop)
+    _add_context_box("DispatchDarkDistance", Vector3(30.0, 20.0, 0.05), Vector3(6.0, 2.1, -12.0), backdrop)
+    var distant_floor := StandardMaterial3D.new()
+    distant_floor.albedo_color = Color(0.28, 0.29, 0.30)
+    distant_floor.roughness = 0.9
+    _add_context_plane("BacklogFloorContinuation", Vector2(4.8, 10.0), Vector3(12.6, -0.003, 0.0), distant_floor)
+    _add_context_plane("DispatchFloorContinuation", Vector2(10.0, 7.3), Vector3(6.0, -0.003, -8.35), distant_floor)
 
 func _add_context_box(box_name: String, size: Vector3, location: Vector3, material: Material) -> void:
     var mesh := BoxMesh.new()
@@ -73,7 +89,33 @@ func _add_context_box(box_name: String, size: Vector3, location: Vector3, materi
     node.mesh = mesh
     node.position = location
     node.material_override = material
+    node.set_meta("scope", "CONTEXT_ONLY / REVIEW_ONLY")
     get_node("ReviewContext").add_child(node)
+
+func _add_context_plane(plane_name: String, size: Vector2, location: Vector3, material: Material) -> void:
+    var mesh := PlaneMesh.new()
+    mesh.size = size
+    var node := MeshInstance3D.new()
+    node.name = plane_name
+    node.mesh = mesh
+    node.position = location
+    node.material_override = material
+    node.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+    node.set_meta("scope", "CONTEXT_ONLY / REVIEW_ONLY")
+    get_node("ReviewContext").add_child(node)
+
+func review_context_inventory() -> Array:
+    var result := []
+    for child in get_node("ReviewContext").get_children():
+        var mesh := (child as MeshInstance3D).mesh
+        var size: Array = []
+        if mesh is BoxMesh:
+            size = _array3((mesh as BoxMesh).size)
+        elif mesh is PlaneMesh:
+            var plane_size := (mesh as PlaneMesh).size
+            size = [plane_size.x, plane_size.y]
+        result.append({"name": child.name, "scope": child.get_meta("scope"), "position_local_m": _array3(child.position), "size_m": size})
+    return result
 
 func _configure_environment() -> void:
     var environment := Environment.new()
@@ -96,6 +138,9 @@ func _configure_cameras() -> void:
     _camera("WallDominant", Vector3(8.3, 1.95, -2.0), Vector3(1.4, 2.0, 3.8), 70.0)
     _camera("FloorRead", Vector3(7.0, 1.35, 3.7), Vector3(3.0, 0.0, -1.2), 73.0)
     _camera("CeilingRead", Vector3(7.0, 1.7, 3.3), Vector3(3.0, 4.2, -1.2), 72.0)
+    _camera("JoinAudit_Apron", Vector3(7.6, 1.55, 1.2), Vector3(10.2, 1.9, 4.7), 60.0)
+    _camera("JoinAudit_Freight", Vector3(-2.5, 1.7, 0.2), Vector3(-0.1, 1.9, 3.35), 65.0)
+    _camera("JoinAudit_Dispatch", Vector3(6.0, 1.6, -2.5), Vector3(6.0, 1.9, -5.1), 63.0)
 
 func _camera(camera_name: String, location: Vector3, target: Vector3, fov: float) -> void:
     var camera := get_camera(camera_name)
@@ -284,7 +329,24 @@ func generation_records() -> Array:
     return result
 
 func shell_source_sha256() -> String:
+    return FileAccess.get_sha256(HISTORICAL_SOURCE)
+
+func proof_composition_sha256() -> String:
     return FileAccess.get_sha256(SOURCE)
+
+func set_join_debug_colors() -> void:
+    var colors := [
+        Color(0.83, 0.43, 0.34), Color(0.38, 0.69, 0.86), Color(0.78, 0.72, 0.36),
+        Color(0.49, 0.79, 0.59), Color(0.72, 0.49, 0.82), Color(0.91, 0.61, 0.35)
+    ]
+    var ids := _pieces.keys()
+    ids.sort()
+    for index in ids.size():
+        var debug := StandardMaterial3D.new()
+        debug.albedo_color = colors[index % colors.size()]
+        debug.roughness = 0.9
+        var piece := _pieces[ids[index]] as EnvironmentSubstratePiece
+        (piece.get_node("GeneratedMesh") as MeshInstance3D).material_override = debug
 
 func _vec3(values: Array) -> Vector3:
     return Vector3(float(values[0]), float(values[1]), float(values[2]))

@@ -24,6 +24,7 @@ func _run() -> void:
 	var builder: RefCounted = builder_script.new()
 	_test_spec(spec_script, registry_script)
 	_test_rect(spec_script, builder)
+	_test_concealed_end(spec_script, builder)
 	_test_bevel(spec_script, builder)
 	_test_opening(spec_script, builder)
 	_test_extension(spec_script, builder)
@@ -102,6 +103,30 @@ func _test_rect(script: GDScript, builder: RefCounted) -> void:
 	var shifted := builder.call("build", spec) as Dictionary
 	_check(String(shifted.get("fingerprint")) != String(turned.get("fingerprint")), "UV phase deterministic change")
 	_check((_first_uv(shifted.get("mesh") as ArrayMesh) - turned_uv).is_equal_approx(Vector2(0.25, 0.75)), "UV origin shifts phase by metres")
+
+
+func _test_concealed_end(script: GDScript, builder: RefCounted) -> void:
+	var spec := _spec(script, "butt", "rect_solid", Vector3(2, 3, 0.3))
+	var closed := builder.call("build", spec) as Dictionary
+	spec.set("concealed_faces", PackedStringArray(["POS_X"]))
+	_check((spec.call("validate") as PackedStringArray).is_empty(), "internal butt cap option valid")
+	var open_result := builder.call("build", spec) as Dictionary
+	var mesh := open_result.get("mesh") as ArrayMesh
+	_check(mesh != null and _aabb_is(mesh.get_aabb(), Vector3(-1, -1.5, -0.15), Vector3(2, 3, 0.3)), "concealed cap keeps bounding box")
+	_check(mesh != null and _triangles_valid(mesh), "concealed cap triangles valid")
+	_check(mesh != null and (mesh.surface_get_arrays(0)[Mesh.ARRAY_VERTEX] as PackedVector3Array).size() == 30, "one cap removes two triangles")
+	_check(String(open_result.get("fingerprint")) != String(closed.get("fingerprint")), "concealed cap changes fingerprint")
+	spec.set("concealed_faces", PackedStringArray(["NEG_X", "POS_X", "NEG_Z", "POS_Z"]))
+	_check((spec.call("validate") as PackedStringArray).is_empty(), "four concealed slab sides valid")
+	var slab_mesh := (builder.call("build", spec) as Dictionary).get("mesh") as ArrayMesh
+	_check(slab_mesh != null and (slab_mesh.surface_get_arrays(0)[Mesh.ARRAY_VERTEX] as PackedVector3Array).size() == 12, "slab exposes only upper and lower planes")
+	spec.set("concealed_faces", PackedStringArray(["POS_X", "POS_X"]))
+	_check(not (spec.call("validate") as PackedStringArray).is_empty(), "duplicate cap rejected")
+	spec.set("concealed_faces", PackedStringArray(["NEG_Y"]))
+	_check(not (spec.call("validate") as PackedStringArray).is_empty(), "non-lateral face rejected")
+	spec.set("concealed_faces", PackedStringArray(["POS_X"]))
+	spec.set("bevel_width_m", 0.02)
+	_check(not (spec.call("validate") as PackedStringArray).is_empty(), "beveled cap omission rejected")
 
 
 func _test_bevel(script: GDScript, builder: RefCounted) -> void:

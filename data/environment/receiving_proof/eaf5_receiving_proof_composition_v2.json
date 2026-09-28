@@ -1,0 +1,499 @@
+{
+  "schema_version": 2,
+  "purpose": "EAF5 Pass 3A EAF2 proof composition; derives from saved-box source without altering historical spatial authority",
+  "source_manifest": "res://data/environment/receiving_proof/eaf5_receiving_shell_source.json",
+  "source_manifest_sha256": "12cf8f93024e833f5c16932a1d963b3986258a7661cff3e246a2db525d4d4fc9",
+  "source_piece_exclusions": [
+    "Ceiling_DispatchAnnex",
+    "DispatchEast",
+    "DispatchNorth",
+    "DispatchWest",
+    "Floor_DispatchAnnex"
+  ],
+  "spatial_invariants": {
+    "finished_floor_y_m": 0.0,
+    "ceiling_underside_y_m": 4.2,
+    "structural_thickness_m": 0.3,
+    "west_freight_aperture_z_m": [
+      -2.5,
+      2.5
+    ],
+    "dispatch_aperture_x_m": [
+      4.8,
+      7.2
+    ],
+    "east_backlog_aperture_z_m": [
+      -1.92,
+      1.92
+    ],
+    "east_backlog_clear_height_m": 3.4
+  },
+  "composition_policy": {
+    "wall_vertical_range_m": [
+      -0.3,
+      4.5
+    ],
+    "apron_slab_hidden_extensions_m": {
+      "east": 0.0,
+      "north": 0.0
+    },
+    "freight_slabs": "retain saved bounds; join apron at X=0",
+    "uv": "derive world-metre phase from composed bounds; visible world phase unchanged",
+    "collision": "NONE",
+    "bevel_m": 0,
+    "hidden_butt_overlap_m": 0.0,
+    "through_wall_outer_face_coverage": "east opening wall spans Z=-5.15..5.15; freight rear spans Z=-3.65..3.65",
+    "context_floor_continuation": "review-only distant planes beyond full-height apertures; no structural frame"
+  },
+  "join_ownership": [
+    {
+      "junction": "ReceivingSouth / ReceivingWestSouthReturn",
+      "through": "ReceivingSouth",
+      "butt": "ReceivingWestSouthReturn",
+      "contact_plane": "Z=4.85"
+    },
+    {
+      "junction": "ReceivingNorthWest / ReceivingWestNorthReturn",
+      "through": "ReceivingNorthWest",
+      "butt": "ReceivingWestNorthReturn",
+      "contact_plane": "Z=-4.85"
+    },
+    {
+      "junction": "ReceivingEastOpeningWall / ReceivingSouth",
+      "through": "ReceivingEastOpeningWall",
+      "butt": "ReceivingSouth",
+      "contact_plane": "X=10.35"
+    },
+    {
+      "junction": "ReceivingEastOpeningWall / DispatchSouthEast",
+      "through": "ReceivingEastOpeningWall",
+      "butt": "DispatchSouthEast",
+      "contact_plane": "X=10.35"
+    },
+    {
+      "junction": "FreightRear / FreightNorth",
+      "through": "FreightRear",
+      "butt": "FreightNorth",
+      "contact_plane": "X=-4.85"
+    },
+    {
+      "junction": "FreightRear / FreightSouth",
+      "through": "FreightRear",
+      "butt": "FreightSouth",
+      "contact_plane": "X=-4.85"
+    },
+    {
+      "junction": "ReceivingWestNorthReturn / FreightNorth",
+      "through": "ReceivingWestNorthReturn",
+      "butt": "FreightNorth",
+      "contact_plane": "X=-0.15"
+    },
+    {
+      "junction": "ReceivingWestSouthReturn / FreightSouth",
+      "through": "ReceivingWestSouthReturn",
+      "butt": "FreightSouth",
+      "contact_plane": "X=-0.15"
+    },
+    {
+      "junction": "ReceivingNorthWest / DispatchSouthWest",
+      "through": "COLLINEAR_BUTT",
+      "butt": "COLLINEAR_BUTT",
+      "contact_plane": "X=1.00"
+    }
+  ],
+  "eaf2_recipe_mapping": [
+    {
+      "piece_id": "Ceiling_FreightEnclosure",
+      "semantic_role": "ceiling",
+      "source_components": [
+        "Ceiling_FreightEnclosure"
+      ],
+      "recipe_id": "rect_solid",
+      "dimensions_m": [
+        5.0,
+        0.3,
+        7.0
+      ],
+      "center_local_m": [
+        -2.5,
+        4.35,
+        0.0
+      ],
+      "rotation_y_degrees": 0,
+      "opening_parameters": null,
+      "collision_policy": "NONE",
+      "classification": "SUPPORTED_BY_EXISTING_RECIPE",
+      "seed": "ceiling_slab",
+      "composition_revision": "EAF5_PASS3A_V2",
+      "concealed_faces": [
+        "NEG_X",
+        "POS_X",
+        "NEG_Z",
+        "POS_Z"
+      ]
+    },
+    {
+      "piece_id": "Ceiling_ReceivingApron",
+      "semantic_role": "ceiling",
+      "source_components": [
+        "Ceiling_ReceivingApron"
+      ],
+      "recipe_id": "rect_solid",
+      "dimensions_m": [
+        10.5,
+        0.3,
+        10.0
+      ],
+      "center_local_m": [
+        5.25,
+        4.35,
+        0.0
+      ],
+      "rotation_y_degrees": 0,
+      "opening_parameters": null,
+      "collision_policy": "NONE",
+      "classification": "SUPPORTED_BY_EXISTING_RECIPE",
+      "seed": "ceiling_slab",
+      "composition_revision": "EAF5_PASS3A_V2",
+      "concealed_faces": [
+        "NEG_X",
+        "POS_X",
+        "NEG_Z",
+        "POS_Z"
+      ]
+    },
+    {
+      "piece_id": "DispatchSouthEast",
+      "semantic_role": "wall",
+      "source_components": [
+        "DispatchSouthEast"
+      ],
+      "recipe_id": "rect_solid",
+      "dimensions_m": [
+        3.15,
+        4.8,
+        0.3
+      ],
+      "center_local_m": [
+        8.775,
+        2.1,
+        -5.0
+      ],
+      "rotation_y_degrees": 0,
+      "opening_parameters": null,
+      "collision_policy": "SIMPLE",
+      "classification": "SUPPORTED_BY_EXISTING_RECIPE",
+      "seed": "wall_standard",
+      "composition_revision": "EAF5_PASS3A_V2",
+      "concealed_faces": [
+        "POS_X"
+      ]
+    },
+    {
+      "piece_id": "DispatchSouthWest",
+      "semantic_role": "wall",
+      "source_components": [
+        "DispatchSouthWest"
+      ],
+      "recipe_id": "rect_solid",
+      "dimensions_m": [
+        3.8,
+        4.8,
+        0.3
+      ],
+      "center_local_m": [
+        2.9,
+        2.1,
+        -5.0
+      ],
+      "rotation_y_degrees": 0,
+      "opening_parameters": null,
+      "collision_policy": "SIMPLE",
+      "classification": "SUPPORTED_BY_EXISTING_RECIPE",
+      "seed": "wall_standard",
+      "composition_revision": "EAF5_PASS3A_V2",
+      "concealed_faces": [
+        "NEG_X"
+      ]
+    },
+    {
+      "piece_id": "Floor_FreightEnclosure",
+      "semantic_role": "floor",
+      "source_components": [
+        "Floor_FreightEnclosure"
+      ],
+      "recipe_id": "rect_solid",
+      "dimensions_m": [
+        5.0,
+        0.3,
+        7.0
+      ],
+      "center_local_m": [
+        -2.5,
+        -0.15,
+        0.0
+      ],
+      "rotation_y_degrees": 0,
+      "opening_parameters": null,
+      "collision_policy": "SIMPLE",
+      "classification": "SUPPORTED_BY_EXISTING_RECIPE",
+      "seed": "floor_slab",
+      "composition_revision": "EAF5_PASS3A_V2",
+      "concealed_faces": [
+        "NEG_X",
+        "POS_X",
+        "NEG_Z",
+        "POS_Z"
+      ]
+    },
+    {
+      "piece_id": "Floor_ReceivingApron",
+      "semantic_role": "floor",
+      "source_components": [
+        "Floor_ReceivingApron"
+      ],
+      "recipe_id": "rect_solid",
+      "dimensions_m": [
+        10.5,
+        0.3,
+        10.0
+      ],
+      "center_local_m": [
+        5.25,
+        -0.15,
+        0.0
+      ],
+      "rotation_y_degrees": 0,
+      "opening_parameters": null,
+      "collision_policy": "SIMPLE",
+      "classification": "SUPPORTED_BY_EXISTING_RECIPE",
+      "seed": "floor_slab",
+      "composition_revision": "EAF5_PASS3A_V2",
+      "concealed_faces": [
+        "NEG_X",
+        "POS_X",
+        "NEG_Z",
+        "POS_Z"
+      ]
+    },
+    {
+      "piece_id": "FreightNorth",
+      "semantic_role": "wall",
+      "source_components": [
+        "FreightNorth"
+      ],
+      "recipe_id": "rect_solid",
+      "dimensions_m": [
+        4.7,
+        4.8,
+        0.3
+      ],
+      "center_local_m": [
+        -2.5,
+        2.1,
+        -3.5
+      ],
+      "rotation_y_degrees": 0,
+      "opening_parameters": null,
+      "collision_policy": "SIMPLE",
+      "classification": "SUPPORTED_BY_EXISTING_RECIPE",
+      "seed": "wall_standard",
+      "composition_revision": "EAF5_PASS3A_V2",
+      "concealed_faces": [
+        "NEG_X",
+        "POS_X"
+      ]
+    },
+    {
+      "piece_id": "FreightRear",
+      "semantic_role": "wall",
+      "source_components": [
+        "FreightRear"
+      ],
+      "recipe_id": "rect_solid",
+      "dimensions_m": [
+        7.3,
+        4.8,
+        0.3
+      ],
+      "center_local_m": [
+        -5.0,
+        2.1,
+        0.0
+      ],
+      "rotation_y_degrees": 90,
+      "opening_parameters": null,
+      "collision_policy": "SIMPLE",
+      "classification": "SUPPORTED_BY_EXISTING_RECIPE",
+      "seed": "wall_standard",
+      "composition_revision": "EAF5_PASS3A_V2"
+    },
+    {
+      "piece_id": "FreightSouth",
+      "semantic_role": "wall",
+      "source_components": [
+        "FreightSouth"
+      ],
+      "recipe_id": "rect_solid",
+      "dimensions_m": [
+        4.7,
+        4.8,
+        0.3
+      ],
+      "center_local_m": [
+        -2.5,
+        2.1,
+        3.5
+      ],
+      "rotation_y_degrees": 0,
+      "opening_parameters": null,
+      "collision_policy": "SIMPLE",
+      "classification": "SUPPORTED_BY_EXISTING_RECIPE",
+      "seed": "wall_standard",
+      "composition_revision": "EAF5_PASS3A_V2",
+      "concealed_faces": [
+        "NEG_X",
+        "POS_X"
+      ]
+    },
+    {
+      "piece_id": "ReceivingEastOpeningWall",
+      "semantic_role": "east_backlog_transition_wall",
+      "source_components": [
+        "ReceivingCeilingTransition",
+        "ReceivingEastNorth",
+        "ReceivingEastSouth"
+      ],
+      "recipe_id": "wall_with_rect_opening",
+      "dimensions_m": [
+        10.3,
+        4.8,
+        0.3
+      ],
+      "center_local_m": [
+        10.5,
+        2.1,
+        0
+      ],
+      "rotation_y_degrees": 90,
+      "opening_parameters": {
+        "opening_width_m": 3.84,
+        "opening_height_m": 3.4,
+        "opening_offset_x_m": 0,
+        "opening_bottom_m": 0.3
+      },
+      "collision_policy": "SIMPLE",
+      "classification": "SUPPORTED_BY_EXISTING_RECIPE",
+      "seed": "wall_opening_standard",
+      "composition_revision": "EAF5_PASS3A_V2"
+    },
+    {
+      "piece_id": "ReceivingNorthWest",
+      "semantic_role": "wall",
+      "source_components": [
+        "ReceivingNorthWest"
+      ],
+      "recipe_id": "rect_solid",
+      "dimensions_m": [
+        1.15,
+        4.8,
+        0.3
+      ],
+      "center_local_m": [
+        0.425,
+        2.1,
+        -5.0
+      ],
+      "rotation_y_degrees": 0,
+      "opening_parameters": null,
+      "collision_policy": "SIMPLE",
+      "classification": "SUPPORTED_BY_EXISTING_RECIPE",
+      "seed": "wall_standard",
+      "composition_revision": "EAF5_PASS3A_V2",
+      "concealed_faces": [
+        "POS_X"
+      ]
+    },
+    {
+      "piece_id": "ReceivingSouth",
+      "semantic_role": "wall",
+      "source_components": [
+        "ReceivingSouth"
+      ],
+      "recipe_id": "rect_solid",
+      "dimensions_m": [
+        10.5,
+        4.8,
+        0.3
+      ],
+      "center_local_m": [
+        5.1,
+        2.1,
+        5.0
+      ],
+      "rotation_y_degrees": 0,
+      "opening_parameters": null,
+      "collision_policy": "SIMPLE",
+      "classification": "SUPPORTED_BY_EXISTING_RECIPE",
+      "seed": "wall_standard",
+      "composition_revision": "EAF5_PASS3A_V2",
+      "concealed_faces": [
+        "POS_X"
+      ]
+    },
+    {
+      "piece_id": "ReceivingWestNorthReturn",
+      "semantic_role": "wall",
+      "source_components": [
+        "ReceivingWestNorthReturn"
+      ],
+      "recipe_id": "rect_solid",
+      "dimensions_m": [
+        2.35,
+        4.8,
+        0.3
+      ],
+      "center_local_m": [
+        0.0,
+        2.1,
+        -3.675
+      ],
+      "rotation_y_degrees": 90,
+      "opening_parameters": null,
+      "collision_policy": "SIMPLE",
+      "classification": "SUPPORTED_BY_EXISTING_RECIPE",
+      "seed": "wall_standard",
+      "composition_revision": "EAF5_PASS3A_V2",
+      "concealed_faces": [
+        "POS_X"
+      ]
+    },
+    {
+      "piece_id": "ReceivingWestSouthReturn",
+      "semantic_role": "wall",
+      "source_components": [
+        "ReceivingWestSouthReturn"
+      ],
+      "recipe_id": "rect_solid",
+      "dimensions_m": [
+        2.35,
+        4.8,
+        0.3
+      ],
+      "center_local_m": [
+        0.0,
+        2.1,
+        3.675
+      ],
+      "rotation_y_degrees": 90,
+      "opening_parameters": null,
+      "collision_policy": "SIMPLE",
+      "classification": "SUPPORTED_BY_EXISTING_RECIPE",
+      "seed": "wall_standard",
+      "composition_revision": "EAF5_PASS3A_V2",
+      "concealed_faces": [
+        "NEG_X"
+      ]
+    }
+  ]
+}

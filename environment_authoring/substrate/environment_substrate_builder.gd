@@ -65,7 +65,16 @@ func _build_rect(tool: SurfaceTool, spec: Resource) -> void:
 		[Vector3(-hx,hy,hz), Vector3(hx,hy,hz), Vector3(hx,hy,-hz), Vector3(-hx,hy,-hz), 2],
 		[Vector3(-hx,-hy,-hz), Vector3(hx,-hy,-hz), Vector3(hx,-hy,hz), Vector3(-hx,-hy,hz), 2],
 	]
-	for face in faces:
+	for face_index in faces.size():
+		if face_index == 0 and "POS_Z" in spec.concealed_faces:
+			continue
+		if face_index == 1 and "NEG_Z" in spec.concealed_faces:
+			continue
+		if face_index == 2 and "POS_X" in spec.concealed_faces:
+			continue
+		if face_index == 3 and "NEG_X" in spec.concealed_faces:
+			continue
+		var face: Array = faces[face_index]
 		var a: Vector3 = face[0]
 		var b: Vector3 = face[1]
 		var d: Vector3 = face[3]
