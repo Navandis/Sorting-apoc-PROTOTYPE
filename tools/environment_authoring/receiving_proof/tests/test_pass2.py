@@ -26,6 +26,7 @@ SUPERSEDED_ZIP_SHA256 = {
 COMBOS = {('neutral', 'Hero'), ('neutral', 'WallGrazing'),
           ('receiving', 'Hero'), ('receiving', 'WallGrazing')}
 RERUN_ID = 'eaf5_receiving_pbr_01_rerun_01'
+RERUN_ZIP_SHA256 = '625fe5ccd5f84a393749c3ada6868a895e701f0b66b6bd3ef8941a2388922465'
 RERUN_CHANGES = {
     'kitbash:kb3d_beyondrepair@7.0.0:KB3D_BYR_COReinforcedConcreteSlabs': {'meters_per_repeat': 3.0},
     'kitbash:kb3d_washingtondc@7.0.3:KB3D_WDC_ConcreteBlocksA': {'albedo_multiplier': 0.75},
@@ -42,6 +43,41 @@ def read_json(path):
 
 
 class Pass2ReviewTests(unittest.TestCase):
+    def test_final_rerun_approvals_and_role_queries(self):
+        decisions = read_json(ROOT / 'data/environment/material_catalog/decisions/'
+                              'eaf5_receiving_pbr_rerun_01_human_review_02.json')['decisions']
+        template = {item['source_stable_id']: item for item in
+                    read_json(REVIEW_ROOT / RERUN_ID / 'decision_template.json')['decisions']}
+        records = read_json(ROOT / 'data/environment/material_catalog/catalog.json')['materials']
+        self.assertEqual({item['source_stable_id'] for item in decisions}, set(RERUN_CHANGES))
+        self.assertEqual(len(decisions), 7)
+        self.assertTrue(all(item['decision'] == 'APPROVED' for item in decisions))
+        for item in decisions:
+            captured = template[item['source_stable_id']]
+            for key in ('review_resolution', 'reviewed_source_fingerprint', 'display_name',
+                        *catalog.PARAMETERS):
+                self.assertEqual(item[key], captured[key])
+            self.assertEqual(item['approval_revision'], 1)
+            self.assertEqual(item['approval_date'], '2026-09-28')
+            self.assertEqual(item['mapping_mode'], 'UV')
+            self.assertTrue(item['review_notes'])
+            current = next(record for record in records
+                           if record['source_stable_id'] == item['source_stable_id'])
+            self.assertEqual(current['effective_status'], 'APPROVED')
+            self.assertTrue(current['current_source_matches_review'])
+        self.assertEqual(len(catalog.query(records)), 30)
+        for family, layer, role in (
+                ('service_floor_concrete', 'structural_substrate', 'floor'),
+                ('masonry_block', 'structural_substrate', 'wall'),
+                ('cement_render', 'applied_finish', 'wall'),
+                ('applied_paint', 'applied_finish', 'wall'),
+                ('structural_concrete', 'structural_substrate', 'ceiling')):
+            self.assertTrue(catalog.query(records, family, layer, role))
+        self.assertFalse(catalog.query(records, 'applied_paint', 'structural_substrate', 'wall'))
+        self.assertFalse(catalog.query(records, 'cement_render', 'structural_substrate', 'wall'))
+        self.assertFalse(catalog.query(records, 'service_floor_concrete',
+                                       'structural_substrate', 'ceiling'))
+
     def test_human_uv01_decisions_and_catalog(self):
         human = read_json(ROOT / 'data/environment/material_catalog/decisions/'
                           'eaf5_receiving_pbr_uv01_human_review_01.json')['decisions']
@@ -55,10 +91,11 @@ class Pass2ReviewTests(unittest.TestCase):
         self.assertEqual(Counter(item['decision'] for item in human),
                          {'APPROVED': 18, 'DEFERRED': 4, 'REJECTED': 2})
         self.assertEqual(Counter(item['status'] for item in catalog_records),
-                         {'APPROVED': 23, 'DEFERRED': 7, 'REJECTED': 6})
-        self.assertEqual(len(catalog.query(catalog_records)), 23)
-        self.assertEqual(len(catalog_records), 36)
-        self.assertFalse(set(RERUN_CHANGES) & {item['source_stable_id'] for item in catalog_records})
+                         {'APPROVED': 30, 'DEFERRED': 7, 'REJECTED': 6})
+        self.assertEqual(len(catalog.query(catalog_records)), 30)
+        self.assertEqual(len(catalog_records), 43)
+        self.assertEqual(set(RERUN_CHANGES) & {item['source_stable_id'] for item in catalog_records},
+                         set(RERUN_CHANGES))
         for item in human:
             captured = uv[item['source_stable_id']]
             for key in ('review_resolution', 'reviewed_source_fingerprint', 'display_name',
@@ -72,7 +109,7 @@ class Pass2ReviewTests(unittest.TestCase):
                 self.assertIsNone(item['vdd_layer'])
                 self.assertEqual(item['approved_roles'], [])
         restage = read_json(ROOT / 'reports/environment_material_catalog/approved_restage_report.json')
-        self.assertEqual(len(restage['restaged']), 23)
+        self.assertEqual(len(restage['restaged']), 30)
         self.assertEqual(restage['refused'], [])
 
     def test_parameter_only_rerun_lineage_and_capture(self):
@@ -111,7 +148,9 @@ class Pass2ReviewTests(unittest.TestCase):
                                 if record['material_id'] == item['catalog_material_id']]
             self.assertEqual({(record['light_mode'], record['camera'])
                               for record in material_records}, COMBOS)
-        with ZipFile(REVIEW_ROOT / f'{RERUN_ID}_review.zip') as zipped:
+        archive = REVIEW_ROOT / f'{RERUN_ID}_review.zip'
+        self.assertEqual(hashlib.sha256(archive.read_bytes()).hexdigest(), RERUN_ZIP_SHA256)
+        with ZipFile(archive) as zipped:
             self.assertIsNone(zipped.testzip())
             self.assertEqual(set(zipped.namelist()),
                              {record['filename'] for record in records} |
@@ -160,7 +199,7 @@ class Pass2ReviewTests(unittest.TestCase):
         human = read_json(ROOT / 'data/environment/material_catalog/decisions/'
                           'eaf5_receiving_pbr_uv01_human_review_01.json')['decisions']
         self.assertEqual(set(selected) & decided,
-                         {item['source_stable_id'] for item in human})
+                         {item['source_stable_id'] for item in human} | set(RERUN_CHANGES))
         for bid, count in BATCH_IDS.items():
             self.assertEqual(len(batches[bid]['candidate_ids']), count)
             self.assertEqual(set(batches[bid]['candidate_ids']),
@@ -293,8 +332,8 @@ class Pass2ReviewTests(unittest.TestCase):
         self.assertEqual(len(approved), 3)
         current = [item for item in read_json(ROOT / 'data/environment/material_catalog/catalog.json')['materials']
                    if item['effective_status'] == 'APPROVED']
-        self.assertEqual(len(current), 23)
-        self.assertEqual(sum(item['mapping_mode'] == 'UV' for item in current), 20)
+        self.assertEqual(len(current), 30)
+        self.assertEqual(sum(item['mapping_mode'] == 'UV' for item in current), 27)
         self.assertEqual(set(batch['candidate_ids']), {item['source_stable_id'] for item in approved})
         for item in approved:
             override = batch['candidate_overrides'][item['source_stable_id']]

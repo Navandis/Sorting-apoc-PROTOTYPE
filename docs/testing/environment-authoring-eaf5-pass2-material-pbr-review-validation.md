@@ -1,6 +1,6 @@
 # EAF5 Pass 2 — Receiving material PBR review
 
-**Status: EAF5 PASS 2 — 24 MATERIAL DECISIONS RECONCILED / 7 HUMAN PBR DECISIONS PENDING.** The source-shortlist record preserves an unresolved per-ID HOLD/DROP split because the handoff provided counts but not the 26 identities.
+**Status: EAF5 PASS 2 — HUMAN PBR REVIEW COMPLETE.** The source-shortlist record preserves an unresolved per-ID HOLD/DROP split because the handoff provided counts but not the 26 identities.
 
 - Branch: `codex/eaf5-receiving-proof`; pre-edit HEAD `64d99fc884c5d19b42b7b334cab97d3a3d457304`; `main` and `origin/main` `ac12a51ce431f94c9a65a4e84edbf2f73bdf5c2c`; pre-edit tree clean. No merge or push.
 - Pass-1 accepted. [Shortlist manifest](../../data/environment/receiving_proof/eaf5_material_source_shortlist_01.json) and [human decision record](../../data/environment/receiving_proof/decisions/eaf5_source_shortlist_01_human_review.json) anchor the reviewed source snapshot. EAF3A index fingerprint `e6398707ff5a1f47d1be2855ad04986a5ba39eb8fbc04fbc107f1a01479de23d` still matches; 31/31 IDs exist and have no EAF3 catalog decision.
@@ -52,9 +52,9 @@ The three current triplanar-approved EAF3 seeds were separately captured with on
 
 **EAF5 Pass-2 disposition: IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN PBR REVIEW PENDING.**
 
-## Human gate
+## Historical human gate before UV01 decisions
 
-All 31 UV01 EAF3B decision templates remain PENDING. Review color/value, roughness, normal direction and strength, physical repeat, visible tiling, directionality, baked history and Neutral versus Receiving response. Wall and ceiling candidates need quiet large-area coverage; floors need to avoid dominant grids and baked traffic motifs; applied finishes should read over structure; patterned structural secondary materials may still suit reveals/recesses. Decide APPROVE/REJECT/DEFER or request a parameter-only rerun through the promoted EAF3B mechanism. EAF5 proposed roles are not EAF3 approved roles; Receiving room-scale suitability is a later gate.
+At this stage, all 31 UV01 EAF3B decision templates were PENDING. Review color/value, roughness, normal direction and strength, physical repeat, visible tiling, directionality, baked history and Neutral versus Receiving response. Wall and ceiling candidates need quiet large-area coverage; floors need to avoid dominant grids and baked traffic motifs; applied finishes should read over structure; patterned structural secondary materials may still suit reveals/recesses. Decide APPROVE/REJECT/DEFER or request a parameter-only rerun through the promoted EAF3B mechanism. EAF5 proposed roles are not EAF3 approved roles; Receiving room-scale suitability is a later gate.
 
 ## UV01 human review and parameter rerun — 2026-09-28
 
@@ -72,10 +72,22 @@ The seven undecided sources have one [rerun batch](../../data/environment/materi
 | KB3D_NNY_ConcretePlasterWhite | albedo_multiplier = 0.70 |
 | KB3D_RFS_ConcretePlasterWhite | albedo_multiplier = 0.70 |
 
-Before capture, all seven rerun stable IDs, selected map records and SHA-256 hashes, strong reviewed source fingerprints, and actual review resolutions matched the clean UV01 staging. The deterministic cache reused source maps; no source bytes needed copying. The unchanged EAF1 scene captured Neutral/Hero, Neutral/WallGrazing, Receiving/Hero and Receiving/WallGrazing for each material: 28 PNGs. All seven new decision-template entries remain PENDING. The [shareable rerun ZIP](../../reports/environment_material_catalog/reviews/eaf5_receiving_pbr_01_rerun_01_review.zip) contains only the 28 captures, manifest.json, batch_summary.md and decision_template.json; no maps or .import files. SHA-256: `625fe5cdd5f84a393749c3ada6868a895e701f0b66b6bd3ef8941a2388922465`.
+Before capture, all seven rerun stable IDs, selected map records and SHA-256 hashes, strong reviewed source fingerprints, and actual review resolutions matched the clean UV01 staging. The deterministic cache reused source maps; no source bytes needed copying. The unchanged EAF1 scene captured Neutral/Hero, Neutral/WallGrazing, Receiving/Hero and Receiving/WallGrazing for each material: 28 PNGs. All seven new decision-template entries remain PENDING. The [shareable rerun ZIP](../../reports/environment_material_catalog/reviews/eaf5_receiving_pbr_01_rerun_01_review.zip) contains only the 28 captures, manifest.json, batch_summary.md and decision_template.json; no maps or .import files. SHA-256: `625fe5ccd5f84a393749c3ada6868a895e701f0b66b6bd3ef8941a2388922465`.
 
 UV is the **permanent default environment material mapping policy**, confirmed by human review. Triplanar and world triplanar remain supported only for an explicit, documented geometry/source reason and representative large-plane, multi-axis and WallGrazing visual verification. The three historical triplanar seed approvals (ConcreteRoughBright, ConcretePittedGrayMed, PlasterA) retain their catalog parameters. Their UV policy-check captures are separate evidence; no parameter-revision decision has been made for them. Original triplanar packages, clean UV01 A/B packages, seed policy-check package and diagnostic captures remain preserved. The clean UV01 ZIP SHA-256 values are still `d42265553a950158efc614f66962257e5ce5729636df14d528e34f43ef1cb875` and `dd8ce4481e1540254c5ba96daf516505daa44b138b03d10955ee35e6aed4f0be`.
 
 Verification: EAF3B Python 17 passed; EAF5 Receiving Python 12 passed in strict local-evidence mode; EAF3B Godot query and live catalog tests, EAF1 lookdev tests, Godot editor import/parse and the rerun capture exited 0. The package integrity and 28-record matrix passed focused tests. EAF3A index/query files were untouched. Production wing, Receiving runtime, EAF4 and C1 files remain untouched; room and palette work remain paused.
 
 **EAF5 PASS 2 — 24 MATERIAL DECISIONS RECONCILED / 7 HUMAN PBR DECISIONS PENDING.**
+
+## Final seven rerun decisions — 2026-09-28
+
+Human review of the unchanged [parameter rerun package](../../reports/environment_material_catalog/reviews/eaf5_receiving_pbr_01_rerun_01_review.zip), SHA-256 `625fe5ccd5f84a393749c3ada6868a895e701f0b66b6bd3ef8941a2388922465`, approved all seven at their captured adjusted values. The [tracked final decision input](../../data/environment/material_catalog/decisions/eaf5_receiving_pbr_rerun_01_human_review_02.json) copies the rerun template's resolution, strong fingerprint, UV mapping, scale, normal and scalar multipliers, and adds the human family, layer, roles and notes. All seven strong fingerprints and selected map records match the clean UV01 lineage. The rerun template and ZIP remain preserved as PENDING review evidence; the separate tracked input records the final decisions.
+
+EAF3B reconciliation added seven approvals with no stale or missing source; a second pass was idempotent. All 36 prior catalog records remained byte-equivalent in their JSON fields. Final new-source outcome across the original 31: **25 APPROVED / 4 DEFERRED / 2 REJECTED / 0 PENDING**. Together with the five pre-existing approved seeds, the curated catalog now contains **30 current APPROVED / 7 DEFERRED / 6 REJECTED**, 43 total records. All 30 approved strong fingerprints match current sources, and every approved `effective_status` is APPROVED. `restage-approved` completed 30 specs with zero refused; default query returns 30. Spot checks pass for service floors, masonry walls, render walls, painted finish walls, structural ceilings, and applied-finish/ceiling nonmatches. No Receiving-specific ranking entered EAF3.
+
+UV remains the permanent default. Triplanar and world triplanar remain supported only as documented, visually verified exceptions. ConcreteRoughBright, ConcretePittedGrayMed and PlasterA keep their explicit historical triplanar approvals; their UV policy-check evidence does not revise those decisions. Superseded original packages, clean UV01 A/B packages, seed and diagnostic evidence, and the seven-material rerun package remain preserved. This closes **Pass 2 only**; EAF5 overall remains unpromoted.
+
+Focused verification: EAF3B Python suite; EAF3B synthetic and live Godot catalog suites; strict EAF5 evidence suite; Godot editor import/parse. No EAF1 file was changed. Production wing and Receiving runtime files remain untouched. The next gate is **EAF5 PASS 3 — ISOLATED RECEIVING PROOF SHELL + ROLE-ISOLATION REVIEW**: build from EAF2 substrate pieces, verify shell geometry/contacts, and inspect approved EAF3 materials one role at a time at Receiving scale while other major surfaces use a quiet diagnostic control. EAF4 wear remains off and palette combinations have not begun. Pass 3 was not implemented in this task.
+
+**EAF5 PASS 2 — HUMAN PBR REVIEW COMPLETE**
