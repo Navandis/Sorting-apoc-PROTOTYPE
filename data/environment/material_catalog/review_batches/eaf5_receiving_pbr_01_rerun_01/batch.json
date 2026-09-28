@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "batch_id": "eaf5_receiving_pbr_01_rerun_01",
+  "source_index_schema": 1,
+  "source_index_revision": "eaf3a-2",
+  "source_index_scan_id": "2026-09-27T20:01:04.531065+00:00",
+  "source_index_fingerprint": "a408ac2c421ebfbccd5a64ac302779b1187fef4ce1789cb4061ee859d8a15954",
+  "candidate_ids": [
+    "fab:ugkkedvlw",
+    "kitbash:kb3d_beyondrepair@7.0.0:KB3D_BYR_COReinforcedConcreteSlabs",
+    "kitbash:kb3d_constructionzone@7.0.3:KB3D_CSZ_ConcreteBlocksBPanels",
+    "kitbash:kb3d_everycitypolicedept@7.0.2:KB3D_ECP_StuccoWhite",
+    "kitbash:kb3d_neonyc@7.0.2:KB3D_NNY_ConcretePlasterWhite",
+    "kitbash:kb3d_refineries@7.0.2:KB3D_RFS_ConcretePlasterWhite",
+    "kitbash:kb3d_washingtondc@7.0.3:KB3D_WDC_ConcreteBlocksA"
+  ],
+  "review_resolution_policy": "2K_THEN_4K_THEN_1K",
+  "candidate_overrides": {
+    "kitbash:kb3d_beyondrepair@7.0.0:KB3D_BYR_COReinforcedConcreteSlabs": {
+      "review_resolution": "2K",
+      "mapping_mode": "UV",
+      "meters_per_repeat": 1.5,
+      "normal_y_flip": false,
+      "normal_strength": 1.0,
+      "roughness_multiplier": 1.0,
+      "metallic_multiplier": 1.0,
+      "albedo_multiplier": 1.0
+    },
+    "kitbash:kb3d_washingtondc@7.0.3:KB3D_WDC_ConcreteBlocksA": {
+      "review_resolution": "2K",
+      "mapping_mode": "UV",
+      "meters_per_repeat": 1.5,
+      "normal_y_flip": false,
+      "normal_strength": 1.0,
+      "roughness_multiplier": 1.0,
+      "metallic_multiplier": 1.0,
+      "albedo_multiplier": 1.0
+    },
+    "fab:ugkkedvlw": {
+      "review_resolution": "2K",
+      "mapping_mode": "UV",
+      "meters_per_repeat": 1.5,
+      "normal_y_flip": false,
+      "normal_strength": 1.0,
+      "roughness_multiplier": 1.0,
+      "metallic_multiplier": 1.0,
+      "albedo_multiplier": 1.0
+    },
+    "kitbash:kb3d_constructionzone@7.0.3:KB3D_CSZ_ConcreteBlocksBPanels": {
+      "review_resolution": "2K",
+      "mapping_mode": "UV",
+      "meters_per_repeat": 1.5,
+      "normal_y_flip": false,
+      "normal_strength": 1.0,
+      "roughness_multiplier": 1.0,
+      "metallic_multiplier": 1.0,
+      "albedo_multiplier": 1.0
+    },
+    "kitbash:kb3d_everycitypolicedept@7.0.2:KB3D_ECP_StuccoWhite": {
+      "review_resolution": "2K",
+      "mapping_mode": "UV",
+      "meters_per_repeat": 1.5,
+      "normal_y_flip": false,
+      "normal_strength": 1.0,
+      "roughness_multiplier": 1.0,
+      "metallic_multiplier": 1.0,
+      "albedo_multiplier": 1.0
+    },
+    "kitbash:kb3d_neonyc@7.0.2:KB3D_NNY_ConcretePlasterWhite": {
+      "review_resolution": "2K",
+      "mapping_mode": "UV",
+      "meters_per_repeat": 1.5,
+      "normal_y_flip": false,
+      "normal_strength": 1.0,
+      "roughness_multiplier": 1.0,
+      "metallic_multiplier": 1.0,
+      "albedo_multiplier": 1.0
+    },
+    "kitbash:kb3d_refineries@7.0.2:KB3D_RFS_ConcretePlasterWhite": {
+      "review_resolution": "2K",
+      "mapping_mode": "UV",
+      "meters_per_repeat": 1.5,
+      "normal_y_flip": false,
+      "normal_strength": 1.0,
+      "roughness_multiplier": 1.0,
+      "metallic_multiplier": 1.0,
+      "albedo_multiplier": 1.0
+    }
+  },
+  "notes": "Parameter-only UV01 rerun; clean UV01 values are the baseline and iteration.json declares the sole changes. Human PBR decisions remain pending."
+}

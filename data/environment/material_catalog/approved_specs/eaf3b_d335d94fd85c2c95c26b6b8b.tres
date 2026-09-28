@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="EnvironmentSurfaceMaterialSpec" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://environment_authoring/environment_surface_material_spec.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/environment/materials/kitbash_cache/eaf3b_d335d94fd85c2c95c26b6b8b/2k/basecolor.jpg" id="2"]
+[ext_resource type="Texture2D" path="res://assets/environment/materials/kitbash_cache/eaf3b_d335d94fd85c2c95c26b6b8b/2k/normal.jpg" id="3"]
+[ext_resource type="Texture2D" path="res://assets/environment/materials/kitbash_cache/eaf3b_d335d94fd85c2c95c26b6b8b/2k/roughness.jpg" id="4"]
+[ext_resource type="Texture2D" path="res://assets/environment/materials/kitbash_cache/eaf3b_d335d94fd85c2c95c26b6b8b/2k/ao.jpg" id="5"]
+
+[resource]
+script = ExtResource("1")
+material_id = "eaf3b_d335d94fd85c2c95c26b6b8b"
+display_name = "Dirty Concrete"
+base_color_texture = ExtResource("2")
+normal_texture = ExtResource("3")
+roughness_texture = ExtResource("4")
+ao_texture = ExtResource("5")
+mapping_mode = 0
+meters_per_repeat = 1.5
+normal_strength = 1.0
+roughness_multiplier = 1.0
+metallic_multiplier = 1.0
+albedo_multiplier = 1.0
+normal_y_flip = false
+surface_family = "rough_poured_concrete"
+vdd_layer = "structural_substrate"
+source_label = "fab @ source / 2K"
+source_path = "FAB/dirty_concrete_ueypchdcw"
+review_notes = "Quiet, fine-grained mineral surface with good response under both rigs. Despite the source name, the reviewed surface does not bake dominant grime/damage into the material."

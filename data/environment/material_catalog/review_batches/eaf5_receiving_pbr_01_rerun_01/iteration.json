@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "batch_id": "eaf5_receiving_pbr_01_rerun_01",
+  "candidate_overrides": {
+    "kitbash:kb3d_beyondrepair@7.0.0:KB3D_BYR_COReinforcedConcreteSlabs": {
+      "meters_per_repeat": 3.0
+    },
+    "kitbash:kb3d_washingtondc@7.0.3:KB3D_WDC_ConcreteBlocksA": {
+      "albedo_multiplier": 0.75
+    },
+    "fab:ugkkedvlw": {
+      "albedo_multiplier": 0.65
+    },
+    "kitbash:kb3d_constructionzone@7.0.3:KB3D_CSZ_ConcreteBlocksBPanels": {
+      "albedo_multiplier": 0.75
+    },
+    "kitbash:kb3d_everycitypolicedept@7.0.2:KB3D_ECP_StuccoWhite": {
+      "albedo_multiplier": 0.7
+    },
+    "kitbash:kb3d_neonyc@7.0.2:KB3D_NNY_ConcretePlasterWhite": {
+      "albedo_multiplier": 0.7
+    },
+    "kitbash:kb3d_refineries@7.0.2:KB3D_RFS_ConcretePlasterWhite": {
+      "albedo_multiplier": 0.7
+    }
+  }
+}

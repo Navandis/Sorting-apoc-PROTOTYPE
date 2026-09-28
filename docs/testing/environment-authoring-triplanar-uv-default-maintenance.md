@@ -101,3 +101,7 @@ All 31 stable IDs and their strong source fingerprints match the original stagin
 - Production wing files and gameplay/logistics_wing/receiving remain untouched; no Receiving proof room, palette combinations, EAF4 wear or Receiving C1 work.
 
 **EAF5 Pass-2 status: IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN PBR REVIEW PENDING.**
+
+## Human policy confirmation — 2026-09-28
+
+Human UV01 review confirms **UV IS THE PERMANENT DEFAULT ENVIRONMENT MATERIAL MAPPING POLICY**. TRIPLANAR and WORLD_TRIPLANAR remain supported but non-default exceptions requiring a documented reason and representative visual verification. The existing three triplanar-approved seeds retain their exact catalog decisions until a separate explicit parameter-revision review; the UV policy-check package is evidence only. The EAF5 Pass-2 validation records the 24 reconciled decisions and seven pending parameter reruns.

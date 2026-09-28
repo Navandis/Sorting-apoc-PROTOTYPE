@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="EnvironmentMaterialReviewSet" load_steps=9 format=3]
+
+[ext_resource type="Script" path="res://environment_authoring/environment_material_review_set.gd" id="1"]
+[ext_resource type="Resource" path="res://data/environment/material_catalog/review_batches/eaf5_receiving_pbr_01_rerun_01/eaf3b_9297ffec71774317b0627951.tres" id="2"]
+[ext_resource type="Resource" path="res://data/environment/material_catalog/review_batches/eaf5_receiving_pbr_01_rerun_01/eaf3b_1beac3a311a480af8844ea89.tres" id="3"]
+[ext_resource type="Resource" path="res://data/environment/material_catalog/review_batches/eaf5_receiving_pbr_01_rerun_01/eaf3b_e1a15a7af45c82b781600501.tres" id="4"]
+[ext_resource type="Resource" path="res://data/environment/material_catalog/review_batches/eaf5_receiving_pbr_01_rerun_01/eaf3b_b395eb3943870fbfd262e8ce.tres" id="5"]
+[ext_resource type="Resource" path="res://data/environment/material_catalog/review_batches/eaf5_receiving_pbr_01_rerun_01/eaf3b_c29826cd934f1534ecfb48c5.tres" id="6"]
+[ext_resource type="Resource" path="res://data/environment/material_catalog/review_batches/eaf5_receiving_pbr_01_rerun_01/eaf3b_7b12b8b3a2e05c502801d22f.tres" id="7"]
+[ext_resource type="Resource" path="res://data/environment/material_catalog/review_batches/eaf5_receiving_pbr_01_rerun_01/eaf3b_e7d641639f5d230a5d21ecbd.tres" id="8"]
+
+[resource]
+script = ExtResource("1")
+specs = Array[Resource]([ExtResource("2"), ExtResource("3"), ExtResource("4"), ExtResource("5"), ExtResource("6"), ExtResource("7"), ExtResource("8")])

@@ -5,6 +5,7 @@ import os
 from pathlib import Path
 import unittest
 from zipfile import ZipFile
+from collections import Counter
 
 from tools.environment_authoring.material_catalog import catalog
 from tools.environment_authoring.material_repository.path_guard import PROJECT_ROOT, load_repository
@@ -24,6 +25,16 @@ SUPERSEDED_ZIP_SHA256 = {
 }
 COMBOS = {('neutral', 'Hero'), ('neutral', 'WallGrazing'),
           ('receiving', 'Hero'), ('receiving', 'WallGrazing')}
+RERUN_ID = 'eaf5_receiving_pbr_01_rerun_01'
+RERUN_CHANGES = {
+    'kitbash:kb3d_beyondrepair@7.0.0:KB3D_BYR_COReinforcedConcreteSlabs': {'meters_per_repeat': 3.0},
+    'kitbash:kb3d_washingtondc@7.0.3:KB3D_WDC_ConcreteBlocksA': {'albedo_multiplier': 0.75},
+    'fab:ugkkedvlw': {'albedo_multiplier': 0.65},
+    'kitbash:kb3d_constructionzone@7.0.3:KB3D_CSZ_ConcreteBlocksBPanels': {'albedo_multiplier': 0.75},
+    'kitbash:kb3d_everycitypolicedept@7.0.2:KB3D_ECP_StuccoWhite': {'albedo_multiplier': 0.70},
+    'kitbash:kb3d_neonyc@7.0.2:KB3D_NNY_ConcretePlasterWhite': {'albedo_multiplier': 0.70},
+    'kitbash:kb3d_refineries@7.0.2:KB3D_RFS_ConcretePlasterWhite': {'albedo_multiplier': 0.70},
+}
 
 
 def read_json(path):
@@ -31,6 +42,81 @@ def read_json(path):
 
 
 class Pass2ReviewTests(unittest.TestCase):
+    def test_human_uv01_decisions_and_catalog(self):
+        human = read_json(ROOT / 'data/environment/material_catalog/decisions/'
+                          'eaf5_receiving_pbr_uv01_human_review_01.json')['decisions']
+        catalog_records = read_json(ROOT / 'data/environment/material_catalog/catalog.json')['materials']
+        uv = {item['source_stable_id']: item
+              for old_id in BATCH_IDS
+              for item in read_json(REVIEW_ROOT / (old_id + '_uv01') /
+                                    'decision_template.json')['decisions']}
+        self.assertEqual(len(human), 24)
+        self.assertEqual(len({item['source_stable_id'] for item in human}), 24)
+        self.assertEqual(Counter(item['decision'] for item in human),
+                         {'APPROVED': 18, 'DEFERRED': 4, 'REJECTED': 2})
+        self.assertEqual(Counter(item['status'] for item in catalog_records),
+                         {'APPROVED': 23, 'DEFERRED': 7, 'REJECTED': 6})
+        self.assertEqual(len(catalog.query(catalog_records)), 23)
+        self.assertEqual(len(catalog_records), 36)
+        self.assertFalse(set(RERUN_CHANGES) & {item['source_stable_id'] for item in catalog_records})
+        for item in human:
+            captured = uv[item['source_stable_id']]
+            for key in ('review_resolution', 'reviewed_source_fingerprint', 'display_name',
+                        *catalog.PARAMETERS):
+                self.assertEqual(item[key], captured[key])
+            self.assertEqual(item['approval_revision'], 1)
+            self.assertEqual(item['approval_date'], '2026-09-28')
+            self.assertEqual(item['mapping_mode'], 'UV')
+            if item['decision'] != 'APPROVED':
+                self.assertIsNone(item['surface_family'])
+                self.assertIsNone(item['vdd_layer'])
+                self.assertEqual(item['approved_roles'], [])
+        restage = read_json(ROOT / 'reports/environment_material_catalog/approved_restage_report.json')
+        self.assertEqual(len(restage['restaged']), 23)
+        self.assertEqual(restage['refused'], [])
+
+    def test_parameter_only_rerun_lineage_and_capture(self):
+        batch = read_json(BATCH_ROOT / RERUN_ID / 'batch.json')
+        iteration = read_json(BATCH_ROOT / RERUN_ID / 'iteration.json')
+        self.assertEqual(set(batch['candidate_ids']), set(RERUN_CHANGES))
+        self.assertEqual(iteration['candidate_overrides'], RERUN_CHANGES)
+        old = {item['source_stable_id']: item for old_id in BATCH_IDS
+               for item in read_json(REVIEW_ROOT / (old_id + '_uv01') /
+                                     'stage_manifest.json')['candidates']}
+        new_dir = REVIEW_ROOT / RERUN_ID
+        if not (new_dir / 'stage_manifest.json').exists():
+            self.skipTest('Local parameter rerun has not been prepared')
+        staged = read_json(new_dir / 'stage_manifest.json')['candidates']
+        pending = read_json(new_dir / 'decision_template.json')['decisions']
+        self.assertEqual(len(staged), 7)
+        self.assertEqual(len(pending), 7)
+        self.assertTrue(all(item['decision'] == 'PENDING' for item in pending))
+        for item in staged:
+            sid = item['source_stable_id']
+            previous = old[sid]
+            for key in ('source_fingerprint', 'maps', 'actual_review_resolution'):
+                self.assertEqual(item[key], previous[key])
+            self.assertEqual(item['mapping_mode'], 'UV')
+            changed = {key: item[key] for key in catalog.PARAMETERS
+                       if item[key] != previous[key]}
+            self.assertEqual(changed, RERUN_CHANGES[sid])
+        if not (new_dir / 'manifest.json').exists():
+            if os.environ.get('EAF5_REQUIRE_LOCAL_EVIDENCE') == '1':
+                self.fail('Required local rerun capture is missing')
+            self.skipTest('Local parameter rerun capture has not been generated')
+        records = read_json(new_dir / 'manifest.json')['records']
+        self.assertEqual(len(records), 28)
+        for item in staged:
+            material_records = [record for record in records
+                                if record['material_id'] == item['catalog_material_id']]
+            self.assertEqual({(record['light_mode'], record['camera'])
+                              for record in material_records}, COMBOS)
+        with ZipFile(REVIEW_ROOT / f'{RERUN_ID}_review.zip') as zipped:
+            self.assertIsNone(zipped.testzip())
+            self.assertEqual(set(zipped.namelist()),
+                             {record['filename'] for record in records} |
+                             {'manifest.json', 'batch_summary.md', 'decision_template.json'})
+
     def test_human_source_decision_record(self):
         record = read_json(ROOT / 'data/environment/receiving_proof/decisions/'
                            'eaf5_source_shortlist_01_human_review.json')
@@ -71,7 +157,10 @@ class Pass2ReviewTests(unittest.TestCase):
         self.assertEqual(len(selected), 31)
         self.assertEqual(len(set(selected)), 31)
         self.assertTrue(set(selected) <= proposed)
-        self.assertFalse(set(selected) & decided)
+        human = read_json(ROOT / 'data/environment/material_catalog/decisions/'
+                          'eaf5_receiving_pbr_uv01_human_review_01.json')['decisions']
+        self.assertEqual(set(selected) & decided,
+                         {item['source_stable_id'] for item in human})
         for bid, count in BATCH_IDS.items():
             self.assertEqual(len(batches[bid]['candidate_ids']), count)
             self.assertEqual(set(batches[bid]['candidate_ids']),
@@ -204,8 +293,8 @@ class Pass2ReviewTests(unittest.TestCase):
         self.assertEqual(len(approved), 3)
         current = [item for item in read_json(ROOT / 'data/environment/material_catalog/catalog.json')['materials']
                    if item['effective_status'] == 'APPROVED']
-        self.assertEqual(len(current), 5)
-        self.assertEqual(sum(item['mapping_mode'] == 'UV' for item in current), 2)
+        self.assertEqual(len(current), 23)
+        self.assertEqual(sum(item['mapping_mode'] == 'UV' for item in current), 20)
         self.assertEqual(set(batch['candidate_ids']), {item['source_stable_id'] for item in approved})
         for item in approved:
             override = batch['candidate_overrides'][item['source_stable_id']]
