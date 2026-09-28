@@ -65,6 +65,36 @@ func _run() -> void:
             same_count += 1
     _check(palette_ids.size() == 35 and palette_keys.size() == 140, "palette records are unique")
     _check(same_count == 16, "four same-wall-ceiling palettes have four captures each")
+    var proof := capture.get_node("Proof")
+    _check(proof.call("get_camera", "FinishField") != null, "fixed finish-field camera exists")
+    _check(proof.call("set_finish_screen", "eaf3b_d335d94fd85c2c95c26b6b8b", "eaf3b_bb32071987faae156ff2d4e8", "eaf3b_6bcd8f817ca2993433e217cc", ""), "no-finish control applies")
+    var base_materials := {}
+    for piece in proof.get_node("Shell").get_children():
+        base_materials[piece.name] = (piece.get_node("GeneratedMesh") as MeshInstance3D).material_override.resource_name
+    _check(proof.call("set_finish_screen", "eaf3b_d335d94fd85c2c95c26b6b8b", "eaf3b_bb32071987faae156ff2d4e8", "eaf3b_6bcd8f817ca2993433e217cc", "eaf3b_9297ffec71774317b0627951"), "painted finish applies")
+    for piece in proof.get_node("Shell").get_children():
+        var name: String = piece.name
+        var actual: String = (piece.get_node("GeneratedMesh") as MeshInstance3D).material_override.resource_name
+        _check(actual == ("eaf3b_9297ffec71774317b0627951" if name == "ReceivingSouth" else base_materials[name]), "finish changes only ReceivingSouth: " + name)
+    _check(proof.call("set_finish_screen", "eaf3b_d335d94fd85c2c95c26b6b8b", "eaf3b_bb32071987faae156ff2d4e8", "eaf3b_6bcd8f817ca2993433e217cc", "eaf3b_8d5f0cf5add98dfe0a58f18a"), "AFT transient UV finish applies")
+    var aft_material := proof.get_node("Shell/ReceivingSouth/GeneratedMesh").material_override as StandardMaterial3D
+    _check(not aft_material.uv1_triplanar, "AFT review clone uses UV")
+    var aft_spec := load("res://data/environment/material_catalog/approved_specs/eaf3b_8d5f0cf5add98dfe0a58f18a.tres") as EnvironmentSurfaceMaterialSpec
+    _check(aft_spec.mapping_name() == "TRIPLANAR", "approved AFT spec stays triplanar")
+    _check(capture.call("validate_finish_source"), "human structural decisions and approved finish specs authorize screening")
+    var finishes: Array = capture.call("finish_capture_records")
+    var finish_sanity: Array = capture.call("finish_capture_records", true)
+    _check(finishes.size() == 144 and finish_sanity.size() == 16, "36 finish configurations and four sanity cases have four views")
+    var configurations := {}
+    var controls := 0
+    var overrides := 0
+    for record in finishes:
+        configurations[record["configuration_id"]] = true
+        if record["finish_id"] == "A00":
+            controls += 1
+        if record["transient_uv_override"]:
+            overrides += 1
+    _check(configurations.size() == 36 and controls == 24 and overrides == 24, "six controls and six AFT UV configurations")
     _finish()
 
 func _check(condition: bool, label: String) -> void:

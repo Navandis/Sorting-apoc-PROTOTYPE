@@ -1,0 +1,328 @@
+{
+  "review": "EAF5 Pass 5 human complete structural palette review 01",
+  "accepted_shell_composition_sha256": "8361ed7d1d211f40c253cc7bf76821b9d141ab303b0fe7a6573208216f05339d",
+  "structural_palette_review_package": "reports/environment_receiving_proof/eaf5/eaf5_structural_palette_review_01.zip",
+  "structural_palette_review_package_sha256": "97034dbad91328f1d53531e3cf2b1816ac63ccf33d14a8e033495aaec61ba748",
+  "allowed_decisions": [
+    "KEEP_PALETTE",
+    "HOLD_PALETTE",
+    "DROP_PALETTE"
+  ],
+  "palettes": [
+    {
+      "structural_palette_id": "P01_C01",
+      "source_pair_id": "W01_F02",
+      "wall_catalog_material_id": "eaf3b_d335d94fd85c2c95c26b6b8b",
+      "floor_catalog_material_id": "eaf3b_bb32071987faae156ff2d4e8",
+      "ceiling_catalog_material_id": "eaf3b_2dc87647fd382ad8287a0280",
+      "decision": "KEEP_PALETTE",
+      "notes": ""
+    },
+    {
+      "structural_palette_id": "P01_C02",
+      "source_pair_id": "W01_F02",
+      "wall_catalog_material_id": "eaf3b_d335d94fd85c2c95c26b6b8b",
+      "floor_catalog_material_id": "eaf3b_bb32071987faae156ff2d4e8",
+      "ceiling_catalog_material_id": "eaf3b_6bcd8f817ca2993433e217cc",
+      "decision": "KEEP_PALETTE",
+      "notes": ""
+    },
+    {
+      "structural_palette_id": "P01_C03",
+      "source_pair_id": "W01_F02",
+      "wall_catalog_material_id": "eaf3b_d335d94fd85c2c95c26b6b8b",
+      "floor_catalog_material_id": "eaf3b_bb32071987faae156ff2d4e8",
+      "ceiling_catalog_material_id": "eaf3b_71edb3fc983ed8f7655d9523",
+      "decision": "DROP_PALETTE",
+      "notes": ""
+    },
+    {
+      "structural_palette_id": "P01_C04",
+      "source_pair_id": "W01_F02",
+      "wall_catalog_material_id": "eaf3b_d335d94fd85c2c95c26b6b8b",
+      "floor_catalog_material_id": "eaf3b_bb32071987faae156ff2d4e8",
+      "ceiling_catalog_material_id": "eaf3b_d335d94fd85c2c95c26b6b8b",
+      "decision": "DROP_PALETTE",
+      "notes": ""
+    },
+    {
+      "structural_palette_id": "P01_C05",
+      "source_pair_id": "W01_F02",
+      "wall_catalog_material_id": "eaf3b_d335d94fd85c2c95c26b6b8b",
+      "floor_catalog_material_id": "eaf3b_bb32071987faae156ff2d4e8",
+      "ceiling_catalog_material_id": "eaf3b_800060297ab83f24c0fb0d75",
+      "decision": "KEEP_PALETTE",
+      "notes": ""
+    },
+    {
+      "structural_palette_id": "P02_C01",
+      "source_pair_id": "W01_F03",
+      "wall_catalog_material_id": "eaf3b_d335d94fd85c2c95c26b6b8b",
+      "floor_catalog_material_id": "eaf3b_20e1005f19f39efb82251916",
+      "ceiling_catalog_material_id": "eaf3b_2dc87647fd382ad8287a0280",
+      "decision": "HOLD_PALETTE",
+      "notes": ""
+    },
+    {
+      "structural_palette_id": "P02_C02",
+      "source_pair_id": "W01_F03",
+      "wall_catalog_material_id": "eaf3b_d335d94fd85c2c95c26b6b8b",
+      "floor_catalog_material_id": "eaf3b_20e1005f19f39efb82251916",
+      "ceiling_catalog_material_id": "eaf3b_6bcd8f817ca2993433e217cc",
+      "decision": "HOLD_PALETTE",
+      "notes": ""
+    },
+    {
+      "structural_palette_id": "P02_C03",
+      "source_pair_id": "W01_F03",
+      "wall_catalog_material_id": "eaf3b_d335d94fd85c2c95c26b6b8b",
+      "floor_catalog_material_id": "eaf3b_20e1005f19f39efb82251916",
+      "ceiling_catalog_material_id": "eaf3b_71edb3fc983ed8f7655d9523",
+      "decision": "DROP_PALETTE",
+      "notes": ""
+    },
+    {
+      "structural_palette_id": "P02_C04",
+      "source_pair_id": "W01_F03",
+      "wall_catalog_material_id": "eaf3b_d335d94fd85c2c95c26b6b8b",
+      "floor_catalog_material_id": "eaf3b_20e1005f19f39efb82251916",
+      "ceiling_catalog_material_id": "eaf3b_d335d94fd85c2c95c26b6b8b",
+      "decision": "DROP_PALETTE",
+      "notes": ""
+    },
+    {
+      "structural_palette_id": "P02_C05",
+      "source_pair_id": "W01_F03",
+      "wall_catalog_material_id": "eaf3b_d335d94fd85c2c95c26b6b8b",
+      "floor_catalog_material_id": "eaf3b_20e1005f19f39efb82251916",
+      "ceiling_catalog_material_id": "eaf3b_800060297ab83f24c0fb0d75",
+      "decision": "HOLD_PALETTE",
+      "notes": ""
+    },
+    {
+      "structural_palette_id": "P03_C01",
+      "source_pair_id": "W02_F02",
+      "wall_catalog_material_id": "eaf3b_20c61bd1c85420be2f71a090",
+      "floor_catalog_material_id": "eaf3b_bb32071987faae156ff2d4e8",
+      "ceiling_catalog_material_id": "eaf3b_2dc87647fd382ad8287a0280",
+      "decision": "DROP_PALETTE",
+      "notes": ""
+    },
+    {
+      "structural_palette_id": "P03_C02",
+      "source_pair_id": "W02_F02",
+      "wall_catalog_material_id": "eaf3b_20c61bd1c85420be2f71a090",
+      "floor_catalog_material_id": "eaf3b_bb32071987faae156ff2d4e8",
+      "ceiling_catalog_material_id": "eaf3b_6bcd8f817ca2993433e217cc",
+      "decision": "HOLD_PALETTE",
+      "notes": ""
+    },
+    {
+      "structural_palette_id": "P03_C03",
+      "source_pair_id": "W02_F02",
+      "wall_catalog_material_id": "eaf3b_20c61bd1c85420be2f71a090",
+      "floor_catalog_material_id": "eaf3b_bb32071987faae156ff2d4e8",
+      "ceiling_catalog_material_id": "eaf3b_71edb3fc983ed8f7655d9523",
+      "decision": "DROP_PALETTE",
+      "notes": ""
+    },
+    {
+      "structural_palette_id": "P03_C04",
+      "source_pair_id": "W02_F02",
+      "wall_catalog_material_id": "eaf3b_20c61bd1c85420be2f71a090",
+      "floor_catalog_material_id": "eaf3b_bb32071987faae156ff2d4e8",
+      "ceiling_catalog_material_id": "eaf3b_d335d94fd85c2c95c26b6b8b",
+      "decision": "DROP_PALETTE",
+      "notes": ""
+    },
+    {
+      "structural_palette_id": "P03_C05",
+      "source_pair_id": "W02_F02",
+      "wall_catalog_material_id": "eaf3b_20c61bd1c85420be2f71a090",
+      "floor_catalog_material_id": "eaf3b_bb32071987faae156ff2d4e8",
+      "ceiling_catalog_material_id": "eaf3b_800060297ab83f24c0fb0d75",
+      "decision": "DROP_PALETTE",
+      "notes": ""
+    },
+    {
+      "structural_palette_id": "P04_C01",
+      "source_pair_id": "W03_F01",
+      "wall_catalog_material_id": "eaf3b_5a797fbdc766d7e3dc475abf",
+      "floor_catalog_material_id": "eaf3b_f10d218d1e8b7f09b7c2689c",
+      "ceiling_catalog_material_id": "eaf3b_2dc87647fd382ad8287a0280",
+      "decision": "HOLD_PALETTE",
+      "notes": ""
+    },
+    {
+      "structural_palette_id": "P04_C02",
+      "source_pair_id": "W03_F01",
+      "wall_catalog_material_id": "eaf3b_5a797fbdc766d7e3dc475abf",
+      "floor_catalog_material_id": "eaf3b_f10d218d1e8b7f09b7c2689c",
+      "ceiling_catalog_material_id": "eaf3b_6bcd8f817ca2993433e217cc",
+      "decision": "KEEP_PALETTE",
+      "notes": ""
+    },
+    {
+      "structural_palette_id": "P04_C03",
+      "source_pair_id": "W03_F01",
+      "wall_catalog_material_id": "eaf3b_5a797fbdc766d7e3dc475abf",
+      "floor_catalog_material_id": "eaf3b_f10d218d1e8b7f09b7c2689c",
+      "ceiling_catalog_material_id": "eaf3b_71edb3fc983ed8f7655d9523",
+      "decision": "DROP_PALETTE",
+      "notes": ""
+    },
+    {
+      "structural_palette_id": "P04_C04",
+      "source_pair_id": "W03_F01",
+      "wall_catalog_material_id": "eaf3b_5a797fbdc766d7e3dc475abf",
+      "floor_catalog_material_id": "eaf3b_f10d218d1e8b7f09b7c2689c",
+      "ceiling_catalog_material_id": "eaf3b_d335d94fd85c2c95c26b6b8b",
+      "decision": "DROP_PALETTE",
+      "notes": ""
+    },
+    {
+      "structural_palette_id": "P04_C05",
+      "source_pair_id": "W03_F01",
+      "wall_catalog_material_id": "eaf3b_5a797fbdc766d7e3dc475abf",
+      "floor_catalog_material_id": "eaf3b_f10d218d1e8b7f09b7c2689c",
+      "ceiling_catalog_material_id": "eaf3b_800060297ab83f24c0fb0d75",
+      "decision": "DROP_PALETTE",
+      "notes": ""
+    },
+    {
+      "structural_palette_id": "P05_C01",
+      "source_pair_id": "W03_F02",
+      "wall_catalog_material_id": "eaf3b_5a797fbdc766d7e3dc475abf",
+      "floor_catalog_material_id": "eaf3b_bb32071987faae156ff2d4e8",
+      "ceiling_catalog_material_id": "eaf3b_2dc87647fd382ad8287a0280",
+      "decision": "HOLD_PALETTE",
+      "notes": ""
+    },
+    {
+      "structural_palette_id": "P05_C02",
+      "source_pair_id": "W03_F02",
+      "wall_catalog_material_id": "eaf3b_5a797fbdc766d7e3dc475abf",
+      "floor_catalog_material_id": "eaf3b_bb32071987faae156ff2d4e8",
+      "ceiling_catalog_material_id": "eaf3b_6bcd8f817ca2993433e217cc",
+      "decision": "KEEP_PALETTE",
+      "notes": ""
+    },
+    {
+      "structural_palette_id": "P05_C03",
+      "source_pair_id": "W03_F02",
+      "wall_catalog_material_id": "eaf3b_5a797fbdc766d7e3dc475abf",
+      "floor_catalog_material_id": "eaf3b_bb32071987faae156ff2d4e8",
+      "ceiling_catalog_material_id": "eaf3b_71edb3fc983ed8f7655d9523",
+      "decision": "KEEP_PALETTE",
+      "notes": ""
+    },
+    {
+      "structural_palette_id": "P05_C04",
+      "source_pair_id": "W03_F02",
+      "wall_catalog_material_id": "eaf3b_5a797fbdc766d7e3dc475abf",
+      "floor_catalog_material_id": "eaf3b_bb32071987faae156ff2d4e8",
+      "ceiling_catalog_material_id": "eaf3b_d335d94fd85c2c95c26b6b8b",
+      "decision": "HOLD_PALETTE",
+      "notes": ""
+    },
+    {
+      "structural_palette_id": "P05_C05",
+      "source_pair_id": "W03_F02",
+      "wall_catalog_material_id": "eaf3b_5a797fbdc766d7e3dc475abf",
+      "floor_catalog_material_id": "eaf3b_bb32071987faae156ff2d4e8",
+      "ceiling_catalog_material_id": "eaf3b_800060297ab83f24c0fb0d75",
+      "decision": "HOLD_PALETTE",
+      "notes": ""
+    },
+    {
+      "structural_palette_id": "P06_C01",
+      "source_pair_id": "W04_F01",
+      "wall_catalog_material_id": "eaf3b_6bcd8f817ca2993433e217cc",
+      "floor_catalog_material_id": "eaf3b_f10d218d1e8b7f09b7c2689c",
+      "ceiling_catalog_material_id": "eaf3b_2dc87647fd382ad8287a0280",
+      "decision": "DROP_PALETTE",
+      "notes": ""
+    },
+    {
+      "structural_palette_id": "P06_C02",
+      "source_pair_id": "W04_F01",
+      "wall_catalog_material_id": "eaf3b_6bcd8f817ca2993433e217cc",
+      "floor_catalog_material_id": "eaf3b_f10d218d1e8b7f09b7c2689c",
+      "ceiling_catalog_material_id": "eaf3b_6bcd8f817ca2993433e217cc",
+      "decision": "DROP_PALETTE",
+      "notes": ""
+    },
+    {
+      "structural_palette_id": "P06_C03",
+      "source_pair_id": "W04_F01",
+      "wall_catalog_material_id": "eaf3b_6bcd8f817ca2993433e217cc",
+      "floor_catalog_material_id": "eaf3b_f10d218d1e8b7f09b7c2689c",
+      "ceiling_catalog_material_id": "eaf3b_71edb3fc983ed8f7655d9523",
+      "decision": "DROP_PALETTE",
+      "notes": ""
+    },
+    {
+      "structural_palette_id": "P06_C04",
+      "source_pair_id": "W04_F01",
+      "wall_catalog_material_id": "eaf3b_6bcd8f817ca2993433e217cc",
+      "floor_catalog_material_id": "eaf3b_f10d218d1e8b7f09b7c2689c",
+      "ceiling_catalog_material_id": "eaf3b_d335d94fd85c2c95c26b6b8b",
+      "decision": "DROP_PALETTE",
+      "notes": ""
+    },
+    {
+      "structural_palette_id": "P06_C05",
+      "source_pair_id": "W04_F01",
+      "wall_catalog_material_id": "eaf3b_6bcd8f817ca2993433e217cc",
+      "floor_catalog_material_id": "eaf3b_f10d218d1e8b7f09b7c2689c",
+      "ceiling_catalog_material_id": "eaf3b_800060297ab83f24c0fb0d75",
+      "decision": "DROP_PALETTE",
+      "notes": ""
+    },
+    {
+      "structural_palette_id": "P07_C01",
+      "source_pair_id": "W04_F02",
+      "wall_catalog_material_id": "eaf3b_6bcd8f817ca2993433e217cc",
+      "floor_catalog_material_id": "eaf3b_bb32071987faae156ff2d4e8",
+      "ceiling_catalog_material_id": "eaf3b_2dc87647fd382ad8287a0280",
+      "decision": "DROP_PALETTE",
+      "notes": ""
+    },
+    {
+      "structural_palette_id": "P07_C02",
+      "source_pair_id": "W04_F02",
+      "wall_catalog_material_id": "eaf3b_6bcd8f817ca2993433e217cc",
+      "floor_catalog_material_id": "eaf3b_bb32071987faae156ff2d4e8",
+      "ceiling_catalog_material_id": "eaf3b_6bcd8f817ca2993433e217cc",
+      "decision": "DROP_PALETTE",
+      "notes": ""
+    },
+    {
+      "structural_palette_id": "P07_C03",
+      "source_pair_id": "W04_F02",
+      "wall_catalog_material_id": "eaf3b_6bcd8f817ca2993433e217cc",
+      "floor_catalog_material_id": "eaf3b_bb32071987faae156ff2d4e8",
+      "ceiling_catalog_material_id": "eaf3b_71edb3fc983ed8f7655d9523",
+      "decision": "DROP_PALETTE",
+      "notes": ""
+    },
+    {
+      "structural_palette_id": "P07_C04",
+      "source_pair_id": "W04_F02",
+      "wall_catalog_material_id": "eaf3b_6bcd8f817ca2993433e217cc",
+      "floor_catalog_material_id": "eaf3b_bb32071987faae156ff2d4e8",
+      "ceiling_catalog_material_id": "eaf3b_d335d94fd85c2c95c26b6b8b",
+      "decision": "DROP_PALETTE",
+      "notes": ""
+    },
+    {
+      "structural_palette_id": "P07_C05",
+      "source_pair_id": "W04_F02",
+      "wall_catalog_material_id": "eaf3b_6bcd8f817ca2993433e217cc",
+      "floor_catalog_material_id": "eaf3b_bb32071987faae156ff2d4e8",
+      "ceiling_catalog_material_id": "eaf3b_800060297ab83f24c0fb0d75",
+      "decision": "HOLD_PALETTE",
+      "notes": ""
+    }
+  ]
+}

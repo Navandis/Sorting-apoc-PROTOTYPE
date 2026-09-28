@@ -1,6 +1,6 @@
 # EAF5 Pass 5 — Receiving structural palette validation
 
-**Status: EAF5 PASS 5 IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN STRUCTURAL-PALETTE REVIEW PENDING.** EAF5 overall remains in progress.
+**Status: EAF5 PASS 5 — HUMAN STRUCTURAL-PALETTE REVIEW COMPLETE.** EAF5 overall remains in progress.
 
 ## Authority and scope
 
@@ -17,6 +17,12 @@ Exactly 35 palette IDs are generated in pair-major order: `P01_C01` through `P07
 The sanity gate captured P01_C03, P04_C01 and P07_C02, four fixed views each. All 12 full-resolution images were checked for the intended wall, floor and ceiling application, neutral review context, plausible same-material application, and absence of a new UV phase issue. Metadata matched the accepted shell and all 14 geometry fingerprints, fixed environment, cameras and light settings. The images were nonblank at 1920×1080. The gate passed before full capture.
 
 Full capture uses Neutral/EastApproachOverview, Receiving/EastApproachOverview, Neutral/CeilingRead and Receiving/CeilingRead per palette: 140 PNGs. Approved wall, floor and ceiling PBR parameters and UV mapping remain unchanged. Main walls, freight recess, opening-reveal approval and the east-opening composite-mesh limitation follow Pass 3/4 rules. Both floor pieces and both ceiling pieces receive their selected role material. Review-only context remains neutral. Structural secondary, applied finish and EAF4 wear remain OFF.
+
+## Final human structural-palette dispositions
+
+The room-specific decision record is `data/environment/receiving_proof/decisions/eaf5_structural_palettes_01_human_review_01.json`, against the preserved Pass-5 ZIP SHA-256 `97034dbad91328f1d53531e3cf2b1816ac63ccf33d14a8e033495aaec61ba748`. The human review assigned 6 KEEP_PALETTE, 9 HOLD_PALETTE and 20 DROP_PALETTE. No pair-specific rationale was supplied for this gate, so notes remain empty rather than inferred.
+
+The six structural finalists, in deterministic screening order rather than rank order, are S01=P01_C02, S02=P05_C02, S03=P04_C02, S04=P05_C03, S05=P01_C01 and S06=P01_C05. The nine HOLD reserves are P02_C01, P02_C02, P02_C05, P03_C02, P04_C01, P05_C01, P05_C04, P05_C05 and P07_C05. The other 20 are DROP_PALETTE. Only the six KEEP palettes advance to Pass 6A applied-finish screening; the archived all-PENDING template remains the evidence presented for review.
 
 ## Review package
 
@@ -37,4 +43,4 @@ ZIP integrity and allowlist: `passed: ZIP CRC test and exact allowlist verified`
 - Accepted composition and Pass-4 ZIP hashes matched the expected values before capture. Production wing paths had no diff before capture; final check `no protected production path diff`.
 - Pass-5 review remains a human decision. Do not select finalists or add later layers in this pass.
 
-**EAF5 PASS 5 READY — HUMAN STRUCTURAL-PALETTE REVIEW PENDING.**
+**EAF5 PASS 5 — HUMAN STRUCTURAL-PALETTE REVIEW COMPLETE.**
