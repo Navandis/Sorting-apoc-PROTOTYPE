@@ -1,0 +1,46 @@
+{
+  "review": "EAF5 Receiving final structural palette selection",
+  "pass5_human_decision_source": "data/environment/receiving_proof/decisions/eaf5_structural_palettes_01_human_review_01.json",
+  "pass5_human_decision_sha256": "56379c959b78452f4c04c0e4568dfe6505cb253cf1c3b3adfef0f6a82418b1ba",
+  "pass6b_human_decision_source": "data/environment/receiving_proof/decisions/eaf5_applied_finish_layouts_01_human_review_01.json",
+  "base_applied_finish": "NONE",
+  "structural_secondary": "NONE",
+  "palettes": [
+    {
+      "selection_role": "PRIMARY",
+      "structural_palette_id": "P01_C02",
+      "wall": {
+        "catalog_material_id": "eaf3b_d335d94fd85c2c95c26b6b8b",
+        "display_name": "Dirty Concrete"
+      },
+      "floor": {
+        "catalog_material_id": "eaf3b_bb32071987faae156ff2d4e8",
+        "display_name": "Worn Concrete Floor"
+      },
+      "ceiling": {
+        "catalog_material_id": "eaf3b_6bcd8f817ca2993433e217cc",
+        "display_name": "Shuttered Concrete Wall"
+      },
+      "applied_finish": "NONE",
+      "structural_secondary": "NONE"
+    },
+    {
+      "selection_role": "ALTERNATE",
+      "structural_palette_id": "P05_C03",
+      "wall": {
+        "catalog_material_id": "eaf3b_5a797fbdc766d7e3dc475abf",
+        "display_name": "KB3D_BTL_ConcreteRoughPanelBright"
+      },
+      "floor": {
+        "catalog_material_id": "eaf3b_bb32071987faae156ff2d4e8",
+        "display_name": "Worn Concrete Floor"
+      },
+      "ceiling": {
+        "catalog_material_id": "eaf3b_71edb3fc983ed8f7655d9523",
+        "display_name": "KB3D_AMC_ConcreteWhite"
+      },
+      "applied_finish": "NONE",
+      "structural_secondary": "NONE"
+    }
+  ]
+}

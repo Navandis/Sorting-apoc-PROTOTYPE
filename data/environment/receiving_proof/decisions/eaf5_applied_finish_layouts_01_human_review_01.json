@@ -1,0 +1,164 @@
+{
+  "review": "EAF5 Pass 6B human finish-layout review 01",
+  "status": "EAF5 PASS 6B \u2014 HUMAN FINISH-LAYOUT REVIEW COMPLETE",
+  "base_applied_finish_direction": "NO_FINISH",
+  "decision_counts": {
+    "KEEP_LAYOUT_VARIANT": 0,
+    "HOLD_LAYOUT_VARIANT": 5,
+    "DROP_LAYOUT_VARIANT": 5,
+    "CONTROL_NO_FINISH": 3
+  },
+  "accepted_shell_composition_sha256": "8361ed7d1d211f40c253cc7bf76821b9d141ab303b0fe7a6573208216f05339d",
+  "pass6b_review_package": "reports/environment_receiving_proof/eaf5/eaf5_applied_finish_layout_review_01.zip",
+  "pass6b_review_package_sha256": "0c261c0a144f4b51068fe7aebb4ab951f74d39e4ff5d0dce77ca8390bba36406",
+  "human_rationale": "Accepted structural palettes stand without a Layer-2 finish. Held patches are optional reserves for a later room-specific production cause; none enters this wear proof.",
+  "configurations": [
+    {
+      "configuration_id": "S01_L00",
+      "structural_palette_id": "P01_C02",
+      "finish_material_id": null,
+      "layout_id": "L00",
+      "physical_size_m": null,
+      "decision": "CONTROL_NO_FINISH",
+      "rationale": "No-finish control is the approved Receiving base direction."
+    },
+    {
+      "configuration_id": "S05_L00",
+      "structural_palette_id": "P01_C01",
+      "finish_material_id": null,
+      "layout_id": "L00",
+      "physical_size_m": null,
+      "decision": "CONTROL_NO_FINISH",
+      "rationale": "No-finish control is the approved Receiving base direction."
+    },
+    {
+      "configuration_id": "S06_L00",
+      "structural_palette_id": "P01_C05",
+      "finish_material_id": null,
+      "layout_id": "L00",
+      "physical_size_m": null,
+      "decision": "CONTROL_NO_FINISH",
+      "rationale": "No-finish control is the approved Receiving base direction."
+    },
+    {
+      "configuration_id": "V01_L01",
+      "structural_palette_id": "P01_C02",
+      "finish_material_id": "eaf3b_7b12b8b3a2e05c502801d22f",
+      "layout_id": "L01",
+      "physical_size_m": [
+        4.2,
+        2.4
+      ],
+      "decision": "DROP_LAYOUT_VARIANT",
+      "rationale": "Human review found no justified base Layer-2 finish; retain the structural substrate."
+    },
+    {
+      "configuration_id": "V01_L02",
+      "structural_palette_id": "P01_C02",
+      "finish_material_id": "eaf3b_7b12b8b3a2e05c502801d22f",
+      "layout_id": "L02",
+      "physical_size_m": [
+        1.8,
+        1.2
+      ],
+      "decision": "HOLD_LAYOUT_VARIANT",
+      "rationale": "Optional room-specific reserve only if later production provides a genuine cause; excluded from this proof."
+    },
+    {
+      "configuration_id": "V02_L01",
+      "structural_palette_id": "P01_C01",
+      "finish_material_id": "eaf3b_b395eb3943870fbfd262e8ce",
+      "layout_id": "L01",
+      "physical_size_m": [
+        4.2,
+        2.4
+      ],
+      "decision": "DROP_LAYOUT_VARIANT",
+      "rationale": "Human review found no justified base Layer-2 finish; retain the structural substrate."
+    },
+    {
+      "configuration_id": "V02_L02",
+      "structural_palette_id": "P01_C01",
+      "finish_material_id": "eaf3b_b395eb3943870fbfd262e8ce",
+      "layout_id": "L02",
+      "physical_size_m": [
+        1.8,
+        1.2
+      ],
+      "decision": "HOLD_LAYOUT_VARIANT",
+      "rationale": "Optional room-specific reserve only if later production provides a genuine cause; excluded from this proof."
+    },
+    {
+      "configuration_id": "V03_L01",
+      "structural_palette_id": "P01_C05",
+      "finish_material_id": "eaf3b_7b12b8b3a2e05c502801d22f",
+      "layout_id": "L01",
+      "physical_size_m": [
+        4.2,
+        2.4
+      ],
+      "decision": "DROP_LAYOUT_VARIANT",
+      "rationale": "Human review found no justified base Layer-2 finish; retain the structural substrate."
+    },
+    {
+      "configuration_id": "V03_L02",
+      "structural_palette_id": "P01_C05",
+      "finish_material_id": "eaf3b_7b12b8b3a2e05c502801d22f",
+      "layout_id": "L02",
+      "physical_size_m": [
+        1.8,
+        1.2
+      ],
+      "decision": "HOLD_LAYOUT_VARIANT",
+      "rationale": "Optional room-specific reserve only if later production provides a genuine cause; excluded from this proof."
+    },
+    {
+      "configuration_id": "V04_L01",
+      "structural_palette_id": "P01_C05",
+      "finish_material_id": "eaf3b_c29826cd934f1534ecfb48c5",
+      "layout_id": "L01",
+      "physical_size_m": [
+        4.2,
+        2.4
+      ],
+      "decision": "DROP_LAYOUT_VARIANT",
+      "rationale": "Human review found no justified base Layer-2 finish; retain the structural substrate."
+    },
+    {
+      "configuration_id": "V04_L02",
+      "structural_palette_id": "P01_C05",
+      "finish_material_id": "eaf3b_c29826cd934f1534ecfb48c5",
+      "layout_id": "L02",
+      "physical_size_m": [
+        1.8,
+        1.2
+      ],
+      "decision": "HOLD_LAYOUT_VARIANT",
+      "rationale": "Optional room-specific reserve only if later production provides a genuine cause; excluded from this proof."
+    },
+    {
+      "configuration_id": "Q01_L02",
+      "structural_palette_id": "P01_C02",
+      "finish_material_id": "eaf3b_8d5f0cf5add98dfe0a58f18a",
+      "layout_id": "L02",
+      "physical_size_m": [
+        1.8,
+        1.2
+      ],
+      "decision": "DROP_LAYOUT_VARIANT",
+      "rationale": "Human review found no justified base Layer-2 finish; retain the structural substrate."
+    },
+    {
+      "configuration_id": "Q02_L02",
+      "structural_palette_id": "P01_C02",
+      "finish_material_id": "eaf3b_9297ffec71774317b0627951",
+      "layout_id": "L02",
+      "physical_size_m": [
+        1.8,
+        1.2
+      ],
+      "decision": "HOLD_LAYOUT_VARIANT",
+      "rationale": "Optional room-specific reserve only if later production provides a genuine cause; excluded from this proof."
+    }
+  ]
+}

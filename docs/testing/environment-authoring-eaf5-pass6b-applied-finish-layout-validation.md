@@ -1,6 +1,6 @@
 # EAF5 Pass 6B — bounded applied-finish layout validation
 
-**Status: EAF5 PASS 6B IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN FINISH-LAYOUT REVIEW PENDING.**
+**Status: EAF5 PASS 6B — HUMAN FINISH-LAYOUT REVIEW COMPLETE.**
 
 ## Authority and branch
 
@@ -51,6 +51,10 @@ Review ZIP: `reports/environment_receiving_proof/eaf5/eaf5_applied_finish_layout
 - Godot 4.7 headless editor import/parse: exit 0. The recurring Windows certificate-store warning did not fail any suite.
 - Accepted composition hash and all 14 fingerprints match Pass 6A. No protected production wing or Receiving path changed. EAF2 source and code remained unchanged.
 
-Human review should compare each variant directly against its same-structure no-finish control and decide whether a credible bounded Layer-2 finish improves the room. EAF4 wear must not be assumed to hide a bad finish boundary or repeated texture. No finish-layout winner is selected here; Receiving C1 remains paused.
+Human review should compare each variant directly against its same-structure no-finish control and decide whether a credible bounded Layer-2 finish improves the room. EAF4 wear must not be assumed to hide a bad finish boundary or repeated texture. At this earlier technical gate no finish-layout winner had yet been selected; the final human disposition is recorded below. Receiving C1 remains paused.
 
-**EAF5 PASS 6B IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN FINISH-LAYOUT REVIEW PENDING.**
+## Final human finish-layout disposition
+
+The human review of the 13-configuration package is recorded in data/environment/receiving_proof/decisions/eaf5_applied_finish_layouts_01_human_review_01.json: 0 KEEP_LAYOUT_VARIANT, 5 HOLD_LAYOUT_VARIANT, 5 DROP_LAYOUT_VARIANT, and 3 CONTROL_NO_FINISH. Receiving's base applied-finish direction is **NO_FINISH**. The L02 HOLD patches are optional reserves only if a later production condition provides a genuine cause; none enters Pass 7. The EAF4 material-patch physical-scale and winding correction evidence above remains valid. No EAF3 approval changed.
+
+**EAF5 PASS 6B — HUMAN FINISH-LAYOUT REVIEW COMPLETE. BASE APPLIED-FINISH DIRECTION — NO_FINISH.**

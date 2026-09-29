@@ -1,6 +1,10 @@
 extends Node3D
 
 const Query = preload("res://environment_authoring/environment_material_catalog_query.gd")
+const WearQuery = preload("res://environment_authoring/wear/environment_wear_catalog_query.gd")
+const WEAR_PROOF := "res://data/environment/receiving_proof/eaf5_receiving_wear_proof_01.json"
+const PALETTE_SELECTION := "res://data/environment/receiving_proof/eaf5_receiving_palette_selection_01.json"
+const PASS6B_DECISIONS := "res://data/environment/receiving_proof/decisions/eaf5_applied_finish_layouts_01_human_review_01.json"
 
 const CAPTURE_SIZE := Vector2i(1920, 1080)
 const OUTPUT := "res://reports/environment_receiving_proof/eaf5"
@@ -45,7 +49,11 @@ const ROLE_PACKAGE_HASHES := {"wall": "2fbb4a646b2e48c742a901c0e650178ebb5e89e2c
 
 func _ready() -> void:
     var args := OS.get_cmdline_user_args()
-    if args.has("--eaf5-capture-shell"):
+    if args.has("--eaf5-capture-wear-sanity"):
+        _capture_wear.call_deferred(true)
+    elif args.has("--eaf5-capture-wear"):
+        _capture_wear.call_deferred(false)
+    elif args.has("--eaf5-capture-shell"):
         _capture_shell.call_deferred()
     elif args.has("--eaf5-capture-joins"):
         _capture_join_debug.call_deferred()
@@ -946,6 +954,134 @@ func _capture_layouts(sample_only: bool, scale_only: bool) -> void:
     if not _write_json(folder.path_join("manifest.json"), manifest):
         return
     print("EAF5_LAYOUT_CAPTURE_COMPLETE records=", records.size(), " sample=", sample_only, " scale=", scale_only)
+    get_tree().quit(0)
+
+func wear_capture_records(sample_only: bool = false) -> Array:
+    var selection := _json_file(PALETTE_SELECTION)
+    var palettes: Array = selection.get("palettes", [])
+    if sample_only:
+        palettes = palettes.slice(0, 1)
+    var records := []
+    for palette in palettes:
+        for camera in ["EastApproachOverview", "WallCausalDetail", "FreightFloorDetail"]:
+            for mode in (["NEUTRAL_ARCHITECTURAL"] if sample_only else LIGHT_MODES):
+                for state in ["WEAR_OFF", "WEAR_ON"]:
+                    var palette_id := String(palette["structural_palette_id"])
+                    records.append({
+                        "selection_role": palette["selection_role"],
+                        "structural_palette_id": palette_id,
+                        "wall": palette["wall"], "floor": palette["floor"], "ceiling": palette["ceiling"],
+                        "applied_finish": "NONE", "structural_secondary": "NONE",
+                        "camera": camera, "light_mode": mode, "wear_state": state,
+                        "filename": "%s__%s__%s__%s.png" % [palette_id, camera, mode.to_lower(), state.to_lower()],
+                    })
+    return records
+
+func validate_wear_source() -> bool:
+    if not validate_accepted_shell():
+        return false
+    var selection := _json_file(PALETTE_SELECTION)
+    var decisions := _json_file(PASS6B_DECISIONS)
+    var manifest := _json_file(WEAR_PROOF)
+    if selection.get("base_applied_finish") != "NONE" or selection.get("structural_secondary") != "NONE" or manifest.get("accepted_shell_composition_sha256") != ACCEPTED_COMPOSITION_SHA256:
+        return false
+    if decisions.get("base_applied_finish_direction") != "NO_FINISH" or int(decisions.get("decision_counts", {}).get("KEEP_LAYOUT_VARIANT", -1)) != 0 or int(decisions.get("decision_counts", {}).get("HOLD_LAYOUT_VARIANT", -1)) != 5 or int(decisions.get("decision_counts", {}).get("DROP_LAYOUT_VARIANT", -1)) != 5 or int(decisions.get("decision_counts", {}).get("CONTROL_NO_FINISH", -1)) != 3:
+        return false
+    if selection.get("pass5_human_decision_sha256") != FileAccess.get_sha256(PASS5_DECISIONS):
+        return false
+    var palettes: Array = selection.get("palettes", [])
+    if palettes.size() != 2 or palettes[0].get("selection_role") != "PRIMARY" or palettes[0].get("structural_palette_id") != "P01_C02" or palettes[1].get("selection_role") != "ALTERNATE" or palettes[1].get("structural_palette_id") != "P05_C03":
+        return false
+    for palette in palettes:
+        if palette.get("applied_finish") != "NONE" or palette.get("structural_secondary") != "NONE":
+            return false
+    var catalog := WearQuery.load_catalog()
+    var approved := {}
+    var status_counts := {"APPROVED": 0, "DEFERRED": 0}
+    for record in catalog:
+        var status := String(record.get("effective_status", ""))
+        if status_counts.has(status):
+            status_counts[status] += 1
+        if status == "APPROVED":
+            approved[record["catalog_wear_id"]] = record
+    if status_counts != {"APPROVED": 12, "DEFERRED": 2}:
+        return false
+    var instances: Array = manifest.get("instances", [])
+    if instances.size() != 4:
+        return false
+    var seen := {}
+    for item in instances:
+        var wear_id := String(item.get("catalog_wear_id", ""))
+        if seen.has(wear_id) or not approved.has(wear_id):
+            return false
+        seen[wear_id] = true
+        var record: Dictionary = approved[wear_id]
+        if record.get("reviewed_source_fingerprint") != record.get("current_source_fingerprint") or record.get("reviewed_source_fingerprint") != item.get("approved_source_fingerprint"):
+            return false
+        var mask: Dictionary = record.get("imperfection", {})
+        if not mask.is_empty() and record.get("current_imperfection_fingerprint") != mask.get("source_fingerprint"):
+            return false
+        var path := String(item.get("approved_spec_path", ""))
+        if path != "res://data/environment/wear_catalog/approved_specs/" + wear_id + ".tres":
+            return false
+        var spec := load(path) as EnvironmentWearOverlaySpec
+        if spec == null or not spec.validate().is_empty() or spec.overlay_id != wear_id or spec.source_fingerprint != record["reviewed_source_fingerprint"]:
+            return false
+        if not spec.physical_size_m.is_equal_approx(Vector2(float(record["default_size"][0]), float(record["default_size"][1]))) or not is_equal_approx(spec.surface_offset_m, float(record["surface_offset"])):
+            return false
+    return true
+
+func _capture_wear(sample_only: bool) -> void:
+    if not validate_wear_source():
+        _fail("wear proof preflight failed")
+        return
+    var proof := get_node("Proof")
+    var relative := OUTPUT + "/final_wear_proof_01" + ("/sanity" if sample_only else "")
+    var folder := ProjectSettings.globalize_path(relative)
+    if not _make_directory(folder):
+        return
+    get_window().size = CAPTURE_SIZE
+    await get_tree().process_frame
+    await get_tree().process_frame
+    var records := []
+    var fingerprints := _piece_fingerprints(proof)
+    for planned in wear_capture_records(sample_only):
+        var state_on: bool = planned["wear_state"] == "WEAR_ON"
+        if not proof.call("set_wear_proof", String(planned["structural_palette_id"]), state_on):
+            _fail("cannot apply wear proof " + String(planned["structural_palette_id"]))
+            return
+        proof.call("set_light_mode", String(planned["light_mode"]))
+        proof.call("set_camera", String(planned["camera"]))
+        await _settle_frame()
+        var record: Dictionary = planned.duplicate(true)
+        record.merge(_camera_metadata(proof, String(record["camera"])))
+        record["light_settings"] = proof.call("light_settings")
+        record["cause_proxies"] = proof.call("cause_proxy_inventory")
+        record["wear_instances"] = proof.call("wear_instance_inventory")
+        record["visible_wear_overlays"] = proof.call("visible_wear_count")
+        record["piece_geometry_fingerprints"] = fingerprints
+        record["proof_composition_sha256"] = proof.call("proof_composition_sha256")
+        if record["visible_wear_overlays"] != (4 if state_on else 0) or record["cause_proxies"].size() != 2 or record["wear_instances"].size() != 4:
+            _fail("OFF/ON inventory mismatch " + String(record["filename"]))
+            return
+        if not _save_image(folder.path_join(String(record["filename"]))):
+            return
+        records.append(record)
+        print("EAF5_WEAR_CAPTURE ", record["filename"])
+    var manifest := _base_manifest(proof)
+    manifest.erase("wear_enabled")
+    manifest.erase("palette_pairs_generated")
+    manifest["capture_type"] = "CAUSAL_WEAR_SANITY" if sample_only else "CAUSAL_WEAR_FINAL"
+    manifest["palette_selection"] = _json_file(PALETTE_SELECTION)
+    manifest["wear_composition"] = _json_file(WEAR_PROOF)
+    manifest["wear_composition_sha256"] = FileAccess.get_sha256(WEAR_PROOF)
+    manifest["pass6b_decisions_sha256"] = FileAccess.get_sha256(PASS6B_DECISIONS)
+    manifest["applied_finish"] = "NONE"
+    manifest["structural_secondary"] = "NONE"
+    manifest["records"] = records
+    if not _write_json(folder.path_join("manifest.json"), manifest):
+        return
+    print("EAF5_WEAR_CAPTURE_COMPLETE records=", records.size(), " sanity=", sample_only)
     get_tree().quit(0)
 
 func _v2(value: Vector2) -> Array:

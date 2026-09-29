@@ -4,6 +4,10 @@ const Query = preload("res://environment_authoring/environment_material_catalog_
 const MaterialBuilder = preload("res://environment_authoring/environment_material_builder.gd")
 const Piece = preload("res://environment_authoring/substrate/environment_substrate_piece.gd")
 const Patch = preload("res://environment_authoring/wear/environment_material_patch.gd")
+const WearOverlay = preload("res://environment_authoring/wear/environment_wear_overlay.gd")
+const WearQuery = preload("res://environment_authoring/wear/environment_wear_catalog_query.gd")
+const WEAR_PROOF := "res://data/environment/receiving_proof/eaf5_receiving_wear_proof_01.json"
+const PALETTE_SELECTION := "res://data/environment/receiving_proof/eaf5_receiving_palette_selection_01.json"
 const CONTROL = preload("res://data/environment/receiving_proof/eaf5_review_control.tres")
 const SOURCE := "res://data/environment/receiving_proof/eaf5_receiving_proof_composition_v2.json"
 const HISTORICAL_SOURCE := "res://data/environment/receiving_proof/eaf5_receiving_shell_source.json"
@@ -12,7 +16,7 @@ const WALL_FAMILIES := ["structural_concrete", "rough_poured_concrete", "service
 const AFT_FINISH_ID := "eaf3b_8d5f0cf5add98dfe0a58f18a"
 const CEILING_FAMILIES := ["structural_concrete", "rough_poured_concrete"]
 const LIGHT_MODES := ["NEUTRAL_ARCHITECTURAL", "RECEIVING_TARGET"]
-const CAMERA_NAMES := ["EastApproachOverview", "FreightAperture", "FreightRecess", "EastOpening", "DispatchOpening", "UpperCeilingContext", "WallDominant", "FinishField", "FinishPatch", "FloorRead", "CeilingRead", "JoinAudit_Apron", "JoinAudit_Freight", "JoinAudit_Dispatch"]
+const CAMERA_NAMES := ["EastApproachOverview", "FreightAperture", "FreightRecess", "EastOpening", "DispatchOpening", "UpperCeilingContext", "WallDominant", "FinishField", "FinishPatch", "FloorRead", "CeilingRead", "JoinAudit_Apron", "JoinAudit_Freight", "JoinAudit_Dispatch", "WallCausalDetail", "FreightFloorDetail"]
 
 var _source: Dictionary = {}
 var _historical_source: Dictionary = {}
@@ -25,6 +29,8 @@ var _light_mode := "NEUTRAL_ARCHITECTURAL"
 var _builder := MaterialBuilder.new()
 var _control_material: StandardMaterial3D
 var _finish_patch: EnvironmentMaterialPatch
+var _wear_manifest: Dictionary = {}
+var _wear_created := false
 
 func _ready() -> void:
     var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(SOURCE))
@@ -146,6 +152,8 @@ func _configure_cameras() -> void:
     _camera("JoinAudit_Apron", Vector3(7.6, 1.55, 1.2), Vector3(10.2, 1.9, 4.7), 60.0)
     _camera("JoinAudit_Freight", Vector3(-2.5, 1.7, 0.2), Vector3(-0.1, 1.9, 3.35), 65.0)
     _camera("JoinAudit_Dispatch", Vector3(6.0, 1.6, -2.5), Vector3(6.0, 1.9, -5.1), 63.0)
+    _camera("WallCausalDetail", Vector3(6.5, 2.0, -1.0), Vector3(7.0, 2.65, 3.5), 70.0)
+    _camera("FreightFloorDetail", Vector3(3.2, 2.3, 1.0), Vector3(0.5, 0.0, -1.3), 65.0)
 
 func _camera(camera_name: String, location: Vector3, target: Vector3, fov: float) -> void:
     var camera := get_camera(camera_name)
@@ -432,6 +440,105 @@ func set_finish_layout(wall_id: String, floor_id: String, ceiling_id: String, fi
     if approved != review:
         (patch.get_node("PatchQuad") as MeshInstance3D).material_override = _builder.build(review)
     return (patch.get_node("PatchQuad") as MeshInstance3D).material_override != null
+
+func set_wear_proof(palette_id: String, wear_on: bool) -> bool:
+    var selection: Variant = JSON.parse_string(FileAccess.get_file_as_string(PALETTE_SELECTION))
+    if not selection is Dictionary:
+        return false
+    var palette: Dictionary = {}
+    for item in selection.get("palettes", []):
+        if item.get("structural_palette_id") == palette_id:
+            palette = item
+            break
+    if palette.is_empty() or palette.get("applied_finish") != "NONE" or palette.get("structural_secondary") != "NONE":
+        return false
+    if not _wear_created and not _create_wear_proof():
+        return false
+    if not set_structural_palette(
+        String(palette["wall"]["catalog_material_id"]),
+        String(palette["floor"]["catalog_material_id"]),
+        String(palette["ceiling"]["catalog_material_id"])
+    ):
+        return false
+    for child in get_node("WearOverlays").get_children():
+        child.visible = wear_on
+    return visible_wear_count() == (4 if wear_on else 0)
+
+func _create_wear_proof() -> bool:
+    var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(WEAR_PROOF))
+    if not parsed is Dictionary or parsed.get("accepted_shell_composition_sha256") != proof_composition_sha256():
+        return false
+    var instances: Array = parsed.get("instances", [])
+    if instances.size() != 4:
+        return false
+    var approved := {}
+    for record in WearQuery.query():
+        approved[record["catalog_wear_id"]] = record
+    var seen := {}
+    for item in instances:
+        var wear_id := String(item.get("catalog_wear_id", ""))
+        if seen.has(wear_id) or not approved.has(wear_id) or not _pieces.has(String(item.get("target_eaf2_piece", ""))):
+            return false
+        seen[wear_id] = true
+        var record: Dictionary = approved[wear_id]
+        if record.get("effective_status") != "APPROVED" or record.get("reviewed_source_fingerprint") != record.get("current_source_fingerprint") or record.get("reviewed_source_fingerprint") != item.get("approved_source_fingerprint"):
+            return false
+        var mask: Dictionary = record.get("imperfection", {})
+        if not mask.is_empty() and record.get("current_imperfection_fingerprint") != mask.get("source_fingerprint"):
+            return false
+        var spec := load(String(item.get("approved_spec_path", ""))) as EnvironmentWearOverlaySpec
+        if spec == null or not spec.validate().is_empty() or spec.overlay_id != wear_id or spec.source_fingerprint != record["reviewed_source_fingerprint"] or spec.semantic_category != record["semantic_category"]:
+            return false
+        if not spec.physical_size_m.is_equal_approx(Vector2(float(record["default_size"][0]), float(record["default_size"][1]))) or not is_equal_approx(spec.surface_offset_m, float(record["surface_offset"])):
+            return false
+    _wear_manifest = parsed
+    for item in instances:
+        var overlay := WearOverlay.new() as EnvironmentWearOverlay
+        overlay.name = String(item["instance_id"])
+        overlay.spec = load(String(item["approved_spec_path"])) as EnvironmentWearOverlaySpec
+        overlay.position = _vec3(item["world_position_m"])
+        overlay.rotation_degrees = _vec3(item["rotation_degrees"])
+        overlay.mirror_u = bool(item["mirror_u"])
+        overlay.mirror_v = bool(item["mirror_v"])
+        overlay.visible = false
+        get_node("WearOverlays").add_child(overlay)
+    var metal := StandardMaterial3D.new()
+    metal.albedo_color = Color(0.12, 0.13, 0.14)
+    metal.metallic = 0.7
+    metal.roughness = 0.65
+    for item in parsed["cause_proxies"]:
+        var mesh := BoxMesh.new()
+        mesh.size = _vec3(item["size_m"])
+        var proxy := MeshInstance3D.new()
+        proxy.name = String(item["name"])
+        proxy.mesh = mesh
+        proxy.position = _vec3(item["position_m"])
+        proxy.material_override = metal
+        proxy.set_meta("scope", "CONTEXT_ONLY / CAUSE_PROXY")
+        get_node("CauseProxies").add_child(proxy)
+    _wear_created = true
+    return true
+
+func visible_wear_count() -> int:
+    var count := 0
+    for child in get_node("WearOverlays").get_children():
+        if child.visible:
+            count += 1
+    return count
+
+func cause_proxy_inventory() -> Array:
+    var result := []
+    for child in get_node("CauseProxies").get_children():
+        var proxy := child as MeshInstance3D
+        result.append({"name": proxy.name, "position_m": _array3(proxy.position), "size_m": _array3((proxy.mesh as BoxMesh).size), "visible": proxy.visible, "scope": proxy.get_meta("scope")})
+    return result
+
+func wear_instance_inventory() -> Array:
+    var result := []
+    for child in get_node("WearOverlays").get_children():
+        var overlay := child as EnvironmentWearOverlay
+        result.append({"instance_id": overlay.name, "catalog_wear_id": overlay.spec.overlay_id, "position_m": _array3(overlay.position), "rotation_degrees": _array3(overlay.rotation_degrees), "physical_size_m": [overlay.spec.physical_size_m.x, overlay.spec.physical_size_m.y], "surface_offset_m": overlay.spec.surface_offset_m, "mirror_u": overlay.mirror_u, "mirror_v": overlay.mirror_v, "visible": overlay.visible})
+    return result
 
 func active_review_spec() -> EnvironmentSurfaceMaterialSpec:
     return _active_spec
