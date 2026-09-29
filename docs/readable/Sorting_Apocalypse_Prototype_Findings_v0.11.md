@@ -138,6 +138,8 @@ Evidence limit: no new structural kit was generated from these maps in this sess
 
 The layered finish language now required across the bunker makes a coherent material library potentially more important than more prefab geometry. The first shell failure exposed an art-direction/composition problem, not proof that all existing meshes are unusable. Select the source route after a small Foundation-Gate proof rather than treating either existing meshes or generated architecture as automatically sufficient. [M14; V02 §24]
 
+29 September supersession: this was the pre-EAF evidence state. EAF1–EAF5 subsequently proved the environment material-review, structural-substrate, curated-material, wear, and Receiving architectural-proof pipeline. See §§28–29 for the current result.
+
 ## 3. Prototype Steps 1-6.3 (historical implementation sequence)
 
 The prototype was deliberately built as a sequence of small gates. Each step answered a narrower question before the next system was attached. The status below distinguishes observed conclusions from implementation presence. Historical input/state descriptions below are not new scope commitments. Current controls and the later no-loose-world-item target take precedence where explicitly refined.
@@ -641,7 +643,7 @@ The gate is a human visual checkpoint, not an exact-transform test. Provisional 
 
 | Area | Approved consequence / open detail |
 | --- | --- |
-| Receiving / Sorting | Accepted cordoned freight bay, distinct Dispatch annex, Backlog and passage-like Sorting. The desk has partial aperture visibility and the two long vistas are interrupted. Preserve that reviewed geometry; actual pile-item recognition and reach remain future Receiving tests. [A17] |
+| Receiving / Sorting | Accepted cordoned freight bay, distinct Dispatch annex, Backlog and passage-like Sorting. The desk has partial aperture visibility and the two long vistas are interrupted. Preserve that reviewed geometry [A17]. Later Stage B evidence promoted the deterministic TAKE-only presenter and functional freight fixtures, including the current 3.4 m Receiving-only fixture reach; see §27. |
 | Main / satellite Storage | Current topology uses five main galleries A-E and a directional 85-90% capacity target, with one primary spine and one intentional C<->D secondary connection. Gallery shapes vary but should remain buildable; Gallery E is not a shortcut to the Deeper-Bunker Approach. Remaining 10-15% capacity is opportunistic/specialist satellite storage. |
 | Sockets / progression | Moderate installed starting capacity; starting loot TBD. All units authored/socketed; movement remains open and restricted if retained. Implicit future sockets may contain designated clutter until night upgrades. Labels remain detailed design work. |
 | Playable service spaces / unseen cores | Workshop/Kitchen service rooms and Medical Supply Anteroom are playable; Ops is an open Transfer Landing. Staffed cores remain off-map behind inner boundaries. Kitchen route uses B-east; Medical retains its protected shared-circulation spur. [H16, D16S] |
