@@ -1,0 +1,44 @@
+{
+  "status": "EAF5 HUMAN-PROMOTED / CLOSED; Receiving Stage C1 next implementation gate after comprehensive documentation review",
+  "shell": {
+    "source": "data/environment/receiving_proof/eaf5_receiving_shell_source.json",
+    "accepted_composition": "data/environment/receiving_proof/eaf5_receiving_proof_composition_v2.json",
+    "composition_sha256": "8361ed7d1d211f40c253cc7bf76821b9d141ab303b0fe7a6573208216f05339d",
+    "eaf2_piece_count": 14,
+    "recipes": {
+      "rect_solid": 13,
+      "wall_with_rect_opening": 1
+    },
+    "root_scale": "Vector3.ONE"
+  },
+  "palette_selection": "data/environment/receiving_proof/eaf5_receiving_palette_selection_01.json",
+  "primary_palette": {
+    "id": "P01_C02",
+    "wall": "eaf3b_d335d94fd85c2c95c26b6b8b",
+    "floor": "eaf3b_bb32071987faae156ff2d4e8",
+    "ceiling": "eaf3b_6bcd8f817ca2993433e217cc"
+  },
+  "alternate_palette": {
+    "id": "P05_C03",
+    "wall": "eaf3b_5a797fbdc766d7e3dc475abf",
+    "floor": "eaf3b_bb32071987faae156ff2d4e8",
+    "ceiling": "eaf3b_71edb3fc983ed8f7655d9523"
+  },
+  "base_applied_finish": "NONE",
+  "structural_secondary_default": "NONE",
+  "base_wear_preset": "NONE",
+  "default_environment_material_mapping": "UV",
+  "production_migration": "Preserve gameplay and spatial authority. Replace or hide the greybox visual shell with EAF2 production visuals while initially keeping gameplay, collision, and runtime ownership stable.",
+  "wear_authoring": "After major infrastructure, furniture, shelving, pallets, freight barrier or shutter, and room lighting are substantially present, query approved EAF4 sources and place room instances manually against actual causes and geometry. Orient or mirror by cause, resize only when placement justifies it, tune instance opacity and albedo in context, and evaluate under final lighting and occlusion. Do not mutate catalog approvals or promote Pass 7A isolated variants as a fixed preset.",
+  "wear_examples": {
+    "freight_dust_or_light_grime": "freight path, threshold, shelf or pallet edge, hard-to-clean zone",
+    "rust": "metal foot, bolt, bracket, rail, barrier, service fitting",
+    "water_or_mineral": "pipe, penetration, drain, leak-prone junction",
+    "crack_or_spall": "stressed opening, damaged edge, freight recess, rough service zone"
+  },
+  "deferred": [
+    "Inaccessible freight/elevator enclosure visual oddity; refine during C1.",
+    "Contextual wear authoring after room causes and lighting exist."
+  ],
+  "production_migration_implemented": false
+}
