@@ -83,7 +83,8 @@ func _initialize() -> void:
     get_root().add_child(patch)
     patch.regenerate()
     assert(patch.scale == Vector3.ONE)
-    assert((patch.get_node("PatchQuad") as MeshInstance3D).mesh.size == Vector2.ONE)
+    var patch_bounds := (patch.get_node("PatchQuad") as MeshInstance3D).mesh.get_aabb().size
+    assert(Vector2(patch_bounds.x, patch_bounds.y).is_equal_approx(Vector2.ONE))
     patch.mode = Patch.Mode.EAF4_SOURCE
     patch.wear_spec = spec
     patch.regenerate()

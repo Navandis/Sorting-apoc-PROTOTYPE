@@ -40,9 +40,38 @@ func regenerate() -> void:
     quad.visible = material != null
     if material == null:
         return
-    var mesh := QuadMesh.new()
-    mesh.size = wear_spec.physical_size_m if mode == Mode.EAF4_SOURCE and wear_spec != null else physical_size_m
-    quad.mesh = mesh
+    if mode == Mode.EAF4_SOURCE:
+        var source_mesh := QuadMesh.new()
+        source_mesh.size = wear_spec.physical_size_m if wear_spec != null else physical_size_m
+        quad.mesh = source_mesh
+    else:
+        quad.mesh = _metre_uv_mesh(physical_size_m)
     quad.position = Vector3(0.0, 0.0, wear_spec.surface_offset_m if mode == Mode.EAF4_SOURCE and wear_spec != null else surface_offset_m)
     quad.material_override = material
     quad.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+
+func _metre_uv_mesh(size_m: Vector2) -> ArrayMesh:
+    var arrays := []
+    arrays.resize(Mesh.ARRAY_MAX)
+    arrays[Mesh.ARRAY_VERTEX] = PackedVector3Array([
+        Vector3(-size_m.x * 0.5, -size_m.y * 0.5, 0.0),
+        Vector3(size_m.x * 0.5, -size_m.y * 0.5, 0.0),
+        Vector3(size_m.x * 0.5, size_m.y * 0.5, 0.0),
+        Vector3(-size_m.x * 0.5, size_m.y * 0.5, 0.0),
+    ])
+    arrays[Mesh.ARRAY_TEX_UV] = PackedVector2Array([
+        Vector2.ZERO, Vector2(size_m.x, 0.0), size_m, Vector2(0.0, size_m.y)
+    ])
+    arrays[Mesh.ARRAY_NORMAL] = PackedVector3Array([
+        Vector3.BACK, Vector3.BACK, Vector3.BACK, Vector3.BACK
+    ])
+    arrays[Mesh.ARRAY_TANGENT] = PackedFloat32Array([
+        1.0, 0.0, 0.0, 1.0,
+        1.0, 0.0, 0.0, 1.0,
+        1.0, 0.0, 0.0, 1.0,
+        1.0, 0.0, 0.0, 1.0,
+    ])
+    arrays[Mesh.ARRAY_INDEX] = PackedInt32Array([0, 2, 1, 0, 3, 2])
+    var mesh := ArrayMesh.new()
+    mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+    return mesh
