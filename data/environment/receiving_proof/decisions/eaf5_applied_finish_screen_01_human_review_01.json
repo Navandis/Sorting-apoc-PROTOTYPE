@@ -1,0 +1,343 @@
+{
+  "review": "EAF5 Pass 6A human applied-finish screen review 01",
+  "pass6a_review_package": "reports/environment_receiving_proof/eaf5/eaf5_applied_finish_screen_01_review.zip",
+  "pass6a_review_package_sha256": "e8bfa330e836687b2fe869a938bf7ed3181ca1a0f076d0d531a32293e6bda66b",
+  "accepted_shell_composition_sha256": "8361ed7d1d211f40c253cc7bf76821b9d141ab303b0fe7a6573208216f05339d",
+  "allowed_decisions": [
+    "KEEP_FINISH_VARIANT",
+    "HOLD_FINISH_VARIANT",
+    "DROP_FINISH_VARIANT"
+  ],
+  "design_conclusions": {
+    "S02_S03_S04": "Broad finish fields rejected because pronounced seam/panel wall language is integral to these structural palettes.",
+    "A02_A03": "Full-wall use rejected or held because visible source repetition dominates.",
+    "S01_S05_S06": "Selected finish variants merit bounded Layer-2 testing.",
+    "NO_FINISH": "Remains a valid final direction; no applied finish is mandatory."
+  },
+  "configurations": [
+    {
+      "configuration_id": "S01_A00",
+      "structural_palette_id": "P01_C02",
+      "finish_id": "A00",
+      "finish_material_id": null,
+      "finish_display_name": "NO_FINISH",
+      "decision": "CONTROL_NO_FINISH",
+      "rationale": "NO_FINISH remains a fully competitive control and valid final direction."
+    },
+    {
+      "configuration_id": "S01_A01",
+      "structural_palette_id": "P01_C02",
+      "finish_id": "A01",
+      "finish_material_id": "eaf3b_7b12b8b3a2e05c502801d22f",
+      "finish_display_name": "KB3D_RFS_ConcretePlasterWhite",
+      "decision": "KEEP_FINISH_VARIANT",
+      "rationale": "Selected finish/palette combination merits bounded Layer-2 layout testing."
+    },
+    {
+      "configuration_id": "S01_A02",
+      "structural_palette_id": "P01_C02",
+      "finish_id": "A02",
+      "finish_material_id": "eaf3b_8d5f0cf5add98dfe0a58f18a",
+      "finish_display_name": "KB3D_AFT_PlasterA",
+      "decision": "HOLD_FINISH_VARIANT",
+      "rationale": "Full-wall source repetition dominates; localization merits only the specified small-patch probe when held."
+    },
+    {
+      "configuration_id": "S01_A03",
+      "structural_palette_id": "P01_C02",
+      "finish_id": "A03",
+      "finish_material_id": "eaf3b_9297ffec71774317b0627951",
+      "finish_display_name": "Painted Concrete Wall",
+      "decision": "HOLD_FINISH_VARIANT",
+      "rationale": "Full-wall source repetition dominates; localization merits only the specified small-patch probe when held."
+    },
+    {
+      "configuration_id": "S01_A04",
+      "structural_palette_id": "P01_C02",
+      "finish_id": "A04",
+      "finish_material_id": "eaf3b_b395eb3943870fbfd262e8ce",
+      "finish_display_name": "KB3D_ECP_StuccoWhite",
+      "decision": "HOLD_FINISH_VARIANT",
+      "rationale": "Held as reserve evidence; not selected for this bounded layout matrix."
+    },
+    {
+      "configuration_id": "S01_A05",
+      "structural_palette_id": "P01_C02",
+      "finish_id": "A05",
+      "finish_material_id": "eaf3b_c29826cd934f1534ecfb48c5",
+      "finish_display_name": "KB3D_NNY_ConcretePlasterWhite",
+      "decision": "HOLD_FINISH_VARIANT",
+      "rationale": "Held as reserve evidence; not selected for this bounded layout matrix."
+    },
+    {
+      "configuration_id": "S02_A00",
+      "structural_palette_id": "P05_C02",
+      "finish_id": "A00",
+      "finish_material_id": null,
+      "finish_display_name": "NO_FINISH",
+      "decision": "CONTROL_NO_FINISH",
+      "rationale": "NO_FINISH remains a fully competitive control and valid final direction."
+    },
+    {
+      "configuration_id": "S02_A01",
+      "structural_palette_id": "P05_C02",
+      "finish_id": "A01",
+      "finish_material_id": "eaf3b_7b12b8b3a2e05c502801d22f",
+      "finish_display_name": "KB3D_RFS_ConcretePlasterWhite",
+      "decision": "DROP_FINISH_VARIANT",
+      "rationale": "Broad finish field rejected: pronounced seam/panel wall language is integral to this structural palette."
+    },
+    {
+      "configuration_id": "S02_A02",
+      "structural_palette_id": "P05_C02",
+      "finish_id": "A02",
+      "finish_material_id": "eaf3b_8d5f0cf5add98dfe0a58f18a",
+      "finish_display_name": "KB3D_AFT_PlasterA",
+      "decision": "DROP_FINISH_VARIANT",
+      "rationale": "Broad finish field rejected: pronounced seam/panel wall language is integral to this structural palette."
+    },
+    {
+      "configuration_id": "S02_A03",
+      "structural_palette_id": "P05_C02",
+      "finish_id": "A03",
+      "finish_material_id": "eaf3b_9297ffec71774317b0627951",
+      "finish_display_name": "Painted Concrete Wall",
+      "decision": "DROP_FINISH_VARIANT",
+      "rationale": "Broad finish field rejected: pronounced seam/panel wall language is integral to this structural palette."
+    },
+    {
+      "configuration_id": "S02_A04",
+      "structural_palette_id": "P05_C02",
+      "finish_id": "A04",
+      "finish_material_id": "eaf3b_b395eb3943870fbfd262e8ce",
+      "finish_display_name": "KB3D_ECP_StuccoWhite",
+      "decision": "DROP_FINISH_VARIANT",
+      "rationale": "Broad finish field rejected: pronounced seam/panel wall language is integral to this structural palette."
+    },
+    {
+      "configuration_id": "S02_A05",
+      "structural_palette_id": "P05_C02",
+      "finish_id": "A05",
+      "finish_material_id": "eaf3b_c29826cd934f1534ecfb48c5",
+      "finish_display_name": "KB3D_NNY_ConcretePlasterWhite",
+      "decision": "DROP_FINISH_VARIANT",
+      "rationale": "Broad finish field rejected: pronounced seam/panel wall language is integral to this structural palette."
+    },
+    {
+      "configuration_id": "S03_A00",
+      "structural_palette_id": "P04_C02",
+      "finish_id": "A00",
+      "finish_material_id": null,
+      "finish_display_name": "NO_FINISH",
+      "decision": "CONTROL_NO_FINISH",
+      "rationale": "NO_FINISH remains a fully competitive control and valid final direction."
+    },
+    {
+      "configuration_id": "S03_A01",
+      "structural_palette_id": "P04_C02",
+      "finish_id": "A01",
+      "finish_material_id": "eaf3b_7b12b8b3a2e05c502801d22f",
+      "finish_display_name": "KB3D_RFS_ConcretePlasterWhite",
+      "decision": "DROP_FINISH_VARIANT",
+      "rationale": "Broad finish field rejected: pronounced seam/panel wall language is integral to this structural palette."
+    },
+    {
+      "configuration_id": "S03_A02",
+      "structural_palette_id": "P04_C02",
+      "finish_id": "A02",
+      "finish_material_id": "eaf3b_8d5f0cf5add98dfe0a58f18a",
+      "finish_display_name": "KB3D_AFT_PlasterA",
+      "decision": "DROP_FINISH_VARIANT",
+      "rationale": "Broad finish field rejected: pronounced seam/panel wall language is integral to this structural palette."
+    },
+    {
+      "configuration_id": "S03_A03",
+      "structural_palette_id": "P04_C02",
+      "finish_id": "A03",
+      "finish_material_id": "eaf3b_9297ffec71774317b0627951",
+      "finish_display_name": "Painted Concrete Wall",
+      "decision": "DROP_FINISH_VARIANT",
+      "rationale": "Broad finish field rejected: pronounced seam/panel wall language is integral to this structural palette."
+    },
+    {
+      "configuration_id": "S03_A04",
+      "structural_palette_id": "P04_C02",
+      "finish_id": "A04",
+      "finish_material_id": "eaf3b_b395eb3943870fbfd262e8ce",
+      "finish_display_name": "KB3D_ECP_StuccoWhite",
+      "decision": "DROP_FINISH_VARIANT",
+      "rationale": "Broad finish field rejected: pronounced seam/panel wall language is integral to this structural palette."
+    },
+    {
+      "configuration_id": "S03_A05",
+      "structural_palette_id": "P04_C02",
+      "finish_id": "A05",
+      "finish_material_id": "eaf3b_c29826cd934f1534ecfb48c5",
+      "finish_display_name": "KB3D_NNY_ConcretePlasterWhite",
+      "decision": "DROP_FINISH_VARIANT",
+      "rationale": "Broad finish field rejected: pronounced seam/panel wall language is integral to this structural palette."
+    },
+    {
+      "configuration_id": "S04_A00",
+      "structural_palette_id": "P05_C03",
+      "finish_id": "A00",
+      "finish_material_id": null,
+      "finish_display_name": "NO_FINISH",
+      "decision": "CONTROL_NO_FINISH",
+      "rationale": "NO_FINISH remains a fully competitive control and valid final direction."
+    },
+    {
+      "configuration_id": "S04_A01",
+      "structural_palette_id": "P05_C03",
+      "finish_id": "A01",
+      "finish_material_id": "eaf3b_7b12b8b3a2e05c502801d22f",
+      "finish_display_name": "KB3D_RFS_ConcretePlasterWhite",
+      "decision": "DROP_FINISH_VARIANT",
+      "rationale": "Broad finish field rejected: pronounced seam/panel wall language is integral to this structural palette."
+    },
+    {
+      "configuration_id": "S04_A02",
+      "structural_palette_id": "P05_C03",
+      "finish_id": "A02",
+      "finish_material_id": "eaf3b_8d5f0cf5add98dfe0a58f18a",
+      "finish_display_name": "KB3D_AFT_PlasterA",
+      "decision": "DROP_FINISH_VARIANT",
+      "rationale": "Broad finish field rejected: pronounced seam/panel wall language is integral to this structural palette."
+    },
+    {
+      "configuration_id": "S04_A03",
+      "structural_palette_id": "P05_C03",
+      "finish_id": "A03",
+      "finish_material_id": "eaf3b_9297ffec71774317b0627951",
+      "finish_display_name": "Painted Concrete Wall",
+      "decision": "DROP_FINISH_VARIANT",
+      "rationale": "Broad finish field rejected: pronounced seam/panel wall language is integral to this structural palette."
+    },
+    {
+      "configuration_id": "S04_A04",
+      "structural_palette_id": "P05_C03",
+      "finish_id": "A04",
+      "finish_material_id": "eaf3b_b395eb3943870fbfd262e8ce",
+      "finish_display_name": "KB3D_ECP_StuccoWhite",
+      "decision": "DROP_FINISH_VARIANT",
+      "rationale": "Broad finish field rejected: pronounced seam/panel wall language is integral to this structural palette."
+    },
+    {
+      "configuration_id": "S04_A05",
+      "structural_palette_id": "P05_C03",
+      "finish_id": "A05",
+      "finish_material_id": "eaf3b_c29826cd934f1534ecfb48c5",
+      "finish_display_name": "KB3D_NNY_ConcretePlasterWhite",
+      "decision": "DROP_FINISH_VARIANT",
+      "rationale": "Broad finish field rejected: pronounced seam/panel wall language is integral to this structural palette."
+    },
+    {
+      "configuration_id": "S05_A00",
+      "structural_palette_id": "P01_C01",
+      "finish_id": "A00",
+      "finish_material_id": null,
+      "finish_display_name": "NO_FINISH",
+      "decision": "CONTROL_NO_FINISH",
+      "rationale": "NO_FINISH remains a fully competitive control and valid final direction."
+    },
+    {
+      "configuration_id": "S05_A01",
+      "structural_palette_id": "P01_C01",
+      "finish_id": "A01",
+      "finish_material_id": "eaf3b_7b12b8b3a2e05c502801d22f",
+      "finish_display_name": "KB3D_RFS_ConcretePlasterWhite",
+      "decision": "HOLD_FINISH_VARIANT",
+      "rationale": "Held as reserve evidence; not selected for this bounded layout matrix."
+    },
+    {
+      "configuration_id": "S05_A02",
+      "structural_palette_id": "P01_C01",
+      "finish_id": "A02",
+      "finish_material_id": "eaf3b_8d5f0cf5add98dfe0a58f18a",
+      "finish_display_name": "KB3D_AFT_PlasterA",
+      "decision": "DROP_FINISH_VARIANT",
+      "rationale": "Full-wall source repetition dominates; excluded from this bounded layout probe."
+    },
+    {
+      "configuration_id": "S05_A03",
+      "structural_palette_id": "P01_C01",
+      "finish_id": "A03",
+      "finish_material_id": "eaf3b_9297ffec71774317b0627951",
+      "finish_display_name": "Painted Concrete Wall",
+      "decision": "DROP_FINISH_VARIANT",
+      "rationale": "Full-wall source repetition dominates; excluded from this bounded layout probe."
+    },
+    {
+      "configuration_id": "S05_A04",
+      "structural_palette_id": "P01_C01",
+      "finish_id": "A04",
+      "finish_material_id": "eaf3b_b395eb3943870fbfd262e8ce",
+      "finish_display_name": "KB3D_ECP_StuccoWhite",
+      "decision": "KEEP_FINISH_VARIANT",
+      "rationale": "Selected finish/palette combination merits bounded Layer-2 layout testing."
+    },
+    {
+      "configuration_id": "S05_A05",
+      "structural_palette_id": "P01_C01",
+      "finish_id": "A05",
+      "finish_material_id": "eaf3b_c29826cd934f1534ecfb48c5",
+      "finish_display_name": "KB3D_NNY_ConcretePlasterWhite",
+      "decision": "HOLD_FINISH_VARIANT",
+      "rationale": "Held as reserve evidence; not selected for this bounded layout matrix."
+    },
+    {
+      "configuration_id": "S06_A00",
+      "structural_palette_id": "P01_C05",
+      "finish_id": "A00",
+      "finish_material_id": null,
+      "finish_display_name": "NO_FINISH",
+      "decision": "CONTROL_NO_FINISH",
+      "rationale": "NO_FINISH remains a fully competitive control and valid final direction."
+    },
+    {
+      "configuration_id": "S06_A01",
+      "structural_palette_id": "P01_C05",
+      "finish_id": "A01",
+      "finish_material_id": "eaf3b_7b12b8b3a2e05c502801d22f",
+      "finish_display_name": "KB3D_RFS_ConcretePlasterWhite",
+      "decision": "KEEP_FINISH_VARIANT",
+      "rationale": "Selected finish/palette combination merits bounded Layer-2 layout testing."
+    },
+    {
+      "configuration_id": "S06_A02",
+      "structural_palette_id": "P01_C05",
+      "finish_id": "A02",
+      "finish_material_id": "eaf3b_8d5f0cf5add98dfe0a58f18a",
+      "finish_display_name": "KB3D_AFT_PlasterA",
+      "decision": "DROP_FINISH_VARIANT",
+      "rationale": "Full-wall source repetition dominates; excluded from this bounded layout probe."
+    },
+    {
+      "configuration_id": "S06_A03",
+      "structural_palette_id": "P01_C05",
+      "finish_id": "A03",
+      "finish_material_id": "eaf3b_9297ffec71774317b0627951",
+      "finish_display_name": "Painted Concrete Wall",
+      "decision": "DROP_FINISH_VARIANT",
+      "rationale": "Full-wall source repetition dominates; excluded from this bounded layout probe."
+    },
+    {
+      "configuration_id": "S06_A04",
+      "structural_palette_id": "P01_C05",
+      "finish_id": "A04",
+      "finish_material_id": "eaf3b_b395eb3943870fbfd262e8ce",
+      "finish_display_name": "KB3D_ECP_StuccoWhite",
+      "decision": "HOLD_FINISH_VARIANT",
+      "rationale": "Held as reserve evidence; not selected for this bounded layout matrix."
+    },
+    {
+      "configuration_id": "S06_A05",
+      "structural_palette_id": "P01_C05",
+      "finish_id": "A05",
+      "finish_material_id": "eaf3b_c29826cd934f1534ecfb48c5",
+      "finish_display_name": "KB3D_NNY_ConcretePlasterWhite",
+      "decision": "KEEP_FINISH_VARIANT",
+      "rationale": "Selected finish/palette combination merits bounded Layer-2 layout testing."
+    }
+  ]
+}

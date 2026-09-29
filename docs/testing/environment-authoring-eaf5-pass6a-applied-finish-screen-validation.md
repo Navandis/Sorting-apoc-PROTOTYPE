@@ -1,6 +1,6 @@
 # EAF5 Pass 6A — Receiving applied-finish screening validation
 
-**Status: EAF5 PASS 6A IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN APPLIED-FINISH SCREEN REVIEW PENDING.** EAF5 overall remains in progress.
+**Status: EAF5 PASS 6A — HUMAN APPLIED-FINISH SCREEN REVIEW COMPLETE.** EAF5 overall remains in progress.
 
 ## Authority and scope
 
@@ -46,6 +46,10 @@ Shareable ZIP: `reports/environment_receiving_proof/eaf5/eaf5_applied_finish_scr
 - Accepted composition and Pass-5 ZIP hashes remain unchanged. No protected production wing path has a diff. EAF2 and EAF4 code was not changed.
 - Review artifacts are local ignored files. Source, tests, decisions and validation are tracked on `codex/eaf5-receiving-proof`; no merge or push.
 
-Human review now decides which finish/palette combinations merit later region-layout testing. The A00 NO_FINISH result remains valid. This pass does not select finish winners, add structural secondary or EAF4 wear, migrate production Receiving, or resume Receiving C1.
+## Human review closure
 
-**EAF5 PASS 6A READY — HUMAN APPLIED-FINISH SCREEN REVIEW PENDING.**
+The human Pass 6A disposition is recorded in `data/environment/receiving_proof/decisions/eaf5_applied_finish_screen_01_human_review_01.json`. All six A00 controls remain `CONTROL_NO_FINISH`. The 30 finish variants resolve to **4 KEEP_FINISH_VARIANT, 7 HOLD_FINISH_VARIANT and 19 DROP_FINISH_VARIANT**. The four kept source combinations are S01_A01, S05_A04, S06_A01 and S06_A05. The two small-patch-only held probes are S01_A02 and S01_A03.
+
+Broad finish fields were rejected for S02/S03/S04 because the structural palettes already carry pronounced seam/panel wall language. A02/A03 full-wall use was held or rejected because source repetition dominates. The selected S01/S05/S06 variants proceed only to bounded Layer-2 layout testing. NO_FINISH remains fully competitive and is a valid final direction; no applied finish is mandatory. These room-level decisions do not modify EAF3 approvals. EAF4 wear, structural secondary, production Receiving and Receiving C1 remain untouched.
+
+**EAF5 PASS 6A — HUMAN APPLIED-FINISH SCREEN REVIEW COMPLETE.**

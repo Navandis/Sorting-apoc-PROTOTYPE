@@ -11,6 +11,8 @@ script = ExtResource("1")
 
 [node name="ReviewContext" type="Node3D" parent="."]
 
+[node name="FinishPatches" type="Node3D" parent="."]
+
 [node name="NeutralLightingRig" type="Node3D" parent="."]
 
 [node name="ReceivingTargetLightingRig" type="Node3D" parent="."]
@@ -34,6 +36,8 @@ current = true
 [node name="WallDominant" type="Camera3D" parent="Cameras"]
 
 [node name="FinishField" type="Camera3D" parent="Cameras"]
+
+[node name="FinishPatch" type="Camera3D" parent="Cameras"]
 
 [node name="FloorRead" type="Camera3D" parent="Cameras"]
 

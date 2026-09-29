@@ -27,6 +27,19 @@ const PASS5_DECISIONS := "res://data/environment/receiving_proof/decisions/eaf5_
 const PASS5_PACKAGE_SHA256 := "97034dbad91328f1d53531e3cf2b1816ac63ccf33d14a8e033495aaec61ba748"
 const PASS5_MANIFEST := OUTPUT + "/structural_palettes_01/manifest.json"
 const FINISH_REGION := "FINISH_SOUTH_WALL_FIELD"
+const PASS6A_PACKAGE_SHA256 := "e8bfa330e836687b2fe869a938bf7ed3181ca1a0f076d0d531a32293e6bda66b"
+const PASS6A_MANIFEST := OUTPUT + "/applied_finish_screen_01/manifest.json"
+const PASS6A_DECISIONS := "res://data/environment/receiving_proof/decisions/eaf5_applied_finish_screen_01_human_review_01.json"
+const LAYOUT_CASES := [
+    ["S01_L00", 0, 0, "L00"], ["S05_L00", 4, 0, "L00"], ["S06_L00", 5, 0, "L00"],
+    ["V01_L01", 0, 1, "L01"], ["V01_L02", 0, 1, "L02"],
+    ["V02_L01", 4, 4, "L01"], ["V02_L02", 4, 4, "L02"],
+    ["V03_L01", 5, 1, "L01"], ["V03_L02", 5, 1, "L02"],
+    ["V04_L01", 5, 5, "L01"], ["V04_L02", 5, 5, "L02"],
+    ["Q01_L02", 0, 2, "L02"], ["Q02_L02", 0, 3, "L02"],
+]
+const LAYOUT_SANITY_IDS := ["S01_L00", "V01_L01", "V01_L02", "Q01_L02", "Q02_L02"]
+const LAYOUT_SCALE_IDS := ["V01_L01", "V01_L02"]
 const ROLE_DECISIONS := "res://data/environment/receiving_proof/decisions/eaf5_role_isolation_02_human_review_01.json"
 const ROLE_PACKAGE_HASHES := {"wall": "2fbb4a646b2e48c742a901c0e650178ebb5e89e2c39bd3c964fcc32566946dcb", "floor": "75ccd8600d1f15e9030b87284bbda0bae1f3f5c362dfe35be02d3c0f80df538e", "ceiling": "a666f59876a6b35112803f9c8a30995aac06cc9da81f4fe3f1a42c53c5e57c37"}
 
@@ -42,6 +55,12 @@ func _ready() -> void:
         _capture_roles.call_deferred(false)
     elif args.has("--eaf5-capture-pairs-sanity"):
         _capture_pairs.call_deferred(true)
+    elif args.has("--eaf5-capture-layout-scale"):
+        _capture_layouts.call_deferred(false, true)
+    elif args.has("--eaf5-capture-layouts-sanity"):
+        _capture_layouts.call_deferred(true, false)
+    elif args.has("--eaf5-capture-layouts"):
+        _capture_layouts.call_deferred(false, false)
     elif args.has("--eaf5-capture-finishes-sanity"):
         _capture_finishes.call_deferred(true)
     elif args.has("--eaf5-capture-finishes"):
@@ -692,6 +711,245 @@ func _finish_configuration_ids() -> Array:
         for finish_index in FINISH_IDS.size():
             ids.append("S%02d_A%02d" % [finalist_index + 1, finish_index])
     return ids
+
+func layout_capture_records(sample_only: bool = false, scale_only: bool = false) -> Array:
+    var records := []
+    var selected := _selected_finalists()
+    if selected.size() != 6:
+        return records
+    for case in LAYOUT_CASES:
+        var configuration_id: String = case[0]
+        if sample_only and not LAYOUT_SANITY_IDS.has(configuration_id):
+            continue
+        if scale_only and not LAYOUT_SCALE_IDS.has(configuration_id):
+            continue
+        var index: int = case[1]
+        var finish_index: int = case[2]
+        var layout_id: String = case[3]
+        var palette: Dictionary = selected[index]
+        var size: Variant = null
+        var wall_position: Variant = null
+        if layout_id == "L01":
+            size = [4.2, 2.4]
+            wall_position = {"offset_x_from_wall_center_m": 0.0, "center_y_m": 2.1, "world_center_m": [5.1, 2.1, 4.85]}
+        elif layout_id == "L02":
+            size = [1.8, 1.2]
+            wall_position = {"offset_x_from_wall_center_m": -2.0, "center_y_m": 1.55, "world_center_m": [3.1, 1.55, 4.85]}
+        var views := [
+            ["NEUTRAL_ARCHITECTURAL", "EastApproachOverview"],
+            ["RECEIVING_TARGET", "EastApproachOverview"],
+            ["NEUTRAL_ARCHITECTURAL", "FinishPatch" if layout_id == "L02" else "FinishField"],
+            ["RECEIVING_TARGET", "FinishPatch" if layout_id == "L02" else "FinishField"],
+        ]
+        if scale_only:
+            views = [["NEUTRAL_ARCHITECTURAL", "FinishPatch" if layout_id == "L02" else "FinishField"]]
+        for view in views:
+            records.append({
+                "configuration_id": configuration_id,
+                "source_screen_configuration_id": "S%02d_A%02d" % [index + 1, finish_index],
+                "structural_finalist_id": "S%02d" % [index + 1],
+                "structural_palette_id": palette["structural_palette_id"],
+                "wall_material_id": palette["wall"]["catalog_material_id"],
+                "floor_material_id": palette["floor"]["catalog_material_id"],
+                "ceiling_material_id": palette["ceiling"]["catalog_material_id"],
+                "finish_id": "A%02d" % finish_index,
+                "finish_material_id": null if finish_index == 0 else FINISH_IDS[finish_index],
+                "layout_id": layout_id,
+                "layout_name": "L00_NO_FINISH" if layout_id == "L00" else "L01_INHERITED_FIELD" if layout_id == "L01" else "L02_LOCAL_PATCH",
+                "finish_piece": "ReceivingSouth",
+                "physical_size_m": size,
+                "wall_local_position": wall_position,
+                "surface_offset_m": null if layout_id == "L00" else 0.002,
+                "approved_finish_mapping": null if finish_index == 0 else "TRIPLANAR" if finish_index == 2 else "UV",
+                "effective_finish_mapping": null if finish_index == 0 else "UV",
+                "transient_uv_override": finish_index == 2,
+                "light_mode": view[0],
+                "camera": view[1],
+                "filename": "%s__%s__%s.png" % [configuration_id, String(view[0]).to_lower(), view[1]],
+            })
+    return records
+
+func validate_layout_source() -> bool:
+    if not validate_finish_source():
+        return false
+    var package := ProjectSettings.globalize_path(OUTPUT + "/eaf5_applied_finish_screen_01_review.zip")
+    if not FileAccess.file_exists(package) or FileAccess.get_sha256(package) != PASS6A_PACKAGE_SHA256:
+        return false
+    var archive := ZIPReader.new()
+    if archive.open(package) != OK:
+        return false
+    var manifest_bytes := archive.read_file("manifest.json")
+    archive.close()
+    if manifest_bytes != FileAccess.get_file_as_bytes(ProjectSettings.globalize_path(PASS6A_MANIFEST)):
+        return false
+    var source := _json_file(PASS6A_MANIFEST)
+    var decisions := _json_file(PASS6A_DECISIONS)
+    if source.get("capture_type") != "APPLIED_FINISH_SCREEN" or source.get("configurations", []).size() != 36:
+        return false
+    if decisions.get("pass6a_review_package_sha256") != PASS6A_PACKAGE_SHA256 or decisions.get("accepted_shell_composition_sha256") != ACCEPTED_COMPOSITION_SHA256:
+        return false
+    var source_by_id := {}
+    for entry in source["configurations"]:
+        source_by_id[entry["configuration_id"]] = entry
+    var seen := {}
+    var counts := {"CONTROL_NO_FINISH": 0, "KEEP_FINISH_VARIANT": 0, "HOLD_FINISH_VARIANT": 0, "DROP_FINISH_VARIANT": 0}
+    var by_id := {}
+    for entry in decisions.get("configurations", []):
+        var cid: String = entry.get("configuration_id", "")
+        var decision: String = entry.get("decision", "")
+        if seen.has(cid) or not source_by_id.has(cid) or not counts.has(decision):
+            return false
+        var original: Dictionary = source_by_id[cid]
+        if entry.get("structural_palette_id") != original["structural_palette_id"] or entry.get("finish_material_id") != original["finish_material_id"] or entry.get("finish_id") != original["finish_id"]:
+            return false
+        seen[cid] = true
+        by_id[cid] = decision
+        counts[decision] += 1
+    if seen.size() != 36 or counts != {"CONTROL_NO_FINISH": 6, "KEEP_FINISH_VARIANT": 4, "HOLD_FINISH_VARIANT": 7, "DROP_FINISH_VARIANT": 19}:
+        return false
+    for cid in ["S01_A01", "S05_A04", "S06_A01", "S06_A05"]:
+        if by_id.get(cid) != "KEEP_FINISH_VARIANT":
+            return false
+    for cid in ["S01_A02", "S01_A03"]:
+        if by_id.get(cid) != "HOLD_FINISH_VARIANT":
+            return false
+    var records := layout_capture_records()
+    if records.size() != 52 or layout_capture_records(true).size() != 20 or layout_capture_records(false, true).size() != 2:
+        return false
+    var config_seen := {}
+    for record in records:
+        var cid: String = record["source_screen_configuration_id"]
+        if by_id.get(cid) != ("CONTROL_NO_FINISH" if record["layout_id"] == "L00" else "HOLD_FINISH_VARIANT" if record["configuration_id"].begins_with("Q") else "KEEP_FINISH_VARIANT"):
+            return false
+        config_seen[record["configuration_id"]] = true
+        if record["finish_material_id"] != null:
+            var material_id: String = record["finish_material_id"]
+            var spec := load("res://data/environment/material_catalog/approved_specs/" + material_id + ".tres") as EnvironmentSurfaceMaterialSpec
+            if spec == null or spec.mapping_name() != record["approved_finish_mapping"]:
+                return false
+    return config_seen.size() == 13
+
+func _capture_layouts(sample_only: bool, scale_only: bool) -> void:
+    var proof := get_node("Proof")
+    if not validate_layout_source():
+        _fail("layout source differs from Pass 6A decisions, approved specs or accepted shell")
+        return
+    var suffix := "/scale_sanity" if scale_only else "/sanity" if sample_only else ""
+    var folder := ProjectSettings.globalize_path(OUTPUT + "/applied_finish_layouts_01" + suffix)
+    if not _make_directory(folder):
+        return
+    get_window().size = CAPTURE_SIZE
+    await get_tree().process_frame
+    await get_tree().process_frame
+    var records := []
+    var fingerprints := _piece_fingerprints(proof)
+    var palette_by_id := {}
+    for palette in _selected_finalists():
+        palette_by_id[palette["structural_palette_id"]] = palette
+    var finish_by_id := {}
+    for candidate in Query.query("", "applied_finish", "wall"):
+        finish_by_id[candidate["catalog_material_id"]] = candidate
+    for planned in layout_capture_records(sample_only, scale_only):
+        var wall_id: String = planned["wall_material_id"]
+        var floor_id: String = planned["floor_material_id"]
+        var ceiling_id: String = planned["ceiling_material_id"]
+        var finish_id := "" if planned["finish_material_id"] == null else String(planned["finish_material_id"])
+        if not proof.call("set_finish_layout", wall_id, floor_id, ceiling_id, finish_id, String(planned["layout_id"])):
+            _fail("could not apply layout " + String(planned["configuration_id"]))
+            return
+        proof.call("set_light_mode", String(planned["light_mode"]))
+        proof.call("set_camera", String(planned["camera"]))
+        await _settle_frame()
+        var record: Dictionary = planned.duplicate(true)
+        var palette: Dictionary = palette_by_id[record["structural_palette_id"]]
+        record["wall"] = palette["wall"]
+        record["floor"] = palette["floor"]
+        record["ceiling"] = palette["ceiling"]
+        record["material_parameters"] = palette["material_parameters"].duplicate(true)
+        record["finish_display_name"] = "NO_FINISH"
+        record["finish_source_fingerprint"] = null
+        record["effective_mapping"] = {"wall": "UV", "floor": "UV", "ceiling": "UV", "finish": null}
+        record["patch_mesh_uv_extent_m"] = null
+        record["patch_root_scale"] = null
+        record["patch_mesh_size_m"] = null
+        record["expected_source_repeats"] = null
+        if not finish_id.is_empty():
+            var finish: Dictionary = finish_by_id[finish_id]
+            record["finish_display_name"] = finish["display_name"]
+            record["finish_source_fingerprint"] = finish["reviewed_source_fingerprint"]
+            record["material_parameters"]["finish"] = _pair_parameters(finish)
+            record["effective_mapping"]["finish"] = "UV"
+            var patch := proof.get_node("FinishPatches").get_child(0) as EnvironmentMaterialPatch
+            var quad := patch.get_node("PatchQuad") as MeshInstance3D
+            var arrays := quad.mesh.surface_get_arrays(0)
+            var uv: PackedVector2Array = arrays[Mesh.ARRAY_TEX_UV]
+            var vertices: PackedVector3Array = arrays[Mesh.ARRAY_VERTEX]
+            var uv_min := Vector2(INF, INF)
+            var uv_max := Vector2(-INF, -INF)
+            var mesh_min := Vector2(INF, INF)
+            var mesh_max := Vector2(-INF, -INF)
+            for index in uv.size():
+                uv_min = uv_min.min(uv[index])
+                uv_max = uv_max.max(uv[index])
+                mesh_min = mesh_min.min(Vector2(vertices[index].x, vertices[index].y))
+                mesh_max = mesh_max.max(Vector2(vertices[index].x, vertices[index].y))
+            var span := uv_max - uv_min
+            var size := mesh_max - mesh_min
+            if patch.mode != EnvironmentMaterialPatch.Mode.EAF3_MATERIAL or patch.scale != Vector3.ONE or not span.is_equal_approx(patch.physical_size_m) or not size.is_equal_approx(patch.physical_size_m):
+                _fail("physical patch scale mismatch " + String(record["configuration_id"]))
+                return
+            record["patch_mesh_uv_extent_m"] = _v2(span)
+            record["patch_root_scale"] = _v3(patch.scale)
+            record["patch_mesh_size_m"] = _v2(size)
+            record["expected_source_repeats"] = _v2(size / float(finish["meters_per_repeat"]))
+        record["review_context_material"] = "eaf5_review_control_only"
+        record.merge(_camera_metadata(proof, String(record["camera"])))
+        record["light_settings"] = proof.call("light_settings")
+        record["shell_source_sha256"] = proof.call("shell_source_sha256")
+        record["proof_composition_sha256"] = proof.call("proof_composition_sha256")
+        record["piece_geometry_fingerprints"] = fingerprints
+        if not _save_image(folder.path_join(String(record["filename"]))):
+            return
+        records.append(record)
+        print("EAF5_LAYOUT_CAPTURE configuration=%s mode=%s camera=%s" % [record["configuration_id"], record["light_mode"], record["camera"]])
+    var manifest := _base_manifest(proof)
+    manifest["capture_type"] = "APPLIED_FINISH_LAYOUT_SCALE" if scale_only else "APPLIED_FINISH_LAYOUT_SANITY" if sample_only else "APPLIED_FINISH_LAYOUT"
+    manifest.erase("applied_finish_enabled")
+    manifest["applied_finish_mode"] = "BOUNDED_EAF3_MATERIAL_PATCH"
+    manifest["pass6a_decision_source"] = PASS6A_DECISIONS
+    manifest["pass6a_decision_sha256"] = FileAccess.get_sha256(PASS6A_DECISIONS)
+    manifest["pass6a_review_package_sha256"] = PASS6A_PACKAGE_SHA256
+    manifest["structural_palette_ids"] = ["P01_C02", "P01_C01", "P01_C05"]
+    manifest["finish_piece"] = "ReceivingSouth"
+    manifest["structural_secondary_enabled"] = false
+    manifest["eaf4_wear_enabled"] = false
+    manifest["configuration_ids"] = []
+    manifest["records"] = records
+    manifest["configurations"] = []
+    var seen := {}
+    for record in records:
+        var configuration_id: String = record["configuration_id"]
+        if seen.has(configuration_id):
+            continue
+        seen[configuration_id] = true
+        manifest["configuration_ids"].append(configuration_id)
+        var configuration: Dictionary = record.duplicate(true)
+        for field in ["filename", "light_mode", "camera", "camera_transform", "camera_fov", "light_settings", "shell_source_sha256", "proof_composition_sha256", "piece_geometry_fingerprints"]:
+            configuration.erase(field)
+        configuration["accepted_shell_composition_sha256"] = ACCEPTED_COMPOSITION_SHA256
+        manifest["configurations"].append(configuration)
+    var transient_count := 0
+    for configuration in manifest["configurations"]:
+        if configuration["transient_uv_override"]:
+            transient_count += 1
+    manifest["transient_uv_override_configuration_count"] = transient_count
+    if not _write_json(folder.path_join("manifest.json"), manifest):
+        return
+    print("EAF5_LAYOUT_CAPTURE_COMPLETE records=", records.size(), " sample=", sample_only, " scale=", scale_only)
+    get_tree().quit(0)
+
+func _v2(value: Vector2) -> Array:
+    return [value.x, value.y]
 
 func _pair_parameters(candidate: Dictionary) -> Dictionary:
     var result := {}

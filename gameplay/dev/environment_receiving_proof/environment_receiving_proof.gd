@@ -3,6 +3,7 @@ extends Node3D
 const Query = preload("res://environment_authoring/environment_material_catalog_query.gd")
 const MaterialBuilder = preload("res://environment_authoring/environment_material_builder.gd")
 const Piece = preload("res://environment_authoring/substrate/environment_substrate_piece.gd")
+const Patch = preload("res://environment_authoring/wear/environment_material_patch.gd")
 const CONTROL = preload("res://data/environment/receiving_proof/eaf5_review_control.tres")
 const SOURCE := "res://data/environment/receiving_proof/eaf5_receiving_proof_composition_v2.json"
 const HISTORICAL_SOURCE := "res://data/environment/receiving_proof/eaf5_receiving_shell_source.json"
@@ -11,7 +12,7 @@ const WALL_FAMILIES := ["structural_concrete", "rough_poured_concrete", "service
 const AFT_FINISH_ID := "eaf3b_8d5f0cf5add98dfe0a58f18a"
 const CEILING_FAMILIES := ["structural_concrete", "rough_poured_concrete"]
 const LIGHT_MODES := ["NEUTRAL_ARCHITECTURAL", "RECEIVING_TARGET"]
-const CAMERA_NAMES := ["EastApproachOverview", "FreightAperture", "FreightRecess", "EastOpening", "DispatchOpening", "UpperCeilingContext", "WallDominant", "FinishField", "FloorRead", "CeilingRead", "JoinAudit_Apron", "JoinAudit_Freight", "JoinAudit_Dispatch"]
+const CAMERA_NAMES := ["EastApproachOverview", "FreightAperture", "FreightRecess", "EastOpening", "DispatchOpening", "UpperCeilingContext", "WallDominant", "FinishField", "FinishPatch", "FloorRead", "CeilingRead", "JoinAudit_Apron", "JoinAudit_Freight", "JoinAudit_Dispatch"]
 
 var _source: Dictionary = {}
 var _historical_source: Dictionary = {}
@@ -23,6 +24,7 @@ var _active_role := ""
 var _light_mode := "NEUTRAL_ARCHITECTURAL"
 var _builder := MaterialBuilder.new()
 var _control_material: StandardMaterial3D
+var _finish_patch: EnvironmentMaterialPatch
 
 func _ready() -> void:
     var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(SOURCE))
@@ -138,6 +140,7 @@ func _configure_cameras() -> void:
     _camera("UpperCeilingContext", Vector3(5.0, 1.35, 3.7), Vector3(3.7, 4.2, -0.2), 72.0)
     _camera("WallDominant", Vector3(8.3, 1.95, -2.0), Vector3(1.4, 2.0, 3.8), 70.0)
     _camera("FinishField", Vector3(5.25, 2.1, 0.0), Vector3(5.25, 2.1, 5.0), 65.0)
+    _camera("FinishPatch", Vector3(3.1, 1.55, 2.3), Vector3(3.1, 1.55, 5.0), 65.0)
     _camera("FloorRead", Vector3(7.0, 1.35, 3.7), Vector3(3.0, 0.0, -1.2), 73.0)
     _camera("CeilingRead", Vector3(7.0, 1.7, 3.3), Vector3(3.0, 4.2, -1.2), 72.0)
     _camera("JoinAudit_Apron", Vector3(7.6, 1.55, 1.2), Vector3(10.2, 1.9, 4.7), 60.0)
@@ -264,6 +267,7 @@ func later_inventory() -> Dictionary:
     return inventory
 
 func set_control() -> void:
+    _clear_finish_patch()
     _active_role = ""
     _active_record = {}
     _active_spec = null
@@ -386,6 +390,48 @@ func set_finish_screen(wall_id: String, floor_id: String, ceiling_id: String, fi
     if finish_material != null:
         (_pieces["ReceivingSouth"].get_node("GeneratedMesh") as MeshInstance3D).material_override = finish_material
     return true
+
+func _clear_finish_patch() -> void:
+    if _finish_patch != null:
+        _finish_patch.free()
+        _finish_patch = null
+
+func set_finish_layout(wall_id: String, floor_id: String, ceiling_id: String, finish_id: String, layout_id: String) -> bool:
+    if layout_id == "L00":
+        return finish_id.is_empty() and set_structural_palette(wall_id, floor_id, ceiling_id)
+    if layout_id not in ["L01", "L02"] or finish_id.is_empty():
+        return false
+    var finish_record: Dictionary = {}
+    for candidate in Query.query("", "applied_finish", "wall"):
+        if candidate["catalog_material_id"] == finish_id:
+            finish_record = candidate
+            break
+    if finish_record.is_empty() or finish_record["effective_status"] != "APPROVED" or finish_record["surface_family"] not in ["cement_render", "applied_paint"]:
+        return false
+    var approved := load("res://data/environment/material_catalog/approved_specs/" + finish_id + ".tres") as EnvironmentSurfaceMaterialSpec
+    if approved == null or approved.material_id != finish_id or not approved.validate().is_empty():
+        return false
+    var review: EnvironmentSurfaceMaterialSpec = approved
+    if approved.mapping_mode != EnvironmentSurfaceMaterialSpec.MappingMode.UV:
+        if finish_id != AFT_FINISH_ID or approved.mapping_mode != EnvironmentSurfaceMaterialSpec.MappingMode.TRIPLANAR:
+            return false
+        review = approved.duplicate(false) as EnvironmentSurfaceMaterialSpec
+        review.mapping_mode = EnvironmentSurfaceMaterialSpec.MappingMode.UV
+    if not set_structural_palette(wall_id, floor_id, ceiling_id):
+        return false
+    var patch := Patch.new() as EnvironmentMaterialPatch
+    patch.name = "Finish_" + layout_id
+    patch.mode = EnvironmentMaterialPatch.Mode.EAF3_MATERIAL
+    patch.eaf3_material_id = finish_id
+    patch.physical_size_m = Vector2(4.2, 2.4) if layout_id == "L01" else Vector2(1.8, 1.2)
+    patch.position = Vector3(5.1, 2.1, 4.85) if layout_id == "L01" else Vector3(3.1, 1.55, 4.85)
+    patch.rotation_degrees.y = 180.0
+    patch.surface_offset_m = 0.002
+    get_node("FinishPatches").add_child(patch)
+    _finish_patch = patch
+    if approved != review:
+        (patch.get_node("PatchQuad") as MeshInstance3D).material_override = _builder.build(review)
+    return (patch.get_node("PatchQuad") as MeshInstance3D).material_override != null
 
 func active_review_spec() -> EnvironmentSurfaceMaterialSpec:
     return _active_spec
