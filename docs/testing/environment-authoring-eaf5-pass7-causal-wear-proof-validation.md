@@ -1,7 +1,12 @@
 # EAF5 Pass 7 — causal-wear proof validation
 
-**Status: EAF5 PASS 7 IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN FINAL WEAR-PROOF REVIEW PENDING.**
+**Status: EAF5 PASS 7 IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN REVIEW DISPOSITION RECORDED.**
 
+## Human Pass-7 disposition (2026-09-29)
+
+PRIMARY P01_C02 = **REVISE_WEAR_COMPOSITION**. ALTERNATE P05_C03 = **REVISE_WEAR_COMPOSITION**. The causal-wear architecture is accepted and the four Pass-7 placements were technically valid. Approved EAF4 catalog defaults proved too strong for direct final use as universal Receiving room-instance settings. Pass 7 is therefore an accepted architectural proof with a room-specific artistic calibration follow-up, not a failed proof.
+
+Pass 7A disables the approved crack WEA02 from the maintained main-apron calibration. Its EAF4 catalog approval and prior causal placement remain valid; it is more appropriate to rougher or stressed secondary areas. Pass 7A compares leak WEA01, freight dust WEA03 and rust debris WEA04 individually, with duplicated approved specs and bounded local opacity/albedo overrides. No final variant or combined composition has been selected.
 ## Authority and selections
 
 Authoritative checkout: D:\Godot Projects\Sorting-apoc-PROTOTYPE, branch codex/eaf5-receiving-proof. Starting HEAD: 7104085eb1b9dda0f217d0f2d3b0e153af779a8b. main/origin/main: ac12a51ce431f94c9a65a4e84edbf2f73bdf5c2c. No merge, push, promotion, production migration or Receiving C1 resume.
@@ -61,4 +66,4 @@ ZIP: reports/environment_receiving_proof/eaf5/eaf5_final_wear_proof_01_review.zi
 - Godot 4.7 headless editor import/parse exited 0; its recurring Windows certificate-store warning was non-blocking.
 - Protected production paths have no diff: gameplay/logistics_wing/wing_gameplay.tscn, gameplay/logistics_wing/wing_environment.tscn, greybox/logistics_wing/wing_geometry.tscn, greybox/logistics_wing/build_wing_geometry.gd, gameplay/logistics_wing/receiving/*. EAF2 code did not change.
 
-**EAF5 PASS 7 IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN FINAL WEAR-PROOF REVIEW PENDING.**
+**EAF5 PASS 7 IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN REVIEW DISPOSITION RECORDED.**

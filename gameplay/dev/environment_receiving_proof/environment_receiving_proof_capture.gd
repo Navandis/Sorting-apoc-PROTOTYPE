@@ -3,6 +3,7 @@ extends Node3D
 const Query = preload("res://environment_authoring/environment_material_catalog_query.gd")
 const WearQuery = preload("res://environment_authoring/wear/environment_wear_catalog_query.gd")
 const WEAR_PROOF := "res://data/environment/receiving_proof/eaf5_receiving_wear_proof_01.json"
+const WEAR_CALIBRATION := "res://data/environment/receiving_proof/eaf5_receiving_wear_calibration_01.json"
 const PALETTE_SELECTION := "res://data/environment/receiving_proof/eaf5_receiving_palette_selection_01.json"
 const PASS6B_DECISIONS := "res://data/environment/receiving_proof/decisions/eaf5_applied_finish_layouts_01_human_review_01.json"
 
@@ -49,7 +50,9 @@ const ROLE_PACKAGE_HASHES := {"wall": "2fbb4a646b2e48c742a901c0e650178ebb5e89e2c
 
 func _ready() -> void:
     var args := OS.get_cmdline_user_args()
-    if args.has("--eaf5-capture-wear-sanity"):
+    if args.has("--eaf5-capture-wear-calibration"):
+        _capture_wear_calibration.call_deferred()
+    elif args.has("--eaf5-capture-wear-sanity"):
         _capture_wear.call_deferred(true)
     elif args.has("--eaf5-capture-wear"):
         _capture_wear.call_deferred(false)
@@ -976,6 +979,91 @@ func wear_capture_records(sample_only: bool = false) -> Array:
                         "filename": "%s__%s__%s__%s.png" % [palette_id, camera, mode.to_lower(), state.to_lower()],
                     })
     return records
+
+func wear_calibration_records() -> Array:
+    var selection := _json_file(PALETTE_SELECTION)
+    var records := []
+    for palette in selection.get("palettes", []):
+        var role := String(palette["selection_role"])
+        var palette_id := String(palette["structural_palette_id"])
+        var states := ["WEAR_OFF", "L0", "L1", "L2", "D0", "D1", "D2", "R0", "R1", "R2"] if role == "PRIMARY" else ["WEAR_OFF", "L2", "D2", "R2"]
+        for state in states:
+            var cameras := ["WallCausalDetail", "FreightFloorDetail"] if state == "WEAR_OFF" else ["WallCausalDetail" if state.begins_with("L") else "FreightFloorDetail"]
+            for camera in cameras:
+                for mode in LIGHT_MODES:
+                    records.append({
+                        "selection_role": role, "structural_palette_id": palette_id,
+                        "wall": palette["wall"], "floor": palette["floor"], "ceiling": palette["ceiling"],
+                        "applied_finish": "NONE", "structural_secondary": "NONE",
+                        "wear_state": state, "camera": camera, "light_mode": mode,
+                        "filename": "%s__%s__%s__%s.png" % [palette_id, camera, mode.to_lower(), state.to_lower()],
+                    })
+    return records
+
+func _capture_wear_calibration() -> void:
+    if not validate_wear_source():
+        _fail("wear calibration preflight failed")
+        return
+    var source := _json_file(WEAR_CALIBRATION)
+    var prior := _json_file(WEAR_PROOF)
+    var expected := []
+    for item in prior["instances"]:
+        if item["instance_id"] != "WEA02":
+            expected.append(item)
+    if source.get("instances") != expected or source.get("accepted_shell_composition_sha256") != ACCEPTED_COMPOSITION_SHA256:
+        _fail("wear calibration source drift")
+        return
+    var proof := get_node("Proof")
+    var folder := ProjectSettings.globalize_path(OUTPUT + "/wear_calibration_01")
+    if not _make_directory(folder):
+        return
+    get_window().size = CAPTURE_SIZE
+    await get_tree().process_frame
+    await get_tree().process_frame
+    var records := []
+    var fingerprints := _piece_fingerprints(proof)
+    for planned in wear_calibration_records():
+        var state := String(planned["wear_state"])
+        var instance_id := "WEAR_OFF"
+        var variant := -1
+        if state != "WEAR_OFF":
+            instance_id = {"L": "WEA01", "D": "WEA03", "R": "WEA04"}[state.substr(0, 1)]
+            variant = int(state.substr(1, 1))
+        if not proof.call("set_wear_calibration", String(planned["structural_palette_id"]), instance_id, variant):
+            _fail("cannot apply wear calibration " + state)
+            return
+        proof.call("set_light_mode", String(planned["light_mode"]))
+        proof.call("set_camera", String(planned["camera"]))
+        await _settle_frame()
+        var record: Dictionary = planned.duplicate(true)
+        record.merge(_camera_metadata(proof, String(record["camera"])))
+        record["light_settings"] = proof.call("light_settings")
+        record["cause_proxies"] = proof.call("cause_proxy_inventory")
+        record["wear_instances"] = proof.call("wear_instance_inventory")
+        record["visible_wear_overlays"] = proof.call("visible_wear_count")
+        record["piece_geometry_fingerprints"] = fingerprints
+        record["proof_composition_sha256"] = proof.call("proof_composition_sha256")
+        if record["visible_wear_overlays"] != (0 if state == "WEAR_OFF" else 1) or record["wear_instances"].size() != 3 or record["cause_proxies"].size() != 2:
+            _fail("calibration inventory mismatch " + state)
+            return
+        if not _save_image(folder.path_join(String(record["filename"]))):
+            return
+        records.append(record)
+        print("EAF5_WEAR_CALIBRATION_CAPTURE ", record["filename"])
+    var manifest := _base_manifest(proof)
+    manifest.erase("wear_enabled")
+    manifest.erase("palette_pairs_generated")
+    manifest["capture_type"] = "WEAR_CALIBRATION_01"
+    manifest["palette_selection"] = _json_file(PALETTE_SELECTION)
+    manifest["wear_calibration"] = source
+    manifest["wear_calibration_sha256"] = FileAccess.get_sha256(WEAR_CALIBRATION)
+    manifest["pass7_wear_proof_sha256"] = FileAccess.get_sha256(WEAR_PROOF)
+    manifest["records"] = records
+    if records.size() != 32 or not _write_json(folder.path_join("manifest.json"), manifest):
+        _fail("wear calibration manifest failed")
+        return
+    print("EAF5_WEAR_CALIBRATION_COMPLETE records=", records.size())
+    get_tree().quit(0)
 
 func validate_wear_source() -> bool:
     if not validate_accepted_shell():

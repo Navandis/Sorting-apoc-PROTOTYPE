@@ -1,0 +1,154 @@
+{
+  "schema_version": 1,
+  "purpose": "EAF5 Pass 7A per-source Receiving wear calibration",
+  "accepted_shell_composition_sha256": "8361ed7d1d211f40c253cc7bf76821b9d141ab303b0fe7a6573208216f05339d",
+  "pass7_source": "res://data/environment/receiving_proof/eaf5_receiving_wear_proof_01.json",
+  "instances": [
+    {
+      "instance_id": "WEA01",
+      "catalog_wear_id": "eaf4b_cd7701bd0cdb622c63628103",
+      "approved_spec_path": "res://data/environment/wear_catalog/approved_specs/eaf4b_cd7701bd0cdb622c63628103.tres",
+      "approved_source_fingerprint": "1e37850ee5fd45ceba6a5619e92bc6703d0eea4028f7593bd7fafda35458fe4c",
+      "semantic_category": "WATER_MINERAL",
+      "cause_anchor": "service pipe penetration on ReceivingSouth",
+      "target_eaf2_piece": "ReceivingSouth",
+      "target_surface": "occupied face",
+      "world_position_m": [
+        3.1,
+        2.08,
+        4.85
+      ],
+      "surface_normal": [
+        0,
+        0,
+        -1
+      ],
+      "rotation_degrees": [
+        0,
+        180,
+        0
+      ],
+      "mirror_u": false,
+      "mirror_v": false,
+      "approved_physical_size_m": [
+        0.25,
+        0.5
+      ],
+      "approved_surface_offset_m": 0.002,
+      "render_mode": "SOFT_BLEND",
+      "rationale": "Small vertical mineral leak starts beneath and is partly occluded by the fixed pipe plate."
+    },
+    {
+      "instance_id": "WEA03",
+      "catalog_wear_id": "eaf4b_7efdf22029c82320d62147c7",
+      "approved_spec_path": "res://data/environment/wear_catalog/approved_specs/eaf4b_7efdf22029c82320d62147c7.tres",
+      "approved_source_fingerprint": "c470c5179d1907452e27be387f2ba5ba53f19aa253a7166df6fed2b0103b3342",
+      "semantic_category": "GRIME",
+      "cause_anchor": "freight/cart turning zone just inside west aperture",
+      "target_eaf2_piece": "Floor_ReceivingApron",
+      "target_surface": "top floor",
+      "world_position_m": [
+        1.4,
+        0,
+        0.15
+      ],
+      "surface_normal": [
+        0,
+        1,
+        0
+      ],
+      "rotation_degrees": [
+        -90,
+        0,
+        0
+      ],
+      "mirror_u": false,
+      "mirror_v": false,
+      "approved_physical_size_m": [
+        1.0,
+        1.0
+      ],
+      "approved_surface_offset_m": 0.002,
+      "render_mode": "SOFT_BLEND",
+      "rationale": "Single dust accumulation lies along Receiving-side freight path."
+    },
+    {
+      "instance_id": "WEA04",
+      "catalog_wear_id": "eaf4b_89c9cb7aa962b19eda21f278",
+      "approved_spec_path": "res://data/environment/wear_catalog/approved_specs/eaf4b_89c9cb7aa962b19eda21f278.tres",
+      "approved_source_fingerprint": "672077321a4479887bfbfed7969e846b1099c9d02fda0ae0e2eca05b8e583c21",
+      "semantic_category": "RUST_CORROSION",
+      "cause_anchor": "existing BarrierProxy_Post02 metal foot",
+      "target_eaf2_piece": "Floor_ReceivingApron",
+      "target_surface": "top floor",
+      "world_position_m": [
+        0.45,
+        0,
+        0.75
+      ],
+      "surface_normal": [
+        0,
+        1,
+        0
+      ],
+      "rotation_degrees": [
+        -90,
+        0,
+        0
+      ],
+      "mirror_u": false,
+      "mirror_v": false,
+      "approved_physical_size_m": [
+        0.5,
+        0.5
+      ],
+      "approved_surface_offset_m": 0.002,
+      "render_mode": "SOFT_BLEND",
+      "rationale": "Corrosion flecks sit at the visible existing Post02 metal foot, separated from traffic dust."
+    }
+  ],
+  "variants": {
+    "WEA01": [
+      [
+        1.0,
+        0.45
+      ],
+      [
+        0.65,
+        0.45
+      ],
+      [
+        0.65,
+        0.3
+      ]
+    ],
+    "WEA03": [
+      [
+        1.0,
+        0.4
+      ],
+      [
+        0.65,
+        0.4
+      ],
+      [
+        0.65,
+        0.25
+      ]
+    ],
+    "WEA04": [
+      [
+        1.0,
+        0.75
+      ],
+      [
+        0.6,
+        0.75
+      ],
+      [
+        0.6,
+        0.4
+      ]
+    ]
+  }
+}

@@ -7,6 +7,7 @@ const Patch = preload("res://environment_authoring/wear/environment_material_pat
 const WearOverlay = preload("res://environment_authoring/wear/environment_wear_overlay.gd")
 const WearQuery = preload("res://environment_authoring/wear/environment_wear_catalog_query.gd")
 const WEAR_PROOF := "res://data/environment/receiving_proof/eaf5_receiving_wear_proof_01.json"
+const WEAR_CALIBRATION := "res://data/environment/receiving_proof/eaf5_receiving_wear_calibration_01.json"
 const PALETTE_SELECTION := "res://data/environment/receiving_proof/eaf5_receiving_palette_selection_01.json"
 const CONTROL = preload("res://data/environment/receiving_proof/eaf5_review_control.tres")
 const SOURCE := "res://data/environment/receiving_proof/eaf5_receiving_proof_composition_v2.json"
@@ -31,6 +32,7 @@ var _control_material: StandardMaterial3D
 var _finish_patch: EnvironmentMaterialPatch
 var _wear_manifest: Dictionary = {}
 var _wear_created := false
+var _wear_calibration_created := false
 
 func _ready() -> void:
     var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(SOURCE))
@@ -462,7 +464,46 @@ func set_wear_proof(palette_id: String, wear_on: bool) -> bool:
         return false
     for child in get_node("WearOverlays").get_children():
         child.visible = wear_on
-    return visible_wear_count() == (4 if wear_on else 0)
+    return visible_wear_count() == ((3 if _wear_calibration_created else 4) if wear_on else 0)
+
+func set_wear_calibration(palette_id: String, instance_id: String, variant: int) -> bool:
+    if palette_id not in ["P01_C02", "P05_C03"]:
+        return false
+    if not _wear_calibration_created:
+        if not set_wear_proof(palette_id, false):
+            return false
+        var crack := get_node("WearOverlays/WEA02")
+        get_node("WearOverlays").remove_child(crack)
+        crack.queue_free()
+        var calibration: Variant = JSON.parse_string(FileAccess.get_file_as_string(WEAR_CALIBRATION))
+        if not calibration is Dictionary or calibration.get("accepted_shell_composition_sha256") != proof_composition_sha256():
+            return false
+        var source_ids := []
+        for item in calibration.get("instances", []):
+            source_ids.append(item.get("instance_id"))
+        if source_ids != ["WEA01", "WEA03", "WEA04"]:
+            return false
+        _wear_calibration_created = true
+    if not set_wear_proof(palette_id, false):
+        return false
+    for child in get_node("WearOverlays").get_children():
+        var placed := child as EnvironmentWearOverlay
+        var approved := load("res://data/environment/wear_catalog/approved_specs/" + placed.spec.overlay_id + ".tres") as EnvironmentWearOverlaySpec
+        if approved == null:
+            return false
+        placed.spec = approved.duplicate(true) as EnvironmentWearOverlaySpec
+    if instance_id == "WEAR_OFF":
+        return variant == -1 and visible_wear_count() == 0
+    if instance_id not in ["WEA01", "WEA03", "WEA04"] or variant < 0 or variant > 2:
+        return false
+    var settings: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(WEAR_CALIBRATION))
+    var values: Array = settings["variants"][instance_id][variant]
+    var overlay := get_node("WearOverlays/" + instance_id) as EnvironmentWearOverlay
+    overlay.spec.opacity_multiplier = float(values[0])
+    overlay.spec.albedo_strength = float(values[1])
+    overlay.regenerate()
+    overlay.visible = true
+    return visible_wear_count() == 1
 
 func _create_wear_proof() -> bool:
     var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(WEAR_PROOF))
@@ -537,7 +578,7 @@ func wear_instance_inventory() -> Array:
     var result := []
     for child in get_node("WearOverlays").get_children():
         var overlay := child as EnvironmentWearOverlay
-        result.append({"instance_id": overlay.name, "catalog_wear_id": overlay.spec.overlay_id, "position_m": _array3(overlay.position), "rotation_degrees": _array3(overlay.rotation_degrees), "physical_size_m": [overlay.spec.physical_size_m.x, overlay.spec.physical_size_m.y], "surface_offset_m": overlay.spec.surface_offset_m, "mirror_u": overlay.mirror_u, "mirror_v": overlay.mirror_v, "visible": overlay.visible})
+        result.append({"instance_id": overlay.name, "catalog_wear_id": overlay.spec.overlay_id, "position_m": _array3(overlay.position), "rotation_degrees": _array3(overlay.rotation_degrees), "physical_size_m": [overlay.spec.physical_size_m.x, overlay.spec.physical_size_m.y], "surface_offset_m": overlay.spec.surface_offset_m, "opacity_multiplier": overlay.spec.opacity_multiplier, "albedo_strength": overlay.spec.albedo_strength, "mirror_u": overlay.mirror_u, "mirror_v": overlay.mirror_v, "visible": overlay.visible})
     return result
 
 func active_review_spec() -> EnvironmentSurfaceMaterialSpec:
