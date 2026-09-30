@@ -15,11 +15,11 @@ CORE PROMISE  The apocalypse ends at the elevator door.
 
 Version 0.11 | 29 September 2026
 
-Living design | Fixed ladder and Receiving Stage B promoted; EAF1–EAF5 closed; Receiving Stage C1 production environment migration is the next implementation gate after documentation reconciliation.
+Living design | Fixed ladder and Receiving Stage B promoted; EAF1–EAF5 closed; the three-master documentation refresh is complete; Receiving Stage C1 production environment migration is the next implementation gate.
 
-The accepted wing and Storage Authoring Foundation remain the playable base. Selected fixed ladders and the Wing ModularRack + FixedLadder bridge are promoted. Receiving Stage B now presents exact committed cargo on a deterministic TAKE-only deck with functional crates and pallets; the irregular frozen pile was rejected. EAF1–EAF5 are promoted and EAF5 is closed. Receiving Stage C1 follows this three-document review and reconciliation.
+The accepted wing and Storage Authoring Foundation remain the playable base. Selected fixed ladders and the Wing ModularRack + FixedLadder bridge are promoted. Receiving Stage B now presents exact committed cargo on a deterministic TAKE-only deck with functional crates and pallets; the irregular frozen pile was rejected. EAF1–EAF5 are promoted and EAF5 is closed. The three-master documentation refresh is complete; Receiving Stage C1 is the next implementation gate.
 
-Companion drafts on this branch: Prototype Findings v0.11; Visual Design & World-Building Direction v0.8. The 12 September Receiving architecture remains a historical subsystem source where later promotions do not supersede it.
+Companion authorities: Prototype Findings v0.11; Visual Design & World-Building Direction v0.8. The 12 September Receiving architecture remains a historical subsystem source where later promotions do not supersede it.
 
 ## Document purpose and status
 
@@ -908,7 +908,7 @@ Once an expedition outcome is committed and no longer player-influenceable, fina
 
 ### 11.8 Stage C delivery, queue and theatre boundary
 
-Stage A owns exact content, identity and deposited lifecycle. Promoted Stage B supplies deterministic one-batch deck and freight-fixture presentation. Stage C remains responsible for delivery choreography, three-slot queue pressure, close/promote interaction, arrival/rejection/backpressure feedback and shutter, light and audio theatre. Receiving Stage C1 production environment migration is the next implementation gate after the three-master documentation reconciliation. Stage B and EAF5 do not complete the broader Receiving feature; final Stage C interface and state-machine detail is not fixed here.
+Stage A owns exact content, identity and deposited lifecycle. Promoted Stage B supplies deterministic one-batch deck and freight-fixture presentation. Stage C remains responsible for delivery choreography, three-slot queue pressure, close/promote interaction, arrival/rejection/backpressure feedback and shutter, light and audio theatre. Receiving Stage C1 production environment migration is the next implementation gate. Stage B and EAF5 do not complete the broader Receiving feature; final Stage C interface and state-machine detail is not fixed here.
 
 ## 12. Kitchen, Meal Service, and Ration Production
 
@@ -1463,7 +1463,7 @@ VALIDATED IN REPRESENTATIVE SCOPE  Pickup/carry/store/retrieve, zoning, determin
 
 The gate comprised 14 mechanical passes and 14 expected-predictability judgments across all four approved Auto Groups. It used 40 eligible definitions within the 42-definition catalogue; Gloves/Pants were intentionally blocked. loot_000010 pickup and singleton shelf-clearance defects were separately fixed and human-validated. [P04 §§13-14]
 
-The interaction/content prototype is complete in its promoted representative scope. The accepted wing supplies functional storage and the saved editor-authored palette. Fixed ladders are promoted for selected taller installations; the Gallery B rack/ladder bridge is a movable Stage B storage-destination baseline. Receiving Stage B's deterministic deck and functional freight fixtures are promoted, while the irregular frozen pile is rejected. EAF1–EAF5 are promoted and EAF5 closed. None of this establishes the broader Systems MVP; timed obligations, economy and full save/journal work remain later.
+The interaction/content prototype is complete in its promoted representative scope. The accepted wing supplies functional storage and the saved editor-authored palette. Fixed ladders are promoted for selected taller installations; the Gallery B rack/ladder bridge is the promoted real-wing Stage B storage-destination baseline. Receiving Stage B's deterministic deck and functional freight fixtures are promoted, while the irregular frozen pile is rejected. EAF1–EAF5 are promoted and EAF5 closed. None of this establishes the broader Systems MVP; timed obligations, economy and full save/journal work remain later.
 
 ### 20.2 Systems MVP
 
@@ -1524,17 +1524,17 @@ The Systems MVP should answer whether sorting and survival form one loop, whethe
 
 ### 20.6 Approved execution roadmap and gated transition
 
-The current sequence is: (1) complete three-master documentation reconciliation; (2) migrate the Receiving Stage C1 production environment; (3) resume remaining Stage C choreography, queue, close/promote, feedback and theatre work; (4) continue the first timed obligation and broader Systems MVP under the existing roadmap once Receiving's current gate permits it.
+The current sequence is: (1) migrate the Receiving Stage C1 production environment; (2) resume remaining Stage C choreography, queue pressure, close/promote, feedback and theatre work; (3) continue the first timed obligation and broader Systems MVP under the existing roadmap once Receiving's current gate permits it.
 
-Accepted geometry, the continuing wing, default project entry, editor-authored palette and storage foundation remain the baseline. Prototype Findings v0.11 and VDD v0.8 are reviewed branch companions; GDD v0.11 awaits human review. Their final cross-document reconciliation and authority-pointer update are separate from this draft. Preserve historical evidence and ignored asset/import state. [A17]
+Accepted geometry, the continuing wing, default project entry, editor-authored palette and storage foundation remain the baseline. GDD v0.11, Prototype Findings v0.11 and VDD v0.8 are the reconciled current masters. Preserve historical evidence and ignored asset/import state. [A17]
 
 | Stage | Scope | Reported state at this revision |
 | --- | --- | --- |
 | A: data/lifecycle | Durable identities, immutable committed content, prepared transforms/snapshots, 40-ID pool, seeded Bulk source, profile/job/diagnostics contracts, one-active/two-queued manager. | Implemented and technically verified in Stage A scope. Full durable save/journal integration remains later work. |
 | B: one physical batch | Deterministic TAKE-only deck, ordinary WorldItems on private Receiving surfaces, functional crates and pallets, exact committed content and progressive apron-side drainability. Production art and Stage C theatre remain separate. | Implemented, technically verified and human-promoted in tested Stage B scope. Irregular frozen piles were human-rejected for production. Current authored dimensions and reach are prototype values. |
-| C: deposited pressure | Three deposited slots, FIFO close/promote, rejected fourth deposit, arrival/backpressure feedback and repeated delivery pressure; production Receiving environment migration precedes remaining gameplay work. | Stage C remains incomplete. C1 production environment migration is the next implementation gate after documentation reconciliation; queue and theatre follow. |
+| C: deposited pressure | Three deposited slots, FIFO close/promote, rejected fourth deposit, arrival/backpressure feedback and repeated delivery pressure; production Receiving environment migration precedes remaining gameplay work. | Stage C remains incomplete. C1 production environment migration is the next implementation gate; queue and theatre follow. |
 
-Storage authoring, canonical item pose, fixed ladder, the real-wing rack/ladder bridge, deterministic Stage B presentation, freight fixtures and EAF1–EAF5 are promoted in bounded scope. C1A stays parked. Next is documentation reconciliation, then Receiving C1; the retained review and legacy mechanics scenes remain available.
+Storage authoring, canonical item pose, fixed ladder, the real-wing rack/ladder bridge, deterministic Stage B presentation, freight fixtures and EAF1–EAF5 are promoted in bounded scope. C1A stays parked. Receiving C1 is the next implementation gate; the retained review and legacy mechanics scenes remain available.
 
 Systems-MVP scope in §20.2 is retained as the eventual integrated target, not authorization to switch all mechanics on from Day 1 or to bypass the phased roadmap.
 
@@ -1602,7 +1602,7 @@ The continuing wing is now the normal project launch through UID uid://bljf1nlhi
 
 ### 21.3 Current next artifacts and bounded follow-ups
 
-On this branch, Prototype Findings v0.11 is the human-reviewed implementation/evidence companion and VDD v0.8 is the human-reviewed visual/world companion. GDD v0.11 is the current draft for human review. After that review, reconcile the three masters and authority pointers together. Receiving Stage C1 production environment migration follows; C1A remains parked and unpromoted. Remaining Stage C gameplay work follows C1.
+GDD v0.11, Prototype Findings v0.11 and VDD v0.8 are the current reconciled authorities. Receiving Stage C1 production environment migration is the next implementation gate. C1A remains parked and unpromoted. Remaining Stage C gameplay work follows C1.
 
 - Preserve the promoted Storage Authoring Foundation, canonical item pose and bounded fixed ladder, including the real-wing rack/ladder bridge.
 
@@ -1926,4 +1926,4 @@ The accepted greybox remains spatial and gameplay authority. Stage C1 owns produ
 
 ### F.5 Current gate order and companion authorities
 
-The branch order is (1) GDD v0.11 human review, (2) three-document reconciliation and authority-pointer promotion, (3) Receiving Stage C1 production environment migration, then (4) remaining Receiving Stage C gameplay. Prototype Findings v0.11 is the evidence companion; VDD v0.8 is the visual/world/material companion. This draft does not merge those masters to main or begin C1.
+GDD v0.11, Prototype Findings v0.11 and VDD v0.8 are reconciled current masters. Receiving Stage C1 production environment migration is the next implementation gate. Remaining Receiving Stage C gameplay follows C1.

@@ -16,14 +16,14 @@ Receiving mood references - useful for layering, warmth, material contrast and f
 
 Version 0.8 | 29 September 2026
 
-Design basis: GDD v0.10; Prototype Findings v0.11; accepted in-engine wing geometry; promoted Storage Authoring Foundation and fixed-ladder proof; Receiving Stage B presenter and freight fixtures; Environment Authoring Foundation EAF1–EAF5.
+Design basis: GDD v0.11; Prototype Findings v0.11; accepted in-engine wing geometry; promoted Storage Authoring Foundation and fixed-ladder proof; Receiving Stage B presenter and freight fixtures; Environment Authoring Foundation EAF1–EAF5.
 
 | CORE VISUAL PROMISE The bunker should look like a real underground municipal/service structure that has been occupied, adapted, repaired, and organized for years - not like a purpose-built survival base. The player should be able to read what the structure used to be, what later builders changed, what survivors adapted, and what the Quartermaster has made orderly. |
 | --- |
 
 ## 1. Purpose, authority, and status
 
-Version 0.8 retains the accepted world, material and whole-wing spatial direction while establishing the promoted environment-authoring model and Receiving architectural recipe as visual-production authority. The bunker remains an occupied municipal/service structure whose older construction and later repairs remain legible beneath survivor adaptation and Quartermaster order. GDD v0.10 remains the dated gameplay and scope authority pending its approved v0.11 refresh. Prototype Findings v0.11 is the current evidence companion for this documentation refresh.
+Version 0.8 retains the accepted world, material and whole-wing spatial direction while establishing the promoted environment-authoring model and Receiving architectural recipe as visual-production authority. The bunker remains an occupied municipal/service structure whose older construction and later repairs remain legible beneath survivor adaptation and Quartermaster order. GDD v0.11 is the current gameplay, design and scope authority. Prototype Findings v0.11 is the current implementation and human evidence companion.
 
 This document governs world-building, environment architecture, spatial composition, material and surface grammar, lighting direction, storage-installation visual direction and environment-production protocol. Gameplay, interaction, storage, Receiving, progression and technical constraints remain with the GDD and their accepted implementation records. Prototype Findings v0.11 records the evidence; this VDD converts the promoted findings into durable visual-production rules.
 
@@ -261,7 +261,7 @@ Physical storage installation is also authored world state. The developer select
 
 3.  Layer 5 - Character/detail: signage, notes, small props, humor, localized grime and storytelling.
 
-The Foundation Gate remains a production-art checkpoint. Functional storage and the Stage B Receiving presenter were promoted in neutral geometry before final room materials; that interaction success did not promote the art layers. EAF5 now supplies the accepted Receiving architectural and material recipe, while C1 will migrate it into the production wing after document reconciliation. Human visual review remains required at each layer, and later dressing cannot rescue a failed shell or palette.
+The Foundation Gate remains a production-art checkpoint. Functional storage and the Stage B Receiving presenter were promoted in neutral geometry before final room materials; that interaction success did not promote the art layers. EAF5 now supplies the accepted Receiving architectural and material recipe, while C1 will migrate it into the production wing as the next implementation gate. Human visual review remains required at each layer, and later dressing cannot rescue a failed shell or palette.
 
 EAF5 confirms that the gate separates structural shape, structural surface material, optional applied finish, localized wear and lighting. These owners can be revised independently. Human visual approval remains the gate; a technically valid material or mesh is not automatically right for a room.
 
@@ -617,7 +617,7 @@ Sorting Apocalypse should present the Quartermaster’s world as a small, legibl
 
 Receiving remains the sole goods interface; Dispatch remains an alcove and Sorting a widened passage. The five-gallery Storage network has one C↔D secondary link. A-east/B-west open to shared circulation; the protected Medical spur enters its Supply Anteroom, and Gallery B east feeds the separate Kitchen Service Room approach. Workshop has its own service room and accepted bent Salvager spur. The dog-legged eastern approach reaches an Incinerator spur, then an open Bunker Ops Transfer Landing with a separate settlement door. [H16, D16S]
 
-The bunker should become visually richer because the player fills, labels, upgrades and operates it, while environment art keeps the architectural shell and working lanes legible. Storage installations have a reusable authoring grammar, per-instance semantic Front and consistent canonical item-facing. The fixed ladder is human-promoted for selected taller authored installations. Receiving Stage B establishes shallow freight presentation and access; EAF5 establishes its structural/material production recipe. C1 remains the next implementation gate after the three-master documentation review and reconciliation. The core fantasy remains an experienced Quartermaster bringing order to a safe but resource-constrained underground community.
+The bunker should become visually richer because the player fills, labels, upgrades and operates it, while environment art keeps the architectural shell and working lanes legible. Storage installations have a reusable authoring grammar, per-instance semantic Front and consistent canonical item-facing. The fixed ladder is human-promoted for selected taller authored installations. Receiving Stage B establishes shallow freight presentation and access; EAF5 establishes its structural/material production recipe. The three-master documentation refresh is complete; Receiving Stage C1 is the next implementation gate. The core fantasy remains an experienced Quartermaster bringing order to a safe but resource-constrained underground community.
 
 The current environment rule is structural shape + surface material + localized finish or wear + lighting, with each owner reviewed in context. UV is the default mapping; applied finish and wear must have causes. Receiving starts from P01_C02, with P05_C03 held as an explicitly reviewed alternate, and no base finish, structural secondary or fixed wear preset (§34).
 
@@ -780,7 +780,7 @@ Review-scene supply reuse, reusable ModularRack authoring, Storage Unit Orientat
 
 ## 34. v0.8 Environment Authoring Foundation and Receiving architectural direction
 
-This section is the current visual-production direction after EAF1–EAF5 and the final Receiving architectural proof. It refines the Foundation Gate without changing the accepted wing's spatial authority. Prototype Findings v0.11 remains the evidence companion; GDD v0.10 remains the dated gameplay/scope authority until its approved v0.11 refresh.
+This section is the current visual-production direction after EAF1–EAF5 and the final Receiving architectural proof. It refines the Foundation Gate without changing the accepted wing's spatial authority. Prototype Findings v0.11 is the current evidence companion; GDD v0.11 is the current gameplay, design and scope authority.
 
 ### 34.1 EAF authoring model
 
@@ -829,13 +829,13 @@ Consume the isolated EAF5 proof's composition, specifications, recipe and palett
 
 ### 34.8 Current validation order
 
-1.  Prototype Findings v0.11 is the reviewed evidence companion for this refresh.
+1.  Prototype Findings v0.11, VDD v0.8 and GDD v0.11 are the reconciled current authorities.
 
-2.  VDD v0.8 is the present visual/world master-document task and awaits human review.
+2.  Receiving Stage C1 production environment migration is the next implementation gate.
 
-3.  GDD v0.11 is the next master-document task; GDD v0.10 remains current until that review.
+3.  Remaining Receiving Stage C delivery choreography, queue pressure, close/promote, feedback and theatre follow C1.
 
-4.  Reconcile the three documents after their individual reviews, then begin Receiving Stage C1 production environment migration.
+4.  Broader Systems MVP work continues afterward under the GDD roadmap.
 
 Later Receiving Stage C gameplay still needs delivery choreography, queue pressure, close/promote interaction, arrival/rejection/backpressure feedback and reusable theatre/state-machine work. These are not established by the EAF5 art proof or the Stage B presenter.
 
@@ -845,7 +845,7 @@ v0.8 updates the visual/world authority from its 21 September v0.7 state through
 
 | Coverage | Source record |
 | --- | --- |
-| Evidence companion | docs/Sorting_Apocalypse_Prototype_Findings_v0.11.docx |
+| Current masters | docs/Sorting_Apocalypse_Preliminary_GDD_v0.11.docx; docs/Sorting_Apocalypse_Prototype_Findings_v0.11.docx; docs/Sorting_Apocalypse_Visual_Design_Direction_v0.8.docx |
 | EAF5 final Receiving decision and C1 handoff | docs/testing/environment-authoring-eaf5-promotion-validation.md; data/environment/receiving_proof/eaf5_c1_handoff.json |
 | EAF1 lookdev and WallGrazing | docs/testing/environment-authoring-eaf1-lookdev-validation.md; docs/testing/environment-authoring-eaf1-wallgrazing-fix-validation.md |
 | EAF2 structural authoring | docs/testing/environment-authoring-eaf2-substrate-validation.md |

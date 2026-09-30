@@ -14,13 +14,13 @@ Evidence window: retained prototype history through EAF5 promotion and closure, 
 
 | Companion authority | Role |
 | --- | --- |
-| Preliminary GDD v0.10 | Dated gameplay and scope master pending the approved documentation refresh; current implementation evidence is governed by CURRENT_STATE and later validations where wording conflicts. |
-| Visual Design & World-Building Direction v0.7 | Dated world, material, service-space and spatial master pending the approved documentation refresh; current implementation evidence is governed by CURRENT_STATE and later validations where wording conflicts. |
+| Preliminary GDD v0.11 | Current overall gameplay, design and scope authority. |
+| Visual Design & World-Building Direction v0.8 | Current environment, world, spatial and material authority. |
 | Receiving/Elevator design, 12 September 2026 | Approved subsystem contracts; later Stage B presenter and freight-fixture validation supersedes historical physical-presentation proposals. |
 
 READING RULE  Validated means observed in the stated prototype scope, not production-ready or balance-final. Reported tests, human gameplay results, human visual approval and unimplemented design decisions remain distinct.
 
-v0.11 supersedes v0.10 current-status summaries while preserving their historical checkpoints. Fixed ladder, the wing rack/ladder bridge, Receiving Stage B presenter and freight fixtures, and EAF1–EAF5 are human-promoted in their recorded scopes. C1A remains parked; Receiving C1 follows the documentation refresh.
+v0.11 supersedes v0.10 current-status summaries while preserving their historical checkpoints. Fixed ladder, the wing rack/ladder bridge, Receiving Stage B presenter and freight fixtures, and EAF1–EAF5 are human-promoted in their recorded scopes. C1A remains parked; the comprehensive three-master documentation refresh is complete, and Receiving Stage C1 is the next implementation gate.
 
 ## Executive summary
 
@@ -30,7 +30,7 @@ Receiving Stage A remains the technically verified upstream content and lifecycl
 
 Environment Authoring Foundation EAF1–EAF4 is human-promoted. EAF5 is human-promoted and closed as an isolated, dimensionally faithful Receiving architectural proof. It selected a primary and alternate room-specific structural palette with no base applied finish, no structural secondary by default and no fixed base wear preset. EAF5 did not migrate production Receiving visuals.
 
-The 13 September asset-led Receiving shell remains a historical human visual rejection. C1A is technically verified research but parked and unpromoted. The comprehensive three-master documentation refresh is the current documentation task; Receiving Stage C1 is the next implementation gate after reconciliation. GDD v0.10 and Visual Design & World-Building Direction v0.7 remain dated companion masters until their replacements are approved.
+The 13 September asset-led Receiving shell remains a historical human visual rejection. C1A is technically verified research but parked and unpromoted. The comprehensive three-master documentation refresh is complete. Receiving Stage C1 is the next implementation gate. Preliminary GDD v0.11 and Visual Design & World-Building Direction v0.8 are the reconciled current companion masters.
 
 | Area | Current evidence state |
 | --- | --- |
@@ -44,7 +44,7 @@ The 13 September asset-led Receiving shell remains a historical human visual rej
 | EAF1–E4 | Each foundation HUMAN-PROMOTED in its recorded scope. |
 | EAF5 | IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN-PROMOTED / CLOSED architectural proof. |
 | C1A | PARKED technically verified research; not promoted or production authority. |
-| Receiving C1 | NEXT IMPLEMENTATION GATE after the three-master documentation refresh. |
+| Receiving C1 | NEXT IMPLEMENTATION GATE. |
 | Receiving Stage C queue/theatre | Later work; not established by the Stage B presenter or EAF5 proof. |
 
 ## 1. Evidence status and design authority
@@ -57,7 +57,7 @@ Current reading rule: HUMAN-REVIEWED is a developer judgement; HUMAN-PROMOTED is
 | Human validated | Observed by the developer in the stated gameplay/visual scope. | Storage stress and singleton fix; environment migration; accepted neutral wing and final Medical tuning. |
 | Technically verified | Reported checks passed for a defined implementation and baseline. | Stage A data/snapshot/queue tests; migration tests; shell contract tests. |
 | Visually rejected | Technical success did not meet human art-direction expectations. | First Receiving shell at c9752c8. |
-| Provisional / unvalidated | Preferred direction or open question still needing evidence. | Physical hidden settling, furnished clearances/route balance, PBR-generated structural kit, machine unlock timing. |
+| Provisional / unvalidated | Preferred direction or open question still needing evidence. | Furnished C1 clearances and sightlines, final fixture art and counts, machine unlock timing, and remaining Stage C queue/theatre. |
 | Deferred / bounded debt | Known work outside the active scope or awaiting a specific repair. | Gloves/Pants, held/HUD quality, multi-column support and physical Receiving evidence. |
 
 ### What remains authoritative in the GDD
@@ -1135,7 +1135,7 @@ C1 should author local wear after infrastructure, furniture, shelving and pallet
 
 ## 30. Current evidence state and next gate
 
-This table records the 29 September state. Its labels distinguish accepted production-facing scope from isolated research and later work. Historical sections above retain the status they had when written.
+This table records the reconciled 30 September state. Its labels distinguish accepted production-facing scope from isolated research and later work. Historical sections above retain the status they had when written.
 
 | Area | Current evidence state |
 | --- | --- |
@@ -1152,14 +1152,14 @@ This table records the 29 September state. Its labels distinguish accepted produ
 | EAF4 wear pipeline and catalog | HUMAN-PROMOTED; 12 current APPROVED / 2 DEFERRED at EAF5 close-out. |
 | EAF5 Receiving architectural proof | IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN-PROMOTED / CLOSED. |
 | C1A structural-shell branch | PARKED technically verified research; not promoted or production authority. |
-| Receiving Stage C1 | NEXT IMPLEMENTATION GATE after three-master documentation reconciliation. |
+| Receiving Stage C1 | NEXT IMPLEMENTATION GATE. |
 | Receiving Stage C queue/theatre | Later work; not proved by Stage B or EAF5. |
 
-The comprehensive documentation refresh is the current documentation task. Once the Findings, GDD and VDD masters are reconciled and reviewed, Receiving Stage C1 is the next implementation gate. C1 owns production visual migration from the accepted wing geometry and the EAF5 recipe. Neither this evidence update nor EAF5 completes that migration.
+The comprehensive three-master documentation refresh is complete. Receiving Stage C1 is the next implementation gate and owns production visual migration from the accepted wing geometry using the EAF5 recipe. Neither this evidence record nor EAF5 completes that migration.
 
 ## 31. v0.11 revision and source register
 
-v0.11 supersedes v0.10 current-status summaries but keeps its dated evidence and §§1–25 checkpoints intact. Sections 26–30 record later explicit promotions, rejections, deferred findings and the current gate. This is an implementation and evidence-boundary record; the dated GDD v0.10 and VDD v0.7 remain companion design masters pending the approved documentation refresh. Where their current-status wording conflicts, CURRENT_STATE and later validation records govern until new editions are promoted.
+v0.11 supersedes v0.10 current-status summaries but keeps its dated evidence and §§1–25 checkpoints intact. Sections 26–30 record later explicit promotions, rejections, deferred findings and the current gate. This is an implementation and evidence-boundary record. Preliminary GDD v0.11 and VDD v0.8 are the reconciled current companion masters; CURRENT_STATE and focused validation records retain the current gate and implementation detail.
 
 - Ladder: docs/testing/fixed-ladder-proof-validation.md; wing-modular-rack-ladder-integration-validation.md.
 
