@@ -24,6 +24,9 @@ func _run() -> void:
         _check(String(record["geometry_fingerprint"]).length() == 64, "fingerprint: " + record["piece_id"])
         _check(record["spec_errors"].is_empty(), "valid EAF2 spec: " + record["piece_id"])
         recipes[record["recipe_id"]] += 1
+        _check(piece.get_meta("eaf2_generation")["generator_revision"] == EnvironmentSubstrateBuilder.GENERATOR_REVISION, "current on-demand EAF2 generation: " + record["piece_id"])
+        var generated := piece.get_node("GeneratedMesh") as MeshInstance3D
+        _check((generated.material_override as StandardMaterial3D).cull_mode == BaseMaterial3D.CULL_BACK, "ordinary back-face culling: " + record["piece_id"])
     _check(recipes == {"rect_solid": 13, "wall_with_rect_opening": 1}, "accepted recipe breakdown")
     for excluded in ["Floor_DispatchAnnex", "Ceiling_DispatchAnnex", "DispatchWest", "DispatchNorth", "DispatchEast"]:
         _check(room.get_node_or_null("Shell/" + excluded) == null, "Dispatch annex context excluded: " + excluded)

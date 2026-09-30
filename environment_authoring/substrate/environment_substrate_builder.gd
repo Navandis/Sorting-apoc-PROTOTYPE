@@ -3,7 +3,7 @@ extends RefCounted
 
 const Registry = preload("res://environment_authoring/substrate/environment_substrate_recipe_registry.gd")
 const Spec = preload("res://environment_authoring/substrate/environment_substrate_piece_spec.gd")
-const GENERATOR_REVISION := 1
+const GENERATOR_REVISION := 2
 
 
 func build(spec: Resource) -> Dictionary:
@@ -167,7 +167,9 @@ func _emit_quad(tool: SurfaceTool, a: Vector3, b: Vector3, c: Vector3, d: Vector
 
 func _emit_triangle(tool: SurfaceTool, a: Vector3, b: Vector3, c: Vector3, plane: int, spec: Resource, size: Vector3) -> void:
 	var normal := (b - a).cross(c - a).normalized()
-	for point in [a, b, c]:
+	# Recipe corners define the outward shading normal above. Godot fronts
+	# are clockwise, so reorder emission without reversing that normal or UVs.
+	for point in [a, c, b]:
 		tool.set_normal(normal)
 		tool.set_uv(_uv(point, plane, spec, size))
 		tool.add_vertex(point)

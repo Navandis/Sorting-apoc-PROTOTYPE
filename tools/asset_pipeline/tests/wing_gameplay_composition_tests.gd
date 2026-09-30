@@ -38,6 +38,32 @@ const PROXY_NAMES: Array[String] = [
 	"GalleryC_West",
 ]
 const ORDINARY_CEILING_UNDERSIDE_Y_M := 3.40
+const RECEIVING_SHELL_PATH := "res://gameplay/logistics_wing/receiving/receiving_structural_shell.tscn"
+# Accepted evidence is a test oracle only; production has no proof dependency.
+const RECEIVING_COMPOSITION_PATH := "res://data/environment/receiving_proof/eaf5_receiving_proof_composition_v2.json"
+const RECEIVING_MATERIALS := {
+	"WALL_PRIMARY": "eaf3b_d335d94fd85c2c95c26b6b8b",
+	"FREIGHT_RECESS_WALL": "eaf3b_d335d94fd85c2c95c26b6b8b",
+	"OPENING_REVEAL": "eaf3b_d335d94fd85c2c95c26b6b8b",
+	"FLOOR_PRIMARY": "eaf3b_bb32071987faae156ff2d4e8",
+	"CEILING_PRIMARY": "eaf3b_6bcd8f817ca2993433e217cc",
+}
+const RECEIVING_UV_PHASES := {
+	"Floor_ReceivingApron": Vector2(0, -5),
+	"Ceiling_ReceivingApron": Vector2(0, -5),
+	"ReceivingSouth": Vector2(-0.15, -0.3),
+	"ReceivingNorthWest": Vector2(-0.15, -0.3),
+	"ReceivingWestNorthReturn": Vector2(2.5, -0.3),
+	"ReceivingWestSouthReturn": Vector2(-4.85, -0.3),
+	"Floor_FreightEnclosure": Vector2(-5, -3.5),
+	"Ceiling_FreightEnclosure": Vector2(-5, -3.5),
+	"FreightNorth": Vector2(-4.85, -0.3),
+	"FreightSouth": Vector2(-4.85, -0.3),
+	"FreightRear": Vector2(-3.65, -0.3),
+	"DispatchSouthWest": Vector2(1, -0.3),
+	"DispatchSouthEast": Vector2(7.2, -0.3),
+	"ReceivingEastOpeningWall": Vector2(-5.15, -0.3),
+}
 
 var _failed: bool = false
 
@@ -56,6 +82,7 @@ func _run() -> void:
 		_finish()
 		return
 	_assert_saved_proxy_overrides()
+	_assert_saved_receiving_shell()
 
 	var direct := packed.instantiate()
 	root.add_child(direct)
@@ -206,6 +233,8 @@ func _assert_composition(scene: Node, context: String) -> void:
 		"%s composition does not embed neutral-review harness" % context
 	)
 	_assert_environment_proxy_contract(environment, context)
+	_assert_receiving_shell(environment, context)
+	_assert_receiving_circulation(scene, context)
 	await _assert_fixture_contract(scene, context)
 	if development_setup != null:
 		var seed_items := development_setup.get_node("SeedItems")
@@ -805,3 +834,156 @@ func _check(condition: bool, message: String) -> bool:
 	_failed = true
 	push_error("ASSERTION FAILED: %s" % message)
 	return false
+
+
+func _assert_saved_receiving_shell() -> void:
+	_check(ResourceLoader.exists(RECEIVING_SHELL_PATH), "production Receiving shell exists")
+	var environment := (load(ENVIRONMENT_PATH) as PackedScene).instantiate()
+	_assert_receiving_shell(environment, "saved/off-tree")
+	environment.free()
+
+
+func _assert_receiving_shell(environment: Node3D, context: String) -> void:
+	var shell := environment.get_node_or_null("ReceivingStructuralShell") as Node3D
+	if not _check(shell != null, "%s has production-owned Receiving shell" % context):
+		return
+	_check(shell.scene_file_path == RECEIVING_SHELL_PATH, "%s instances the production shell" % context)
+	_check(shell.position.is_equal_approx(Vector3(-39, 0, 0)) and shell.basis.is_equal_approx(Basis.IDENTITY), "%s shell uses accepted origin and unit root" % context)
+	var composition: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(RECEIVING_COMPOSITION_PATH))
+	var pieces: Array = composition["eaf2_recipe_mapping"]
+	_check(shell.get_child_count() == 14 and pieces.size() == 14, "%s exactly 14 intended EAF2 pieces" % context)
+	_check(shell.find_children("*", "CollisionObject3D", true, false).is_empty() and shell.find_children("*", "CollisionShape3D", true, false).is_empty(), "%s shell has no duplicate structural collision" % context)
+	var suppressed: Array[String] = []
+	for row: Dictionary in pieces:
+		var id := String(row["piece_id"])
+		var piece := shell.get_node_or_null(NodePath(id)) as EnvironmentSubstratePiece
+		if not _check(piece != null, "%s owns intended piece %s" % [context, id]):
+			continue
+		var spec := piece.piece_spec
+		if not _check(spec != null and piece.validate_authoring().is_empty(), "%s %s valid EAF2 authoring" % [context, id]):
+			continue
+		var role := String(row["semantic_role"]).to_upper() + "_PRIMARY"
+		if id in ["FreightNorth", "FreightRear", "FreightSouth"]:
+			role = "FREIGHT_RECESS_WALL"
+		elif id in ["ReceivingWestNorthReturn", "ReceivingWestSouthReturn"]:
+			role = "OPENING_REVEAL"
+		elif role == "EAST_BACKLOG_TRANSITION_WALL_PRIMARY":
+			role = "WALL_PRIMARY"
+		_check(spec.piece_id == id and spec.semantic_role == role and spec.recipe_id == row["recipe_id"], "%s %s accepted ID/role/recipe" % [context, id])
+		_check(spec.dimensions_m.is_equal_approx(_receiving_vec3(row["dimensions_m"])) and piece.position.is_equal_approx(_receiving_vec3(row["center_local_m"])) and is_equal_approx(piece.rotation_degrees.y, float(row["rotation_y_degrees"])), "%s %s accepted dimensions/transform" % [context, id])
+		_check(spec.concealed_faces == PackedStringArray(row.get("concealed_faces", [])) and spec.bevel_width_m == 0, "%s %s accepted concealed faces and joins" % [context, id])
+		_check(spec.collision_policy == EnvironmentSubstratePieceSpec.CollisionPolicy.NONE and piece.scale.is_equal_approx(Vector3.ONE), "%s %s visual only, unit root" % [context, id])
+		_check(spec.uv_quarter_turns == 0 and spec.uv_origin_m.is_equal_approx(RECEIVING_UV_PHASES[id]), "%s %s accepted UV phase" % [context, id])
+		var approved_path := "res://data/environment/material_catalog/approved_specs/%s.tres" % RECEIVING_MATERIALS[role]
+		_check(spec.material_spec == load(approved_path) and spec.material_spec.material_id == RECEIVING_MATERIALS[role], "%s %s references promoted PRIMARY spec" % [context, id])
+		_check(spec.material_spec.mapping_mode == EnvironmentSurfaceMaterialSpec.MappingMode.UV and is_equal_approx(spec.material_spec.meters_per_repeat, 1.5), "%s %s UV at 1.5 metres per repeat" % [context, id])
+		if row["opening_parameters"] != null:
+			for parameter: String in row["opening_parameters"]:
+				_check(is_equal_approx(float(spec.get(parameter)), float(row["opening_parameters"][parameter])), "%s %s accepted %s" % [context, id, parameter])
+		var generated := piece.get_node_or_null("GeneratedMesh") as MeshInstance3D
+		if _check(generated != null and generated.mesh != null, "%s %s persists generated mesh" % [context, id]):
+			_check(_receiving_winding_matches_front_faces(generated.mesh), "%s %s outward surface survives Godot back-face culling" % [context, id])
+			var rebuilt := EnvironmentSubstrateBuilder.new().build(spec)
+			_check(generated.mesh.surface_get_arrays(0) == (rebuilt["mesh"] as ArrayMesh).surface_get_arrays(0), "%s %s saved vertices/normals/tangents/UV match EAF2 owner" % [context, id])
+			_check(piece.get_meta("eaf2_generation", {}).get("generator_revision", 0) == EnvironmentSubstrateBuilder.GENERATOR_REVISION and piece.get_meta("eaf2_generation", {}).get("geometry_fingerprint", "") == rebuilt["fingerprint"], "%s %s current saved fingerprint" % [context, id])
+			var material := generated.material_override as StandardMaterial3D
+			_check(material != null and material.resource_name == RECEIVING_MATERIALS[role] and material.cull_mode == BaseMaterial3D.CULL_BACK and not material.uv1_triplanar and material.uv1_scale.is_equal_approx(Vector3.ONE / 1.5) and material.albedo_texture == spec.material_spec.base_color_texture and material.normal_texture == spec.material_spec.normal_texture and material.roughness_texture == spec.material_spec.roughness_texture and material.ao_texture == spec.material_spec.ao_texture, "%s %s saved PRIMARY PBR material and physical scale" % [context, id])
+		for source_id: String in row["source_components"]:
+			var parent_path := "RoofVisuals/" if source_id.begins_with("Ceiling_") else "Districts/Receiving/"
+			suppressed.append(parent_path + source_id + "/Mesh")
+	_check(suppressed.size() == 16, "%s maps exactly 16 legacy visual meshes" % context)
+	var baseline := (load(GEOMETRY_PATH) as PackedScene).instantiate() as Node3D
+	var live := environment.get_node("Greybox")
+	var hidden_count := 0
+	for base_mesh: MeshInstance3D in baseline.find_children("*", "MeshInstance3D", true, false):
+		var path := String(baseline.get_path_to(base_mesh))
+		var mesh := live.get_node_or_null(NodePath(path)) as MeshInstance3D
+		if not _check(mesh != null, "%s retains greybox %s" % [context, path]):
+			continue
+		var storage_proxy := path.get_slice("/", 0) == "Proxies" and PROXY_NAMES.has(path.get_slice("/", 1))
+		var expected_visible := false if suppressed.has(path) or storage_proxy else base_mesh.visible
+		_check(mesh.visible == expected_visible and mesh.transform.is_equal_approx(base_mesh.transform) and mesh.mesh == base_mesh.mesh, "%s exact greybox visual preservation %s" % [context, path])
+		if suppressed.has(path) and not mesh.visible:
+			hidden_count += 1
+	_check(hidden_count == 16, "%s exactly 16 mapped Receiving meshes hidden" % context)
+	for base_shape: CollisionShape3D in baseline.find_children("*", "CollisionShape3D", true, false):
+		var path := String(baseline.get_path_to(base_shape))
+		var shape := live.get_node_or_null(NodePath(path)) as CollisionShape3D
+		var storage_proxy := path.get_slice("/", 0) == "Proxies" and PROXY_NAMES.has(path.get_slice("/", 1))
+		var expected_disabled := true if storage_proxy else base_shape.disabled
+		_check(shape != null and shape.disabled == expected_disabled and shape.shape == base_shape.shape and shape.transform.is_equal_approx(base_shape.transform), "%s preserves greybox collision %s" % [context, path])
+		if shape != null:
+			var body := shape.get_parent() as StaticBody3D
+			var base_body := base_shape.get_parent() as StaticBody3D
+			_check(body != null and body.collision_layer == base_body.collision_layer and body.collision_mask == base_body.collision_mask, "%s retained collision layers %s" % [context, path])
+	for base_node: Node3D in baseline.find_children("*", "Node3D", true, false):
+		var path := baseline.get_path_to(base_node)
+		var live_node := live.get_node_or_null(path) as Node3D
+		_check(live_node != null and live_node.transform.is_equal_approx(base_node.transform), "%s greybox transforms/anchors unchanged %s" % [context, path])
+	baseline.free()
+	# Test actual saved triangles through each aperture, including its edge and closure.
+	for z: float in [-2.49, 0.0, 2.49]:
+		_check(not _receiving_visual_hit(shell, Vector3(-1, 2, z), Vector3(1, 2, z)), "%s 5.00 m freight visual aperture at %.2f" % [context, z])
+	for x: float in [4.81, 6.0, 7.19]:
+		_check(not _receiving_visual_hit(shell, Vector3(x, 2, -4), Vector3(x, 2, -6)), "%s 2.40 m Dispatch visual aperture at %.2f" % [context, x])
+	for z: float in [-1.91, 0.0, 1.91]:
+		for y: float in [0.01, 1.7, 3.39]:
+			_check(not _receiving_visual_hit(shell, Vector3(10, y, z), Vector3(11, y, z)), "%s east 3.84 x 3.40 m aperture at %.2f/%.2f" % [context, z, y])
+	for z: float in [-1.93, 1.93]:
+		_check(_receiving_visual_hit(shell, Vector3(10, 2, z), Vector3(11, 2, z)), "%s east jamb/reveal retained" % context)
+	_check(_receiving_visual_hit(shell, Vector3(10, 3.41, 0), Vector3(11, 3.41, 0)) and _receiving_visual_hit(shell, Vector3(10, 4.19, 0), Vector3(11, 4.19, 0)), "%s east 0.80 m upper closure retained" % context)
+
+
+func _receiving_vec3(values: Array) -> Vector3:
+	return Vector3(float(values[0]), float(values[1]), float(values[2]))
+
+
+func _receiving_visual_hit(shell: Node3D, from: Vector3, to: Vector3) -> bool:
+	for piece: Node3D in shell.get_children():
+		var mesh := piece.get_node("GeneratedMesh") as MeshInstance3D
+		var arrays := mesh.mesh.surface_get_arrays(0)
+		var vertices: PackedVector3Array = arrays[Mesh.ARRAY_VERTEX]
+		var indices: PackedInt32Array = arrays[Mesh.ARRAY_INDEX] if arrays[Mesh.ARRAY_INDEX] != null else PackedInt32Array()
+		var count := vertices.size() if indices.is_empty() else indices.size()
+		for i in range(0, count, 3):
+			var a := piece.transform * vertices[i if indices.is_empty() else indices[i]]
+			var b := piece.transform * vertices[i + 1 if indices.is_empty() else indices[i + 1]]
+			var c := piece.transform * vertices[i + 2 if indices.is_empty() else indices[i + 2]]
+			if Geometry3D.segment_intersects_triangle(from, to, a, b, c) != null:
+				return true
+	return false
+
+
+func _assert_receiving_circulation(scene: Node, context: String) -> void:
+	var player := scene.get_node("Player") as CharacterBody3D
+	# Query the normal player capsule without moving or changing its gameplay values.
+	var probes := [
+		["Dispatch passage", Vector3(-33, 0.01, -4), Vector3(0, 0, -2), false],
+		["Backlog passage", Vector3(-29.5, 0.01, 0), Vector3(2, 0, 0), false],
+		["freight barrier blocks entry", Vector3(-38, 0.01, 0), Vector3(-2, 0, 0), true],
+		["freight north corner", Vector3(-41.5, 0.01, -2.5), Vector3(0, 0, -2), true],
+		["freight rear corner", Vector3(-43, 0.01, 0), Vector3(-2, 0, 0), true],
+	]
+	for probe: Array in probes:
+		var parameters := PhysicsTestMotionParameters3D.new()
+		parameters.from = Transform3D(Basis.IDENTITY, probe[1])
+		parameters.motion = probe[2]
+		var blocked := PhysicsServer3D.body_test_motion(player.get_rid(), parameters)
+		_check(blocked == bool(probe[3]), "%s normal capsule: %s" % [context, probe[0]])
+
+
+func _receiving_winding_matches_front_faces(mesh: Mesh) -> bool:
+	# Godot renders clockwise triangle fronts. Outward shading normals must
+	# oppose the mathematical (counterclockwise) cross product, not match it.
+	var arrays := mesh.surface_get_arrays(0)
+	var vertices: PackedVector3Array = arrays[Mesh.ARRAY_VERTEX]
+	var normals: PackedVector3Array = arrays[Mesh.ARRAY_NORMAL]
+	var indices: PackedInt32Array = arrays[Mesh.ARRAY_INDEX] if arrays[Mesh.ARRAY_INDEX] != null else PackedInt32Array()
+	var count := vertices.size() if indices.is_empty() else indices.size()
+	for i in range(0, count, 3):
+		var a := i if indices.is_empty() else indices[i]
+		var b := i + 1 if indices.is_empty() else indices[i + 1]
+		var c := i + 2 if indices.is_empty() else indices[i + 2]
+		if (vertices[b] - vertices[a]).cross(vertices[c] - vertices[a]).normalized().dot(normals[a]) > -0.99:
+			return false
+	return count > 0

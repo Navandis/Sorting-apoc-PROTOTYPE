@@ -7,6 +7,7 @@ const PIECE := "res://environment_authoring/substrate/environment_substrate_piec
 const MATERIAL := "res://data/environment/substrate/diagnostic_metre_grid.tres"
 
 var failures: Array[String] = []
+var _native_front_sign := 0.0
 
 
 func _initialize() -> void:
@@ -22,6 +23,7 @@ func _run() -> void:
 		_finish()
 		return
 	var builder: RefCounted = builder_script.new()
+	_test_native_front_reference()
 	_test_spec(spec_script, registry_script)
 	_test_rect(spec_script, builder)
 	_test_concealed_end(spec_script, builder)
@@ -82,7 +84,7 @@ func _test_rect(script: GDScript, builder: RefCounted) -> void:
 	if mesh == null:
 		return
 	_check(_aabb_is(mesh.get_aabb(), Vector3(-1, -1.5, -0.15), Vector3(2, 3, 0.3)), "rect exact AABB")
-	_check(_triangles_valid(mesh) and _closed(mesh), "rect closed, finite, nondegenerate, outward, tangent-bearing")
+	_check(_triangles_valid(mesh) and _closed(mesh) and _normals_face_free_space(mesh, spec), "rect closed, finite, nondegenerate, outward, tangent-bearing")
 	_check(_face_uv_span(mesh, Vector3(0, 0, 1), 2.0, 3.0), "2 m face has 2 UV units")
 	_check((result.get("collision_boxes") as Array).is_empty(), "NONE collision")
 	var fingerprint := String(result.get("fingerprint"))
@@ -113,7 +115,7 @@ func _test_concealed_end(script: GDScript, builder: RefCounted) -> void:
 	var open_result := builder.call("build", spec) as Dictionary
 	var mesh := open_result.get("mesh") as ArrayMesh
 	_check(mesh != null and _aabb_is(mesh.get_aabb(), Vector3(-1, -1.5, -0.15), Vector3(2, 3, 0.3)), "concealed cap keeps bounding box")
-	_check(mesh != null and _triangles_valid(mesh), "concealed cap triangles valid")
+	_check(mesh != null and _triangles_valid(mesh) and _normals_face_free_space(mesh, spec), "concealed cap triangles valid")
 	_check(mesh != null and (mesh.surface_get_arrays(0)[Mesh.ARRAY_VERTEX] as PackedVector3Array).size() == 30, "one cap removes two triangles")
 	_check(String(open_result.get("fingerprint")) != String(closed.get("fingerprint")), "concealed cap changes fingerprint")
 	spec.set("concealed_faces", PackedStringArray(["NEG_X", "POS_X", "NEG_Z", "POS_Z"]))
@@ -134,7 +136,7 @@ func _test_bevel(script: GDScript, builder: RefCounted) -> void:
 	spec.set("bevel_width_m", 0.04)
 	var mesh := (builder.call("build", spec) as Dictionary).get("mesh") as ArrayMesh
 	_check(mesh != null and _aabb_is(mesh.get_aabb(), Vector3(-0.25, -1.2, -0.25), Vector3(0.5, 2.4, 0.5)), "bevel preserves AABB")
-	_check(mesh != null and _triangles_valid(mesh) and _closed(mesh), "bevel closed triangles valid")
+	_check(mesh != null and _triangles_valid(mesh) and _closed(mesh) and _normals_face_free_space(mesh, spec), "bevel closed triangles valid")
 
 
 func _test_opening(script: GDScript, builder: RefCounted) -> void:
@@ -148,7 +150,7 @@ func _test_opening(script: GDScript, builder: RefCounted) -> void:
 	var result := builder.call("build", spec) as Dictionary
 	var mesh := result.get("mesh") as ArrayMesh
 	_check(mesh != null and _aabb_is(mesh.get_aabb(), Vector3(-2.75, -1.6, -0.15), Vector3(5.5, 3.2, 0.3)), "opening outer AABB")
-	_check(mesh != null and _triangles_valid(mesh) and _closed(mesh), "opening is closed thick solid")
+	_check(mesh != null and _triangles_valid(mesh) and _closed(mesh) and _normals_face_free_space(mesh, spec), "opening is closed thick solid")
 	_check(mesh != null and _has_reveal(mesh, -0.25, 1.15, 0.75), "jamb and header reveals")
 	_check((result.get("collision_boxes") as Array).size() == 4, "opening SIMPLE has four regions")
 	spec.set("opening_offset_x_m", 2.2)
@@ -172,7 +174,7 @@ func _test_extension(script: GDScript, builder: RefCounted) -> void:
 	var result := builder.call("build", spec) as Dictionary
 	var mesh := result.get("mesh") as ArrayMesh
 	_check(mesh != null and _aabb_is(mesh.get_aabb(), Vector3(-3.5, -1.6, -0.15), Vector3(7, 3.2, 0.3)), "extension outer AABB")
-	_check(mesh != null and _triangles_valid(mesh) and _closed(mesh), "extension closed continuous wall")
+	_check(mesh != null and _triangles_valid(mesh) and _closed(mesh) and _normals_face_free_space(mesh, spec), "extension closed continuous wall")
 	_check((result.get("collision_boxes") as Array).size() >= 5, "extension SIMPLE regions")
 	_check(String(result.get("fingerprint")) == String((builder.call("build", spec) as Dictionary).get("fingerprint")), "extension deterministic")
 	spec.set("second_opening_offset_x_m", -0.8)
@@ -247,6 +249,15 @@ func _test_material_and_wrapper(script: GDScript) -> void:
 
 
 func _test_review() -> void:
+	var review := (load("res://gameplay/dev/environment_substrate/environment_substrate_review.tscn") as PackedScene).instantiate()
+	root.add_child(review)
+	var pieces: Array = review.get("pieces")
+	_check(pieces.size() == 17, "EAF2 review generates its 17 current pieces on demand")
+	for piece: EnvironmentSubstratePiece in pieces:
+		var mesh := piece.get_node("GeneratedMesh") as MeshInstance3D
+		_check(piece.generation_metadata["generator_revision"] == EnvironmentSubstrateBuilder.GENERATOR_REVISION and _triangles_valid(mesh.mesh as ArrayMesh) and _normals_face_free_space(mesh.mesh as ArrayMesh, piece.piece_spec), "current EAF2 review front faces: " + piece.name)
+		_check((mesh.material_override as StandardMaterial3D).cull_mode == BaseMaterial3D.CULL_BACK, "EAF2 review retains normal culling: " + piece.name)
+	review.free()
 	for path in ["res://gameplay/dev/environment_substrate/environment_substrate_review.tscn", "res://gameplay/dev/environment_substrate/environment_substrate_review_capture.tscn"]:
 		_check(load(path) is PackedScene, "review scene loads")
 	for seed in ["wall_standard", "floor_slab", "ceiling_slab", "beam_standard", "column_standard", "threshold_standard", "opening_return_standard", "wall_opening_standard"]:
@@ -283,12 +294,16 @@ func _triangles_valid(mesh: ArrayMesh) -> bool:
 	if vertices.is_empty() or vertices.size() % 3 != 0 or normals.size() != vertices.size() or tangents.size() != vertices.size() * 4:
 		return false
 	for i in vertices.size():
-		if not vertices[i].is_finite() or not normals[i].is_finite() or absf(normals[i].length() - 1.0) > 0.01 or not is_finite(tangents[i * 4]):
+		if not vertices[i].is_finite() or not normals[i].is_finite() or absf(normals[i].length() - 1.0) > 0.01:
+			return false
+		var tangent := Vector3(tangents[i * 4], tangents[i * 4 + 1], tangents[i * 4 + 2])
+		var handedness := tangents[i * 4 + 3]
+		if not tangent.is_finite() or not is_finite(handedness) or absf(tangent.length() - 1.0) > 0.01 or absf(tangent.dot(normals[i])) > 0.01 or not is_equal_approx(absf(handedness), 1.0):
 			return false
 	for t in vertices.size() / 3:
 		var i := t * 3
 		var cross := (vertices[i + 1] - vertices[i]).cross(vertices[i + 2] - vertices[i])
-		if cross.length_squared() < 0.00000001 or cross.normalized().dot(normals[i]) < 0.99:
+		if cross.length_squared() < 0.00000001 or cross.normalized().dot(normals[i]) * _native_front_sign < 0.99:
 			return false
 	return true
 
@@ -317,11 +332,11 @@ func _has_reveal(mesh: ArrayMesh, left: float, right: float, top: float) -> bool
 	var normals := arrays[Mesh.ARRAY_NORMAL] as PackedVector3Array
 	var found := [false, false, false]
 	for i in vertices.size():
-		if absf(vertices[i].x - left) < 0.001 and absf(normals[i].x) > 0.99:
+		if absf(vertices[i].x - left) < 0.001 and normals[i].x > 0.99:
 			found[0] = true
-		if absf(vertices[i].x - right) < 0.001 and absf(normals[i].x) > 0.99:
+		if absf(vertices[i].x - right) < 0.001 and normals[i].x < -0.99:
 			found[1] = true
-		if absf(vertices[i].y - top) < 0.001 and absf(normals[i].y) > 0.99:
+		if absf(vertices[i].y - top) < 0.001 and normals[i].y < -0.99:
 			found[2] = true
 	return found[0] and found[1] and found[2]
 
@@ -337,3 +352,52 @@ func _check(condition: bool, label: String) -> void:
 func _finish() -> void:
 	print("EAF2_TESTS failures=", failures.size())
 	quit(0 if failures.is_empty() else 1)
+
+
+func _test_native_front_reference() -> void:
+	# This independent engine primitive defines the rendered front convention;
+	# no EAF2 emission helper or assumed outward-centroid rule supplies it.
+	var native := BoxMesh.new().get_mesh_arrays()
+	var vertices: PackedVector3Array = native[Mesh.ARRAY_VERTEX]
+	var normals: PackedVector3Array = native[Mesh.ARRAY_NORMAL]
+	var indices: PackedInt32Array = native[Mesh.ARRAY_INDEX]
+	var consistent := true
+	for i in range(0, indices.size(), 3):
+		var a := indices[i]
+		var cross := (vertices[indices[i + 1]] - vertices[a]).cross(vertices[indices[i + 2]] - vertices[a]).normalized()
+		var sign := signf(cross.dot(normals[a]))
+		if i == 0:
+			_native_front_sign = sign
+		consistent = consistent and sign == _native_front_sign and normals[a].dot(vertices[a]) > 0
+	_check(consistent and _native_front_sign == -1.0, "native BoxMesh outward fronts use clockwise winding")
+	print("EAF2_NATIVE_FRONT cross_dot_outward_normal_sign=", _native_front_sign)
+
+
+func _normals_face_free_space(mesh: ArrayMesh, spec: Resource) -> bool:
+	var arrays := mesh.surface_get_arrays(0)
+	var vertices: PackedVector3Array = arrays[Mesh.ARRAY_VERTEX]
+	var normals: PackedVector3Array = arrays[Mesh.ARRAY_NORMAL]
+	for i in range(0, vertices.size(), 3):
+		var center := (vertices[i] + vertices[i + 1] + vertices[i + 2]) / 3.0
+		if spec.recipe_id == "rect_solid":
+			# Applies to bevels too: each convex exterior normal points away
+			# from this centred solid. Concealed caps are simply absent.
+			if center.dot(normals[i]) <= 0:
+				return false
+		else:
+			# Reveal normals face the aperture, not away from the wall centre.
+			if _point_in_opening_wall(center + normals[i] * 0.001, spec):
+				return false
+			if not _point_in_opening_wall(center - normals[i] * 0.001, spec):
+				return false
+	return true
+
+
+func _point_in_opening_wall(point: Vector3, spec: Resource) -> bool:
+	var half_size: Vector3 = spec.dimensions_m * 0.5
+	if absf(point.x) >= half_size.x or absf(point.y) >= half_size.y or absf(point.z) >= half_size.z:
+		return false
+	for opening: Rect2 in spec.opening_rectangles():
+		if opening.has_point(Vector2(point.x, point.y)):
+			return false
+	return true

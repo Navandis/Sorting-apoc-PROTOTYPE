@@ -1,7 +1,9 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://gameplay/logistics_wing/wing_environment.gd" id="1_environment"]
 [ext_resource type="PackedScene" path="res://greybox/logistics_wing/wing_geometry.tscn" id="2_geometry"]
+
+[ext_resource type="PackedScene" path="res://gameplay/logistics_wing/receiving/receiving_structural_shell.tscn" id="3_receiving_shell"]
 
 [sub_resource type="Environment" id="Environment_gameplay"]
 background_mode = 1
@@ -34,6 +36,57 @@ visible = false
 
 [node name="CollisionShape3D" parent="Greybox/Proxies/GalleryC_West/StaticBody3D" index="0"]
 disabled = true
+
+[node name="Mesh" parent="Greybox/RoofVisuals/Ceiling_FreightEnclosure" index="0"]
+visible = false
+
+[node name="Mesh" parent="Greybox/RoofVisuals/Ceiling_ReceivingApron" index="0"]
+visible = false
+
+[node name="Mesh" parent="Greybox/Districts/Receiving/DispatchSouthEast" index="0"]
+visible = false
+
+[node name="Mesh" parent="Greybox/Districts/Receiving/DispatchSouthWest" index="0"]
+visible = false
+
+[node name="Mesh" parent="Greybox/Districts/Receiving/Floor_FreightEnclosure" index="0"]
+visible = false
+
+[node name="Mesh" parent="Greybox/Districts/Receiving/Floor_ReceivingApron" index="0"]
+visible = false
+
+[node name="Mesh" parent="Greybox/Districts/Receiving/FreightNorth" index="0"]
+visible = false
+
+[node name="Mesh" parent="Greybox/Districts/Receiving/FreightRear" index="0"]
+visible = false
+
+[node name="Mesh" parent="Greybox/Districts/Receiving/FreightSouth" index="0"]
+visible = false
+
+[node name="Mesh" parent="Greybox/Districts/Receiving/ReceivingCeilingTransition" index="0"]
+visible = false
+
+[node name="Mesh" parent="Greybox/Districts/Receiving/ReceivingEastNorth" index="0"]
+visible = false
+
+[node name="Mesh" parent="Greybox/Districts/Receiving/ReceivingEastSouth" index="0"]
+visible = false
+
+[node name="Mesh" parent="Greybox/Districts/Receiving/ReceivingNorthWest" index="0"]
+visible = false
+
+[node name="Mesh" parent="Greybox/Districts/Receiving/ReceivingSouth" index="0"]
+visible = false
+
+[node name="Mesh" parent="Greybox/Districts/Receiving/ReceivingWestNorthReturn" index="0"]
+visible = false
+
+[node name="Mesh" parent="Greybox/Districts/Receiving/ReceivingWestSouthReturn" index="0"]
+visible = false
+
+[node name="ReceivingStructuralShell" parent="." instance=ExtResource("3_receiving_shell")]
+position = Vector3(-39, 0, 0)
 
 [node name="GameplayEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_gameplay")
