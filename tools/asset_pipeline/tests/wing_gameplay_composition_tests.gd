@@ -42,9 +42,9 @@ const RECEIVING_SHELL_PATH := "res://gameplay/logistics_wing/receiving/receiving
 # Accepted evidence is a test oracle only; production has no proof dependency.
 const RECEIVING_COMPOSITION_PATH := "res://data/environment/receiving_proof/eaf5_receiving_proof_composition_v2.json"
 const RECEIVING_MATERIALS := {
-	"WALL_PRIMARY": "eaf3b_d335d94fd85c2c95c26b6b8b",
-	"FREIGHT_RECESS_WALL": "eaf3b_d335d94fd85c2c95c26b6b8b",
-	"OPENING_REVEAL": "eaf3b_d335d94fd85c2c95c26b6b8b",
+	"WALL_PRIMARY": "eaf3b_5a797fbdc766d7e3dc475abf",
+	"FREIGHT_RECESS_WALL": "eaf3b_5a797fbdc766d7e3dc475abf",
+	"OPENING_REVEAL": "eaf3b_5a797fbdc766d7e3dc475abf",
 	"FLOOR_PRIMARY": "eaf3b_bb32071987faae156ff2d4e8",
 	"CEILING_PRIMARY": "eaf3b_6bcd8f817ca2993433e217cc",
 }
@@ -887,7 +887,7 @@ func _assert_receiving_shell(environment: Node3D, context: String) -> void:
 			_check(generated.mesh.surface_get_arrays(0) == (rebuilt["mesh"] as ArrayMesh).surface_get_arrays(0), "%s %s saved vertices/normals/tangents/UV match EAF2 owner" % [context, id])
 			_check(piece.get_meta("eaf2_generation", {}).get("generator_revision", 0) == EnvironmentSubstrateBuilder.GENERATOR_REVISION and piece.get_meta("eaf2_generation", {}).get("geometry_fingerprint", "") == rebuilt["fingerprint"], "%s %s current saved fingerprint" % [context, id])
 			var material := generated.material_override as StandardMaterial3D
-			_check(material != null and material.resource_name == RECEIVING_MATERIALS[role] and material.cull_mode == BaseMaterial3D.CULL_BACK and not material.uv1_triplanar and material.uv1_scale.is_equal_approx(Vector3.ONE / 1.5) and material.albedo_texture == spec.material_spec.base_color_texture and material.normal_texture == spec.material_spec.normal_texture and material.roughness_texture == spec.material_spec.roughness_texture and material.ao_texture == spec.material_spec.ao_texture, "%s %s saved PRIMARY PBR material and physical scale" % [context, id])
+			_check(material != null and material.resource_name == RECEIVING_MATERIALS[role] and material.cull_mode == BaseMaterial3D.CULL_BACK and not material.uv1_triplanar and material.uv1_scale.is_equal_approx(Vector3.ONE / 1.5) and material.albedo_texture == spec.material_spec.base_color_texture and material.normal_texture == spec.material_spec.normal_texture and material.normal_enabled and is_equal_approx(material.normal_scale, spec.material_spec.normal_strength) and material.metallic_texture == spec.material_spec.metallic_texture and is_equal_approx(material.metallic, spec.material_spec.metallic_multiplier if spec.material_spec.metallic_texture != null else 0.0) and is_equal_approx(material.roughness, spec.material_spec.roughness_multiplier) and material.roughness_texture == spec.material_spec.roughness_texture and material.ao_texture == spec.material_spec.ao_texture, "%s %s saved P05_C02 PBR material and physical scale" % [context, id])
 		for source_id: String in row["source_components"]:
 			var parent_path := "RoofVisuals/" if source_id.begins_with("Ceiling_") else "Districts/Receiving/"
 			suppressed.append(parent_path + source_id + "/Mesh")
@@ -902,7 +902,15 @@ func _assert_receiving_shell(environment: Node3D, context: String) -> void:
 			continue
 		var storage_proxy := path.get_slice("/", 0) == "Proxies" and PROXY_NAMES.has(path.get_slice("/", 1))
 		var expected_visible := false if suppressed.has(path) or storage_proxy else base_mesh.visible
-		_check(mesh.visible == expected_visible and mesh.transform.is_equal_approx(base_mesh.transform) and mesh.mesh == base_mesh.mesh, "%s exact greybox visual preservation %s" % [context, path])
+		if path == "Districts/Receiving/DispatchWest/Mesh":
+			var trimmed := mesh.mesh as BoxMesh
+			var expected_transform := base_mesh.transform
+			expected_transform.origin.z -= 0.15
+			_check(mesh.visible == expected_visible and mesh.transform.is_equal_approx(expected_transform) and trimmed != null and trimmed.size.is_equal_approx(Vector3(0.3, 4.2, 3.5)) and mesh.material_override == base_mesh.material_override, "%s Dispatch butt visual stops at Receiving outer face without changing its material" % context)
+			var world_bounds: AABB = live.transform * live.get_node("Districts/Receiving/DispatchWest").transform * mesh.transform * mesh.get_aabb()
+			_check(is_equal_approx(world_bounds.position.z, -8.65) and is_equal_approx(world_bounds.end.z, -5.15), "%s Dispatch visual preserves north extent and removes coplanar Receiving cap" % context)
+		else:
+			_check(mesh.visible == expected_visible and mesh.transform.is_equal_approx(base_mesh.transform) and mesh.mesh == base_mesh.mesh, "%s exact greybox visual preservation %s" % [context, path])
 		if suppressed.has(path) and not mesh.visible:
 			hidden_count += 1
 	_check(hidden_count == 16, "%s exactly 16 mapped Receiving meshes hidden" % context)
@@ -919,7 +927,10 @@ func _assert_receiving_shell(environment: Node3D, context: String) -> void:
 	for base_node: Node3D in baseline.find_children("*", "Node3D", true, false):
 		var path := baseline.get_path_to(base_node)
 		var live_node := live.get_node_or_null(path) as Node3D
-		_check(live_node != null and live_node.transform.is_equal_approx(base_node.transform), "%s greybox transforms/anchors unchanged %s" % [context, path])
+		var expected_transform := base_node.transform
+		if String(path) == "Districts/Receiving/DispatchWest/Mesh":
+			expected_transform.origin.z -= 0.15
+		_check(live_node != null and live_node.transform.is_equal_approx(expected_transform), "%s greybox transforms/anchors preserved except explicit Dispatch visual butt trim %s" % [context, path])
 	baseline.free()
 	# Test actual saved triangles through each aperture, including its edge and closure.
 	for z: float in [-2.49, 0.0, 2.49]:

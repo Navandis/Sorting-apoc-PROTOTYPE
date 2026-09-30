@@ -7,12 +7,13 @@
 [ext_resource type="Texture2D" path="res://assets/environment/materials/kitbash_cache/eaf3b_6bcd8f817ca2993433e217cc/2k/ao.jpg" id="5_0pssm"]
 [ext_resource type="Texture2D" path="res://assets/environment/materials/kitbash_cache/eaf3b_6bcd8f817ca2993433e217cc/2k/normal.jpg" id="6_348db"]
 [ext_resource type="Texture2D" path="res://assets/environment/materials/kitbash_cache/eaf3b_6bcd8f817ca2993433e217cc/2k/roughness.jpg" id="7_t766x"]
-[ext_resource type="Resource" path="res://data/environment/material_catalog/approved_specs/eaf3b_d335d94fd85c2c95c26b6b8b.tres" id="8_japy4"]
-[ext_resource type="Texture2D" path="res://assets/environment/materials/kitbash_cache/eaf3b_d335d94fd85c2c95c26b6b8b/2k/basecolor.jpg" id="9_bvdj8"]
-[ext_resource type="Texture2D" path="res://assets/environment/materials/kitbash_cache/eaf3b_d335d94fd85c2c95c26b6b8b/2k/ao.jpg" id="10_y73s0"]
-[ext_resource type="Texture2D" path="res://assets/environment/materials/kitbash_cache/eaf3b_d335d94fd85c2c95c26b6b8b/2k/normal.jpg" id="11_jtos4"]
-[ext_resource type="Texture2D" path="res://assets/environment/materials/kitbash_cache/eaf3b_d335d94fd85c2c95c26b6b8b/2k/roughness.jpg" id="12_28aou"]
+[ext_resource type="Resource" path="res://data/environment/material_catalog/approved_specs/eaf3b_5a797fbdc766d7e3dc475abf.tres" id="8_mgu1a"]
+[ext_resource type="Texture2D" path="res://assets/environment/materials/kitbash_cache/eaf3b_5a797fbdc766d7e3dc475abf/2k/basecolor.png" id="9_53yqr"]
+[ext_resource type="Texture2D" path="res://assets/environment/materials/kitbash_cache/eaf3b_5a797fbdc766d7e3dc475abf/2k/ao.png" id="10_ou67k"]
+[ext_resource type="Texture2D" path="res://assets/environment/materials/kitbash_cache/eaf3b_5a797fbdc766d7e3dc475abf/2k/metallic.png" id="11_0pssm"]
+[ext_resource type="Texture2D" path="res://assets/environment/materials/kitbash_cache/eaf3b_5a797fbdc766d7e3dc475abf/2k/normal.png" id="12_348db"]
 [ext_resource type="Resource" path="res://data/environment/material_catalog/approved_specs/eaf3b_bb32071987faae156ff2d4e8.tres" id="13_kdhd8"]
+[ext_resource type="Texture2D" path="res://assets/environment/materials/kitbash_cache/eaf3b_5a797fbdc766d7e3dc475abf/2k/roughness.png" id="13_t766x"]
 [ext_resource type="Texture2D" path="res://assets/environment/materials/kitbash_cache/eaf3b_bb32071987faae156ff2d4e8/2k/basecolor.jpg" id="14_pfren"]
 [ext_resource type="Texture2D" path="res://assets/environment/materials/kitbash_cache/eaf3b_bb32071987faae156ff2d4e8/2k/ao.jpg" id="15_btyii"]
 [ext_resource type="Texture2D" path="res://assets/environment/materials/kitbash_cache/eaf3b_bb32071987faae156ff2d4e8/2k/normal.jpg" id="16_3pdl3"]
@@ -27,7 +28,7 @@ dimensions_m = Vector3(5, 0.3, 7)
 concealed_faces = PackedStringArray("NEG_X", "POS_X", "NEG_Z", "POS_Z")
 uv_origin_m = Vector2(-5, -3.5)
 material_spec = ExtResource("2_mgu1a")
-authoring_notes = "Receiving C1 production visual; greybox retains collision. PRIMARY P01_C02; accepted through/butt ownership and metre UV phase."
+authoring_notes = "Receiving C1 production visual; greybox retains collision. PRIMARY P05_C02; accepted through/butt ownership and metre UV phase."
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qpln2"]
 resource_name = "eaf3b_6bcd8f817ca2993433e217cc"
@@ -61,7 +62,7 @@ dimensions_m = Vector3(10.5, 0.3, 10)
 concealed_faces = PackedStringArray("NEG_X", "POS_X", "NEG_Z", "POS_Z")
 uv_origin_m = Vector2(0, -5)
 material_spec = ExtResource("2_mgu1a")
-authoring_notes = "Receiving C1 production visual; greybox retains collision. PRIMARY P01_C02; accepted through/butt ownership and metre UV phase."
+authoring_notes = "Receiving C1 production visual; greybox retains collision. PRIMARY P05_C02; accepted through/butt ownership and metre UV phase."
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_mgu1a"]
 resource_name = "Ceiling_ReceivingApron"
@@ -83,21 +84,23 @@ semantic_role = "WALL_PRIMARY"
 dimensions_m = Vector3(3.15, 4.8, 0.3)
 concealed_faces = PackedStringArray("POS_X")
 uv_origin_m = Vector2(7.2, -0.3)
-material_spec = ExtResource("8_japy4")
-authoring_notes = "Receiving C1 production visual; greybox retains collision. PRIMARY P01_C02; accepted through/butt ownership and metre UV phase."
+material_spec = ExtResource("8_mgu1a")
+authoring_notes = "Receiving C1 production visual; greybox retains collision. PRIMARY P05_C02; accepted through/butt ownership and metre UV phase."
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ratna"]
-resource_name = "eaf3b_d335d94fd85c2c95c26b6b8b"
-albedo_texture = ExtResource("9_bvdj8")
-roughness_texture = ExtResource("12_28aou")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_japy4"]
+resource_name = "eaf3b_5a797fbdc766d7e3dc475abf"
+albedo_texture = ExtResource("9_53yqr")
+metallic = 1.0
+metallic_texture = ExtResource("11_0pssm")
+roughness_texture = ExtResource("13_t766x")
 normal_enabled = true
-normal_texture = ExtResource("11_jtos4")
+normal_texture = ExtResource("12_348db")
 ao_enabled = true
-ao_texture = ExtResource("10_y73s0")
+ao_texture = ExtResource("10_ou67k")
 uv1_scale = Vector3(0.6666667, 0.6666667, 0.6666667)
 texture_filter = 5
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_53yqr"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_bvdj8"]
 resource_name = "DispatchSouthEast"
 _surfaces = [{
 "aabb": AABB(-1.575, -2.4, -0.15, 3.15, 4.8, 0.3),
@@ -117,10 +120,10 @@ semantic_role = "WALL_PRIMARY"
 dimensions_m = Vector3(3.8, 4.8, 0.3)
 concealed_faces = PackedStringArray("NEG_X")
 uv_origin_m = Vector2(1, -0.3)
-material_spec = ExtResource("8_japy4")
-authoring_notes = "Receiving C1 production visual; greybox retains collision. PRIMARY P01_C02; accepted through/butt ownership and metre UV phase."
+material_spec = ExtResource("8_mgu1a")
+authoring_notes = "Receiving C1 production visual; greybox retains collision. PRIMARY P05_C02; accepted through/butt ownership and metre UV phase."
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_ou67k"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_y73s0"]
 resource_name = "DispatchSouthWest"
 _surfaces = [{
 "aabb": AABB(-1.9, -2.4, -0.15, 3.8, 4.8, 0.3),
@@ -141,7 +144,7 @@ dimensions_m = Vector3(5, 0.3, 7)
 concealed_faces = PackedStringArray("NEG_X", "POS_X", "NEG_Z", "POS_Z")
 uv_origin_m = Vector2(-5, -3.5)
 material_spec = ExtResource("13_kdhd8")
-authoring_notes = "Receiving C1 production visual; greybox retains collision. PRIMARY P01_C02; accepted through/butt ownership and metre UV phase."
+authoring_notes = "Receiving C1 production visual; greybox retains collision. PRIMARY P05_C02; accepted through/butt ownership and metre UV phase."
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mb5ys"]
 resource_name = "eaf3b_bb32071987faae156ff2d4e8"
@@ -175,7 +178,7 @@ dimensions_m = Vector3(10.5, 0.3, 10)
 concealed_faces = PackedStringArray("NEG_X", "POS_X", "NEG_Z", "POS_Z")
 uv_origin_m = Vector2(0, -5)
 material_spec = ExtResource("13_kdhd8")
-authoring_notes = "Receiving C1 production visual; greybox retains collision. PRIMARY P01_C02; accepted through/butt ownership and metre UV phase."
+authoring_notes = "Receiving C1 production visual; greybox retains collision. PRIMARY P05_C02; accepted through/butt ownership and metre UV phase."
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_348db"]
 resource_name = "Floor_ReceivingApron"
@@ -197,21 +200,10 @@ semantic_role = "FREIGHT_RECESS_WALL"
 dimensions_m = Vector3(4.7, 4.8, 0.3)
 concealed_faces = PackedStringArray("NEG_X", "POS_X")
 uv_origin_m = Vector2(-4.85, -0.3)
-material_spec = ExtResource("8_japy4")
-authoring_notes = "Receiving C1 production visual; greybox retains collision. PRIMARY P01_C02; accepted through/butt ownership and metre UV phase."
+material_spec = ExtResource("8_mgu1a")
+authoring_notes = "Receiving C1 production visual; greybox retains collision. PRIMARY P05_C02; accepted through/butt ownership and metre UV phase."
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n3n6h"]
-resource_name = "eaf3b_d335d94fd85c2c95c26b6b8b"
-albedo_texture = ExtResource("9_bvdj8")
-roughness_texture = ExtResource("12_28aou")
-normal_enabled = true
-normal_texture = ExtResource("11_jtos4")
-ao_enabled = true
-ao_texture = ExtResource("10_y73s0")
-uv1_scale = Vector3(0.6666667, 0.6666667, 0.6666667)
-texture_filter = 5
-
-[sub_resource type="ArrayMesh" id="ArrayMesh_t766x"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_jtos4"]
 resource_name = "FreightNorth"
 _surfaces = [{
 "aabb": AABB(-2.35, -2.4, -0.15, 4.7, 4.8, 0.3),
@@ -231,10 +223,10 @@ semantic_role = "FREIGHT_RECESS_WALL"
 dimensions_m = Vector3(7.3, 4.8, 0.3)
 concealed_faces = PackedStringArray()
 uv_origin_m = Vector2(-3.65, -0.3)
-material_spec = ExtResource("8_japy4")
-authoring_notes = "Receiving C1 production visual; greybox retains collision. PRIMARY P01_C02; accepted through/butt ownership and metre UV phase."
+material_spec = ExtResource("8_mgu1a")
+authoring_notes = "Receiving C1 production visual; greybox retains collision. PRIMARY P05_C02; accepted through/butt ownership and metre UV phase."
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_japy4"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_28aou"]
 resource_name = "FreightRear"
 _surfaces = [{
 "aabb": AABB(-3.65, -2.4, -0.15, 7.3, 4.8, 0.3),
@@ -254,10 +246,10 @@ semantic_role = "FREIGHT_RECESS_WALL"
 dimensions_m = Vector3(4.7, 4.8, 0.3)
 concealed_faces = PackedStringArray("NEG_X", "POS_X")
 uv_origin_m = Vector2(-4.85, -0.3)
-material_spec = ExtResource("8_japy4")
-authoring_notes = "Receiving C1 production visual; greybox retains collision. PRIMARY P01_C02; accepted through/butt ownership and metre UV phase."
+material_spec = ExtResource("8_mgu1a")
+authoring_notes = "Receiving C1 production visual; greybox retains collision. PRIMARY P05_C02; accepted through/butt ownership and metre UV phase."
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_bvdj8"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_kdhd8"]
 resource_name = "FreightSouth"
 _surfaces = [{
 "aabb": AABB(-2.35, -2.4, -0.15, 4.7, 4.8, 0.3),
@@ -278,13 +270,13 @@ semantic_role = "WALL_PRIMARY"
 dimensions_m = Vector3(10.3, 4.8, 0.3)
 concealed_faces = PackedStringArray()
 uv_origin_m = Vector2(-5.15, -0.3)
-material_spec = ExtResource("8_japy4")
-authoring_notes = "Receiving C1 production visual; greybox retains collision. PRIMARY P01_C02; accepted through/butt ownership and metre UV phase."
+material_spec = ExtResource("8_mgu1a")
+authoring_notes = "Receiving C1 production visual; greybox retains collision. PRIMARY P05_C02; accepted through/butt ownership and metre UV phase."
 opening_width_m = 3.84
 opening_height_m = 3.4
 opening_bottom_m = 0.3
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_y73s0"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_pfren"]
 resource_name = "ReceivingEastOpeningWall"
 _surfaces = [{
 "aabb": AABB(-5.15, -2.4, -0.15, 10.3, 4.8, 0.3),
@@ -304,10 +296,10 @@ semantic_role = "WALL_PRIMARY"
 dimensions_m = Vector3(1.15, 4.8, 0.3)
 concealed_faces = PackedStringArray("POS_X")
 uv_origin_m = Vector2(-0.15, -0.3)
-material_spec = ExtResource("8_japy4")
-authoring_notes = "Receiving C1 production visual; greybox retains collision. PRIMARY P01_C02; accepted through/butt ownership and metre UV phase."
+material_spec = ExtResource("8_mgu1a")
+authoring_notes = "Receiving C1 production visual; greybox retains collision. PRIMARY P05_C02; accepted through/butt ownership and metre UV phase."
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_jtos4"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_btyii"]
 resource_name = "ReceivingNorthWest"
 _surfaces = [{
 "aabb": AABB(-0.575, -2.4, -0.15, 1.15, 4.8, 0.3),
@@ -327,10 +319,10 @@ semantic_role = "WALL_PRIMARY"
 dimensions_m = Vector3(10.5, 4.8, 0.3)
 concealed_faces = PackedStringArray("POS_X")
 uv_origin_m = Vector2(-0.15, -0.3)
-material_spec = ExtResource("8_japy4")
-authoring_notes = "Receiving C1 production visual; greybox retains collision. PRIMARY P01_C02; accepted through/butt ownership and metre UV phase."
+material_spec = ExtResource("8_mgu1a")
+authoring_notes = "Receiving C1 production visual; greybox retains collision. PRIMARY P05_C02; accepted through/butt ownership and metre UV phase."
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_28aou"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_3pdl3"]
 resource_name = "ReceivingSouth"
 _surfaces = [{
 "aabb": AABB(-5.25, -2.4, -0.15, 10.5, 4.8, 0.3),
@@ -350,21 +342,10 @@ semantic_role = "OPENING_REVEAL"
 dimensions_m = Vector3(2.35, 4.8, 0.3)
 concealed_faces = PackedStringArray("POS_X")
 uv_origin_m = Vector2(2.5, -0.3)
-material_spec = ExtResource("8_japy4")
-authoring_notes = "Receiving C1 production visual; greybox retains collision. PRIMARY P01_C02; accepted through/butt ownership and metre UV phase."
+material_spec = ExtResource("8_mgu1a")
+authoring_notes = "Receiving C1 production visual; greybox retains collision. PRIMARY P05_C02; accepted through/butt ownership and metre UV phase."
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g2kyd"]
-resource_name = "eaf3b_d335d94fd85c2c95c26b6b8b"
-albedo_texture = ExtResource("9_bvdj8")
-roughness_texture = ExtResource("12_28aou")
-normal_enabled = true
-normal_texture = ExtResource("11_jtos4")
-ao_enabled = true
-ao_texture = ExtResource("10_y73s0")
-uv1_scale = Vector3(0.6666667, 0.6666667, 0.6666667)
-texture_filter = 5
-
-[sub_resource type="ArrayMesh" id="ArrayMesh_kdhd8"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_r4mq3"]
 resource_name = "ReceivingWestNorthReturn"
 _surfaces = [{
 "aabb": AABB(-1.175, -2.4, -0.15, 2.35, 4.8, 0.3),
@@ -384,10 +365,10 @@ semantic_role = "OPENING_REVEAL"
 dimensions_m = Vector3(2.35, 4.8, 0.3)
 concealed_faces = PackedStringArray("NEG_X")
 uv_origin_m = Vector2(-4.85, -0.3)
-material_spec = ExtResource("8_japy4")
-authoring_notes = "Receiving C1 production visual; greybox retains collision. PRIMARY P01_C02; accepted through/butt ownership and metre UV phase."
+material_spec = ExtResource("8_mgu1a")
+authoring_notes = "Receiving C1 production visual; greybox retains collision. PRIMARY P05_C02; accepted through/butt ownership and metre UV phase."
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_pfren"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_h4uje"]
 resource_name = "ReceivingWestSouthReturn"
 _surfaces = [{
 "aabb": AABB(-1.175, -2.4, -0.15, 2.35, 4.8, 0.3),
@@ -406,7 +387,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 4.35, 0)
 script = ExtResource("1_xbsv6")
 piece_spec = SubResource("Resource_h4uje")
 metadata/eaf2_generation = {
-"authoring_notes": "Receiving C1 production visual; greybox retains collision. PRIMARY P01_C02; accepted through/butt ownership and metre UV phase.",
+"authoring_notes": "Receiving C1 production visual; greybox retains collision. PRIMARY P05_C02; accepted through/butt ownership and metre UV phase.",
 "collision_policy": 0,
 "exact_parameters": {
 "bevel_width_m": 0.0,
@@ -434,7 +415,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.25, 4.35, 0)
 script = ExtResource("1_xbsv6")
 piece_spec = SubResource("Resource_bdnle")
 metadata/eaf2_generation = {
-"authoring_notes": "Receiving C1 production visual; greybox retains collision. PRIMARY P01_C02; accepted through/butt ownership and metre UV phase.",
+"authoring_notes": "Receiving C1 production visual; greybox retains collision. PRIMARY P05_C02; accepted through/butt ownership and metre UV phase.",
 "collision_policy": 0,
 "exact_parameters": {
 "bevel_width_m": 0.0,
@@ -462,7 +443,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.775, 2.1, -5)
 script = ExtResource("1_xbsv6")
 piece_spec = SubResource("Resource_dp24u")
 metadata/eaf2_generation = {
-"authoring_notes": "Receiving C1 production visual; greybox retains collision. PRIMARY P01_C02; accepted through/butt ownership and metre UV phase.",
+"authoring_notes": "Receiving C1 production visual; greybox retains collision. PRIMARY P05_C02; accepted through/butt ownership and metre UV phase.",
 "collision_policy": 0,
 "exact_parameters": {
 "bevel_width_m": 0.0,
@@ -472,7 +453,7 @@ metadata/eaf2_generation = {
 "generation_revision": 1,
 "generator_revision": 2,
 "geometry_fingerprint": "738243b9e2353627f6e7c5af091dd183015ad15005a2e070a99b633d123e8549",
-"material_spec": "res://data/environment/material_catalog/approved_specs/eaf3b_d335d94fd85c2c95c26b6b8b.tres",
+"material_spec": "res://data/environment/material_catalog/approved_specs/eaf3b_5a797fbdc766d7e3dc475abf.tres",
 "piece_id": "DispatchSouthEast",
 "recipe_id": "rect_solid",
 "recipe_revision": 1,
@@ -481,16 +462,16 @@ metadata/eaf2_generation = {
 "uv_quarter_turns": 0
 }
 
-[node name="GeneratedMesh" type="MeshInstance3D" parent="DispatchSouthEast" unique_id=233583232]
-material_override = SubResource("StandardMaterial3D_ratna")
-mesh = SubResource("ArrayMesh_53yqr")
+[node name="GeneratedMesh" type="MeshInstance3D" parent="DispatchSouthEast" unique_id=1039412142]
+material_override = SubResource("StandardMaterial3D_japy4")
+mesh = SubResource("ArrayMesh_bvdj8")
 
 [node name="DispatchSouthWest" type="Node3D" parent="." unique_id=1477393392]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9, 2.1, -5)
 script = ExtResource("1_xbsv6")
 piece_spec = SubResource("Resource_88fxe")
 metadata/eaf2_generation = {
-"authoring_notes": "Receiving C1 production visual; greybox retains collision. PRIMARY P01_C02; accepted through/butt ownership and metre UV phase.",
+"authoring_notes": "Receiving C1 production visual; greybox retains collision. PRIMARY P05_C02; accepted through/butt ownership and metre UV phase.",
 "collision_policy": 0,
 "exact_parameters": {
 "bevel_width_m": 0.0,
@@ -500,7 +481,7 @@ metadata/eaf2_generation = {
 "generation_revision": 1,
 "generator_revision": 2,
 "geometry_fingerprint": "3643cee0fe20a2503704b13d7b15e1e05e9b0abbe42ee3da2b90920f9b25fcc0",
-"material_spec": "res://data/environment/material_catalog/approved_specs/eaf3b_d335d94fd85c2c95c26b6b8b.tres",
+"material_spec": "res://data/environment/material_catalog/approved_specs/eaf3b_5a797fbdc766d7e3dc475abf.tres",
 "piece_id": "DispatchSouthWest",
 "recipe_id": "rect_solid",
 "recipe_revision": 1,
@@ -509,16 +490,16 @@ metadata/eaf2_generation = {
 "uv_quarter_turns": 0
 }
 
-[node name="GeneratedMesh" type="MeshInstance3D" parent="DispatchSouthWest" unique_id=281742164]
-material_override = SubResource("StandardMaterial3D_ratna")
-mesh = SubResource("ArrayMesh_ou67k")
+[node name="GeneratedMesh" type="MeshInstance3D" parent="DispatchSouthWest" unique_id=1163037503]
+material_override = SubResource("StandardMaterial3D_japy4")
+mesh = SubResource("ArrayMesh_y73s0")
 
 [node name="Floor_FreightEnclosure" type="Node3D" parent="." unique_id=1094420523]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, -0.15, 0)
 script = ExtResource("1_xbsv6")
 piece_spec = SubResource("Resource_ssl42")
 metadata/eaf2_generation = {
-"authoring_notes": "Receiving C1 production visual; greybox retains collision. PRIMARY P01_C02; accepted through/butt ownership and metre UV phase.",
+"authoring_notes": "Receiving C1 production visual; greybox retains collision. PRIMARY P05_C02; accepted through/butt ownership and metre UV phase.",
 "collision_policy": 0,
 "exact_parameters": {
 "bevel_width_m": 0.0,
@@ -546,7 +527,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.25, -0.15, 0)
 script = ExtResource("1_xbsv6")
 piece_spec = SubResource("Resource_ab0hg")
 metadata/eaf2_generation = {
-"authoring_notes": "Receiving C1 production visual; greybox retains collision. PRIMARY P01_C02; accepted through/butt ownership and metre UV phase.",
+"authoring_notes": "Receiving C1 production visual; greybox retains collision. PRIMARY P05_C02; accepted through/butt ownership and metre UV phase.",
 "collision_policy": 0,
 "exact_parameters": {
 "bevel_width_m": 0.0,
@@ -574,7 +555,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 2.1, -3.5)
 script = ExtResource("1_xbsv6")
 piece_spec = SubResource("Resource_f75qw")
 metadata/eaf2_generation = {
-"authoring_notes": "Receiving C1 production visual; greybox retains collision. PRIMARY P01_C02; accepted through/butt ownership and metre UV phase.",
+"authoring_notes": "Receiving C1 production visual; greybox retains collision. PRIMARY P05_C02; accepted through/butt ownership and metre UV phase.",
 "collision_policy": 0,
 "exact_parameters": {
 "bevel_width_m": 0.0,
@@ -584,7 +565,7 @@ metadata/eaf2_generation = {
 "generation_revision": 1,
 "generator_revision": 2,
 "geometry_fingerprint": "7ff1a1c26f5fef14f0e43486c52949013377be700b9db4b9d63662166f034de2",
-"material_spec": "res://data/environment/material_catalog/approved_specs/eaf3b_d335d94fd85c2c95c26b6b8b.tres",
+"material_spec": "res://data/environment/material_catalog/approved_specs/eaf3b_5a797fbdc766d7e3dc475abf.tres",
 "piece_id": "FreightNorth",
 "recipe_id": "rect_solid",
 "recipe_revision": 1,
@@ -593,16 +574,16 @@ metadata/eaf2_generation = {
 "uv_quarter_turns": 0
 }
 
-[node name="GeneratedMesh" type="MeshInstance3D" parent="FreightNorth" unique_id=838064881]
-material_override = SubResource("StandardMaterial3D_n3n6h")
-mesh = SubResource("ArrayMesh_t766x")
+[node name="GeneratedMesh" type="MeshInstance3D" parent="FreightNorth" unique_id=626909357]
+material_override = SubResource("StandardMaterial3D_japy4")
+mesh = SubResource("ArrayMesh_jtos4")
 
 [node name="FreightRear" type="Node3D" parent="." unique_id=324050307]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -5, 2.1, 0)
 script = ExtResource("1_xbsv6")
 piece_spec = SubResource("Resource_r4evy")
 metadata/eaf2_generation = {
-"authoring_notes": "Receiving C1 production visual; greybox retains collision. PRIMARY P01_C02; accepted through/butt ownership and metre UV phase.",
+"authoring_notes": "Receiving C1 production visual; greybox retains collision. PRIMARY P05_C02; accepted through/butt ownership and metre UV phase.",
 "collision_policy": 0,
 "exact_parameters": {
 "bevel_width_m": 0.0,
@@ -611,7 +592,7 @@ metadata/eaf2_generation = {
 "generation_revision": 1,
 "generator_revision": 2,
 "geometry_fingerprint": "18bdd35a1ca10f014ad2e78e1f5b5c22e11408cb62e4af5f39fc63f8ee593f74",
-"material_spec": "res://data/environment/material_catalog/approved_specs/eaf3b_d335d94fd85c2c95c26b6b8b.tres",
+"material_spec": "res://data/environment/material_catalog/approved_specs/eaf3b_5a797fbdc766d7e3dc475abf.tres",
 "piece_id": "FreightRear",
 "recipe_id": "rect_solid",
 "recipe_revision": 1,
@@ -620,16 +601,16 @@ metadata/eaf2_generation = {
 "uv_quarter_turns": 0
 }
 
-[node name="GeneratedMesh" type="MeshInstance3D" parent="FreightRear" unique_id=641518100]
-material_override = SubResource("StandardMaterial3D_n3n6h")
-mesh = SubResource("ArrayMesh_japy4")
+[node name="GeneratedMesh" type="MeshInstance3D" parent="FreightRear" unique_id=838092703]
+material_override = SubResource("StandardMaterial3D_japy4")
+mesh = SubResource("ArrayMesh_28aou")
 
 [node name="FreightSouth" type="Node3D" parent="." unique_id=1309814126]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 2.1, 3.5)
 script = ExtResource("1_xbsv6")
 piece_spec = SubResource("Resource_qkw44")
 metadata/eaf2_generation = {
-"authoring_notes": "Receiving C1 production visual; greybox retains collision. PRIMARY P01_C02; accepted through/butt ownership and metre UV phase.",
+"authoring_notes": "Receiving C1 production visual; greybox retains collision. PRIMARY P05_C02; accepted through/butt ownership and metre UV phase.",
 "collision_policy": 0,
 "exact_parameters": {
 "bevel_width_m": 0.0,
@@ -639,7 +620,7 @@ metadata/eaf2_generation = {
 "generation_revision": 1,
 "generator_revision": 2,
 "geometry_fingerprint": "7ff1a1c26f5fef14f0e43486c52949013377be700b9db4b9d63662166f034de2",
-"material_spec": "res://data/environment/material_catalog/approved_specs/eaf3b_d335d94fd85c2c95c26b6b8b.tres",
+"material_spec": "res://data/environment/material_catalog/approved_specs/eaf3b_5a797fbdc766d7e3dc475abf.tres",
 "piece_id": "FreightSouth",
 "recipe_id": "rect_solid",
 "recipe_revision": 1,
@@ -648,16 +629,16 @@ metadata/eaf2_generation = {
 "uv_quarter_turns": 0
 }
 
-[node name="GeneratedMesh" type="MeshInstance3D" parent="FreightSouth" unique_id=2023031929]
-material_override = SubResource("StandardMaterial3D_n3n6h")
-mesh = SubResource("ArrayMesh_bvdj8")
+[node name="GeneratedMesh" type="MeshInstance3D" parent="FreightSouth" unique_id=2080975022]
+material_override = SubResource("StandardMaterial3D_japy4")
+mesh = SubResource("ArrayMesh_kdhd8")
 
 [node name="ReceivingEastOpeningWall" type="Node3D" parent="." unique_id=1619232791]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 10.5, 2.1, 0)
 script = ExtResource("1_xbsv6")
 piece_spec = SubResource("Resource_m2i87")
 metadata/eaf2_generation = {
-"authoring_notes": "Receiving C1 production visual; greybox retains collision. PRIMARY P01_C02; accepted through/butt ownership and metre UV phase.",
+"authoring_notes": "Receiving C1 production visual; greybox retains collision. PRIMARY P05_C02; accepted through/butt ownership and metre UV phase.",
 "collision_policy": 0,
 "exact_parameters": {
 "bevel_width_m": 0.0,
@@ -670,7 +651,7 @@ metadata/eaf2_generation = {
 "generation_revision": 1,
 "generator_revision": 2,
 "geometry_fingerprint": "1120ec802b730413c39713dfa45253ef881856c579437518302973ee521b0cdd",
-"material_spec": "res://data/environment/material_catalog/approved_specs/eaf3b_d335d94fd85c2c95c26b6b8b.tres",
+"material_spec": "res://data/environment/material_catalog/approved_specs/eaf3b_5a797fbdc766d7e3dc475abf.tres",
 "piece_id": "ReceivingEastOpeningWall",
 "recipe_id": "wall_with_rect_opening",
 "recipe_revision": 1,
@@ -679,16 +660,16 @@ metadata/eaf2_generation = {
 "uv_quarter_turns": 0
 }
 
-[node name="GeneratedMesh" type="MeshInstance3D" parent="ReceivingEastOpeningWall" unique_id=952655334]
-material_override = SubResource("StandardMaterial3D_ratna")
-mesh = SubResource("ArrayMesh_y73s0")
+[node name="GeneratedMesh" type="MeshInstance3D" parent="ReceivingEastOpeningWall" unique_id=2047773127]
+material_override = SubResource("StandardMaterial3D_japy4")
+mesh = SubResource("ArrayMesh_pfren")
 
 [node name="ReceivingNorthWest" type="Node3D" parent="." unique_id=60862895]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.425, 2.1, -5)
 script = ExtResource("1_xbsv6")
 piece_spec = SubResource("Resource_fv0bs")
 metadata/eaf2_generation = {
-"authoring_notes": "Receiving C1 production visual; greybox retains collision. PRIMARY P01_C02; accepted through/butt ownership and metre UV phase.",
+"authoring_notes": "Receiving C1 production visual; greybox retains collision. PRIMARY P05_C02; accepted through/butt ownership and metre UV phase.",
 "collision_policy": 0,
 "exact_parameters": {
 "bevel_width_m": 0.0,
@@ -698,7 +679,7 @@ metadata/eaf2_generation = {
 "generation_revision": 1,
 "generator_revision": 2,
 "geometry_fingerprint": "86687bc80598c589555801495ff42032735c135473d7012336e9cf17a829fbff",
-"material_spec": "res://data/environment/material_catalog/approved_specs/eaf3b_d335d94fd85c2c95c26b6b8b.tres",
+"material_spec": "res://data/environment/material_catalog/approved_specs/eaf3b_5a797fbdc766d7e3dc475abf.tres",
 "piece_id": "ReceivingNorthWest",
 "recipe_id": "rect_solid",
 "recipe_revision": 1,
@@ -707,16 +688,16 @@ metadata/eaf2_generation = {
 "uv_quarter_turns": 0
 }
 
-[node name="GeneratedMesh" type="MeshInstance3D" parent="ReceivingNorthWest" unique_id=1576394185]
-material_override = SubResource("StandardMaterial3D_ratna")
-mesh = SubResource("ArrayMesh_jtos4")
+[node name="GeneratedMesh" type="MeshInstance3D" parent="ReceivingNorthWest" unique_id=88083143]
+material_override = SubResource("StandardMaterial3D_japy4")
+mesh = SubResource("ArrayMesh_btyii")
 
 [node name="ReceivingSouth" type="Node3D" parent="." unique_id=1636156305]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.1, 2.1, 5)
 script = ExtResource("1_xbsv6")
 piece_spec = SubResource("Resource_2bmmv")
 metadata/eaf2_generation = {
-"authoring_notes": "Receiving C1 production visual; greybox retains collision. PRIMARY P01_C02; accepted through/butt ownership and metre UV phase.",
+"authoring_notes": "Receiving C1 production visual; greybox retains collision. PRIMARY P05_C02; accepted through/butt ownership and metre UV phase.",
 "collision_policy": 0,
 "exact_parameters": {
 "bevel_width_m": 0.0,
@@ -726,7 +707,7 @@ metadata/eaf2_generation = {
 "generation_revision": 1,
 "generator_revision": 2,
 "geometry_fingerprint": "dc1008c1d383a08d13280d6fcf437853c40e449d14ba321f84985c3305ebb2e6",
-"material_spec": "res://data/environment/material_catalog/approved_specs/eaf3b_d335d94fd85c2c95c26b6b8b.tres",
+"material_spec": "res://data/environment/material_catalog/approved_specs/eaf3b_5a797fbdc766d7e3dc475abf.tres",
 "piece_id": "ReceivingSouth",
 "recipe_id": "rect_solid",
 "recipe_revision": 1,
@@ -735,16 +716,16 @@ metadata/eaf2_generation = {
 "uv_quarter_turns": 0
 }
 
-[node name="GeneratedMesh" type="MeshInstance3D" parent="ReceivingSouth" unique_id=1599124221]
-material_override = SubResource("StandardMaterial3D_ratna")
-mesh = SubResource("ArrayMesh_28aou")
+[node name="GeneratedMesh" type="MeshInstance3D" parent="ReceivingSouth" unique_id=301759187]
+material_override = SubResource("StandardMaterial3D_japy4")
+mesh = SubResource("ArrayMesh_3pdl3")
 
 [node name="ReceivingWestNorthReturn" type="Node3D" parent="." unique_id=1341517749]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 2.1, -3.675)
 script = ExtResource("1_xbsv6")
 piece_spec = SubResource("Resource_hn36o")
 metadata/eaf2_generation = {
-"authoring_notes": "Receiving C1 production visual; greybox retains collision. PRIMARY P01_C02; accepted through/butt ownership and metre UV phase.",
+"authoring_notes": "Receiving C1 production visual; greybox retains collision. PRIMARY P05_C02; accepted through/butt ownership and metre UV phase.",
 "collision_policy": 0,
 "exact_parameters": {
 "bevel_width_m": 0.0,
@@ -754,7 +735,7 @@ metadata/eaf2_generation = {
 "generation_revision": 1,
 "generator_revision": 2,
 "geometry_fingerprint": "c0e73fba8f808eac3ddadf22a70f1c113f5f309d3ea6fad20ef32fd2ab05edab",
-"material_spec": "res://data/environment/material_catalog/approved_specs/eaf3b_d335d94fd85c2c95c26b6b8b.tres",
+"material_spec": "res://data/environment/material_catalog/approved_specs/eaf3b_5a797fbdc766d7e3dc475abf.tres",
 "piece_id": "ReceivingWestNorthReturn",
 "recipe_id": "rect_solid",
 "recipe_revision": 1,
@@ -763,16 +744,16 @@ metadata/eaf2_generation = {
 "uv_quarter_turns": 0
 }
 
-[node name="GeneratedMesh" type="MeshInstance3D" parent="ReceivingWestNorthReturn" unique_id=2004871368]
-material_override = SubResource("StandardMaterial3D_g2kyd")
-mesh = SubResource("ArrayMesh_kdhd8")
+[node name="GeneratedMesh" type="MeshInstance3D" parent="ReceivingWestNorthReturn" unique_id=1945755886]
+material_override = SubResource("StandardMaterial3D_japy4")
+mesh = SubResource("ArrayMesh_r4mq3")
 
 [node name="ReceivingWestSouthReturn" type="Node3D" parent="." unique_id=1725784696]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 2.1, 3.675)
 script = ExtResource("1_xbsv6")
 piece_spec = SubResource("Resource_v35u1")
 metadata/eaf2_generation = {
-"authoring_notes": "Receiving C1 production visual; greybox retains collision. PRIMARY P01_C02; accepted through/butt ownership and metre UV phase.",
+"authoring_notes": "Receiving C1 production visual; greybox retains collision. PRIMARY P05_C02; accepted through/butt ownership and metre UV phase.",
 "collision_policy": 0,
 "exact_parameters": {
 "bevel_width_m": 0.0,
@@ -782,7 +763,7 @@ metadata/eaf2_generation = {
 "generation_revision": 1,
 "generator_revision": 2,
 "geometry_fingerprint": "dc4c29ba0c684662875af58968a50704f429c0c4973e767745a1a6c36dc5019f",
-"material_spec": "res://data/environment/material_catalog/approved_specs/eaf3b_d335d94fd85c2c95c26b6b8b.tres",
+"material_spec": "res://data/environment/material_catalog/approved_specs/eaf3b_5a797fbdc766d7e3dc475abf.tres",
 "piece_id": "ReceivingWestSouthReturn",
 "recipe_id": "rect_solid",
 "recipe_revision": 1,
@@ -791,6 +772,6 @@ metadata/eaf2_generation = {
 "uv_quarter_turns": 0
 }
 
-[node name="GeneratedMesh" type="MeshInstance3D" parent="ReceivingWestSouthReturn" unique_id=2071830517]
-material_override = SubResource("StandardMaterial3D_g2kyd")
-mesh = SubResource("ArrayMesh_pfren")
+[node name="GeneratedMesh" type="MeshInstance3D" parent="ReceivingWestSouthReturn" unique_id=1202724469]
+material_override = SubResource("StandardMaterial3D_japy4")
+mesh = SubResource("ArrayMesh_h4uje")

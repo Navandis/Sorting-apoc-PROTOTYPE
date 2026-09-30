@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene load_steps=9 format=3]
 
 [ext_resource type="Script" path="res://gameplay/logistics_wing/wing_environment.gd" id="1_environment"]
 [ext_resource type="PackedScene" path="res://greybox/logistics_wing/wing_geometry.tscn" id="2_geometry"]
@@ -13,6 +13,10 @@ ambient_light_color = Color(0.78, 0.81, 0.84, 1)
 ambient_light_energy = 0.7
 reflected_light_source = 2
 tonemap_mode = 2
+
+[sub_resource type="BoxMesh" id="BoxMesh_dispatch_west_butt"]
+resource_name = "C1 Dispatch visual butt; inherited collision unchanged"
+size = Vector3(0.3, 4.2, 3.5)
 
 [node name="Environment" type="Node3D"]
 script = ExtResource("1_environment")
@@ -84,6 +88,10 @@ visible = false
 
 [node name="Mesh" parent="Greybox/Districts/Receiving/ReceivingWestSouthReturn" index="0"]
 visible = false
+
+[node name="Mesh" parent="Greybox/Districts/Receiving/DispatchWest" index="0"]
+position = Vector3(0, 0, -0.15)
+mesh = SubResource("BoxMesh_dispatch_west_butt")
 
 [node name="ReceivingStructuralShell" parent="." instance=ExtResource("3_receiving_shell")]
 position = Vector3(-39, 0, 0)
