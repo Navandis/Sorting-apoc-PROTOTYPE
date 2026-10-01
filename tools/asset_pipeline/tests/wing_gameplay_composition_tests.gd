@@ -278,9 +278,9 @@ func _assert_receiving_runtime_contract(runtime: Node3D, scene: Node, context: S
 		return
 	_check(presenter.get_script() != null and presenter.get_script().resource_path == RECEIVING_PRESENTER_SCRIPT_PATH, "%s presenter uses deterministic deck script" % context)
 	_check(presenter.get_child_count() >= 1, "%s presenter retains its neutral deck fixture" % context)
-	var deck_visual := presenter.get_node_or_null("DeckVisual") as MeshInstance3D
-	var deck_mesh := deck_visual.mesh as BoxMesh if deck_visual != null else null
-	_check(deck_mesh != null and deck_mesh.size.is_equal_approx(Vector3(3.10, 0.05, 2.10)), "%s physical/support deck is exactly 3.10 m × 2.10 m" % context)
+	_check(presenter.transform.is_equal_approx(Transform3D.IDENTITY), "%s presenter retains the profile coordinate system" % context)
+	var deck_visual := presenter.get_node_or_null("DeckVisual") as Node3D
+	var support := _assert_receiving_platform(deck_visual, presenter, context)
 	_check((presenter.call("get_materialized_world_items") as Array).is_empty(), "%s normal launch creates no synthetic Receiving batch" % context)
 	var functional_surfaces := scene.call("get_functional_surfaces") as Array
 	var private_surfaces := presenter.call("get_private_storage_surfaces") as Array
@@ -290,12 +290,52 @@ func _assert_receiving_runtime_contract(runtime: Node3D, scene: Node, context: S
 		var storage_surface := surface as StorageSurface
 		_check(storage_surface.get_grid_size() == Vector2i(30, 20), "%s private grid remains exactly 30 × 20" % context)
 		_check(storage_surface.get_usable_size_m().is_equal_approx(Vector2(3.0, 2.0)), "%s functional usable area remains exactly 3.00 m × 2.00 m" % context)
-		if deck_mesh != null:
-			var margin := (Vector2(deck_mesh.size.x, deck_mesh.size.z) - storage_surface.get_usable_size_m()) * 0.5
-			_check(margin.is_equal_approx(Vector2(0.05, 0.05)), "%s support border is centered and non-reservable at 0.05 m per edge" % context)
+		_check((presenter.global_transform.affine_inverse() * storage_surface.global_transform).is_equal_approx(Transform3D.IDENTITY), "%s logical MainDeck remains centered at the profile origin" % context)
+		var margin := (Vector2(support.size.x, support.size.z) - storage_surface.get_usable_size_m()) * 0.5
+		_check(margin.is_equal_approx(Vector2(0.05, 0.05)), "%s support border is centered and non-reservable at 0.05 m per edge" % context)
 	for forbidden_name: String in ["ReceivingGeometryComparison", "ReceivingPhysicsPileProof", "ReceivingComparisonA", "ReceivingComparisonB", "ReceivingComparisonC"]:
 		_check(scene.find_child(forbidden_name, true, false) == null, "%s omits historical %s" % [context, forbidden_name])
 
+
+func _assert_receiving_platform(visual: Node3D, presenter: Node3D, context: String) -> AABB:
+	if not _check(visual != null and not visual is MeshInstance3D, "%s DeckVisual is a stable physical datum wrapper" % context):
+		return AABB()
+	_check(visual.transform.is_equal_approx(Transform3D.IDENTITY), "%s physical datum stays at the presenter origin" % context)
+	var vertices: Array[Vector3] = []
+	var imported_count := 0
+	for node: Node in visual.find_children("*", "", true, false):
+		_check(not node is CollisionObject3D and not node is CollisionShape3D and not node is CollisionPolygon3D, "%s platform adds no gameplay/query collision" % context)
+		if node.scene_file_path == "res://assets/environment/architecture/floors/SM_Platform_01.glb":
+			imported_count += 1
+			var relative := presenter.global_transform.affine_inverse() * (node as Node3D).global_transform
+			# Source inspection establishes that its two yellow strips follow source X.
+			_check(relative.basis.x.normalized().is_equal_approx(Vector3.RIGHT), "%s yellow strips run across width, parallel to the barrier" % context)
+		if node is MeshInstance3D:
+			var mesh_node := node as MeshInstance3D
+			_check(not mesh_node.mesh is BoxMesh, "%s placeholder BoxMesh is removed" % context)
+			var relative := presenter.global_transform.affine_inverse() * mesh_node.global_transform
+			for surface_index: int in range(mesh_node.mesh.get_surface_count()):
+				for vertex: Vector3 in mesh_node.mesh.surface_get_arrays(surface_index)[Mesh.ARRAY_VERTEX]:
+					vertices.append(relative * vertex)
+	_check(imported_count == 1, "%s normal wing uses one real SM_Platform_01 instance" % context)
+	if not _check(not vertices.is_empty(), "%s platform has measurable support geometry" % context):
+		return AABB()
+	var top_y := -INF
+	for vertex: Vector3 in vertices:
+		top_y = maxf(top_y, vertex.y)
+	_check(absf(top_y) < 0.0001, "%s physical support top plane stays at local Y 0" % context)
+	var support := AABB()
+	var initialized := false
+	for vertex: Vector3 in vertices:
+		if absf(vertex.y - top_y) > 0.0001:
+			continue
+		if not initialized:
+			support = AABB(vertex, Vector3.ZERO)
+			initialized = true
+		else:
+			support = support.expand(vertex)
+	_check(support.position.distance_to(Vector3(-1.55, 0, -1.05)) < 0.0001 and support.size.distance_to(Vector3(3.10, 0, 2.10)) < 0.0001, "%s measured top support is centered and exactly 3.10 m × 2.10 m" % context)
+	return support
 
 func _assert_live_palette_coverage(
 	development_setup: Node3D,
