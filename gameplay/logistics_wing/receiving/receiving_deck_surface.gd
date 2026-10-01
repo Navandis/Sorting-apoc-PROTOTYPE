@@ -47,14 +47,20 @@ func configure_private_surface(
 		return false
 	if _storage_surface != null and is_instance_valid(_storage_surface):
 		_storage_surface.free()
+	# Profile poses/dimensions are metres, independent of the visual hierarchy.
+	# Capture this wrapper's authored origin/orientation before applying the pose.
+	var metric_frame := Transform3D(global_basis.orthonormalized(), global_position)
+	set_as_top_level(true)
+	global_transform = metric_frame
 	_storage_surface = StorageSurfaceScript.new()
 	_storage_surface.name = "PrivateStorageSurface"
 	_storage_surface.transform = local_transform
 	add_child(_storage_surface)
 	_storage_surface.configure(
 		surface_id,
-		usable_width_m,
-		usable_depth_m,
+		# Quantize at the Receiving boundary; 3.30 / 0.10 can be just below 33.
+		float(floori(usable_width_m / cell_size_m + 0.000001)) * cell_size_m,
+		float(floori(usable_depth_m / cell_size_m + 0.000001)) * cell_size_m,
 		cell_size_m,
 		stack_clearance_m
 	)

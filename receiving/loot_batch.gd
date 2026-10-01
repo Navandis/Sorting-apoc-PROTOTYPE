@@ -616,9 +616,10 @@ static func _validate_fixture_commit(
 	var main_grid := Vector2i.ZERO
 	if main_deck_spec != null:
 		var cell_size_m := float(profile.get("cell_size_m"))
+		# Match Receiving's whole-cell boundary tolerance during commit validation.
 		main_grid = Vector2i(
-			floori(float(main_deck_spec.get("usable_width_m")) / cell_size_m),
-			floori(float(main_deck_spec.get("usable_depth_m")) / cell_size_m)
+			floori(float(main_deck_spec.get("usable_width_m")) / cell_size_m + 0.000001),
+			floori(float(main_deck_spec.get("usable_depth_m")) / cell_size_m + 0.000001)
 		)
 
 	for fixture: ReceivingFreightFixtureInstance in fixtures:

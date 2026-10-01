@@ -216,9 +216,10 @@ func _new_surface_state(
 	stack_clearance_m: float,
 	local_transform: Transform3D
 ) -> Dictionary:
+	# A whole-cell decimal dimension can divide to just below its cell count.
 	var grid_size := Vector2i(
-		maxi(1, floori(usable_width_m / cell_size_m)),
-		maxi(1, floori(usable_depth_m / cell_size_m))
+		maxi(1, floori(usable_width_m / cell_size_m + 0.000001)),
+		maxi(1, floori(usable_depth_m / cell_size_m + 0.000001))
 	)
 	var cells: Array[String] = []
 	cells.resize(grid_size.x * grid_size.y)

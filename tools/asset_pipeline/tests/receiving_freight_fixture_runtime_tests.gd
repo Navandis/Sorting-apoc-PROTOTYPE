@@ -38,7 +38,7 @@ func _test_fixture_instance_round_trip() -> void:
 		Vector2i(1, 13),
 		0,
 		Vector2i(5, 6),
-		Transform3D(Basis.IDENTITY, Vector3(-1.15, 0.0, 0.6))
+		Transform3D(Basis.IDENTITY, Vector3(-1.30, 0.0, 0.6))
 	)
 	_check(fixture != null, "valid fixture instance is created")
 	if fixture == null:
@@ -142,7 +142,7 @@ func _proof_crate_fixture(
 		Vector2i(1, 13),
 		0,
 		Vector2i(5, 6),
-		Transform3D(Basis.IDENTITY, Vector3(-1.15, 0.0, 0.6))
+		Transform3D(Basis.IDENTITY, Vector3(-1.30, 0.0, 0.6))
 	)
 
 
@@ -156,10 +156,10 @@ func _second_proof_crate_fixture(
 		0,
 		&"crate_middle_center",
 		surface_id,
-		Vector2i(12, 13),
+		Vector2i(14, 13),
 		0,
 		Vector2i(5, 7),
-		Transform3D(Basis.IDENTITY, Vector3(-0.05, 0.0, 0.65))
+		Transform3D(Basis.IDENTITY, Vector3(0.0, 0.0, 0.65))
 	)
 
 

@@ -268,7 +268,7 @@ func _assert_receiving_runtime_contract(runtime: Node3D, scene: Node, context: S
 		return
 	_check(runtime.scene_file_path == RECEIVING_RUNTIME_PATH, "%s uses the Receiving runtime scene" % context)
 	_check(runtime.get_script() != null and runtime.get_script().resource_path == RECEIVING_RUNTIME_SCRIPT_PATH, "%s runtime uses the intended script" % context)
-	_check(runtime.position.is_equal_approx(Vector3(-40.41487, 0.82, 0.0)) and runtime.scale.is_equal_approx(Vector3(1, 1.225, 1)), "%s preserves human-authored platform/runtime datum" % context)
+	_check(runtime.position.is_equal_approx(Vector3(-40.41487, 0.82, 0.0)) and runtime.scale.is_equal_approx(Vector3(1.11, 1.225, 1)), "%s preserves human-authored platform/runtime datum" % context)
 	_check((runtime.basis * Vector3.BACK).is_equal_approx(Vector3.RIGHT), "%s Receiving FRONT local +Z maps to world +X / player-barrier side" % context)
 	var manager := runtime.get_node_or_null("ReceivingManager")
 	var presenter := runtime.get_node_or_null("ReceivingDeckPresenter") as Node3D
@@ -280,6 +280,7 @@ func _assert_receiving_runtime_contract(runtime: Node3D, scene: Node, context: S
 	_check(presenter.get_child_count() >= 1, "%s presenter retains its neutral deck fixture" % context)
 	_check(presenter.transform.is_equal_approx(Transform3D.IDENTITY), "%s presenter retains the profile coordinate system" % context)
 	var deck_visual := presenter.get_node_or_null("DeckVisual") as Node3D
+	_check(int(runtime.get("deck_profile").get("revision")) == 4, "%s new layouts use profile revision 4" % context)
 	var support := _assert_receiving_platform(deck_visual, presenter, context)
 	_check((presenter.call("get_materialized_world_items") as Array).is_empty(), "%s normal launch creates no synthetic Receiving batch" % context)
 	var functional_surfaces := scene.call("get_functional_surfaces") as Array
@@ -288,11 +289,15 @@ func _assert_receiving_runtime_contract(runtime: Node3D, scene: Node, context: S
 	for surface: Node in private_surfaces:
 		_check(not functional_surfaces.has(surface), "%s private deck surface is excluded from functional storage" % context)
 		var storage_surface := surface as StorageSurface
-		_check(storage_surface.get_grid_size() == Vector2i(30, 20), "%s private grid remains exactly 30 × 20" % context)
-		_check(storage_surface.get_usable_size_m().is_equal_approx(Vector2(3.0, 2.0)), "%s functional usable area remains exactly 3.00 m × 2.00 m" % context)
+		_check(storage_surface.get_grid_size() == Vector2i(33, 20), "%s private grid is exactly 33 × 20 despite runtime scale" % context)
+		_check(storage_surface.get_usable_size_m().is_equal_approx(Vector2(3.3, 2.0)), "%s functional usable area remains exactly 3.30 m × 2.00 m" % context)
 		_check(storage_surface.global_position.is_equal_approx(presenter.global_position) and storage_surface.global_basis.is_equal_approx(presenter.global_basis.orthonormalized()), "%s logical MainDeck retains profile origin/orientation with scale-isolated metric coordinates" % context)
+		_check(is_equal_approx(storage_surface.cell_size_m, 0.10), "%s live cells remain literal 0.10 m" % context)
+		var half_size := storage_surface.get_usable_size_m() * 0.5
+		for border: float in [-half_size.x - support.position.x, support.end.x - half_size.x, -half_size.y - support.position.z, support.end.z - half_size.y]:
+			_check(border >= 0.05 - 0.00001, "%s every edge retains 0.05 m within mesh precision" % context)
 		var margin := (Vector2(support.size.x, support.size.z) - storage_surface.get_usable_size_m()) * 0.5
-		_check(margin.is_equal_approx(Vector2(0.05, 0.05)), "%s support border is centered and non-reservable at 0.05 m per edge" % context)
+		_check(margin.is_equal_approx(Vector2(0.0705, 0.05)), "%s support border is centered and non-reservable at 0.0705 m sides / 0.05 m front and rear" % context)
 	for forbidden_name: String in ["ReceivingGeometryComparison", "ReceivingPhysicsPileProof", "ReceivingComparisonA", "ReceivingComparisonB", "ReceivingComparisonC"]:
 		_check(scene.find_child(forbidden_name, true, false) == null, "%s omits historical %s" % [context, forbidden_name])
 
@@ -307,13 +312,14 @@ func _assert_receiving_platform(visual: Node3D, presenter: Node3D, context: Stri
 		_check(not node is CollisionObject3D and not node is CollisionShape3D and not node is CollisionPolygon3D, "%s platform adds no gameplay/query collision" % context)
 		if node.scene_file_path == "res://assets/environment/architecture/floors/SM_Platform_01.glb":
 			imported_count += 1
-			var relative := presenter.global_transform.affine_inverse() * (node as Node3D).global_transform
+			var relative := Transform3D(presenter.global_basis.orthonormalized(), presenter.global_position).affine_inverse() * (node as Node3D).global_transform
 			# Source inspection establishes that its two yellow strips follow source X.
 			_check(relative.basis.x.normalized().is_equal_approx(Vector3.RIGHT), "%s yellow strips run across width, parallel to the barrier" % context)
 		if node is MeshInstance3D:
 			var mesh_node := node as MeshInstance3D
 			_check(not mesh_node.mesh is BoxMesh, "%s placeholder BoxMesh is removed" % context)
-			var relative := presenter.global_transform.affine_inverse() * mesh_node.global_transform
+			var relative := Transform3D(presenter.global_basis.orthonormalized(), presenter.global_position).affine_inverse() * mesh_node.global_transform
+			_check(relative.basis.x.normalized().is_equal_approx(Vector3.RIGHT) and relative.basis.y.normalized().is_equal_approx(Vector3.UP) and relative.basis.z.normalized().is_equal_approx(Vector3.BACK), "%s top stays axis-aligned" % context)
 			for surface_index: int in range(mesh_node.mesh.get_surface_count()):
 				for vertex: Vector3 in mesh_node.mesh.surface_get_arrays(surface_index)[Mesh.ARRAY_VERTEX]:
 					vertices.append(relative * vertex)
@@ -334,7 +340,8 @@ func _assert_receiving_platform(visual: Node3D, presenter: Node3D, context: Stri
 			initialized = true
 		else:
 			support = support.expand(vertex)
-	_check(support.position.distance_to(Vector3(-1.55, 0, -1.05)) < 0.0001 and support.size.distance_to(Vector3(3.10, 0, 2.10)) < 0.0001, "%s measured top support is centered and exactly 3.10 m × 2.10 m" % context)
+	# Independent top-vertex dimensions from human checkpoint c76442f.
+	_check(support.position.distance_to(Vector3(-1.7205, 0, -1.05)) < 0.0001 and support.size.distance_to(Vector3(3.441, 0, 2.10)) < 0.0001, "%s measured top support is centered and 3.441 m × 2.100 m, following human widened checkpoint c76442f" % context)
 	return support
 
 func _assert_live_palette_coverage(

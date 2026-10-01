@@ -236,7 +236,7 @@ func _test_profile_backward_compatibility_and_proof_authoring() -> void:
 		if family >= 0 and family < family_counts.size():
 			family_counts[family] += 1
 		var origin := socket.get("main_deck_origin") as Vector2i
-		_check(origin.x >= 0 and origin.y >= 0 and origin.x < 30 and origin.y < 20, "%s origin lies in the 30x20 MainDeck grid" % String(socket.get("socket_id")))
+		_check(origin.x >= 0 and origin.y >= 0 and origin.x < 33 and origin.y < 20, "%s origin lies in the 33x20 MainDeck grid" % String(socket.get("socket_id")))
 	_check(family_counts[0] >= 3, "proof profile provides at least three crate candidates")
 	_check(family_counts[1] >= 2, "proof profile provides at least two pallet candidates")
 	_pending_helpers -= 1
@@ -269,7 +269,7 @@ func _test_proof_socket_front_rear_contract_and_full_arrangement() -> void:
 				continue
 			var footprint := _socket_footprint(socket, definition)
 			_check(
-				origin.x + footprint.x <= 30 and origin.y + footprint.y <= 20,
+				origin.x + footprint.x <= 33 and origin.y + footprint.y <= 20,
 				"%s fits calibrated %s inside MainDeck" % [String(socket.get("socket_id")), String(definition.get("fixture_id"))]
 			)
 			if family == 0:

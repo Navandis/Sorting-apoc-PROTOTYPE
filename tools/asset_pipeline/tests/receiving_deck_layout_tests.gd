@@ -31,7 +31,7 @@ func _run_suite() -> void:
 	_test_legacy_entry_snapshot_restores_deck_defaults()
 	_test_deck_snapshot_round_trip_and_atomic_commit()
 	_test_generic_arrangement_remains_valid()
-	_test_proof_profile_is_exact_30_by_20()
+	_test_proof_profile_is_exact_33_by_20()
 	_test_four_quarter_turns_preserve_two_physical_footprints()
 	_test_same_seed_reproduces_and_alternate_seed_changes_only_layout()
 	_test_front_to_rear_scan_starts_at_frontmost_legal_row()
@@ -159,23 +159,35 @@ func _test_generic_arrangement_remains_valid() -> void:
 	_pending_helpers -= 1
 
 
-func _test_proof_profile_is_exact_30_by_20() -> void:
+func _test_proof_profile_is_exact_33_by_20() -> void:
 	_pending_helpers += 1
 	_check(ProofProfile.get_script() == DeckProfileScript, "proof resource has deck profile type")
 	if ProofProfile.get_script() == DeckProfileScript:
 		var profile: Resource = ProofProfile
 		_check(profile.validate().is_empty(), "proof profile validates")
 		_check(profile.profile_id == &"receiving_deck_stage_b_proof", "proof profile ID")
-		_check(profile.revision == 3 and profile.layout_version == 3, "front-crate/rear-pallet proof profile versions")
+		_check(profile.revision == 4 and profile.layout_version == 3, "widened profile revision; reserved layout version unchanged")
 		_check(is_equal_approx(profile.cell_size_m, 0.10), "proof cell size")
 		_check(profile.max_layout_attempts == 4, "proof attempt bound")
 		_check(profile.surfaces.size() == 1, "proof uses one surface")
 		var surface = profile.surfaces[0]
 		_check(surface.surface_id == &"MainDeck", "proof main surface identity")
-		_check(is_equal_approx(surface.usable_width_m, 3.0), "proof width is approved 3.00 m")
+		_check(is_equal_approx(surface.usable_width_m, 3.3), "proof width is approved 3.30 m")
 		_check(is_equal_approx(surface.usable_depth_m, 2.0), "proof depth is provisional 2.00 m")
-		_check(Vector2i(floori(surface.usable_width_m / profile.cell_size_m), floori(surface.usable_depth_m / profile.cell_size_m)) == Vector2i(30, 20), "proof grid is exactly 30 by 20")
+		_check(Vector2i(floori(surface.usable_width_m / profile.cell_size_m + 0.000001), floori(surface.usable_depth_m / profile.cell_size_m + 0.000001)) == Vector2i(33, 20), "proof grid is exactly 33 by 20")
 		_check(is_equal_approx(surface.stack_clearance_m, 1.5), "proof stack clearance")
+	var expected_origins := [Vector2i(1, 13), Vector2i(14, 13), Vector2i(27, 13), Vector2i(22, 0), Vector2i(1, 0)]
+	var max_footprints := [Vector2i(5, 7), Vector2i(5, 7), Vector2i(5, 7), Vector2i(10, 13), Vector2i(10, 13)]
+	var occupied: Array[Rect2i] = []
+	for index in expected_origins.size():
+		var socket = ProofProfile.freight_fixture_sockets[index]
+		_check(socket.main_deck_origin == expected_origins[index], "socket follows widened edge/centre-relative placement")
+		var rect := Rect2i(socket.main_deck_origin, max_footprints[index])
+		_check(Rect2i(0, 0, 33, 20).encloses(rect), "each enabled fixture definition fits its semantic socket")
+		_check(rect.position.y == (13 if index < 3 else 0), "crates remain FRONT and pallets REAR")
+		for other in occupied:
+			_check(not rect.intersects(other), "maximum fixture bases do not overlap")
+		occupied.append(rect)
 	_pending_helpers -= 1
 
 

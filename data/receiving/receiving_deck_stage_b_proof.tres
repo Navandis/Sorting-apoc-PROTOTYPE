@@ -16,7 +16,7 @@
 script = ExtResource("2_surface")
 surface_id = &"MainDeck"
 local_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
-usable_width_m = 3.0
+usable_width_m = 3.3
 usable_depth_m = 2.0
 stack_clearance_m = 1.5
 enabled = true
@@ -33,7 +33,7 @@ enabled = true
 script = ExtResource("3_socket")
 socket_id = &"crate_middle_center"
 allowed_family = 0
-main_deck_origin = Vector2i(12, 13)
+main_deck_origin = Vector2i(14, 13)
 quarter_turns = 0
 enabled = true
 
@@ -41,7 +41,7 @@ enabled = true
 script = ExtResource("3_socket")
 socket_id = &"crate_rear_right"
 allowed_family = 0
-main_deck_origin = Vector2i(24, 13)
+main_deck_origin = Vector2i(27, 13)
 quarter_turns = 0
 enabled = true
 
@@ -49,7 +49,7 @@ enabled = true
 script = ExtResource("3_socket")
 socket_id = &"pallet_front_right"
 allowed_family = 1
-main_deck_origin = Vector2i(19, 0)
+main_deck_origin = Vector2i(22, 0)
 quarter_turns = 0
 enabled = true
 
@@ -64,7 +64,7 @@ enabled = true
 [resource]
 script = ExtResource("1_profile")
 profile_id = &"receiving_deck_stage_b_proof"
-revision = 3
+revision = 4
 layout_version = 3
 cell_size_m = 0.1
 max_layout_attempts = 4

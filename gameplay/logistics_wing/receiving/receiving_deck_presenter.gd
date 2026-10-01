@@ -300,8 +300,13 @@ func _rebuild_private_surfaces(fixtures: Array = []) -> bool:
 			return false
 		var fixture_root := Node3D.new()
 		fixture_root.name = "FreightFixture_%s" % fixture.instance_id.validate_node_name()
-		fixture_root.transform = fixture.local_transform
+		# Fixture bodies share the same literal-metre frame as private cargo.
 		add_child(fixture_root)
+		fixture_root.set_as_top_level(true)
+		fixture_root.global_transform = (
+			Transform3D(global_basis.orthonormalized(), global_position)
+			* fixture.local_transform
+		)
 		var visual: Node = (definition.get("visual_scene") as PackedScene).instantiate()
 		fixture_root.add_child(visual)
 		if visual is Node3D:

@@ -41,6 +41,7 @@ func _run_suite() -> void:
 	await _test_fixture_reconstruction_reservation_and_empty_persistence()
 	await _test_actual_main_deck_and_fixture_stacks_reject_manual_put()
 	_test_fixture_stack_base_take_compacts()
+	await _test_profile_revision_mismatch_fails_closed()
 	await _test_runtime_debug_delivery_is_explicit()
 	_pending_helpers -= 1
 	_finish()
@@ -594,3 +595,28 @@ func _finish() -> void:
 		return
 	print("PASS: receiving deck presenter tests")
 	quit(0)
+
+func _test_profile_revision_mismatch_fails_closed() -> void:
+	var old_profile = ProofProfile.duplicate(true)
+	old_profile.revision = 3
+	old_profile.surfaces[0].usable_width_m = 3.0
+	old_profile.freight_fixture_sockets[1].main_deck_origin = Vector2i(12, 13)
+	old_profile.freight_fixture_sockets[2].main_deck_origin = Vector2i(24, 13)
+	old_profile.freight_fixture_sockets[3].main_deck_origin = Vector2i(19, 0)
+	var batch: LootBatch = LootSourceScript.new().generate_committed_batch(PersistentItemCatalog, PrototypeLootPool, "revision_3", 1842, 9001, 24)
+	_check(DeckPlannerScript.new().prepare(batch, PersistentItemCatalog, old_profile, DeckPlannerScript.FixtureMode.MIXED).succeeded, "historical revision-3 fixture layout prepares")
+	var restored := LootBatchScript.from_snapshot(batch.to_snapshot())
+	_check(restored != null, "revision-3 prepared snapshot reconstructs")
+	var before := var_to_bytes(restored.to_snapshot())
+	var manager := ReceivingManagerScript.new()
+	root.add_child(manager)
+	var presenter := DeckPresenterScript.new()
+	root.add_child(presenter)
+	_check(presenter.configure(manager, PersistentItemCatalog, ProofProfile), "current revision-4 presenter configures")
+	_check(manager.deposit_batch(restored), "historical batch retains durable state")
+	_check(not presenter.present_active_batch(), "revision-4 presenter rejects revision-3 coordinates")
+	_check(presenter.get_materialized_world_items().is_empty() and presenter.get_materialized_fixture_nodes().is_empty(), "mismatch exposes no cargo or fixtures")
+	_check(var_to_bytes(restored.to_snapshot()) == before, "mismatch never replans persisted state")
+	presenter.free()
+	manager.free()
+	await process_frame
