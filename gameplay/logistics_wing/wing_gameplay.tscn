@@ -46,14 +46,50 @@
 [ext_resource type="PackedScene" path="res://gameplay/traversal/fixed_ladder/fixed_ladder.tscn" id="42_ladder"]
 [ext_resource type="PackedScene" uid="uid://crhai3v0or4eb" path="res://assets/environment/furniture/storage/SM_Rack02.glb" id="43_rack02"]
 [ext_resource type="PackedScene" path="res://gameplay/logistics_wing/receiving/receiving_runtime.tscn" id="44_receiving"]
+[ext_resource type="PackedScene" uid="uid://cqi5ol3pisw7o" path="res://assets/environment/architecture/barriers/fences/SM_Fence_01.glb" id="47_d12kh"]
+[ext_resource type="PackedScene" uid="uid://dtc5hhjkyl3ov" path="res://assets/environment/architecture/floors/SM_IndustrialPlatform04.glb" id="48_kwor4"]
+[ext_resource type="PackedScene" uid="uid://cd3dtifmy0p7c" path="res://assets/environment/architecture/barriers/barricades/SM_WallPart_01.glb" id="49_h65wt"]
+[ext_resource type="PackedScene" uid="uid://ca6sqm3g8vnqy" path="res://assets/environment/architecture/doors/SM_KB3D_LND_PropGarageDoor_A_Frame.glb" id="50_dhxay"]
+[ext_resource type="PackedScene" uid="uid://b1c52bh48icoc" path="res://assets/environment/architecture/doors/SM_KB3D_LND_PropGarageDoor_B_Door.glb" id="51_i7er2"]
+[ext_resource type="PackedScene" uid="uid://cgqgyo8ud0jqe" path="res://assets/environment/architecture/structural/pillars/SM_ConcretePillar02.glb" id="52_3syii"]
+[ext_resource type="PackedScene" uid="uid://dhbfyo2yyt2jf" path="res://assets/environment/architecture/barriers/barricades/SM_Barrier01.glb" id="53_qssrt"]
+[ext_resource type="PackedScene" uid="uid://dft37otdh37ur" path="res://assets/environment/architecture/structural/beams/SM_MetalBeam15.glb" id="54_qssrt"]
+[ext_resource type="PackedScene" uid="uid://2ebc73eyq8kk" path="res://assets/environment/dressing/signage/SM_sign_02.glb" id="55_v3vfn"]
+[ext_resource type="PackedScene" uid="uid://cv7vglot1faq0" path="res://assets/environment/dressing/signage/SM_FWYSignWarn_Caution_E01_N1.glb" id="56_232ub"]
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_f70e0"]
 resource_local_to_scene = true
 size = Vector3(4.04, 3, 0.82)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lift_barrier"]
+size = Vector3(0.12, 1.2, 4.8)
 
 [node name="WingGameplay" type="Node3D" unique_id=1126541559]
 script = ExtResource("1_gameplay")
 
 [node name="Environment" parent="." unique_id=1856855740 instance=ExtResource("2_environment")]
+
+[node name="FreightBarrier" parent="Environment/Greybox/Boundaries" index="0" unique_id=1475417136]
+visible = false
+metadata/purpose = "Obsolete historical visual; all six collision shapes disabled in production"
+
+[node name="CollisionShape3D" parent="Environment/Greybox/Boundaries/FreightBarrier/LowerRail/StaticBody3D" index="0"]
+disabled = true
+
+[node name="CollisionShape3D" parent="Environment/Greybox/Boundaries/FreightBarrier/UpperRail/StaticBody3D" index="0"]
+disabled = true
+
+[node name="CollisionShape3D" parent="Environment/Greybox/Boundaries/FreightBarrier/Post00/StaticBody3D" index="0"]
+disabled = true
+
+[node name="CollisionShape3D" parent="Environment/Greybox/Boundaries/FreightBarrier/Post01/StaticBody3D" index="0"]
+disabled = true
+
+[node name="CollisionShape3D" parent="Environment/Greybox/Boundaries/FreightBarrier/Post02/StaticBody3D" index="0"]
+disabled = true
+
+[node name="CollisionShape3D" parent="Environment/Greybox/Boundaries/FreightBarrier/Post03/StaticBody3D" index="0"]
+disabled = true
 
 [node name="FunctionalFixtures" parent="." unique_id=1215529146 instance=ExtResource("5_fixtures")]
 
@@ -114,9 +150,6 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 1.04
 ladder_height_m = 2.92
 
 [node name="DevelopmentSetup" parent="." unique_id=1793037051 instance=ExtResource("6_development")]
-
-[node name="ReceivingRuntime" parent="." instance=ExtResource("44_receiving")]
-transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -40.905, 0.82, 0)
 
 [node name="SM_Table_SeedWest" parent="DevelopmentSetup/Tables" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.418461, 0, 3.8245745)
@@ -424,6 +457,9 @@ item_id = &"loot_000042"
 
 [node name="Visual" parent="DevelopmentSetup/SeedItems/Weapons_TennisRacket" unique_id=336093353 instance=ExtResource("39_racket")]
 
+[node name="ReceivingRuntime" parent="." unique_id=1625899199 instance=ExtResource("44_receiving")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1.225, 0, -1, 0, -4.371139e-08, -40.41487, 0.82, 0)
+
 [node name="Player" parent="." unique_id=551360273 instance=ExtResource("3_player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0.05, -2.5)
 receiving_interaction_distance = 3.4
@@ -433,6 +469,76 @@ layer = 10
 
 [node name="CarriedItemsHUD" parent="HUD" unique_id=626635065 instance=ExtResource("4_hud")]
 
+[node name="ReceivingLiftInstallation" type="Node3D" parent="."]
+metadata/purpose = "Manual lift visuals; identity grouping preserves authored world transforms"
+
+[node name="SM_Fence_01" parent="ReceivingLiftInstallation" unique_id=742320119 instance=ExtResource("47_d12kh")]
+transform = Transform3D(1.68, 0, 0, 0, 2.53, 0, 0, 0, 1.68, -39.358643, 0.66369426, -1.5749303)
+
+[node name="SM_Fence_03" parent="ReceivingLiftInstallation" unique_id=836456385 instance=ExtResource("47_d12kh")]
+transform = Transform3D(-1.0831682e-07, 0, 1.68, 0, 2.53, 0, -2.478, 0, -7.343513e-08, -41.508873, 0.664, -1.565)
+
+[node name="SM_Fence_02" parent="ReceivingLiftInstallation" unique_id=42959253 instance=ExtResource("47_d12kh")]
+transform = Transform3D(-1.68, 0, -2.5367294e-07, 0, 2.53, 0, 2.5367294e-07, 0, -1.68, -41.490505, 0.66369426, 1.5967622)
+
+[node name="SM_IndustrialPlatform04" parent="ReceivingLiftInstallation" unique_id=1563534865 instance=ExtResource("48_kwor4")]
+transform = Transform3D(-0.725, 1.1249188e-07, 9.266814e-08, -1.0947196e-07, -0.745, 9.266814e-08, 6.338153e-08, 6.512996e-08, 1.06, -40.423344, 3.72212, 0.002060026)
+
+[node name="SM_WallPart_01" parent="ReceivingLiftInstallation" unique_id=820739852 instance=ExtResource("49_h65wt")]
+transform = Transform3D(-0.555, 0, -1.1702174e-07, 0, 0.59, 0, 8.3802675e-08, 0, -0.775, -41.481655, 0.8265916, -1.5070513)
+
+[node name="SM_WallPart_02" parent="ReceivingLiftInstallation" unique_id=883036225 instance=ExtResource("49_h65wt")]
+transform = Transform3D(-2.425982e-08, 0, 0.52, 0, 0.585, 0, -0.555, 0, -2.2729921e-08, -39.41681, 0.8265916, -1.5463957)
+
+[node name="SM_WallPart_03" parent="ReceivingLiftInstallation" unique_id=667616790 instance=ExtResource("49_h65wt")]
+transform = Transform3D(2.425982e-08, -2.2355018e-15, 0.52, -4.851964e-08, -0.585, 0, 0.555, -5.1142322e-08, -2.2729921e-08, -39.394596, 3.1552064, 1.5665872)
+
+[node name="SM_KB3D_LND_PropGarageDoor_A_Frame" parent="ReceivingLiftInstallation" unique_id=1693052903 instance=ExtResource("50_dhxay")]
+transform = Transform3D(1.475, 0, 0, 0, 1.555, 0, 0, 0, 1.79, -39.367, 1.868, 0.035)
+
+[node name="SM_KB3D_LND_PropGarageDoor_B_Door" parent="ReceivingLiftInstallation" unique_id=1548685690 instance=ExtResource("51_i7er2")]
+transform = Transform3D(0.75, 0, 0, 0, 1.05, 0, 0, 0, 0.9, -39.169, 1.85, 0.008)
+
+[node name="SM_ConcretePillar02" parent="ReceivingLiftInstallation" unique_id=1296925920 instance=ExtResource("52_3syii")]
+transform = Transform3D(-0.505, 0, -6.719313e-08, 0, 0.45, 0, 7.625288e-08, 0, -0.445, -39.229767, -0.0005104542, 2.2009237)
+
+[node name="SM_ConcretePillar03" parent="ReceivingLiftInstallation" unique_id=1929355278 instance=ExtResource("52_3syii")]
+transform = Transform3D(-0.505, 0, -6.719313e-08, 0, 0.45, 0, 7.625288e-08, 0, -0.445, -39.229767, -0.0005104542, -2.204061)
+
+[node name="SM_Barrier01" parent="ReceivingLiftInstallation" unique_id=332986137 instance=ExtResource("53_qssrt")]
+transform = Transform3D(-1.3769088e-07, 0, -0.5, 0, 1, 0, 3.15, 0, -2.1855694e-08, -38.997356, 0.08457935, -0.0021447986)
+
+[node name="SM_MetalBeam15" parent="ReceivingLiftInstallation" unique_id=1131570668 instance=ExtResource("54_qssrt")]
+transform = Transform3D(-4.371139e-08, 1, -4.371139e-08, 0, -4.371139e-08, -1, -1, -4.371139e-08, 1.9106855e-15, -39.237198, 3.9677286, 2.4172034)
+
+[node name="SM_sign_02" parent="ReceivingLiftInstallation" unique_id=1942064760 instance=ExtResource("55_v3vfn")]
+transform = Transform3D(1.090432e-08, 7.858323e-08, 1, 1.7977747, -0.24946177, 0, 0.24946177, 1.7977747, -4.371139e-08, -38.971012, 0.80947685, 0.05105634)
+
+[node name="SM_FWYSignWarn_Caution_E01_N2" parent="ReceivingLiftInstallation" unique_id=1328143936 instance=ExtResource("56_232ub")]
+transform = Transform3D(0.9, 0, 0, 0, 1.275, 0, 0, 0, 0.9, -38.833004, 0.6090314, -2.1985335)
+
+[node name="SM_FWYSignWarn_Caution_E01_N3" parent="ReceivingLiftInstallation" unique_id=222786591 instance=ExtResource("56_232ub")]
+transform = Transform3D(0.9, 0, 0, 0, 1.275, 0, 0, 0, 0.9, -38.833004, 0.6090314, 2.200317)
+
+[node name="BarrierCollision" type="StaticBody3D" parent="ReceivingLiftInstallation"]
+position = Vector3(-38.997356, 0.6, -0.0021447986)
+collision_layer = 1
+collision_mask = 1
+metadata/purpose = "Single movement proxy; closes end gaps beneath collisionless pillars; below lowered barrier top"
+
+[node name="Shape" type="CollisionShape3D" parent="ReceivingLiftInstallation/BarrierCollision"]
+shape = SubResource("BoxShape3D_lift_barrier")
+
+[node name="ShutterPoseMarkers" type="Node3D" parent="ReceivingLiftInstallation"]
+
+[node name="Closed" type="Marker3D" parent="ReceivingLiftInstallation/ShutterPoseMarkers"]
+transform = Transform3D(0.75, 0, 0, 0, 1.05, 0, 0, 0, 0.9, -39.169, 1.85, 0.008)
+
+[node name="Open" type="Marker3D" parent="ReceivingLiftInstallation/ShutterPoseMarkers"]
+transform = Transform3D(0.75, 0, 0, 0, 1.05, 0, 0, 0, 0.9, -39.169, 4.93, 0.008)
+
+[editable path="Environment"]
+[editable path="Environment/Greybox"]
 [editable path="FunctionalFixtures"]
 [editable path="FunctionalFixtures/ModularRack_GalleryB_Initial"]
 [editable path="DevelopmentSetup"]

@@ -48,7 +48,7 @@ func _run() -> void:
 	var dmax := float(limiting["hit_distance_m"])
 	var selected_reach := ceilf((dmax + REQUIRED_HEADROOM_M) * 10.0) / 10.0
 	_check(selected_reach <= DIAGNOSTIC_REACH_M, "derived Receiving reach stays within the 4.0 m controller bound")
-	_check(is_equal_approx(configured_reach, selected_reach), "saved wing Receiving reach matches the measured %.1f m requirement" % selected_reach)
+	_check(is_equal_approx(configured_reach, 3.4) and configured_reach >= selected_reach, "saved 3.4 m Receiving reach covers the authored installation with headroom")
 	await _replay_limiting_boundary(limiting, selected_reach)
 	_finish()
 
@@ -89,11 +89,12 @@ func _measure_case(case: Dictionary) -> Dictionary:
 	for entry in batch.entries:
 		entries_by_item[entry.item_instance_id] = entry
 	var initial_count := (presenter.call("get_materialized_world_items") as Array).size()
+	_assert_production_seating(presenter)
 	var fixture_visuals_clean := _fixture_visuals_expose_no_pickup_layer(presenter, String(case["label"]))
 
 	player.set_physics_process(false)
 	player.set_process_input(false)
-	player.set("receiving_interaction_distance", DIAGNOSTIC_REACH_M)
+	player.set("receiving_interaction_distance", configured_reach)
 	var camera := player.get_node("Camera3D") as Camera3D
 	var carried = player.get_node("CarriedItems")
 	carried.set("max_bulk", 99999)
@@ -139,6 +140,10 @@ func _measure_case(case: Dictionary) -> Dictionary:
 
 		_place_player_at_stance(player, float(candidate["stance_z"]))
 		camera.look_at(candidate["target_position"] as Vector3)
+		# Validate geometric clearance as well as the production pickup-area ray.
+		# The movement proxy must not form an invisible obstruction above the visual.
+		var clearance := PhysicsRayQueryParameters3D.create(camera.global_position, candidate["ray_hit_position"] as Vector3, 1)
+		_check(camera.get_world_3d().direct_space_state.intersect_ray(clearance).is_empty(), "%s cargo ray clears final production barrier" % String(case["label"]))
 		_check(player.call("_get_looked_at_world_item") == world_item, "%s step %d production ray resolves measured target" % [String(case["label"]), records.size() - 1])
 		player.call("_attempt_pickup_click")
 		_check(carried.get_selected_item() == item, "%s step %d TAKE transfers the measured item" % [String(case["label"]), records.size() - 1])
@@ -157,6 +162,21 @@ func _measure_case(case: Dictionary) -> Dictionary:
 		"fixture_visuals_clean": fixture_visuals_clean,
 	}
 
+
+func _assert_production_seating(presenter: Node) -> void:
+	for world_item: WorldItem in presenter.call("get_materialized_world_items") as Array[WorldItem]:
+		var host := world_item.get_parent() as Node3D
+		var surface := world_item.get_storage_surface()
+		var bottom := INF
+		for mesh: MeshInstance3D in host.find_children("*", "MeshInstance3D", true, false):
+			for index: int in range(mesh.mesh.get_surface_count()):
+				for vertex: Vector3 in mesh.mesh.surface_get_arrays(index)[Mesh.ARRAY_VERTEX]:
+					bottom = minf(bottom, (mesh.global_transform * vertex).y)
+		_check(absf(bottom - host.global_position.y - 0.006) < 0.0001, "production cargo retains 6 mm visual seating offset without inherited vertical stretch")
+		_check(bottom >= surface.global_position.y, "production cargo does not penetrate its support surface")
+		_check(surface.global_basis.get_scale().is_equal_approx(Vector3.ONE), "private metric cargo surfaces remain scale-isolated")
+		if surface.surface_id == &"MainDeck":
+			_check(is_equal_approx(surface.global_position.y, 0.82), "MainDeck cargo shares the physical platform top datum at Y 0.82")
 
 func _nearest_exposed_candidate(
 	player: CharacterBody3D,

@@ -268,7 +268,7 @@ func _assert_receiving_runtime_contract(runtime: Node3D, scene: Node, context: S
 		return
 	_check(runtime.scene_file_path == RECEIVING_RUNTIME_PATH, "%s uses the Receiving runtime scene" % context)
 	_check(runtime.get_script() != null and runtime.get_script().resource_path == RECEIVING_RUNTIME_SCRIPT_PATH, "%s runtime uses the intended script" % context)
-	_check(runtime.position.is_equal_approx(Vector3(-40.905, 0.82, 0.0)), "%s deck root shifts exactly 0.20 m rearward in world -X" % context)
+	_check(runtime.position.is_equal_approx(Vector3(-40.41487, 0.82, 0.0)) and runtime.scale.is_equal_approx(Vector3(1, 1.225, 1)), "%s preserves human-authored platform/runtime datum" % context)
 	_check((runtime.basis * Vector3.BACK).is_equal_approx(Vector3.RIGHT), "%s Receiving FRONT local +Z maps to world +X / player-barrier side" % context)
 	var manager := runtime.get_node_or_null("ReceivingManager")
 	var presenter := runtime.get_node_or_null("ReceivingDeckPresenter") as Node3D
@@ -290,7 +290,7 @@ func _assert_receiving_runtime_contract(runtime: Node3D, scene: Node, context: S
 		var storage_surface := surface as StorageSurface
 		_check(storage_surface.get_grid_size() == Vector2i(30, 20), "%s private grid remains exactly 30 × 20" % context)
 		_check(storage_surface.get_usable_size_m().is_equal_approx(Vector2(3.0, 2.0)), "%s functional usable area remains exactly 3.00 m × 2.00 m" % context)
-		_check((presenter.global_transform.affine_inverse() * storage_surface.global_transform).is_equal_approx(Transform3D.IDENTITY), "%s logical MainDeck remains centered at the profile origin" % context)
+		_check(storage_surface.global_position.is_equal_approx(presenter.global_position) and storage_surface.global_basis.is_equal_approx(presenter.global_basis.orthonormalized()), "%s logical MainDeck retains profile origin/orientation with scale-isolated metric coordinates" % context)
 		var margin := (Vector2(support.size.x, support.size.z) - storage_surface.get_usable_size_m()) * 0.5
 		_check(margin.is_equal_approx(Vector2(0.05, 0.05)), "%s support border is centered and non-reservable at 0.05 m per edge" % context)
 	for forbidden_name: String in ["ReceivingGeometryComparison", "ReceivingPhysicsPileProof", "ReceivingComparisonA", "ReceivingComparisonB", "ReceivingComparisonC"]:
@@ -958,7 +958,9 @@ func _assert_receiving_shell(environment: Node3D, context: String) -> void:
 		var path := String(baseline.get_path_to(base_shape))
 		var shape := live.get_node_or_null(NodePath(path)) as CollisionShape3D
 		var storage_proxy := path.get_slice("/", 0) == "Proxies" and PROXY_NAMES.has(path.get_slice("/", 1))
-		var expected_disabled := true if storage_proxy else base_shape.disabled
+		# Only the production lift replaces the six historical barrier shapes.
+		var obsolete_barrier := path.begins_with("Boundaries/FreightBarrier/") and environment.get_parent() != null and environment.get_parent().get_node_or_null("ReceivingLiftInstallation") != null
+		var expected_disabled := true if storage_proxy or obsolete_barrier else base_shape.disabled
 		_check(shape != null and shape.disabled == expected_disabled and shape.shape == base_shape.shape and shape.transform.is_equal_approx(base_shape.transform), "%s preserves greybox collision %s" % [context, path])
 		if shape != null:
 			var body := shape.get_parent() as StaticBody3D
