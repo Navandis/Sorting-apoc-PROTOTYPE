@@ -57,6 +57,113 @@
 [ext_resource type="PackedScene" uid="uid://2ebc73eyq8kk" path="res://assets/environment/dressing/signage/SM_sign_02.glb" id="55_v3vfn"]
 [ext_resource type="PackedScene" uid="uid://cv7vglot1faq0" path="res://assets/environment/dressing/signage/SM_FWYSignWarn_Caution_E01_N1.glb" id="56_232ub"]
 
+[ext_resource type="Script" path="res://environment_authoring/substrate/environment_substrate_piece.gd" id="shaft_1_x53na"]
+[ext_resource type="Resource" path="res://data/environment/material_catalog/approved_specs/eaf3b_d335d94fd85c2c95c26b6b8b.tres" id="shaft_2_rflhy"]
+[ext_resource type="Script" path="res://environment_authoring/substrate/environment_substrate_piece_spec.gd" id="shaft_3_4ax3c"]
+[ext_resource type="Texture2D" path="res://assets/environment/materials/kitbash_cache/eaf3b_d335d94fd85c2c95c26b6b8b/2k/basecolor.jpg" id="shaft_4_pov2y"]
+[ext_resource type="Texture2D" path="res://assets/environment/materials/kitbash_cache/eaf3b_d335d94fd85c2c95c26b6b8b/2k/ao.jpg" id="shaft_5_t1h14"]
+[ext_resource type="Texture2D" path="res://assets/environment/materials/kitbash_cache/eaf3b_d335d94fd85c2c95c26b6b8b/2k/normal.jpg" id="shaft_6_h0kxl"]
+[ext_resource type="Texture2D" path="res://assets/environment/materials/kitbash_cache/eaf3b_d335d94fd85c2c95c26b6b8b/2k/roughness.jpg" id="shaft_7_8hvsm"]
+
+[sub_resource type="Resource" id="shaft_Resource_ndtmw"]
+resource_name = "ShaftWall_Left"
+script = ExtResource("shaft_3_4ax3c")
+piece_id = "ShaftWall_Left"
+semantic_role = "LIFT_SHAFT_LINING"
+dimensions_m = Vector3(1.96693, 4.2, 0.3)
+concealed_faces = PackedStringArray()
+material_spec = ExtResource("shaft_2_rflhy")
+authoring_notes = "Provisional Dirty Concrete shaft role. Fixed cage measured world/installation bounds X -41.511680..-39.335838, Z -1.587940..1.610733. Inner gap 0.10 m, outward thickness 0.30 m; Y 0..4.2. Sides butt into through rear at X -41.611680; front ends at shutter-frame rear X -39.644750. No finish/secondary/wear/collision. Remeasure deliberately for future lift widening."
+
+[sub_resource type="StandardMaterial3D" id="shaft_StandardMaterial3D_bk2ie"]
+resource_name = "eaf3b_d335d94fd85c2c95c26b6b8b"
+albedo_texture = ExtResource("shaft_4_pov2y")
+roughness_texture = ExtResource("shaft_7_8hvsm")
+normal_enabled = true
+normal_texture = ExtResource("shaft_6_h0kxl")
+ao_enabled = true
+ao_texture = ExtResource("shaft_5_t1h14")
+uv1_scale = Vector3(0.6666667, 0.6666667, 0.6666667)
+texture_filter = 5
+
+[sub_resource type="ArrayMesh" id="shaft_ArrayMesh_lcxpf"]
+resource_name = "ShaftWall_Left"
+_surfaces = [{
+"aabb": AABB(-0.983465, -2.1, -0.15, 1.96693, 4.2, 0.3),
+"attribute_data": PackedByteArray("AAAAAAAAAABdxPs/ZmaGQF3E+z8AAAAAAAAAAAAAAAAAAAAAZmaGQF3E+z9mZoZAXcT7PwAAAAAAAAAAZmaGQAAAAAAAAAAAXcT7PwAAAABdxPs/ZmaGQAAAAABmZoZAmpmZPgAAAAAAAAAAZmaGQAAAAAAAAAAAmpmZPgAAAACamZk+ZmaGQAAAAABmZoZAAAAAAAAAAACamZk+ZmaGQJqZmT4AAAAAAAAAAAAAAAAAAAAAZmaGQJqZmT5mZoZAAAAAAJqZmT5dxPs/AAAAAF3E+z+amZk+AAAAAJqZmT4AAAAAAAAAAF3E+z8AAAAAAAAAAAAAAABdxPs/mpmZPl3E+z8AAAAAAAAAAAAAAAAAAAAAmpmZPl3E+z+amZk+"),
+"format": 34359738391,
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 36,
+"vertex_data": PackedByteArray("XcR7v2ZmBsCamRk+XcR7P2ZmBkCamRk+XcR7P2ZmBsCamRk+XcR7v2ZmBsCamRk+XcR7v2ZmBkCamRk+XcR7P2ZmBkCamRk+XcR7P2ZmBsCamRm+XcR7v2ZmBkCamRm+XcR7v2ZmBsCamRm+XcR7P2ZmBsCamRm+XcR7P2ZmBkCamRm+XcR7v2ZmBkCamRm+XcR7P2ZmBsCamRk+XcR7P2ZmBkCamRm+XcR7P2ZmBsCamRm+XcR7P2ZmBsCamRk+XcR7P2ZmBkCamRk+XcR7P2ZmBkCamRm+XcR7v2ZmBsCamRm+XcR7v2ZmBkCamRk+XcR7v2ZmBsCamRk+XcR7v2ZmBsCamRm+XcR7v2ZmBkCamRm+XcR7v2ZmBkCamRk+XcR7v2ZmBkCamRk+XcR7P2ZmBkCamRm+XcR7P2ZmBkCamRk+XcR7v2ZmBkCamRk+XcR7v2ZmBkCamRm+XcR7P2ZmBkCamRm+XcR7v2ZmBsCamRm+XcR7P2ZmBsCamRk+XcR7P2ZmBsCamRm+XcR7v2ZmBsCamRm+XcR7v2ZmBsCamRk+XcR7P2ZmBsCamRk+/3//f////z//f/9/////P/9//3////8//3//f////z//f/9/////P/9//3////8//////////7//////////v/////////+//////////7//////////v/////////+/////f/9//7////9//3//v////3//f/+/////f/9//7////9//3//v////3//f/+/AAD/f/9//z8AAP9//3//PwAA/3//f/8/AAD/f/9//z8AAP9//3//PwAA/3//f/8//3///////7//f///////v/9///////+//3///////7//f///////v/9///////+//38AAP///z//fwAA////P/9/AAD///8//38AAP///z//fwAA////P/9/AAD///8/")
+}]
+
+[sub_resource type="Resource" id="shaft_Resource_kdayc"]
+resource_name = "ShaftWall_Right"
+script = ExtResource("shaft_3_4ax3c")
+piece_id = "ShaftWall_Right"
+semantic_role = "LIFT_SHAFT_LINING"
+dimensions_m = Vector3(1.96693, 4.2, 0.3)
+concealed_faces = PackedStringArray()
+material_spec = ExtResource("shaft_2_rflhy")
+authoring_notes = "Provisional Dirty Concrete shaft role. Fixed cage measured world/installation bounds X -41.511680..-39.335838, Z -1.587940..1.610733. Inner gap 0.10 m, outward thickness 0.30 m; Y 0..4.2. Sides butt into through rear at X -41.611680; front ends at shutter-frame rear X -39.644750. No finish/secondary/wear/collision. Remeasure deliberately for future lift widening."
+
+[sub_resource type="StandardMaterial3D" id="shaft_StandardMaterial3D_v31ww"]
+resource_name = "eaf3b_d335d94fd85c2c95c26b6b8b"
+albedo_texture = ExtResource("shaft_4_pov2y")
+roughness_texture = ExtResource("shaft_7_8hvsm")
+normal_enabled = true
+normal_texture = ExtResource("shaft_6_h0kxl")
+ao_enabled = true
+ao_texture = ExtResource("shaft_5_t1h14")
+uv1_scale = Vector3(0.6666667, 0.6666667, 0.6666667)
+texture_filter = 5
+
+[sub_resource type="ArrayMesh" id="shaft_ArrayMesh_hl67m"]
+resource_name = "ShaftWall_Right"
+_surfaces = [{
+"aabb": AABB(-0.983465, -2.1, -0.15, 1.96693, 4.2, 0.3),
+"attribute_data": PackedByteArray("AAAAAAAAAABdxPs/ZmaGQF3E+z8AAAAAAAAAAAAAAAAAAAAAZmaGQF3E+z9mZoZAXcT7PwAAAAAAAAAAZmaGQAAAAAAAAAAAXcT7PwAAAABdxPs/ZmaGQAAAAABmZoZAmpmZPgAAAAAAAAAAZmaGQAAAAAAAAAAAmpmZPgAAAACamZk+ZmaGQAAAAABmZoZAAAAAAAAAAACamZk+ZmaGQJqZmT4AAAAAAAAAAAAAAAAAAAAAZmaGQJqZmT5mZoZAAAAAAJqZmT5dxPs/AAAAAF3E+z+amZk+AAAAAJqZmT4AAAAAAAAAAF3E+z8AAAAAAAAAAAAAAABdxPs/mpmZPl3E+z8AAAAAAAAAAAAAAAAAAAAAmpmZPl3E+z+amZk+"),
+"format": 34359738391,
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 36,
+"vertex_data": PackedByteArray("XcR7v2ZmBsCamRk+XcR7P2ZmBkCamRk+XcR7P2ZmBsCamRk+XcR7v2ZmBsCamRk+XcR7v2ZmBkCamRk+XcR7P2ZmBkCamRk+XcR7P2ZmBsCamRm+XcR7v2ZmBkCamRm+XcR7v2ZmBsCamRm+XcR7P2ZmBsCamRm+XcR7P2ZmBkCamRm+XcR7v2ZmBkCamRm+XcR7P2ZmBsCamRk+XcR7P2ZmBkCamRm+XcR7P2ZmBsCamRm+XcR7P2ZmBsCamRk+XcR7P2ZmBkCamRk+XcR7P2ZmBkCamRm+XcR7v2ZmBsCamRm+XcR7v2ZmBkCamRk+XcR7v2ZmBsCamRk+XcR7v2ZmBsCamRm+XcR7v2ZmBkCamRm+XcR7v2ZmBkCamRk+XcR7v2ZmBkCamRk+XcR7P2ZmBkCamRm+XcR7P2ZmBkCamRk+XcR7v2ZmBkCamRk+XcR7v2ZmBkCamRm+XcR7P2ZmBkCamRm+XcR7v2ZmBsCamRm+XcR7P2ZmBsCamRk+XcR7P2ZmBsCamRm+XcR7v2ZmBsCamRm+XcR7v2ZmBsCamRk+XcR7P2ZmBsCamRk+/3//f////z//f/9/////P/9//3////8//3//f////z//f/9/////P/9//3////8//////////7//////////v/////////+//////////7//////////v/////////+/////f/9//7////9//3//v////3//f/+/////f/9//7////9//3//v////3//f/+/AAD/f/9//z8AAP9//3//PwAA/3//f/8/AAD/f/9//z8AAP9//3//PwAA/3//f/8//3///////7//f///////v/9///////+//3///////7//f///////v/9///////+//38AAP///z//fwAA////P/9/AAD///8//38AAP///z//fwAA////P/9/AAD///8/")
+}]
+
+[sub_resource type="Resource" id="shaft_Resource_gyw6a"]
+resource_name = "ShaftWall_Rear"
+script = ExtResource("shaft_3_4ax3c")
+piece_id = "ShaftWall_Rear"
+semantic_role = "LIFT_SHAFT_LINING"
+dimensions_m = Vector3(0.3, 4.2, 3.998673)
+concealed_faces = PackedStringArray()
+material_spec = ExtResource("shaft_2_rflhy")
+authoring_notes = "Provisional Dirty Concrete shaft role. Fixed cage measured world/installation bounds X -41.511680..-39.335838, Z -1.587940..1.610733. Inner gap 0.10 m, outward thickness 0.30 m; Y 0..4.2. Sides butt into through rear at X -41.611680; front ends at shutter-frame rear X -39.644750. No finish/secondary/wear/collision. Remeasure deliberately for future lift widening."
+
+[sub_resource type="StandardMaterial3D" id="shaft_StandardMaterial3D_ub82l"]
+resource_name = "eaf3b_d335d94fd85c2c95c26b6b8b"
+albedo_texture = ExtResource("shaft_4_pov2y")
+roughness_texture = ExtResource("shaft_7_8hvsm")
+normal_enabled = true
+normal_texture = ExtResource("shaft_6_h0kxl")
+ao_enabled = true
+ao_texture = ExtResource("shaft_5_t1h14")
+uv1_scale = Vector3(0.6666667, 0.6666667, 0.6666667)
+texture_filter = 5
+
+[sub_resource type="ArrayMesh" id="shaft_ArrayMesh_pw0i7"]
+resource_name = "ShaftWall_Rear"
+_surfaces = [{
+"aabb": AABB(-0.15, -2.1, -1.9993365, 0.3, 4.2, 3.998673),
+"attribute_data": PackedByteArray("AAAAAAAAAACamZk+ZmaGQJqZmT4AAAAAAAAAAAAAAAAAAAAAZmaGQJqZmT5mZoZAmpmZPgAAAAAAAAAAZmaGQAAAAAAAAAAAmpmZPgAAAACamZk+ZmaGQAAAAABmZoZAQup/QAAAAAAAAAAAZmaGQAAAAAAAAAAAQup/QAAAAABC6n9AZmaGQAAAAABmZoZAAAAAAAAAAABC6n9AZmaGQELqf0AAAAAAAAAAAAAAAAAAAAAAZmaGQELqf0BmZoZAAAAAAELqf0CamZk+AAAAAJqZmT5C6n9AAAAAAELqf0AAAAAAAAAAAJqZmT4AAAAAAAAAAAAAAACamZk+Qup/QJqZmT4AAAAAAAAAAAAAAAAAAAAAQup/QJqZmT5C6n9A"),
+"format": 34359738391,
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 36,
+"vertex_data": PackedByteArray("mpkZvmZmBsBC6v8/mpkZPmZmBkBC6v8/mpkZPmZmBsBC6v8/mpkZvmZmBsBC6v8/mpkZvmZmBkBC6v8/mpkZPmZmBkBC6v8/mpkZPmZmBsBC6v+/mpkZvmZmBkBC6v+/mpkZvmZmBsBC6v+/mpkZPmZmBsBC6v+/mpkZPmZmBkBC6v+/mpkZvmZmBkBC6v+/mpkZPmZmBsBC6v8/mpkZPmZmBkBC6v+/mpkZPmZmBsBC6v+/mpkZPmZmBsBC6v8/mpkZPmZmBkBC6v8/mpkZPmZmBkBC6v+/mpkZvmZmBsBC6v+/mpkZvmZmBkBC6v8/mpkZvmZmBsBC6v8/mpkZvmZmBsBC6v+/mpkZvmZmBkBC6v+/mpkZvmZmBkBC6v8/mpkZvmZmBkBC6v8/mpkZPmZmBkBC6v+/mpkZPmZmBkBC6v8/mpkZvmZmBkBC6v8/mpkZvmZmBkBC6v+/mpkZPmZmBkBC6v+/mpkZvmZmBsBC6v+/mpkZPmZmBsBC6v8/mpkZPmZmBsBC6v+/mpkZvmZmBsBC6v+/mpkZvmZmBsBC6v8/mpkZPmZmBsBC6v8//3//f////z//f/9/////P/9//3////8//3//f////z//f/9/////P/9//3////8//////////7//////////v/////////+//////////7//////////v/////////+/////f/9//7////9//3//v////3//f/+/////f/9//7////9//3//v////3//f/+/AAD/f/9//z8AAP9//3//PwAA/3//f/8/AAD/f/9//z8AAP9//3//PwAA/3//f/8//3///////7//f///////v/9///////+//3///////7//f///////v/9///////+//38AAP///z//fwAA////P/9/AAD///8//38AAP///z//fwAA////P/9/AAD///8/")
+}]
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_f70e0"]
 resource_local_to_scene = true
 size = Vector3(4.04, 3, 0.82)
@@ -536,6 +643,90 @@ transform = Transform3D(0.75, 0, 0, 0, 1.05, 0, 0, 0, 0.9, -39.169, 1.85, 0.008)
 
 [node name="Open" type="Marker3D" parent="ReceivingLiftInstallation/ShutterPoseMarkers"]
 transform = Transform3D(0.75, 0, 0, 0, 1.05, 0, 0, 0, 0.9, -39.169, 4.93, 0.008)
+
+[node name="ShaftWalls" type="Node3D" parent="ReceivingLiftInstallation" unique_id=1233453375]
+metadata/purpose = "Visual lift shaft lining measured from fixed cage; Left/Right viewed from apron (+X)"
+
+[node name="ShaftWall_Left" type="Node3D" parent="ReceivingLiftInstallation/ShaftWalls" unique_id=524326850]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40.628216, 2.1, 1.860733)
+script = ExtResource("shaft_1_x53na")
+piece_spec = SubResource("shaft_Resource_ndtmw")
+metadata/eaf2_generation = {
+"authoring_notes": "Provisional Dirty Concrete shaft role. Fixed cage measured world/installation bounds X -41.511680..-39.335838, Z -1.587940..1.610733. Inner gap 0.10 m, outward thickness 0.30 m; Y 0..4.2. Sides butt into through rear at X -41.611680; front ends at shutter-frame rear X -39.644750. No finish/secondary/wear/collision. Remeasure deliberately for future lift widening.",
+"collision_policy": 0,
+"exact_parameters": {
+"bevel_width_m": 0.0,
+"dimensions_m": [1.96693, 4.2, 0.3]
+},
+"generation_revision": 1,
+"generator_revision": 2,
+"geometry_fingerprint": "ae58a5401a5a63ae07e08d498ae3de28a7133eaa20ea238eba39402567597d41",
+"material_spec": "res://data/environment/material_catalog/approved_specs/eaf3b_d335d94fd85c2c95c26b6b8b.tres",
+"piece_id": "ShaftWall_Left",
+"recipe_id": "rect_solid",
+"recipe_revision": 1,
+"semantic_role": "LIFT_SHAFT_LINING",
+"uv_origin_m": [0.0, 0.0],
+"uv_quarter_turns": 0
+}
+
+[node name="GeneratedMesh" type="MeshInstance3D" parent="ReceivingLiftInstallation/ShaftWalls/ShaftWall_Left" unique_id=2105693123]
+material_override = SubResource("shaft_StandardMaterial3D_bk2ie")
+mesh = SubResource("shaft_ArrayMesh_lcxpf")
+
+[node name="ShaftWall_Right" type="Node3D" parent="ReceivingLiftInstallation/ShaftWalls" unique_id=956986888]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40.628216, 2.1, -1.83794)
+script = ExtResource("shaft_1_x53na")
+piece_spec = SubResource("shaft_Resource_kdayc")
+metadata/eaf2_generation = {
+"authoring_notes": "Provisional Dirty Concrete shaft role. Fixed cage measured world/installation bounds X -41.511680..-39.335838, Z -1.587940..1.610733. Inner gap 0.10 m, outward thickness 0.30 m; Y 0..4.2. Sides butt into through rear at X -41.611680; front ends at shutter-frame rear X -39.644750. No finish/secondary/wear/collision. Remeasure deliberately for future lift widening.",
+"collision_policy": 0,
+"exact_parameters": {
+"bevel_width_m": 0.0,
+"dimensions_m": [1.96693, 4.2, 0.3]
+},
+"generation_revision": 1,
+"generator_revision": 2,
+"geometry_fingerprint": "ae58a5401a5a63ae07e08d498ae3de28a7133eaa20ea238eba39402567597d41",
+"material_spec": "res://data/environment/material_catalog/approved_specs/eaf3b_d335d94fd85c2c95c26b6b8b.tres",
+"piece_id": "ShaftWall_Right",
+"recipe_id": "rect_solid",
+"recipe_revision": 1,
+"semantic_role": "LIFT_SHAFT_LINING",
+"uv_origin_m": [0.0, 0.0],
+"uv_quarter_turns": 0
+}
+
+[node name="GeneratedMesh" type="MeshInstance3D" parent="ReceivingLiftInstallation/ShaftWalls/ShaftWall_Right" unique_id=1518870262]
+material_override = SubResource("shaft_StandardMaterial3D_v31ww")
+mesh = SubResource("shaft_ArrayMesh_hl67m")
+
+[node name="ShaftWall_Rear" type="Node3D" parent="ReceivingLiftInstallation/ShaftWalls" unique_id=1856959247]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41.76168, 2.1, 0.0113965)
+script = ExtResource("shaft_1_x53na")
+piece_spec = SubResource("shaft_Resource_gyw6a")
+metadata/eaf2_generation = {
+"authoring_notes": "Provisional Dirty Concrete shaft role. Fixed cage measured world/installation bounds X -41.511680..-39.335838, Z -1.587940..1.610733. Inner gap 0.10 m, outward thickness 0.30 m; Y 0..4.2. Sides butt into through rear at X -41.611680; front ends at shutter-frame rear X -39.644750. No finish/secondary/wear/collision. Remeasure deliberately for future lift widening.",
+"collision_policy": 0,
+"exact_parameters": {
+"bevel_width_m": 0.0,
+"dimensions_m": [0.3, 4.2, 3.998673]
+},
+"generation_revision": 1,
+"generator_revision": 2,
+"geometry_fingerprint": "42d0c6e0e2d7f3cc9df72e0cb9b84b031db7fd1101a36d6bda9057fb8c0769ad",
+"material_spec": "res://data/environment/material_catalog/approved_specs/eaf3b_d335d94fd85c2c95c26b6b8b.tres",
+"piece_id": "ShaftWall_Rear",
+"recipe_id": "rect_solid",
+"recipe_revision": 1,
+"semantic_role": "LIFT_SHAFT_LINING",
+"uv_origin_m": [0.0, 0.0],
+"uv_quarter_turns": 0
+}
+
+[node name="GeneratedMesh" type="MeshInstance3D" parent="ReceivingLiftInstallation/ShaftWalls/ShaftWall_Rear" unique_id=445815504]
+material_override = SubResource("shaft_StandardMaterial3D_ub82l")
+mesh = SubResource("shaft_ArrayMesh_pw0i7")
 
 [editable path="Environment"]
 [editable path="Environment/Greybox"]

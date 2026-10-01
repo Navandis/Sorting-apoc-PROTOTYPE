@@ -19,6 +19,7 @@ func run() -> void:
 	await physics_frame
 	var installation := scene.get_node_or_null("ReceivingLiftInstallation") as Node3D
 	if check(installation != null, "manual lift has scene-local ownership"):
+		assert_shaft_walls(scene, installation)
 		check(installation.transform == Transform3D.IDENTITY, "grouping introduces no transform")
 		check(installation.find_children("*", "CollisionObject3D", true, false).size() == 1, "installation has exactly one collision authority")
 		var barrier := installation.get_node("BarrierCollision") as StaticBody3D
@@ -61,3 +62,69 @@ func run() -> void:
 	scene.free()
 	print("FAIL: Receiving lift installation tests" if failed else "PASS: Receiving lift installation tests")
 	quit(1 if failed else 0)
+
+# Catches lining drifting into the measured cage, aperture, or gameplay collision.
+func assert_shaft_walls(scene: Node3D, installation: Node3D) -> void:
+	var group := installation.get_node_or_null("ShaftWalls") as Node3D
+	if not check(group != null, "shaft lining exists under fixed installation"):
+		return
+	check(group.transform == Transform3D.IDENTITY and group.owner == scene, "shaft group is scene-owned at unit identity")
+	check(group.get_child_count() == 3, "exactly three walls; front remains open")
+	check(group.find_children("*", "CollisionObject3D", true, false).is_empty() and group.find_children("*", "CollisionShape3D", true, false).is_empty(), "shaft lining adds no collision")
+	var cage := AABB()
+	var first := true
+	var sources: Array[Node] = [scene.get_node("ReceivingRuntime/ReceivingDeckPresenter/DeckVisual/SM_Platform_01")]
+	for name: String in ["SM_Fence_01", "SM_Fence_02", "SM_Fence_03", "SM_IndustrialPlatform04", "SM_WallPart_01", "SM_WallPart_02", "SM_WallPart_03"]:
+		sources.append(installation.get_node(name))
+	for source in sources:
+		var bounds := transformed_mesh_bounds(source)
+		cage = bounds if first else cage.merge(bounds)
+		first = false
+	var frame := transformed_mesh_bounds(installation.get_node("SM_KB3D_LND_PropGarageDoor_A_Frame"))
+	var wall_bounds := {}
+	for name: String in ["ShaftWall_Left", "ShaftWall_Right", "ShaftWall_Rear"]:
+		var wall := group.get_node_or_null(name) as EnvironmentSubstratePiece
+		if not check(wall != null, name + " uses EAF2 owner"):
+			continue
+		check(wall.owner == scene and wall.scale.is_equal_approx(Vector3.ONE) and wall.validate_authoring().is_empty(), name + " valid unit production authoring")
+		var spec := wall.piece_spec
+		check(spec.recipe_id == "rect_solid" and spec.collision_policy == EnvironmentSubstratePieceSpec.CollisionPolicy.NONE, name + " collisionless solid recipe")
+		check(spec.material_spec.material_id == "eaf3b_d335d94fd85c2c95c26b6b8b" and spec.material_spec.mapping_mode == 0 and is_equal_approx(spec.material_spec.meters_per_repeat, 1.5) and spec.uv_quarter_turns == 0, name + " approved Dirty Concrete default UV / physical scale")
+		var mesh := wall.get_node("GeneratedMesh") as MeshInstance3D
+		check(mesh.owner == scene and mesh.mesh != null and mesh.material_override is StandardMaterial3D, name + " saved generated mesh/material")
+		var material := mesh.material_override as StandardMaterial3D
+		check(material.albedo_texture == spec.material_spec.base_color_texture and material.uv1_scale.is_equal_approx(Vector3.ONE / 1.5) and material.cull_mode == BaseMaterial3D.CULL_BACK, name + " actual material binding and scale")
+		var bounds := transformed_mesh_bounds(wall)
+		wall_bounds[name] = bounds
+		check(not bounds.intersects(cage), name + " separated from full transformed cage bounds")
+		check(absf(bounds.position.y) < 0.001 and absf(bounds.end.y - 4.2) < 0.001, name + " joins floor/ceiling without gap")
+		check(bounds.end.x <= frame.position.x + 0.001, name + " terminates behind shutter frame")
+		var clearance: float
+		if name == "ShaftWall_Left":
+			clearance = bounds.position.z - cage.end.z
+			check(absf(bounds.size.z - 0.30) < 0.001, "left thickness extends outward")
+		elif name == "ShaftWall_Right":
+			clearance = cage.position.z - bounds.end.z
+			check(absf(bounds.size.z - 0.30) < 0.001, "right thickness extends outward")
+		else:
+			clearance = cage.position.x - bounds.end.x
+			check(absf(bounds.size.x - 0.30) < 0.001, "rear thickness extends outward")
+		check(absf(clearance - 0.10) < 0.001, name + " measured 0.10 m inner clearance")
+		print("SHAFT ", name, " bounds=", bounds, " clearance=", clearance)
+	if wall_bounds.size() == 3:
+		var rear: AABB = wall_bounds["ShaftWall_Rear"]
+		for name: String in ["ShaftWall_Left", "ShaftWall_Right"]:
+			var side: AABB = wall_bounds[name]
+			check(absf(side.position.x - rear.end.x) < 0.001 and rear.position.z <= side.position.z and rear.end.z >= side.end.z, name + " butts into through rear without overlap/gap")
+			check(not side.intersects(rear), name + " no corner mesh-volume overlap")
+
+func transformed_mesh_bounds(node: Node) -> AABB:
+	var bounds := AABB()
+	var first := true
+	for mesh: MeshInstance3D in node.find_children("*", "MeshInstance3D", true, false):
+		for surface in mesh.mesh.get_surface_count():
+			for vertex: Vector3 in mesh.mesh.surface_get_arrays(surface)[Mesh.ARRAY_VERTEX]:
+				var point := mesh.global_transform * vertex
+				bounds = AABB(point, Vector3.ZERO) if first else bounds.expand(point)
+				first = false
+	return bounds

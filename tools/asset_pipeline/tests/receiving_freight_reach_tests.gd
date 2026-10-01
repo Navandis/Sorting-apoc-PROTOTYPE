@@ -140,6 +140,11 @@ func _measure_case(case: Dictionary) -> Dictionary:
 
 		_place_player_at_stance(player, float(candidate["stance_z"]))
 		camera.look_at(candidate["target_position"] as Vector3)
+		# Visual lining must also stay clear of every successful legal TAKE ray.
+		for wall: Node3D in scene.get_node("ReceivingLiftInstallation/ShaftWalls").get_children():
+			var mesh := wall.get_node("GeneratedMesh") as MeshInstance3D
+			var bounds := mesh.global_transform * mesh.get_aabb()
+			_check(not bounds.intersects_segment(camera.global_position, candidate["ray_hit_position"] as Vector3), "%s cargo ray clears %s visual lining" % [String(case["label"]), wall.name])
 		# Validate geometric clearance as well as the production pickup-area ray.
 		# The movement proxy must not form an invisible obstruction above the visual.
 		var clearance := PhysicsRayQueryParameters3D.create(camera.global_position, candidate["ray_hit_position"] as Vector3, 1)
