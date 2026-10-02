@@ -3,6 +3,19 @@ class_name ReceivingDeckItemPose
 
 const StorageVisualPoseScript = preload("res://storage_visual_pose.gd")
 
+# The fixed SM_Platform_01 main plate is 10.392 mm below its raised edge datum.
+# Keep the authored MainDeck frame unchanged; seat its cargo on the plate.
+const MAIN_DECK_PLATE_INSET_M: float = 0.010392
+const CONTACT_EPSILON_M: float = 0.0005
+
+
+static func surface_host_y_m(surface_id: StringName) -> float:
+	var plate_inset := MAIN_DECK_PLATE_INSET_M if surface_id == &"MainDeck" else 0.0
+	# Shared pose normalization supplies 6 mm shelf clearance. Receiving cancels
+	# that clearance at its host so ordinary shelves/stack semantics stay intact.
+	return CONTACT_EPSILON_M - StorageVisualPoseScript.SHELF_CLEARANCE_M - plate_inset
+
+
 
 static func normalize_quarter_turns(value: int) -> int:
 	return ((value % 4) + 4) % 4

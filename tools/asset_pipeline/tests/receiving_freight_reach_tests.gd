@@ -177,6 +177,16 @@ func _measure_case(case: Dictionary) -> Dictionary:
 
 
 func _assert_production_seating(presenter: Node) -> void:
+	# The top datum is the raised perimeter; cargo rests on the inset main plate.
+	# Derive that support height from the real production vertices independently.
+	var plate_y := -INF
+	for mesh: MeshInstance3D in presenter.get_node("DeckVisual").find_children("*", "MeshInstance3D", true, false):
+		for index: int in range(mesh.mesh.get_surface_count()):
+			for vertex: Vector3 in mesh.mesh.surface_get_arrays(index)[Mesh.ARRAY_VERTEX]:
+				var point := mesh.global_transform * vertex
+				if point.y < (presenter as Node3D).global_position.y - 0.001:
+					plate_y = maxf(plate_y, point.y)
+	_check(is_finite(plate_y), "actual inset platform plate has measurable support")
 	for world_item: WorldItem in presenter.call("get_materialized_world_items") as Array[WorldItem]:
 		var host := world_item.get_parent() as Node3D
 		var surface := world_item.get_storage_surface()
@@ -186,10 +196,11 @@ func _assert_production_seating(presenter: Node) -> void:
 				for vertex: Vector3 in mesh.mesh.surface_get_arrays(index)[Mesh.ARRAY_VERTEX]:
 					bottom = minf(bottom, (mesh.global_transform * vertex).y)
 		_check(absf(bottom - host.global_position.y - 0.006) < 0.0001, "production cargo retains 6 mm visual seating offset without inherited vertical stretch")
-		_check(bottom >= surface.global_position.y, "production cargo does not penetrate its support surface")
+		var support_y: float = plate_y if surface.surface_id == &"MainDeck" else surface.global_position.y
+		_check(bottom >= support_y - 0.0001, "production cargo does not penetrate its actual support surface")
 		_check(surface.global_basis.get_scale().is_equal_approx(Vector3.ONE), "private metric cargo surfaces remain scale-isolated")
 		if surface.surface_id == &"MainDeck":
-			_check(is_equal_approx(surface.global_position.y, 0.82), "MainDeck cargo shares the physical platform top datum at Y 0.82")
+			_check(is_equal_approx(surface.global_position.y, 0.82), "MainDeck retains the physical platform raised-edge datum at Y 0.82")
 
 func _nearest_exposed_candidate(
 	player: CharacterBody3D,

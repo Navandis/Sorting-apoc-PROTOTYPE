@@ -5,7 +5,17 @@ class_name ReceivingDeckSurface
 ## StorageSurface stack mechanics while removing every player PUT target.
 
 const DeckSurfaceSpecScript = preload("res://receiving/receiving_deck_surface_spec.gd")
-const StorageSurfaceScript = preload("res://storage_surface.gd")
+const DeckItemPoseScript = preload("res://receiving/receiving_deck_item_pose.gd")
+
+
+# Private override is used by initial materialization AND ordinary base promotion
+# and stack compression. Generic StorageSurface keeps its shelf/debug clearance.
+class ContactStorageSurface extends StorageSurface:
+	func get_local_placement_position(origin: Vector2i, footprint: Vector2i) -> Vector3:
+		var position := super.get_local_placement_position(origin, footprint)
+		position.y = DeckItemPoseScript.surface_host_y_m(surface_id)
+		return position
+
 
 var _storage_surface: StorageSurface = null
 
@@ -52,7 +62,7 @@ func configure_private_surface(
 	var metric_frame := Transform3D(global_basis.orthonormalized(), global_position)
 	set_as_top_level(true)
 	global_transform = metric_frame
-	_storage_surface = StorageSurfaceScript.new()
+	_storage_surface = ContactStorageSurface.new()
 	_storage_surface.name = "PrivateStorageSurface"
 	_storage_surface.transform = local_transform
 	add_child(_storage_surface)

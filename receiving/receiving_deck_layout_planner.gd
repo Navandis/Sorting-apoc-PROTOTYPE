@@ -10,7 +10,9 @@ const FreightFixturePolicyScript = preload("res://receiving/receiving_freight_fi
 const StorageStackScript = preload("res://storage_stack.gd")
 
 const MAX_STACK_USED_FRACTION: float = 0.95
-const SURFACE_Y_OFFSET_M: float = 0.012
+# Preserve the accepted conservative stack capacity while changing only contact.
+# Fit decisions use the former 12 mm datum; committed/rendered hosts are seated.
+const STACK_FIT_DATUM_M: float = 0.012
 const FAILURE_INVALID_INPUT: StringName = &"invalid_layout_input"
 const FAILURE_INSUFFICIENT_CAPACITY: StringName = &"insufficient_layout_capacity"
 const FAILURE_COMMIT_REJECTED: StringName = &"layout_commit_rejected"
@@ -372,7 +374,7 @@ func _try_append_stack_on_surfaces(
 				var physical_fit: Dictionary = stack.find_manual_append(
 					candidate,
 					float(surface_state["stack_clearance_m"]) * MAX_STACK_USED_FRACTION,
-					base_position.y
+					STACK_FIT_DATUM_M
 				)
 				if not bool(physical_fit.get("valid", false)):
 					continue
@@ -380,7 +382,7 @@ func _try_append_stack_on_surfaces(
 				stack.entries.append(candidate)
 				return _placement_record(
 					surface_id, stack.surface_origin, int(orientation["quarter_turns"]),
-					stack_id, stack_index, float(physical_fit["host_y_m"]), surface_state
+					stack_id, stack_index, float(physical_fit["host_y_m"]) + base_position.y - STACK_FIT_DATUM_M, surface_state
 				)
 	return {}
 
@@ -404,7 +406,7 @@ func _try_empty_on_surfaces(
 			var group_number := int(surface_state["next_stack_number"])
 			var stack_id := "%s:stack_%04d" % [String(surface_id), group_number]
 			var host_y_m := _local_placement_position(surface_state, origin, candidate.footprint).y
-			if host_y_m + candidate.aligned_bounds.end.y > float(surface_state["stack_clearance_m"]):
+			if STACK_FIT_DATUM_M + candidate.aligned_bounds.end.y > float(surface_state["stack_clearance_m"]):
 				continue
 			_reserve(surface_state, stack_id, origin, candidate.footprint)
 			var stack: StorageStack = StorageStackScript.new()
@@ -593,7 +595,7 @@ func _local_placement_position(surface_state: Dictionary, origin: Vector2i, foot
 	var cell_size_m := float(surface_state["cell_size_m"])
 	return Vector3(
 		-usable_size.x * 0.5 + (float(origin.x) + float(footprint.x) * 0.5) * cell_size_m,
-		SURFACE_Y_OFFSET_M,
+		DeckPoseScript.surface_host_y_m(surface_state["surface_id"] as StringName),
 		-usable_size.y * 0.5 + (float(origin.y) + float(footprint.y) * 0.5) * cell_size_m
 	)
 

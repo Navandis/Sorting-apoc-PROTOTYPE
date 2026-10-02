@@ -24,8 +24,8 @@ light_color = Color(1, 0.84, 0.68, 1)
 light_energy = 1.9
 light_volumetric_fog_energy = 0.0
 shadow_enabled = true
-shadow_bias = 0.025
-shadow_normal_bias = 0.25
+shadow_bias = 0.05
+shadow_normal_bias = 0.5
 spot_range = 6.2
 spot_angle = 55.0
 
