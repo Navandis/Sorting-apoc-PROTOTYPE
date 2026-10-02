@@ -1,0 +1,27 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/environment/infrastructure/lighting/SM_Lamp_long_T_Lamp_long_BC.png" id="1_rsq8v"]
+[ext_resource type="Texture2D" path="res://assets/environment/infrastructure/lighting/SM_Lamp_long_T_Lamp_long_ORM.png" id="2_sfy67"]
+[ext_resource type="Texture2D" path="res://assets/environment/infrastructure/lighting/SM_Lamp_long_MI_Lamp_long_Emissive.png" id="3_cf7ho"]
+[ext_resource type="Texture2D" path="res://assets/environment/infrastructure/lighting/SM_Lamp_long_T_Lamp_long_N.png" id="4_e4ctb"]
+
+[resource]
+resource_local_to_scene = true
+resource_name = "Receiving task_strip"
+cull_mode = 2
+albedo_texture = ExtResource("1_rsq8v")
+metallic = 1.0
+metallic_texture = ExtResource("2_sfy67")
+metallic_texture_channel = 2
+roughness_texture = ExtResource("2_sfy67")
+roughness_texture_channel = 1
+emission_enabled = true
+emission = Color(1, 0.94, 0.82, 1)
+emission_energy_multiplier = 0.6
+emission_operator = 1
+emission_texture = ExtResource("3_cf7ho")
+normal_enabled = true
+normal_texture = ExtResource("4_e4ctb")
+ao_enabled = true
+ao_texture = ExtResource("2_sfy67")
+metadata/_gltf_primary_texture_coord = 0

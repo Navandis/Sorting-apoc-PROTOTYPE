@@ -1,16 +1,18 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene load_steps=10 format=3]
 
 [ext_resource type="Script" path="res://gameplay/logistics_wing/wing_environment.gd" id="1_environment"]
 [ext_resource type="PackedScene" path="res://greybox/logistics_wing/wing_geometry.tscn" id="2_geometry"]
 
 [ext_resource type="PackedScene" path="res://gameplay/logistics_wing/receiving/receiving_structural_shell.tscn" id="3_receiving_shell"]
 
+[ext_resource type="PackedScene" path="res://gameplay/logistics_wing/receiving/receiving_lighting.tscn" id="4_receiving_lighting"]
+
 [sub_resource type="Environment" id="Environment_gameplay"]
 background_mode = 1
 background_color = Color(0.055, 0.06, 0.065, 1)
 ambient_light_source = 3
 ambient_light_color = Color(0.78, 0.81, 0.84, 1)
-ambient_light_energy = 0.7
+ambient_light_energy = 0.12
 reflected_light_source = 2
 tonemap_mode = 2
 
@@ -96,6 +98,8 @@ mesh = SubResource("BoxMesh_dispatch_west_butt")
 [node name="ReceivingStructuralShell" parent="." instance=ExtResource("3_receiving_shell")]
 position = Vector3(-39, 0, 0)
 
+[node name="ReceivingLighting" parent="." instance=ExtResource("4_receiving_lighting")]
+
 [node name="GameplayEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_gameplay")
 
@@ -109,6 +113,7 @@ directional_shadow_max_distance = 140.0
 [node name="FillLights" type="Node3D" parent="."]
 
 [node name="West" type="OmniLight3D" parent="FillLights"]
+visible = false
 position = Vector3(-33, 2.7, 0)
 light_color = Color(1, 0.92, 0.8, 1)
 light_energy = 2.2
@@ -116,6 +121,7 @@ omni_range = 22.0
 shadow_enabled = true
 
 [node name="Sorting" type="OmniLight3D" parent="FillLights"]
+visible = false
 position = Vector3(-10, 2.7, -1)
 light_color = Color(0.94, 0.97, 1, 1)
 light_energy = 2.0

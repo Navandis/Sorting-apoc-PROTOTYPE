@@ -1,0 +1,127 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="PackedScene" path="res://assets/environment/infrastructure/lighting/SM_Ind_War_Light_Ceiling_Metal_Hanging_02.glb" id="1"]
+[ext_resource type="PackedScene" path="res://assets/environment/infrastructure/lighting/SM_Lamp_long.glb" id="2"]
+[ext_resource type="PackedScene" path="res://assets/environment/infrastructure/lighting/SM_AlarmLight.glb" id="3"]
+[ext_resource type="Material" path="res://gameplay/logistics_wing/receiving/lighting/task_strip.tres" id="4"]
+[ext_resource type="Material" path="res://gameplay/logistics_wing/receiving/lighting/warning_body.tres" id="5"]
+[ext_resource type="Material" path="res://gameplay/logistics_wing/receiving/lighting/warning_lens.tres" id="6"]
+
+[node name="ReceivingLighting" type="Node3D"]
+
+[node name="GeneralFixtures" type="Node3D" parent="."]
+
+[node name="G1" type="Node3D" parent="GeneralFixtures"]
+
+[node name="Fixture" parent="GeneralFixtures/G1" instance=ExtResource("1")]
+position = Vector3(-36.9, 4.137, -1.6)
+scale = Vector3(1.65, 1.65, 1.65)
+
+[node name="Light" type="SpotLight3D" parent="GeneralFixtures/G1"]
+position = Vector3(-36.9, 3.675, -1.6)
+rotation = Vector3(-1.570796327, 0, 0)
+light_color = Color(1, 0.84, 0.68, 1)
+light_energy = 1.9
+light_volumetric_fog_energy = 0.0
+shadow_enabled = true
+shadow_bias = 0.025
+shadow_normal_bias = 0.25
+spot_range = 6.2
+spot_angle = 55.0
+
+[node name="G2" type="Node3D" parent="GeneralFixtures"]
+
+[node name="Fixture" parent="GeneralFixtures/G2" instance=ExtResource("1")]
+position = Vector3(-33.25, 4.137, 2.4)
+scale = Vector3(1.65, 1.65, 1.65)
+
+[node name="Light" type="SpotLight3D" parent="GeneralFixtures/G2"]
+position = Vector3(-33.25, 3.675, 2.4)
+rotation = Vector3(-1.570796327, 0, 0)
+light_color = Color(1, 0.84, 0.68, 1)
+light_energy = 1.9
+light_volumetric_fog_energy = 0.0
+shadow_enabled = true
+shadow_bias = 0.025
+shadow_normal_bias = 0.25
+spot_range = 6.2
+spot_angle = 55.0
+
+[node name="G3" type="Node3D" parent="GeneralFixtures"]
+
+[node name="Fixture" parent="GeneralFixtures/G3" instance=ExtResource("1")]
+position = Vector3(-30.4, 4.137, -1)
+scale = Vector3(1.65, 1.65, 1.65)
+
+[node name="Light" type="SpotLight3D" parent="GeneralFixtures/G3"]
+position = Vector3(-30.4, 3.675, -1)
+rotation = Vector3(-1.570796327, 0, 0)
+light_color = Color(1, 0.84, 0.68, 1)
+light_energy = 1.9
+light_volumetric_fog_energy = 0.0
+shadow_enabled = true
+shadow_bias = 0.025
+shadow_normal_bias = 0.25
+spot_range = 6.2
+spot_angle = 55.0
+
+[node name="TaskFixtures" type="Node3D" parent="."]
+
+[node name="T1" type="Node3D" parent="TaskFixtures"]
+
+[node name="Fixture" parent="TaskFixtures/T1" instance=ExtResource("2")]
+position = Vector3(-40.4, 3.1, -0.8)
+scale = Vector3(0.65, 0.65, 0.65)
+
+[node name="Mesh" parent="TaskFixtures/T1/Fixture" index="0"]
+surface_material_override/0 = ExtResource("4")
+
+[node name="Light" type="SpotLight3D" parent="TaskFixtures/T1"]
+position = Vector3(-40.4, 2.9, -0.8)
+rotation = Vector3(-1.254698339, -3.112189365, 0)
+light_color = Color(1, 0.94, 0.82, 1)
+light_energy = 0.85
+light_volumetric_fog_energy = 0.0
+shadow_enabled = true
+shadow_bias = 0.025
+shadow_normal_bias = 0.25
+spot_range = 3.2
+spot_angle = 52.0
+
+[node name="T2" type="Node3D" parent="TaskFixtures"]
+
+[node name="Fixture" parent="TaskFixtures/T2" instance=ExtResource("2")]
+position = Vector3(-40.4, 3.1, 0.8)
+scale = Vector3(0.65, 0.65, 0.65)
+
+[node name="Mesh" parent="TaskFixtures/T2/Fixture" index="0"]
+surface_material_override/0 = ExtResource("4")
+
+[node name="Light" type="SpotLight3D" parent="TaskFixtures/T2"]
+position = Vector3(-40.4, 2.9, 0.8)
+rotation = Vector3(-1.254698339, -0.0294032882, 0)
+light_color = Color(1, 0.94, 0.82, 1)
+light_energy = 0.85
+light_volumetric_fog_energy = 0.0
+shadow_enabled = true
+shadow_bias = 0.025
+shadow_normal_bias = 0.25
+spot_range = 3.2
+spot_angle = 52.0
+
+[node name="WarningFixtures" type="Node3D" parent="."]
+
+[node name="W1" type="Node3D" parent="WarningFixtures"]
+
+[node name="Fixture" parent="WarningFixtures/W1" instance=ExtResource("3")]
+position = Vector3(-38.83, 2.85, 2.2)
+
+[node name="Mesh" parent="WarningFixtures/W1/Fixture" index="0"]
+surface_material_override/0 = ExtResource("5")
+surface_material_override/1 = ExtResource("6")
+
+[editable path="TaskFixtures/T1/Fixture"]
+
+[editable path="TaskFixtures/T2/Fixture"]
+
+[editable path="WarningFixtures/W1/Fixture"]
