@@ -57,12 +57,12 @@
 [ext_resource type="PackedScene" uid="uid://2ebc73eyq8kk" path="res://assets/environment/dressing/signage/SM_sign_02.glb" id="55_v3vfn"]
 [ext_resource type="PackedScene" uid="uid://cv7vglot1faq0" path="res://assets/environment/dressing/signage/SM_FWYSignWarn_Caution_E01_N1.glb" id="56_232ub"]
 [ext_resource type="Script" uid="uid://be6gucor1ya72" path="res://environment_authoring/substrate/environment_substrate_piece.gd" id="shaft_1_x53na"]
-[ext_resource type="Resource" path="res://data/environment/material_catalog/approved_specs/eaf3b_d335d94fd85c2c95c26b6b8b.tres" id="shaft_2_rflhy"]
+[ext_resource type="Resource" path="res://data/environment/material_catalog/approved_specs/eaf3b_1beac3a311a480af8844ea89.tres" id="shaft_2_rflhy"]
 [ext_resource type="Script" uid="uid://dym5xpqw4qae4" path="res://environment_authoring/substrate/environment_substrate_piece_spec.gd" id="shaft_3_4ax3c"]
-[ext_resource type="Texture2D" uid="uid://j70ftssko1ma" path="res://assets/environment/materials/kitbash_cache/eaf3b_d335d94fd85c2c95c26b6b8b/2k/basecolor.jpg" id="shaft_4_pov2y"]
-[ext_resource type="Texture2D" uid="uid://da04cnf4m1833" path="res://assets/environment/materials/kitbash_cache/eaf3b_d335d94fd85c2c95c26b6b8b/2k/ao.jpg" id="shaft_5_t1h14"]
-[ext_resource type="Texture2D" uid="uid://dxwu33odjijit" path="res://assets/environment/materials/kitbash_cache/eaf3b_d335d94fd85c2c95c26b6b8b/2k/normal.jpg" id="shaft_6_h0kxl"]
-[ext_resource type="Texture2D" uid="uid://wb26cc415m13" path="res://assets/environment/materials/kitbash_cache/eaf3b_d335d94fd85c2c95c26b6b8b/2k/roughness.jpg" id="shaft_7_8hvsm"]
+[ext_resource type="Texture2D" uid="uid://ddwe2tnog7wcr" path="res://assets/environment/materials/kitbash_cache/eaf3b_1beac3a311a480af8844ea89/2k/basecolor.png" id="shaft_4_pov2y"]
+[ext_resource type="Texture2D" uid="uid://celna86twtvq7" path="res://assets/environment/materials/kitbash_cache/eaf3b_1beac3a311a480af8844ea89/2k/metallic.png" id="shaft_5_t1h14"]
+[ext_resource type="Texture2D" uid="uid://dmerwhc48dlm0" path="res://assets/environment/materials/kitbash_cache/eaf3b_1beac3a311a480af8844ea89/2k/normal.png" id="shaft_6_h0kxl"]
+[ext_resource type="Texture2D" uid="uid://buvwu7wptxnjv" path="res://assets/environment/materials/kitbash_cache/eaf3b_1beac3a311a480af8844ea89/2k/roughness.png" id="shaft_7_8hvsm"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_gic0c"]
 resource_local_to_scene = true
@@ -79,17 +79,17 @@ semantic_role = "LIFT_SHAFT_LINING"
 dimensions_m = Vector3(1.96693, 4.2, 0.3)
 concealed_faces = PackedStringArray()
 material_spec = ExtResource("shaft_2_rflhy")
-authoring_notes = "Provisional Dirty Concrete shaft role. Fixed cage measured world/installation bounds X -41.511680..-39.335838, Z -1.587940..1.610733. Inner gap 0.10 m, outward thickness 0.30 m; Y 0..4.2. Sides butt into through rear at X -41.611680; front ends at shutter-frame rear X -39.644750. No finish/secondary/wear/collision. Remeasure deliberately for future lift widening."
+authoring_notes = "Human-selected Reinforced Concrete Slabs shaft role. Fixed cage measured world/installation bounds X -41.511680..-39.335838, Z -1.587940..1.610733. Inner gap 0.10 m, outward thickness 0.30 m; Y 0..4.2. Sides butt into through rear at X -41.611680; front ends at shutter-frame rear X -39.644750. No finish/secondary/wear/collision. Remeasure deliberately for future lift widening."
 
 [sub_resource type="StandardMaterial3D" id="shaft_StandardMaterial3D_bk2ie"]
-resource_name = "eaf3b_d335d94fd85c2c95c26b6b8b"
+resource_name = "eaf3b_1beac3a311a480af8844ea89"
 albedo_texture = ExtResource("shaft_4_pov2y")
 roughness_texture = ExtResource("shaft_7_8hvsm")
 normal_enabled = true
 normal_texture = ExtResource("shaft_6_h0kxl")
-ao_enabled = true
-ao_texture = ExtResource("shaft_5_t1h14")
-uv1_scale = Vector3(0.6666667, 0.6666667, 0.6666667)
+metallic = 1.0
+metallic_texture = ExtResource("shaft_5_t1h14")
+uv1_scale = Vector3(0.33333334, 0.33333334, 0.33333334)
 texture_filter = 5
 
 [sub_resource type="ArrayMesh" id="shaft_ArrayMesh_lcxpf"]
@@ -112,17 +112,17 @@ semantic_role = "LIFT_SHAFT_LINING"
 dimensions_m = Vector3(1.96693, 4.2, 0.3)
 concealed_faces = PackedStringArray()
 material_spec = ExtResource("shaft_2_rflhy")
-authoring_notes = "Provisional Dirty Concrete shaft role. Fixed cage measured world/installation bounds X -41.511680..-39.335838, Z -1.587940..1.610733. Inner gap 0.10 m, outward thickness 0.30 m; Y 0..4.2. Sides butt into through rear at X -41.611680; front ends at shutter-frame rear X -39.644750. No finish/secondary/wear/collision. Remeasure deliberately for future lift widening."
+authoring_notes = "Human-selected Reinforced Concrete Slabs shaft role. Fixed cage measured world/installation bounds X -41.511680..-39.335838, Z -1.587940..1.610733. Inner gap 0.10 m, outward thickness 0.30 m; Y 0..4.2. Sides butt into through rear at X -41.611680; front ends at shutter-frame rear X -39.644750. No finish/secondary/wear/collision. Remeasure deliberately for future lift widening."
 
 [sub_resource type="StandardMaterial3D" id="shaft_StandardMaterial3D_v31ww"]
-resource_name = "eaf3b_d335d94fd85c2c95c26b6b8b"
+resource_name = "eaf3b_1beac3a311a480af8844ea89"
 albedo_texture = ExtResource("shaft_4_pov2y")
 roughness_texture = ExtResource("shaft_7_8hvsm")
 normal_enabled = true
 normal_texture = ExtResource("shaft_6_h0kxl")
-ao_enabled = true
-ao_texture = ExtResource("shaft_5_t1h14")
-uv1_scale = Vector3(0.6666667, 0.6666667, 0.6666667)
+metallic = 1.0
+metallic_texture = ExtResource("shaft_5_t1h14")
+uv1_scale = Vector3(0.33333334, 0.33333334, 0.33333334)
 texture_filter = 5
 
 [sub_resource type="ArrayMesh" id="shaft_ArrayMesh_hl67m"]
@@ -145,17 +145,17 @@ semantic_role = "LIFT_SHAFT_LINING"
 dimensions_m = Vector3(0.3, 4.2, 3.998673)
 concealed_faces = PackedStringArray()
 material_spec = ExtResource("shaft_2_rflhy")
-authoring_notes = "Provisional Dirty Concrete shaft role. Fixed cage measured world/installation bounds X -41.511680..-39.335838, Z -1.587940..1.610733. Inner gap 0.10 m, outward thickness 0.30 m; Y 0..4.2. Sides butt into through rear at X -41.611680; front ends at shutter-frame rear X -39.644750. No finish/secondary/wear/collision. Remeasure deliberately for future lift widening."
+authoring_notes = "Human-selected Reinforced Concrete Slabs shaft role. Fixed cage measured world/installation bounds X -41.511680..-39.335838, Z -1.587940..1.610733. Inner gap 0.10 m, outward thickness 0.30 m; Y 0..4.2. Sides butt into through rear at X -41.611680; front ends at shutter-frame rear X -39.644750. No finish/secondary/wear/collision. Remeasure deliberately for future lift widening."
 
 [sub_resource type="StandardMaterial3D" id="shaft_StandardMaterial3D_ub82l"]
-resource_name = "eaf3b_d335d94fd85c2c95c26b6b8b"
+resource_name = "eaf3b_1beac3a311a480af8844ea89"
 albedo_texture = ExtResource("shaft_4_pov2y")
 roughness_texture = ExtResource("shaft_7_8hvsm")
 normal_enabled = true
 normal_texture = ExtResource("shaft_6_h0kxl")
-ao_enabled = true
-ao_texture = ExtResource("shaft_5_t1h14")
-uv1_scale = Vector3(0.6666667, 0.6666667, 0.6666667)
+metallic = 1.0
+metallic_texture = ExtResource("shaft_5_t1h14")
+uv1_scale = Vector3(0.33333334, 0.33333334, 0.33333334)
 texture_filter = 5
 
 [sub_resource type="ArrayMesh" id="shaft_ArrayMesh_pw0i7"]
@@ -685,7 +685,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40.628216, 2.1, 1.860733)
 script = ExtResource("shaft_1_x53na")
 piece_spec = SubResource("shaft_Resource_ndtmw")
 metadata/eaf2_generation = {
-"authoring_notes": "Provisional Dirty Concrete shaft role. Fixed cage measured world/installation bounds X -41.511680..-39.335838, Z -1.587940..1.610733. Inner gap 0.10 m, outward thickness 0.30 m; Y 0..4.2. Sides butt into through rear at X -41.611680; front ends at shutter-frame rear X -39.644750. No finish/secondary/wear/collision. Remeasure deliberately for future lift widening.",
+"authoring_notes": "Human-selected Reinforced Concrete Slabs shaft role. Fixed cage measured world/installation bounds X -41.511680..-39.335838, Z -1.587940..1.610733. Inner gap 0.10 m, outward thickness 0.30 m; Y 0..4.2. Sides butt into through rear at X -41.611680; front ends at shutter-frame rear X -39.644750. No finish/secondary/wear/collision. Remeasure deliberately for future lift widening.",
 "collision_policy": 0,
 "exact_parameters": {
 "bevel_width_m": 0.0,
@@ -694,7 +694,7 @@ metadata/eaf2_generation = {
 "generation_revision": 1,
 "generator_revision": 2,
 "geometry_fingerprint": "ae58a5401a5a63ae07e08d498ae3de28a7133eaa20ea238eba39402567597d41",
-"material_spec": "res://data/environment/material_catalog/approved_specs/eaf3b_d335d94fd85c2c95c26b6b8b.tres",
+"material_spec": "res://data/environment/material_catalog/approved_specs/eaf3b_1beac3a311a480af8844ea89.tres",
 "piece_id": "ShaftWall_Left",
 "recipe_id": "rect_solid",
 "recipe_revision": 1,
@@ -713,7 +713,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40.628216, 2.1, -1.83794)
 script = ExtResource("shaft_1_x53na")
 piece_spec = SubResource("shaft_Resource_kdayc")
 metadata/eaf2_generation = {
-"authoring_notes": "Provisional Dirty Concrete shaft role. Fixed cage measured world/installation bounds X -41.511680..-39.335838, Z -1.587940..1.610733. Inner gap 0.10 m, outward thickness 0.30 m; Y 0..4.2. Sides butt into through rear at X -41.611680; front ends at shutter-frame rear X -39.644750. No finish/secondary/wear/collision. Remeasure deliberately for future lift widening.",
+"authoring_notes": "Human-selected Reinforced Concrete Slabs shaft role. Fixed cage measured world/installation bounds X -41.511680..-39.335838, Z -1.587940..1.610733. Inner gap 0.10 m, outward thickness 0.30 m; Y 0..4.2. Sides butt into through rear at X -41.611680; front ends at shutter-frame rear X -39.644750. No finish/secondary/wear/collision. Remeasure deliberately for future lift widening.",
 "collision_policy": 0,
 "exact_parameters": {
 "bevel_width_m": 0.0,
@@ -722,7 +722,7 @@ metadata/eaf2_generation = {
 "generation_revision": 1,
 "generator_revision": 2,
 "geometry_fingerprint": "ae58a5401a5a63ae07e08d498ae3de28a7133eaa20ea238eba39402567597d41",
-"material_spec": "res://data/environment/material_catalog/approved_specs/eaf3b_d335d94fd85c2c95c26b6b8b.tres",
+"material_spec": "res://data/environment/material_catalog/approved_specs/eaf3b_1beac3a311a480af8844ea89.tres",
 "piece_id": "ShaftWall_Right",
 "recipe_id": "rect_solid",
 "recipe_revision": 1,
@@ -741,7 +741,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41.76168, 2.1, 0.0113965)
 script = ExtResource("shaft_1_x53na")
 piece_spec = SubResource("shaft_Resource_gyw6a")
 metadata/eaf2_generation = {
-"authoring_notes": "Provisional Dirty Concrete shaft role. Fixed cage measured world/installation bounds X -41.511680..-39.335838, Z -1.587940..1.610733. Inner gap 0.10 m, outward thickness 0.30 m; Y 0..4.2. Sides butt into through rear at X -41.611680; front ends at shutter-frame rear X -39.644750. No finish/secondary/wear/collision. Remeasure deliberately for future lift widening.",
+"authoring_notes": "Human-selected Reinforced Concrete Slabs shaft role. Fixed cage measured world/installation bounds X -41.511680..-39.335838, Z -1.587940..1.610733. Inner gap 0.10 m, outward thickness 0.30 m; Y 0..4.2. Sides butt into through rear at X -41.611680; front ends at shutter-frame rear X -39.644750. No finish/secondary/wear/collision. Remeasure deliberately for future lift widening.",
 "collision_policy": 0,
 "exact_parameters": {
 "bevel_width_m": 0.0,
@@ -750,7 +750,7 @@ metadata/eaf2_generation = {
 "generation_revision": 1,
 "generator_revision": 2,
 "geometry_fingerprint": "42d0c6e0e2d7f3cc9df72e0cb9b84b031db7fd1101a36d6bda9057fb8c0769ad",
-"material_spec": "res://data/environment/material_catalog/approved_specs/eaf3b_d335d94fd85c2c95c26b6b8b.tres",
+"material_spec": "res://data/environment/material_catalog/approved_specs/eaf3b_1beac3a311a480af8844ea89.tres",
 "piece_id": "ShaftWall_Rear",
 "recipe_id": "rect_solid",
 "recipe_revision": 1,

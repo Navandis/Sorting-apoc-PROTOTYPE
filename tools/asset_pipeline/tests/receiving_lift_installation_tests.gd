@@ -94,11 +94,14 @@ func assert_shaft_walls(scene: Node3D, installation: Node3D) -> void:
 		check(wall.owner == scene and wall.scale.is_equal_approx(Vector3.ONE) and wall.validate_authoring().is_empty(), name + " valid unit production authoring")
 		var spec := wall.piece_spec
 		check(spec.recipe_id == "rect_solid" and spec.collision_policy == EnvironmentSubstratePieceSpec.CollisionPolicy.NONE, name + " collisionless solid recipe")
-		check(spec.material_spec.material_id == "eaf3b_d335d94fd85c2c95c26b6b8b" and spec.material_spec.mapping_mode == 0 and is_equal_approx(spec.material_spec.meters_per_repeat, 1.5) and spec.uv_quarter_turns == 0, name + " approved Dirty Concrete default UV / physical scale")
+		check(spec.material_spec.material_id == "eaf3b_1beac3a311a480af8844ea89" and spec.material_spec.mapping_mode == 0 and is_equal_approx(spec.material_spec.meters_per_repeat, 3.0) and spec.uv_quarter_turns == 0, name + " selected Reinforced Concrete Slabs default UV / physical scale")
 		var mesh := wall.get_node("GeneratedMesh") as MeshInstance3D
 		check(mesh.owner == scene and mesh.mesh != null and mesh.material_override is StandardMaterial3D, name + " saved generated mesh/material")
 		var material := mesh.material_override as StandardMaterial3D
-		check(material.albedo_texture == spec.material_spec.base_color_texture and material.uv1_scale.is_equal_approx(Vector3.ONE / 1.5) and material.cull_mode == BaseMaterial3D.CULL_BACK, name + " actual material binding and scale")
+		check(material.albedo_texture == spec.material_spec.base_color_texture and material.uv1_scale.is_equal_approx(Vector3.ONE / 3.0) and material.cull_mode == BaseMaterial3D.CULL_BACK, name + " actual material binding and scale")
+		check(is_equal_approx(spec.material_spec.normal_strength, 1.0) and is_equal_approx(material.normal_scale, 1.0) and material.normal_texture == spec.material_spec.normal_texture and material.roughness_texture == spec.material_spec.roughness_texture and material.metallic_texture == spec.material_spec.metallic_texture, name + " approved normal/roughness/metallic binding")
+		check(is_equal_approx(material.roughness, spec.material_spec.roughness_multiplier) and is_equal_approx(material.metallic, spec.material_spec.metallic_multiplier) and material.albedo_color.is_equal_approx(Color(spec.material_spec.albedo_multiplier, spec.material_spec.albedo_multiplier, spec.material_spec.albedo_multiplier)), name + " approved material multipliers")
+		check(not material.uv1_triplanar and not material.uv1_world_triplanar and not material.ao_enabled and not material.heightmap_enabled and mesh.material_overlay == null and mesh.get_child_count() == 0, name + " UV mapping with no finish/secondary/wear")
 		var bounds := transformed_mesh_bounds(wall)
 		wall_bounds[name] = bounds
 		check(not bounds.intersects(cage), name + " separated from full transformed cage bounds")
