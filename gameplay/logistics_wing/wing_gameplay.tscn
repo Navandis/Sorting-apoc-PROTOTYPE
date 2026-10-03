@@ -67,7 +67,7 @@
 [ext_resource type="Texture2D" uid="uid://dmerwhc48dlm0" path="res://assets/environment/materials/kitbash_cache/eaf3b_1beac3a311a480af8844ea89/2k/normal.png" id="shaft_6_h0kxl"]
 [ext_resource type="Texture2D" uid="uid://buvwu7wptxnjv" path="res://assets/environment/materials/kitbash_cache/eaf3b_1beac3a311a480af8844ea89/2k/roughness.png" id="shaft_7_8hvsm"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_fmv76"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_p6c26"]
 resource_local_to_scene = true
 size = Vector3(4.04, 3, 0.82)
 
@@ -288,7 +288,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.4, 0)
 
 [node name="Shape" parent="FunctionalFixtures/ModularRack_GalleryB_Initial/MovementCollision" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
-shape = SubResource("BoxShape3D_fmv76")
+shape = SubResource("BoxShape3D_p6c26")
 
 [node name="FixedLadder_GalleryB_Initial" parent="FunctionalFixtures" unique_id=806369216 instance=ExtResource("42_ladder")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 1.043639, 0, -8.665108)
@@ -654,7 +654,7 @@ transform = Transform3D(-0.505, 0, -6.719313e-08, 0, 0.45, 0, 7.625288e-08, 0, -
 transform = Transform3D(-1.3769088e-07, 0, -0.5, 0, 1, 0, 3.15, 0, -2.1855694e-08, -38.997356, 0.08457935, -0.0021447986)
 
 [node name="SM_MetalBeam15" parent="ReceivingLiftInstallation" unique_id=1131570668 instance=ExtResource("54_qssrt")]
-transform = Transform3D(-4.371139e-08, 1, -4.371139e-08, 0, -4.371139e-08, -1, -1, -4.371139e-08, 1.9106855e-15, -39.237198, 3.9677286, 2.4172034)
+transform = Transform3D(-4.371139e-08, 1, -4.371139e-08, 0, -4.371139e-08, -1, -1, -4.371139e-08, 1.9106855e-15, -39.237, 3.968, 8.467)
 
 [node name="SM_sign_02" parent="ReceivingLiftInstallation" unique_id=1942064760 instance=ExtResource("55_v3vfn")]
 transform = Transform3D(1.090432e-08, 7.858323e-08, 1, 1.7977747, -0.24946177, 0, 0.24946177, 1.7977747, -4.371139e-08, -38.971012, 0.80947685, 0.05105634)
