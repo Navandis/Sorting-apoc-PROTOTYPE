@@ -114,9 +114,9 @@ func _create_materials() -> void:
 
 func _build_floor_and_ceiling_plan() -> void:
 	# Western logistics core.
-	_floor_zone("Receiving", "ReceivingApron", -39.0, -28.5, -5.0, 5.0, RECEIVING_HEIGHT, "floor_core")
-	_floor_zone("Receiving", "FreightEnclosure", -44.0, -39.0, -3.5, 3.5, RECEIVING_HEIGHT, "floor_core")
-	_floor_zone("Receiving", "DispatchAnnex", -38.0, -28.5, -8.5, -5.0, RECEIVING_HEIGHT, "floor_core")
+	_floor_zone("Receiving", "ReceivingApron", -36.0, -28.5, -4.0, 4.0, RECEIVING_HEIGHT, "floor_core")
+	_floor_zone("Receiving", "FreightEnclosure", -41.0, -36.0, -3.5, 3.5, RECEIVING_HEIGHT, "floor_core")
+	_floor_zone("Receiving", "DispatchAnnex", -35.0, -28.5, -7.5, -4.0, RECEIVING_HEIGHT, "floor_core")
 	_floor_zone_with_ceiling_west("Backlog", "BacklogPassage", -28.5, -15.0, -28.35, -3.8, 3.8, CLEAR_HEIGHT, "floor_core")
 	_floor_zone("Sorting", "SortingPassage", -15.0, -5.0, -5.0, 5.0, CLEAR_HEIGHT, "floor_core")
 	_floor_zone("Sorting", "SortingPocket", -14.0, -6.0, -7.2, -5.0, CLEAR_HEIGHT, "floor_core")
@@ -166,21 +166,21 @@ func _build_floor_and_ceiling_plan() -> void:
 
 func _build_structural_walls() -> void:
 	var receiving := _district("Receiving")
-	_wall_z(receiving, "ReceivingWestNorthReturn", -39.0, -5.0, -2.5, RECEIVING_HEIGHT)
-	_wall_z(receiving, "ReceivingWestSouthReturn", -39.0, 2.5, 5.0, RECEIVING_HEIGHT)
-	_wall_x_joined(receiving, "ReceivingSouth", -39.0, -28.5, 5.0, RECEIVING_HEIGHT)
-	_wall_x_joined(receiving, "ReceivingNorthWest", -39.0, -38.0, -5.0, RECEIVING_HEIGHT, true, false)
-	_wall_z(receiving, "ReceivingEastNorth", -28.5, -5.0, -1.92, RECEIVING_HEIGHT)
-	_wall_z(receiving, "ReceivingEastSouth", -28.5, 1.92, 5.0, RECEIVING_HEIGHT)
-	_wall_x_joined(receiving, "FreightNorth", -44.0, -39.0, -3.5, RECEIVING_HEIGHT, true, false)
-	_wall_x_joined(receiving, "FreightSouth", -44.0, -39.0, 3.5, RECEIVING_HEIGHT, true, false)
-	_wall_z(receiving, "FreightRear", -44.0, -3.5, 3.5, RECEIVING_HEIGHT)
-	_wall_z_joined(receiving, "DispatchWest", -38.0, -8.5, -5.0, RECEIVING_HEIGHT)
-	_wall_x_joined(receiving, "DispatchNorth", -38.0, -28.5, -8.5, RECEIVING_HEIGHT)
-	_wall_z_joined(receiving, "DispatchEast", -28.5, -8.5, -5.0, RECEIVING_HEIGHT, true, false)
-	_wall_x(receiving, "DispatchSouthWest", -38.0, -34.2, -5.0, RECEIVING_HEIGHT)
-	_wall_x_joined(receiving, "DispatchSouthEast", -31.8, -28.5, -5.0, RECEIVING_HEIGHT, false, true)
-	_box(receiving, "ReceivingCeilingTransition", Vector3(-28.5, 3.8, 0.0), Vector3(WALL_THICKNESS, 0.8, 3.84), _materials["wall"])
+	_wall_z(receiving, "ReceivingWestNorthReturn", -36.0, -4.0, -2.5, RECEIVING_HEIGHT)
+	_wall_z(receiving, "ReceivingWestSouthReturn", -36.0, 2.5, 4.0, RECEIVING_HEIGHT)
+	_wall_x_joined(receiving, "ReceivingSouth", -36.0, -28.5, 4.0, RECEIVING_HEIGHT)
+	_wall_x_joined(receiving, "ReceivingNorthWest", -36.0, -35.0, -4.0, RECEIVING_HEIGHT, true, false)
+	_wall_z(receiving, "ReceivingEastNorth", -28.5, -4.0, -1.42, RECEIVING_HEIGHT)
+	_wall_z(receiving, "ReceivingEastSouth", -28.5, 1.42, 4.0, RECEIVING_HEIGHT)
+	_wall_x_joined(receiving, "FreightNorth", -41.0, -36.0, -3.5, RECEIVING_HEIGHT, true, false)
+	_wall_x_joined(receiving, "FreightSouth", -41.0, -36.0, 3.5, RECEIVING_HEIGHT, true, false)
+	_wall_z(receiving, "FreightRear", -41.0, -3.5, 3.5, RECEIVING_HEIGHT)
+	_wall_z_joined(receiving, "DispatchWest", -35.0, -7.5, -4.0, RECEIVING_HEIGHT)
+	_wall_x_joined(receiving, "DispatchNorth", -35.0, -28.5, -7.5, RECEIVING_HEIGHT)
+	_wall_z_joined(receiving, "DispatchEast", -28.5, -7.5, -4.0, RECEIVING_HEIGHT, true, false)
+	_wall_x(receiving, "DispatchSouthWest", -35.0, -32.914285714286, -4.0, RECEIVING_HEIGHT)
+	_wall_x_joined(receiving, "DispatchSouthEast", -30.514285714286, -28.5, -4.0, RECEIVING_HEIGHT, false, true)
+	_box(receiving, "ReceivingCeilingTransition", Vector3(-28.5, 3.8, 0.0), Vector3(WALL_THICKNESS, 0.8, 2.84), _materials["wall"])
 
 	var backlog := _district("Backlog")
 	_wall_x_joined(backlog, "BacklogNorth", -28.5, -15.0, -3.8, CLEAR_HEIGHT, false, true)
@@ -328,10 +328,10 @@ func _build_structural_walls() -> void:
 
 func _build_fixed_boundaries() -> void:
 	var freight := _owned_node(_boundaries, Node3D.new(), "FreightBarrier") as Node3D
-	_box(freight, "LowerRail", Vector3(-39.0, 0.35, 0.0), Vector3(0.32, 0.28, 4.8), _materials["barrier"])
-	_box(freight, "UpperRail", Vector3(-39.0, 1.15, 0.0), Vector3(0.32, 0.24, 4.8), _materials["barrier"])
+	_box(freight, "LowerRail", Vector3(-36.0, 0.35, 0.0), Vector3(0.32, 0.28, 4.8), _materials["barrier"])
+	_box(freight, "UpperRail", Vector3(-36.0, 1.15, 0.0), Vector3(0.32, 0.24, 4.8), _materials["barrier"])
 	for index: int in 4:
-		_box(freight, "Post%02d" % index, Vector3(-39.0, 0.75, -2.25 + index * 1.5), Vector3(0.34, 1.5, 0.24), _materials["barrier"])
+		_box(freight, "Post%02d" % index, Vector3(-36.0, 0.75, -2.25 + index * 1.5), Vector3(0.34, 1.5, 0.24), _materials["barrier"])
 
 	# Each departmental support space has a traversable territorial entrance,
 	# a separate neutral interface envelope, and this opaque staffed-core edge.
@@ -344,7 +344,7 @@ func _build_fixed_boundaries() -> void:
 
 func _build_spatial_proxies() -> void:
 	_box(_proxies, "SortingTable", Vector3(-10.0, 0.45, -6.18), Vector3(4.8, 0.90, 1.74), _materials["proxy"])
-	_box(_proxies, "DispatchWorkSurface", Vector3(-33.25, 0.45, -7.8), Vector3(5.0, 0.90, 0.9), _materials["proxy"])
+	_box(_proxies, "DispatchWorkSurface", Vector3(-31.75, 0.45, -6.8), Vector3(5.0, 0.90, 0.9), _materials["proxy"])
 	_box(_proxies, "BacklogNorthBlock", Vector3(-25.8, 0.85, -2.9), Vector3(2.0, 1.7, 1.3), _materials["backlog"])
 	_box(_proxies, "BacklogSouthBlock", Vector3(-23.0, 0.65, 3.0), Vector3(1.6, 1.3, 1.1), _materials["backlog"])
 
@@ -371,8 +371,8 @@ func _build_spatial_proxies() -> void:
 
 
 func _build_anchors() -> void:
-	_anchor("ReceivingApron", Vector3(-33.0, 0.05, 0.0), -90.0)
-	_anchor("Dispatch", Vector3(-33.0, 0.05, -6.75), 180.0)
+	_anchor("ReceivingApron", Vector3(-31.714285714286, 0.05, 0.0), -90.0)
+	_anchor("Dispatch", Vector3(-31.714285714286, 0.05, -5.75), 180.0)
 	_anchor("SortingWork", Vector3(-10.0, 0.05, -4.4), 0.0)
 	_anchor("StorageNear", Vector3(-2.0, 0.05, 2.7), -90.0)
 	_anchor("GalleryA", Vector3(0.0, 0.05, -7.0), 0.0)
@@ -406,6 +406,11 @@ func _floor_zone(district_name: String, zone_name: String, x0: float, x1: float,
 func _floor_zone_with_ceiling_west(district_name: String, zone_name: String, floor_x0: float, x1: float, ceiling_x0: float, z0: float, z1: float, height: float, floor_material_key: String) -> void:
 	var district := _district(district_name)
 	_box(district, "Floor_" + zone_name, Vector3((floor_x0 + x1) * 0.5, -FLOOR_THICKNESS * 0.5, (z0 + z1) * 0.5), Vector3(x1 - floor_x0, FLOOR_THICKNESS, z1 - z0), _materials[floor_material_key])
+	# Backlog keeps nominal support; its visible floor butts into the sill.
+	var floor_mesh := district.get_node("Floor_" + zone_name + "/Mesh") as MeshInstance3D
+	floor_mesh.mesh = floor_mesh.mesh.duplicate()
+	(floor_mesh.mesh as BoxMesh).size.x = x1 - ceiling_x0
+	floor_mesh.position.x = (ceiling_x0 - floor_x0) * 0.5
 	_box(_roof_visuals, "Ceiling_" + zone_name, Vector3((ceiling_x0 + x1) * 0.5, height + FLOOR_THICKNESS * 0.5, (z0 + z1) * 0.5), Vector3(x1 - ceiling_x0, FLOOR_THICKNESS, z1 - z0), _materials["ceiling"])
 
 

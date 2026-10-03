@@ -190,10 +190,10 @@ func _test_complete_wing_geometry_contract() -> void:
 
 	# These checks use the saved collision geometry rather than source text or
 	# metadata, so an incorrect builder output cannot satisfy them nominally.
-	_check_box(wing, "Districts/Receiving/Floor_ReceivingApron", Vector3(-33.75, -0.15, 0.0), Vector3(10.5, 0.30, 10.0), "Receiving Apron is shortened east-west but remains usable")
-	_check_box(wing, "Districts/Receiving/Floor_FreightEnclosure", Vector3(-41.5, -0.15, 0.0), Vector3(5.0, 0.30, 7.0), "freight enclosure is distinct and shallow")
-	_check_box(wing, "Districts/Receiving/Floor_DispatchAnnex", Vector3(-33.25, -0.15, -6.75), Vector3(9.5, 0.30, 3.5), "Dispatch remains a shallow external annex")
-	_check_box(wing, "Districts/Receiving/ReceivingCeilingTransition", Vector3(-28.5, 3.8, 0.0), Vector3(0.30, 0.80, 3.84), "Receiving-to-Backlog height strip aligns with the doorway depth planes")
+	_check_box(wing, "Districts/Receiving/Floor_ReceivingApron", Vector3(-32.25, -0.15, 0.0), Vector3(7.5, 0.30, 8.0), "Receiving Apron is shortened east-west but remains usable")
+	_check_box(wing, "Districts/Receiving/Floor_FreightEnclosure", Vector3(-38.5, -0.15, 0.0), Vector3(5.0, 0.30, 7.0), "freight enclosure is distinct and shallow")
+	_check_box(wing, "Districts/Receiving/Floor_DispatchAnnex", Vector3(-31.75, -0.15, -5.75), Vector3(6.5, 0.30, 3.5), "Dispatch remains a shallow external annex")
+	_check_box(wing, "Districts/Receiving/ReceivingCeilingTransition", Vector3(-28.5, 3.8, 0.0), Vector3(0.30, 0.80, 2.84), "Receiving-to-Backlog height strip aligns with the doorway depth planes")
 	_check_box(wing, "Districts/Backlog/Floor_BacklogPassage", Vector3(-21.75, -0.15, 0.0), Vector3(13.5, 0.30, 7.6), "Backlog regains its approved 13.5 m nominal span")
 	_check_box(wing, "RoofVisuals/Ceiling_BacklogPassage", Vector3(-21.675, 3.55, 0.0), Vector3(13.35, 0.30, 7.6), "Backlog lower ceiling terminates at the aligned closure face")
 	_check_box(wing, "Districts/Sorting/Floor_SortingPassage", Vector3(-10.0, -0.15, 0.0), Vector3(10.0, 0.30, 10.0), "Sorting returns to its approved 10 m nominal span")
@@ -249,10 +249,10 @@ func _test_complete_wing_geometry_contract() -> void:
 	_check_no_positive_area_zone_overlaps(wing.get_node("Districts"), "Floor_", "floor rectangles meet only at boundaries")
 	_check_no_positive_area_zone_overlaps(wing.get_node("RoofVisuals"), "Ceiling_", "ceiling rectangles meet only at boundaries")
 	for target_z: float in [1.95, 2.075, 2.2]:
-		var rail_target := Vector3(-39.0, 1.15, target_z)
+		var rail_target := Vector3(-36.0, 1.15, target_z)
 		_check_segment_clear_of_structural_walls(wing, Vector3(-10.0, 1.7162851, -4.4), rail_target, "Sorting work stance has a clear freight ray to Z=%.3f" % target_z)
 		_check_segment_hits_exact_box(wing, "Boundaries/FreightBarrier/UpperRail", Vector3(-10.0, 1.7162851, -4.4), rail_target, "Sorting ray reaches real upper-rail geometry at Z=%.3f" % target_z)
-	_check_segment_blocked_by_structural_wall(wing, Vector3(-38.82, 1.2, 2.2), Vector3(40.0, 1.4, 1.5), "Receiving/ReceivingEastSouth", "lift-to-Deeper long vista is interrupted")
+	_check_segment_blocked_by_structural_wall(wing, Vector3(-35.82, 1.2, 2.2), Vector3(40.0, 1.4, 1.5), "Receiving/ReceivingEastSouth", "lift-to-Deeper long vista is interrupted")
 	_check_segment_blocked_by_structural_wall(wing, Vector3(24.0, 1.7162851, 2.5), Vector3(62.5, 1.4, -6.8), "DeeperApproach/DeeperWideNorth", "Storage-to-Ops long vista is interrupted")
 	for junction_sample: Vector3 in [
 		Vector3(-14.90, 1.0, -4.90),
@@ -265,7 +265,7 @@ func _test_complete_wing_geometry_contract() -> void:
 		_check_point_inside_static_box(wing, junction_sample, "joined structural corner is solid at %s" % junction_sample)
 
 	for opening: Dictionary in [
-		{"point": Vector3(-33.0, 1.0, -5.0), "label": "Dispatch framed doorless opening"},
+		{"point": Vector3(-31.714286, 1.0, -4.0), "label": "Dispatch framed doorless opening"},
 		{"point": Vector3(-28.5, 1.0, 0.0), "label": "narrow Receiving-to-Backlog opening"},
 		{"point": Vector3(-15.0, 1.0, -0.98), "label": "authorized Backlog-to-Sorting opening"},
 		{"point": Vector3(4.5, 1.0, -8.2), "label": "north-shifted Gallery A east opening"},
@@ -295,6 +295,20 @@ func _test_complete_wing_geometry_contract() -> void:
 	_check(roof != null and roof.visible, "roof visuals exist and default visible")
 	_check(_count_nodes_of_type(wing, StaticBody3D) > 50, "wing has authored static collision bodies")
 	_check(_count_nodes_of_type(wing, MeshInstance3D) > 50, "wing has editor-visible primitive meshes")
+	_check_box(wing, "Districts/Receiving/ReceivingWestNorthReturn", Vector3(-36.0, 2.1, -3.25), Vector3(0.3, 4.2, 1.5), "compact ReceivingWestNorthReturn envelope")
+	_check_box(wing, "Districts/Receiving/ReceivingWestSouthReturn", Vector3(-36, 2.1, 3.25), Vector3(0.3, 4.2, 1.5), "compact ReceivingWestSouthReturn envelope")
+	_check_box(wing, "Districts/Receiving/ReceivingSouth", Vector3(-32.25, 2.1, 4), Vector3(7.8, 4.2, 0.3), "compact ReceivingSouth envelope")
+	_check_box(wing, "Districts/Receiving/ReceivingNorthWest", Vector3(-35.575, 2.1, -4), Vector3(1.15, 4.2, 0.3), "compact ReceivingNorthWest envelope")
+	_check_box(wing, "Districts/Receiving/ReceivingEastNorth", Vector3(-28.5, 2.1, -2.71), Vector3(0.3, 4.2, 2.58), "compact ReceivingEastNorth envelope")
+	_check_box(wing, "Districts/Receiving/ReceivingEastSouth", Vector3(-28.5, 2.1, 2.71), Vector3(0.3, 4.2, 2.58), "compact ReceivingEastSouth envelope")
+	_check_box(wing, "Districts/Receiving/FreightNorth", Vector3(-38.575, 2.1, -3.5), Vector3(5.15, 4.2, 0.3), "compact FreightNorth envelope")
+	_check_box(wing, "Districts/Receiving/FreightSouth", Vector3(-38.575, 2.1, 3.5), Vector3(5.15, 4.2, 0.3), "compact FreightSouth envelope")
+	_check_box(wing, "Districts/Receiving/FreightRear", Vector3(-41, 2.1, 0), Vector3(0.3, 4.2, 7), "compact FreightRear envelope")
+	_check_box(wing, "Districts/Receiving/DispatchWest", Vector3(-35, 2.1, -5.75), Vector3(0.3, 4.2, 3.8), "compact DispatchWest envelope")
+	_check_box(wing, "Districts/Receiving/DispatchEast", Vector3(-28.5, 2.1, -5.825), Vector3(0.3, 4.2, 3.65), "compact DispatchEast envelope")
+	_check_box(wing, "Districts/Receiving/DispatchNorth", Vector3(-31.75, 2.1, -7.5), Vector3(6.8, 4.2, 0.3), "compact DispatchNorth envelope")
+	_check_box(wing, "Districts/Receiving/DispatchSouthWest", Vector3(-33.957142857, 2.1, -4), Vector3(2.085714286, 4.2, 0.3), "compact DispatchSouthWest envelope")
+	_check_box(wing, "Districts/Receiving/DispatchSouthEast", Vector3(-29.432142857, 2.1, -4), Vector3(2.164285714, 4.2, 0.3), "compact DispatchSouthEast envelope")
 	_validate_box_shapes(wing)
 	wing.free()
 
@@ -326,7 +340,7 @@ func _test_default_launch_promotes_wing_gameplay() -> void:
 			_check(default_root.get_node_or_null("Player") != null, "promoted scene keeps one gameplay player")
 			_check(default_root.get_node_or_null("HUD/CarriedItemsHUD") != null, "promoted scene keeps one carried-items HUD")
 			var seed_items := default_root.get_node_or_null("DevelopmentSetup/SeedItems")
-			_check(seed_items != null and seed_items.get_child_count() == 14, "promoted scene keeps all fourteen accepted seed hosts")
+			_check(seed_items != null and seed_items.get_child_count() == 46, "promoted scene keeps all 46 seed hosts from checkpoint a263e24")
 			default_root.free()
 
 
@@ -358,14 +372,19 @@ func _validate_box_shapes(node: Node, wing_root: Node = null) -> void:
 				var mesh_size := (mesh_instance.mesh as BoxMesh).size
 				_check(mesh_size.is_finite(), "box mesh size is finite: " + relative_path)
 				_check(mesh_size.x > 0.0 and mesh_size.y > 0.0 and mesh_size.z > 0.0, "box mesh size is positive: " + relative_path)
-				_check(mesh_instance.transform.is_equal_approx(Transform3D.IDENTITY), "box mesh uses its container transform: " + relative_path)
+				var sill_trim := relative_path == "Districts/Backlog/Floor_BacklogPassage"
+				var expected_pose := Transform3D(Basis.IDENTITY, Vector3(0.075, 0, 0)) if sill_trim else Transform3D.IDENTITY
+				_check(mesh_instance.transform.is_equal_approx(expected_pose), "box mesh uses its authorized transform: " + relative_path)
 				if collisionless_allowed:
 					_check(collision == null, "authorized provisional interface remains visual-only: " + relative_path)
 				elif _check(collision != null and collision.shape is BoxShape3D, "generated solid box has BoxShape collision: " + relative_path):
 					var collision_size := (collision.shape as BoxShape3D).size
 					_check(collision_size.is_finite(), "box collision size is finite: " + relative_path)
 					_check(collision_size.x > 0.0 and collision_size.y > 0.0 and collision_size.z > 0.0, "box collision size is positive: " + relative_path)
-					_check(collision_size.is_equal_approx(mesh_size), "BoxMesh and BoxShape sizes match: " + relative_path)
+					var expected_visual_size := Vector3(13.35, 0.3, 7.6) if sill_trim else collision_size
+					_check(mesh_size.is_equal_approx(expected_visual_size), "BoxMesh matches structural size or exact sill trim: " + relative_path)
+					if sill_trim:
+						_check(collision_size.is_equal_approx(Vector3(13.5, 0.3, 7.6)) and container.position.is_equal_approx(Vector3(-21.75, -0.15, 0)), "Backlog collision remains nominal and meets apron")
 					_check(collision.transform.is_equal_approx(Transform3D.IDENTITY), "box collision uses its container transform: " + relative_path)
 					var body := collision.get_parent() as StaticBody3D
 					_check(body.transform.is_equal_approx(Transform3D.IDENTITY), "box body uses its container transform: " + relative_path)
@@ -859,7 +878,7 @@ func _count_playable_floor_quadrants(intersection: Vector2, floor_zones: Array[D
 
 func _junction_opening_records() -> Array[Dictionary]:
 	return [
-		_opening_record("Dispatch framed doorless opening", Vector3(-33.0, 1.0, -5.0)),
+		_opening_record("Dispatch framed doorless opening", Vector3(-31.714286, 1.0, -4.0)),
 		_opening_record("narrow Receiving-to-Backlog opening", Vector3(-28.5, 1.0, 0.0)),
 		_opening_record("authorized Backlog-to-Sorting opening", Vector3(-15.0, 1.0, -0.98)),
 		_opening_record("north-shifted Gallery A east opening", Vector3(4.5, 1.0, -8.2)),

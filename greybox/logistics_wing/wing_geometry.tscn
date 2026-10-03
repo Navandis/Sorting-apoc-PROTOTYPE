@@ -5,10 +5,10 @@ resource_name = "Greybox Core Floor"
 albedo_color = Color(0.2901961, 0.32156864, 0.34509805, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_5ny2a"]
-size = Vector3(10.5, 0.3, 10)
+size = Vector3(7.5, 0.3, 8)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7m0iy"]
-size = Vector3(10.5, 0.3, 10)
+size = Vector3(7.5, 0.3, 8)
 
 [sub_resource type="BoxMesh" id="BoxMesh_y12k3"]
 size = Vector3(5, 0.3, 7)
@@ -17,32 +17,32 @@ size = Vector3(5, 0.3, 7)
 size = Vector3(5, 0.3, 7)
 
 [sub_resource type="BoxMesh" id="BoxMesh_qnm33"]
-size = Vector3(9.5, 0.3, 3.5)
+size = Vector3(6.5, 0.3, 3.5)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7cyxy"]
-size = Vector3(9.5, 0.3, 3.5)
+size = Vector3(6.5, 0.3, 3.5)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_umvn7"]
 resource_name = "Greybox Wall"
 albedo_color = Color(0.54509807, 0.5647059, 0.5803922, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_svuiu"]
-size = Vector3(0.3, 4.2, 2.5)
+size = Vector3(0.3, 4.2, 1.5)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_f2xdp"]
-size = Vector3(0.3, 4.2, 2.5)
+size = Vector3(0.3, 4.2, 1.5)
 
 [sub_resource type="BoxMesh" id="BoxMesh_1ij7f"]
-size = Vector3(0.3, 4.2, 2.5)
+size = Vector3(0.3, 4.2, 1.5)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_tdcuq"]
-size = Vector3(0.3, 4.2, 2.5)
+size = Vector3(0.3, 4.2, 1.5)
 
 [sub_resource type="BoxMesh" id="BoxMesh_tmrkn"]
-size = Vector3(10.8, 4.2, 0.3)
+size = Vector3(7.8, 4.2, 0.3)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_eibvu"]
-size = Vector3(10.8, 4.2, 0.3)
+size = Vector3(7.8, 4.2, 0.3)
 
 [sub_resource type="BoxMesh" id="BoxMesh_5tygn"]
 size = Vector3(1.15, 4.2, 0.3)
@@ -51,16 +51,16 @@ size = Vector3(1.15, 4.2, 0.3)
 size = Vector3(1.15, 4.2, 0.3)
 
 [sub_resource type="BoxMesh" id="BoxMesh_m35jd"]
-size = Vector3(0.3, 4.2, 3.08)
+size = Vector3(0.3, 4.2, 2.58)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_iycu4"]
-size = Vector3(0.3, 4.2, 3.08)
+size = Vector3(0.3, 4.2, 2.58)
 
 [sub_resource type="BoxMesh" id="BoxMesh_umk6e"]
-size = Vector3(0.3, 4.2, 3.08)
+size = Vector3(0.3, 4.2, 2.58)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8f0ej"]
-size = Vector3(0.3, 4.2, 3.08)
+size = Vector3(0.3, 4.2, 2.58)
 
 [sub_resource type="BoxMesh" id="BoxMesh_huund"]
 size = Vector3(5.15, 4.2, 0.3)
@@ -87,10 +87,10 @@ size = Vector3(0.3, 4.2, 3.8)
 size = Vector3(0.3, 4.2, 3.8)
 
 [sub_resource type="BoxMesh" id="BoxMesh_fkohk"]
-size = Vector3(9.8, 4.2, 0.3)
+size = Vector3(6.8, 4.2, 0.3)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8seae"]
-size = Vector3(9.8, 4.2, 0.3)
+size = Vector3(6.8, 4.2, 0.3)
 
 [sub_resource type="BoxMesh" id="BoxMesh_p8yi4"]
 size = Vector3(0.3, 4.2, 3.65)
@@ -99,25 +99,25 @@ size = Vector3(0.3, 4.2, 3.65)
 size = Vector3(0.3, 4.2, 3.65)
 
 [sub_resource type="BoxMesh" id="BoxMesh_xa2rf"]
-size = Vector3(3.8, 4.2, 0.3)
+size = Vector3(2.08571428571, 4.2, 0.3)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ol88j"]
-size = Vector3(3.8, 4.2, 0.3)
+size = Vector3(2.08571428571, 4.2, 0.3)
 
 [sub_resource type="BoxMesh" id="BoxMesh_q0g8a"]
-size = Vector3(3.45, 4.2, 0.3)
+size = Vector3(2.16428571429, 4.2, 0.3)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vwiul"]
-size = Vector3(3.45, 4.2, 0.3)
+size = Vector3(2.16428571429, 4.2, 0.3)
 
 [sub_resource type="BoxMesh" id="BoxMesh_nind6"]
-size = Vector3(0.3, 0.8, 3.84)
+size = Vector3(0.3, 0.8, 2.84)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_mj4bm"]
-size = Vector3(0.3, 0.8, 3.84)
+size = Vector3(0.3, 0.8, 2.84)
 
 [sub_resource type="BoxMesh" id="BoxMesh_pew1k"]
-size = Vector3(13.5, 0.3, 7.6)
+size = Vector3(13.35, 0.3, 7.6)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_uvi8x"]
 size = Vector3(13.5, 0.3, 7.6)
@@ -1201,10 +1201,10 @@ resource_name = "Greybox Ceiling"
 albedo_color = Color(0.40392157, 0.42352942, 0.4392157, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_6ywfn"]
-size = Vector3(10.5, 0.3, 10)
+size = Vector3(7.5, 0.3, 8)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_h8sa7"]
-size = Vector3(10.5, 0.3, 10)
+size = Vector3(7.5, 0.3, 8)
 
 [sub_resource type="BoxMesh" id="BoxMesh_ib4ha"]
 size = Vector3(5, 0.3, 7)
@@ -1213,10 +1213,10 @@ size = Vector3(5, 0.3, 7)
 size = Vector3(5, 0.3, 7)
 
 [sub_resource type="BoxMesh" id="BoxMesh_0q0ik"]
-size = Vector3(9.5, 0.3, 3.5)
+size = Vector3(6.5, 0.3, 3.5)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_32qnw"]
-size = Vector3(9.5, 0.3, 3.5)
+size = Vector3(6.5, 0.3, 3.5)
 
 [sub_resource type="BoxMesh" id="BoxMesh_4g07c"]
 size = Vector3(13.35, 0.3, 7.6)
@@ -1439,7 +1439,7 @@ metadata/coordinate_note = "+X east, +Z south, Y=0 finished floor"
 [node name="Receiving" type="Node3D" parent="Districts" unique_id=650501075]
 
 [node name="Floor_ReceivingApron" type="Node3D" parent="Districts/Receiving" unique_id=348777735]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.75, -0.15, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.25, -0.15, 0)
 
 [node name="Mesh" type="MeshInstance3D" parent="Districts/Receiving/Floor_ReceivingApron" unique_id=689151158]
 material_override = SubResource("StandardMaterial3D_mkfts")
@@ -1451,7 +1451,7 @@ mesh = SubResource("BoxMesh_5ny2a")
 shape = SubResource("BoxShape3D_7m0iy")
 
 [node name="Floor_FreightEnclosure" type="Node3D" parent="Districts/Receiving" unique_id=451061789]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41.5, -0.15, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38.5, -0.15, 0)
 
 [node name="Mesh" type="MeshInstance3D" parent="Districts/Receiving/Floor_FreightEnclosure" unique_id=2113767855]
 material_override = SubResource("StandardMaterial3D_mkfts")
@@ -1463,7 +1463,7 @@ mesh = SubResource("BoxMesh_y12k3")
 shape = SubResource("BoxShape3D_142ij")
 
 [node name="Floor_DispatchAnnex" type="Node3D" parent="Districts/Receiving" unique_id=1445581379]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.25, -0.15, -6.75)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.75, -0.15, -5.75)
 
 [node name="Mesh" type="MeshInstance3D" parent="Districts/Receiving/Floor_DispatchAnnex" unique_id=787804624]
 material_override = SubResource("StandardMaterial3D_mkfts")
@@ -1475,7 +1475,7 @@ mesh = SubResource("BoxMesh_qnm33")
 shape = SubResource("BoxShape3D_7cyxy")
 
 [node name="ReceivingWestNorthReturn" type="Node3D" parent="Districts/Receiving" unique_id=831115815]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39, 2.1, -3.75)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36, 2.1, -3.25)
 
 [node name="Mesh" type="MeshInstance3D" parent="Districts/Receiving/ReceivingWestNorthReturn" unique_id=438192212]
 material_override = SubResource("StandardMaterial3D_umvn7")
@@ -1487,7 +1487,7 @@ mesh = SubResource("BoxMesh_svuiu")
 shape = SubResource("BoxShape3D_f2xdp")
 
 [node name="ReceivingWestSouthReturn" type="Node3D" parent="Districts/Receiving" unique_id=1159981427]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39, 2.1, 3.75)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36, 2.1, 3.25)
 
 [node name="Mesh" type="MeshInstance3D" parent="Districts/Receiving/ReceivingWestSouthReturn" unique_id=1689187880]
 material_override = SubResource("StandardMaterial3D_umvn7")
@@ -1499,7 +1499,7 @@ mesh = SubResource("BoxMesh_1ij7f")
 shape = SubResource("BoxShape3D_tdcuq")
 
 [node name="ReceivingSouth" type="Node3D" parent="Districts/Receiving" unique_id=1207016015]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.75, 2.1, 5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.25, 2.1, 4)
 
 [node name="Mesh" type="MeshInstance3D" parent="Districts/Receiving/ReceivingSouth" unique_id=1172888168]
 material_override = SubResource("StandardMaterial3D_umvn7")
@@ -1511,7 +1511,7 @@ mesh = SubResource("BoxMesh_tmrkn")
 shape = SubResource("BoxShape3D_eibvu")
 
 [node name="ReceivingNorthWest" type="Node3D" parent="Districts/Receiving" unique_id=1561555139]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38.575, 2.1, -5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.575, 2.1, -4)
 
 [node name="Mesh" type="MeshInstance3D" parent="Districts/Receiving/ReceivingNorthWest" unique_id=1861771157]
 material_override = SubResource("StandardMaterial3D_umvn7")
@@ -1523,7 +1523,7 @@ mesh = SubResource("BoxMesh_5tygn")
 shape = SubResource("BoxShape3D_nvb22")
 
 [node name="ReceivingEastNorth" type="Node3D" parent="Districts/Receiving" unique_id=1162060694]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.5, 2.1, -3.46)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.5, 2.1, -2.71)
 
 [node name="Mesh" type="MeshInstance3D" parent="Districts/Receiving/ReceivingEastNorth" unique_id=2073595140]
 material_override = SubResource("StandardMaterial3D_umvn7")
@@ -1535,7 +1535,7 @@ mesh = SubResource("BoxMesh_m35jd")
 shape = SubResource("BoxShape3D_iycu4")
 
 [node name="ReceivingEastSouth" type="Node3D" parent="Districts/Receiving" unique_id=407617562]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.5, 2.1, 3.46)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.5, 2.1, 2.71)
 
 [node name="Mesh" type="MeshInstance3D" parent="Districts/Receiving/ReceivingEastSouth" unique_id=931783438]
 material_override = SubResource("StandardMaterial3D_umvn7")
@@ -1547,7 +1547,7 @@ mesh = SubResource("BoxMesh_umk6e")
 shape = SubResource("BoxShape3D_8f0ej")
 
 [node name="FreightNorth" type="Node3D" parent="Districts/Receiving" unique_id=405092286]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41.575, 2.1, -3.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38.575, 2.1, -3.5)
 
 [node name="Mesh" type="MeshInstance3D" parent="Districts/Receiving/FreightNorth" unique_id=1488499884]
 material_override = SubResource("StandardMaterial3D_umvn7")
@@ -1559,7 +1559,7 @@ mesh = SubResource("BoxMesh_huund")
 shape = SubResource("BoxShape3D_u51gx")
 
 [node name="FreightSouth" type="Node3D" parent="Districts/Receiving" unique_id=1693140301]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41.575, 2.1, 3.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38.575, 2.1, 3.5)
 
 [node name="Mesh" type="MeshInstance3D" parent="Districts/Receiving/FreightSouth" unique_id=153664833]
 material_override = SubResource("StandardMaterial3D_umvn7")
@@ -1571,7 +1571,7 @@ mesh = SubResource("BoxMesh_kly17")
 shape = SubResource("BoxShape3D_kf1qe")
 
 [node name="FreightRear" type="Node3D" parent="Districts/Receiving" unique_id=324067116]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44, 2.1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41, 2.1, 0)
 
 [node name="Mesh" type="MeshInstance3D" parent="Districts/Receiving/FreightRear" unique_id=672612383]
 material_override = SubResource("StandardMaterial3D_umvn7")
@@ -1583,7 +1583,7 @@ mesh = SubResource("BoxMesh_h72go")
 shape = SubResource("BoxShape3D_cjaem")
 
 [node name="DispatchWest" type="Node3D" parent="Districts/Receiving" unique_id=1541037567]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38, 2.1, -6.75)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 2.1, -5.75)
 
 [node name="Mesh" type="MeshInstance3D" parent="Districts/Receiving/DispatchWest" unique_id=501822292]
 material_override = SubResource("StandardMaterial3D_umvn7")
@@ -1595,7 +1595,7 @@ mesh = SubResource("BoxMesh_5t3gl")
 shape = SubResource("BoxShape3D_dlhyo")
 
 [node name="DispatchNorth" type="Node3D" parent="Districts/Receiving" unique_id=1663544292]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.25, 2.1, -8.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.75, 2.1, -7.5)
 
 [node name="Mesh" type="MeshInstance3D" parent="Districts/Receiving/DispatchNorth" unique_id=750056367]
 material_override = SubResource("StandardMaterial3D_umvn7")
@@ -1607,7 +1607,7 @@ mesh = SubResource("BoxMesh_fkohk")
 shape = SubResource("BoxShape3D_8seae")
 
 [node name="DispatchEast" type="Node3D" parent="Districts/Receiving" unique_id=720066307]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.5, 2.1, -6.825)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.5, 2.1, -5.825)
 
 [node name="Mesh" type="MeshInstance3D" parent="Districts/Receiving/DispatchEast" unique_id=1265134273]
 material_override = SubResource("StandardMaterial3D_umvn7")
@@ -1619,7 +1619,7 @@ mesh = SubResource("BoxMesh_p8yi4")
 shape = SubResource("BoxShape3D_2g6oc")
 
 [node name="DispatchSouthWest" type="Node3D" parent="Districts/Receiving" unique_id=1317764458]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.1, 2.1, -5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.9571428571, 2.1, -4)
 
 [node name="Mesh" type="MeshInstance3D" parent="Districts/Receiving/DispatchSouthWest" unique_id=412411911]
 material_override = SubResource("StandardMaterial3D_umvn7")
@@ -1631,7 +1631,7 @@ mesh = SubResource("BoxMesh_xa2rf")
 shape = SubResource("BoxShape3D_ol88j")
 
 [node name="DispatchSouthEast" type="Node3D" parent="Districts/Receiving" unique_id=1959049027]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.075, 2.1, -5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.4321428571, 2.1, -4)
 
 [node name="Mesh" type="MeshInstance3D" parent="Districts/Receiving/DispatchSouthEast" unique_id=721833973]
 material_override = SubResource("StandardMaterial3D_umvn7")
@@ -1662,6 +1662,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.75, -0.15, 0)
 [node name="Mesh" type="MeshInstance3D" parent="Districts/Backlog/Floor_BacklogPassage" unique_id=1643992843]
 material_override = SubResource("StandardMaterial3D_mkfts")
 mesh = SubResource("BoxMesh_pew1k")
+position = Vector3(0.075, 0, 0)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Districts/Backlog/Floor_BacklogPassage" unique_id=424361934]
 
@@ -3409,7 +3410,7 @@ shape = SubResource("BoxShape3D_i3rp7")
 [node name="FreightBarrier" type="Node3D" parent="Boundaries" unique_id=1475417136]
 
 [node name="LowerRail" type="Node3D" parent="Boundaries/FreightBarrier" unique_id=1879461864]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39, 0.35, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36, 0.35, 0)
 
 [node name="Mesh" type="MeshInstance3D" parent="Boundaries/FreightBarrier/LowerRail" unique_id=881123501]
 material_override = SubResource("StandardMaterial3D_kks0s")
@@ -3421,7 +3422,7 @@ mesh = SubResource("BoxMesh_1horh")
 shape = SubResource("BoxShape3D_s4ld4")
 
 [node name="UpperRail" type="Node3D" parent="Boundaries/FreightBarrier" unique_id=475024780]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39, 1.15, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36, 1.15, 0)
 
 [node name="Mesh" type="MeshInstance3D" parent="Boundaries/FreightBarrier/UpperRail" unique_id=1751226650]
 material_override = SubResource("StandardMaterial3D_kks0s")
@@ -3433,7 +3434,7 @@ mesh = SubResource("BoxMesh_v7th3")
 shape = SubResource("BoxShape3D_5hm1d")
 
 [node name="Post00" type="Node3D" parent="Boundaries/FreightBarrier" unique_id=1202401755]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39, 0.75, -2.25)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36, 0.75, -2.25)
 
 [node name="Mesh" type="MeshInstance3D" parent="Boundaries/FreightBarrier/Post00" unique_id=1667259866]
 material_override = SubResource("StandardMaterial3D_kks0s")
@@ -3445,7 +3446,7 @@ mesh = SubResource("BoxMesh_wm8ew")
 shape = SubResource("BoxShape3D_53r5l")
 
 [node name="Post01" type="Node3D" parent="Boundaries/FreightBarrier" unique_id=69285889]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39, 0.75, -0.75)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36, 0.75, -0.75)
 
 [node name="Mesh" type="MeshInstance3D" parent="Boundaries/FreightBarrier/Post01" unique_id=741645144]
 material_override = SubResource("StandardMaterial3D_kks0s")
@@ -3457,7 +3458,7 @@ mesh = SubResource("BoxMesh_sxppd")
 shape = SubResource("BoxShape3D_0b7m2")
 
 [node name="Post02" type="Node3D" parent="Boundaries/FreightBarrier" unique_id=343130818]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39, 0.75, 0.75)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36, 0.75, 0.75)
 
 [node name="Mesh" type="MeshInstance3D" parent="Boundaries/FreightBarrier/Post02" unique_id=990199273]
 material_override = SubResource("StandardMaterial3D_kks0s")
@@ -3469,7 +3470,7 @@ mesh = SubResource("BoxMesh_neyd8")
 shape = SubResource("BoxShape3D_65v3n")
 
 [node name="Post03" type="Node3D" parent="Boundaries/FreightBarrier" unique_id=1358879401]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39, 0.75, 2.25)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36, 0.75, 2.25)
 
 [node name="Mesh" type="MeshInstance3D" parent="Boundaries/FreightBarrier/Post03" unique_id=1251820789]
 material_override = SubResource("StandardMaterial3D_kks0s")
@@ -3555,7 +3556,7 @@ mesh = SubResource("BoxMesh_dcp4c")
 shape = SubResource("BoxShape3D_ie8by")
 
 [node name="DispatchWorkSurface" type="Node3D" parent="Proxies" unique_id=2016220953]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.25, 0.45, -7.8)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.75, 0.45, -6.8)
 
 [node name="Mesh" type="MeshInstance3D" parent="Proxies/DispatchWorkSurface" unique_id=499106102]
 material_override = SubResource("StandardMaterial3D_3hf00")
@@ -3789,10 +3790,10 @@ shape = SubResource("BoxShape3D_67flk")
 [node name="Anchors" type="Node3D" parent="." unique_id=1016298562]
 
 [node name="ReceivingApron" type="Marker3D" parent="Anchors" unique_id=1184164598]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -33, 0.05, 0)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -31.7142857143, 0.05, 0)
 
 [node name="Dispatch" type="Marker3D" parent="Anchors" unique_id=862799390]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -33, 0.05, -6.75)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -31.7142857143, 0.05, -5.75)
 
 [node name="SortingWork" type="Marker3D" parent="Anchors" unique_id=432345111]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0.05, -4.4)
@@ -3863,7 +3864,7 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 7, 0
 [node name="RoofVisuals" type="Node3D" parent="." unique_id=1525194163]
 
 [node name="Ceiling_ReceivingApron" type="Node3D" parent="RoofVisuals" unique_id=1435033319]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.75, 4.35, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.25, 4.35, 0)
 
 [node name="Mesh" type="MeshInstance3D" parent="RoofVisuals/Ceiling_ReceivingApron" unique_id=1300465808]
 material_override = SubResource("StandardMaterial3D_40qjf")
@@ -3875,7 +3876,7 @@ mesh = SubResource("BoxMesh_6ywfn")
 shape = SubResource("BoxShape3D_h8sa7")
 
 [node name="Ceiling_FreightEnclosure" type="Node3D" parent="RoofVisuals" unique_id=969313499]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41.5, 4.35, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38.5, 4.35, 0)
 
 [node name="Mesh" type="MeshInstance3D" parent="RoofVisuals/Ceiling_FreightEnclosure" unique_id=1397202603]
 material_override = SubResource("StandardMaterial3D_40qjf")
@@ -3887,7 +3888,7 @@ mesh = SubResource("BoxMesh_ib4ha")
 shape = SubResource("BoxShape3D_ijuhu")
 
 [node name="Ceiling_DispatchAnnex" type="Node3D" parent="RoofVisuals" unique_id=9874832]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.25, 4.35, -6.75)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.75, 4.35, -5.75)
 
 [node name="Mesh" type="MeshInstance3D" parent="RoofVisuals/Ceiling_DispatchAnnex" unique_id=1265584721]
 material_override = SubResource("StandardMaterial3D_40qjf")

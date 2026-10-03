@@ -28,8 +28,8 @@ func get_route_records() -> Array:
 			Vector3(-12.0, 0.05, -1.0), Vector3(-10.0, 0.05, -4.4),
 		]),
 		_route("receiving_to_dispatch", "ReceivingApron", "Dispatch", [
-			Vector3(-33.0, 0.05, -4.2), Vector3(-33.0, 0.05, -5.8),
-			Vector3(-33.0, 0.05, -6.75),
+			Vector3(-31.714285714286, 0.05, -3.2), Vector3(-31.714285714286, 0.05, -4.8),
+			Vector3(-31.714285714286, 0.05, -5.75),
 		]),
 		_route("receiving_to_storage_near", "ReceivingApron", "StorageNear", [
 			Vector3(-29.0, 0.05, 0.0), Vector3(-26.0, 0.05, 0.0),
@@ -141,7 +141,7 @@ func get_route_records() -> Array:
 
 func get_boundary_records() -> Array:
 	return [
-		_boundary("freight_barrier", Vector3(-37.0, 0.05, 0.0), Vector3(-1, 0, 0), "x", "min", -38.75),
+		_boundary("freight_barrier", Vector3(-34.0, 0.05, 0.0), Vector3(-1, 0, 0), "x", "min", -35.75),
 		_boundary("medical_inner_boundary", Vector3(4.3, 0.05, -28.0), Vector3(0, 0, -1), "z", "min", -29.70),
 		_boundary("kitchen_inner_boundary", Vector3(26.65, 0.05, -22.0), Vector3(0, 0, -1), "z", "min", -24.70),
 		_boundary("workshop_inner_boundary", Vector3(-15.5, 0.05, 20.0), Vector3(-1, 0, 0), "x", "min", -17.70),

@@ -58,22 +58,22 @@ resource_name = "Ceiling_ReceivingApron"
 script = ExtResource("3_53yqr")
 piece_id = "Ceiling_ReceivingApron"
 semantic_role = "CEILING_PRIMARY"
-dimensions_m = Vector3(10.5, 0.3, 10)
+dimensions_m = Vector3(7.5, 0.3, 8)
 concealed_faces = PackedStringArray("NEG_X", "POS_X", "NEG_Z", "POS_Z")
-uv_origin_m = Vector2(0, -5)
+uv_origin_m = Vector2(0, -4)
 material_spec = ExtResource("2_mgu1a")
 authoring_notes = "Receiving C1 production visual; greybox retains collision. PRIMARY P05_C02; accepted through/butt ownership and metre UV phase."
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_mgu1a"]
 resource_name = "Ceiling_ReceivingApron"
 _surfaces = [{
-"aabb": AABB(-5.25, -0.15, -5, 10.5, 0.3, 10),
-"attribute_data": PackedByteArray("AAAAAAAAoEAAAChBAACgwAAAKEEAAKBAAAAAAAAAoEAAAAAAAACgwAAAKEEAAKDAAAAAAAAAoMAAAChBAACgQAAAKEEAAKDAAAAAAAAAoMAAAAAAAACgQAAAKEEAAKBA"),
+"aabb": AABB(-3.75, -0.15, -4, 7.5, 0.3, 8),
+"attribute_data": PackedByteArray("AAAAAAAAgEAAAPBAAACAwAAA8EAAAIBAAAAAAAAAgEAAAAAAAACAwAAA8EAAAIDAAAAAAAAAgMAAAPBAAACAQAAA8EAAAIDAAAAAAAAAgMAAAAAAAACAQAAA8EAAAIBA"),
 "format": 34359738391,
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),
 "vertex_count": 12,
-"vertex_data": PackedByteArray("AACowJqZGT4AAKBAAACoQJqZGT4AAKDAAACoQJqZGT4AAKBAAACowJqZGT4AAKBAAACowJqZGT4AAKDAAACoQJqZGT4AAKDAAACowJqZGb4AAKDAAACoQJqZGb4AAKBAAACoQJqZGb4AAKDAAACowJqZGb4AAKDAAACowJqZGb4AAKBAAACoQJqZGb4AAKBA/3///////7//f///////v/9///////+//3///////7//f///////v/9///////+//38AAP///z//fwAA////P/9/AAD///8//38AAP///z//fwAA////P/9/AAD///8/")
+"vertex_data": PackedByteArray("AABwwJqZGT4AAIBAAABwQJqZGT4AAIDAAABwQJqZGT4AAIBAAABwwJqZGT4AAIBAAABwwJqZGT4AAIDAAABwQJqZGT4AAIDAAABwwJqZGb4AAIDAAABwQJqZGb4AAIBAAABwQJqZGb4AAIDAAABwwJqZGb4AAIDAAABwwJqZGb4AAIBAAABwQJqZGb4AAIBA/3///////7//f///////v/9///////+//3///////7//f///////v/9///////+//38AAP///z//fwAA////P/9/AAD///8//38AAP///z//fwAA////P/9/AAD///8/")
 }]
 
 [sub_resource type="Resource" id="Resource_dp24u"]
@@ -81,35 +81,22 @@ resource_name = "DispatchSouthEast"
 script = ExtResource("3_53yqr")
 piece_id = "DispatchSouthEast"
 semantic_role = "WALL_PRIMARY"
-dimensions_m = Vector3(3.15, 4.8, 0.3)
+dimensions_m = Vector3(1.8642857, 4.8, 0.3)
 concealed_faces = PackedStringArray("POS_X")
-uv_origin_m = Vector2(7.2, -0.3)
+uv_origin_m = Vector2(5.4857144, -0.3)
 material_spec = ExtResource("8_mgu1a")
 authoring_notes = "Receiving C1 production visual; greybox retains collision. PRIMARY P05_C02; accepted through/butt ownership and metre UV phase."
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_japy4"]
-resource_name = "eaf3b_5a797fbdc766d7e3dc475abf"
-albedo_texture = ExtResource("9_53yqr")
-metallic = 1.0
-metallic_texture = ExtResource("11_0pssm")
-roughness_texture = ExtResource("13_t766x")
-normal_enabled = true
-normal_texture = ExtResource("12_348db")
-ao_enabled = true
-ao_texture = ExtResource("10_ou67k")
-uv1_scale = Vector3(0.6666667, 0.6666667, 0.6666667)
-texture_filter = 5
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_bvdj8"]
 resource_name = "DispatchSouthEast"
 _surfaces = [{
-"aabb": AABB(-1.575, -2.4, -0.15, 3.15, 4.8, 0.3),
-"attribute_data": PackedByteArray("ZmbmQJqZmb6amSVBAACQQJqZJUGamZm+ZmbmQJqZmb5mZuZAAACQQJqZJUEAAJBAmpklQZqZmb5mZuZAAACQQGZm5kCamZm+mpklQZqZmb6amSVBAACQQGZm5kAAAJBAZmbmQJqZmb4AAPBAAACQQAAA8ECamZm+ZmbmQJqZmb5mZuZAAACQQAAA8EAAAJBAZmbmQAAAAACamSVBmpmZvpqZJUEAAAAAZmbmQAAAAABmZuZAmpmZvpqZJUGamZm+ZmbmQJqZmb6amSVBAAAAAJqZJUGamZm+ZmbmQJqZmb5mZuZAAAAAAJqZJUEAAAAA"),
+"aabb": AABB(-0.93214285, -2.4, -0.15, 1.8642857, 4.8, 0.3),
+"attribute_data": PackedByteArray("+YqvQJqZmb40M+tAAACQQDQz60CamZm++YqvQJqZmb75iq9AAACQQDQz60AAAJBANDPrQJqZmb75iq9AAACQQPmKr0CamZm+NDPrQJqZmb40M+tAAACQQPmKr0AAAJBA+YqvQJqZmb6TJLlAAACQQJMkuUCamZm++YqvQJqZmb75iq9AAACQQJMkuUAAAJBA+YqvQAAAAAA0M+tAmpmZvjQz60AAAAAA+YqvQAAAAAD5iq9AmpmZvjQz60CamZm++YqvQJqZmb40M+tAAAAAADQz60CamZm++YqvQJqZmb75iq9AAAAAADQz60AAAAAA"),
 "format": 34359738391,
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),
 "vertex_count": 30,
-"vertex_data": PackedByteArray("mpnJv5qZGcCamRk+mpnJP5qZGUCamRk+mpnJP5qZGcCamRk+mpnJv5qZGcCamRk+mpnJv5qZGUCamRk+mpnJP5qZGUCamRk+mpnJP5qZGcCamRm+mpnJv5qZGUCamRm+mpnJv5qZGcCamRm+mpnJP5qZGcCamRm+mpnJP5qZGUCamRm+mpnJv5qZGUCamRm+mpnJv5qZGcCamRm+mpnJv5qZGUCamRk+mpnJv5qZGcCamRk+mpnJv5qZGcCamRm+mpnJv5qZGUCamRm+mpnJv5qZGUCamRk+mpnJv5qZGUCamRk+mpnJP5qZGUCamRm+mpnJP5qZGUCamRk+mpnJv5qZGUCamRk+mpnJv5qZGUCamRm+mpnJP5qZGUCamRm+mpnJv5qZGcCamRm+mpnJP5qZGcCamRk+mpnJP5qZGcCamRm+mpnJv5qZGcCamRm+mpnJv5qZGcCamRk+mpnJP5qZGcCamRk+/3//f////z//f/9/////P/9//3////8//3//f////z//f/9/////P/9//3////8//////////7//////////v/////////+//////////7//////////v/////////+/AAD/f/9//z8AAP9//3//PwAA/3//f/8/AAD/f/9//z8AAP9//3//PwAA/3//f/8//3///////7//f///////v/9///////+//3///////7//f///////v/9///////+//38AAP///z//fwAA////P/9/AAD///8//38AAP///z//fwAA////P/9/AAD///8/")
+"vertex_data": PackedByteArray("6qBuv5qZGcCamRk+6qBuP5qZGUCamRk+6qBuP5qZGcCamRk+6qBuv5qZGcCamRk+6qBuv5qZGUCamRk+6qBuP5qZGUCamRk+6qBuP5qZGcCamRm+6qBuv5qZGUCamRm+6qBuv5qZGcCamRm+6qBuP5qZGcCamRm+6qBuP5qZGUCamRm+6qBuv5qZGUCamRm+6qBuv5qZGcCamRm+6qBuv5qZGUCamRk+6qBuv5qZGcCamRk+6qBuv5qZGcCamRm+6qBuv5qZGUCamRm+6qBuv5qZGUCamRk+6qBuv5qZGUCamRk+6qBuP5qZGUCamRm+6qBuP5qZGUCamRk+6qBuv5qZGUCamRk+6qBuv5qZGUCamRm+6qBuP5qZGUCamRm+6qBuv5qZGcCamRm+6qBuP5qZGcCamRk+6qBuP5qZGcCamRm+6qBuv5qZGcCamRm+6qBuv5qZGcCamRk+6qBuP5qZGcCamRk+/3//f////z//f/9/////P/9//3////8//3//f////z//f/9/////P/9//3////8//////////7//////////v/////////+//////////7//////////v/////////+/AAD/f/9//z8AAP9//3//PwAA/3//f/8/AAD/f/9//z8AAP9//3//PwAA/3//f/8//3///////7//f///////v/9///////+//3///////7//f///////v/9///////+//38AAP///z//fwAA////P/9/AAD///8//38AAP///z//fwAA////P/9/AAD///8/")
 }]
 
 [sub_resource type="Resource" id="Resource_88fxe"]
@@ -117,7 +104,7 @@ resource_name = "DispatchSouthWest"
 script = ExtResource("3_53yqr")
 piece_id = "DispatchSouthWest"
 semantic_role = "WALL_PRIMARY"
-dimensions_m = Vector3(3.8, 4.8, 0.3)
+dimensions_m = Vector3(2.0857143, 4.8, 0.3)
 concealed_faces = PackedStringArray("NEG_X")
 uv_origin_m = Vector2(1, -0.3)
 material_spec = ExtResource("8_mgu1a")
@@ -126,13 +113,13 @@ authoring_notes = "Receiving C1 production visual; greybox retains collision. PR
 [sub_resource type="ArrayMesh" id="ArrayMesh_y73s0"]
 resource_name = "DispatchSouthWest"
 _surfaces = [{
-"aabb": AABB(-1.9, -2.4, -0.15, 3.8, 4.8, 0.3),
-"attribute_data": PackedByteArray("AACAP5qZmb6amZlAAACQQJqZmUCamZm+AACAP5qZmb4AAIA/AACQQJqZmUAAAJBAmpmZQJqZmb4AAIA/AACQQAAAgD+amZm+mpmZQJqZmb6amZlAAACQQAAAgD8AAJBAZmamP5qZmb4AAIA/AACQQAAAgD+amZm+ZmamP5qZmb5mZqY/AACQQAAAgD8AAJBAAACAPwAAAACamZlAmpmZvpqZmUAAAAAAAACAPwAAAAAAAIA/mpmZvpqZmUCamZm+AACAP5qZmb6amZlAAAAAAJqZmUCamZm+AACAP5qZmb4AAIA/AAAAAJqZmUAAAAAA"),
+"aabb": AABB(-1.0428572, -2.4, -0.15, 2.0857143, 4.8, 0.3),
+"attribute_data": PackedByteArray("AACAP5qZmb5YfEVAAACQQFh8RUCamZm+AACAP5qZmb4AAIA/AACQQFh8RUAAAJBAWHxFQJqZmb4AAIA/AACQQAAAgD+amZm+WHxFQJqZmb5YfEVAAACQQAAAgD8AAJBAZmamP5qZmb4AAIA/AACQQAAAgD+amZm+ZmamP5qZmb5mZqY/AACQQAAAgD8AAJBAAACAPwAAAABYfEVAmpmZvlh8RUAAAAAAAACAPwAAAAAAAIA/mpmZvlh8RUCamZm+AACAP5qZmb5YfEVAAAAAAFh8RUCamZm+AACAP5qZmb4AAIA/AAAAAFh8RUAAAAAA"),
 "format": 34359738391,
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),
 "vertex_count": 30,
-"vertex_data": PackedByteArray("MzPzv5qZGcCamRk+MzPzP5qZGUCamRk+MzPzP5qZGcCamRk+MzPzv5qZGcCamRk+MzPzv5qZGUCamRk+MzPzP5qZGUCamRk+MzPzP5qZGcCamRm+MzPzv5qZGUCamRm+MzPzv5qZGcCamRm+MzPzP5qZGcCamRm+MzPzP5qZGUCamRm+MzPzv5qZGUCamRm+MzPzP5qZGcCamRk+MzPzP5qZGUCamRm+MzPzP5qZGcCamRm+MzPzP5qZGcCamRk+MzPzP5qZGUCamRk+MzPzP5qZGUCamRm+MzPzv5qZGUCamRk+MzPzP5qZGUCamRm+MzPzP5qZGUCamRk+MzPzv5qZGUCamRk+MzPzv5qZGUCamRm+MzPzP5qZGUCamRm+MzPzv5qZGcCamRm+MzPzP5qZGcCamRk+MzPzP5qZGcCamRm+MzPzv5qZGcCamRm+MzPzv5qZGcCamRk+MzPzP5qZGcCamRk+/3//f////z//f/9/////P/9//3////8//3//f////z//f/9/////P/9//3////8//////////7//////////v/////////+//////////7//////////v/////////+/////f/9//7////9//3//v////3//f/+/////f/9//7////9//3//v////3//f/+//3///////7//f///////v/9///////+//3///////7//f///////v/9///////+//38AAP///z//fwAA////P/9/AAD///8//38AAP///z//fwAA////P/9/AAD///8/")
+"vertex_data": PackedByteArray("WHyFv5qZGcCamRk+WHyFP5qZGUCamRk+WHyFP5qZGcCamRk+WHyFv5qZGcCamRk+WHyFv5qZGUCamRk+WHyFP5qZGUCamRk+WHyFP5qZGcCamRm+WHyFv5qZGUCamRm+WHyFv5qZGcCamRm+WHyFP5qZGcCamRm+WHyFP5qZGUCamRm+WHyFv5qZGUCamRm+WHyFP5qZGcCamRk+WHyFP5qZGUCamRm+WHyFP5qZGcCamRm+WHyFP5qZGcCamRk+WHyFP5qZGUCamRk+WHyFP5qZGUCamRm+WHyFv5qZGUCamRk+WHyFP5qZGUCamRm+WHyFP5qZGUCamRk+WHyFv5qZGUCamRk+WHyFv5qZGUCamRm+WHyFP5qZGUCamRm+WHyFv5qZGcCamRm+WHyFP5qZGcCamRk+WHyFP5qZGcCamRm+WHyFv5qZGcCamRm+WHyFv5qZGcCamRk+WHyFP5qZGcCamRk+/3//f////z//f/9/////P/9//3////8//3//f////z//f/9/////P/9//3////8//////////7//////////v/////////+//////////7//////////v/////////+/////f/9//7////9//3//v////3//f/+/////f/9//7////9//3//v////3//f/+//3///////7//f///////v/9///////+//3///////7//f///////v/9///////+//38AAP///z//fwAA////P/9/AAD///8//38AAP///z//fwAA////P/9/AAD///8/")
 }]
 
 [sub_resource type="Resource" id="Resource_ssl42"]
@@ -174,22 +161,22 @@ resource_name = "Floor_ReceivingApron"
 script = ExtResource("3_53yqr")
 piece_id = "Floor_ReceivingApron"
 semantic_role = "FLOOR_PRIMARY"
-dimensions_m = Vector3(10.5, 0.3, 10)
+dimensions_m = Vector3(7.35, 0.3, 8)
 concealed_faces = PackedStringArray("NEG_X", "POS_X", "NEG_Z", "POS_Z")
-uv_origin_m = Vector2(0, -5)
+uv_origin_m = Vector2(0, -4)
 material_spec = ExtResource("13_kdhd8")
 authoring_notes = "Receiving C1 production visual; greybox retains collision. PRIMARY P05_C02; accepted through/butt ownership and metre UV phase."
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_348db"]
 resource_name = "Floor_ReceivingApron"
 _surfaces = [{
-"aabb": AABB(-5.25, -0.15, -5, 10.5, 0.3, 10),
-"attribute_data": PackedByteArray("AAAAAAAAoEAAAChBAACgwAAAKEEAAKBAAAAAAAAAoEAAAAAAAACgwAAAKEEAAKDAAAAAAAAAoMAAAChBAACgQAAAKEEAAKDAAAAAAAAAoMAAAAAAAACgQAAAKEEAAKBA"),
+"aabb": AABB(-3.675, -0.15, -4, 7.35, 0.3, 8),
+"attribute_data": PackedByteArray("AAAAAAAAgEAzM+tAAACAwDMz60AAAIBAAAAAAAAAgEAAAAAAAACAwDMz60AAAIDAAAAAAAAAgMAzM+tAAACAQDMz60AAAIDAAAAAAAAAgMAAAAAAAACAQDMz60AAAIBA"),
 "format": 34359738391,
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),
 "vertex_count": 12,
-"vertex_data": PackedByteArray("AACowJqZGT4AAKBAAACoQJqZGT4AAKDAAACoQJqZGT4AAKBAAACowJqZGT4AAKBAAACowJqZGT4AAKDAAACoQJqZGT4AAKDAAACowJqZGb4AAKDAAACoQJqZGb4AAKBAAACoQJqZGb4AAKDAAACowJqZGb4AAKDAAACowJqZGb4AAKBAAACoQJqZGb4AAKBA/3///////7//f///////v/9///////+//3///////7//f///////v/9///////+//38AAP///z//fwAA////P/9/AAD///8//38AAP///z//fwAA////P/9/AAD///8/")
+"vertex_data": PackedByteArray("MzNrwJqZGT4AAIBAMzNrQJqZGT4AAIDAMzNrQJqZGT4AAIBAMzNrwJqZGT4AAIBAMzNrwJqZGT4AAIDAMzNrQJqZGT4AAIDAMzNrwJqZGb4AAIDAMzNrQJqZGb4AAIBAMzNrQJqZGb4AAIDAMzNrwJqZGb4AAIDAMzNrwJqZGb4AAIBAMzNrQJqZGb4AAIBA/3///////7//f///////v/9///////+//3///////7//f///////v/9///////+//38AAP///z//fwAA////P/9/AAD///8//38AAP///z//fwAA////P/9/AAD///8/")
 }]
 
 [sub_resource type="Resource" id="Resource_f75qw"]
@@ -202,6 +189,19 @@ concealed_faces = PackedStringArray("NEG_X", "POS_X")
 uv_origin_m = Vector2(-4.85, -0.3)
 material_spec = ExtResource("8_mgu1a")
 authoring_notes = "Receiving C1 production visual; greybox retains collision. PRIMARY P05_C02; accepted through/butt ownership and metre UV phase."
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_japy4"]
+resource_name = "eaf3b_5a797fbdc766d7e3dc475abf"
+albedo_texture = ExtResource("9_53yqr")
+metallic = 1.0
+metallic_texture = ExtResource("11_0pssm")
+roughness_texture = ExtResource("13_t766x")
+normal_enabled = true
+normal_texture = ExtResource("12_348db")
+ao_enabled = true
+ao_texture = ExtResource("10_ou67k")
+uv1_scale = Vector3(0.6666667, 0.6666667, 0.6666667)
+texture_filter = 5
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_jtos4"]
 resource_name = "FreightNorth"
@@ -267,25 +267,25 @@ script = ExtResource("3_53yqr")
 piece_id = "ReceivingEastOpeningWall"
 recipe_id = "wall_with_rect_opening"
 semantic_role = "WALL_PRIMARY"
-dimensions_m = Vector3(10.3, 4.8, 0.3)
+dimensions_m = Vector3(8.3, 4.8, 0.3)
 concealed_faces = PackedStringArray()
-uv_origin_m = Vector2(-5.15, -0.3)
+uv_origin_m = Vector2(-4.15, -0.3)
 material_spec = ExtResource("8_mgu1a")
 authoring_notes = "Receiving C1 production visual; greybox retains collision. PRIMARY P05_C02; accepted through/butt ownership and metre UV phase."
-opening_width_m = 3.84
+opening_width_m = 2.84
 opening_height_m = 3.4
 opening_bottom_m = 0.3
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_pfren"]
 resource_name = "ReceivingEastOpeningWall"
 _surfaces = [{
-"aabb": AABB(-5.15, -2.4, -0.15, 10.3, 4.8, 0.3),
-"attribute_data": PackedByteArray("zcykwJqZmb6QwvW/AACAs5DC9b+amZm+zcykwJqZmb7NzKTAAACAs5DC9b8AAICzkML1v5qZmb7NzKTAAACAs83MpMCamZm+kML1v5qZmb6QwvW/AACAs83MpMAAAICzzcykwJqZmb4zM5vAAACAszMzm8CamZm+zcykwJqZmb7NzKTAAACAszMzm8AAAICzzcykwJqZmb6QwvW/AAAAAJDC9b+amZm+zcykwJqZmb7NzKTAAAAAAJDC9b8AAAAAzcykwAAAgLOQwvW/mplZQJDC9b8AAICzzcykwAAAgLPNzKTAmplZQJDC9b+amVlAkML1vwAAgLPNzKTAmplZQM3MpMAAAICzkML1vwAAgLOQwvW/mplZQM3MpMCamVlAzcykwAAAgLMzM5vAmplZQDMzm8AAAICzzcykwAAAgLPNzKTAmplZQDMzm8CamVlAMzObwAAAgLPNzKTAmplZQM3MpMAAAICzMzObwAAAgLMzM5vAmplZQM3MpMCamVlAzcykwJqZWUCQwvW/AACQQJDC9b+amVlAzcykwJqZWUDNzKTAAACQQJDC9b8AAJBAkML1v5qZWUDNzKTAAACQQM3MpMCamVlAkML1v5qZWUCQwvW/AACQQM3MpMAAAJBAzcykwJqZWUAzM5vAAACQQDMzm8CamVlAzcykwJqZWUDNzKTAAACQQDMzm8AAAJBAzcykwAAAAACQwvW/mpmZvpDC9b8AAAAAzcykwAAAAADNzKTAmpmZvpDC9b+amZm+kML1v5qZmb6QwvU/AACAs5DC9T+amZm+kML1v5qZmb6QwvW/AACAs5DC9T8AAICzkML1P5qZmb6QwvW/AACAs5DC9b+amZm+kML1P5qZmb6QwvU/AACAs5DC9b8AAICzkML1v5qZmb6QwvU/AAAAAJDC9T+amZm+kML1v5qZmb6QwvW/AAAAAJDC9T8AAAAAkML1vwAAAACQwvU/mpmZvpDC9T8AAAAAkML1vwAAAACQwvW/mpmZvpDC9T+amZm+kML1v5qZWUCQwvU/AACQQJDC9T+amVlAkML1v5qZWUCQwvW/AACQQJDC9T8AAJBAkML1P5qZWUCQwvW/AACQQJDC9b+amVlAkML1P5qZWUCQwvU/AACQQJDC9b8AAJBAkML1v5qZmb6QwvU/AAAAAJDC9T+amZm+kML1v5qZmb6QwvW/AAAAAJDC9T8AAAAAkML1vwAAAACQwvU/mpmZvpDC9T8AAAAAkML1vwAAAACQwvW/mpmZvpDC9T+amZm+kML1P5qZmb7NzKRAAACAs83MpECamZm+kML1P5qZmb6QwvU/AACAs83MpEAAAICzzcykQJqZmb6QwvU/AACAs5DC9T+amZm+zcykQJqZmb7NzKRAAACAs5DC9T8AAICzMzObwJqZmb7NzKTAAACAs83MpMCamZm+MzObwJqZmb4zM5vAAACAs83MpMAAAICzkML1P5qZmb7NzKRAAAAAAM3MpECamZm+kML1P5qZmb6QwvU/AAAAAM3MpEAAAAAAkML1PwAAgLPNzKRAmplZQM3MpEAAAICzkML1PwAAgLOQwvU/mplZQM3MpECamVlAzcykQAAAgLOQwvU/mplZQJDC9T8AAICzzcykQAAAgLPNzKRAmplZQJDC9T+amVlAzcykwAAAgLMzM5vAmplZQDMzm8AAAICzzcykwAAAgLPNzKTAmplZQDMzm8CamVlAMzObwAAAgLPNzKTAmplZQM3MpMAAAICzMzObwAAAgLMzM5vAmplZQM3MpMCamVlAkML1P5qZWUDNzKRAAACQQM3MpECamVlAkML1P5qZWUCQwvU/AACQQM3MpEAAAJBAzcykQJqZWUCQwvU/AACQQJDC9T+amVlAzcykQJqZWUDNzKRAAACQQJDC9T8AAJBAMzObwJqZWUDNzKTAAACQQM3MpMCamVlAMzObwJqZWUAzM5vAAACQQM3MpMAAAJBAkML1PwAAAADNzKRAmpmZvs3MpEAAAAAAkML1PwAAAACQwvU/mpmZvs3MpECamZm+"),
+"aabb": AABB(-4.15, -2.4, -0.15, 8.3, 4.8, 0.3),
+"attribute_data": PackedByteArray("zcyEwJqZmb6QwrW/AACAs5DCtb+amZm+zcyEwJqZmb7NzITAAACAs5DCtb8AAICzkMK1v5qZmb7NzITAAACAs83MhMCamZm+kMK1v5qZmb6QwrW/AACAs83MhMAAAICzzcyEwJqZmb5nZnbAAACAs2dmdsCamZm+zcyEwJqZmb7NzITAAACAs2dmdsAAAICzzcyEwJqZmb6QwrW/AAAAAJDCtb+amZm+zcyEwJqZmb7NzITAAAAAAJDCtb8AAAAAzcyEwAAAgLOQwrW/mplZQJDCtb8AAICzzcyEwAAAgLPNzITAmplZQJDCtb+amVlAkMK1vwAAgLPNzITAmplZQM3MhMAAAICzkMK1vwAAgLOQwrW/mplZQM3MhMCamVlAzcyEwAAAgLNnZnbAmplZQGdmdsAAAICzzcyEwAAAgLPNzITAmplZQGdmdsCamVlAZ2Z2wAAAgLPNzITAmplZQM3MhMAAAICzZ2Z2wAAAgLNnZnbAmplZQM3MhMCamVlAzcyEwJqZWUCQwrW/AACQQJDCtb+amVlAzcyEwJqZWUDNzITAAACQQJDCtb8AAJBAkMK1v5qZWUDNzITAAACQQM3MhMCamVlAkMK1v5qZWUCQwrW/AACQQM3MhMAAAJBAzcyEwJqZWUBnZnbAAACQQGdmdsCamVlAzcyEwJqZWUDNzITAAACQQGdmdsAAAJBAzcyEwAAAAACQwrW/mpmZvpDCtb8AAAAAzcyEwAAAAADNzITAmpmZvpDCtb+amZm+kMK1v5qZmb6QwrU/AACAs5DCtT+amZm+kMK1v5qZmb6QwrW/AACAs5DCtT8AAICzkMK1P5qZmb6QwrW/AACAs5DCtb+amZm+kMK1P5qZmb6QwrU/AACAs5DCtb8AAICzkMK1v5qZmb6QwrU/AAAAAJDCtT+amZm+kMK1v5qZmb6QwrW/AAAAAJDCtT8AAAAAkMK1vwAAAACQwrU/mpmZvpDCtT8AAAAAkMK1vwAAAACQwrW/mpmZvpDCtT+amZm+kMK1v5qZWUCQwrU/AACQQJDCtT+amVlAkMK1v5qZWUCQwrW/AACQQJDCtT8AAJBAkMK1P5qZWUCQwrW/AACQQJDCtb+amVlAkMK1P5qZWUCQwrU/AACQQJDCtb8AAJBAkMK1v5qZmb6QwrU/AAAAAJDCtT+amZm+kMK1v5qZmb6QwrW/AAAAAJDCtT8AAAAAkMK1vwAAAACQwrU/mpmZvpDCtT8AAAAAkMK1vwAAAACQwrW/mpmZvpDCtT+amZm+kMK1P5qZmb7NzIRAAACAs83MhECamZm+kMK1P5qZmb6QwrU/AACAs83MhEAAAICzzcyEQJqZmb6QwrU/AACAs5DCtT+amZm+zcyEQJqZmb7NzIRAAACAs5DCtT8AAICzZ2Z2wJqZmb7NzITAAACAs83MhMCamZm+Z2Z2wJqZmb5nZnbAAACAs83MhMAAAICzkMK1P5qZmb7NzIRAAAAAAM3MhECamZm+kMK1P5qZmb6QwrU/AAAAAM3MhEAAAAAAkMK1PwAAgLPNzIRAmplZQM3MhEAAAICzkMK1PwAAgLOQwrU/mplZQM3MhECamVlAzcyEQAAAgLOQwrU/mplZQJDCtT8AAICzzcyEQAAAgLPNzIRAmplZQJDCtT+amVlAzcyEwAAAgLNnZnbAmplZQGdmdsAAAICzzcyEwAAAgLPNzITAmplZQGdmdsCamVlAZ2Z2wAAAgLPNzITAmplZQM3MhMAAAICzZ2Z2wAAAgLNnZnbAmplZQM3MhMCamVlAkMK1P5qZWUDNzIRAAACQQM3MhECamVlAkMK1P5qZWUCQwrU/AACQQM3MhEAAAJBAzcyEQJqZWUCQwrU/AACQQJDCtT+amVlAzcyEQJqZWUDNzIRAAACQQJDCtT8AAJBAZ2Z2wJqZWUDNzITAAACQQM3MhMCamVlAZ2Z2wJqZWUBnZnbAAACQQM3MhMAAAJBAkMK1PwAAAADNzIRAmpmZvs3MhEAAAAAAkMK1PwAAAACQwrU/mpmZvs3MhECamZm+"),
 "format": 34359738391,
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),
 "vertex_count": 192,
-"vertex_data": PackedByteArray("zcykwJqZGcCamRk+j8L1v2dmBsCamRk+j8L1v5qZGcCamRk+zcykwJqZGcCamRk+zcykwGdmBsCamRk+j8L1v2dmBsCamRk+j8L1v5qZGcCamRm+zcykwGdmBsCamRm+zcykwJqZGcCamRm+j8L1v5qZGcCamRm+j8L1v2dmBsCamRm+zcykwGdmBsCamRm+zcykwJqZGcCamRm+zcykwGdmBsCamRk+zcykwJqZGcCamRk+zcykwJqZGcCamRm+zcykwGdmBsCamRm+zcykwGdmBsCamRk+zcykwJqZGcCamRm+j8L1v5qZGcCamRk+j8L1v5qZGcCamRm+zcykwJqZGcCamRm+zcykwJqZGcCamRk+j8L1v5qZGcCamRk+zcykwGdmBsCamRk+j8L1v2Zmpj+amRk+j8L1v2dmBsCamRk+zcykwGdmBsCamRk+zcykwGZmpj+amRk+j8L1v2Zmpj+amRk+j8L1v2dmBsCamRm+zcykwGZmpj+amRm+zcykwGdmBsCamRm+j8L1v2dmBsCamRm+j8L1v2Zmpj+amRm+zcykwGZmpj+amRm+zcykwGdmBsCamRm+zcykwGZmpj+amRk+zcykwGdmBsCamRk+zcykwGdmBsCamRm+zcykwGZmpj+amRm+zcykwGZmpj+amRk+j8L1v2dmBsCamRk+j8L1v2Zmpj+amRm+j8L1v2dmBsCamRm+j8L1v2dmBsCamRk+j8L1v2Zmpj+amRk+j8L1v2Zmpj+amRm+zcykwGZmpj+amRk+j8L1v5qZGUCamRk+j8L1v2Zmpj+amRk+zcykwGZmpj+amRk+zcykwJqZGUCamRk+j8L1v5qZGUCamRk+j8L1v2Zmpj+amRm+zcykwJqZGUCamRm+zcykwGZmpj+amRm+j8L1v2Zmpj+amRm+j8L1v5qZGUCamRm+zcykwJqZGUCamRm+zcykwGZmpj+amRm+zcykwJqZGUCamRk+zcykwGZmpj+amRk+zcykwGZmpj+amRm+zcykwJqZGUCamRm+zcykwJqZGUCamRk+zcykwJqZGUCamRk+j8L1v5qZGUCamRm+j8L1v5qZGUCamRk+zcykwJqZGUCamRk+zcykwJqZGUCamRm+j8L1v5qZGUCamRm+j8L1v5qZGcCamRk+j8L1P2dmBsCamRk+j8L1P5qZGcCamRk+j8L1v5qZGcCamRk+j8L1v2dmBsCamRk+j8L1P2dmBsCamRk+j8L1P5qZGcCamRm+j8L1v2dmBsCamRm+j8L1v5qZGcCamRm+j8L1P5qZGcCamRm+j8L1P2dmBsCamRm+j8L1v2dmBsCamRm+j8L1v5qZGcCamRm+j8L1P5qZGcCamRk+j8L1P5qZGcCamRm+j8L1v5qZGcCamRm+j8L1v5qZGcCamRk+j8L1P5qZGcCamRk+j8L1v2dmBsCamRk+j8L1P2dmBsCamRm+j8L1P2dmBsCamRk+j8L1v2dmBsCamRk+j8L1v2dmBsCamRm+j8L1P2dmBsCamRm+j8L1v2Zmpj+amRk+j8L1P5qZGUCamRk+j8L1P2Zmpj+amRk+j8L1v2Zmpj+amRk+j8L1v5qZGUCamRk+j8L1P5qZGUCamRk+j8L1P2Zmpj+amRm+j8L1v5qZGUCamRm+j8L1v2Zmpj+amRm+j8L1P2Zmpj+amRm+j8L1P5qZGUCamRm+j8L1v5qZGUCamRm+j8L1v2Zmpj+amRm+j8L1P2Zmpj+amRk+j8L1P2Zmpj+amRm+j8L1v2Zmpj+amRm+j8L1v2Zmpj+amRk+j8L1P2Zmpj+amRk+j8L1v5qZGUCamRk+j8L1P5qZGUCamRm+j8L1P5qZGUCamRk+j8L1v5qZGUCamRk+j8L1v5qZGUCamRm+j8L1P5qZGUCamRm+j8L1P5qZGcCamRk+zcykQGdmBsCamRk+zcykQJqZGcCamRk+j8L1P5qZGcCamRk+j8L1P2dmBsCamRk+zcykQGdmBsCamRk+zcykQJqZGcCamRm+j8L1P2dmBsCamRm+j8L1P5qZGcCamRm+zcykQJqZGcCamRm+zcykQGdmBsCamRm+j8L1P2dmBsCamRm+zcykQJqZGcCamRk+zcykQGdmBsCamRm+zcykQJqZGcCamRm+zcykQJqZGcCamRk+zcykQGdmBsCamRk+zcykQGdmBsCamRm+j8L1P5qZGcCamRm+zcykQJqZGcCamRk+zcykQJqZGcCamRm+j8L1P5qZGcCamRm+j8L1P5qZGcCamRk+zcykQJqZGcCamRk+j8L1P2dmBsCamRk+zcykQGZmpj+amRk+zcykQGdmBsCamRk+j8L1P2dmBsCamRk+j8L1P2Zmpj+amRk+zcykQGZmpj+amRk+zcykQGdmBsCamRm+j8L1P2Zmpj+amRm+j8L1P2dmBsCamRm+zcykQGdmBsCamRm+zcykQGZmpj+amRm+j8L1P2Zmpj+amRm+j8L1P2dmBsCamRm+j8L1P2Zmpj+amRk+j8L1P2dmBsCamRk+j8L1P2dmBsCamRm+j8L1P2Zmpj+amRm+j8L1P2Zmpj+amRk+zcykQGdmBsCamRk+zcykQGZmpj+amRm+zcykQGdmBsCamRm+zcykQGdmBsCamRk+zcykQGZmpj+amRk+zcykQGZmpj+amRm+j8L1P2Zmpj+amRk+zcykQJqZGUCamRk+zcykQGZmpj+amRk+j8L1P2Zmpj+amRk+j8L1P5qZGUCamRk+zcykQJqZGUCamRk+zcykQGZmpj+amRm+j8L1P5qZGUCamRm+j8L1P2Zmpj+amRm+zcykQGZmpj+amRm+zcykQJqZGUCamRm+j8L1P5qZGUCamRm+zcykQGZmpj+amRk+zcykQJqZGUCamRm+zcykQGZmpj+amRm+zcykQGZmpj+amRk+zcykQJqZGUCamRk+zcykQJqZGUCamRm+j8L1P5qZGUCamRk+zcykQJqZGUCamRm+zcykQJqZGUCamRk+j8L1P5qZGUCamRk+j8L1P5qZGUCamRm+zcykQJqZGUCamRm+/3//f////z//f/9/////P/9//3////8//3//f////z//f/9/////P/9//3////8//////////7//////////v/////////+//////////7//////////v/////////+/AAD/f/9//z8AAP9//3//PwAA/3//f/8/AAD/f/9//z8AAP9//3//PwAA/3//f/8//38AAP///z//fwAA////P/9/AAD///8//38AAP///z//fwAA////P/9/AAD///8//3//f////z//f/9/////P/9//3////8//3//f////z//f/9/////P/9//3////8//////////7//////////v/////////+//////////7//////////v/////////+/AAD/f/9//z8AAP9//3//PwAA/3//f/8/AAD/f/9//z8AAP9//3//PwAA/3//f/8/////f/9//7////9//3//v////3//f/+/////f/9//7////9//3//v////3//f/+//3//f////z//f/9/////P/9//3////8//3//f////z//f/9/////P/9//3////8//////////7//////////v/////////+//////////7//////////v/////////+/AAD/f/9//z8AAP9//3//PwAA/3//f/8/AAD/f/9//z8AAP9//3//PwAA/3//f/8//3///////7//f///////v/9///////+//3///////7//f///////v/9///////+//3//f////z//f/9/////P/9//3////8//3//f////z//f/9/////P/9//3////8//////////7//////////v/////////+//////////7//////////v/////////+//38AAP///z//fwAA////P/9/AAD///8//38AAP///z//fwAA////P/9/AAD///8//3///////7//f///////v/9///////+//3///////7//f///////v/9///////+//3//f////z//f/9/////P/9//3////8//3//f////z//f/9/////P/9//3////8//////////7//////////v/////////+//////////7//////////v/////////+//38AAP///z//fwAA////P/9/AAD///8//38AAP///z//fwAA////P/9/AAD///8//3///////7//f///////v/9///////+//3///////7//f///////v/9///////+//3//f////z//f/9/////P/9//3////8//3//f////z//f/9/////P/9//3////8//////////7//////////v/////////+//////////7//////////v/////////+/////f/9//7////9//3//v////3//f/+/////f/9//7////9//3//v////3//f/+//38AAP///z//fwAA////P/9/AAD///8//38AAP///z//fwAA////P/9/AAD///8//3//f////z//f/9/////P/9//3////8//3//f////z//f/9/////P/9//3////8//////////7//////////v/////////+//////////7//////////v/////////+/AAD/f/9//z8AAP9//3//PwAA/3//f/8/AAD/f/9//z8AAP9//3//PwAA/3//f/8/////f/9//7////9//3//v////3//f/+/////f/9//7////9//3//v////3//f/+//3//f////z//f/9/////P/9//3////8//3//f////z//f/9/////P/9//3////8//////////7//////////v/////////+//////////7//////////v/////////+/////f/9//7////9//3//v////3//f/+/////f/9//7////9//3//v////3//f/+//3///////7//f///////v/9///////+//3///////7//f///////v/9///////+/")
+"vertex_data": PackedByteArray("zcyEwJqZGcCamRk+j8K1v2dmBsCamRk+j8K1v5qZGcCamRk+zcyEwJqZGcCamRk+zcyEwGdmBsCamRk+j8K1v2dmBsCamRk+j8K1v5qZGcCamRm+zcyEwGdmBsCamRm+zcyEwJqZGcCamRm+j8K1v5qZGcCamRm+j8K1v2dmBsCamRm+zcyEwGdmBsCamRm+zcyEwJqZGcCamRm+zcyEwGdmBsCamRk+zcyEwJqZGcCamRk+zcyEwJqZGcCamRm+zcyEwGdmBsCamRm+zcyEwGdmBsCamRk+zcyEwJqZGcCamRm+j8K1v5qZGcCamRk+j8K1v5qZGcCamRm+zcyEwJqZGcCamRm+zcyEwJqZGcCamRk+j8K1v5qZGcCamRk+zcyEwGdmBsCamRk+j8K1v2Zmpj+amRk+j8K1v2dmBsCamRk+zcyEwGdmBsCamRk+zcyEwGZmpj+amRk+j8K1v2Zmpj+amRk+j8K1v2dmBsCamRm+zcyEwGZmpj+amRm+zcyEwGdmBsCamRm+j8K1v2dmBsCamRm+j8K1v2Zmpj+amRm+zcyEwGZmpj+amRm+zcyEwGdmBsCamRm+zcyEwGZmpj+amRk+zcyEwGdmBsCamRk+zcyEwGdmBsCamRm+zcyEwGZmpj+amRm+zcyEwGZmpj+amRk+j8K1v2dmBsCamRk+j8K1v2Zmpj+amRm+j8K1v2dmBsCamRm+j8K1v2dmBsCamRk+j8K1v2Zmpj+amRk+j8K1v2Zmpj+amRm+zcyEwGZmpj+amRk+j8K1v5qZGUCamRk+j8K1v2Zmpj+amRk+zcyEwGZmpj+amRk+zcyEwJqZGUCamRk+j8K1v5qZGUCamRk+j8K1v2Zmpj+amRm+zcyEwJqZGUCamRm+zcyEwGZmpj+amRm+j8K1v2Zmpj+amRm+j8K1v5qZGUCamRm+zcyEwJqZGUCamRm+zcyEwGZmpj+amRm+zcyEwJqZGUCamRk+zcyEwGZmpj+amRk+zcyEwGZmpj+amRm+zcyEwJqZGUCamRm+zcyEwJqZGUCamRk+zcyEwJqZGUCamRk+j8K1v5qZGUCamRm+j8K1v5qZGUCamRk+zcyEwJqZGUCamRk+zcyEwJqZGUCamRm+j8K1v5qZGUCamRm+j8K1v5qZGcCamRk+j8K1P2dmBsCamRk+j8K1P5qZGcCamRk+j8K1v5qZGcCamRk+j8K1v2dmBsCamRk+j8K1P2dmBsCamRk+j8K1P5qZGcCamRm+j8K1v2dmBsCamRm+j8K1v5qZGcCamRm+j8K1P5qZGcCamRm+j8K1P2dmBsCamRm+j8K1v2dmBsCamRm+j8K1v5qZGcCamRm+j8K1P5qZGcCamRk+j8K1P5qZGcCamRm+j8K1v5qZGcCamRm+j8K1v5qZGcCamRk+j8K1P5qZGcCamRk+j8K1v2dmBsCamRk+j8K1P2dmBsCamRm+j8K1P2dmBsCamRk+j8K1v2dmBsCamRk+j8K1v2dmBsCamRm+j8K1P2dmBsCamRm+j8K1v2Zmpj+amRk+j8K1P5qZGUCamRk+j8K1P2Zmpj+amRk+j8K1v2Zmpj+amRk+j8K1v5qZGUCamRk+j8K1P5qZGUCamRk+j8K1P2Zmpj+amRm+j8K1v5qZGUCamRm+j8K1v2Zmpj+amRm+j8K1P2Zmpj+amRm+j8K1P5qZGUCamRm+j8K1v5qZGUCamRm+j8K1v2Zmpj+amRm+j8K1P2Zmpj+amRk+j8K1P2Zmpj+amRm+j8K1v2Zmpj+amRm+j8K1v2Zmpj+amRk+j8K1P2Zmpj+amRk+j8K1v5qZGUCamRk+j8K1P5qZGUCamRm+j8K1P5qZGUCamRk+j8K1v5qZGUCamRk+j8K1v5qZGUCamRm+j8K1P5qZGUCamRm+j8K1P5qZGcCamRk+zcyEQGdmBsCamRk+zcyEQJqZGcCamRk+j8K1P5qZGcCamRk+j8K1P2dmBsCamRk+zcyEQGdmBsCamRk+zcyEQJqZGcCamRm+j8K1P2dmBsCamRm+j8K1P5qZGcCamRm+zcyEQJqZGcCamRm+zcyEQGdmBsCamRm+j8K1P2dmBsCamRm+zcyEQJqZGcCamRk+zcyEQGdmBsCamRm+zcyEQJqZGcCamRm+zcyEQJqZGcCamRk+zcyEQGdmBsCamRk+zcyEQGdmBsCamRm+j8K1P5qZGcCamRm+zcyEQJqZGcCamRk+zcyEQJqZGcCamRm+j8K1P5qZGcCamRm+j8K1P5qZGcCamRk+zcyEQJqZGcCamRk+j8K1P2dmBsCamRk+zcyEQGZmpj+amRk+zcyEQGdmBsCamRk+j8K1P2dmBsCamRk+j8K1P2Zmpj+amRk+zcyEQGZmpj+amRk+zcyEQGdmBsCamRm+j8K1P2Zmpj+amRm+j8K1P2dmBsCamRm+zcyEQGdmBsCamRm+zcyEQGZmpj+amRm+j8K1P2Zmpj+amRm+j8K1P2dmBsCamRm+j8K1P2Zmpj+amRk+j8K1P2dmBsCamRk+j8K1P2dmBsCamRm+j8K1P2Zmpj+amRm+j8K1P2Zmpj+amRk+zcyEQGdmBsCamRk+zcyEQGZmpj+amRm+zcyEQGdmBsCamRm+zcyEQGdmBsCamRk+zcyEQGZmpj+amRk+zcyEQGZmpj+amRm+j8K1P2Zmpj+amRk+zcyEQJqZGUCamRk+zcyEQGZmpj+amRk+j8K1P2Zmpj+amRk+j8K1P5qZGUCamRk+zcyEQJqZGUCamRk+zcyEQGZmpj+amRm+j8K1P5qZGUCamRm+j8K1P2Zmpj+amRm+zcyEQGZmpj+amRm+zcyEQJqZGUCamRm+j8K1P5qZGUCamRm+zcyEQGZmpj+amRk+zcyEQJqZGUCamRm+zcyEQGZmpj+amRm+zcyEQGZmpj+amRk+zcyEQJqZGUCamRk+zcyEQJqZGUCamRm+j8K1P5qZGUCamRk+zcyEQJqZGUCamRm+zcyEQJqZGUCamRk+j8K1P5qZGUCamRk+j8K1P5qZGUCamRm+zcyEQJqZGUCamRm+/3//f////z//f/9/////P/9//3////8//3//f////z//f/9/////P/9//3////8//////////7//////////v/////////+//////////7//////////v/////////+/AAD/f/9//z8AAP9//3//PwAA/3//f/8/AAD/f/9//z8AAP9//3//PwAA/3//f/8//38AAP///z//fwAA////P/9/AAD///8//38AAP///z//fwAA////P/9/AAD///8//3//f////z//f/9/////P/9//3////8//3//f////z//f/9/////P/9//3////8//////////7//////////v/////////+//////////7//////////v/////////+/AAD/f/9//z8AAP9//3//PwAA/3//f/8/AAD/f/9//z8AAP9//3//PwAA/3//f/8/////f/9//7////9//3//v////3//f/+/////f/9//7////9//3//v////3//f/+//3//f////z//f/9/////P/9//3////8//3//f////z//f/9/////P/9//3////8//////////7//////////v/////////+//////////7//////////v/////////+/AAD/f/9//z8AAP9//3//PwAA/3//f/8/AAD/f/9//z8AAP9//3//PwAA/3//f/8//3///////7//f///////v/9///////+//3///////7//f///////v/9///////+//3//f////z//f/9/////P/9//3////8//3//f////z//f/9/////P/9//3////8//////////7//////////v/////////+//////////7//////////v/////////+//38AAP///z//fwAA////P/9/AAD///8//38AAP///z//fwAA////P/9/AAD///8//3///////7//f///////v/9///////+//3///////7//f///////v/9///////+//3//f////z//f/9/////P/9//3////8//3//f////z//f/9/////P/9//3////8//////////7//////////v/////////+//////////7//////////v/////////+//38AAP///z//fwAA////P/9/AAD///8//38AAP///z//fwAA////P/9/AAD///8//3///////7//f///////v/9///////+//3///////7//f///////v/9///////+//3//f////z//f/9/////P/9//3////8//3//f////z//f/9/////P/9//3////8//////////7//////////v/////////+//////////7//////////v/////////+/////f/9//7////9//3//v////3//f/+/////f/9//7////9//3//v////3//f/+//38AAP///z//fwAA////P/9/AAD///8//38AAP///z//fwAA////P/9/AAD///8//3//f////z//f/9/////P/9//3////8//3//f////z//f/9/////P/9//3////8//////////7//////////v/////////+//////////7//////////v/////////+/AAD/f/9//z8AAP9//3//PwAA/3//f/8/AAD/f/9//z8AAP9//3//PwAA/3//f/8/////f/9//7////9//3//v////3//f/+/////f/9//7////9//3//v////3//f/+//3//f////z//f/9/////P/9//3////8//3//f////z//f/9/////P/9//3////8//////////7//////////v/////////+//////////7//////////v/////////+/////f/9//7////9//3//v////3//f/+/////f/9//7////9//3//v////3//f/+//3///////7//f///////v/9///////+//3///////7//f///////v/9///////+/")
 }]
 
 [sub_resource type="Resource" id="Resource_fv0bs"]
@@ -316,7 +316,7 @@ resource_name = "ReceivingSouth"
 script = ExtResource("3_53yqr")
 piece_id = "ReceivingSouth"
 semantic_role = "WALL_PRIMARY"
-dimensions_m = Vector3(10.5, 4.8, 0.3)
+dimensions_m = Vector3(7.5, 4.8, 0.3)
 concealed_faces = PackedStringArray("POS_X")
 uv_origin_m = Vector2(-0.15, -0.3)
 material_spec = ExtResource("8_mgu1a")
@@ -325,13 +325,13 @@ authoring_notes = "Receiving C1 production visual; greybox retains collision. PR
 [sub_resource type="ArrayMesh" id="ArrayMesh_3pdl3"]
 resource_name = "ReceivingSouth"
 _surfaces = [{
-"aabb": AABB(-5.25, -2.4, -0.15, 10.5, 4.8, 0.3),
-"attribute_data": PackedByteArray("mpkZvpqZmb6amSVBAACQQJqZJUGamZm+mpkZvpqZmb6amRm+AACQQJqZJUEAAJBAmpklQZqZmb6amRm+AACQQJqZGb6amZm+mpklQZqZmb6amSVBAACQQJqZGb4AAJBAmpkZvpqZmb6amRk+AACQQJqZGT6amZm+mpkZvpqZmb6amRm+AACQQJqZGT4AAJBAmpkZvgAAAACamSVBmpmZvpqZJUEAAAAAmpkZvgAAAACamRm+mpmZvpqZJUGamZm+mpkZvpqZmb6amSVBAAAAAJqZJUGamZm+mpkZvpqZmb6amRm+AAAAAJqZJUEAAAAA"),
+"aabb": AABB(-3.75, -2.4, -0.15, 7.5, 4.8, 0.3),
+"attribute_data": PackedByteArray("mpkZvpqZmb4zM+tAAACQQDMz60CamZm+mpkZvpqZmb6amRm+AACQQDMz60AAAJBAMzPrQJqZmb6amRm+AACQQJqZGb6amZm+MzPrQJqZmb4zM+tAAACQQJqZGb4AAJBAmpkZvpqZmb6amRk+AACQQJqZGT6amZm+mpkZvpqZmb6amRm+AACQQJqZGT4AAJBAmpkZvgAAAAAzM+tAmpmZvjMz60AAAAAAmpkZvgAAAACamRm+mpmZvjMz60CamZm+mpkZvpqZmb4zM+tAAAAAADMz60CamZm+mpkZvpqZmb6amRm+AAAAADMz60AAAAAA"),
 "format": 34359738391,
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),
 "vertex_count": 30,
-"vertex_data": PackedByteArray("AACowJqZGcCamRk+AACoQJqZGUCamRk+AACoQJqZGcCamRk+AACowJqZGcCamRk+AACowJqZGUCamRk+AACoQJqZGUCamRk+AACoQJqZGcCamRm+AACowJqZGUCamRm+AACowJqZGcCamRm+AACoQJqZGcCamRm+AACoQJqZGUCamRm+AACowJqZGUCamRm+AACowJqZGcCamRm+AACowJqZGUCamRk+AACowJqZGcCamRk+AACowJqZGcCamRm+AACowJqZGUCamRm+AACowJqZGUCamRk+AACowJqZGUCamRk+AACoQJqZGUCamRm+AACoQJqZGUCamRk+AACowJqZGUCamRk+AACowJqZGUCamRm+AACoQJqZGUCamRm+AACowJqZGcCamRm+AACoQJqZGcCamRk+AACoQJqZGcCamRm+AACowJqZGcCamRm+AACowJqZGcCamRk+AACoQJqZGcCamRk+/3//f////z//f/9/////P/9//3////8//3//f////z//f/9/////P/9//3////8//////////7//////////v/////////+//////////7//////////v/////////+/AAD/f/9//z8AAP9//3//PwAA/3//f/8/AAD/f/9//z8AAP9//3//PwAA/3//f/8//3///////7//f///////v/9///////+//3///////7//f///////v/9///////+//38AAP///z//fwAA////P/9/AAD///8//38AAP///z//fwAA////P/9/AAD///8/")
+"vertex_data": PackedByteArray("AABwwJqZGcCamRk+AABwQJqZGUCamRk+AABwQJqZGcCamRk+AABwwJqZGcCamRk+AABwwJqZGUCamRk+AABwQJqZGUCamRk+AABwQJqZGcCamRm+AABwwJqZGUCamRm+AABwwJqZGcCamRm+AABwQJqZGcCamRm+AABwQJqZGUCamRm+AABwwJqZGUCamRm+AABwwJqZGcCamRm+AABwwJqZGUCamRk+AABwwJqZGcCamRk+AABwwJqZGcCamRm+AABwwJqZGUCamRm+AABwwJqZGUCamRk+AABwwJqZGUCamRk+AABwQJqZGUCamRm+AABwQJqZGUCamRk+AABwwJqZGUCamRk+AABwwJqZGUCamRm+AABwQJqZGUCamRm+AABwwJqZGcCamRm+AABwQJqZGcCamRk+AABwQJqZGcCamRm+AABwwJqZGcCamRm+AABwwJqZGcCamRk+AABwQJqZGcCamRk+/3//f////z//f/9/////P/9//3////8//3//f////z//f/9/////P/9//3////8//////////7//////////v/////////+//////////7//////////v/////////+/AAD/f/9//z8AAP9//3//PwAA/3//f/8/AAD/f/9//z8AAP9//3//PwAA/3//f/8//3///////7//f///////v/9///////+//3///////7//f///////v/9///////+//38AAP///z//fwAA////P/9/AAD///8//38AAP///z//fwAA////P/9/AAD///8/")
 }]
 
 [sub_resource type="Resource" id="Resource_hn36o"]
@@ -339,7 +339,7 @@ resource_name = "ReceivingWestNorthReturn"
 script = ExtResource("3_53yqr")
 piece_id = "ReceivingWestNorthReturn"
 semantic_role = "OPENING_REVEAL"
-dimensions_m = Vector3(2.35, 4.8, 0.3)
+dimensions_m = Vector3(1.35, 4.8, 0.3)
 concealed_faces = PackedStringArray("POS_X")
 uv_origin_m = Vector2(2.5, -0.3)
 material_spec = ExtResource("8_mgu1a")
@@ -348,13 +348,13 @@ authoring_notes = "Receiving C1 production visual; greybox retains collision. PR
 [sub_resource type="ArrayMesh" id="ArrayMesh_r4mq3"]
 resource_name = "ReceivingWestNorthReturn"
 _surfaces = [{
-"aabb": AABB(-1.175, -2.4, -0.15, 2.35, 4.8, 0.3),
-"attribute_data": PackedByteArray("AAAgQJqZmb4zM5tAAACQQDMzm0CamZm+AAAgQJqZmb4AACBAAACQQDMzm0AAAJBAMzObQJqZmb4AACBAAACQQAAAIECamZm+MzObQJqZmb4zM5tAAACQQAAAIEAAAJBAAAAgQJqZmb4zMzNAAACQQDMzM0CamZm+AAAgQJqZmb4AACBAAACQQDMzM0AAAJBAAAAgQAAAAAAzM5tAmpmZvjMzm0AAAAAAAAAgQAAAAAAAACBAmpmZvjMzm0CamZm+AAAgQJqZmb4zM5tAAAAAADMzm0CamZm+AAAgQJqZmb4AACBAAAAAADMzm0AAAAAA"),
+"aabb": AABB(-0.675, -2.4, -0.15, 1.35, 4.8, 0.3),
+"attribute_data": PackedByteArray("AAAgQJqZmb5mZnZAAACQQGZmdkCamZm+AAAgQJqZmb4AACBAAACQQGZmdkAAAJBAZmZ2QJqZmb4AACBAAACQQAAAIECamZm+ZmZ2QJqZmb5mZnZAAACQQAAAIEAAAJBAAAAgQJqZmb4zMzNAAACQQDMzM0CamZm+AAAgQJqZmb4AACBAAACQQDMzM0AAAJBAAAAgQAAAAABmZnZAmpmZvmZmdkAAAAAAAAAgQAAAAAAAACBAmpmZvmZmdkCamZm+AAAgQJqZmb5mZnZAAAAAAGZmdkCamZm+AAAgQJqZmb4AACBAAAAAAGZmdkAAAAAA"),
 "format": 34359738391,
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),
 "vertex_count": 30,
-"vertex_data": PackedByteArray("ZmaWv5qZGcCamRk+ZmaWP5qZGUCamRk+ZmaWP5qZGcCamRk+ZmaWv5qZGcCamRk+ZmaWv5qZGUCamRk+ZmaWP5qZGUCamRk+ZmaWP5qZGcCamRm+ZmaWv5qZGUCamRm+ZmaWv5qZGcCamRm+ZmaWP5qZGcCamRm+ZmaWP5qZGUCamRm+ZmaWv5qZGUCamRm+ZmaWv5qZGcCamRm+ZmaWv5qZGUCamRk+ZmaWv5qZGcCamRk+ZmaWv5qZGcCamRm+ZmaWv5qZGUCamRm+ZmaWv5qZGUCamRk+ZmaWv5qZGUCamRk+ZmaWP5qZGUCamRm+ZmaWP5qZGUCamRk+ZmaWv5qZGUCamRk+ZmaWv5qZGUCamRm+ZmaWP5qZGUCamRm+ZmaWv5qZGcCamRm+ZmaWP5qZGcCamRk+ZmaWP5qZGcCamRm+ZmaWv5qZGcCamRm+ZmaWv5qZGcCamRk+ZmaWP5qZGcCamRk+/3//f////z//f/9/////P/9//3////8//3//f////z//f/9/////P/9//3////8//////////7//////////v/////////+//////////7//////////v/////////+/AAD/f/9//z8AAP9//3//PwAA/3//f/8/AAD/f/9//z8AAP9//3//PwAA/3//f/8//3///////7//f///////v/9///////+//3///////7//f///////v/9///////+//38AAP///z//fwAA////P/9/AAD///8//38AAP///z//fwAA////P/9/AAD///8/")
+"vertex_data": PackedByteArray("zcwsv5qZGcCamRk+zcwsP5qZGUCamRk+zcwsP5qZGcCamRk+zcwsv5qZGcCamRk+zcwsv5qZGUCamRk+zcwsP5qZGUCamRk+zcwsP5qZGcCamRm+zcwsv5qZGUCamRm+zcwsv5qZGcCamRm+zcwsP5qZGcCamRm+zcwsP5qZGUCamRm+zcwsv5qZGUCamRm+zcwsv5qZGcCamRm+zcwsv5qZGUCamRk+zcwsv5qZGcCamRk+zcwsv5qZGcCamRm+zcwsv5qZGUCamRm+zcwsv5qZGUCamRk+zcwsv5qZGUCamRk+zcwsP5qZGUCamRm+zcwsP5qZGUCamRk+zcwsv5qZGUCamRk+zcwsv5qZGUCamRm+zcwsP5qZGUCamRm+zcwsv5qZGcCamRm+zcwsP5qZGcCamRk+zcwsP5qZGcCamRm+zcwsv5qZGcCamRm+zcwsv5qZGcCamRk+zcwsP5qZGcCamRk+/3//f////z//f/9/////P/9//3////8//3//f////z//f/9/////P/9//3////8//////////7//////////v/////////+//////////7//////////v/////////+/AAD/f/9//z8AAP9//3//PwAA/3//f/8/AAD/f/9//z8AAP9//3//PwAA/3//f/8//3///////7//f///////v/9///////+//3///////7//f///////v/9///////+//38AAP///z//fwAA////P/9/AAD///8//38AAP///z//fwAA////P/9/AAD///8/")
 }]
 
 [sub_resource type="Resource" id="Resource_v35u1"]
@@ -362,22 +362,22 @@ resource_name = "ReceivingWestSouthReturn"
 script = ExtResource("3_53yqr")
 piece_id = "ReceivingWestSouthReturn"
 semantic_role = "OPENING_REVEAL"
-dimensions_m = Vector3(2.35, 4.8, 0.3)
+dimensions_m = Vector3(1.35, 4.8, 0.3)
 concealed_faces = PackedStringArray("NEG_X")
-uv_origin_m = Vector2(-4.85, -0.3)
+uv_origin_m = Vector2(-3.85, -0.3)
 material_spec = ExtResource("8_mgu1a")
 authoring_notes = "Receiving C1 production visual; greybox retains collision. PRIMARY P05_C02; accepted through/butt ownership and metre UV phase."
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_h4uje"]
 resource_name = "ReceivingWestSouthReturn"
 _surfaces = [{
-"aabb": AABB(-1.175, -2.4, -0.15, 2.35, 4.8, 0.3),
-"attribute_data": PackedByteArray("MzObwJqZmb4AACDAAACQQAAAIMCamZm+MzObwJqZmb4zM5vAAACQQAAAIMAAAJBAAAAgwJqZmb4zM5vAAACQQDMzm8CamZm+AAAgwJqZmb4AACDAAACQQDMzm8AAAJBAmZmRwJqZmb4zM5vAAACQQDMzm8CamZm+mZmRwJqZmb6ZmZHAAACQQDMzm8AAAJBAMzObwAAAAAAAACDAmpmZvgAAIMAAAAAAMzObwAAAAAAzM5vAmpmZvgAAIMCamZm+MzObwJqZmb4AACDAAAAAAAAAIMCamZm+MzObwJqZmb4zM5vAAAAAAAAAIMAAAAAA"),
+"aabb": AABB(-0.675, -2.4, -0.15, 1.35, 4.8, 0.3),
+"attribute_data": PackedByteArray("ZmZ2wJqZmb4AACDAAACQQAAAIMCamZm+ZmZ2wJqZmb5mZnbAAACQQAAAIMAAAJBAAAAgwJqZmb5mZnbAAACQQGZmdsCamZm+AAAgwJqZmb4AACDAAACQQGZmdsAAAJBAMzNjwJqZmb5mZnbAAACQQGZmdsCamZm+MzNjwJqZmb4zM2PAAACQQGZmdsAAAJBAZmZ2wAAAAAAAACDAmpmZvgAAIMAAAAAAZmZ2wAAAAABmZnbAmpmZvgAAIMCamZm+ZmZ2wJqZmb4AACDAAAAAAAAAIMCamZm+ZmZ2wJqZmb5mZnbAAAAAAAAAIMAAAAAA"),
 "format": 34359738391,
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),
 "vertex_count": 30,
-"vertex_data": PackedByteArray("ZmaWv5qZGcCamRk+ZmaWP5qZGUCamRk+ZmaWP5qZGcCamRk+ZmaWv5qZGcCamRk+ZmaWv5qZGUCamRk+ZmaWP5qZGUCamRk+ZmaWP5qZGcCamRm+ZmaWv5qZGUCamRm+ZmaWv5qZGcCamRm+ZmaWP5qZGcCamRm+ZmaWP5qZGUCamRm+ZmaWv5qZGUCamRm+ZmaWP5qZGcCamRk+ZmaWP5qZGUCamRm+ZmaWP5qZGcCamRm+ZmaWP5qZGcCamRk+ZmaWP5qZGUCamRk+ZmaWP5qZGUCamRm+ZmaWv5qZGUCamRk+ZmaWP5qZGUCamRm+ZmaWP5qZGUCamRk+ZmaWv5qZGUCamRk+ZmaWv5qZGUCamRm+ZmaWP5qZGUCamRm+ZmaWv5qZGcCamRm+ZmaWP5qZGcCamRk+ZmaWP5qZGcCamRm+ZmaWv5qZGcCamRm+ZmaWv5qZGcCamRk+ZmaWP5qZGcCamRk+/3//f////z//f/9/////P/9//3////8//3//f////z//f/9/////P/9//3////8//////////7//////////v/////////+//////////7//////////v/////////+/////f/9//7////9//3//v////3//f/+/////f/9//7////9//3//v////3//f/+//3///////7//f///////v/9///////+//3///////7//f///////v/9///////+//38AAP///z//fwAA////P/9/AAD///8//38AAP///z//fwAA////P/9/AAD///8/")
+"vertex_data": PackedByteArray("zcwsv5qZGcCamRk+zcwsP5qZGUCamRk+zcwsP5qZGcCamRk+zcwsv5qZGcCamRk+zcwsv5qZGUCamRk+zcwsP5qZGUCamRk+zcwsP5qZGcCamRm+zcwsv5qZGUCamRm+zcwsv5qZGcCamRm+zcwsP5qZGcCamRm+zcwsP5qZGUCamRm+zcwsv5qZGUCamRm+zcwsP5qZGcCamRk+zcwsP5qZGUCamRm+zcwsP5qZGcCamRm+zcwsP5qZGcCamRk+zcwsP5qZGUCamRk+zcwsP5qZGUCamRm+zcwsv5qZGUCamRk+zcwsP5qZGUCamRm+zcwsP5qZGUCamRk+zcwsv5qZGUCamRk+zcwsv5qZGUCamRm+zcwsP5qZGUCamRm+zcwsv5qZGcCamRm+zcwsP5qZGcCamRk+zcwsP5qZGcCamRm+zcwsv5qZGcCamRm+zcwsv5qZGcCamRk+zcwsP5qZGcCamRk+/3//f////z//f/9/////P/9//3////8//3//f////z//f/9/////P/9//3////8//////////7//////////v/////////+//////////7//////////v/////////+/////f/9//7////9//3//v////3//f/+/////f/9//7////9//3//v////3//f/+//3///////7//f///////v/9///////+//3///////7//f///////v/9///////+//38AAP///z//fwAA////P/9/AAD///8//38AAP///z//fwAA////P/9/AAD///8/")
 }]
 
 [node name="ReceivingStructuralShell" type="Node3D" unique_id=1437908084]
@@ -411,7 +411,7 @@ material_override = SubResource("StandardMaterial3D_qpln2")
 mesh = SubResource("ArrayMesh_xbsv6")
 
 [node name="Ceiling_ReceivingApron" type="Node3D" parent="." unique_id=2077185718]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.25, 4.35, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.75, 4.35, 0)
 script = ExtResource("1_xbsv6")
 piece_spec = SubResource("Resource_bdnle")
 metadata/eaf2_generation = {
@@ -420,17 +420,17 @@ metadata/eaf2_generation = {
 "exact_parameters": {
 "bevel_width_m": 0.0,
 "concealed_faces": ["NEG_X", "POS_X", "NEG_Z", "POS_Z"],
-"dimensions_m": [10.5, 0.3, 10.0]
+"dimensions_m": [7.5, 0.3, 8.0]
 },
 "generation_revision": 1,
 "generator_revision": 2,
-"geometry_fingerprint": "22f2035bc01896356930cadc6a34d8e78888a1364b0ee8c5a6a9c238488a10b9",
+"geometry_fingerprint": "017621ff8007288e7083a78658d8ca850a1932306d7e2e665b126269dd7d09ee",
 "material_spec": "res://data/environment/material_catalog/approved_specs/eaf3b_6bcd8f817ca2993433e217cc.tres",
 "piece_id": "Ceiling_ReceivingApron",
 "recipe_id": "rect_solid",
 "recipe_revision": 1,
 "semantic_role": "CEILING_PRIMARY",
-"uv_origin_m": [0.0, -5.0],
+"uv_origin_m": [0.0, -4.0],
 "uv_quarter_turns": 0
 }
 
@@ -439,7 +439,7 @@ material_override = SubResource("StandardMaterial3D_qpln2")
 mesh = SubResource("ArrayMesh_mgu1a")
 
 [node name="DispatchSouthEast" type="Node3D" parent="." unique_id=908253991]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.775, 2.1, -5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.417857, 2.1, -4)
 script = ExtResource("1_xbsv6")
 piece_spec = SubResource("Resource_dp24u")
 metadata/eaf2_generation = {
@@ -448,17 +448,17 @@ metadata/eaf2_generation = {
 "exact_parameters": {
 "bevel_width_m": 0.0,
 "concealed_faces": ["POS_X"],
-"dimensions_m": [3.15, 4.8, 0.3]
+"dimensions_m": [1.8642857, 4.8, 0.3]
 },
 "generation_revision": 1,
 "generator_revision": 2,
-"geometry_fingerprint": "738243b9e2353627f6e7c5af091dd183015ad15005a2e070a99b633d123e8549",
+"geometry_fingerprint": "329c34adf6f7b2a3e92369e9507863a162523ea39d45cc26d73042d51791bb09",
 "material_spec": "res://data/environment/material_catalog/approved_specs/eaf3b_5a797fbdc766d7e3dc475abf.tres",
 "piece_id": "DispatchSouthEast",
 "recipe_id": "rect_solid",
 "recipe_revision": 1,
 "semantic_role": "WALL_PRIMARY",
-"uv_origin_m": [7.2, -0.3],
+"uv_origin_m": [5.4857144, -0.3],
 "uv_quarter_turns": 0
 }
 
@@ -467,7 +467,7 @@ material_override = SubResource("StandardMaterial3D_japy4")
 mesh = SubResource("ArrayMesh_bvdj8")
 
 [node name="DispatchSouthWest" type="Node3D" parent="." unique_id=1477393392]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9, 2.1, -5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.0428572, 2.1, -4)
 script = ExtResource("1_xbsv6")
 piece_spec = SubResource("Resource_88fxe")
 metadata/eaf2_generation = {
@@ -476,11 +476,11 @@ metadata/eaf2_generation = {
 "exact_parameters": {
 "bevel_width_m": 0.0,
 "concealed_faces": ["NEG_X"],
-"dimensions_m": [3.8, 4.8, 0.3]
+"dimensions_m": [2.0857143, 4.8, 0.3]
 },
 "generation_revision": 1,
 "generator_revision": 2,
-"geometry_fingerprint": "3643cee0fe20a2503704b13d7b15e1e05e9b0abbe42ee3da2b90920f9b25fcc0",
+"geometry_fingerprint": "3877247f47a2c15a07a62c84ebb9ac8dc9a43bc2ce73c36170381b9ac7ba5cbc",
 "material_spec": "res://data/environment/material_catalog/approved_specs/eaf3b_5a797fbdc766d7e3dc475abf.tres",
 "piece_id": "DispatchSouthWest",
 "recipe_id": "rect_solid",
@@ -523,7 +523,7 @@ material_override = SubResource("StandardMaterial3D_mb5ys")
 mesh = SubResource("ArrayMesh_0pssm")
 
 [node name="Floor_ReceivingApron" type="Node3D" parent="." unique_id=159032784]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.25, -0.15, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.675, -0.15, 0)
 script = ExtResource("1_xbsv6")
 piece_spec = SubResource("Resource_ab0hg")
 metadata/eaf2_generation = {
@@ -532,17 +532,17 @@ metadata/eaf2_generation = {
 "exact_parameters": {
 "bevel_width_m": 0.0,
 "concealed_faces": ["NEG_X", "POS_X", "NEG_Z", "POS_Z"],
-"dimensions_m": [10.5, 0.3, 10.0]
+"dimensions_m": [7.35, 0.3, 8.0]
 },
 "generation_revision": 1,
 "generator_revision": 2,
-"geometry_fingerprint": "22f2035bc01896356930cadc6a34d8e78888a1364b0ee8c5a6a9c238488a10b9",
+"geometry_fingerprint": "b78b1eec9a81f60c49576c4a831bd9e945302292a1ad94dfcef8245688a35e41",
 "material_spec": "res://data/environment/material_catalog/approved_specs/eaf3b_bb32071987faae156ff2d4e8.tres",
 "piece_id": "Floor_ReceivingApron",
 "recipe_id": "rect_solid",
 "recipe_revision": 1,
 "semantic_role": "FLOOR_PRIMARY",
-"uv_origin_m": [0.0, -5.0],
+"uv_origin_m": [0.0, -4.0],
 "uv_quarter_turns": 0
 }
 
@@ -634,7 +634,7 @@ material_override = SubResource("StandardMaterial3D_japy4")
 mesh = SubResource("ArrayMesh_kdhd8")
 
 [node name="ReceivingEastOpeningWall" type="Node3D" parent="." unique_id=1619232791]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 10.5, 2.1, 0)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 7.5, 2.1, 0)
 script = ExtResource("1_xbsv6")
 piece_spec = SubResource("Resource_m2i87")
 metadata/eaf2_generation = {
@@ -642,21 +642,21 @@ metadata/eaf2_generation = {
 "collision_policy": 0,
 "exact_parameters": {
 "bevel_width_m": 0.0,
-"dimensions_m": [10.3, 4.8, 0.3],
+"dimensions_m": [8.3, 4.8, 0.3],
 "opening_bottom_m": 0.3,
 "opening_height_m": 3.4,
 "opening_offset_x_m": 0.0,
-"opening_width_m": 3.84
+"opening_width_m": 2.84
 },
 "generation_revision": 1,
 "generator_revision": 2,
-"geometry_fingerprint": "1120ec802b730413c39713dfa45253ef881856c579437518302973ee521b0cdd",
+"geometry_fingerprint": "0a01a7030d06d1b37dd89bf7a0019fa10f2ec2c3289006ccd2fad2002571ae55",
 "material_spec": "res://data/environment/material_catalog/approved_specs/eaf3b_5a797fbdc766d7e3dc475abf.tres",
 "piece_id": "ReceivingEastOpeningWall",
 "recipe_id": "wall_with_rect_opening",
 "recipe_revision": 1,
 "semantic_role": "WALL_PRIMARY",
-"uv_origin_m": [-5.15, -0.3],
+"uv_origin_m": [-4.15, -0.3],
 "uv_quarter_turns": 0
 }
 
@@ -665,7 +665,7 @@ material_override = SubResource("StandardMaterial3D_japy4")
 mesh = SubResource("ArrayMesh_pfren")
 
 [node name="ReceivingNorthWest" type="Node3D" parent="." unique_id=60862895]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.425, 2.1, -5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.425, 2.1, -4)
 script = ExtResource("1_xbsv6")
 piece_spec = SubResource("Resource_fv0bs")
 metadata/eaf2_generation = {
@@ -693,7 +693,7 @@ material_override = SubResource("StandardMaterial3D_japy4")
 mesh = SubResource("ArrayMesh_btyii")
 
 [node name="ReceivingSouth" type="Node3D" parent="." unique_id=1636156305]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.1, 2.1, 5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.6, 2.1, 4)
 script = ExtResource("1_xbsv6")
 piece_spec = SubResource("Resource_2bmmv")
 metadata/eaf2_generation = {
@@ -702,11 +702,11 @@ metadata/eaf2_generation = {
 "exact_parameters": {
 "bevel_width_m": 0.0,
 "concealed_faces": ["POS_X"],
-"dimensions_m": [10.5, 4.8, 0.3]
+"dimensions_m": [7.5, 4.8, 0.3]
 },
 "generation_revision": 1,
 "generator_revision": 2,
-"geometry_fingerprint": "dc1008c1d383a08d13280d6fcf437853c40e449d14ba321f84985c3305ebb2e6",
+"geometry_fingerprint": "55cebc9e54d969771f89773adffaa95945cc54c3ca86de823040876db73ef43d",
 "material_spec": "res://data/environment/material_catalog/approved_specs/eaf3b_5a797fbdc766d7e3dc475abf.tres",
 "piece_id": "ReceivingSouth",
 "recipe_id": "rect_solid",
@@ -721,7 +721,7 @@ material_override = SubResource("StandardMaterial3D_japy4")
 mesh = SubResource("ArrayMesh_3pdl3")
 
 [node name="ReceivingWestNorthReturn" type="Node3D" parent="." unique_id=1341517749]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 2.1, -3.675)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 2.1, -3.175)
 script = ExtResource("1_xbsv6")
 piece_spec = SubResource("Resource_hn36o")
 metadata/eaf2_generation = {
@@ -730,11 +730,11 @@ metadata/eaf2_generation = {
 "exact_parameters": {
 "bevel_width_m": 0.0,
 "concealed_faces": ["POS_X"],
-"dimensions_m": [2.35, 4.8, 0.3]
+"dimensions_m": [1.35, 4.8, 0.3]
 },
 "generation_revision": 1,
 "generator_revision": 2,
-"geometry_fingerprint": "c0e73fba8f808eac3ddadf22a70f1c113f5f309d3ea6fad20ef32fd2ab05edab",
+"geometry_fingerprint": "04fedc967a6864ecbbb1a5a199a8ada1e3415d76d44c502559338c4a98396c8b",
 "material_spec": "res://data/environment/material_catalog/approved_specs/eaf3b_5a797fbdc766d7e3dc475abf.tres",
 "piece_id": "ReceivingWestNorthReturn",
 "recipe_id": "rect_solid",
@@ -749,7 +749,7 @@ material_override = SubResource("StandardMaterial3D_japy4")
 mesh = SubResource("ArrayMesh_r4mq3")
 
 [node name="ReceivingWestSouthReturn" type="Node3D" parent="." unique_id=1725784696]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 2.1, 3.675)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 2.1, 3.175)
 script = ExtResource("1_xbsv6")
 piece_spec = SubResource("Resource_v35u1")
 metadata/eaf2_generation = {
@@ -758,17 +758,17 @@ metadata/eaf2_generation = {
 "exact_parameters": {
 "bevel_width_m": 0.0,
 "concealed_faces": ["NEG_X"],
-"dimensions_m": [2.35, 4.8, 0.3]
+"dimensions_m": [1.35, 4.8, 0.3]
 },
 "generation_revision": 1,
 "generator_revision": 2,
-"geometry_fingerprint": "dc4c29ba0c684662875af58968a50704f429c0c4973e767745a1a6c36dc5019f",
+"geometry_fingerprint": "b76b6ed088d780dc53aea10086720f8661f017072fc54f6c2d5984d3b0d10951",
 "material_spec": "res://data/environment/material_catalog/approved_specs/eaf3b_5a797fbdc766d7e3dc475abf.tres",
 "piece_id": "ReceivingWestSouthReturn",
 "recipe_id": "rect_solid",
 "recipe_revision": 1,
 "semantic_role": "OPENING_REVEAL",
-"uv_origin_m": [-4.85, -0.3],
+"uv_origin_m": [-3.85, -0.3],
 "uv_quarter_turns": 0
 }
 

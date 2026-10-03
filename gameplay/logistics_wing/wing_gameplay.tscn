@@ -56,7 +56,6 @@
 [ext_resource type="PackedScene" uid="uid://dft37otdh37ur" path="res://assets/environment/architecture/structural/beams/SM_MetalBeam15.glb" id="54_qssrt"]
 [ext_resource type="PackedScene" uid="uid://2ebc73eyq8kk" path="res://assets/environment/dressing/signage/SM_sign_02.glb" id="55_v3vfn"]
 [ext_resource type="PackedScene" uid="uid://cv7vglot1faq0" path="res://assets/environment/dressing/signage/SM_FWYSignWarn_Caution_E01_N1.glb" id="56_232ub"]
-[ext_resource type="PackedScene" uid="uid://br6oaqwqfws6t" path="res://assets/environment/infrastructure/lighting/SM_KB3D_SIN_PropPendantLight_A_Main_transparent.glb" id="64_6gicl"]
 [ext_resource type="PackedScene" uid="uid://dpwqcn5830pcv" path="res://assets/environment/infrastructure/lighting/SM_ChainLink_01.glb" id="64_p6c26"]
 [ext_resource type="PackedScene" uid="uid://d1ldh0m20d6r" path="res://assets/environment/infrastructure/lighting/SM_KB3D_WDC_PropLight_H_Glass.glb" id="65_p6c26"]
 [ext_resource type="Script" uid="uid://be6gucor1ya72" path="res://environment_authoring/substrate/environment_substrate_piece.gd" id="shaft_1_x53na"]
@@ -204,7 +203,7 @@ disabled = true
 disabled = true
 
 [node name="ReceivingStructuralShell" parent="Environment" index="1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36, 0, 0)
 
 [node name="KeyLight" parent="Environment" index="4"]
 transform = Transform3D(0.8480481, 0.44939703, -0.28081444, 0, 0.52991927, 0.8480481, 0.52991927, -0.7191856, 0.44939703, 0, 0, 0)
@@ -603,7 +602,7 @@ item_id = &"loot_000042"
 [node name="Visual" parent="DevelopmentSetup/SeedItems/Weapons_TennisRacket" unique_id=336093353 instance=ExtResource("39_racket")]
 
 [node name="ReceivingRuntime" parent="." unique_id=1625899199 instance=ExtResource("44_receiving")]
-transform = Transform3D(-4.851964e-08, 0, 1, 0, 1.225, 0, -1.11, 0, -4.371139e-08, -40.41487, 0.82, 0)
+transform = Transform3D(-4.851964e-08, 0, 1, 0, 1.225, 0, -1.11, 0, -4.371139e-08, -37.41487, 0.82, 0)
 
 [node name="Player" parent="." unique_id=551360273 instance=ExtResource("3_player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0.05, -2.5)
@@ -615,7 +614,8 @@ layer = 10
 [node name="CarriedItemsHUD" parent="HUD" unique_id=626635065 instance=ExtResource("4_hud")]
 
 [node name="ReceivingLiftInstallation" type="Node3D" parent="." unique_id=138998562]
-metadata/purpose = "Manual lift visuals; identity grouping preserves authored world transforms"
+metadata/purpose = "Manual lift ensemble; +3 m X retrofit with authored descendant transforms preserved"
+position = Vector3(3, 0, 0)
 
 [node name="SM_Fence_01" parent="ReceivingLiftInstallation" unique_id=742320119 instance=ExtResource("47_d12kh")]
 transform = Transform3D(1.68, 0, 0, 0, 2.555, 0, 0, 0, 1.68, -39.358643, 0.6426194, -1.749261)
@@ -767,22 +767,16 @@ material_override = SubResource("shaft_StandardMaterial3D_ub82l")
 mesh = SubResource("shaft_ArrayMesh_pw0i7")
 
 [node name="SM_ChainLink_01" parent="." unique_id=28053962 instance=ExtResource("64_p6c26")]
-transform = Transform3D(1.12, 0, 0, 0, 1.12, 0, 0, 0, 1.12, -36.89905, 4.212658, -1.5961862)
+transform = Transform3D(1.12, 0, 0, 0, 1.12, 0, 0, 0, 1.12, -34.39905, 4.212658, -1.1961862)
 
 [node name="SM_ChainLink_02" parent="." unique_id=126623278 instance=ExtResource("64_p6c26")]
-transform = Transform3D(1.12, 0, 0, 0, 1.12, 0, 0, 0, 1.12, -33.25089, 4.210858, 2.3987157)
-
-[node name="SM_ChainLink_03" parent="." unique_id=244655200 instance=ExtResource("64_p6c26")]
-transform = Transform3D(1.12, 0, 0, 0, 1.12, 0, 0, 0, 1.12, -30.401554, 4.211133, -1.0054566)
+transform = Transform3D(1.12, 0, 0, 0, 1.12, 0, 0, 0, 1.12, -30.30089, 4.210858, 1.1987157)
 
 [node name="SM_KB3D_WDC_PropLight_H_Glass" parent="." unique_id=635042247 instance=ExtResource("65_p6c26")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37.128525, 3.6945462, -1.6137503)
-
-[node name="SM_KB3D_SIN_PropPendantLight_A_Main_transparent" parent="." unique_id=2034413845 instance=ExtResource("64_6gicl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.399578, 4.146592, -1.0292507)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.628525, 3.6945462, -1.2137503)
 
 [node name="SM_KB3D_WDC_PropLight_H_Glass2" parent="." unique_id=517906581 instance=ExtResource("65_p6c26")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.48431, 3.7066905, 2.365712)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.53431, 3.7066905, 1.165712)
 
 [editable path="Environment"]
 [editable path="Environment/Greybox"]

@@ -240,7 +240,7 @@ func _nearest_exposed_candidate(
 func _place_player_at_stance(player: CharacterBody3D, stance_z: float) -> void:
 	player.rotation = Vector3.ZERO
 	player.velocity = Vector3.ZERO
-	player.global_position = Vector3(-37.8, 0.05, stance_z)
+	player.global_position = Vector3(-34.8, 0.05, stance_z)
 	player.move_and_collide(Vector3(-3.0, 0.0, 0.0))
 	player.move_and_collide(Vector3(0.0, -1.0, 0.0))
 

@@ -48,21 +48,37 @@ const RECEIVING_MATERIALS := {
 	"FLOOR_PRIMARY": "eaf3b_bb32071987faae156ff2d4e8",
 	"CEILING_PRIMARY": "eaf3b_6bcd8f817ca2993433e217cc",
 }
+const RECEIVING_PRODUCTION_TARGETS := {
+	"Floor_FreightEnclosure": [[5, 0.3, 7], [-2.5, -0.15, 0]],
+	"Ceiling_FreightEnclosure": [[5, 0.3, 7], [-2.5, 4.35, 0]],
+	"Floor_ReceivingApron": [[7.35, 0.3, 8], [3.675, -0.15, 0]],
+	"Ceiling_ReceivingApron": [[7.5, 0.3, 8], [3.75, 4.35, 0]],
+	"FreightNorth": [[4.7, 4.8, 0.3], [-2.5, 2.1, -3.5]],
+	"FreightSouth": [[4.7, 4.8, 0.3], [-2.5, 2.1, 3.5]],
+	"FreightRear": [[7.3, 4.8, 0.3], [-5, 2.1, 0]],
+	"ReceivingWestNorthReturn": [[1.35, 4.8, 0.3], [0, 2.1, -3.175]],
+	"ReceivingWestSouthReturn": [[1.35, 4.8, 0.3], [0, 2.1, 3.175]],
+	"ReceivingNorthWest": [[1.15, 4.8, 0.3], [0.425, 2.1, -4]],
+	"DispatchSouthWest": [[2.085714285714, 4.8, 0.3], [2.042857142857, 2.1, -4]],
+	"DispatchSouthEast": [[1.864285714286, 4.8, 0.3], [6.417857142857, 2.1, -4]],
+	"ReceivingSouth": [[7.5, 4.8, 0.3], [3.6, 2.1, 4]],
+	"ReceivingEastOpeningWall": [[8.3, 4.8, 0.3], [7.5, 2.1, 0]],
+}
 const RECEIVING_UV_PHASES := {
-	"Floor_ReceivingApron": Vector2(0, -5),
-	"Ceiling_ReceivingApron": Vector2(0, -5),
+	"Floor_ReceivingApron": Vector2(0, -4),
+	"Ceiling_ReceivingApron": Vector2(0, -4),
 	"ReceivingSouth": Vector2(-0.15, -0.3),
 	"ReceivingNorthWest": Vector2(-0.15, -0.3),
 	"ReceivingWestNorthReturn": Vector2(2.5, -0.3),
-	"ReceivingWestSouthReturn": Vector2(-4.85, -0.3),
+	"ReceivingWestSouthReturn": Vector2(-3.85, -0.3),
 	"Floor_FreightEnclosure": Vector2(-5, -3.5),
 	"Ceiling_FreightEnclosure": Vector2(-5, -3.5),
 	"FreightNorth": Vector2(-4.85, -0.3),
 	"FreightSouth": Vector2(-4.85, -0.3),
 	"FreightRear": Vector2(-3.65, -0.3),
 	"DispatchSouthWest": Vector2(1, -0.3),
-	"DispatchSouthEast": Vector2(7.2, -0.3),
-	"ReceivingEastOpeningWall": Vector2(-5.15, -0.3),
+	"DispatchSouthEast": Vector2(5.485714285714, -0.3),
+	"ReceivingEastOpeningWall": Vector2(-4.15, -0.3),
 }
 
 var _failed: bool = false
@@ -268,7 +284,7 @@ func _assert_receiving_runtime_contract(runtime: Node3D, scene: Node, context: S
 		return
 	_check(runtime.scene_file_path == RECEIVING_RUNTIME_PATH, "%s uses the Receiving runtime scene" % context)
 	_check(runtime.get_script() != null and runtime.get_script().resource_path == RECEIVING_RUNTIME_SCRIPT_PATH, "%s runtime uses the intended script" % context)
-	_check(runtime.position.is_equal_approx(Vector3(-40.41487, 0.82, 0.0)) and runtime.scale.is_equal_approx(Vector3(1.11, 1.225, 1)), "%s preserves human-authored platform/runtime datum" % context)
+	_check(runtime.position.is_equal_approx(Vector3(-37.41487, 0.82, 0.0)) and runtime.scale.is_equal_approx(Vector3(1.11, 1.225, 1)), "%s preserves human-authored platform/runtime datum" % context)
 	_check((runtime.basis * Vector3.BACK).is_equal_approx(Vector3.RIGHT), "%s Receiving FRONT local +Z maps to world +X / player-barrier side" % context)
 	var manager := runtime.get_node_or_null("ReceivingManager")
 	var presenter := runtime.get_node_or_null("ReceivingDeckPresenter") as Node3D
@@ -895,9 +911,15 @@ func _assert_receiving_shell(environment: Node3D, context: String) -> void:
 	if not _check(shell != null, "%s has production-owned Receiving shell" % context):
 		return
 	_check(shell.scene_file_path == RECEIVING_SHELL_PATH, "%s instances the production shell" % context)
-	_check(shell.position.is_equal_approx(Vector3(-39, 0, 0)) and shell.basis.is_equal_approx(Basis.IDENTITY), "%s shell uses accepted origin and unit root" % context)
+	_check(shell.position.is_equal_approx(Vector3(-36, 0, 0)) and shell.basis.is_equal_approx(Basis.IDENTITY), "%s shell uses accepted origin and unit root" % context)
 	var composition: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(RECEIVING_COMPOSITION_PATH))
-	var pieces: Array = composition["eaf2_recipe_mapping"]
+	var pieces: Array = composition["eaf2_recipe_mapping"].duplicate(true)
+	for row: Dictionary in pieces:
+		var target: Array = RECEIVING_PRODUCTION_TARGETS[row["piece_id"]]
+		row["dimensions_m"] = target[0]
+		row["center_local_m"] = target[1]
+		if row["piece_id"] == "ReceivingEastOpeningWall":
+			row["opening_parameters"]["opening_width_m"] = 2.84
 	_check(shell.get_child_count() == 14 and pieces.size() == 14, "%s exactly 14 intended EAF2 pieces" % context)
 	_check(shell.find_children("*", "CollisionObject3D", true, false).is_empty() and shell.find_children("*", "CollisionShape3D", true, false).is_empty(), "%s shell has no duplicate structural collision" % context)
 	var suppressed: Array[String] = []
@@ -949,13 +971,13 @@ func _assert_receiving_shell(environment: Node3D, context: String) -> void:
 			continue
 		var storage_proxy := path.get_slice("/", 0) == "Proxies" and PROXY_NAMES.has(path.get_slice("/", 1))
 		var expected_visible := false if suppressed.has(path) or storage_proxy else base_mesh.visible
-		if path == "Districts/Receiving/DispatchWest/Mesh":
+		if path in ["Districts/Receiving/DispatchWest/Mesh", "Districts/Receiving/DispatchEast/Mesh"]:
 			var trimmed := mesh.mesh as BoxMesh
 			var expected_transform := base_mesh.transform
-			expected_transform.origin.z -= 0.15
+			expected_transform.origin.z -= 0.15 if String(path).contains("DispatchWest") else 0.075
 			_check(mesh.visible == expected_visible and mesh.transform.is_equal_approx(expected_transform) and trimmed != null and trimmed.size.is_equal_approx(Vector3(0.3, 4.2, 3.5)) and mesh.material_override == base_mesh.material_override, "%s Dispatch butt visual stops at Receiving outer face without changing its material" % context)
-			var world_bounds: AABB = live.transform * live.get_node("Districts/Receiving/DispatchWest").transform * mesh.transform * mesh.get_aabb()
-			_check(is_equal_approx(world_bounds.position.z, -8.65) and is_equal_approx(world_bounds.end.z, -5.15), "%s Dispatch visual preserves north extent and removes coplanar Receiving cap" % context)
+			var world_bounds: AABB = live.transform * mesh.get_parent().transform * mesh.transform * mesh.get_aabb()
+			_check(is_equal_approx(world_bounds.position.z, -7.65) and is_equal_approx(world_bounds.end.z, -4.15), "%s Dispatch visual preserves north extent and removes coplanar Receiving cap" % context)
 		else:
 			_check(mesh.visible == expected_visible and mesh.transform.is_equal_approx(base_mesh.transform) and mesh.mesh == base_mesh.mesh, "%s exact greybox visual preservation %s" % [context, path])
 		if suppressed.has(path) and not mesh.visible:
@@ -977,21 +999,22 @@ func _assert_receiving_shell(environment: Node3D, context: String) -> void:
 		var path := baseline.get_path_to(base_node)
 		var live_node := live.get_node_or_null(path) as Node3D
 		var expected_transform := base_node.transform
-		if String(path) == "Districts/Receiving/DispatchWest/Mesh":
-			expected_transform.origin.z -= 0.15
+		if String(path) in ["Districts/Receiving/DispatchWest/Mesh", "Districts/Receiving/DispatchEast/Mesh"]:
+			expected_transform.origin.z -= 0.15 if String(path).contains("DispatchWest") else 0.075
 		_check(live_node != null and live_node.transform.is_equal_approx(expected_transform), "%s greybox transforms/anchors preserved except explicit Dispatch visual butt trim %s" % [context, path])
 	baseline.free()
+	_assert_sill_partition(environment, context)
 	# Test actual saved triangles through each aperture, including its edge and closure.
 	for z: float in [-2.49, 0.0, 2.49]:
 		_check(not _receiving_visual_hit(shell, Vector3(-1, 2, z), Vector3(1, 2, z)), "%s 5.00 m freight visual aperture at %.2f" % [context, z])
-	for x: float in [4.81, 6.0, 7.19]:
-		_check(not _receiving_visual_hit(shell, Vector3(x, 2, -4), Vector3(x, 2, -6)), "%s 2.40 m Dispatch visual aperture at %.2f" % [context, x])
-	for z: float in [-1.91, 0.0, 1.91]:
+	for x: float in [3.095714, 4.285714, 5.475714]:
+		_check(not _receiving_visual_hit(shell, Vector3(x, 2, -3), Vector3(x, 2, -5)), "%s 2.40 m Dispatch visual aperture at %.2f" % [context, x])
+	for z: float in [-1.41, 0.0, 1.41]:
 		for y: float in [0.01, 1.7, 3.39]:
-			_check(not _receiving_visual_hit(shell, Vector3(10, y, z), Vector3(11, y, z)), "%s east 3.84 x 3.40 m aperture at %.2f/%.2f" % [context, z, y])
-	for z: float in [-1.93, 1.93]:
-		_check(_receiving_visual_hit(shell, Vector3(10, 2, z), Vector3(11, 2, z)), "%s east jamb/reveal retained" % context)
-	_check(_receiving_visual_hit(shell, Vector3(10, 3.41, 0), Vector3(11, 3.41, 0)) and _receiving_visual_hit(shell, Vector3(10, 4.19, 0), Vector3(11, 4.19, 0)), "%s east 0.80 m upper closure retained" % context)
+			_check(not _receiving_visual_hit(shell, Vector3(7, y, z), Vector3(8, y, z)), "%s east 2.84 x 3.40 m aperture at %.2f/%.2f" % [context, z, y])
+	for z: float in [-1.43, 1.43]:
+		_check(_receiving_visual_hit(shell, Vector3(7, 2, z), Vector3(8, 2, z)), "%s east jamb/reveal retained" % context)
+	_check(_receiving_visual_hit(shell, Vector3(7, 3.41, 0), Vector3(8, 3.41, 0)) and _receiving_visual_hit(shell, Vector3(7, 4.19, 0), Vector3(8, 4.19, 0)), "%s east 0.80 m upper closure retained" % context)
 
 
 func _receiving_vec3(values: Array) -> Vector3:
@@ -1018,11 +1041,18 @@ func _assert_receiving_circulation(scene: Node, context: String) -> void:
 	var player := scene.get_node("Player") as CharacterBody3D
 	# Query the normal player capsule without moving or changing its gameplay values.
 	var probes := [
-		["Dispatch passage", Vector3(-33, 0.01, -4), Vector3(0, 0, -2), false],
+		["Dispatch passage", Vector3(-31.714286, 0.01, -3), Vector3(0, 0, -2), false],
+		["Dispatch west jamb", Vector3(-33.15, 0.01, -3), Vector3(0, 0, -2), true],
+		["Dispatch east jamb", Vector3(-30.25, 0.01, -3), Vector3(0, 0, -2), true],
+		["Backlog north jamb", Vector3(-29.5, 0.01, -1.6), Vector3(2, 0, 0), true],
+		["Backlog south jamb", Vector3(-29.5, 0.01, 1.6), Vector3(2, 0, 0), true],
+		["old north plane clear", Vector3(-32, 0.01, -5), Vector3(1, 0, 0), false],
+		["old south plane clear", Vector3(-32, 0.01, 5), Vector3(1, 0, 0), false],
+		["old west plane clear", Vector3(-39.5, 0.01, 3), Vector3(1, 0, 0), false],
 		["Backlog passage", Vector3(-29.5, 0.01, 0), Vector3(2, 0, 0), false],
-		["freight barrier blocks entry", Vector3(-38, 0.01, 0), Vector3(-2, 0, 0), true],
-		["freight north corner", Vector3(-41.5, 0.01, -2.5), Vector3(0, 0, -2), true],
-		["freight rear corner", Vector3(-43, 0.01, 0), Vector3(-2, 0, 0), true],
+		["freight barrier blocks entry", Vector3(-35, 0.01, 0), Vector3(-2, 0, 0), true],
+		["freight north corner", Vector3(-38.5, 0.01, -2.5), Vector3(0, 0, -2), true],
+		["freight rear corner", Vector3(-40, 0.01, 0), Vector3(-2, 0, 0), true],
 	]
 	for probe: Array in probes:
 		var parameters := PhysicsTestMotionParameters3D.new()
@@ -1030,6 +1060,13 @@ func _assert_receiving_circulation(scene: Node, context: String) -> void:
 		parameters.motion = probe[2]
 		var blocked := PhysicsServer3D.body_test_motion(player.get_rid(), parameters)
 		_check(blocked == bool(probe[3]), "%s normal capsule: %s" % [context, probe[0]])
+
+
+	for x: float in [-28.66, -28.64, -28.51, -28.49, -28.36, -28.34]:
+		for z: float in [-1.2, 0.0, 1.2]:
+			var ray := PhysicsRayQueryParameters3D.create(Vector3(x, 0.25, z), Vector3(x, -0.25, z), 1)
+			var hit := player.get_world_3d().direct_space_state.intersect_ray(ray)
+			_check(not hit.is_empty() and absf(hit["position"].y) < 0.0001 and String(hit["collider"].get_path()).contains("Floor_"), "%s continuous nominal slab support at %.2f/%.2f" % [context, x, z])
 
 
 func _receiving_winding_matches_front_faces(mesh: Mesh) -> bool:
@@ -1047,3 +1084,32 @@ func _receiving_winding_matches_front_faces(mesh: Mesh) -> bool:
 		if (vertices[b] - vertices[a]).cross(vertices[c] - vertices[a]).normalized().dot(normals[a]) > -0.99:
 			return false
 	return count > 0
+
+func _assert_sill_partition(environment: Node3D, context: String) -> void:
+	var meshes: Array[MeshInstance3D] = [environment.get_node("ReceivingStructuralShell/Floor_ReceivingApron/GeneratedMesh"), environment.get_node("ReceivingStructuralShell/ReceivingEastOpeningWall/GeneratedMesh"), environment.get_node("Greybox/Districts/Backlog/Floor_BacklogPassage/Mesh")]
+	# Interior samples straddle both half-strips formerly overlapped by the sill.
+	for x: float in [-28.66, -28.64, -28.51, -28.49, -28.36, -28.34]:
+		for z: float in [-1.2, 0.17, 1.2]:
+			var hits := 0
+			for mesh in meshes:
+				var arrays := mesh.mesh.surface_get_arrays(0)
+				var vertices: PackedVector3Array = arrays[Mesh.ARRAY_VERTEX]
+				var indices: PackedInt32Array = arrays[Mesh.ARRAY_INDEX] if arrays[Mesh.ARRAY_INDEX] != null else PackedInt32Array()
+				var count := indices.size() if not indices.is_empty() else vertices.size()
+				for i in range(0, count, 3):
+					var a := _receiving_relative_transform(environment, mesh) * vertices[indices[i] if not indices.is_empty() else i]
+					var b := _receiving_relative_transform(environment, mesh) * vertices[indices[i+1] if not indices.is_empty() else i+1]
+					var c := _receiving_relative_transform(environment, mesh) * vertices[indices[i+2] if not indices.is_empty() else i+2]
+					if absf(a.y) < 0.00001 and absf(b.y) < 0.00001 and absf(c.y) < 0.00001 and Geometry3D.segment_intersects_triangle(Vector3(x, 0.1, z), Vector3(x, -0.1, z), a, b, c) != null:
+						hits += 1
+			_check(hits == 1, "%s one floor triangle across sill at %.2f/%.2f" % [context, x, z])
+
+
+func _receiving_relative_transform(root_node: Node3D, node: Node3D) -> Transform3D:
+	var result := node.transform
+	var parent := node.get_parent()
+	while parent != root_node:
+		if parent is Node3D:
+			result = parent.transform * result
+		parent = parent.get_parent()
+	return result
