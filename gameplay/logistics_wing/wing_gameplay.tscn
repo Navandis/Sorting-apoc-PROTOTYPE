@@ -56,6 +56,9 @@
 [ext_resource type="PackedScene" uid="uid://dft37otdh37ur" path="res://assets/environment/architecture/structural/beams/SM_MetalBeam15.glb" id="54_qssrt"]
 [ext_resource type="PackedScene" uid="uid://2ebc73eyq8kk" path="res://assets/environment/dressing/signage/SM_sign_02.glb" id="55_v3vfn"]
 [ext_resource type="PackedScene" uid="uid://cv7vglot1faq0" path="res://assets/environment/dressing/signage/SM_FWYSignWarn_Caution_E01_N1.glb" id="56_232ub"]
+[ext_resource type="PackedScene" uid="uid://br6oaqwqfws6t" path="res://assets/environment/infrastructure/lighting/SM_KB3D_SIN_PropPendantLight_A_Main_transparent.glb" id="64_6gicl"]
+[ext_resource type="PackedScene" uid="uid://dpwqcn5830pcv" path="res://assets/environment/infrastructure/lighting/SM_ChainLink_01.glb" id="64_p6c26"]
+[ext_resource type="PackedScene" uid="uid://d1ldh0m20d6r" path="res://assets/environment/infrastructure/lighting/SM_KB3D_WDC_PropLight_H_Glass.glb" id="65_p6c26"]
 [ext_resource type="Script" uid="uid://be6gucor1ya72" path="res://environment_authoring/substrate/environment_substrate_piece.gd" id="shaft_1_x53na"]
 [ext_resource type="Resource" path="res://data/environment/material_catalog/approved_specs/eaf3b_1beac3a311a480af8844ea89.tres" id="shaft_2_rflhy"]
 [ext_resource type="Script" uid="uid://dym5xpqw4qae4" path="res://environment_authoring/substrate/environment_substrate_piece_spec.gd" id="shaft_3_4ax3c"]
@@ -64,7 +67,7 @@
 [ext_resource type="Texture2D" uid="uid://dmerwhc48dlm0" path="res://assets/environment/materials/kitbash_cache/eaf3b_1beac3a311a480af8844ea89/2k/normal.png" id="shaft_6_h0kxl"]
 [ext_resource type="Texture2D" uid="uid://buvwu7wptxnjv" path="res://assets/environment/materials/kitbash_cache/eaf3b_1beac3a311a480af8844ea89/2k/roughness.png" id="shaft_7_8hvsm"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_gic0c"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_fmv76"]
 resource_local_to_scene = true
 size = Vector3(4.04, 3, 0.82)
 
@@ -84,11 +87,11 @@ authoring_notes = "Human-selected Reinforced Concrete Slabs shaft role. Fixed ca
 [sub_resource type="StandardMaterial3D" id="shaft_StandardMaterial3D_bk2ie"]
 resource_name = "eaf3b_1beac3a311a480af8844ea89"
 albedo_texture = ExtResource("shaft_4_pov2y")
+metallic = 1.0
+metallic_texture = ExtResource("shaft_5_t1h14")
 roughness_texture = ExtResource("shaft_7_8hvsm")
 normal_enabled = true
 normal_texture = ExtResource("shaft_6_h0kxl")
-metallic = 1.0
-metallic_texture = ExtResource("shaft_5_t1h14")
 uv1_scale = Vector3(0.33333334, 0.33333334, 0.33333334)
 texture_filter = 5
 
@@ -117,11 +120,11 @@ authoring_notes = "Human-selected Reinforced Concrete Slabs shaft role. Fixed ca
 [sub_resource type="StandardMaterial3D" id="shaft_StandardMaterial3D_v31ww"]
 resource_name = "eaf3b_1beac3a311a480af8844ea89"
 albedo_texture = ExtResource("shaft_4_pov2y")
+metallic = 1.0
+metallic_texture = ExtResource("shaft_5_t1h14")
 roughness_texture = ExtResource("shaft_7_8hvsm")
 normal_enabled = true
 normal_texture = ExtResource("shaft_6_h0kxl")
-metallic = 1.0
-metallic_texture = ExtResource("shaft_5_t1h14")
 uv1_scale = Vector3(0.33333334, 0.33333334, 0.33333334)
 texture_filter = 5
 
@@ -150,11 +153,11 @@ authoring_notes = "Human-selected Reinforced Concrete Slabs shaft role. Fixed ca
 [sub_resource type="StandardMaterial3D" id="shaft_StandardMaterial3D_ub82l"]
 resource_name = "eaf3b_1beac3a311a480af8844ea89"
 albedo_texture = ExtResource("shaft_4_pov2y")
+metallic = 1.0
+metallic_texture = ExtResource("shaft_5_t1h14")
 roughness_texture = ExtResource("shaft_7_8hvsm")
 normal_enabled = true
 normal_texture = ExtResource("shaft_6_h0kxl")
-metallic = 1.0
-metallic_texture = ExtResource("shaft_5_t1h14")
 uv1_scale = Vector3(0.33333334, 0.33333334, 0.33333334)
 texture_filter = 5
 
@@ -203,7 +206,7 @@ disabled = true
 [node name="ReceivingStructuralShell" parent="Environment" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39, 0, 0)
 
-[node name="KeyLight" parent="Environment" index="3"]
+[node name="KeyLight" parent="Environment" index="4"]
 transform = Transform3D(0.8480481, 0.44939703, -0.28081444, 0, 0.52991927, 0.8480481, 0.52991927, -0.7191856, 0.44939703, 0, 0, 0)
 
 [node name="West" parent="Environment/FillLights" index="0"]
@@ -285,7 +288,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.4, 0)
 
 [node name="Shape" parent="FunctionalFixtures/ModularRack_GalleryB_Initial/MovementCollision" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
-shape = SubResource("BoxShape3D_gic0c")
+shape = SubResource("BoxShape3D_fmv76")
 
 [node name="FixedLadder_GalleryB_Initial" parent="FunctionalFixtures" unique_id=806369216 instance=ExtResource("42_ladder")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 1.043639, 0, -8.665108)
@@ -762,6 +765,24 @@ metadata/eaf2_generation = {
 [node name="GeneratedMesh" type="MeshInstance3D" parent="ReceivingLiftInstallation/ShaftWalls/ShaftWall_Rear" unique_id=445815504]
 material_override = SubResource("shaft_StandardMaterial3D_ub82l")
 mesh = SubResource("shaft_ArrayMesh_pw0i7")
+
+[node name="SM_ChainLink_01" parent="." unique_id=28053962 instance=ExtResource("64_p6c26")]
+transform = Transform3D(1.12, 0, 0, 0, 1.12, 0, 0, 0, 1.12, -36.89905, 4.212658, -1.5961862)
+
+[node name="SM_ChainLink_02" parent="." unique_id=126623278 instance=ExtResource("64_p6c26")]
+transform = Transform3D(1.12, 0, 0, 0, 1.12, 0, 0, 0, 1.12, -33.25089, 4.210858, 2.3987157)
+
+[node name="SM_ChainLink_03" parent="." unique_id=244655200 instance=ExtResource("64_p6c26")]
+transform = Transform3D(1.12, 0, 0, 0, 1.12, 0, 0, 0, 1.12, -30.401554, 4.211133, -1.0054566)
+
+[node name="SM_KB3D_WDC_PropLight_H_Glass" parent="." unique_id=635042247 instance=ExtResource("65_p6c26")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37.128525, 3.6945462, -1.6137503)
+
+[node name="SM_KB3D_SIN_PropPendantLight_A_Main_transparent" parent="." unique_id=2034413845 instance=ExtResource("64_6gicl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.399578, 4.146592, -1.0292507)
+
+[node name="SM_KB3D_WDC_PropLight_H_Glass2" parent="." unique_id=517906581 instance=ExtResource("65_p6c26")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.48431, 3.7066905, 2.365712)
 
 [editable path="Environment"]
 [editable path="Environment/Greybox"]
