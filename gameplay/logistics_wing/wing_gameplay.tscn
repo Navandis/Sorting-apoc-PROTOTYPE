@@ -654,7 +654,7 @@ transform = Transform3D(-0.505, 0, -6.719313e-08, 0, 0.45, 0, 7.625288e-08, 0, -
 transform = Transform3D(-1.3769088e-07, 0, -0.5, 0, 1, 0, 3.15, 0, -2.1855694e-08, -38.997356, 0.08457935, -0.0021447986)
 
 [node name="SM_MetalBeam15" parent="ReceivingLiftInstallation" unique_id=1131570668 instance=ExtResource("54_qssrt")]
-transform = Transform3D(-4.371139e-08, 1, -4.371139e-08, 0, -4.371139e-08, -1, -1, -4.371139e-08, 1.9106855e-15, -39.237, 3.968, 8.467)
+transform = Transform3D(-4.371139e-08, 1, -4.371139e-08, 0, -4.371139e-08, -1, -1, -4.371139e-08, 1.9106855e-15, -39.237, 3.968, 9.190912)
 
 [node name="SM_sign_02" parent="ReceivingLiftInstallation" unique_id=1942064760 instance=ExtResource("55_v3vfn")]
 transform = Transform3D(1.090432e-08, 7.858323e-08, 1, 1.7977747, -0.24946177, 0, 0.24946177, 1.7977747, -4.371139e-08, -38.971012, 0.80947685, 0.05105634)
