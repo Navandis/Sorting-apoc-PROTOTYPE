@@ -58,6 +58,7 @@
 [ext_resource type="PackedScene" uid="uid://cv7vglot1faq0" path="res://assets/environment/dressing/signage/SM_FWYSignWarn_Caution_E01_N1.glb" id="56_232ub"]
 [ext_resource type="PackedScene" uid="uid://dpwqcn5830pcv" path="res://assets/environment/infrastructure/lighting/SM_ChainLink_01.glb" id="64_p6c26"]
 [ext_resource type="PackedScene" uid="uid://d1ldh0m20d6r" path="res://assets/environment/infrastructure/lighting/SM_KB3D_WDC_PropLight_H_Glass.glb" id="65_p6c26"]
+[ext_resource type="PackedScene" uid="uid://b7j1t6xxrp7oq" path="res://assets/environment/architecture/doors/SM_KB3D_NWD_ReuGarageDoorBlue_B.glb" id="69_k0nnl"]
 [ext_resource type="Script" uid="uid://be6gucor1ya72" path="res://environment_authoring/substrate/environment_substrate_piece.gd" id="shaft_1_x53na"]
 [ext_resource type="Resource" path="res://data/environment/material_catalog/approved_specs/eaf3b_1beac3a311a480af8844ea89.tres" id="shaft_2_rflhy"]
 [ext_resource type="Script" uid="uid://dym5xpqw4qae4" path="res://environment_authoring/substrate/environment_substrate_piece_spec.gd" id="shaft_3_4ax3c"]
@@ -66,7 +67,7 @@
 [ext_resource type="Texture2D" uid="uid://dmerwhc48dlm0" path="res://assets/environment/materials/kitbash_cache/eaf3b_1beac3a311a480af8844ea89/2k/normal.png" id="shaft_6_h0kxl"]
 [ext_resource type="Texture2D" uid="uid://buvwu7wptxnjv" path="res://assets/environment/materials/kitbash_cache/eaf3b_1beac3a311a480af8844ea89/2k/roughness.png" id="shaft_7_8hvsm"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_p6c26"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_omu8d"]
 resource_local_to_scene = true
 size = Vector3(4.04, 3, 0.82)
 
@@ -180,6 +181,12 @@ script = ExtResource("1_gameplay")
 [node name="Mesh" parent="Environment/Greybox/Districts/Receiving/DispatchWest" index="0" unique_id=501822292]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.15)
 
+[node name="Mesh" parent="Environment/Greybox/Districts/Receiving/DispatchEast" index="0" unique_id=1265134273]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.075)
+
+[node name="Mesh" parent="Environment/Greybox/Districts/Backlog/Floor_BacklogPassage" index="0" unique_id=1643992843]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.075, 0, 0)
+
 [node name="FreightBarrier" parent="Environment/Greybox/Boundaries" index="0" unique_id=1475417136]
 visible = false
 metadata/purpose = "Obsolete historical visual; all six collision shapes disabled in production"
@@ -287,7 +294,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.4, 0)
 
 [node name="Shape" parent="FunctionalFixtures/ModularRack_GalleryB_Initial/MovementCollision" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
-shape = SubResource("BoxShape3D_p6c26")
+shape = SubResource("BoxShape3D_omu8d")
 
 [node name="FixedLadder_GalleryB_Initial" parent="FunctionalFixtures" unique_id=806369216 instance=ExtResource("42_ladder")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 1.043639, 0, -8.665108)
@@ -614,8 +621,8 @@ layer = 10
 [node name="CarriedItemsHUD" parent="HUD" unique_id=626635065 instance=ExtResource("4_hud")]
 
 [node name="ReceivingLiftInstallation" type="Node3D" parent="." unique_id=138998562]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 0)
 metadata/purpose = "Manual lift ensemble; +3 m X retrofit with authored descendant transforms preserved"
-position = Vector3(3, 0, 0)
 
 [node name="SM_Fence_01" parent="ReceivingLiftInstallation" unique_id=742320119 instance=ExtResource("47_d12kh")]
 transform = Transform3D(1.68, 0, 0, 0, 2.555, 0, 0, 0, 1.68, -39.358643, 0.6426194, -1.749261)
@@ -643,6 +650,10 @@ transform = Transform3D(1.475, 0, 0, 0, 1.555, 0, 0, 0, 1.79, -39.367, 1.868, 0.
 
 [node name="SM_KB3D_LND_PropGarageDoor_B_Door" parent="ReceivingLiftInstallation" unique_id=1548685690 instance=ExtResource("51_i7er2")]
 transform = Transform3D(0.75, 0, 0, 0, 1.05, 0, 0, 0, 0.9, -39.169, 4.93, 0.008)
+visible = false
+
+[node name="SM_KB3D_NWD_ReuGarageDoorBlue_B" parent="ReceivingLiftInstallation" unique_id=853935050 instance=ExtResource("69_k0nnl")]
+transform = Transform3D(1, 0, 0, 0, 1.305, 0, 0, 0, 0.69, -39.164536, 3.1416707, -0.01947911)
 
 [node name="SM_ConcretePillar02" parent="ReceivingLiftInstallation" unique_id=1296925920 instance=ExtResource("52_3syii")]
 transform = Transform3D(-0.505, 0, -6.719313e-08, 0, 0.45, 0, 7.625288e-08, 0, -0.445, -39.229767, -0.0005104542, 2.2009237)
@@ -773,7 +784,7 @@ transform = Transform3D(1.12, 0, 0, 0, 1.12, 0, 0, 0, 1.12, -34.39905, 4.212658,
 transform = Transform3D(1.12, 0, 0, 0, 1.12, 0, 0, 0, 1.12, -30.30089, 4.210858, 1.1987157)
 
 [node name="SM_KB3D_WDC_PropLight_H_Glass" parent="." unique_id=635042247 instance=ExtResource("65_p6c26")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.628525, 3.6945462, -1.2137503)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.628525, 3.6945462, -1.2137502)
 
 [node name="SM_KB3D_WDC_PropLight_H_Glass2" parent="." unique_id=517906581 instance=ExtResource("65_p6c26")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.53431, 3.7066905, 1.165712)
