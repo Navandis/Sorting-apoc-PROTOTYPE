@@ -50,7 +50,6 @@
 [ext_resource type="PackedScene" uid="uid://dtc5hhjkyl3ov" path="res://assets/environment/architecture/floors/SM_IndustrialPlatform04.glb" id="48_kwor4"]
 [ext_resource type="PackedScene" uid="uid://cd3dtifmy0p7c" path="res://assets/environment/architecture/barriers/barricades/SM_WallPart_01.glb" id="49_h65wt"]
 [ext_resource type="PackedScene" uid="uid://ca6sqm3g8vnqy" path="res://assets/environment/architecture/doors/SM_KB3D_LND_PropGarageDoor_A_Frame.glb" id="50_dhxay"]
-[ext_resource type="PackedScene" uid="uid://b1c52bh48icoc" path="res://assets/environment/architecture/doors/SM_KB3D_LND_PropGarageDoor_B_Door.glb" id="51_i7er2"]
 [ext_resource type="PackedScene" uid="uid://cgqgyo8ud0jqe" path="res://assets/environment/architecture/structural/pillars/SM_ConcretePillar02.glb" id="52_3syii"]
 [ext_resource type="PackedScene" uid="uid://dhbfyo2yyt2jf" path="res://assets/environment/architecture/barriers/barricades/SM_Barrier01.glb" id="53_qssrt"]
 [ext_resource type="PackedScene" uid="uid://dft37otdh37ur" path="res://assets/environment/architecture/structural/beams/SM_MetalBeam15.glb" id="54_qssrt"]
@@ -621,6 +620,7 @@ layer = 10
 [node name="CarriedItemsHUD" parent="HUD" unique_id=626635065 instance=ExtResource("4_hud")]
 
 [node name="ReceivingLiftInstallation" type="Node3D" parent="." unique_id=138998562]
+metadata/active_shutter = NodePath("SM_KB3D_NWD_ReuGarageDoorBlue_B")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 0)
 metadata/purpose = "Manual lift ensemble; +3 m X retrofit with authored descendant transforms preserved"
 
@@ -648,9 +648,6 @@ transform = Transform3D(2.425982e-08, -3.861138e-15, 0.52, -8.3802675e-08, -0.58
 [node name="SM_KB3D_LND_PropGarageDoor_A_Frame" parent="ReceivingLiftInstallation" unique_id=1693052903 instance=ExtResource("50_dhxay")]
 transform = Transform3D(1.475, 0, 0, 0, 1.555, 0, 0, 0, 1.79, -39.367, 1.868, 0.035)
 
-[node name="SM_KB3D_LND_PropGarageDoor_B_Door" parent="ReceivingLiftInstallation" unique_id=1548685690 instance=ExtResource("51_i7er2")]
-transform = Transform3D(0.75, 0, 0, 0, 1.05, 0, 0, 0, 0.9, -39.169, 4.93, 0.008)
-visible = false
 
 [node name="SM_KB3D_NWD_ReuGarageDoorBlue_B" parent="ReceivingLiftInstallation" unique_id=853935050 instance=ExtResource("69_k0nnl")]
 transform = Transform3D(1, 0, 0, 0, 1.305, 0, 0, 0, 0.69, -39.164536, 3.1416707, -0.01947911)
@@ -686,10 +683,10 @@ shape = SubResource("BoxShape3D_lift_barrier")
 [node name="ShutterPoseMarkers" type="Node3D" parent="ReceivingLiftInstallation" unique_id=1034387749]
 
 [node name="Closed" type="Marker3D" parent="ReceivingLiftInstallation/ShutterPoseMarkers" unique_id=1445948340]
-transform = Transform3D(0.75, 0, 0, 0, 1.05, 0, 0, 0, 0.9, -39.169, 1.85, 0.008)
+transform = Transform3D(1, 0, 0, 0, 1.305, 0, 0, 0, 0.69, -39.164536, 0.086, -0.01947911)
 
 [node name="Open" type="Marker3D" parent="ReceivingLiftInstallation/ShutterPoseMarkers" unique_id=727079581]
-transform = Transform3D(0.75, 0, 0, 0, 1.05, 0, 0, 0, 0.9, -39.169, 4.93, 0.008)
+transform = Transform3D(1, 0, 0, 0, 1.305, 0, 0, 0, 0.69, -39.164536, 3.1416707, -0.01947911)
 
 [node name="ShaftWalls" type="Node3D" parent="ReceivingLiftInstallation" unique_id=1233453375]
 metadata/purpose = "Visual lift shaft lining measured from fixed cage; Left/Right viewed from apron (+X)"

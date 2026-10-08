@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene load_steps=11 format=3]
 
 [ext_resource type="Script" path="res://gameplay/logistics_wing/wing_environment.gd" id="1_environment"]
 [ext_resource type="PackedScene" path="res://greybox/logistics_wing/wing_geometry.tscn" id="2_geometry"]
@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" path="res://gameplay/logistics_wing/receiving/receiving_structural_shell.tscn" id="3_receiving_shell"]
 
 [ext_resource type="PackedScene" path="res://gameplay/logistics_wing/receiving/receiving_lighting.tscn" id="4_receiving_lighting"]
+
+[ext_resource type="PackedScene" path="res://gameplay/logistics_wing/receiving/receiving_infrastructure.tscn" id="5_receiving_infrastructure"]
 
 [sub_resource type="Environment" id="Environment_gameplay"]
 background_mode = 1
@@ -176,5 +178,7 @@ position = Vector3(56, 2.7, -5)
 light_color = Color(0.94, 0.97, 1, 1)
 light_energy = 2.0
 omni_range = 22.0
+
+[node name="ReceivingInfrastructure" parent="." instance=ExtResource("5_receiving_infrastructure")]
 
 [editable path="Greybox"]

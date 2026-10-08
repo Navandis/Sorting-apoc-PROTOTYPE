@@ -1,0 +1,250 @@
+[gd_scene format=4]
+
+[ext_resource type="PackedScene" path="res://assets/environment/infrastructure/pipes/SM_L_Pipe_4m_02.glb" id="1_cuysx"]
+
+[ext_resource type="PackedScene" path="res://assets/environment/infrastructure/cables/SM_ElectricalSupply_Wire01_Straight.glb" id="10_n3t1k"]
+
+[ext_resource type="Texture2D" path="res://assets/environment/infrastructure/cables/SM_ElectricalSupply_Wire01_Straight_T_ElectricalSupply_Details_BC.png" id="11_qwf3i"]
+
+[ext_resource type="Texture2D" path="res://assets/environment/infrastructure/cables/SM_ElectricalSupply_Wire01_Straight_T_ElectricalSupply_Details_ORM.png" id="12_jxrx6"]
+
+[ext_resource type="Texture2D" path="res://assets/environment/infrastructure/cables/SM_ElectricalSupply_Wire01_Straight_MI_ElectricalSupply_Details_Emissive.png" id="13_rfu5g"]
+
+[ext_resource type="Texture2D" path="res://assets/environment/infrastructure/cables/SM_ElectricalSupply_Wire01_Straight_T_ElectricalSupply_Details_N.png" id="14_1mud6"]
+
+[ext_resource type="PackedScene" path="res://assets/environment/infrastructure/cables/SM_ElectricalSupply_Wire01_Corner.glb" id="15_yijrq"]
+
+[ext_resource type="Texture2D" path="res://assets/environment/infrastructure/cables/SM_ElectricalSupply_Wire01_Corner_T_ElectricalSupply_Details_BC.png" id="16_tnaee"]
+
+[ext_resource type="Texture2D" path="res://assets/environment/infrastructure/cables/SM_ElectricalSupply_Wire01_Corner_T_ElectricalSupply_Details_ORM.png" id="17_dss1r"]
+
+[ext_resource type="Texture2D" path="res://assets/environment/infrastructure/cables/SM_ElectricalSupply_Wire01_Corner_MI_ElectricalSupply_Details_Emissive.png" id="18_h8t2f"]
+
+[ext_resource type="Texture2D" path="res://assets/environment/infrastructure/cables/SM_ElectricalSupply_Wire01_Corner_T_ElectricalSupply_Details_N.png" id="19_y4tpc"]
+
+[ext_resource type="PackedScene" path="res://assets/environment/infrastructure/service_props/SM_ElectricalSupply_JunctionBox04.glb" id="20_sn4gi"]
+
+[ext_resource type="Texture2D" path="res://assets/environment/infrastructure/service_props/SM_ElectricalSupply_JunctionBox04_T_ElectricalSupply_Details_BC.png" id="21_x367h"]
+
+[ext_resource type="Texture2D" path="res://assets/environment/infrastructure/service_props/SM_ElectricalSupply_JunctionBox04_T_ElectricalSupply_Details_ORM.png" id="22_f0k31"]
+
+[ext_resource type="Texture2D" path="res://assets/environment/infrastructure/service_props/SM_ElectricalSupply_JunctionBox04_MI_ElectricalSupply_Details_Emissive.png" id="23_1we0v"]
+
+[ext_resource type="Texture2D" path="res://assets/environment/infrastructure/service_props/SM_ElectricalSupply_JunctionBox04_T_ElectricalSupply_Details_N.png" id="24_anvat"]
+
+[ext_resource type="PackedScene" path="res://assets/environment/infrastructure/electrical/SM_KB3D_PAR_PropElectricalBox_A.glb" id="25_apyjj"]
+
+[ext_resource type="PackedScene" path="res://assets/environment/infrastructure/vents/SM_Vent_Holders.glb" id="6_0ve3p"]
+
+[ext_resource type="Material" path="res://assets/environment/infrastructure/vents/SM_Vent_Holders.glb::StandardMaterial3D_yx38s" id="27_support_metal"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_support_rod"]
+size = Vector3(0.02, 1.372, 0.02)
+
+[sub_resource type="BoxMesh" id="BoxMesh_support_bearer"]
+size = Vector3(0.03, 0.012, 0.512)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ts4lt"]
+size = Vector3(1.0086681, 0.97544134, 0.4052829)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kxkcu"]
+resource_name = "MI_ElectricalSupply_Details"
+albedo_texture = ExtResource("16_tnaee")
+metallic = 1.0
+metallic_texture = ExtResource("17_dss1r")
+metallic_texture_channel = 2
+roughness_texture = ExtResource("17_dss1r")
+roughness_texture_channel = 1
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 10.0
+emission_operator = 1
+emission_texture = ExtResource("18_h8t2f")
+normal_enabled = true
+normal_texture = ExtResource("19_y4tpc")
+ao_enabled = true
+ao_texture = ExtResource("17_dss1r")
+metadata/_gltf_primary_texture_coord = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p21qt"]
+resource_name = "MI_ElectricalSupply_Details"
+albedo_texture = ExtResource("21_x367h")
+metallic = 1.0
+metallic_texture = ExtResource("22_f0k31")
+metallic_texture_channel = 2
+roughness_texture = ExtResource("22_f0k31")
+roughness_texture_channel = 1
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 10.0
+emission_operator = 1
+emission_texture = ExtResource("23_1we0v")
+normal_enabled = true
+normal_texture = ExtResource("24_anvat")
+ao_enabled = true
+ao_texture = ExtResource("22_f0k31")
+metadata/_gltf_primary_texture_coord = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pslb4"]
+resource_name = "MI_ElectricalSupply_Details"
+albedo_texture = ExtResource("11_qwf3i")
+metallic = 1.0
+metallic_texture = ExtResource("12_jxrx6")
+metallic_texture_channel = 2
+roughness_texture = ExtResource("12_jxrx6")
+roughness_texture_channel = 1
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 10.0
+emission_operator = 1
+emission_texture = ExtResource("13_rfu5g")
+normal_enabled = true
+normal_texture = ExtResource("14_1mud6")
+ao_enabled = true
+ao_texture = ExtResource("12_jxrx6")
+metadata/_gltf_primary_texture_coord = 0
+
+[node name="ReceivingInfrastructure" type="Node3D" unique_id=1951997673]
+
+[node name="P1_ServiceMain" type="Node3D" parent="." unique_id=1962766373]
+
+[node name="P1_Module_0" parent="P1_ServiceMain" unique_id=1891675132 instance=ExtResource("1_cuysx")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -36.1, 3.04, 3.38)
+
+[node name="P1_Module_1" parent="P1_ServiceMain" unique_id=1024924786 instance=ExtResource("1_cuysx")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -34.099293, 3.04, 3.38)
+
+[node name="P1_Module_2" parent="P1_ServiceMain" unique_id=203109305 instance=ExtResource("1_cuysx")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -32.098587, 3.04, 3.38)
+
+[node name="P1_Module_3" parent="P1_ServiceMain" unique_id=1214506935 instance=ExtResource("1_cuysx")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -30.09788, 3.04, 3.38)
+
+[node name="P1_CeilingHanger_0" parent="P1_ServiceMain" unique_id=405799245 instance=ExtResource("6_0ve3p")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.4, 4.2, 3.66)
+
+[node name="Mesh" parent="P1_ServiceMain/P1_CeilingHanger_0" index="0"]
+position = Vector3(0, -0.686, 0)
+mesh = SubResource("BoxMesh_support_rod")
+material_override = ExtResource("27_support_metal")
+
+[node name="Bearer" type="MeshInstance3D" parent="P1_ServiceMain/P1_CeilingHanger_0"]
+position = Vector3(0, -1.366, -0.246)
+mesh = SubResource("BoxMesh_support_bearer")
+material_override = ExtResource("27_support_metal")
+
+[node name="P1_CeilingHanger_1" parent="P1_ServiceMain" unique_id=432613863 instance=ExtResource("6_0ve3p")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.7, 4.2, 3.66)
+
+[node name="Mesh" parent="P1_ServiceMain/P1_CeilingHanger_1" index="0"]
+position = Vector3(0, -0.686, 0)
+mesh = SubResource("BoxMesh_support_rod")
+material_override = ExtResource("27_support_metal")
+
+[node name="Bearer" type="MeshInstance3D" parent="P1_ServiceMain/P1_CeilingHanger_1"]
+position = Vector3(0, -1.366, -0.246)
+mesh = SubResource("BoxMesh_support_bearer")
+material_override = ExtResource("27_support_metal")
+
+[node name="P1_CeilingHanger_2" parent="P1_ServiceMain" unique_id=82001701 instance=ExtResource("6_0ve3p")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 4.2, 3.66)
+
+[node name="Mesh" parent="P1_ServiceMain/P1_CeilingHanger_2" index="0"]
+position = Vector3(0, -0.686, 0)
+mesh = SubResource("BoxMesh_support_rod")
+material_override = ExtResource("27_support_metal")
+
+[node name="Bearer" type="MeshInstance3D" parent="P1_ServiceMain/P1_CeilingHanger_2"]
+position = Vector3(0, -1.366, -0.246)
+mesh = SubResource("BoxMesh_support_bearer")
+material_override = ExtResource("27_support_metal")
+
+[node name="E1_ElectricalThroughFeed" type="Node3D" parent="." unique_id=1227528596]
+
+[node name="E1_Run_0" parent="E1_ElectricalThroughFeed" unique_id=302105249 instance=ExtResource("10_n3t1k")]
+transform = Transform3D(-1.09278474e-07, 5, 0, -2.5, -2.1855695e-07, 0, 0, 0, 2.5, -36.1, 2.6, 3.812)
+
+[node name="Mesh" parent="E1_ElectricalThroughFeed/E1_Run_0" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_pslb4")
+
+[node name="E1_Run_1" parent="E1_ElectricalThroughFeed" unique_id=360790186 instance=ExtResource("10_n3t1k")]
+transform = Transform3D(-1.09278474e-07, 5, 0, -2.5, -2.1855695e-07, 0, 0, 0, 2.5, -33.6, 2.6, 3.812)
+
+[node name="Mesh" parent="E1_ElectricalThroughFeed/E1_Run_1" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_pslb4")
+
+[node name="E1_Run_2" parent="E1_ElectricalThroughFeed" unique_id=1716491753 instance=ExtResource("10_n3t1k")]
+transform = Transform3D(-1.09278474e-07, 2.5, 0, -2.5, -1.09278474e-07, 0, 0, 0, 2.5, -31.1, 2.6, 3.812)
+
+[node name="Mesh" parent="E1_ElectricalThroughFeed/E1_Run_2" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_pslb4")
+
+[node name="E1_Jog_1" parent="E1_ElectricalThroughFeed" unique_id=195943969 instance=ExtResource("15_yijrq")]
+transform = Transform3D(0, 2.5, 0, 0, 0, -2.5, -2.5, 0, 0, -29.85, 2.6, 3.812)
+
+[node name="Mesh" parent="E1_ElectricalThroughFeed/E1_Jog_1" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_kxkcu")
+
+[node name="E1_Jog_2" parent="E1_ElectricalThroughFeed" unique_id=555228459 instance=ExtResource("15_yijrq")]
+transform = Transform3D(2.5, 0, 0, 0, 0, 2.5, 0, -2.5, 0, -29.225, 2.6, 3.187)
+
+[node name="Mesh" parent="E1_ElectricalThroughFeed/E1_Jog_2" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_kxkcu")
+
+[node name="E1_BacklogStub" parent="E1_ElectricalThroughFeed" unique_id=864061986 instance=ExtResource("10_n3t1k")]
+transform = Transform3D(-1.09278474e-07, 1, 0, -2.5, -4.371139e-08, 0, 0, 0, 2.5, -28.6, 2.6, 2.562)
+
+[node name="Mesh" parent="E1_ElectricalThroughFeed/E1_BacklogStub" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_pslb4")
+
+[node name="L1_LiftServiceBranch" type="Node3D" parent="." unique_id=2052641002]
+
+[node name="E1_Junction" parent="L1_LiftServiceBranch" unique_id=1328703337 instance=ExtResource("20_sn4gi")]
+transform = Transform3D(-1.5, 0, -1.3113416e-07, 0, 1.5, 0, 1.3113416e-07, 0, -1.5, -35.05, 2.6, 3.85)
+
+[node name="Mesh" parent="L1_LiftServiceBranch/E1_Junction" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_p21qt")
+
+[node name="L1_Isolator" parent="L1_LiftServiceBranch" unique_id=1983946844 instance=ExtResource("25_apyjj")]
+transform = Transform3D(-3.4969112e-08, 0, 0.8, 0, 0.8, 0, -0.8, 0, -3.4969112e-08, -35.05, 1.15, 3.85)
+
+[node name="L1_Feeder" parent="L1_LiftServiceBranch" unique_id=1901984354 instance=ExtResource("10_n3t1k")]
+transform = Transform3D(1.5, 0, 0, 0, 0.73638, 0, 0, 0, 1.5, -35.05, 2.1254413, 3.819)
+
+[node name="Mesh" parent="L1_LiftServiceBranch/L1_Feeder" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_pslb4")
+
+[node name="CabinetMovementCollision" type="StaticBody3D" parent="L1_LiftServiceBranch" unique_id=1231386829]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.05, 1.6377206, 3.6403584)
+
+[node name="HousingBox" type="CollisionShape3D" parent="L1_LiftServiceBranch/CabinetMovementCollision" unique_id=1653127502]
+shape = SubResource("BoxShape3D_ts4lt")
+
+[editable path="P1_ServiceMain/P1_Module_0"]
+
+[editable path="P1_ServiceMain/P1_Module_1"]
+
+[editable path="P1_ServiceMain/P1_Module_2"]
+
+[editable path="P1_ServiceMain/P1_Module_3"]
+
+[editable path="P1_ServiceMain/P1_CeilingHanger_0"]
+
+[editable path="P1_ServiceMain/P1_CeilingHanger_1"]
+
+[editable path="P1_ServiceMain/P1_CeilingHanger_2"]
+
+[editable path="E1_ElectricalThroughFeed/E1_Run_0"]
+
+[editable path="E1_ElectricalThroughFeed/E1_Run_1"]
+
+[editable path="E1_ElectricalThroughFeed/E1_Run_2"]
+
+[editable path="E1_ElectricalThroughFeed/E1_Jog_1"]
+
+[editable path="E1_ElectricalThroughFeed/E1_Jog_2"]
+
+[editable path="E1_ElectricalThroughFeed/E1_BacklogStub"]
+
+[editable path="L1_LiftServiceBranch/E1_Junction"]
+
+[editable path="L1_LiftServiceBranch/L1_Isolator"]
+
+[editable path="L1_LiftServiceBranch/L1_Feeder"]

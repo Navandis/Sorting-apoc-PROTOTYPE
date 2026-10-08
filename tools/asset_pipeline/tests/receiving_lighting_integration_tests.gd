@@ -118,7 +118,8 @@ func assert_environment(env):
    check(light.global_position.distance_to(light.global_position.clamp(box.position,box.end))>light.omni_range,name+" cannot reach Receiving")
 func assert_clearance(rig,wing):
  var roof = AABB(Vector3(-38.511,3.213,-1.755),Vector3(2.176,.509,3.495))
- var sweep = AABB(Vector3(-36.266,.071,-1.803),Vector3(.195,6.638,3.622))
+ # Accepted collisionless shutter prism excludes added fixture hardware only.
+ var sweep = AABB(Vector3(-36.291565,.085839,-1.838069),Vector3(.214279,6.483488,3.635061))
  var beam = AABB(Vector3(-36.510307,3.514409,-2.809088),Vector3(.546615,.907182,12))
  var interaction = AABB(Vector3(-38.6,.82,-1.82),Vector3(3.3,1.7,3.64))
  for mesh in rig.find_children("*","MeshInstance3D",true,false):

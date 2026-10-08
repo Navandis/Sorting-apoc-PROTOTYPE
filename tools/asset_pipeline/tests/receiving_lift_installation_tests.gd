@@ -33,11 +33,20 @@ func run() -> void:
 		check(old_shapes.size() == 6, "all historical shapes identified")
 		for old_shape: CollisionShape3D in old_shapes:
 			check(old_shape.disabled, "historical barrier collider disabled")
-		var door := installation.get_node("SM_KB3D_LND_PropGarageDoor_B_Door") as Node3D
-		for pose: String in ["Closed", "Open"]:
-			var marker := installation.get_node("ShutterPoseMarkers/" + pose) as Marker3D
-			check(marker.basis == door.basis and is_equal_approx(marker.position.x, door.position.x) and is_equal_approx(marker.position.z, door.position.z) and is_equal_approx(marker.position.y, 1.85 if pose == "Closed" else 4.93), "shutter endpoint preserves X/Z/basis: " + pose)
-		for name: String in ["SM_KB3D_LND_PropGarageDoor_B_Door", "SM_ConcretePillar02", "SM_ConcretePillar03", "SM_MetalBeam15"]:
+		var active_path: NodePath = installation.get_meta("active_shutter", NodePath())
+		check(active_path == NodePath("SM_KB3D_NWD_ReuGarageDoorBlue_B"), "explicit active NWD shutter reference")
+		var door := installation.get_node_or_null(active_path) as Node3D if not active_path.is_empty() else null
+		if check(door != null, "active shutter reference resolves"):
+			var open_pose := Transform3D(Basis(Vector3(1, 0, 0), Vector3(0, 1.305, 0), Vector3(0, 0, 0.69)), Vector3(-39.164536, 3.1416707, -0.01947911))
+			check(door.visible and door.transform == open_pose, "saved NWD open transform remains exact")
+			for pose: String in ["Closed", "Open"]:
+				var expected := open_pose
+				if pose == "Closed":
+					expected.origin.y = 0.086
+				var marker := installation.get_node("ShutterPoseMarkers/" + pose) as Marker3D
+				check(marker.transform == expected, "full NWD basis/X/Z/endpoint: " + pose)
+			check(installation.get_node_or_null("SM_KB3D_LND_PropGarageDoor_B_Door") == null, "unused hidden predecessor instance retired")
+		for name: String in ["SM_KB3D_NWD_ReuGarageDoorBlue_B", "SM_ConcretePillar02", "SM_ConcretePillar03", "SM_MetalBeam15"]:
 			var visual := installation.get_node(name)
 			check(visual.find_children("*", "CollisionObject3D", true, false).is_empty() and visual.find_children("*", "CollisionShape3D", true, false).is_empty(), name + " remains collisionless")
 		# Dispatch interior begins east of the west wall at X -34.85.
