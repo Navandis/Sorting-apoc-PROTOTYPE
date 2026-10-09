@@ -38,7 +38,9 @@ func run() -> void:
 		var door := installation.get_node_or_null(active_path) as Node3D if not active_path.is_empty() else null
 		if check(door != null, "active shutter reference resolves"):
 			var open_pose := Transform3D(Basis(Vector3(1, 0, 0), Vector3(0, 1.305, 0), Vector3(0, 0, 0.69)), Vector3(-39.164536, 3.1416707, -0.01947911))
-			check(door.visible and door.transform == open_pose, "saved NWD open transform remains exact")
+			# Human art checkpoint 8857615 saves the visible shutter closed; marker endpoints remain the accepted pose authority.
+			var authored_closed := Transform3D(Basis(Vector3(1, 0, 0), Vector3(0, 1.305, 0), Vector3(0, 0, 0.69)), Vector3(-39.165, 0.086, -0.019))
+			check(door.visible and door.transform == authored_closed, "human-authored NWD closed transform remains exact")
 			for pose: String in ["Closed", "Open"]:
 				var expected := open_pose
 				if pose == "Closed":
@@ -49,6 +51,7 @@ func run() -> void:
 		for name: String in ["SM_KB3D_NWD_ReuGarageDoorBlue_B", "SM_ConcretePillar02", "SM_ConcretePillar03", "SM_MetalBeam15"]:
 			var visual := installation.get_node(name)
 			check(visual.find_children("*", "CollisionObject3D", true, false).is_empty() and visual.find_children("*", "CollisionShape3D", true, false).is_empty(), name + " remains collisionless")
+		# Barrier sweeps start in the clear strip next to the barrier, outside the human-authored pallet-jack staging.
 		# Dispatch interior begins east of the west wall at X -34.85.
 		var dispatch := AABB(Vector3(-34.85, 0, -7.35), Vector3(6.2, 4.2, 3.2))
 		for name: String in ["SM_ConcretePillar02", "SM_ConcretePillar03", "SM_MetalBeam15"]:
@@ -58,12 +61,12 @@ func run() -> void:
 		player.set_physics_process(false)
 		for z: float in [-2.3, -1.9, -1.2, 0.0, 1.2, 1.9, 2.3]:
 			var parameters := PhysicsTestMotionParameters3D.new()
-			parameters.from = Transform3D(Basis.IDENTITY, Vector3(-35, 0.01, z))
+			parameters.from = Transform3D(Basis.IDENTITY, Vector3(-35.5, 0.01, z))
 			parameters.motion = Vector3(-2, 0, 0)
 			var result := PhysicsTestMotionResult3D.new()
 			check(PhysicsServer3D.body_test_motion(player.get_rid(), parameters, result), "capsule excluded at Z %.2f" % z)
 			check(result.get_collision_count() > 0 and (result.get_collider() == barrier or (absf(z) > 2.0 and "ReceivingWest" in str(result.get_collider().get_path()))), "barrier or retained aperture jamb stops capsule at Z %.2f" % z)
-		for probe: Array in [[Vector3(-35.2, 0.01, -3), Vector3(0, 0, 6)], [Vector3(-31.714286, 0.01, -3), Vector3(0, 0, -2)]]:
+		for probe: Array in [[Vector3(-35.15, 0.01, -2.25), Vector3(0, 0, 4.0)], [Vector3(-31.714286, 0.01, -3), Vector3(0, 0, -2)]]:
 			var parameters := PhysicsTestMotionParameters3D.new()
 			parameters.from = Transform3D(Basis.IDENTITY, probe[0])
 			parameters.motion = probe[1]
