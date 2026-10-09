@@ -156,6 +156,8 @@
 [ext_resource type="Texture2D" uid="uid://dmerwhc48dlm0" path="res://assets/environment/materials/kitbash_cache/eaf3b_1beac3a311a480af8844ea89/2k/normal.png" id="shaft_6_h0kxl"]
 [ext_resource type="Texture2D" uid="uid://buvwu7wptxnjv" path="res://assets/environment/materials/kitbash_cache/eaf3b_1beac3a311a480af8844ea89/2k/roughness.png" id="shaft_7_8hvsm"]
 
+[ext_resource type="PackedScene" path="res://gameplay/logistics_wing/receiving/receiving_lift_phosphor_display.tscn" id="154_crt_display"]
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_76yn2"]
 resource_local_to_scene = true
 size = Vector3(4.04, 3, 0.82)
@@ -316,6 +318,15 @@ size = Vector3(0.405, 1.24, 0.23)
 [sub_resource type="CylinderShape3D" id="Receiving_BlueBarrelMovement_Body"]
 radius = 0.287017959
 height = 0.874783341
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_receiving_crt"]
+resource_local_to_scene = true
+shading_mode = 0
+albedo_color = Color(0.008, 0.02, 0.014, 1)
+texture_filter = 1
+texture_repeat = false
+uv1_scale = Vector3(4.611302975, 5.949906454, 1)
+uv1_offset = Vector3(-2.119711754, -2.159240137, 0)
 
 [node name="WingGameplay" type="Node3D" unique_id=1126541559]
 script = ExtResource("1_gameplay")
@@ -1479,6 +1490,9 @@ transform = Transform3D(1.235, 0, 0, 0, 1.22, 0, 0, 0, 1.665, -36.277256, 2.0607
 
 [node name="Mesh" parent="ReceivingLiftMonitor/SM_KB3D_CPP_PropTV_A" index="0" unique_id=208583326]
 transform = Transform3D(1, 0, 0, 0, 0.9999998, 0, 0, 0, 1, 0.016489029, 0, 0.02396071)
+surface_material_override/1 = SubResource("StandardMaterial3D_receiving_crt")
+
+[node name="PhosphorDisplay" parent="ReceivingLiftMonitor" instance=ExtResource("154_crt_display")]
 
 [node name="SM_OfficeMonitor_02" parent="ReceivingLiftMonitor" unique_id=321225774 instance=ExtResource("152_0tjjn")]
 transform = Transform3D(-4.742686e-08, 0.009468291, 1.0849587, 0, 1.0849587, -0.009468291, -1.085, -4.1387216e-10, -4.742505e-08, -35.929733, 2.4504955, -3.2735615)
