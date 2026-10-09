@@ -3,12 +3,18 @@
 [ext_resource type="Script" uid="uid://biayrmaxttpah" path="res://gameplay/logistics_wing/wing_gameplay.gd" id="1_gameplay"]
 [ext_resource type="PackedScene" path="res://gameplay/logistics_wing/wing_environment.tscn" id="2_environment"]
 [ext_resource type="PackedScene" path="res://gameplay/player/gameplay_player.tscn" id="3_player"]
+[ext_resource type="PackedScene" uid="uid://dvfofak5jgwjg" path="res://assets/environment/furniture/work_surfaces/SM_Desk_A01_N1.glb" id="3_pygu1"]
+[ext_resource type="PackedScene" uid="uid://uvdd3n5k2rij" path="res://assets/environment/dressing/decoration/SM_Ind_War_Cable_Power_Rubber_Weathered_03.glb" id="4_cllla"]
 [ext_resource type="PackedScene" path="res://gameplay/ui/carried_items_hud.tscn" id="4_hud"]
+[ext_resource type="PackedScene" uid="uid://ddunnblmgwyuf" path="res://assets/environment/dressing/decoration/SM_Food_Leftover_FO1_N1.glb" id="5_5ehom"]
 [ext_resource type="Script" uid="uid://6qrk22inrvej" path="res://gameplay/logistics_wing/development/seed_host.gd" id="5_8pqnk"]
 [ext_resource type="PackedScene" path="res://gameplay/logistics_wing/functional_fixtures.tscn" id="5_fixtures"]
 [ext_resource type="PackedScene" uid="uid://dqahwgcsham5a" path="res://assets/props/morale/SM_Book_01.glb" id="6_54osu"]
 [ext_resource type="PackedScene" path="res://gameplay/logistics_wing/development/seeded_storage_setup.tscn" id="6_development"]
+[ext_resource type="PackedScene" uid="uid://35txwa8f4omp" path="res://assets/environment/infrastructure/lighting/SM_KB3D_API_TwoBedroom_A_DeskLampB.glb" id="6_gnorf"]
+[ext_resource type="PackedScene" uid="uid://dwi21utjbv5eb" path="res://assets/environment/infrastructure/lighting/SM_KB3D_API_TwoBedroom_A_DeskLampB_transparent.glb" id="7_3gvbg"]
 [ext_resource type="PackedScene" uid="uid://xt5xd2i71gmi" path="res://assets/props/morale/SM_CDStack_01.glb" id="7_tw2hy"]
+[ext_resource type="PackedScene" uid="uid://cfjkh5kcajj3x" path="res://assets/environment/dressing/decoration/SM_Thermos_01.glb" id="8_1bkje"]
 [ext_resource type="PackedScene" uid="uid://cdtpk0sa4cpcp" path="res://assets/props/electronics/SM_ComputerMouse_01.glb" id="8_mouse"]
 [ext_resource type="PackedScene" uid="uid://bnkwk3smcnutr" path="res://assets/props/electronics/SM_ComputerTower_01.glb" id="9_tower"]
 [ext_resource type="PackedScene" uid="uid://bccl7gu0qfqi3" path="res://assets/props/electronics/SM_ElectronicDevice_01.glb" id="10_device"]
@@ -57,7 +63,91 @@
 [ext_resource type="PackedScene" uid="uid://cv7vglot1faq0" path="res://assets/environment/dressing/signage/SM_FWYSignWarn_Caution_E01_N1.glb" id="56_232ub"]
 [ext_resource type="PackedScene" uid="uid://dpwqcn5830pcv" path="res://assets/environment/infrastructure/lighting/SM_ChainLink_01.glb" id="64_p6c26"]
 [ext_resource type="PackedScene" uid="uid://d1ldh0m20d6r" path="res://assets/environment/infrastructure/lighting/SM_KB3D_WDC_PropLight_H_Glass.glb" id="65_p6c26"]
+[ext_resource type="PackedScene" uid="uid://cna40hvpoju4j" path="res://assets/environment/infrastructure/pipes/SM_KB3D_BMK_PropPipeHangingCap_BB.glb" id="66_fmv76"]
+[ext_resource type="PackedScene" uid="uid://b5s6l1qtkxxbb" path="res://assets/environment/infrastructure/pipes/SM_KB3D_BMK_PropPipeHangingSeg_BA.glb" id="67_6j63b"]
+[ext_resource type="PackedScene" uid="uid://e78mfjfmsx45" path="res://assets/environment/infrastructure/electrical/SM_ElectricalSupply_Switchboard06_01.glb" id="68_omu8d"]
 [ext_resource type="PackedScene" uid="uid://b7j1t6xxrp7oq" path="res://assets/environment/architecture/doors/SM_KB3D_NWD_ReuGarageDoorBlue_B.glb" id="69_k0nnl"]
+[ext_resource type="PackedScene" uid="uid://3cpwttcnsq0r" path="res://assets/environment/infrastructure/electrical/SM_ElectricalSupply_Switchboard01.glb" id="69_lx7ns"]
+[ext_resource type="PackedScene" uid="uid://bkutkgxf6npc4" path="res://assets/environment/infrastructure/electrical/SM_KB3D_RFS_PropElectricalBox_D_Main.glb" id="71_88csr"]
+[ext_resource type="PackedScene" uid="uid://bddq4qffhtxke" path="res://assets/environment/infrastructure/electrical/SM_KB3D_CPI_PropElectricJunctionBox_F.glb" id="72_bjeyl"]
+[ext_resource type="PackedScene" uid="uid://d20v8coxw50on" path="res://assets/environment/infrastructure/pipes/SM_KB3D_BMK_PropPipeHangingSeg_AA.glb" id="73_4lctd"]
+[ext_resource type="PackedScene" uid="uid://c7h21ajtus8jf" path="res://assets/environment/infrastructure/electrical/SM_KB3D_BMK_PropUtilitiesC.glb" id="75_vsanc"]
+[ext_resource type="PackedScene" uid="uid://vg0u4w1cey2o" path="res://assets/environment/infrastructure/electrical/SM_KB3D_PAR_PropElectricalBox_B.glb" id="76_kn5jw"]
+[ext_resource type="PackedScene" uid="uid://mt2ugbqfw8ti" path="res://assets/environment/infrastructure/electrical/SM_Utility_Box_1a.glb" id="77_y7b5x"]
+[ext_resource type="PackedScene" uid="uid://dpn8fpngwl6w7" path="res://assets/environment/dressing/decals/SM_Slums_Decal_02b.glb" id="79_8yurt"]
+[ext_resource type="PackedScene" uid="uid://b8jxqdxbirm1c" path="res://assets/environment/dressing/decals/SM_Slums_Decal_02a.glb" id="80_kn5jw"]
+[ext_resource type="PackedScene" uid="uid://bvactmcd312tj" path="res://assets/environment/infrastructure/electrical/SM_KB3D_ECE_PropLightSwitch_A_Main.glb" id="81_uxmga"]
+[ext_resource type="PackedScene" uid="uid://drnqsmrejks32" path="res://assets/environment/dressing/decals/SM_Slums_Decal_02d.glb" id="81_y7b5x"]
+[ext_resource type="PackedScene" uid="uid://b402t1rti3ld8" path="res://assets/environment/infrastructure/cables/SM_ElectricalSupply_Group04.glb" id="82_ofw8x"]
+[ext_resource type="PackedScene" uid="uid://b4owwp11dcpku" path="res://assets/environment/infrastructure/cables/SM_KB3D_BMK_BldgSmWhisperVault_A_CablesC.glb" id="83_3lipy"]
+[ext_resource type="PackedScene" uid="uid://jqm3ykkpkybv" path="res://assets/environment/infrastructure/cables/SM_ElectricalSupply_Wire01_Corner.glb" id="84_5uwd2"]
+[ext_resource type="PackedScene" uid="uid://bwxhruyh7lpje" path="res://assets/environment/dressing/decals/SM_Slums_Decal_01b.glb" id="85_uxmga"]
+[ext_resource type="PackedScene" uid="uid://chbi0ywfju7sw" path="res://assets/environment/infrastructure/cables/SM_ElectricalSupply_Wire01_Straight.glb" id="86_25yk3"]
+[ext_resource type="PackedScene" uid="uid://du4rhbfh6baou" path="res://assets/environment/infrastructure/electrical/SM_TargetRetrievalButton.glb" id="86_uxmga"]
+[ext_resource type="PackedScene" uid="uid://07gttup30ldl" path="res://assets/environment/infrastructure/service_props/SM_WallBrace.glb" id="92_as8k2"]
+[ext_resource type="PackedScene" uid="uid://b1y38jf1ervlb" path="res://assets/environment/infrastructure/service_props/SM_ElectricalSupply_RemoteControl.glb" id="93_ywlxo"]
+[ext_resource type="PackedScene" uid="uid://dkjf3k02lnsfh" path="res://assets/environment/infrastructure/service_props/SM_KB3D_LAB_Electronics_G_Main.glb" id="95_ti4b2"]
+[ext_resource type="PackedScene" uid="uid://spuiydrqrf2e" path="res://assets/environment/infrastructure/service_props/SM_KB3D_LAB_Electronics_G_Main_transparent.glb" id="96_oy8el"]
+[ext_resource type="PackedScene" uid="uid://dynsxihjf4nhi" path="res://assets/environment/dressing/containers/SM_Pallet01.glb" id="97_qkm8c"]
+[ext_resource type="PackedScene" uid="uid://k3lppyinosb3" path="res://assets/environment/dressing/containers/SM_WoodPallet_03.glb" id="98_xe8rb"]
+[ext_resource type="PackedScene" uid="uid://dq1kal5ib847h" path="res://assets/environment/dressing/containers/SM_Pallet03.glb" id="99_wlm0n"]
+[ext_resource type="PackedScene" uid="uid://bgd4pqy6qqekd" path="res://assets/environment/dressing/decoration/SM_KB3D_WHS_PropHandPalletJack_A_HandCrank.glb" id="100_i2lar"]
+[ext_resource type="PackedScene" uid="uid://dnbcoqvwg2jbj" path="res://assets/environment/dressing/decoration/SM_KB3D_WHS_PropHandPalletJack_A_Main.glb" id="101_iwfau"]
+[ext_resource type="PackedScene" uid="uid://2e7m0r4efom3" path="res://assets/environment/dressing/decoration/SM_KB3D_WHS_PropHandPalletJack_A_Wheels.glb" id="102_b6j7d"]
+[ext_resource type="PackedScene" uid="uid://bpj0r52327m0g" path="res://assets/environment/furniture/seating/SM_Res_Fur_Stool_Metal_Worn_01.glb" id="103_f3716"]
+[ext_resource type="PackedScene" uid="uid://ehju0qsvgcdp" path="res://assets/environment/dressing/containers/SM_MilitaryCrate_02.glb" id="104_n70vc"]
+[ext_resource type="PackedScene" uid="uid://b5a4nd3s23j66" path="res://assets/environment/dressing/containers/SM_Ind_War_Storage_Box_Cardboard_Set_03_D.glb" id="105_37i1o"]
+[ext_resource type="PackedScene" uid="uid://b1vavmwepnygs" path="res://assets/environment/dressing/containers/SM_Ind_War_Storage_Box_Cardboard_Set_03_B.glb" id="106_tf5ny"]
+[ext_resource type="PackedScene" uid="uid://cx61qvvk0ad5e" path="res://assets/environment/dressing/containers/SM_Cardboard_Boxes_04.glb" id="107_8nees"]
+[ext_resource type="PackedScene" uid="uid://hxhaw1ayqv4h" path="res://assets/environment/dressing/decoration/SM_KB3D_SIS_PropToolsBoard_A_Main.glb" id="108_gwr2t"]
+[ext_resource type="PackedScene" uid="uid://cy0bn2f2xvrqc" path="res://assets/environment/dressing/containers/SM_Metal_Barrel_RedWhite_01.glb" id="109_47db8"]
+[ext_resource type="PackedScene" uid="uid://o266t35qsja3" path="res://assets/environment/infrastructure/electrical/SM_HVSockets01.glb" id="110_d4svs"]
+[ext_resource type="PackedScene" uid="uid://bkh54ln3iv78o" path="res://assets/environment/dressing/decoration/SM_Toolbox_Prestaged_A01_N1.glb" id="111_2iqdd"]
+[ext_resource type="PackedScene" uid="uid://1produrbj1hy" path="res://assets/environment/dressing/decoration/SM_Toolbox_Prestaged_B01_N1.glb" id="112_xlboq"]
+[ext_resource type="PackedScene" uid="uid://bptno52y2jlrs" path="res://assets/environment/dressing/decoration/SM_Food_Leftover_HO1_N1.glb" id="113_y5jed"]
+[ext_resource type="PackedScene" uid="uid://cjroodaim28p3" path="res://assets/environment/dressing/debris/SM_Cardboard_02a.glb" id="114_ityum"]
+[ext_resource type="PackedScene" uid="uid://cvuekdxcj13om" path="res://assets/environment/dressing/debris/SM_Cardboard_01a.glb" id="115_n5jcu"]
+[ext_resource type="PackedScene" uid="uid://bpaw43oqqowld" path="res://assets/environment/dressing/decoration/SM_AllenWrench_A01_N1.glb" id="116_5ip33"]
+[ext_resource type="PackedScene" uid="uid://wemtv0redlrf" path="res://assets/environment/dressing/decoration/SM_Rag_02.glb" id="117_0chgu"]
+[ext_resource type="PackedScene" uid="uid://bfoalxp8atwd2" path="res://assets/environment/dressing/decoration/SM_Rag_01.glb" id="118_qfugg"]
+[ext_resource type="PackedScene" uid="uid://qxfe50tlgres" path="res://assets/environment/dressing/decoration/SM_FireExtinguisher_01.glb" id="119_u1qwk"]
+[ext_resource type="PackedScene" uid="uid://bw22ncbnj1jox" path="res://assets/environment/dressing/decoration/SM_OfficeTape_A01_N1.glb" id="120_qjmvj"]
+[ext_resource type="PackedScene" uid="uid://cb6q6ev5ink55" path="res://assets/environment/dressing/containers/SM_PlasticBox_04.glb" id="122_ti4b2"]
+[ext_resource type="PackedScene" uid="uid://uctwvwptkl4e" path="res://assets/environment/dressing/containers/SM_Ind_War_Storage_Crate_Plastic_Teal_01.glb" id="123_oy8el"]
+[ext_resource type="PackedScene" uid="uid://c1llrwi60eaew" path="res://assets/environment/infrastructure/service_props/SM_KB3D_NWD_PropWallAlarm_A.glb" id="125_xe8rb"]
+[ext_resource type="PackedScene" uid="uid://ddkie8k46ukcb" path="res://assets/environment/infrastructure/lighting/SM_KB3D_BTL_PropTrafficLight_A_Main.glb" id="126_wlm0n"]
+[ext_resource type="PackedScene" uid="uid://bw8do8bpfvy3m" path="res://assets/environment/infrastructure/cables/SM_ElectricalSupply_Wire03_Straight.glb" id="127_2b2ub"]
+[ext_resource type="PackedScene" uid="uid://bc1k2lec2f84w" path="res://assets/environment/infrastructure/cables/SM_ElectricalSupply_Wire03_Corner.glb" id="128_iwfau"]
+[ext_resource type="PackedScene" uid="uid://dmsmb2ehf0bxf" path="res://assets/environment/infrastructure/cables/SM_ElectricalSupply_Wire03_Curved.glb" id="128_ti4b2"]
+[ext_resource type="PackedScene" uid="uid://codsanrcft7if" path="res://assets/environment/infrastructure/communications/SM_KB3D_WHS_PropOfficeDesk_A_Intercom.glb" id="129_ti4b2"]
+[ext_resource type="PackedScene" uid="uid://m86b5b122alo" path="res://assets/environment/dressing/decoration/SM_Tire_02.glb" id="130_qkm8c"]
+[ext_resource type="PackedScene" uid="uid://cg0ttfgmnbmi" path="res://assets/environment/infrastructure/electrical/SM_ElectricalSupply_Switchboard03.glb" id="131_xe8rb"]
+[ext_resource type="PackedScene" uid="uid://bj3vl1lpinh27" path="res://assets/environment/infrastructure/electrical/SM_Electrical_Cabinet_01a.glb" id="132_xe8rb"]
+[ext_resource type="PackedScene" uid="uid://fdpvupy4hvep" path="res://assets/environment/dressing/decoration/SM_KB3D_ECE_BldgIntReception_A_BinderB.glb" id="133_ityum"]
+[ext_resource type="PackedScene" uid="uid://brfgvesfpsd32" path="res://assets/environment/dressing/decoration/SM_KB3D_ECE_BldgIntMRIRoom_A_BinderD.glb" id="134_n5jcu"]
+[ext_resource type="PackedScene" uid="uid://c14r80vhi2wmw" path="res://assets/environment/dressing/decoration/SM_KB3D_ECP_Pen_01.glb" id="135_5ip33"]
+[ext_resource type="PackedScene" uid="uid://cc1cwdo36c1yb" path="res://assets/environment/dressing/decoration/SM_KB3D_DMZ_Bucket_A_Main.glb" id="136_0chgu"]
+[ext_resource type="PackedScene" uid="uid://2xmxm4c55cno" path="res://assets/environment/dressing/decoration/SM_KB3D_WHS_PropPlasticTubCart_A_TubYlwA.glb" id="137_qfugg"]
+[ext_resource type="PackedScene" uid="uid://dealtr25tnqb7" path="res://assets/environment/dressing/decoration/SM_KB3D_WHS_PropDolly_A_Main.glb" id="138_u1qwk"]
+[ext_resource type="PackedScene" uid="uid://8jo0cxdgkd2i" path="res://assets/environment/dressing/decoration/SM_KB3D_WHS_PropDolly_A_Wheels.glb" id="139_qjmvj"]
+[ext_resource type="PackedScene" uid="uid://q0044h7dows7" path="res://assets/environment/dressing/decoration/SM_KB3D_HOH_PropFlashlight_A.glb" id="140_kr55y"]
+[ext_resource type="PackedScene" uid="uid://dmearc6wdrjpr" path="res://assets/environment/dressing/decoration/SM_KB3D_HOH_PropFlashlight_A_glasss.glb" id="141_0tjjn"]
+[ext_resource type="PackedScene" uid="uid://rwwwldgh7grk" path="res://assets/environment/dressing/decoration/SM_KB3D_HOH_PropScotchTape_A.glb" id="142_nxht3"]
+[ext_resource type="PackedScene" uid="uid://djwujtx3l5tps" path="res://assets/environment/dressing/decoration/SM_KB3D_HOH_PropTire_A.glb" id="143_76yn2"]
+[ext_resource type="PackedScene" uid="uid://basbbk00rauf1" path="res://assets/environment/dressing/containers/SM_Ind_Aba_Storage_Barrel_Metal_Blue_01.glb" id="144_c7vt0"]
+[ext_resource type="PackedScene" uid="uid://ma48lcrvbdcm" path="res://assets/environment/dressing/decoration/SM_KB3D_HOH_PropChemicalContainer_C.glb" id="145_5rgdo"]
+[ext_resource type="PackedScene" uid="uid://bcnd4hrngfrcf" path="res://assets/environment/dressing/decoration/SM_KB3D_HOH_PropChemicalContainer_A.glb" id="146_tl1pp"]
+[ext_resource type="PackedScene" uid="uid://p7e0h1q45hhr" path="res://assets/environment/dressing/decoration/SM_KB3D_NWD_PropCrate_A_Main.glb" id="147_njov3"]
+[ext_resource type="PackedScene" uid="uid://umfosx0g1e4e" path="res://assets/environment/dressing/decoration/SM_Wood_Pallet01.glb" id="149_u1qwk"]
+[ext_resource type="PackedScene" uid="uid://d02i2gj7hwpye" path="res://assets/environment/infrastructure/service_props/SM_WallBrace_A.glb" id="150_qjmvj"]
+[ext_resource type="PackedScene" uid="uid://0wav07myac0y" path="res://assets/environment/infrastructure/service_props/SM_KB3D_CPP_PropTV_A.glb" id="151_kr55y"]
+[ext_resource type="PackedScene" uid="uid://c6w1cetcp4yi6" path="res://assets/environment/infrastructure/service_props/SM_OfficeMonitor_02.glb" id="152_0tjjn"]
+[ext_resource type="PackedScene" uid="uid://dc68l3l7wxqti" path="res://assets/environment/infrastructure/service_props/SM_KB3D_CBD_PropPCMonitor_B.glb" id="153_nxht3"]
+[ext_resource type="PackedScene" uid="uid://h2k4jnxgm853" path="res://assets/environment/infrastructure/cables/SM_Cables04_01.glb" id="155_nxht3"]
+[ext_resource type="PackedScene" uid="uid://2hd4rlk50bq" path="res://assets/environment/infrastructure/cables/SM_Cables06.glb" id="156_76yn2"]
+[ext_resource type="PackedScene" uid="uid://be7iku0tv4r8l" path="res://assets/environment/infrastructure/service_props/SM_ElectricalSupply_JunctionBox04.glb" id="157_76yn2"]
+[ext_resource type="PackedScene" uid="uid://dc16ksdm4ajvb" path="res://assets/environment/infrastructure/cables/SM_ElectricalSupply_Wire01_Curved.glb" id="157_nxht3"]
+[ext_resource type="PackedScene" uid="uid://c67vg31d6pmkq" path="res://assets/environment/infrastructure/cables/SM_ElectricalSupply_Wire02_Corner.glb" id="158_c7vt0"]
 [ext_resource type="Script" uid="uid://be6gucor1ya72" path="res://environment_authoring/substrate/environment_substrate_piece.gd" id="shaft_1_x53na"]
 [ext_resource type="Resource" path="res://data/environment/material_catalog/approved_specs/eaf3b_1beac3a311a480af8844ea89.tres" id="shaft_2_rflhy"]
 [ext_resource type="Script" uid="uid://dym5xpqw4qae4" path="res://environment_authoring/substrate/environment_substrate_piece_spec.gd" id="shaft_3_4ax3c"]
@@ -66,7 +156,7 @@
 [ext_resource type="Texture2D" uid="uid://dmerwhc48dlm0" path="res://assets/environment/materials/kitbash_cache/eaf3b_1beac3a311a480af8844ea89/2k/normal.png" id="shaft_6_h0kxl"]
 [ext_resource type="Texture2D" uid="uid://buvwu7wptxnjv" path="res://assets/environment/materials/kitbash_cache/eaf3b_1beac3a311a480af8844ea89/2k/roughness.png" id="shaft_7_8hvsm"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_omu8d"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_76yn2"]
 resource_local_to_scene = true
 size = Vector3(4.04, 3, 0.82)
 
@@ -241,6 +331,33 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 2.7, 0)
 [node name="East" parent="Environment/FillLights" index="8"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56, 2.7, -5)
 
+[node name="ReceivingInfrastructure" parent="Environment" index="6"]
+visible = false
+
+[node name="Mesh" parent="Environment/ReceivingInfrastructure/P1_ServiceMain/P1_CeilingHanger_0" index="0" unique_id=1865781599]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.686, 0)
+
+[node name="Bearer" parent="Environment/ReceivingInfrastructure/P1_ServiceMain/P1_CeilingHanger_0" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.366, -0.246)
+
+[node name="Mesh" parent="Environment/ReceivingInfrastructure/P1_ServiceMain/P1_CeilingHanger_1" index="0" unique_id=1865781599]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.686, 0)
+
+[node name="Bearer" parent="Environment/ReceivingInfrastructure/P1_ServiceMain/P1_CeilingHanger_1" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.366, -0.246)
+
+[node name="Mesh" parent="Environment/ReceivingInfrastructure/P1_ServiceMain/P1_CeilingHanger_2" index="0" unique_id=1865781599]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.686, 0)
+
+[node name="Bearer" parent="Environment/ReceivingInfrastructure/P1_ServiceMain/P1_CeilingHanger_2" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.366, -0.246)
+
+[node name="Mesh" parent="Environment/ReceivingInfrastructure/L1_LiftServiceBranch/E1_Junction" index="0" unique_id=1137403061]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.23093414, 0, -4.7683716e-07)
+
+[node name="Mesh" parent="Environment/ReceivingInfrastructure/L1_LiftServiceBranch/L1_Feeder" index="0" unique_id=655517951]
+transform = Transform3D(1, 0, 0, 0, 1.0000001, 0, 0, 0, 1, -0.22958946, 0.5256443, 0)
+
 [node name="FunctionalFixtures" parent="." unique_id=1215529146 instance=ExtResource("5_fixtures")]
 
 [node name="SM_MetalShelves_GalleryA_West" parent="FunctionalFixtures" index="0"]
@@ -293,7 +410,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.4, 0)
 
 [node name="Shape" parent="FunctionalFixtures/ModularRack_GalleryB_Initial/MovementCollision" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
-shape = SubResource("BoxShape3D_omu8d")
+shape = SubResource("BoxShape3D_76yn2")
 
 [node name="FixedLadder_GalleryB_Initial" parent="FunctionalFixtures" unique_id=806369216 instance=ExtResource("42_ladder")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 1.043639, 0, -8.665108)
@@ -620,9 +737,23 @@ layer = 10
 [node name="CarriedItemsHUD" parent="HUD" unique_id=626635065 instance=ExtResource("4_hud")]
 
 [node name="ReceivingLiftInstallation" type="Node3D" parent="." unique_id=138998562]
-metadata/active_shutter = NodePath("SM_KB3D_NWD_ReuGarageDoorBlue_B")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 0)
+metadata/active_shutter = NodePath("SM_KB3D_NWD_ReuGarageDoorBlue_B")
 metadata/purpose = "Manual lift ensemble; +3 m X retrofit with authored descendant transforms preserved"
+
+[node name="SM_KB3D_LAB_Electronics_G_Main" parent="ReceivingLiftInstallation" unique_id=532674465 instance=ExtResource("95_ti4b2")]
+transform = Transform3D(1.74, 0, 0, 0, 1.74, 0, 0, 0, 1.74, -38.861774, 1.8545858, -2.1938906)
+visible = false
+
+[node name="SM_KB3D_LAB_Electronics_G_Main_transparent" parent="ReceivingLiftInstallation" unique_id=9073031 instance=ExtResource("96_oy8el")]
+transform = Transform3D(1.74, 0, 0, 0, 1.74, 0, 0, 0, 1.74, -38.861774, 1.8545858, -2.1938906)
+visible = false
+
+[node name="SM_KB3D_NWD_PropWallAlarm_A" parent="ReceivingLiftInstallation" unique_id=1070155342 instance=ExtResource("125_xe8rb")]
+transform = Transform3D(1.66, 0, 0, 0, 1.66, 0, 0, 0, 1.66, -38.8605, 3.276966, 2.179464)
+
+[node name="SM_TargetRetrievalButton" parent="ReceivingLiftInstallation" unique_id=1296610366 instance=ExtResource("86_uxmga")]
+transform = Transform3D(-0.56505656, 1.9705864, 0, -1.9705864, -0.56505656, 0, 0, 0, 2.05, -38.901566, 1.9208326, -2.1936965)
 
 [node name="SM_Fence_01" parent="ReceivingLiftInstallation" unique_id=742320119 instance=ExtResource("47_d12kh")]
 transform = Transform3D(1.68, 0, 0, 0, 2.555, 0, 0, 0, 1.68, -39.358643, 0.6426194, -1.749261)
@@ -648,9 +779,8 @@ transform = Transform3D(2.425982e-08, -3.861138e-15, 0.52, -8.3802675e-08, -0.58
 [node name="SM_KB3D_LND_PropGarageDoor_A_Frame" parent="ReceivingLiftInstallation" unique_id=1693052903 instance=ExtResource("50_dhxay")]
 transform = Transform3D(1.475, 0, 0, 0, 1.555, 0, 0, 0, 1.79, -39.367, 1.868, 0.035)
 
-
 [node name="SM_KB3D_NWD_ReuGarageDoorBlue_B" parent="ReceivingLiftInstallation" unique_id=853935050 instance=ExtResource("69_k0nnl")]
-transform = Transform3D(1, 0, 0, 0, 1.305, 0, 0, 0, 0.69, -39.164536, 3.1416707, -0.01947911)
+transform = Transform3D(1, 0, 0, 0, 1.305, 0, 0, 0, 0.69, -39.165, 0.086, -0.019)
 
 [node name="SM_ConcretePillar02" parent="ReceivingLiftInstallation" unique_id=1296925920 instance=ExtResource("52_3syii")]
 transform = Transform3D(-0.505, 0, -6.719313e-08, 0, 0.45, 0, 7.625288e-08, 0, -0.445, -39.229767, -0.0005104542, 2.2009237)
@@ -774,6 +904,422 @@ metadata/eaf2_generation = {
 material_override = SubResource("shaft_StandardMaterial3D_ub82l")
 mesh = SubResource("shaft_ArrayMesh_pw0i7")
 
+[node name="ReceivingDecals" type="Node3D" parent="." unique_id=1970938110]
+
+[node name="SM_Slums_Decal_02b7" parent="ReceivingDecals" unique_id=851622678 instance=ExtResource("79_8yurt")]
+transform = Transform3D(-2.9505188e-08, 0, 0.675, 0, 0.675, 0, -0.675, 0, -2.9505188e-08, -28.651995, 3.8061159, 2.719009)
+
+[node name="SM_Slums_Decal_02b8" parent="ReceivingDecals" unique_id=950946621 instance=ExtResource("79_8yurt")]
+transform = Transform3D(-2.9505188e-08, 0, 0.675, 0, 0.675, 0, -0.675, 0, -2.9505188e-08, -28.651995, 3.8061159, 2.719009)
+
+[node name="SM_Slums_Decal_02b9" parent="ReceivingDecals" unique_id=534189545 instance=ExtResource("79_8yurt")]
+transform = Transform3D(-2.9505188e-08, 0, 0.675, 0, 0.675, 0, -0.675, 0, -2.9505188e-08, -28.651995, 3.8061159, 2.719009)
+
+[node name="SM_Slums_Decal_02b" parent="ReceivingDecals" unique_id=2052696823 instance=ExtResource("79_8yurt")]
+transform = Transform3D(0.605, 0, 0, 0, 0.63, 0, 0, 0, 10, -35.266296, 3.8217413, 3.8466258)
+
+[node name="SM_Slums_Decal_02b3" parent="ReceivingDecals" unique_id=1161558945 instance=ExtResource("79_8yurt")]
+transform = Transform3D(0.41645452, -0.45698583, 0, 0.43885148, 0.43366337, 0, 0, 0, 10, -34.80928, 3.790662, 3.8466258)
+
+[node name="SM_Slums_Decal_02b2" parent="ReceivingDecals" unique_id=631683217 instance=ExtResource("79_8yurt")]
+transform = Transform3D(0.5130691, -0.33384913, 0, 0.32060117, 0.5342703, 0, 0, 0, 0.63, -35.25785, 3.838945, 3.84999)
+visible = false
+
+[node name="SM_Slums_Decal_02b5" parent="ReceivingDecals" unique_id=821959626 instance=ExtResource("79_8yurt")]
+transform = Transform3D(0.5130691, -0.33384913, 0, 0.32060117, 0.5342703, 0, 0, 0, 0.63, -35.24737, 3.8044891, 3.84999)
+visible = false
+
+[node name="SM_Slums_Decal_02b4" parent="ReceivingDecals" unique_id=587081327 instance=ExtResource("79_8yurt")]
+transform = Transform3D(0.61213577, -0.24616061, 0, 0.2598362, 0.5799181, 0, 0, 0, 0.63, -34.83117, 3.816636, 3.84999)
+visible = false
+
+[node name="SM_Slums_Decal_02b6" parent="ReceivingDecals" unique_id=1528892222 instance=ExtResource("79_8yurt")]
+transform = Transform3D(0.10975664, -0.62135994, 0, 0.65588, 0.10397997, 0, 0, 0, 0.63, -34.79129, 3.816636, 3.84999)
+visible = false
+
+[node name="SM_Slums_Decal_02a" parent="ReceivingDecals" unique_id=1296523916 instance=ExtResource("80_kn5jw")]
+transform = Transform3D(1.26, 0, 0, 0, 1, 0, 0, 0, 1, -29.86127, 4.2160254, 3.8435566)
+
+[node name="SM_Slums_Decal_02d" parent="ReceivingDecals" unique_id=249786814 instance=ExtResource("81_y7b5x")]
+transform = Transform3D(-2.4915492e-08, 0, 0.8, 0, 0.71, 0, -0.57, 0, -3.4969112e-08, -28.65421, 3.6613255, 3.2158365)
+
+[node name="SM_Slums_Decal_01b" parent="ReceivingDecals" unique_id=935532023 instance=ExtResource("85_uxmga")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 0.585, 0, 1, 0, -4.371139e-08, -28.663315, 1.2520905, 2.126989)
+visible = false
+
+[node name="SM_Slums_Decal_01b2" parent="ReceivingDecals" unique_id=537764931 instance=ExtResource("85_uxmga")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 0.585, 0, 1, 0, -4.371139e-08, -28.663315, 1.2520905, 3.4796956)
+visible = false
+
+[node name="SM_Slums_Decal_01b3" parent="ReceivingDecals" unique_id=1720135905 instance=ExtResource("85_uxmga")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 0.585, 0, -8.742278e-08, 0, -1, -29.039654, 1.2520905, 3.8461835)
+visible = false
+
+[node name="SM_Slums_Decal_01b4" parent="ReceivingDecals" unique_id=1109903729 instance=ExtResource("85_uxmga")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 0.585, 0, -8.742278e-08, 0, -1, -30.395555, 1.2520905, 3.8461835)
+visible = false
+
+[node name="SM_Slums_Decal_01b5" parent="ReceivingDecals" unique_id=590257144 instance=ExtResource("85_uxmga")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 0.585, 0, -8.742278e-08, 0, -1, -31.771746, 1.2520905, 3.8461835)
+visible = false
+
+[node name="SM_Slums_Decal_01b6" parent="ReceivingDecals" unique_id=1166910825 instance=ExtResource("85_uxmga")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 0.585, 0, -8.742278e-08, 0, -1, -33.14864, 1.2520905, 3.8461835)
+visible = false
+
+[node name="SM_Slums_Decal_01b7" parent="ReceivingDecals" unique_id=289723628 instance=ExtResource("85_uxmga")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 0.585, 0, -8.742278e-08, 0, -1, -34.51776, 1.2520905, 3.8461835)
+visible = false
+
+[node name="SM_Slums_Decal_01b8" parent="ReceivingDecals" unique_id=2129317202 instance=ExtResource("85_uxmga")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 0.585, 0, -8.742278e-08, 0, -1, -35.88428, 1.2520905, 3.8461835)
+visible = false
+
+[node name="ReceivingPipes" type="Node3D" parent="." unique_id=681310302]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.628525, 3.6945462, -1.2137502)
+
+[node name="SM_KB3D_BMK_PropPipeHangingSeg_AA" parent="ReceivingPipes" unique_id=755359676 instance=ExtResource("73_4lctd")]
+transform = Transform3D(1.44, 0, 0, 0, 1.44, 0, 0, 0, 1.44, -0.64466095, 0.13345385, 4.5755954)
+
+[node name="SM_KB3D_BMK_PropPipeHangingCap_BB" parent="ReceivingPipes" unique_id=1437997143 instance=ExtResource("66_fmv76")]
+transform = Transform3D(-6.29444e-08, 0, -1.44, 0, 1.44, 0, 1.44, 0, -6.29444e-08, 1.2289162, 0.13385129, 4.4264693)
+
+[node name="SM_KB3D_BMK_PropPipeHangingSeg_BA" parent="ReceivingPipes" unique_id=1099302851 instance=ExtResource("67_6j63b")]
+transform = Transform3D(-6.29444e-08, 0, 1.44, 0, 1.44, 0, -1.44, 0, -6.29444e-08, 1.2204399, 0.13345385, 4.42675)
+
+[node name="SM_KB3D_BMK_PropPipeHangingSeg_BA2" parent="ReceivingPipes" unique_id=366174424 instance=ExtResource("67_6j63b")]
+transform = Transform3D(-6.29444e-08, 0, 1.44, 0, 1.44, 0, -1.44, 0, -6.29444e-08, 4.430439, 0.13345385, 4.42675)
+
+[node name="SM_KB3D_BMK_PropPipeHangingCap_BB2" parent="ReceivingPipes" unique_id=2025908588 instance=ExtResource("66_fmv76")]
+transform = Transform3D(-6.29444e-08, 0, -1.44, 0, 1.44, 0, 1.44, 0, -6.29444e-08, 0.8013191, 0.13385129, 3.9475436)
+
+[node name="SM_KB3D_BMK_PropPipeHangingSeg_BA3" parent="ReceivingPipes" unique_id=1910684968 instance=ExtResource("67_6j63b")]
+transform = Transform3D(-6.29444e-08, 0, 1.44, 0, 1.44, 0, -1.44, 0, -6.29444e-08, 0.79284286, 0.13345385, 3.9478245)
+
+[node name="SM_KB3D_BMK_PropPipeHangingSeg_BA4" parent="ReceivingPipes" unique_id=823906247 instance=ExtResource("67_6j63b")]
+transform = Transform3D(-6.29444e-08, 0, 1.44, 0, 1.44, 0, -1.44, 0, -6.29444e-08, 4.002842, 0.13345385, 3.9478245)
+
+[node name="SM_Cardboard_01a" parent="ReceivingPipes" unique_id=466522632 instance=ExtResource("115_n5jcu")]
+transform = Transform3D(-0.2706249, 0.0023617076, 0.8583452, 0.007853881, 0.8999657, 0, -0.85831255, 0.00749038, -0.27063522, 1.5806503, 0.3126812, 4.7710342)
+
+[node name="ReceivingElectrical" type="Node3D" parent="." unique_id=2002778135]
+
+[node name="SM_ElectricalSupply_Wire03_Straight" parent="ReceivingElectrical" unique_id=1076681418 instance=ExtResource("127_2b2ub")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.442432, 2.4520352, 3.8424997)
+
+[node name="SM_ElectricalSupply_Wire03_Curved" parent="ReceivingElectrical" unique_id=578967216 instance=ExtResource("128_ti4b2")]
+transform = Transform3D(-4.371139e-08, -1.12, 0, 1, -4.8956753e-08, 0, 0, 0, 1, -28.660315, 2.225247, 3.8425)
+
+[node name="SM_ElectricalSupply_Wire03_Curved2" parent="ReceivingElectrical" unique_id=637576250 instance=ExtResource("128_ti4b2")]
+transform = Transform3D(1.9106855e-15, 5.4202122e-08, 1, 1, -5.4202122e-08, 0, 4.371139e-08, 1.24, -4.371139e-08, -28.653223, 2.2275932, 3.2271779)
+
+[node name="SM_ElectricalSupply_Wire03_Curved3" parent="ReceivingElectrical" unique_id=480167091 instance=ExtResource("128_ti4b2")]
+transform = Transform3D(1.9106855e-15, 2.076291e-08, 1, 1, -2.076291e-08, 0, 4.371139e-08, 0.475, -4.371139e-08, -28.653223, 2.2275932, 2.991213)
+
+[node name="SM_ElectricalSupply_Wire03_Corner" parent="ReceivingElectrical" unique_id=454478752 instance=ExtResource("128_iwfau")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1.075, 0, 1, 0, -4.371139e-08, -28.657085, 1.957833, 2.8596241)
+
+[node name="SM_ElectricalSupply_Switchboard06_01" parent="ReceivingElectrical" unique_id=449328336 instance=ExtResource("68_omu8d")]
+transform = Transform3D(-1.1, 0, -1.6609539e-07, 0, 1.1, 0, 1.6609539e-07, 0, -1.1, -29.662373, 2.9535446, 3.853553)
+
+[node name="SM_ElectricalSupply_Wire01_Corner" parent="ReceivingElectrical" unique_id=195943969 instance=ExtResource("84_5uwd2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.40686, 3.0909708, 3.8209198)
+
+[node name="SM_ElectricalSupply_Wire01_Corner2" parent="ReceivingElectrical" unique_id=1090709044 instance=ExtResource("84_5uwd2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.32136, 2.9870272, 3.8209198)
+
+[node name="SM_ElectricalSupply_Wire01_Straight3" parent="ReceivingElectrical" unique_id=1059075192 instance=ExtResource("86_25yk3")]
+transform = Transform3D(-4.371139e-08, -6.425, 0, 1, -2.8084568e-07, 0, 0, 0, 1, -29.969213, 3.350385, 3.837)
+
+[node name="SM_ElectricalSupply_Wire01_Straight4" parent="ReceivingElectrical" unique_id=1988106782 instance=ExtResource("86_25yk3")]
+transform = Transform3D(-4.371139e-08, -6.26, 0, 1, -2.736333e-07, 0, 0, 0, 1, -29.958, 3.2442012, 3.837)
+
+[node name="SM_ElectricalSupply_Group05" parent="ReceivingElectrical" unique_id=322922930 instance=ExtResource("82_ofw8x")]
+transform = Transform3D(-0.925, 0, -8.0866066e-08, 0, 0.925, 0, 8.0866066e-08, 0, -0.925, -33.3605, 3.0018635, 3.8493156)
+
+[node name="SM_KB3D_CPI_PropElectricJunctionBox_F" parent="ReceivingElectrical" unique_id=802623976 instance=ExtResource("72_bjeyl")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -32.986107, 0.0059047686, 3.879168)
+visible = false
+
+[node name="SM_KB3D_RFS_PropElectricalBox_D_Main2" parent="ReceivingElectrical" unique_id=124249836 instance=ExtResource("71_88csr")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -33.071796, 1.0399941, 3.4346855)
+visible = false
+
+[node name="SM_KB3D_ECE_PropLightSwitch_A_Main" parent="ReceivingElectrical" unique_id=1407757534 instance=ExtResource("81_uxmga")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -28.670727, 1.847646, 1.7496703)
+visible = false
+
+[node name="SM_ElectricalSupply_RemoteControl" parent="ReceivingElectrical" unique_id=862384718 instance=ExtResource("93_ywlxo")]
+transform = Transform3D(-7.9117605e-08, 0, -1.8099998, 0, 1.8099998, 0, 1.8099998, 0, -7.9117605e-08, -28.543436, 1.7109586, 2.874339)
+
+[node name="SM_ElectricalSupply_Switchboard01" parent="ReceivingElectrical" unique_id=1970991761 instance=ExtResource("69_lx7ns")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -33.223328, 2.1219253e-07, 3.869597)
+visible = false
+
+[node name="SM_HVSockets01" parent="ReceivingElectrical" unique_id=778261413 instance=ExtResource("110_d4svs")]
+transform = Transform3D(-0.59990865, 0, 0.010471475, 0, 0.6, 0, -0.010471475, 0, -0.59990865, -31.4576, 1.2032325, 3.8465552)
+
+[node name="SM_KB3D_BTL_PropTrafficLight_A_Main" parent="ReceivingElectrical" unique_id=137728515 instance=ExtResource("126_wlm0n")]
+transform = Transform3D(-0.15499999, 0, 2.3515895e-08, 0, 0.155, 0, -2.3515895e-08, 0, -0.15499999, -28.667107, 1.9249024, 2.8731997)
+
+[node name="SM_Utility_Box_1a" parent="ReceivingElectrical" unique_id=2080793701 instance=ExtResource("77_y7b5x")]
+transform = Transform3D(-1.655, 0, -2.4989805e-07, 0, 1.655, 0, 2.4989805e-07, 0, -1.655, -32.892963, 5.9604638e-08, 3.595727)
+
+[node name="SM_KB3D_PAR_PropElectricalBox_B" parent="ReceivingElectrical" unique_id=585751278 instance=ExtResource("76_kn5jw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.88064, -0.013854996, -2.6278696)
+
+[node name="SM_KB3D_BMK_PropUtilitiesC" parent="ReceivingElectrical" unique_id=972759564 instance=ExtResource("75_vsanc")]
+transform = Transform3D(4.371139e-08, 1, -8.742278e-08, 1, -4.371139e-08, 0, -3.821371e-15, -8.742278e-08, -1, -35.84957, 1.7241254, -3.2170124)
+visible = false
+
+[node name="SM_KB3D_BMK_BldgSmWhisperVault_A_CablesC" parent="ReceivingElectrical" unique_id=804507835 instance=ExtResource("83_3lipy")]
+transform = Transform3D(-3.628045e-08, 0, -0.83, 0, 0.83, 0, 0.83, 0, -3.628045e-08, -35.755, 0.519, -3.1755657)
+
+[node name="SM_WallBrace" parent="ReceivingElectrical" unique_id=41116075 instance=ExtResource("92_as8k2")]
+transform = Transform3D(3.088, 0, 0, 0, 1.204, 0, 0, 0, 2.355, -35.842663, 0.5724682, -3.173799)
+
+[node name="SM_ElectricalSupply_Wire01_Straight" parent="ReceivingElectrical" unique_id=302105249 instance=ExtResource("86_25yk3")]
+transform = Transform3D(-4.371139e-08, -1.59, 0, 1, -6.9501105e-08, 0, 0, 0, 1, -31.530523, 1.1796434, 3.855468)
+
+[node name="SM_ElectricalSupply_Switchboard03" parent="ReceivingElectrical" unique_id=800273979 instance=ExtResource("131_xe8rb")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -36.09806, 1.0640442, -3.2786999)
+visible = false
+
+[node name="SM_Electrical_Cabinet_01a" parent="ReceivingElectrical" unique_id=604578892 instance=ExtResource("132_xe8rb")]
+transform = Transform3D(-7.937988e-08, 0, 1.525, 0, 1.375, 0, -1.816, 0, -6.6659865e-08, -35.869316, 0.93231606, -3.174009)
+
+[node name="SM_Cables04_01" parent="ReceivingElectrical" unique_id=1451357116 instance=ExtResource("155_nxht3")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -31.819078, 3.179554, -3.1461024)
+
+[node name="SM_Cables04_02" parent="ReceivingElectrical" unique_id=1622363276 instance=ExtResource("155_nxht3")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -27.84545, 3.179554, -3.1461024)
+
+[node name="SM_Cables04_03" parent="ReceivingElectrical" unique_id=30457768 instance=ExtResource("155_nxht3")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -24.629906, 3.179554, -3.1461024)
+
+[node name="SM_Cables06" parent="ReceivingElectrical" unique_id=1998614189 instance=ExtResource("156_76yn2")]
+transform = Transform3D(-6.491141e-08, 0.9, -4.371139e-08, 0, -3.934025e-08, -1, -1.485, -3.934025e-08, 1.9106855e-15, -35.86661, 2.2306948, -3.1563559)
+visible = false
+
+[node name="SM_ElectricalSupply_Wire01_Corner3" parent="ReceivingElectrical" unique_id=1554525721 instance=ExtResource("84_5uwd2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.84349, 2.9692168, -3.074929)
+
+[node name="SM_ElectricalSupply_Wire01_Corner4" parent="ReceivingElectrical" unique_id=1312066056 instance=ExtResource("84_5uwd2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.84349, 2.9692168, -3.1216516)
+
+[node name="SM_ElectricalSupply_Wire01_Corner5" parent="ReceivingElectrical" unique_id=1939591308 instance=ExtResource("84_5uwd2")]
+transform = Transform3D(0.9998477, 0, -0.017452406, 0, 1, 0, 0.017452406, 0, 0.9998477, -35.84349, 2.9692168, -3.167813)
+
+[node name="SM_ElectricalSupply_Wire01_Corner6" parent="ReceivingElectrical" unique_id=13925764 instance=ExtResource("84_5uwd2")]
+transform = Transform3D(0.9999619, 0, -0.008726535, 0, 1, 0, 0.008726535, 0, 0.9999619, -35.84349, 2.9692168, -3.2295034)
+
+[node name="SM_ElectricalSupply_Wire01_Straight2" parent="ReceivingElectrical" unique_id=1616519957 instance=ExtResource("86_25yk3")]
+transform = Transform3D(1, 0, 0, 0, 1.98, 0, 0, 0, 1, -35.834995, 1.9936864, -3.0746891)
+
+[node name="SM_ElectricalSupply_Wire01_Straight5" parent="ReceivingElectrical" unique_id=872199292 instance=ExtResource("86_25yk3")]
+transform = Transform3D(1, 0, 0, 0, 1.98, 0, 0, 0, 1, -35.834995, 1.9936864, -3.1689725)
+
+[node name="SM_ElectricalSupply_Wire01_Curved" parent="ReceivingElectrical" unique_id=1281461630 instance=ExtResource("157_nxht3")]
+transform = Transform3D(1, 0, 0, 0, 1.98, 0, 0, 0, 1, -35.822308, 1.9934049, -3.1232865)
+
+[node name="SM_ElectricalSupply_Wire01_Curved2" parent="ReceivingElectrical" unique_id=105595216 instance=ExtResource("157_nxht3")]
+transform = Transform3D(1, 0, 0, 0, 1.98, 0, 0, 0, 1, -35.822308, 1.9934049, -3.2297795)
+
+[node name="SM_ElectricalSupply_Wire01_Curved3" parent="ReceivingElectrical" unique_id=2095108456 instance=ExtResource("157_nxht3")]
+transform = Transform3D(-1.675, 3.0878644e-07, -1.1055395e-14, 0, -8.938979e-08, -1.675, -2.5291797e-07, -2.045, 7.3216576e-08, -35.822308, 3.0002801, 3.8098702)
+
+[node name="SM_ElectricalSupply_JunctionBox04" parent="ReceivingElectrical" unique_id=800115357 instance=ExtResource("157_76yn2")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -35.864456, 2.9977715, 2.7281609)
+
+[node name="SM_ElectricalSupply_Wire02_Corner" parent="ReceivingElectrical" unique_id=1678485910 instance=ExtResource("158_c7vt0")]
+transform = Transform3D(-0.017452352, 0, 0.9998477, 0, 1, 0, -0.9998477, 0, -0.017452352, -35.85603, 3.0628178, 2.7301435)
+
+[node name="SM_ElectricalSupply_Wire02_Corner2" parent="ReceivingElectrical" unique_id=614581418 instance=ExtResource("158_c7vt0")]
+transform = Transform3D(-0.017452383, -1.5257359e-09, -0.9998477, 8.742278e-08, -1, 0, -0.9998477, -8.740946e-08, 0.017452383, -35.855965, 3.0264812, 2.7301435)
+
+[node name="SM_ElectricalSupply_Wire03_Corner2" parent="ReceivingElectrical" unique_id=1960630204 instance=ExtResource("128_iwfau")]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -29.192713, 2.2245135, 3.8424997)
+
+[node name="ReceivingDesk" type="Node3D" parent="." unique_id=815730021]
+transform = Transform3D(-0.9099612, 0, -0.4146933, 0, 1, 0, 0.4146933, 0, -0.9099612, -30.801361, 0.9993936, 3.645598)
+
+[node name="SM_KB3D_HOH_PropFlashlight_A" parent="ReceivingDesk" unique_id=459484775 instance=ExtResource("140_kr55y")]
+transform = Transform3D(-0.9681476, 0, -0.25037995, 0, 1, 0, 0.25037995, 0, -0.9681476, -0.38155365, 0.00077700615, -0.19606209)
+
+[node name="SM_KB3D_HOH_PropFlashlight_A_glasss" parent="ReceivingDesk" unique_id=692408560 instance=ExtResource("141_0tjjn")]
+transform = Transform3D(-0.9681476, 0, -0.25037995, 0, 1, 0, 0.25037995, 0, -0.9681476, -0.38155365, 0.00077700615, -0.19606209)
+
+[node name="SM_KB3D_HOH_PropScotchTape_A" parent="ReceivingDesk" unique_id=777544684 instance=ExtResource("142_nxht3")]
+transform = Transform3D(-0.9099612, 0, 0.4146933, 0, 1, 0, -0.4146933, 0, -0.9099612, -2.4229336, -0.33964813, 0.71030617)
+
+[node name="SM_Ind_War_Storage_Box_Cardboard_Set_03_D" parent="ReceivingDesk" unique_id=340808835 instance=ExtResource("105_37i1o")]
+transform = Transform3D(-1.1841178, 0, 0.78375053, 0, 1.42, 0, -0.78375053, 0, -1.1841178, -2.433569, -0.41629165, 0.6542444)
+
+[node name="SM_Ind_War_Storage_Box_Cardboard_Set_03_B" parent="ReceivingDesk" unique_id=1725303382 instance=ExtResource("106_tf5ny")]
+transform = Transform3D(-0.84171414, 0, 0.3835913, 0, 0.925, 0, -0.3835913, 0, -0.84171414, -2.15374, -0.1421473, 0.40756702)
+
+[node name="SM_Cardboard_Boxes_04" parent="ReceivingDesk" unique_id=1754182986 instance=ExtResource("107_8nees")]
+transform = Transform3D(-0.5224986, 0, -0.85264015, 0, 1, 0, 0.85264015, 0, -0.5224986, -2.1717358, -0.48254496, 0.37593365)
+
+[node name="SM_MilitaryCrate_02" parent="ReceivingDesk" unique_id=987440685 instance=ExtResource("104_n70vc")]
+transform = Transform3D(-0.8098655, 0, 0.36907703, 0, 0.89, 0, -0.36907703, 0, -0.8098655, -2.2423134, -0.99802506, 0.37316227)
+
+[node name="SM_KB3D_SIS_PropToolsBoard_A_Main" parent="ReceivingDesk" unique_id=2061360978 instance=ExtResource("108_gwr2t")]
+transform = Transform3D(-0.41469327, 0, -0.9099612, 0, 1, 0, 0.9099612, 0, -0.41469327, -0.46684265, 0.68641365, -0.4052086)
+
+[node name="SM_Res_Fur_Stool_Metal_Worn_01" parent="ReceivingDesk" unique_id=1727372000 instance=ExtResource("103_f3716")]
+transform = Transform3D(-0.7219488, 0, -0.87579376, 0, 1.135, 0, 0.87579376, 0, -0.7219488, -1.493496, -0.9633935, 0.10220528)
+
+[node name="SM_KB3D_WHS_PropOfficeDesk_A_Intercom" parent="ReceivingDesk" unique_id=1886056494 instance=ExtResource("129_ti4b2")]
+transform = Transform3D(1.0584561, 0, -0.67431116, 0, 1.255, 0, 0.67431116, 0, 1.0584561, -1.7249489, 0.014719605, 0.09373093)
+
+[node name="SM_OfficeTape_A01_N1" parent="ReceivingDesk" unique_id=898287395 instance=ExtResource("120_qjmvj")]
+transform = Transform3D(-0.9099612, 0, 0.4146933, 0, 1, 0, -0.4146933, 0, -0.9099612, -2.1321735, 0.0062834024, 0.7260723)
+
+[node name="SM_Cardboard_02a2" parent="ReceivingDesk" unique_id=1987615831 instance=ExtResource("114_ityum")]
+transform = Transform3D(0.007237373, -0.4146301, -0.90996116, -0.9998477, -0.01745235, 0, -0.015880963, 0.9098226, -0.41469324, 0.9592819, -0.086565554, 0.21924496)
+
+[node name="SM_AllenWrench_A01_N1" parent="ReceivingDesk" unique_id=1886188564 instance=ExtResource("116_5ip33")]
+transform = Transform3D(1.1905993, 0, -0.364003, 0, 1.245, 0, 0.364003, 0, 1.1905993, -0.22987556, 0.0009146929, -0.05368042)
+
+[node name="SM_Rag_02" parent="ReceivingDesk" unique_id=2017423732 instance=ExtResource("117_0chgu")]
+transform = Transform3D(-1.1283519, 0, 0.5142197, 0, 1.24, 0, -0.5142197, 0, -1.1283519, 0.05373764, 0.0076464415, 0.19447517)
+
+[node name="SM_Rag_01" parent="ReceivingDesk" unique_id=1542087606 instance=ExtResource("118_qfugg")]
+transform = Transform3D(-1.6015317, 0, 0.7298602, 0, 1.76, 0, -0.7298602, 0, -1.6015317, -2.2188282, 0.0053727627, 0.0117836)
+
+[node name="SM_Food_Leftover_HO1_N1" parent="ReceivingDesk" unique_id=1346280690 instance=ExtResource("113_y5jed")]
+transform = Transform3D(-0.9914447, 0, 0.13052624, 0, 1, 0, -0.13052624, 0, -0.9914447, -2.26869, 0.0012813807, 0.8921747)
+
+[node name="SM_Cardboard_02a" parent="ReceivingDesk" unique_id=2013957301 instance=ExtResource("114_ityum")]
+transform = Transform3D(-0.5983546, 0, 0.08942473, 0, 0.605, 0, -0.08942473, 0, -0.5983546, -1.9778137, -0.9972004, 0.98000145)
+
+[node name="SM_Toolbox_Prestaged_A01_N1" parent="ReceivingDesk" unique_id=380105211 instance=ExtResource("111_2iqdd")]
+transform = Transform3D(-0.30457932, 0, -1.0621942, 0, 1.105, 0, 1.0621942, 0, -0.30457932, -2.3843193, 0.010372758, 0.6493416)
+
+[node name="SM_Toolbox_Prestaged_B01_N1" parent="ReceivingDesk" unique_id=630101470 instance=ExtResource("112_xlboq")]
+
+[node name="SM_KB3D_ECE_BldgIntReception_A_BinderB" parent="ReceivingDesk" unique_id=298243541 instance=ExtResource("133_ityum")]
+transform = Transform3D(0.416161, 0, -0.37471318, 0, 0.56, 0, 0.37471318, 0, 0.416161, -1.5695705, 0.021323323, -0.2640791)
+
+[node name="SM_KB3D_ECE_BldgIntMRIRoom_A_BinderD" parent="ReceivingDesk" unique_id=1273058393 instance=ExtResource("134_n5jcu")]
+transform = Transform3D(-0.54463905, 0, -0.83867055, 0, 1, 0, 0.83867055, 0, -0.54463905, -1.9035854, 0.050147653, -0.52288914)
+
+[node name="SM_KB3D_ECP_Pen_01" parent="ReceivingDesk" unique_id=1456524136 instance=ExtResource("135_5ip33")]
+transform = Transform3D(-0.832936, 0, 0.16946283, 0, 0.85, 0, -0.16946283, 0, -0.832936, -1.6160088, 0.021164417, -0.14296341)
+
+[node name="SM_Desk_A01_N1" parent="ReceivingDesk" unique_id=1422268854 instance=ExtResource("3_pygu1")]
+transform = Transform3D(-0.3752974, 0, -0.85081375, 0, 1, 0, 0.8235149, 0, -0.3877382, -2.0827599, -0.9979125, 0.33336353)
+
+[node name="SM_Ind_War_Cable_Power_Rubber_Weathered_03" parent="ReceivingDesk" unique_id=2106208295 instance=ExtResource("4_cllla")]
+transform = Transform3D(0.04667282, 0, -1.0689816, 0, 1.07, 0, 1.0689816, 0, 0.04667282, 0.33927727, -0.004858732, 0.3313961)
+
+[node name="SM_Food_Leftover_FO1_N1" parent="ReceivingDesk" unique_id=896380668 instance=ExtResource("5_5ehom")]
+transform = Transform3D(-0.37460652, 0, 0.92718387, 0, 1, 0, -0.92718387, 0, -0.37460652, -1.9780407, 0.0059486628, 0.2987547)
+
+[node name="SM_KB3D_API_TwoBedroom_A_DeskLampB" parent="ReceivingDesk" unique_id=699625178 instance=ExtResource("6_gnorf")]
+transform = Transform3D(-5.9604645e-08, 0, -0.99999994, 0, 1, 0, 0.99999994, 0, -5.9604645e-08, -1.7082634, 0.24047959, -0.79046154)
+
+[node name="SM_KB3D_API_TwoBedroom_A_DeskLampB_transparent" parent="ReceivingDesk" unique_id=753390941 instance=ExtResource("7_3gvbg")]
+transform = Transform3D(-5.9604645e-08, 0, -0.99999994, 0, 1, 0, 0.99999994, 0, -5.9604645e-08, -1.7757931, 0.24047959, -0.82123756)
+
+[node name="SM_Thermos_01" parent="ReceivingDesk" unique_id=2123335265 instance=ExtResource("8_1bkje")]
+transform = Transform3D(-0.31868523, 0, -1.0423722, 0, 1.09, 0, 1.0423722, 0, -0.31868523, -2.2850666, 0.0020610094, 0.22192001)
+
+[node name="ReceivingDecorations" type="Node3D" parent="." unique_id=647698513]
+transform = Transform3D(-0.018813225, 0.997989, 0.060530405, -0.036076266, 0.059824117, -0.9975569, -0.99917203, -0.02095097, 0.034878235, -35.791737, 0.6614795, 3.2287724)
+
+[node name="SM_WallBrace_A" parent="ReceivingDecorations" unique_id=457077883 instance=ExtResource("150_qjmvj")]
+transform = Transform3D(1.1940677, -0.051769435, 0.0032941033, -0.016599834, 0.085847594, 0.20461304, -0.04417851, -1.4314939, 0.012151644, -0.7942922, 3.9744759, -0.7117114)
+
+[node name="SM_FireExtinguisher_01" parent="ReceivingDecorations" unique_id=68147832 instance=ExtResource("119_u1qwk")]
+transform = Transform3D(-1.1070362, -0.04094656, 0.24701953, -0.24912955, 0.06790036, -1.1052374, 0.025095098, -1.1322271, -0.075215146, -0.78654027, 3.9338322, -0.49903202)
+
+[node name="PalletArea" type="Node3D" parent="ReceivingDecorations" unique_id=1453456443]
+transform = Transform3D(1, 0, 3.7252903e-09, 0, 1, -2.3283064e-09, 0, -2.0954758e-09, 1.0000001, 0, 0, 0)
+
+[node name="SM_Metal_Barrel_RedWhite_01" parent="ReceivingDecorations/PalletArea" unique_id=285954074 instance=ExtResource("109_47db8")]
+transform = Transform3D(-0.021823341, -0.04184846, -1.159039, 1.1576676, 0.06939596, -0.024303123, 0.07021527, -1.1571656, 0.04045874, -0.16509438, 1.2067261, 0.57254815)
+
+[node name="SM_KB3D_HOH_PropTire_A" parent="ReceivingDecorations/PalletArea" unique_id=933043462 instance=ExtResource("143_76yn2")]
+transform = Transform3D(0.050583303, 0.042188957, -0.94270164, 0.2531487, 0.90884376, 0.05425713, 0.9090555, -0.25543717, 0.037346277, -0.29030085, 1.7910194, 0.43636036)
+
+[node name="SM_Wood_Pallet01" parent="ReceivingDecorations/PalletArea" unique_id=1620408607 instance=ExtResource("149_u1qwk")]
+transform = Transform3D(0.99869126, -0.03607626, -0.036248293, 0.03836507, 0.059824105, 0.9974715, -0.033816513, -0.9975566, 0.0611299, -0.22749448, 1.413578, 0.7573049)
+
+[node name="SM_Tire_02" parent="ReceivingDecorations/PalletArea" unique_id=590571637 instance=ExtResource("130_qkm8c")]
+transform = Transform3D(0.026654823, -0.007231259, -0.76450115, 0.1271858, 0.75434846, -0.0027008047, 0.7538821, -0.12700872, 0.027485924, -0.1955049, 1.613842, 0.35846806)
+
+[node name="SM_WoodPallet_03" parent="ReceivingDecorations/PalletArea" unique_id=1848659426 instance=ExtResource("98_xe8rb")]
+transform = Transform3D(0.9985941, -0.017995765, -0.049863413, -0.024070326, -0.9919856, -0.124037564, -0.04723161, 0.12506337, -0.99102396, -0.14321327, 0.3585472, 0.022969961)
+
+[node name="SM_Pallet03" parent="ReceivingDecorations/PalletArea" unique_id=814873664 instance=ExtResource("99_wlm0n")]
+transform = Transform3D(-0.6746929, -0.01756192, -0.082951576, 0.000500964, 0.664417, -0.14474024, 0.08478877, -0.14367174, -0.65921855, -0.083530664, 0.4225502, 0.17009974)
+
+[node name="SM_Pallet012" parent="ReceivingDecorations/PalletArea" unique_id=638208351 instance=ExtResource("97_qkm8c")]
+transform = Transform3D(1, -1.8626451e-09, 3.7252903e-09, -1.8626451e-09, 1, -2.2700988e-09, 0, -2.0372681e-09, 1.0000001, 0, 0, 0)
+
+[node name="CleaningNook" type="Node3D" parent="ReceivingDecorations" unique_id=44034962]
+transform = Transform3D(1, 0, 3.7252903e-09, 0, 1, -2.3283064e-09, 0, -2.0954758e-09, 1.0000001, 0, 0, 0)
+
+[node name="SM_Ind_Aba_Storage_Barrel_Metal_Blue_01" parent="ReceivingDecorations/CleaningNook" unique_id=707926954 instance=ExtResource("144_c7vt0")]
+transform = Transform3D(-0.018813225, -0.03607626, -0.99917185, 0.9979891, 0.059824105, -0.020950971, 0.06053041, -0.9975566, 0.034878228, 6.6577725, 6.8748856, 0.83222854)
+
+[node name="SM_KB3D_HOH_PropChemicalContainer_C" parent="ReceivingDecorations/CleaningNook" unique_id=818715681 instance=ExtResource("145_5rgdo")]
+transform = Transform3D(-0.79834265, -0.031566728, 0.35675964, -0.35807708, 0.05234609, -0.79665923, 0.00739765, -0.8728621, -0.060678232, 6.163149, 6.646578, 0.8384814)
+
+[node name="SM_KB3D_HOH_PropChemicalContainer_A" parent="ReceivingDecorations/CleaningNook" unique_id=474932201 instance=ExtResource("146_tl1pp")]
+transform = Transform3D(0.19203189, -0.03607626, 0.98072535, -0.9791894, 0.059824105, 0.19393183, -0.06566736, -0.9975566, -0.023837345, 5.688086, 6.9922543, 0.876722)
+
+[node name="SM_KB3D_NWD_PropCrate_A_Main" parent="ReceivingDecorations/CleaningNook" unique_id=856709010 instance=ExtResource("147_njov3")]
+transform = Transform3D(-0.17299837, -0.02759834, -0.7446709, 0.7434459, 0.04576544, -0.17440988, 0.05084134, -0.76313084, 0.01647127, 6.6639566, 6.911228, -0.035136223)
+
+[node name="SM_PlasticBox_06" parent="ReceivingDecorations/CleaningNook" unique_id=290512112 instance=ExtResource("122_ti4b2")]
+transform = Transform3D(-0.018813225, -0.03607626, -0.99917185, 0.9979891, 0.059824105, -0.020950971, 0.06053041, -0.9975566, 0.034878228, 6.6753106, 6.2290745, 0.7919831)
+
+[node name="SM_Ind_War_Storage_Crate_Plastic_Teal_01" parent="ReceivingDecorations/CleaningNook" unique_id=446600748 instance=ExtResource("123_oy8el")]
+transform = Transform3D(-0.040387325, -0.004929348, -0.99917185, 0.61456996, -0.7885842, -0.020950971, -0.78782785, -0.61490697, 0.034878228, 6.658775, 6.465294, 0.10351348)
+
+[node name="SM_KB3D_DMZ_Bucket_A_Main" parent="ReceivingDecorations/CleaningNook" unique_id=511244021 instance=ExtResource("136_0chgu")]
+transform = Transform3D(-0.018813225, -0.03607626, -0.99917185, 0.9979891, 0.059824105, -0.020950971, 0.06053041, -0.9975566, 0.034878228, 5.9903784, 7.026951, 0.03886795)
+
+[node name="SM_KB3D_WHS_PropPlasticTubCart_A_TubYlwA" parent="ReceivingDecorations/CleaningNook" unique_id=1222751038 instance=ExtResource("137_qfugg")]
+transform = Transform3D(0.99917185, -0.03607626, -0.018813182, 0.020950928, 0.059824105, 0.9979891, -0.03487823, -0.9975566, 0.06053041, 6.713971, 6.2304993, 0.79936767)
+
+[node name="SM_KB3D_WHS_PropDolly_A_Main" parent="ReceivingDecorations/CleaningNook" unique_id=2106610738 instance=ExtResource("138_u1qwk")]
+transform = Transform3D(-0.9992031, -0.03607626, 0.017069342, -0.019209148, 0.059824105, -0.9980241, 0.034983806, -0.9975566, -0.06046945, 6.5929227, 5.788513, 0.6509211)
+
+[node name="SM_KB3D_WHS_PropDolly_A_Wheels" parent="ReceivingDecorations/CleaningNook" unique_id=1997862679 instance=ExtResource("139_qjmvj")]
+transform = Transform3D(-0.99920315, -0.03607626, 0.017069343, -0.01920915, 0.059824105, -0.99802417, 0.034983806, -0.9975566, -0.060469452, 6.5929227, 5.788513, 0.6509211)
+
+[node name="PalletJack" type="Node3D" parent="ReceivingDecorations" unique_id=287229047]
+transform = Transform3D(0.8229577, -0.037519317, -0.10365268, 0.10531264, 0.06221708, 0.8217932, -0.023446292, -1.0374591, 0.053032015, 0.6525469, 0.9154167, 0.6015196)
+
+[node name="SM_KB3D_WHS_PropHandPalletJack_A_Main" parent="ReceivingDecorations/PalletJack" unique_id=807701247 instance=ExtResource("101_iwfau")]
+transform = Transform3D(0.9999998, 4.7694493e-10, -2.9802322e-08, -1.791004e-09, 0.79807675, 8.326673e-17, 1.4901161e-08, 4.462887e-09, 0.9999997, 4.7683716e-07, -0.072040394, 0)
+
+[node name="SM_KB3D_WHS_PropHandPalletJack_A_Wheels" parent="ReceivingDecorations/PalletJack" unique_id=283241964 instance=ExtResource("102_b6j7d")]
+transform = Transform3D(0.9999999, 4.7694493e-10, -2.9802322e-08, -1.7910041e-09, 0.7980767, 5.551115e-17, 1.4901161e-08, 4.4628874e-09, 0.99999976, 0, -2.30968e-07, 0)
+
+[node name="SM_KB3D_WHS_PropHandPalletJack_A_HandCrank" parent="ReceivingDecorations/PalletJack" unique_id=1264937118 instance=ExtResource("100_i2lar")]
+transform = Transform3D(1.0000001, 0, -2.9802322e-08, -1.7910048e-09, 0.9999998, 5.551115e-17, 0, 0, 0.9999999, 0, -2.30968e-07, 0)
+
+[node name="ReceivingLiftMonitor" type="Node3D" parent="." unique_id=1786126556]
+
+[node name="SM_KB3D_CPP_PropTV_A" parent="ReceivingLiftMonitor" unique_id=1847863322 instance=ExtResource("151_kr55y")]
+transform = Transform3D(1.235, 0, 0, 0, 1.22, 0, 0, 0, 1.665, -36.277256, 2.0607827, -3.2622252)
+
+[node name="Mesh" parent="ReceivingLiftMonitor/SM_KB3D_CPP_PropTV_A" index="0" unique_id=208583326]
+transform = Transform3D(1, 0, 0, 0, 0.9999998, 0, 0, 0, 1, 0.016489029, 0, 0.02396071)
+
+[node name="SM_OfficeMonitor_02" parent="ReceivingLiftMonitor" unique_id=321225774 instance=ExtResource("152_0tjjn")]
+transform = Transform3D(-4.742686e-08, 0.009468291, 1.0849587, 0, 1.0849587, -0.009468291, -1.085, -4.1387216e-10, -4.742505e-08, -35.929733, 2.4504955, -3.2735615)
+visible = false
+
+[node name="SM_KB3D_CBD_PropPCMonitor_B" parent="ReceivingLiftMonitor" unique_id=1917241600 instance=ExtResource("153_nxht3")]
+transform = Transform3D(1.3836055, 0.32955328, 0, -0.31943047, 1.4274522, 0, 0, 0, 2.155, -36.17277, 2.0046422, -3.2785425)
+visible = false
+
 [node name="SM_ChainLink_01" parent="." unique_id=28053962 instance=ExtResource("64_p6c26")]
 transform = Transform3D(1.12, 0, 0, 0, 1.12, 0, 0, 0, 1.12, -34.39905, 4.212658, -1.1961862)
 
@@ -788,6 +1334,24 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.53431, 3.7066905, 1.16571
 
 [editable path="Environment"]
 [editable path="Environment/Greybox"]
+[editable path="Environment/ReceivingInfrastructure"]
+[editable path="Environment/ReceivingInfrastructure/P1_ServiceMain/P1_Module_0"]
+[editable path="Environment/ReceivingInfrastructure/P1_ServiceMain/P1_Module_1"]
+[editable path="Environment/ReceivingInfrastructure/P1_ServiceMain/P1_Module_2"]
+[editable path="Environment/ReceivingInfrastructure/P1_ServiceMain/P1_Module_3"]
+[editable path="Environment/ReceivingInfrastructure/P1_ServiceMain/P1_CeilingHanger_0"]
+[editable path="Environment/ReceivingInfrastructure/P1_ServiceMain/P1_CeilingHanger_1"]
+[editable path="Environment/ReceivingInfrastructure/P1_ServiceMain/P1_CeilingHanger_2"]
+[editable path="Environment/ReceivingInfrastructure/E1_ElectricalThroughFeed/E1_Run_0"]
+[editable path="Environment/ReceivingInfrastructure/E1_ElectricalThroughFeed/E1_Run_1"]
+[editable path="Environment/ReceivingInfrastructure/E1_ElectricalThroughFeed/E1_Run_2"]
+[editable path="Environment/ReceivingInfrastructure/E1_ElectricalThroughFeed/E1_Jog_1"]
+[editable path="Environment/ReceivingInfrastructure/E1_ElectricalThroughFeed/E1_Jog_2"]
+[editable path="Environment/ReceivingInfrastructure/E1_ElectricalThroughFeed/E1_BacklogStub"]
+[editable path="Environment/ReceivingInfrastructure/L1_LiftServiceBranch/E1_Junction"]
+[editable path="Environment/ReceivingInfrastructure/L1_LiftServiceBranch/L1_Isolator"]
+[editable path="Environment/ReceivingInfrastructure/L1_LiftServiceBranch/L1_Feeder"]
 [editable path="FunctionalFixtures"]
 [editable path="FunctionalFixtures/ModularRack_GalleryB_Initial"]
 [editable path="DevelopmentSetup"]
+[editable path="ReceivingLiftMonitor/SM_KB3D_CPP_PropTV_A"]
