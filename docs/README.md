@@ -22,6 +22,8 @@ Current human-promoted compact baseline: Receiving **8.00 × 7.50 m / 60 m²**, 
 
 ## Current records
 
+- [10 October EAF4 authoring milestone close-out](testing/environment-authoring-eaf4-imperfection-authoring-milestone-closeout-2026-10-10.md): accepted tooling, 11 conventional presets, sixteen scoped scalar approvals, visible unchanged E-stop plaque and seven retired dust patches. The seventeen human-authored local placements and other dirty proof/import resources remain unpublished; C1 is IN PROGRESS.
+
 - [9 October CRT visual-only close-out](testing/receiving-c1-lift-crt-visual-closeout-2026-10-09.md): in-game readability, original curvature, subdued bezel and no light spill accepted; static mock content only. C1 remains open; live-data and final vocabulary/sizing work is deferred.
 
 - [9 October set-dressing/collision close-out](testing/receiving-c1-set-dressing-collision-closeout-2026-10-09.md): human-accepted manual layout and bounded technical integration, fresh focused tests, retired legacy infrastructure, protected alternatives and manual visual/proxy maintenance rule. Local ignored assets load in the configured environment; Git publication is not a complete source-art archive. C1 overall remains open.
@@ -55,7 +57,7 @@ Current human-promoted compact baseline: Receiving **8.00 × 7.50 m / 60 m²**, 
 - [EAF3A Repository Indexing + Source Triage Foundation](testing/environment-authoring-eaf3a-repository-index-validation.md): human-promoted single-root source discovery, mixed-content classification, stable source indexing and triage sheets; EAF3A itself makes no individual material approval decisions.
 - [EAF3B Selective Staging + Curated Catalog](testing/environment-authoring-eaf3b-curated-catalog-validation.md): human-promoted selective PBR staging, deterministic EAF1 review, human decisions, approved-spec restaging and query; five approved seed materials.
 - [EAF3 FAB profile refresh](testing/environment-authoring-eaf3-fab-profile-refresh-validation.md): human-promoted maintenance extension of the same single EAF3 source root; `KITBASH_PROFILE_V1` and `FAB_SURFACE_PROFILE_V1` revision 1 under scanner `eaf3a-2`. The corrected EAF5 structural-source sheets exclude warned trim/object-specific candidates by default, while raw discovery retains them. The original five approved EAF3 materials were unchanged by that maintenance; EAF5 later reviewed 30 current approved materials and selected a Receiving palette.
-- [EAF4B Wear Overlay, Review, and Curated Catalog](testing/environment-authoring-eaf4b-overlay-catalog-validation.md): human-promoted causal wear workflow; 12 current approved sources and two deferred sources.
+- [EAF4B Wear Overlay, Review, and Curated Catalog](testing/environment-authoring-eaf4b-overlay-catalog-validation.md): human-promoted causal wear workflow; original 12-approved/two-deferred source review, superseded by the 10 October scalar approvals for current counts.
 - [EAF4B diagnostic rerun](testing/environment-authoring-eaf4b-human-review-rerun-validation.md): historical review calibration and preserved original/rerun packages.
 - [EAF4A Wear Source Index + Triage Catalog Foundation](testing/environment-authoring-eaf4a-wear-source-index-validation.md): human-promoted guarded source discovery and triage; records City/Unreal limits and EAF4B shortlist guidance.
 
@@ -71,6 +73,8 @@ The [1 October lift/deck close-out](testing/receiving-c1-lift-enclosure-deck-clo
 
 The [3 October lighting baseline close-out](testing/receiving-c1-lighting-baseline-closeout-2026-10-03.md) and operational docs supersede older Receiving lighting and shaft-material statements until the next proportionate master reconciliation. GDD/VDD/Findings DOCX masters and readable extracts remain unchanged.
 
-## Experimental imperfection audition
+## Accepted EAF4 wear and imperfection authoring
 
-[Editor guide](environment-authoring/eaf4-imperfection-audition-guide.md), [source inventory](testing/environment-authoring-imperfection-source-inventory-2026-10-10.md) and [implementation evidence](testing/environment-authoring-imperfection-audition-2026-10-10.md) describe the separate 16-source experimental workflow. These are diagnostics for human review, not approvals or Receiving C1 acceptance.
+[Wear authoring guide](environment-authoring/eaf4-wear-authoring-guide.md) / [11-preset coverage](../environment_authoring/wear/presets/README.md); [scalar-layer guide](environment-authoring/eaf4-imperfection-audition-guide.md) / [16-source coverage](../environment_authoring/wear/imperfection_experiments/README.md). The two libraries remain separate. Sixteen human-approved patterns use eleven opacity.red and five roughness.red scalar distributions for flat tinted-opacity layers and only the existing two soft Leakage modulation cases; grayscale remains diagnostic. No substrate PBR integration or final Receiving placement acceptance is implied.
+
+The [accepted milestone record](testing/environment-authoring-eaf4-imperfection-authoring-milestone-closeout-2026-10-10.md) supersedes historical pending editor/source statuses in the [audition evidence](testing/environment-authoring-imperfection-audition-2026-10-10.md) and [original inventory](testing/environment-authoring-imperfection-source-inventory-2026-10-10.md), without rewriting them. All seventeen local placements remain uncommitted for later independent human composition review. Receiving C1 remains IN PROGRESS; Stage C remains later. Commercial originals/import caches are licensed local dependencies, not a complete Git source-art archive.
