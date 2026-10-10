@@ -143,11 +143,27 @@
 [ext_resource type="PackedScene" uid="uid://0wav07myac0y" path="res://assets/environment/infrastructure/service_props/SM_KB3D_CPP_PropTV_A.glb" id="151_kr55y"]
 [ext_resource type="PackedScene" uid="uid://c6w1cetcp4yi6" path="res://assets/environment/infrastructure/service_props/SM_OfficeMonitor_02.glb" id="152_0tjjn"]
 [ext_resource type="PackedScene" uid="uid://dc68l3l7wxqti" path="res://assets/environment/infrastructure/service_props/SM_KB3D_CBD_PropPCMonitor_B.glb" id="153_nxht3"]
+[ext_resource type="PackedScene" path="res://gameplay/logistics_wing/receiving/receiving_lift_phosphor_display.tscn" id="154_crt_display"]
 [ext_resource type="PackedScene" uid="uid://h2k4jnxgm853" path="res://assets/environment/infrastructure/cables/SM_Cables04_01.glb" id="155_nxht3"]
 [ext_resource type="PackedScene" uid="uid://2hd4rlk50bq" path="res://assets/environment/infrastructure/cables/SM_Cables06.glb" id="156_76yn2"]
 [ext_resource type="PackedScene" uid="uid://be7iku0tv4r8l" path="res://assets/environment/infrastructure/service_props/SM_ElectricalSupply_JunctionBox04.glb" id="157_76yn2"]
 [ext_resource type="PackedScene" uid="uid://dc16ksdm4ajvb" path="res://assets/environment/infrastructure/cables/SM_ElectricalSupply_Wire01_Curved.glb" id="157_nxht3"]
+[ext_resource type="PackedScene" path="res://environment_authoring/wear/presets/oil_stain_semlsbi.tscn" id="158_5uhxw"]
 [ext_resource type="PackedScene" uid="uid://c67vg31d6pmkq" path="res://assets/environment/infrastructure/cables/SM_ElectricalSupply_Wire02_Corner.glb" id="158_c7vt0"]
+[ext_resource type="PackedScene" path="res://environment_authoring/wear/imperfection_experiments/presets/wipe_marks_uh4scioc.tscn" id="163_uww01"]
+[ext_resource type="PackedScene" path="res://environment_authoring/wear/imperfection_experiments/presets/grunge_tedwdiic.tscn" id="163_vi167"]
+[ext_resource type="PackedScene" path="res://environment_authoring/wear/imperfection_experiments/presets/grain_sc2nbisc.tscn" id="164_noiif"]
+[ext_resource type="PackedScene" path="res://environment_authoring/wear/imperfection_experiments/presets/stains_ulttebjc.tscn" id="164_wmf8m"]
+[ext_resource type="PackedScene" path="res://environment_authoring/wear/imperfection_experiments/presets/dust_uh4rdfvc.tscn" id="165_5kgru"]
+[ext_resource type="PackedScene" path="res://environment_authoring/wear/imperfection_experiments/presets/scratched_metal_vdekebbc.tscn" id="165_jn6lb"]
+[ext_resource type="PackedScene" path="res://environment_authoring/wear/imperfection_experiments/presets/dust_uh4qbeic.tscn" id="166_5uhxw"]
+[ext_resource type="PackedScene" path="res://environment_authoring/wear/imperfection_experiments/presets/grungy_surface_slnnecvc.tscn" id="166_du0t1"]
+[ext_resource type="PackedScene" path="res://environment_authoring/wear/imperfection_experiments/presets/grunge_uh4uaawc.tscn" id="167_e78ty"]
+[ext_resource type="PackedScene" path="res://environment_authoring/wear/imperfection_experiments/presets/stains_ultwabqc.tscn" id="167_yjnqw"]
+[ext_resource type="PackedScene" path="res://environment_authoring/wear/imperfection_experiments/presets/grunge_tjvibebc.tscn" id="168_7gnqw"]
+[ext_resource type="PackedScene" path="res://environment_authoring/wear/imperfection_experiments/presets/dust_uh4qbflc.tscn" id="168_y27sh"]
+[ext_resource type="PackedScene" path="res://environment_authoring/wear/imperfection_experiments/presets/grunge_tedxadjc.tscn" id="169_kdg1h"]
+[ext_resource type="PackedScene" path="res://gameplay/logistics_wing/receiving/receiving_emergency_stop_signage.tscn" id="receiving_signage"]
 [ext_resource type="Script" uid="uid://be6gucor1ya72" path="res://environment_authoring/substrate/environment_substrate_piece.gd" id="shaft_1_x53na"]
 [ext_resource type="Resource" path="res://data/environment/material_catalog/approved_specs/eaf3b_1beac3a311a480af8844ea89.tres" id="shaft_2_rflhy"]
 [ext_resource type="Script" uid="uid://dym5xpqw4qae4" path="res://environment_authoring/substrate/environment_substrate_piece_spec.gd" id="shaft_3_4ax3c"]
@@ -156,11 +172,7 @@
 [ext_resource type="Texture2D" uid="uid://dmerwhc48dlm0" path="res://assets/environment/materials/kitbash_cache/eaf3b_1beac3a311a480af8844ea89/2k/normal.png" id="shaft_6_h0kxl"]
 [ext_resource type="Texture2D" uid="uid://buvwu7wptxnjv" path="res://assets/environment/materials/kitbash_cache/eaf3b_1beac3a311a480af8844ea89/2k/roughness.png" id="shaft_7_8hvsm"]
 
-[ext_resource type="PackedScene" path="res://gameplay/logistics_wing/receiving/receiving_lift_phosphor_display.tscn" id="154_crt_display"]
-
-[ext_resource type="PackedScene" path="res://gameplay/logistics_wing/receiving/receiving_emergency_stop_signage.tscn" id="receiving_signage"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_76yn2"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_5kgru"]
 resource_local_to_scene = true
 size = Vector3(4.04, 3, 0.82)
 
@@ -279,15 +291,15 @@ size = Vector3(0.61, 0.93, 1.964)
 size = Vector3(0.055, 0.96, 0.065)
 
 [sub_resource type="CylinderShape3D" id="Receiving_StoolMovement_Body"]
+height = 0.66354924
 radius = 0.19759765
-height = 0.663549241
 
 [sub_resource type="BoxShape3D" id="Receiving_UtilityBoxMovement_Housing"]
-size = Vector3(1.38237427, 1.99832997, 0.703047997)
+size = Vector3(1.3823743, 1.99833, 0.703048)
 
 [sub_resource type="CylinderShape3D" id="Receiving_RedWhiteBarrelMovement_Body"]
-radius = 0.342859486
-height = 1.06047828
+height = 1.0604783
+radius = 0.34285948
 
 [sub_resource type="BoxShape3D" id="Receiving_PalletJackMovement_LowForks"]
 size = Vector3(0.6, 0.11, 1.28)
@@ -299,17 +311,17 @@ size = Vector3(0.53, 0.35, 0.29)
 size = Vector3(0.375, 0.72, 0.22)
 
 [sub_resource type="BoxShape3D" id="Receiving_LeaningPalletMovement_Housing"]
-size = Vector3(0.862744851, 0.155828563, 1.29411715)
+size = Vector3(0.86274487, 0.15582857, 1.2941171)
 
 [sub_resource type="BoxShape3D" id="Receiving_ElectricalCabinetMovement_Housing"]
-size = Vector3(0.545331377, 1.10031465, 0.1868215)
+size = Vector3(0.54533136, 1.1003146, 0.1868215)
 
 [sub_resource type="CylinderShape3D" id="Receiving_BucketMovement_BucketBody"]
-radius = 0.21
 height = 0.56
+radius = 0.21
 
 [sub_resource type="BoxShape3D" id="Receiving_PlasticBoxMovement_Housing"]
-size = Vector3(0.599999968, 0.49975509, 0.799999952)
+size = Vector3(0.59999996, 0.49975508, 0.79999995)
 
 [sub_resource type="BoxShape3D" id="Receiving_DollyMovement_FootPlate"]
 size = Vector3(0.65, 0.18, 0.35)
@@ -318,17 +330,17 @@ size = Vector3(0.65, 0.18, 0.35)
 size = Vector3(0.405, 1.24, 0.23)
 
 [sub_resource type="CylinderShape3D" id="Receiving_BlueBarrelMovement_Body"]
-radius = 0.287017959
-height = 0.874783341
+height = 0.87478334
+radius = 0.28701797
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_receiving_crt"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5uhxw"]
 resource_local_to_scene = true
 shading_mode = 0
 albedo_color = Color(0.008, 0.02, 0.014, 1)
+uv1_scale = Vector3(4.611303, 5.9499063, 1)
+uv1_offset = Vector3(-2.1197116, -2.1592402, 0)
 texture_filter = 1
 texture_repeat = false
-uv1_scale = Vector3(4.611302975, 5.949906454, 1)
-uv1_offset = Vector3(-2.119711754, -2.159240137, 0)
 
 [node name="WingGameplay" type="Node3D" unique_id=1126541559]
 script = ExtResource("1_gameplay")
@@ -451,7 +463,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.4, 0)
 
 [node name="Shape" parent="FunctionalFixtures/ModularRack_GalleryB_Initial/MovementCollision" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
-shape = SubResource("BoxShape3D_76yn2")
+shape = SubResource("BoxShape3D_5kgru")
 
 [node name="FixedLadder_GalleryB_Initial" parent="FunctionalFixtures" unique_id=806369216 instance=ExtResource("42_ladder")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 1.043639, 0, -8.665108)
@@ -945,7 +957,7 @@ metadata/eaf2_generation = {
 material_override = SubResource("shaft_StandardMaterial3D_ub82l")
 mesh = SubResource("shaft_ArrayMesh_pw0i7")
 
-[node name="ReceivingSetDressing" type="Node3D" parent="."]
+[node name="ReceivingSetDressing" type="Node3D" parent="." unique_id=71069160]
 metadata/purpose = "Human-authored Receiving art; identity organization, editable in this scene"
 
 [node name="ReceivingDecals" type="Node3D" parent="ReceivingSetDressing" unique_id=1970938110]
@@ -1019,7 +1031,7 @@ visible = false
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 0.585, 0, -8.742278e-08, 0, -1, -35.88428, 1.2520905, 3.8461835)
 visible = false
 
-[node name="ReceivingSignage" parent="ReceivingSetDressing/ReceivingDecals" instance=ExtResource("receiving_signage")]
+[node name="ReceivingSignage" parent="ReceivingSetDressing/ReceivingDecals" unique_id=1962544865 instance=ExtResource("receiving_signage")]
 
 [node name="ReceivingPipes" type="Node3D" parent="ReceivingSetDressing" unique_id=681310302]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.628525, 3.6945462, -1.2137502)
@@ -1350,141 +1362,119 @@ transform = Transform3D(0.9999999, 4.7694493e-10, -2.9802322e-08, -1.7910041e-09
 [node name="SM_KB3D_WHS_PropHandPalletJack_A_HandCrank" parent="ReceivingSetDressing/ReceivingDecorations/PalletJack" unique_id=1264937118 instance=ExtResource("100_i2lar")]
 transform = Transform3D(1.0000001, 0, -2.9802322e-08, -1.7910048e-09, 0.9999998, 5.551115e-17, 0, 0, 0.9999999, 0, -2.30968e-07, 0)
 
-[node name="CollisionProxies" type="Node3D" parent="ReceivingSetDressing"]
+[node name="CollisionProxies" type="Node3D" parent="ReceivingSetDressing" unique_id=1783830575]
 metadata/purpose = "Unit-scale movement-only siblings; visual_target maps each proxy to authored art. Move deliberately alongside the visual assembly."
 
-[node name="DeskMovement" type="StaticBody3D" parent="ReceivingSetDressing/CollisionProxies"]
-transform = Transform3D(0, 0, 1, 0, 1, -0, -1, 0, 0, -29.0443745, 0.00148105621, 2.47854352)
-collision_layer = 1
-collision_mask = 1
+[node name="DeskMovement" type="StaticBody3D" parent="ReceivingSetDressing/CollisionProxies" unique_id=1946815754]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -29.044374, 0.0014810562, 2.4785435)
 metadata/visual_target = NodePath("../../ReceivingDesk/SM_Desk_A01_N1")
 
-[node name="LongTop" type="CollisionShape3D" parent="ReceivingSetDressing/CollisionProxies/DeskMovement"]
-position = Vector3(-1.008, 0.973, -1.046)
+[node name="LongTop" type="CollisionShape3D" parent="ReceivingSetDressing/CollisionProxies/DeskMovement" unique_id=432673665]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.008, 0.973, -1.046)
 shape = SubResource("Receiving_DeskMovement_LongTop")
 
-[node name="ReturnTop" type="CollisionShape3D" parent="ReceivingSetDressing/CollisionProxies/DeskMovement"]
-position = Vector3(0.0315, 0.973, 0.069)
+[node name="ReturnTop" type="CollisionShape3D" parent="ReceivingSetDressing/CollisionProxies/DeskMovement" unique_id=504600556]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0315, 0.973, 0.069)
 shape = SubResource("Receiving_DeskMovement_ReturnTop")
 
-[node name="CabinetSupport" type="CollisionShape3D" parent="ReceivingSetDressing/CollisionProxies/DeskMovement"]
-position = Vector3(-1.035, 0.47, -1.402)
+[node name="CabinetSupport" type="CollisionShape3D" parent="ReceivingSetDressing/CollisionProxies/DeskMovement" unique_id=990403312]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.035, 0.47, -1.402)
 shape = SubResource("Receiving_DeskMovement_CabinetSupport")
 
-[node name="OuterLeg" type="CollisionShape3D" parent="ReceivingSetDressing/CollisionProxies/DeskMovement"]
-position = Vector3(0.649, 0.48, 0.331)
+[node name="OuterLeg" type="CollisionShape3D" parent="ReceivingSetDressing/CollisionProxies/DeskMovement" unique_id=1092940835]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.649, 0.48, 0.331)
 shape = SubResource("Receiving_DeskMovement_OuterLeg")
 
-[node name="StoolMovement" type="StaticBody3D" parent="ReceivingSetDressing/CollisionProxies"]
-transform = Transform3D(0.258819082, 0, 0.965925816, 0, 1, -0, -0.965925816, 0, 0.258819082, -29.4847221, 0.036000073, 2.93325233)
-collision_layer = 1
-collision_mask = 1
+[node name="StoolMovement" type="StaticBody3D" parent="ReceivingSetDressing/CollisionProxies" unique_id=112030977]
+transform = Transform3D(0.25881907, 0, 0.9659258, 0, 1, 0, -0.9659258, 0, 0.25881907, -29.484722, 0.036000073, 2.9332523)
 metadata/visual_target = NodePath("../../ReceivingDesk/SM_Res_Fur_Stool_Metal_Worn_01")
 
-[node name="Body" type="CollisionShape3D" parent="ReceivingSetDressing/CollisionProxies/StoolMovement"]
-position = Vector3(0.00158826558, 0.326691888, -0.00234765099)
+[node name="Body" type="CollisionShape3D" parent="ReceivingSetDressing/CollisionProxies/StoolMovement" unique_id=430241160]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0015882655, 0.3266919, -0.002347651)
 shape = SubResource("Receiving_StoolMovement_Body")
 
-[node name="UtilityBoxMovement" type="StaticBody3D" parent="ReceivingSetDressing/CollisionProxies"]
-transform = Transform3D(-1, 0, -1.50995804e-07, 0, 1, 0, 1.50995804e-07, 0, -1, -32.8929634, 5.96046377e-08, 3.59572697)
-collision_layer = 1
-collision_mask = 1
+[node name="UtilityBoxMovement" type="StaticBody3D" parent="ReceivingSetDressing/CollisionProxies" unique_id=965252697]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, -32.892963, 5.9604638e-08, 3.595727)
 metadata/visual_target = NodePath("../../ReceivingElectrical/SM_Utility_Box_1a")
 
-[node name="Housing" type="CollisionShape3D" parent="ReceivingSetDressing/CollisionProxies/UtilityBoxMovement"]
-position = Vector3(0.00192980554, 0.999164884, 0.0188305242)
+[node name="Housing" type="CollisionShape3D" parent="ReceivingSetDressing/CollisionProxies/UtilityBoxMovement" unique_id=342560248]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0019298055, 0.9991649, 0.018830525)
 shape = SubResource("Receiving_UtilityBoxMovement_Housing")
 
-[node name="RedWhiteBarrelMovement" type="StaticBody3D" parent="ReceivingSetDressing/CollisionProxies"]
-transform = Transform3D(1, -1.2845825e-08, 2.20787618e-09, 1.2845825e-08, 1, 1.41809999e-17, -2.20787618e-09, 1.41809911e-17, 1, -34.549675, 0.168477327, 3.38841748)
-collision_layer = 1
-collision_mask = 1
+[node name="RedWhiteBarrelMovement" type="StaticBody3D" parent="ReceivingSetDressing/CollisionProxies" unique_id=864741242]
+transform = Transform3D(1, -1.2845825e-08, 2.207876e-09, 1.2845825e-08, 1, 1.4180999e-17, -2.207876e-09, 1.4180991e-17, 1, -34.549675, 0.16847733, 3.3884175)
 metadata/visual_target = NodePath("../../ReceivingDecorations/PalletArea/SM_Metal_Barrel_RedWhite_01")
 
-[node name="Body" type="CollisionShape3D" parent="ReceivingSetDressing/CollisionProxies/RedWhiteBarrelMovement"]
-position = Vector3(-0.00674885477, 0.53108293, -0.00312923445)
+[node name="Body" type="CollisionShape3D" parent="ReceivingSetDressing/CollisionProxies/RedWhiteBarrelMovement" unique_id=871130486]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0067488546, 0.5310829, -0.0031292345)
 shape = SubResource("Receiving_RedWhiteBarrelMovement_Body")
 
-[node name="PalletJackMovement" type="StaticBody3D" parent="ReceivingSetDressing/CollisionProxies"]
-transform = Transform3D(0.106264046, -4.76945106e-10, 0.994337947, 4.48830179e-09, 1, 1.03397577e-25, -0.994337947, 4.46288878e-09, 0.106264046, -34.8540268, 0.0926519632, 2.57856703)
-collision_layer = 1
-collision_mask = 1
+[node name="PalletJackMovement" type="StaticBody3D" parent="ReceivingSetDressing/CollisionProxies" unique_id=2045239944]
+transform = Transform3D(0.10626405, -4.769451e-10, 0.994338, 4.4883017e-09, 1, 1.0339758e-25, -0.994338, 4.4628887e-09, 0.10626405, -34.854027, 0.09265196, 2.578567)
 metadata/visual_target = NodePath("../../ReceivingDecorations/PalletJack")
 
-[node name="LowForks" type="CollisionShape3D" parent="ReceivingSetDressing/CollisionProxies/PalletJackMovement"]
-position = Vector3(0, -0.035, 0.78)
+[node name="LowForks" type="CollisionShape3D" parent="ReceivingSetDressing/CollisionProxies/PalletJackMovement" unique_id=825737697]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.035, 0.78)
 shape = SubResource("Receiving_PalletJackMovement_LowForks")
 
-[node name="PumpBase" type="CollisionShape3D" parent="ReceivingSetDressing/CollisionProxies/PalletJackMovement"]
-position = Vector3(0, 0.08, 0.047)
+[node name="PumpBase" type="CollisionShape3D" parent="ReceivingSetDressing/CollisionProxies/PalletJackMovement" unique_id=1769131240]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, 0.047)
 shape = SubResource("Receiving_PalletJackMovement_PumpBase")
 
-[node name="UprightHandle" type="CollisionShape3D" parent="ReceivingSetDressing/CollisionProxies/PalletJackMovement"]
-position = Vector3(0, 0.59, 0.1)
+[node name="UprightHandle" type="CollisionShape3D" parent="ReceivingSetDressing/CollisionProxies/PalletJackMovement" unique_id=131516477]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.59, 0.1)
 shape = SubResource("Receiving_PalletJackMovement_UprightHandle")
 
-[node name="LeaningPalletMovement" type="StaticBody3D" parent="ReceivingSetDressing/CollisionProxies"]
-transform = Transform3D(-0.0456676311, -0.982081996, -0.182837143, 0.00965069321, -0.183453289, 0.982981055, -0.998910072, 0.043125911, 0.0178556492, -35.4298248, 0.665181994, 3.36515641)
-collision_layer = 1
-collision_mask = 1
+[node name="LeaningPalletMovement" type="StaticBody3D" parent="ReceivingSetDressing/CollisionProxies" unique_id=1594324688]
+transform = Transform3D(-0.04566763, -0.982082, -0.18283714, 0.009650693, -0.18345329, 0.982981, -0.99891007, 0.043125913, 0.01785565, -35.429825, 0.665182, 3.3651564)
 metadata/visual_target = NodePath("../../ReceivingDecorations/PalletArea/SM_WoodPallet_03")
 
-[node name="Housing" type="CollisionShape3D" parent="ReceivingSetDressing/CollisionProxies/LeaningPalletMovement"]
-position = Vector3(0.0026701693, 0.0779136942, 0.000375867009)
+[node name="Housing" type="CollisionShape3D" parent="ReceivingSetDressing/CollisionProxies/LeaningPalletMovement" unique_id=1902834846]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0026701693, 0.077913694, 0.000375867)
 shape = SubResource("Receiving_LeaningPalletMovement_Housing")
 
-[node name="ElectricalCabinetMovement" type="StaticBody3D" parent="ReceivingSetDressing/CollisionProxies"]
-transform = Transform3D(-4.37113883e-08, 0, 1, 0, 1, 0, -1, 0, -4.37113883e-08, -35.8693161, 0.932316065, -3.17400908)
-collision_layer = 1
-collision_mask = 1
+[node name="ElectricalCabinetMovement" type="StaticBody3D" parent="ReceivingSetDressing/CollisionProxies" unique_id=801978553]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -35.869316, 0.93231606, -3.174009)
 metadata/visual_target = NodePath("../../ReceivingElectrical/SM_Electrical_Cabinet_01a")
 
-[node name="Housing" type="CollisionShape3D" parent="ReceivingSetDressing/CollisionProxies/ElectricalCabinetMovement"]
-position = Vector3(-2.82511709e-05, 0.550042503, 0.0933261509)
+[node name="Housing" type="CollisionShape3D" parent="ReceivingSetDressing/CollisionProxies/ElectricalCabinetMovement" unique_id=998102850]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.825117e-05, 0.5500425, 0.09332615)
 shape = SubResource("Receiving_ElectricalCabinetMovement_Housing")
 
-[node name="BucketMovement" type="StaticBody3D" parent="ReceivingSetDressing/CollisionProxies"]
-transform = Transform3D(1, 7.4505806e-09, -1.16415322e-09, -7.4505806e-09, 1, 0, 1.16415322e-09, 8.67361738e-18, 1, -28.8892632, 0.826977134, -2.90251184)
-collision_layer = 1
-collision_mask = 1
+[node name="BucketMovement" type="StaticBody3D" parent="ReceivingSetDressing/CollisionProxies" unique_id=269371440]
+transform = Transform3D(1, 7.450581e-09, -1.1641532e-09, -7.450581e-09, 1, 0, 1.1641532e-09, 8.673617e-18, 1, -28.889263, 0.82697713, -2.9025118)
 metadata/visual_target = NodePath("../../ReceivingDecorations/CleaningNook/SM_KB3D_DMZ_Bucket_A_Main")
 
-[node name="BucketBody" type="CollisionShape3D" parent="ReceivingSetDressing/CollisionProxies/BucketMovement"]
-position = Vector3(0, -0.515, 0)
+[node name="BucketBody" type="CollisionShape3D" parent="ReceivingSetDressing/CollisionProxies/BucketMovement" unique_id=1263273031]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.515, 0)
 shape = SubResource("Receiving_BucketMovement_BucketBody")
 
-[node name="PlasticBoxMovement" type="StaticBody3D" parent="ReceivingSetDressing/CollisionProxies"]
-transform = Transform3D(1, 7.4505806e-09, -1.16415322e-09, -7.4505806e-09, 1, 0, 1.16415322e-09, 8.67361738e-18, 1, -29.6528339, 0.00325971842, -3.5438931)
-collision_layer = 1
-collision_mask = 1
+[node name="PlasticBoxMovement" type="StaticBody3D" parent="ReceivingSetDressing/CollisionProxies" unique_id=1439926653]
+transform = Transform3D(1, 7.450581e-09, -1.1641532e-09, -7.450581e-09, 1, 0, 1.1641532e-09, 8.673617e-18, 1, -29.652834, 0.0032597184, -3.543893)
 metadata/visual_target = NodePath("../../ReceivingDecorations/CleaningNook/SM_PlasticBox_06")
 
-[node name="Housing" type="CollisionShape3D" parent="ReceivingSetDressing/CollisionProxies/PlasticBoxMovement"]
-position = Vector3(-1.86173277e-09, 0.249877542, 0)
+[node name="Housing" type="CollisionShape3D" parent="ReceivingSetDressing/CollisionProxies/PlasticBoxMovement" unique_id=1536582408]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8617328e-09, 0.24987754, 0)
 shape = SubResource("Receiving_PlasticBoxMovement_Housing")
 
-[node name="DollyMovement" type="StaticBody3D" parent="ReceivingSetDressing/CollisionProxies"]
-transform = Transform3D(0.00174529749, -1.30034807e-11, -0.999998477, 7.45058124e-09, 1, 0, 0.999998477, -7.45056989e-09, 0.00174529749, -30.0994968, 0.12059325, -3.45726323)
-collision_layer = 1
-collision_mask = 1
+[node name="DollyMovement" type="StaticBody3D" parent="ReceivingSetDressing/CollisionProxies" unique_id=1531378480]
+transform = Transform3D(0.0017452975, -1.3003481e-11, -0.99999845, 7.4505815e-09, 1, 0, 0.99999845, -7.45057e-09, 0.0017452975, -30.099497, 0.12059325, -3.4572632)
 metadata/visual_target = NodePath("../../ReceivingDecorations/CleaningNook/SM_KB3D_WHS_PropDolly_A_Main")
 
-[node name="FootPlate" type="CollisionShape3D" parent="ReceivingSetDressing/CollisionProxies/DollyMovement"]
-position = Vector3(0, -0.018, -0.165)
+[node name="FootPlate" type="CollisionShape3D" parent="ReceivingSetDressing/CollisionProxies/DollyMovement" unique_id=864080978]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.018, -0.165)
 shape = SubResource("Receiving_DollyMovement_FootPlate")
 
-[node name="UprightFrame" type="CollisionShape3D" parent="ReceivingSetDressing/CollisionProxies/DollyMovement"]
-position = Vector3(0, 0.705, -0.01)
+[node name="UprightFrame" type="CollisionShape3D" parent="ReceivingSetDressing/CollisionProxies/DollyMovement" unique_id=198448756]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.705, -0.01)
 shape = SubResource("Receiving_DollyMovement_UprightFrame")
 
-[node name="BlueBarrelMovement" type="StaticBody3D" parent="ReceivingSetDressing/CollisionProxies"]
-transform = Transform3D(1, 7.4505806e-09, -1.16415322e-09, -7.4505806e-09, 1, 0, 1.16415322e-09, 8.67361738e-18, 1, -29.0055561, 0.0023804307, -3.53849673)
-collision_layer = 1
-collision_mask = 1
+[node name="BlueBarrelMovement" type="StaticBody3D" parent="ReceivingSetDressing/CollisionProxies" unique_id=2029126568]
+transform = Transform3D(1, 7.450581e-09, -1.1641532e-09, -7.450581e-09, 1, 0, 1.1641532e-09, 8.673617e-18, 1, -29.005556, 0.0023804307, -3.5384967)
 metadata/visual_target = NodePath("../../ReceivingDecorations/CleaningNook/SM_Ind_Aba_Storage_Barrel_Metal_Blue_01")
 
-[node name="Body" type="CollisionShape3D" parent="ReceivingSetDressing/CollisionProxies/BlueBarrelMovement"]
-position = Vector3(-0.000963452719, 0.435011353, 0.000454962254)
+[node name="Body" type="CollisionShape3D" parent="ReceivingSetDressing/CollisionProxies/BlueBarrelMovement" unique_id=1940516694]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00096345274, 0.43501136, 0.00045496225)
 shape = SubResource("Receiving_BlueBarrelMovement_Body")
 
 [node name="ReceivingLiftMonitor" type="Node3D" parent="." unique_id=1786126556]
@@ -1494,9 +1484,9 @@ transform = Transform3D(1.235, 0, 0, 0, 1.22, 0, 0, 0, 1.665, -36.277256, 2.0607
 
 [node name="Mesh" parent="ReceivingLiftMonitor/SM_KB3D_CPP_PropTV_A" index="0" unique_id=208583326]
 transform = Transform3D(1, 0, 0, 0, 0.9999998, 0, 0, 0, 1, 0.016489029, 0, 0.02396071)
-surface_material_override/1 = SubResource("StandardMaterial3D_receiving_crt")
+surface_material_override/1 = SubResource("StandardMaterial3D_5uhxw")
 
-[node name="PhosphorDisplay" parent="ReceivingLiftMonitor" instance=ExtResource("154_crt_display")]
+[node name="PhosphorDisplay" parent="ReceivingLiftMonitor" unique_id=352976086 instance=ExtResource("154_crt_display")]
 
 [node name="SM_OfficeMonitor_02" parent="ReceivingLiftMonitor" unique_id=321225774 instance=ExtResource("152_0tjjn")]
 transform = Transform3D(-4.742686e-08, 0.009468291, 1.0849587, 0, 1.0849587, -0.009468291, -1.085, -4.1387216e-10, -4.742505e-08, -35.929733, 2.4504955, -3.2735615)
@@ -1518,17 +1508,193 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.628525, 3.6945462, -1.213
 [node name="SM_KB3D_WDC_PropLight_H_Glass2" parent="." unique_id=517906581 instance=ExtResource("65_p6c26")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.53431, 3.7066905, 1.165712)
 
-[node name="AuthoredWear" type="Node3D" parent="."]
+[node name="AuthoredWear" type="Node3D" parent="." unique_id=112169679]
 metadata/purpose = "Visual-only user wear; drag approved presets here and edit their instance roots"
 
-[node name="Receiving" type="Node3D" parent="AuthoredWear"]
+[node name="Receiving" type="Node3D" parent="AuthoredWear" unique_id=547755799]
 
-[node name="Storage" type="Node3D" parent="AuthoredWear"]
+[node name="OilStainSemlsbi" parent="AuthoredWear/Receiving" unique_id=1221535767 instance=ExtResource("158_5uhxw")]
+transform = Transform3D(0.4970189, -0.86773974, -3.7930107e-08, 0, -4.371139e-08, 1, -0.86773974, -0.4970189, -2.1725386e-08, -34.460693, 0, 3.0462887)
+width_m = 1.001
+height_m = 0.941
+opacity_multiplier = 0.695
+albedo_strength = 0.542
+albedo_tint = Color(0.029506557, 0.029506557, 0.029506557, 1)
+normal_strength = 1.027
+roughness_strength = 0.0
+edge_feather = 0.131
+_appearance_initialized = true
 
-[node name="OtherRooms" type="Node3D" parent="AuthoredWear"]
+[node name="Storage" type="Node3D" parent="AuthoredWear" unique_id=1018508958]
 
-[node name="ImperfectionExperiments" type="Node3D" parent="."]
+[node name="OtherRooms" type="Node3D" parent="AuthoredWear" unique_id=1453138851]
+
+[node name="ImperfectionExperiments" type="Node3D" parent="." unique_id=896966648]
 metadata/purpose = "EXPERIMENTAL / NOT APPROVED: visual-only scalar mask auditions; hide this group independently"
+
+[node name="ExperimentalWipeMarksUh4Scioc" parent="ImperfectionExperiments" unique_id=1699741298 instance=ExtResource("163_uww01")]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -31.766415, 0, 0)
+visible = false
+preview_mode = 1
+width_m = 8.0
+height_m = 8.0
+opacity_multiplier = 1.0
+albedo_tint = Color(0, 0, 0, 1)
+mask_rotation_degrees = -137.143
+
+[node name="ExperimentalStainsUlttebjc" parent="ImperfectionExperiments" unique_id=1683164013 instance=ExtResource("164_wmf8m")]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -31.379, -0.001, 1.7076783)
+visible = false
+preview_mode = 1
+opacity_multiplier = 0.266
+albedo_tint = Color(0.011242399, 0.010257419, 0.016444782, 1)
+mask_repeat = Vector2(0.5, 0.5)
+scalar_contrast = 1.3210000000000002
+scalar_bias = 0.17900000000000005
+
+[node name="ExperimentalScratchedMetalVdekebbc" parent="ImperfectionExperiments" unique_id=880073489 instance=ExtResource("165_jn6lb")]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -31.023666, -0.001, 0)
+visible = false
+preview_mode = 1
+width_m = 8.0
+height_m = 8.0
+opacity_multiplier = 1.0
+albedo_tint = Color(0, 0, 0, 1)
+mask_rotation_degrees = -343.062
+
+[node name="ExperimentalScratchedMetalVdekebbc3" parent="ImperfectionExperiments" unique_id=1519673995 instance=ExtResource("165_jn6lb")]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -31.716, -0.001, 0)
+visible = false
+preview_mode = 1
+width_m = 8.0
+height_m = 8.0
+opacity_multiplier = 1.0
+albedo_tint = Color(0, 0, 0, 1)
+mask_rotation_degrees = -330.389
+
+[node name="ExperimentalScratchedMetalVdekebbc2" parent="ImperfectionExperiments" unique_id=1082122763 instance=ExtResource("165_jn6lb")]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -31.716, -0.001, 0)
+visible = false
+preview_mode = 1
+width_m = 8.0
+height_m = 8.0
+opacity_multiplier = 1.0
+albedo_tint = Color(0, 0, 0, 1)
+mask_rotation_degrees = -43.636000000000024
+
+[node name="ExperimentalGrungySurfaceSlnnecvc" parent="ImperfectionExperiments" unique_id=355911330 instance=ExtResource("166_du0t1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.4, 0.736, -3.851)
+preview_mode = 1
+width_m = 2.941
+height_m = 1.4509999999999998
+opacity_multiplier = 0.475
+albedo_tint = Color(0.12468847, 0.103107534, 0.08512247, 1)
+mask_rotation_degrees = -2.4350000000000023
+scalar_contrast = 3.851
+scalar_bias = -0.10099999999999998
+
+[node name="ExperimentalGrungeUh4Uaawc" parent="ImperfectionExperiments" unique_id=752128683 instance=ExtResource("167_e78ty")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.541374, 0.48763165, 0)
+visible = false
+
+[node name="ExperimentalGrungeTjvibebc" parent="ImperfectionExperiments" unique_id=1260684454 instance=ExtResource("168_7gnqw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.01621, 0.50840217, 0)
+visible = false
+
+[node name="ExperimentalGrungeTedxadjc" parent="ImperfectionExperiments" unique_id=1649794841 instance=ExtResource("169_kdg1h")]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -32.748753, -0.001, 0.015349984)
+visible = false
+mask_source = "Stains (stains_ulttebjc) | eaf4:IMPERFECTION_TEXTURE_PROFILE:stains_ulttebjc:ulttebjc"
+preview_mode = 2
+width_m = 8.0
+height_m = 8.0
+opacity_multiplier = 0.269
+albedo_tint = Color(0.5793192, 0.48952377, 0.37318972, 1)
+mask_rotation_degrees = 171.39700000000005
+scalar_contrast = 1.015
+scalar_bias = -0.16500000000000004
+
+[node name="ExperimentalGrungeTedwdiic2" parent="ImperfectionExperiments" unique_id=355078315 instance=ExtResource("163_vi167")]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -32.6417, -0.001, 0.04)
+preview_mode = 1
+width_m = 8.0
+height_m = 8.0
+opacity_multiplier = 0.349
+albedo_tint = Color(0.45882353, 0.3882353, 0.29411766, 1)
+mask_rotation_degrees = 103.83300000000004
+scalar_contrast = 0.74
+scalar_bias = -0.251
+
+[node name="ExperimentalGrungeTedwdiic" parent="ImperfectionExperiments" unique_id=2139516478 instance=ExtResource("163_vi167")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.4036, 2.2662299, -3.8515189)
+preview_mode = 1
+width_m = 2.951
+height_m = 1.4509999999999998
+opacity_multiplier = 0.517
+albedo_tint = Color(0.47788042, 0.47788012, 0.47788, 1)
+mask_rotation_degrees = 54.45400000000001
+scalar_contrast = 0.8119999999999999
+scalar_bias = -0.43899999999999995
+
+[node name="ExperimentalGrainSc2Nbisc" parent="ImperfectionExperiments" unique_id=1747358949 instance=ExtResource("164_noiif")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.53737, 0.71312726, -3.8519201)
+visible = false
+preview_mode = 1
+opacity_multiplier = 0.43
+albedo_tint = Color(0.39215687, 0.36862746, 0.33333334, 1)
+scalar_bias = -0.17300000000000004
+
+[node name="ExperimentalDustUh4Rdfvc" parent="ImperfectionExperiments" unique_id=1630362063 instance=ExtResource("165_5kgru")]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -32.334, -0.001, 0.086)
+visible = false
+preview_mode = 1
+width_m = 8.0
+height_m = 8.0
+opacity_multiplier = 0.84
+albedo_tint = Color(0.06892107, 0.06719954, 0.028370675, 1)
+
+[node name="ExperimentalDustUh4Qbeic" parent="ImperfectionExperiments" unique_id=545813966 instance=ExtResource("166_5uhxw")]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -32.53963, -0.0014449283, 0.13710093)
+visible = false
+preview_mode = 1
+width_m = 8.0
+height_m = 8.0
+opacity_multiplier = 0.525
+albedo_tint = Color(0.013577621, 0.020436395, 0.010193489, 1)
+mask_rotation_degrees = 124.034
+scalar_contrast = 1.147
+scalar_bias = 0.4870000000000001
+
+[node name="ExperimentalDustUh4Qbeic2" parent="ImperfectionExperiments" unique_id=1419333335 instance=ExtResource("166_5uhxw")]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -32.53963, -0.0014449283, 0.13710093)
+visible = false
+preview_mode = 1
+width_m = 8.0
+height_m = 8.0
+opacity_multiplier = 0.525
+albedo_tint = Color(0.013577621, 0.020436395, 0.010193489, 1)
+mask_rotation_degrees = 48.127999999999986
+scalar_contrast = 1.147
+scalar_bias = 0.4870000000000001
+
+[node name="ExperimentalStainsUltwabqc" parent="ImperfectionExperiments" unique_id=596583891 instance=ExtResource("167_yjnqw")]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -29.816723, -0.0014449283, 2.516941)
+preview_mode = 1
+opacity_multiplier = 0.818
+albedo_tint = Color(0.0125709735, 0.02220979, 0.00045543347, 1)
+mask_rotation_degrees = -3.117000000000018
+scalar_contrast = 1.3210000000000002
+scalar_bias = -0.113
+
+[node name="ExperimentalDustUh4Qbflc" parent="ImperfectionExperiments" unique_id=1489149067 instance=ExtResource("168_y27sh")]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -32.553623, -0.001, 0)
+preview_mode = 1
+width_m = 8.0
+height_m = 8.0
+albedo_tint = Color(0.0995264, 0.05264502, 0.020411445, 1)
+mask_rotation_degrees = -127.678
+scalar_contrast = 1.254
+scalar_bias = -0.02600000000000002
 
 [editable path="Environment"]
 [editable path="Environment/Greybox"]
