@@ -28,7 +28,7 @@ func run() -> void:
         await settle()
         check(node.source_id() == source.stable_id, "wrapper uses exact stable ID")
         check(node._get_configuration_warnings().is_empty(), "genuine source valid")
-        check(node.experiment_notes.contains("EXPERIMENTAL / NOT APPROVED") and node.experiment_notes.contains(source.channel), "honest Inspector channel and experiment status")
+        check(node.experiment_notes.contains("Catalog source status: APPROVED") and node.experiment_notes.contains("Placement acceptance is separate") and node.experiment_notes.contains(source.channel) and node.experiment_notes.contains("TINTED_OPACITY_LAYER") and node.experiment_notes.contains("WEAR_OPACITY_MODULATION"), "honest Inspector channel, source approval and placement scope")
         var quad = node.get_node("Quad")
         check(node.get_child_count() == 1 and quad.owner == null and quad.mesh is QuadMesh, "one unsaved visual")
         var material = quad.material_override

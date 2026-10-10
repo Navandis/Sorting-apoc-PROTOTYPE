@@ -158,7 +158,7 @@
 
 [ext_resource type="PackedScene" path="res://gameplay/logistics_wing/receiving/receiving_lift_phosphor_display.tscn" id="154_crt_display"]
 
-[ext_resource type="PackedScene" path="res://gameplay/logistics_wing/receiving/receiving_finish_pass.tscn" id="receiving_finish"]
+[ext_resource type="PackedScene" path="res://gameplay/logistics_wing/receiving/receiving_emergency_stop_signage.tscn" id="receiving_signage"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_76yn2"]
 resource_local_to_scene = true
@@ -1019,7 +1019,7 @@ visible = false
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 0.585, 0, -8.742278e-08, 0, -1, -35.88428, 1.2520905, 3.8461835)
 visible = false
 
-[node name="ReceivingFinishPass" parent="ReceivingSetDressing/ReceivingDecals" instance=ExtResource("receiving_finish")]
+[node name="ReceivingSignage" parent="ReceivingSetDressing/ReceivingDecals" instance=ExtResource("receiving_signage")]
 
 [node name="ReceivingPipes" type="Node3D" parent="ReceivingSetDressing" unique_id=681310302]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.628525, 3.6945462, -1.2137502)
@@ -1536,5 +1536,3 @@ metadata/purpose = "EXPERIMENTAL / NOT APPROVED: visual-only scalar mask auditio
 [editable path="FunctionalFixtures/ModularRack_GalleryB_Initial"]
 [editable path="DevelopmentSetup"]
 [editable path="ReceivingLiftMonitor/SM_KB3D_CPP_PropTV_A"]
-
-[editable path="ReceivingSetDressing/ReceivingDecals/ReceivingFinishPass"]

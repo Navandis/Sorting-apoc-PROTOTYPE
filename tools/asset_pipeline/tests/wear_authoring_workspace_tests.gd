@@ -71,27 +71,16 @@ func run() -> void:
         a.free()
         b.free()
         new_room.free()
-    var finish := wing.get_node("ReceivingSetDressing/ReceivingDecals/ReceivingFinishPass")
-    var signage := finish.get_node("ReceivingSignage")
-    var legacy := finish.find_children("*", "EnvironmentWearOverlay", true, false)
-    check(legacy.size() == 7, "seven original examples retained")
-    var traffic := finish.get_node("ReceivingWear_Floor/Traffic_Approach")
-    var original_size: Vector2 = traffic.spec.physical_size_m
-    var original_opacity: float = traffic.spec.opacity_multiplier
-    traffic.spec.physical_size_m = Vector2(0.71, 0.82)
-    traffic.spec.opacity_multiplier = 0.12
-    await process_frame
-    await process_frame
-    check(traffic.get_node("Quad").mesh.size == Vector2(0.71, 0.82), "existing Road Dust live dimension edit")
-    check(is_equal_approx(traffic.get_node("Quad").material_override.get_shader_parameter("opacity_multiplier"), 0.12), "existing Road Dust live appearance edit")
-    traffic.spec.physical_size_m = original_size
-    traffic.spec.opacity_multiplier = original_opacity
-    var signage_was_visible = signage.is_visible_in_tree()
-    finish.get_node("ReceivingWear_Floor").hide()
-    finish.get_node("ReceivingWear_LiftZone").hide()
-    check(signage.is_visible_in_tree() == signage_was_visible, "hide wear preserves saved signage visibility")
-    for helper in legacy:
-        check(not helper.is_visible_in_tree() and helper.get_child_count() == 1, "legacy visibility and single geometry: " + str(helper.name))
+    check(not wing.has_node("ReceivingSetDressing/ReceivingDecals/ReceivingFinishPass"), "seven rejected Codex examples retired")
+    var signage := wing.get_node("ReceivingSetDressing/ReceivingDecals/ReceivingSignage")
+    var label := signage.get_node("LiftEmergencyStopLabel") as MeshInstance3D
+    check(label.is_visible_in_tree(), "accepted plaque effectively visible")
+    check(label.mesh.size == Vector2(0.32, 0.14), "original plaque proportions")
+    check(label.global_transform == Transform3D(Vector3(0,0,-1), Vector3(0,1,0), Vector3(1,0,0), Vector3(-35.8485,2.055,-2.1937)), "original exact plaque world placement")
+    check(label.material_override.albedo_texture.resource_path == "res://data/environment/receiving_signage/lift_emergency_stop.svg" and is_equal_approx(label.material_override.roughness,0.86), "original SVG/material appearance")
+    branch.hide()
+    wing.get_node("ImperfectionExperiments").hide()
+    check(label.is_visible_in_tree(), "hide authoring branches preserves visible plaque")
     wing.free()
     print("wear_authoring_workspace_tests: %d checks, %d failures" % [checks, failures])
     quit(0 if failures == 0 else 1)

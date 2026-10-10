@@ -27,7 +27,9 @@ def audit(root: Path) -> list[dict]:
         item = dict(record=entry, eligible=eligible, slug=slug,
                     name=slug.replace('_', ' ').title(), blocked='')
         if not eligible:
-            item['blocked'] = ('Modulation-only, not a standalone placement'
+            item['blocked'] = ('Scalar source; use the separate scalar library, not a conventional wear preset'
+                               if entry['semantic_category'] == 'IMPERFECTION_MASK' and 'TINTED_OPACITY_LAYER' in entry.get('supported_uses', [])
+                               else 'Modulation-only, not a standalone placement'
                                if entry['semantic_category'] == 'IMPERFECTION_MASK'
                                else entry['effective_status'])
         else:
@@ -97,7 +99,7 @@ def coverage(items: list[dict]) -> str:
     for item in covered:
         lines += ['', f'**{item["name"]} ({item["slug"]})**: {item["record"]["review_notes"]}']
     patch_count = sum(bool(item['record']['patch_mode']) for item in eligible)
-    lines += ['', f'{patch_count} current eligible material-patch sources. Material patches use the supported EnvironmentMaterialPatch EAF4_SOURCE path; never substituted as overlays. Any future patch approval also needs instance-control and wing-guard review. Unknown modes or missing/stale resources block generation explicitly. The current deferred and modulation-only entries above remain excluded.', '']
+    lines += ['', f'{patch_count} current eligible material-patch sources. Material patches use the supported EnvironmentMaterialPatch EAF4_SOURCE path; never substituted as overlays. Any future patch approval also needs instance-control and wing-guard review. Unknown modes or missing/stale resources block generation explicitly. The current deferred and scalar-mask entries above remain excluded from conventional wear presets. Approved scalar sources use the [separate scalar library](../imperfection_experiments/README.md); placement acceptance remains separate.', '']
     return '\n'.join(lines)
 
 

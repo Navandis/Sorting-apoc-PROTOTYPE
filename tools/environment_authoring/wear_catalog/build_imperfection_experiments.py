@@ -1,4 +1,4 @@
-"""Explicit one-shot experimental staging; never edits the approval authority."""
+"""Explicit one-shot scalar-library staging; never edits the approval authority."""
 import argparse
 import hashlib
 import json
@@ -58,7 +58,7 @@ def build(check=False):
     catalog = json.loads((PROJECT_ROOT / 'data/environment/wear_catalog/catalog.json').read_text(encoding='utf-8'))
     sources, rows = audit(repository, index, catalog) # Complete audit before any output.
     target = PROJECT_ROOT / LIBRARY
-    manifest = json.dumps(dict(schema_version=1, purpose='EXPERIMENTAL / NOT APPROVED: illustrative scalar auditions, not substrate material changes', candidates=rows), indent=2, ensure_ascii=False) + '\n'
+    manifest = json.dumps(dict(schema_version=1, purpose='Scalar-layer source coverage; catalog decisions govern approved uses; placements require separate acceptance; no substrate material changes', candidates=rows), indent=2, ensure_ascii=False) + '\n'
     outputs = {target / 'manifest.json':manifest}
     outputs.update({target / 'presets' / (r['slug'] + '.tscn'):wrapper(r) for r in rows})
     obsolete = set((target / 'presets').glob('*.tscn')) - set(outputs)
@@ -75,7 +75,7 @@ def build(check=False):
         for path, text in outputs.items():
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(text, encoding='utf-8')
-    print('Experimental coverage: 16 genuine 1K sources; no approval decisions; ' + ('CHECK PASS' if check else 'staged'))
+    print('Scalar coverage: 16 genuine 1K sources; no approval decisions written; ' + ('CHECK PASS' if check else 'staged'))
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)

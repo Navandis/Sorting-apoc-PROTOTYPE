@@ -1,7 +1,7 @@
 extends SceneTree
 
 const FIXTURE = preload("res://environment_authoring/wear/fixtures/wear_authoring_validation.tscn")
-const FINISH = preload("res://gameplay/logistics_wing/receiving/receiving_finish_pass.tscn")
+const SIGNAGE = preload("res://gameplay/logistics_wing/receiving/receiving_emergency_stop_signage.tscn")
 var failures: Array[String] = []
 
 func _initialize() -> void:
@@ -47,24 +47,15 @@ func _run() -> void:
         _check(reopened.get_node(path).get_child_count() == 1, path + " reopened one visual")
     reopened.free()
     DirAccess.remove_absolute(ProjectSettings.globalize_path(saved_path))
-    var finish := FINISH.instantiate()
-    var authored_transforms := {}
-    for helper in finish.find_children("*", "EnvironmentWearOverlay", true, false):
-        authored_transforms[helper.name] = helper.transform
-    root.add_child(finish)
-    await process_frame
-    await process_frame
-    var overlays := finish.find_children("*", "EnvironmentWearOverlay", true, false)
-    _check(overlays.size() == 7, "existing Receiving seven overlays retained")
-    for helper in overlays:
-        var quad := helper.get_node("Quad") as MeshInstance3D
-        _check(helper.get_child_count() == 1 and quad.visible, helper.name + " legacy initializes once")
-        _check(helper.scale.is_equal_approx(Vector3.ONE), helper.name + " existing unit scale unchanged")
-        _check(helper.transform == authored_transforms[helper.name], helper.name + " serialized transform retained exactly")
-        _check(helper.get_mesh_size().is_equal_approx(helper.spec.physical_size_m), helper.name + " legacy physical size unchanged")
-        _check(is_equal_approx(quad.material_override.get_shader_parameter("opacity_multiplier"), helper.spec.opacity_multiplier), helper.name + " legacy opacity retained")
+    var signage := SIGNAGE.instantiate()
+    root.add_child(signage)
+    var label := signage.get_node("LiftEmergencyStopLabel") as MeshInstance3D
+    _check(signage.get_child_count() == 1 and label.is_visible_in_tree(), "standalone accepted plaque visible")
+    _check(label.global_transform == Transform3D(Vector3(0,0,-1), Vector3(0,1,0), Vector3(1,0,0), Vector3(-35.8485,2.055,-2.1937)), "original plaque world transform")
+    _check(label.mesh.size == Vector2(0.32,0.14), "original plaque mesh size")
+    _check(label.get_script() == null and signage.get_script() == null, "signage adds no runtime authority")
     fixture.free()
-    finish.free()
+    signage.free()
     for failure in failures:
         push_error("WEAR_FIXTURE_FAIL " + failure)
     print("WEAR_FIXTURE_TEST editor_hint=", Engine.is_editor_hint(), " failures=", failures.size())

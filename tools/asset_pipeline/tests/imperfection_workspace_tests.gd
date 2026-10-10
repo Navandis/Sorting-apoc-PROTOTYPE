@@ -88,7 +88,7 @@ func run() -> void:
     check(not guard.validate_experiments(branch).is_empty(), "experiment branch does not expand to other authoring scripts")
     approved.free()
     check(guard.validate_experiments(branch).is_empty(), "guard restored")
-    var signage = wing.get_node("ReceivingSetDressing/ReceivingDecals/ReceivingFinishPass/ReceivingSignage")
+    var signage = wing.get_node("ReceivingSetDressing/ReceivingDecals/ReceivingSignage")
     var signage_was_visible = signage.is_visible_in_tree()
     branch.hide()
     check(not a.get_node("Quad").is_visible_in_tree(), "hide all experiments")

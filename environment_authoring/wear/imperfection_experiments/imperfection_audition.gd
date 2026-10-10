@@ -1,7 +1,7 @@
 @tool
 class_name ImperfectionAudition
 extends Node3D
-## Experimental visual-only scalar auditions. No EAF4 approval or substrate edit.
+## Visual-only scalar layers. Catalog decisions govern source uses; no substrate edit.
 const MANIFEST = "res://environment_authoring/wear/imperfection_experiments/manifest.json"
 const SHADER = preload("res://environment_authoring/wear/imperfection_experiments/imperfection_audition.gdshader")
 const Overlay = preload("res://environment_authoring/wear/environment_wear_overlay.gd")
@@ -12,10 +12,15 @@ const EFFECT_IDS = ["eaf4b_e890439d8e117d36ac05e55c", "eaf4b_cd7701bd0cdb622c636
     get:
         var source = selected_candidate()
         var status := "UNREVIEWED"
+        var uses: Array = []
+        var reviewed_channel := "UNSPECIFIED"
         for record in Query.load_catalog():
             if record.get("source_stable_id") == source_id():
                 status = str(record.get("effective_status", "UNKNOWN"))
-        var note := "EXPERIMENTAL / NOT APPROVED placement. Catalog source status: " + status
+                uses = record.get("supported_uses", [])
+                reviewed_channel = str(record.get("scalar_channel", "UNSPECIFIED"))
+        var note := "Catalog source status: " + status + ". Placement acceptance is separate."
+        note += "\nReviewed scalar channel: " + reviewed_channel + "; supported uses: " + str(uses)
         note += "\nSample: " + str(source.get("channel", "MISSING")) + ".red (1K); scalar distribution only, not substrate roughness/colour/normal."
         note += "\nSource size estimate: " + str(source.get("physical_size_estimate_m", [])) + " m; practical starting patch 1×1 m."
         note += "\nMode B supports only the two approved soft Leakage overlays, intended for vertical walls. Floor modulation is diagnostic only."

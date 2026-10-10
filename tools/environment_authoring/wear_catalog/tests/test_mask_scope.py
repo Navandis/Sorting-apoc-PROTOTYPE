@@ -208,8 +208,22 @@ class ActualSourceCompatibilityTests(unittest.TestCase):
 
     def test_trusted_legacy_grunge_and_all_conventional_specs_are_unchanged(self):
         before = authoring.CATALOG.read_bytes()
-        plan = self.plan(self.catalog)
-        old_export = json.loads((authoring.DATA / "approved_specs/approved_masks.json").read_text())["masks"][0]
+        # Preserve revision-1 compatibility independently of later live approvals.
+        initial = json.loads((authoring.DATA / "decisions/2026-09-27-eaf4b-human-review.json").read_text(encoding="utf-8"))
+        historical = dict(schema_version=1, wear=[copy.deepcopy(r) for r in self.catalog["wear"]
+                                                if r["semantic_category"] != "IMPERFECTION_MASK"])
+        for decision in initial["decisions"]:
+            if decision["semantic_category"] != "IMPERFECTION_MASK": continue
+            record = copy.deepcopy(decision)
+            record["status"] = record.pop("decision")
+            record.update(effective_status=record["status"], current_source_fingerprint=record["reviewed_source_fingerprint"])
+            historical["wear"].append(record)
+        historical["wear"].sort(key=lambda r:r["source_stable_id"])
+        plan = self.plan(historical)
+        legacy = next(r for r in historical["wear"] if r["source_stable_id"] == workflow.LEGACY_GRUNGE_ID)
+        old_export = dict(catalog_wear_id=legacy["catalog_wear_id"], source_stable_id=legacy["source_stable_id"],
+                          source_fingerprint=legacy["reviewed_source_fingerprint"], modulation_only=True,
+                          texture=workflow.CACHE_RESOURCE_ROOT + "/" + legacy["catalog_wear_id"] + "/1k/roughness.jpg")
         new_export = plan["masks"][0]
         self.assertEqual(len(plan["masks"]), 1)
         for key, value in old_export.items(): self.assertEqual(new_export[key], value)
@@ -225,24 +239,23 @@ class ActualSourceCompatibilityTests(unittest.TestCase):
         for filename in plan["specs"]:
             (scratch / filename).write_bytes((authoring.DATA / "approved_specs" / filename).read_bytes())
         original_bytes = {p.name:p.read_bytes() for p in scratch.glob("*.tres")}
-        self.plan(self.catalog, scratch)
-        self.plan(self.catalog, scratch)
+        self.plan(historical, scratch)
+        self.plan(historical, scratch)
         self.assertEqual(original_bytes, {p.name:p.read_bytes() for p in scratch.glob("*.tres")})
         for identifier in workflow.LEAKAGE_MODULATION_IDS:
             self.assertIn(old_export["texture"], plan["specs"][identifier + ".tres"])
-        legacy = next(r for r in self.catalog["wear"] if r["source_stable_id"] == workflow.LEGACY_GRUNGE_ID)
         decision = workflow._human_fields(legacy)
-        workflow.validate_decision_sources(self.repo, self.index, [decision], self.catalog)
-        latest = workflow.current_fingerprints(self.repo, self.index, self.catalog["wear"])
-        masks = workflow.current_imperfection_status(self.repo, self.index, self.catalog["wear"])
-        same, audit = workflow.reconcile(self.catalog, [decision], latest, masks, source_index=self.index)
-        self.assertEqual(same, self.catalog)
+        workflow.validate_decision_sources(self.repo, self.index, [decision], historical)
+        latest = workflow.current_fingerprints(self.repo, self.index, historical["wear"])
+        masks = workflow.current_imperfection_status(self.repo, self.index, historical["wear"])
+        same, audit = workflow.reconcile(historical, [decision], latest, masks, source_index=self.index)
+        self.assertEqual(same, historical)
         self.assertEqual(audit, [])
         with self.assertRaisesRegex(ValueError, "scalar_channel"):
             workflow.validate_decision_sources(self.repo, self.index, [decision], dict(schema_version=1, wear=[]))
         revised = dict(decision, decision_revision=2)
         with self.assertRaisesRegex(ValueError, "scalar_channel"):
-            workflow.validate_decision_sources(self.repo, self.index, [revised], self.catalog)
+            workflow.validate_decision_sources(self.repo, self.index, [revised], historical)
         self.assertEqual(before, authoring.CATALOG.read_bytes())
 
     def test_actual_sixteen_hypothetical_approvals_export_exact_eleven_five_channels(self):

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "purpose": "EXPERIMENTAL / NOT APPROVED: illustrative scalar auditions, not substrate material changes",
+  "purpose": "Scalar-layer source coverage; catalog decisions govern approved uses; placements require separate acceptance; no substrate material changes",
   "candidates": [
     {
       "stable_id": "eaf4:IMPERFECTION_TEXTURE_PROFILE:dust_uh4qbeic:uh4qbeic",
@@ -43,7 +43,7 @@
         "4K",
         "8K"
       ],
-      "status_at_audit": "UNREVIEWED",
+      "status_at_audit": "APPROVED",
       "texture_path": "res://assets/environment/wear/imperfection_experiments_cache/eaf4b_7861a882827158cab9937196/1k/opacity.jpg",
       "blocker": ""
     },
@@ -88,7 +88,7 @@
         "4K",
         "8K"
       ],
-      "status_at_audit": "UNREVIEWED",
+      "status_at_audit": "APPROVED",
       "texture_path": "res://assets/environment/wear/imperfection_experiments_cache/eaf4b_4ced1a3973d9ede63d7cde48/1k/opacity.jpg",
       "blocker": ""
     },
@@ -133,7 +133,7 @@
         "4K",
         "8K"
       ],
-      "status_at_audit": "UNREVIEWED",
+      "status_at_audit": "APPROVED",
       "texture_path": "res://assets/environment/wear/imperfection_experiments_cache/eaf4b_1258cd6455c7367fb02eb2fe/1k/opacity.jpg",
       "blocker": ""
     },
@@ -174,7 +174,7 @@
         "4K",
         "8K"
       ],
-      "status_at_audit": "UNREVIEWED",
+      "status_at_audit": "APPROVED",
       "texture_path": "res://assets/environment/wear/imperfection_experiments_cache/eaf4b_cd6e17b97463ce00c0685bbd/1k/roughness.jpg",
       "blocker": ""
     },
@@ -215,7 +215,7 @@
         "4K",
         "8K"
       ],
-      "status_at_audit": "UNREVIEWED",
+      "status_at_audit": "APPROVED",
       "texture_path": "res://assets/environment/wear/imperfection_experiments_cache/eaf4b_88cbe4d6b460b401ee6d6d7b/1k/roughness.jpg",
       "blocker": ""
     },
@@ -297,7 +297,7 @@
         "4K",
         "8K"
       ],
-      "status_at_audit": "UNREVIEWED",
+      "status_at_audit": "APPROVED",
       "texture_path": "res://assets/environment/wear/imperfection_experiments_cache/eaf4b_59ea0f6e18d6edba4035cf08/1k/roughness.jpg",
       "blocker": ""
     },
@@ -338,7 +338,7 @@
         "4K",
         "8K"
       ],
-      "status_at_audit": "UNREVIEWED",
+      "status_at_audit": "APPROVED",
       "texture_path": "res://assets/environment/wear/imperfection_experiments_cache/eaf4b_90ab5c8d3e788ad7f9300336/1k/roughness.jpg",
       "blocker": ""
     },
@@ -383,7 +383,7 @@
         "4K",
         "8K"
       ],
-      "status_at_audit": "UNREVIEWED",
+      "status_at_audit": "APPROVED",
       "texture_path": "res://assets/environment/wear/imperfection_experiments_cache/eaf4b_442aa42e72c622fa1f3af4b9/1k/opacity.jpg",
       "blocker": ""
     },
@@ -427,7 +427,7 @@
         "2K",
         "4K"
       ],
-      "status_at_audit": "UNREVIEWED",
+      "status_at_audit": "APPROVED",
       "texture_path": "res://assets/environment/wear/imperfection_experiments_cache/eaf4b_3863efcbbda45860ab849694/1k/opacity.jpg",
       "blocker": ""
     },
@@ -471,7 +471,7 @@
         "2K",
         "4K"
       ],
-      "status_at_audit": "UNREVIEWED",
+      "status_at_audit": "APPROVED",
       "texture_path": "res://assets/environment/wear/imperfection_experiments_cache/eaf4b_7fdb448b22a60aa6e146cfd7/1k/opacity.jpg",
       "blocker": ""
     },
@@ -516,7 +516,7 @@
         "4K",
         "8K"
       ],
-      "status_at_audit": "DEFERRED",
+      "status_at_audit": "APPROVED",
       "texture_path": "res://assets/environment/wear/imperfection_experiments_cache/eaf4b_e1cf2067e3efcd02296f1f79/1k/opacity.jpg",
       "blocker": ""
     },
@@ -561,7 +561,7 @@
         "4K",
         "8K"
       ],
-      "status_at_audit": "UNREVIEWED",
+      "status_at_audit": "APPROVED",
       "texture_path": "res://assets/environment/wear/imperfection_experiments_cache/eaf4b_59989972790f0d57a6e4fade/1k/opacity.jpg",
       "blocker": ""
     },
@@ -606,7 +606,7 @@
         "4K",
         "8K"
       ],
-      "status_at_audit": "UNREVIEWED",
+      "status_at_audit": "APPROVED",
       "texture_path": "res://assets/environment/wear/imperfection_experiments_cache/eaf4b_2652b2a801b966c69a931213/1k/opacity.jpg",
       "blocker": ""
     },
@@ -651,7 +651,7 @@
         "4K",
         "8K"
       ],
-      "status_at_audit": "UNREVIEWED",
+      "status_at_audit": "APPROVED",
       "texture_path": "res://assets/environment/wear/imperfection_experiments_cache/eaf4b_965ef296e00bba5e57459f76/1k/opacity.jpg",
       "blocker": ""
     },
@@ -696,7 +696,7 @@
         "4K",
         "8K"
       ],
-      "status_at_audit": "UNREVIEWED",
+      "status_at_audit": "APPROVED",
       "texture_path": "res://assets/environment/wear/imperfection_experiments_cache/eaf4b_560a1a00053287b4aa7685e3/1k/opacity.jpg",
       "blocker": ""
     }

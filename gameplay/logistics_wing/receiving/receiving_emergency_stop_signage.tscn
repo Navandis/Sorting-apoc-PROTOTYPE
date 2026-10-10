@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Texture2D" path="res://data/environment/receiving_signage/lift_emergency_stop.svg" id="label"]
+
+[sub_resource type="StandardMaterial3D" id="LabelMaterial"]
+albedo_texture = ExtResource("label")
+roughness = 0.86
+
+[sub_resource type="QuadMesh" id="LabelQuad"]
+size = Vector2(0.32, 0.14)
+
+[node name="ReceivingSignage" type="Node3D"]
+metadata/purpose = "Accepted emergency-stop plaque; independent visible decorative signage, no gameplay authority."
+
+[node name="LiftEmergencyStopLabel" type="MeshInstance3D" parent="."]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -35.8485, 2.055, -2.1937)
+cast_shadow = 0
+material_override = SubResource("LabelMaterial")
+mesh = SubResource("LabelQuad")
+metadata/purpose = "320 x 140 mm identification plaque, 2.5 mm ahead of the column face and above the decorative red button. No gameplay interaction."

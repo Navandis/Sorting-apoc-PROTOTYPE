@@ -31,10 +31,9 @@ func run() -> void:
     root.add_child(wing)
     for camera in wing.find_children("*", "Camera3D", true, false):
         camera.current = false
-    var finish := wing.get_node("ReceivingSetDressing/ReceivingDecals/ReceivingFinishPass")
-    finish.get_node("ReceivingWear_Floor").hide()
-    finish.get_node("ReceivingWear_LiftZone").hide()
-    check(finish.get_node("ReceivingSignage").is_visible_in_tree(), "runtime hide wear keeps label")
+    wing.get_node("AuthoredWear").hide()
+    wing.get_node("ImperfectionExperiments").hide()
+    check(wing.get_node("ReceivingSetDressing/ReceivingDecals/ReceivingSignage").is_visible_in_tree(), "runtime hide wear keeps label")
     var camera := Camera3D.new()
     camera.fov = 50
     camera.near = 0.05
@@ -46,7 +45,7 @@ func run() -> void:
     ]
     for entry in cases:
         var helper := (load(entry["path"]) as PackedScene).instantiate()
-        wing.get_node("AuthoredWear/Receiving").add_child(helper)
+        wing.add_child(helper) # Temporary diagnostic; saved art branches stay hidden in memory.
         helper.position = entry["position"]
         if entry["wall"]: helper.rotation.y = PI
         helper.width_m = 1.6

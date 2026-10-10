@@ -1,496 +1,13 @@
 {
   "schema_version": 1,
-  "wear": [
-    {
-      "source_stable_id": "eaf4:FAB_DECAL_PROFILE:chipped_paint_patch_ui2ncdjfw:ui2ncdjfw",
-      "catalog_wear_id": "eaf4b_16c913a6a9cc1926bcc14833",
-      "reviewed_source_fingerprint": "cd2d8519a93efeca95e4fcb15967de297cf5581959be5955865f87e97ea7af0f",
-      "selected_resolution": "2K",
-      "decision_revision": 2,
-      "semantic_category": "PAINT_DAMAGE",
-      "cause_tags": [
-        "paint_history",
-        "surface_age"
-      ],
-      "surface_capabilities": [
-        "WALL"
-      ],
-      "render_mode": "CUTOUT",
-      "patch_mode": "",
-      "eaf3_material_id": "",
-      "default_size": [
-        1.0,
-        1.0
-      ],
-      "surface_offset": 0.002,
-      "opacity": 0.85,
-      "albedo_strength": 0.35,
-      "albedo_tint": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "normal_strength": 0.8,
-      "normal_y_flip": false,
-      "roughness_strength": 0.7,
-      "imperfection": {},
-      "review_notes": "Approve as localized paint/finish damage, not damage to bare concrete. Use where an old painted/rendered institutional finish is historically plausible—paint bands, painted wall sections, repaired/overpainted areas or similar applied finish.",
-      "status": "APPROVED",
-      "current_source_fingerprint": "cd2d8519a93efeca95e4fcb15967de297cf5581959be5955865f87e97ea7af0f",
-      "effective_status": "APPROVED"
-    },
-    {
-      "source_stable_id": "eaf4:FAB_DECAL_PROFILE:concrete_crack_sf2moag:sf2moag",
-      "catalog_wear_id": "eaf4b_c3b63b5da3fbdda32be47bd0",
-      "reviewed_source_fingerprint": "8da6c186f20805a003062c4c11e364a9b842ed715d202a6701195d1f891a864e",
-      "selected_resolution": "2K",
-      "decision_revision": 1,
-      "semantic_category": "CRACK",
-      "cause_tags": [
-        "settlement"
-      ],
-      "surface_capabilities": [
-        "PLANAR_ANY"
-      ],
-      "render_mode": "CUTOUT",
-      "patch_mode": "",
-      "eaf3_material_id": "",
-      "default_size": [
-        0.5,
-        0.5
-      ],
-      "surface_offset": 0.002,
-      "opacity": 0.85,
-      "albedo_strength": 0.35,
-      "albedo_tint": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "normal_strength": 0.8,
-      "normal_y_flip": false,
-      "roughness_strength": 0.7,
-      "imperfection": {},
-      "review_notes": "Good small branched crack. Prefer origins at corners, openings, structural joints, penetrations, impact points, or repair boundaries. Approval is for reusable source quality, not universal placement.",
-      "status": "APPROVED",
-      "current_source_fingerprint": "8da6c186f20805a003062c4c11e364a9b842ed715d202a6701195d1f891a864e",
-      "effective_status": "APPROVED"
-    },
-    {
-      "source_stable_id": "eaf4:FAB_DECAL_PROFILE:concrete_crack_sfhmrfg:sfhmrfg",
-      "catalog_wear_id": "eaf4b_1215035d1f7cf36ee4b9f3eb",
-      "reviewed_source_fingerprint": "a7330f981b7aff1efd0c325aaaddf538bcbddac30e908ffa5769bc44f9d482f8",
-      "selected_resolution": "2K",
-      "decision_revision": 1,
-      "semantic_category": "CRACK",
-      "cause_tags": [
-        "settlement"
-      ],
-      "surface_capabilities": [
-        "PLANAR_ANY",
-        "WALL",
-        "CEILING"
-      ],
-      "render_mode": "CUTOUT",
-      "patch_mode": "",
-      "eaf3_material_id": "",
-      "default_size": [
-        1.0,
-        0.25
-      ],
-      "surface_offset": 0.002,
-      "opacity": 0.85,
-      "albedo_strength": 0.35,
-      "albedo_tint": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "normal_strength": 0.8,
-      "normal_y_flip": false,
-      "roughness_strength": 0.7,
-      "imperfection": {},
-      "review_notes": "Strong long fracture. Clean silhouette and restrained source color. Place only where a plausible stress origin exists: opening/corner/junction/penetration/repair boundary/impact. Do not float arbitrarily in the middle of otherwise sound structure.",
-      "status": "APPROVED",
-      "current_source_fingerprint": "a7330f981b7aff1efd0c325aaaddf538bcbddac30e908ffa5769bc44f9d482f8",
-      "effective_status": "APPROVED"
-    },
-    {
-      "source_stable_id": "eaf4:FAB_DECAL_PROFILE:concrete_damage_sfcmkbg:sfcmkbg",
-      "catalog_wear_id": "eaf4b_5858bd2916c3227c201ec5a4",
-      "reviewed_source_fingerprint": "3fb58ceb71f076f5aea11de0b7968857970385962d4af4295a3831d219bca54b",
-      "selected_resolution": "2K",
-      "decision_revision": 1,
-      "semantic_category": "SPALL",
-      "cause_tags": [
-        "impact"
-      ],
-      "surface_capabilities": [
-        "PLANAR_ANY"
-      ],
-      "render_mode": "CUTOUT",
-      "patch_mode": "",
-      "eaf3_material_id": "",
-      "default_size": [
-        1.0,
-        0.5
-      ],
-      "surface_offset": 0.002,
-      "opacity": 0.85,
-      "albedo_strength": 0.45,
-      "albedo_tint": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "normal_strength": 0.8,
-      "normal_y_flip": false,
-      "roughness_strength": 0.7,
-      "imperfection": {},
-      "review_notes": "Strong compact concrete damage/spall source. Use sparsely as localized damage rather than baseline age. Prefer plausible impact, failed repair, opening/edge, or other local cause.",
-      "status": "APPROVED",
-      "current_source_fingerprint": "3fb58ceb71f076f5aea11de0b7968857970385962d4af4295a3831d219bca54b",
-      "effective_status": "APPROVED"
-    },
-    {
-      "source_stable_id": "eaf4:FAB_DECAL_PROFILE:concrete_leakage_tk3jej1c:tk3jej1c",
-      "catalog_wear_id": "eaf4b_cdded964c68d6777983af66f",
-      "reviewed_source_fingerprint": "157f81acbf2321fb84525f48e4f641cd4e9a8ea3a9aa9e21cd7de8baae41071b",
-      "selected_resolution": "2K",
-      "decision_revision": 2,
-      "semantic_category": "WATER_MINERAL",
-      "cause_tags": [
-        "moisture_leak",
-        "mineral_deposit"
-      ],
-      "surface_capabilities": [
-        "WALL",
-        "VERTICAL_PREFERRED"
-      ],
-      "render_mode": "SOFT_BLEND",
-      "patch_mode": "",
-      "eaf3_material_id": "",
-      "default_size": [
-        0.25,
-        1.0
-      ],
-      "surface_offset": 0.002,
-      "opacity": 1.0,
-      "albedo_strength": 0.45,
-      "albedo_tint": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "normal_strength": 0.8,
-      "normal_y_flip": false,
-      "roughness_strength": 0.7,
-      "imperfection": {},
-      "review_notes": "Deliberately narrow, low-amplitude vertical leak. Its subtlety is useful. Place directly beneath or behind a credible moisture source such as a pipe joint, penetration, fitting, vent, ceiling/service joint or similar infrastructure. Partial occlusion at the origin is preferable.",
-      "status": "APPROVED",
-      "current_source_fingerprint": "157f81acbf2321fb84525f48e4f641cd4e9a8ea3a9aa9e21cd7de8baae41071b",
-      "effective_status": "APPROVED"
-    },
-    {
-      "source_stable_id": "eaf4:FAB_DECAL_PROFILE:damaged_concrete_tbqmbayr:tbqmbayr",
-      "catalog_wear_id": "eaf4b_2faa4471206d5eaf048558bb",
-      "reviewed_source_fingerprint": "4e47b963ba867573afd41f0f9b36b76fb3a13d81798d1cd25e9cc8801b58d7ca",
-      "selected_resolution": "2K",
-      "decision_revision": 1,
-      "semantic_category": "SPALL",
-      "cause_tags": [
-        "impact"
-      ],
-      "surface_capabilities": [
-        "PLANAR_ANY"
-      ],
-      "render_mode": "CUTOUT",
-      "patch_mode": "",
-      "eaf3_material_id": "",
-      "default_size": [
-        1.0,
-        1.0
-      ],
-      "surface_offset": 0.002,
-      "opacity": 0.85,
-      "albedo_strength": 0.45,
-      "albedo_tint": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "normal_strength": 0.8,
-      "normal_y_flip": false,
-      "roughness_strength": 0.7,
-      "imperfection": {},
-      "review_notes": "Broad broken-concrete source with useful depth language. Use only where impact, opening/edge condition, structural interruption, or failed repair justifies it. Avoid scattering across maintained active rooms.",
-      "status": "APPROVED",
-      "current_source_fingerprint": "4e47b963ba867573afd41f0f9b36b76fb3a13d81798d1cd25e9cc8801b58d7ca",
-      "effective_status": "APPROVED"
-    },
-    {
-      "source_stable_id": "eaf4:FAB_DECAL_PROFILE:industrial_abandonedfactory_wall_concrete_painted_xetubap:xetubap",
-      "catalog_wear_id": "eaf4b_dc44a10776bc702874712334",
-      "reviewed_source_fingerprint": "e098cb1062052e1b5d9aa48d943ea879d9ec3a6d258855caba6b9420e80ef2b1",
-      "selected_resolution": "4K",
-      "decision_revision": 2,
-      "semantic_category": "PAINT_REMNANT",
-      "cause_tags": [
-        "paint_history",
-        "old_finish"
-      ],
-      "surface_capabilities": [
-        "WALL"
-      ],
-      "render_mode": "SOFT_BLEND",
-      "patch_mode": "EAF4_SOURCE",
-      "eaf3_material_id": "",
-      "default_size": [
-        1.5,
-        2.0
-      ],
-      "surface_offset": 0.002,
-      "opacity": 0.75,
-      "albedo_strength": 0.55,
-      "albedo_tint": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "normal_strength": 0.8,
-      "normal_y_flip": false,
-      "roughness_strength": 0.7,
-      "imperfection": {},
-      "review_notes": "Calibrated treatment is substantially better and the source remains promising as a broad paint-remnant asset. However, it is inherently a large historical finish patch and the current review lacks a truly compatible room-scale painted/rendered wall composition. Defer until EAF5 or a later room provides that context. Do not reject it and do not force a universal default now.",
-      "status": "DEFERRED",
-      "current_source_fingerprint": "e098cb1062052e1b5d9aa48d943ea879d9ec3a6d258855caba6b9420e80ef2b1",
-      "effective_status": "DEFERRED"
-    },
-    {
-      "source_stable_id": "eaf4:FAB_DECAL_PROFILE:leakage_skiubhzc:skiubhzc",
-      "catalog_wear_id": "eaf4b_e890439d8e117d36ac05e55c",
-      "reviewed_source_fingerprint": "4fb69b29c659eb1f564ada1144c0df2f7f99330836d34aea4a1e159cafd315dc",
-      "selected_resolution": "2K",
-      "decision_revision": 1,
-      "semantic_category": "WATER_MINERAL",
-      "cause_tags": [
-        "moisture_leak",
-        "mineral_deposit"
-      ],
-      "surface_capabilities": [
-        "WALL",
-        "VERTICAL_PREFERRED"
-      ],
-      "render_mode": "SOFT_BLEND",
-      "patch_mode": "",
-      "eaf3_material_id": "",
-      "default_size": [
-        1.0,
-        1.0
-      ],
-      "surface_offset": 0.002,
-      "opacity": 0.85,
-      "albedo_strength": 0.45,
-      "albedo_tint": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "normal_strength": 0.8,
-      "normal_y_flip": false,
-      "roughness_strength": 0.7,
-      "imperfection": {
-        "source_stable_id": "eaf4:IMPERFECTION_TEXTURE_PROFILE:grunge_tedxadjc:tedxadjc",
-        "source_fingerprint": "e71aaf2f2092f229536c4a8ffd8e28b52db2c0e9b3924ab6436852a38267504b",
-        "selected_resolution": "1K",
-        "scale": [
-          1.7,
-          1.3
-        ],
-        "rotation": 18.0,
-        "contrast": 1.35,
-        "strength": 0.55
-      },
-      "review_notes": "Strong broad mineral/water source. Normally begin behind/below a pipe, penetration, vent, ceiling/service joint, drain, fitting, or other plausible moisture source. Partial occlusion behind infrastructure is desirable.",
-      "status": "APPROVED",
-      "current_source_fingerprint": "4fb69b29c659eb1f564ada1144c0df2f7f99330836d34aea4a1e159cafd315dc",
-      "current_imperfection_fingerprint": "e71aaf2f2092f229536c4a8ffd8e28b52db2c0e9b3924ab6436852a38267504b",
-      "effective_status": "APPROVED"
-    },
-    {
-      "source_stable_id": "eaf4:FAB_DECAL_PROFILE:leakage_tculfbnc:tculfbnc",
-      "catalog_wear_id": "eaf4b_cd7701bd0cdb622c63628103",
-      "reviewed_source_fingerprint": "1e37850ee5fd45ceba6a5619e92bc6703d0eea4028f7593bd7fafda35458fe4c",
-      "selected_resolution": "2K",
-      "decision_revision": 2,
-      "semantic_category": "WATER_MINERAL",
-      "cause_tags": [
-        "moisture_leak",
-        "mineral_deposit"
-      ],
-      "surface_capabilities": [
-        "WALL",
-        "VERTICAL_PREFERRED"
-      ],
-      "render_mode": "SOFT_BLEND",
-      "patch_mode": "",
-      "eaf3_material_id": "",
-      "default_size": [
-        0.25,
-        0.5
-      ],
-      "surface_offset": 0.002,
-      "opacity": 1.0,
-      "albedo_strength": 0.45,
-      "albedo_tint": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "normal_strength": 0.8,
-      "normal_y_flip": false,
-      "roughness_strength": 0.7,
-      "imperfection": {
-        "source_stable_id": "eaf4:IMPERFECTION_TEXTURE_PROFILE:grunge_tedxadjc:tedxadjc",
-        "source_fingerprint": "e71aaf2f2092f229536c4a8ffd8e28b52db2c0e9b3924ab6436852a38267504b",
-        "selected_resolution": "1K",
-        "scale": [
-          1.7,
-          1.3
-        ],
-        "rotation": 18.0,
-        "contrast": 1.35,
-        "strength": 0.55
-      },
-      "review_notes": "Useful smaller tapered leak/mineral mark. Place below a plausible service/moisture origin rather than freestanding on a wall.",
-      "status": "APPROVED",
-      "current_source_fingerprint": "1e37850ee5fd45ceba6a5619e92bc6703d0eea4028f7593bd7fafda35458fe4c",
-      "current_imperfection_fingerprint": "e71aaf2f2092f229536c4a8ffd8e28b52db2c0e9b3924ab6436852a38267504b",
-      "effective_status": "APPROVED"
-    },
-    {
-      "source_stable_id": "eaf4:FAB_DECAL_PROFILE:oil_stain_semlsbi:semlsbi",
-      "catalog_wear_id": "eaf4b_16f72d4cb37ef4ee74a9073c",
-      "reviewed_source_fingerprint": "9c797ce2e4279562325c6d9000bb975a58d39c3a6c3cfe2fe6f94846f3f198f2",
-      "selected_resolution": "2K",
-      "decision_revision": 1,
-      "semantic_category": "OIL_GREASE",
-      "cause_tags": [
-        "oil_grease",
-        "maintenance",
-        "freight_service"
-      ],
-      "surface_capabilities": [
-        "FLOOR",
-        "HORIZONTAL_PREFERRED"
-      ],
-      "render_mode": "SOFT_BLEND",
-      "patch_mode": "",
-      "eaf3_material_id": "",
-      "default_size": [
-        0.5,
-        0.5
-      ],
-      "surface_offset": 0.002,
-      "opacity": 0.85,
-      "albedo_strength": 0.45,
-      "albedo_tint": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "normal_strength": 0.8,
-      "normal_y_flip": false,
-      "roughness_strength": 0.7,
-      "imperfection": {},
-      "review_notes": "Readable localized spill. Appropriate near machinery, maintenance points, containers, freight/service activity, or equipment. Avoid generic circulation placement.",
-      "status": "APPROVED",
-      "current_source_fingerprint": "9c797ce2e4279562325c6d9000bb975a58d39c3a6c3cfe2fe6f94846f3f198f2",
-      "effective_status": "APPROVED"
-    },
-    {
-      "source_stable_id": "eaf4:FAB_DECAL_PROFILE:road_dust_sgzh1so:sgzh1so",
-      "catalog_wear_id": "eaf4b_7efdf22029c82320d62147c7",
-      "reviewed_source_fingerprint": "c470c5179d1907452e27be387f2ba5ba53f19aa253a7166df6fed2b0103b3342",
-      "selected_resolution": "2K",
-      "decision_revision": 2,
-      "semantic_category": "GRIME",
-      "cause_tags": [
-        "traffic",
-        "accumulation",
-        "cart_freight"
-      ],
-      "surface_capabilities": [
-        "FLOOR",
-        "HORIZONTAL_PREFERRED"
-      ],
-      "render_mode": "SOFT_BLEND",
-      "patch_mode": "",
-      "eaf3_material_id": "",
-      "default_size": [
-        1.0,
-        1.0
-      ],
-      "surface_offset": 0.002,
-      "opacity": 1.0,
-      "albedo_strength": 0.4,
-      "albedo_tint": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "normal_strength": 0.8,
-      "normal_y_flip": false,
-      "roughness_strength": 0.7,
-      "imperfection": {},
-      "review_notes": "Sparse, subtle accumulation layer appropriate for an occupied/maintained bunker. Use along traffic paths, freight/cart turning areas, wall edges, thresholds or service accumulation zones; do not blanket floors uniformly.",
-      "status": "APPROVED",
-      "current_source_fingerprint": "c470c5179d1907452e27be387f2ba5ba53f19aa253a7166df6fed2b0103b3342",
-      "effective_status": "APPROVED"
-    },
-    {
-      "source_stable_id": "eaf4:FAB_DECAL_PROFILE:rust_debris_ugxhbh0h:ugxhbh0h",
-      "catalog_wear_id": "eaf4b_89c9cb7aa962b19eda21f278",
-      "reviewed_source_fingerprint": "672077321a4479887bfbfed7969e846b1099c9d02fda0ae0e2eca05b8e583c21",
-      "selected_resolution": "2K",
-      "decision_revision": 2,
-      "semantic_category": "RUST_CORROSION",
-      "cause_tags": [
-        "corrosion"
-      ],
-      "surface_capabilities": [
-        "WALL",
-        "FLOOR"
-      ],
-      "render_mode": "SOFT_BLEND",
-      "patch_mode": "",
-      "eaf3_material_id": "",
-      "default_size": [
-        0.5,
-        0.5
-      ],
-      "surface_offset": 0.002,
-      "opacity": 1.0,
-      "albedo_strength": 0.75,
-      "albedo_tint": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "normal_strength": 0.8,
-      "normal_y_flip": false,
-      "roughness_strength": 0.7,
-      "imperfection": {},
-      "review_notes": "Sparse corrosion flecks. Use only with a nearby plausible corrosion source—fastener, bracket, pipe, plate, barrier, vent, rail or other metal fitting. Do not use as generic orange dirt.",
-      "status": "APPROVED",
-      "current_source_fingerprint": "672077321a4479887bfbfed7969e846b1099c9d02fda0ae0e2eca05b8e583c21",
-      "effective_status": "APPROVED"
-    },
+  "batch_id": "imperfection_sources_2026_10_10",
+  "decisions": [
     {
       "source_stable_id": "eaf4:IMPERFECTION_TEXTURE_PROFILE:dust_uh4qbeic:uh4qbeic",
       "catalog_wear_id": "eaf4b_7861a882827158cab9937196",
       "reviewed_source_fingerprint": "64cc7e145ecf460d0d7d0b939dad716ed3fe1e5f103fb2ccb579bdb88a97b0a1",
       "selected_resolution": "1K",
+      "decision": "APPROVED",
       "decision_revision": 1,
       "semantic_category": "IMPERFECTION_MASK",
       "cause_tags": [
@@ -523,16 +40,14 @@
       "supported_uses": [
         "TINTED_OPACITY_LAYER",
         "WEAR_OPACITY_MODULATION"
-      ],
-      "status": "APPROVED",
-      "current_source_fingerprint": "64cc7e145ecf460d0d7d0b939dad716ed3fe1e5f103fb2ccb579bdb88a97b0a1",
-      "effective_status": "APPROVED"
+      ]
     },
     {
       "source_stable_id": "eaf4:IMPERFECTION_TEXTURE_PROFILE:dust_uh4qbflc:uh4qbflc",
       "catalog_wear_id": "eaf4b_4ced1a3973d9ede63d7cde48",
       "reviewed_source_fingerprint": "83aadf1ef4115e1cef7e4c0e4f36321fe98644011579a3fb969bf5f9b4dc7a03",
       "selected_resolution": "1K",
+      "decision": "APPROVED",
       "decision_revision": 1,
       "semantic_category": "IMPERFECTION_MASK",
       "cause_tags": [
@@ -565,16 +80,14 @@
       "supported_uses": [
         "TINTED_OPACITY_LAYER",
         "WEAR_OPACITY_MODULATION"
-      ],
-      "status": "APPROVED",
-      "current_source_fingerprint": "83aadf1ef4115e1cef7e4c0e4f36321fe98644011579a3fb969bf5f9b4dc7a03",
-      "effective_status": "APPROVED"
+      ]
     },
     {
       "source_stable_id": "eaf4:IMPERFECTION_TEXTURE_PROFILE:dust_uh4rdfvc:uh4rdfvc",
       "catalog_wear_id": "eaf4b_1258cd6455c7367fb02eb2fe",
       "reviewed_source_fingerprint": "ce7533556f6a057a86596d6e2ae21052552f789d759f78610c0cac14a9fc39f0",
       "selected_resolution": "1K",
+      "decision": "APPROVED",
       "decision_revision": 1,
       "semantic_category": "IMPERFECTION_MASK",
       "cause_tags": [
@@ -607,16 +120,14 @@
       "supported_uses": [
         "TINTED_OPACITY_LAYER",
         "WEAR_OPACITY_MODULATION"
-      ],
-      "status": "APPROVED",
-      "current_source_fingerprint": "ce7533556f6a057a86596d6e2ae21052552f789d759f78610c0cac14a9fc39f0",
-      "effective_status": "APPROVED"
+      ]
     },
     {
       "source_stable_id": "eaf4:IMPERFECTION_TEXTURE_PROFILE:grain_sc2nbisc:sc2nbisc",
       "catalog_wear_id": "eaf4b_cd6e17b97463ce00c0685bbd",
       "reviewed_source_fingerprint": "ff2b1ddf290463be0d9b3c98347c2a7660076669981172f02d5f8bff39ed4064",
       "selected_resolution": "1K",
+      "decision": "APPROVED",
       "decision_revision": 1,
       "semantic_category": "IMPERFECTION_MASK",
       "cause_tags": [
@@ -649,16 +160,14 @@
       "supported_uses": [
         "TINTED_OPACITY_LAYER",
         "WEAR_OPACITY_MODULATION"
-      ],
-      "status": "APPROVED",
-      "current_source_fingerprint": "ff2b1ddf290463be0d9b3c98347c2a7660076669981172f02d5f8bff39ed4064",
-      "effective_status": "APPROVED"
+      ]
     },
     {
       "source_stable_id": "eaf4:IMPERFECTION_TEXTURE_PROFILE:grunge_tedwdiic:tedwdiic",
       "catalog_wear_id": "eaf4b_88cbe4d6b460b401ee6d6d7b",
       "reviewed_source_fingerprint": "cb32c72ca424d665cb38923b9e8cbe716e1dfdb3c54eee606741e1dfd5d049de",
       "selected_resolution": "1K",
+      "decision": "APPROVED",
       "decision_revision": 1,
       "semantic_category": "IMPERFECTION_MASK",
       "cause_tags": [
@@ -691,16 +200,14 @@
       "supported_uses": [
         "TINTED_OPACITY_LAYER",
         "WEAR_OPACITY_MODULATION"
-      ],
-      "status": "APPROVED",
-      "current_source_fingerprint": "cb32c72ca424d665cb38923b9e8cbe716e1dfdb3c54eee606741e1dfd5d049de",
-      "effective_status": "APPROVED"
+      ]
     },
     {
       "source_stable_id": "eaf4:IMPERFECTION_TEXTURE_PROFILE:grunge_tedxadjc:tedxadjc",
       "catalog_wear_id": "eaf4b_c8b0a5126abd42ebe766fd44",
       "reviewed_source_fingerprint": "e71aaf2f2092f229536c4a8ffd8e28b52db2c0e9b3924ab6436852a38267504b",
       "selected_resolution": "1K",
+      "decision": "APPROVED",
       "decision_revision": 2,
       "semantic_category": "IMPERFECTION_MASK",
       "cause_tags": [
@@ -733,16 +240,14 @@
       "supported_uses": [
         "TINTED_OPACITY_LAYER",
         "WEAR_OPACITY_MODULATION"
-      ],
-      "status": "APPROVED",
-      "current_source_fingerprint": "e71aaf2f2092f229536c4a8ffd8e28b52db2c0e9b3924ab6436852a38267504b",
-      "effective_status": "APPROVED"
+      ]
     },
     {
       "source_stable_id": "eaf4:IMPERFECTION_TEXTURE_PROFILE:grunge_tjnncdwc:tjnncdwc",
       "catalog_wear_id": "eaf4b_59ea0f6e18d6edba4035cf08",
       "reviewed_source_fingerprint": "794f3de2f896b42957a9a84fd16cec846b0c50e4f2eb754d05fc35224897ba9f",
       "selected_resolution": "1K",
+      "decision": "APPROVED",
       "decision_revision": 1,
       "semantic_category": "IMPERFECTION_MASK",
       "cause_tags": [
@@ -775,16 +280,14 @@
       "supported_uses": [
         "TINTED_OPACITY_LAYER",
         "WEAR_OPACITY_MODULATION"
-      ],
-      "status": "APPROVED",
-      "current_source_fingerprint": "794f3de2f896b42957a9a84fd16cec846b0c50e4f2eb754d05fc35224897ba9f",
-      "effective_status": "APPROVED"
+      ]
     },
     {
       "source_stable_id": "eaf4:IMPERFECTION_TEXTURE_PROFILE:grunge_tjvibebc:tjvibebc",
       "catalog_wear_id": "eaf4b_90ab5c8d3e788ad7f9300336",
       "reviewed_source_fingerprint": "c87250c7aa2dc612b3f4e4ff7941c563ec271ca81c036b580c8656e5d6921036",
       "selected_resolution": "1K",
+      "decision": "APPROVED",
       "decision_revision": 1,
       "semantic_category": "IMPERFECTION_MASK",
       "cause_tags": [
@@ -817,16 +320,14 @@
       "supported_uses": [
         "TINTED_OPACITY_LAYER",
         "WEAR_OPACITY_MODULATION"
-      ],
-      "status": "APPROVED",
-      "current_source_fingerprint": "c87250c7aa2dc612b3f4e4ff7941c563ec271ca81c036b580c8656e5d6921036",
-      "effective_status": "APPROVED"
+      ]
     },
     {
       "source_stable_id": "eaf4:IMPERFECTION_TEXTURE_PROFILE:grunge_uh4uaawc:uh4uaawc",
       "catalog_wear_id": "eaf4b_442aa42e72c622fa1f3af4b9",
       "reviewed_source_fingerprint": "5b578c31da47f268b96580449dd8f4e31ab67584d72234864f56b641200cd46b",
       "selected_resolution": "1K",
+      "decision": "APPROVED",
       "decision_revision": 1,
       "semantic_category": "IMPERFECTION_MASK",
       "cause_tags": [
@@ -859,16 +360,14 @@
       "supported_uses": [
         "TINTED_OPACITY_LAYER",
         "WEAR_OPACITY_MODULATION"
-      ],
-      "status": "APPROVED",
-      "current_source_fingerprint": "5b578c31da47f268b96580449dd8f4e31ab67584d72234864f56b641200cd46b",
-      "effective_status": "APPROVED"
+      ]
     },
     {
       "source_stable_id": "eaf4:IMPERFECTION_TEXTURE_PROFILE:grungy_surface_slnnecvc:slnnecvc",
       "catalog_wear_id": "eaf4b_3863efcbbda45860ab849694",
       "reviewed_source_fingerprint": "ddbd600975cc9907a95eb000286432209089f34f7e252388e76160f58914c98e",
       "selected_resolution": "1K",
+      "decision": "APPROVED",
       "decision_revision": 1,
       "semantic_category": "IMPERFECTION_MASK",
       "cause_tags": [
@@ -901,16 +400,14 @@
       "supported_uses": [
         "TINTED_OPACITY_LAYER",
         "WEAR_OPACITY_MODULATION"
-      ],
-      "status": "APPROVED",
-      "current_source_fingerprint": "ddbd600975cc9907a95eb000286432209089f34f7e252388e76160f58914c98e",
-      "effective_status": "APPROVED"
+      ]
     },
     {
       "source_stable_id": "eaf4:IMPERFECTION_TEXTURE_PROFILE:leakage_sl3ace3c:sl3ace3c",
       "catalog_wear_id": "eaf4b_7fdb448b22a60aa6e146cfd7",
       "reviewed_source_fingerprint": "e6456a72bd9330c75de80f770375cd525d4ed23228ffbe3076ca02246f11730c",
       "selected_resolution": "1K",
+      "decision": "APPROVED",
       "decision_revision": 1,
       "semantic_category": "IMPERFECTION_MASK",
       "cause_tags": [
@@ -943,16 +440,14 @@
       "supported_uses": [
         "TINTED_OPACITY_LAYER",
         "WEAR_OPACITY_MODULATION"
-      ],
-      "status": "APPROVED",
-      "current_source_fingerprint": "e6456a72bd9330c75de80f770375cd525d4ed23228ffbe3076ca02246f11730c",
-      "effective_status": "APPROVED"
+      ]
     },
     {
       "source_stable_id": "eaf4:IMPERFECTION_TEXTURE_PROFILE:scratched_metal_vdekebbc:vdekebbc",
       "catalog_wear_id": "eaf4b_e1cf2067e3efcd02296f1f79",
       "reviewed_source_fingerprint": "a857787b71a6fcc65be5a84cdf2e36ff06f3d1346598bd90c09dbb921b4095cd",
       "selected_resolution": "1K",
+      "decision": "APPROVED",
       "decision_revision": 2,
       "semantic_category": "IMPERFECTION_MASK",
       "cause_tags": [
@@ -985,16 +480,14 @@
       "supported_uses": [
         "TINTED_OPACITY_LAYER",
         "WEAR_OPACITY_MODULATION"
-      ],
-      "status": "APPROVED",
-      "current_source_fingerprint": "a857787b71a6fcc65be5a84cdf2e36ff06f3d1346598bd90c09dbb921b4095cd",
-      "effective_status": "APPROVED"
+      ]
     },
     {
       "source_stable_id": "eaf4:IMPERFECTION_TEXTURE_PROFILE:stains_ulttebjc:ulttebjc",
       "catalog_wear_id": "eaf4b_59989972790f0d57a6e4fade",
       "reviewed_source_fingerprint": "98e6ac5d048c4fa7d0c2e10d283a9e1141493cf9c0d959c964c63122b8b5dfd1",
       "selected_resolution": "1K",
+      "decision": "APPROVED",
       "decision_revision": 1,
       "semantic_category": "IMPERFECTION_MASK",
       "cause_tags": [
@@ -1027,16 +520,14 @@
       "supported_uses": [
         "TINTED_OPACITY_LAYER",
         "WEAR_OPACITY_MODULATION"
-      ],
-      "status": "APPROVED",
-      "current_source_fingerprint": "98e6ac5d048c4fa7d0c2e10d283a9e1141493cf9c0d959c964c63122b8b5dfd1",
-      "effective_status": "APPROVED"
+      ]
     },
     {
       "source_stable_id": "eaf4:IMPERFECTION_TEXTURE_PROFILE:stains_ultwabqc:ultwabqc",
       "catalog_wear_id": "eaf4b_2652b2a801b966c69a931213",
       "reviewed_source_fingerprint": "8f64cd2e748bbe3ce2944478ae53059c6f44535163d192ddb078f7ae81d09083",
       "selected_resolution": "1K",
+      "decision": "APPROVED",
       "decision_revision": 1,
       "semantic_category": "IMPERFECTION_MASK",
       "cause_tags": [
@@ -1069,16 +560,14 @@
       "supported_uses": [
         "TINTED_OPACITY_LAYER",
         "WEAR_OPACITY_MODULATION"
-      ],
-      "status": "APPROVED",
-      "current_source_fingerprint": "8f64cd2e748bbe3ce2944478ae53059c6f44535163d192ddb078f7ae81d09083",
-      "effective_status": "APPROVED"
+      ]
     },
     {
       "source_stable_id": "eaf4:IMPERFECTION_TEXTURE_PROFILE:stains_ultwaekc:ultwaekc",
       "catalog_wear_id": "eaf4b_965ef296e00bba5e57459f76",
       "reviewed_source_fingerprint": "99e043914f173ae2347f5134e5f3a644ec3c9a9da778e8158318551b8914b6b5",
       "selected_resolution": "1K",
+      "decision": "APPROVED",
       "decision_revision": 1,
       "semantic_category": "IMPERFECTION_MASK",
       "cause_tags": [
@@ -1111,16 +600,14 @@
       "supported_uses": [
         "TINTED_OPACITY_LAYER",
         "WEAR_OPACITY_MODULATION"
-      ],
-      "status": "APPROVED",
-      "current_source_fingerprint": "99e043914f173ae2347f5134e5f3a644ec3c9a9da778e8158318551b8914b6b5",
-      "effective_status": "APPROVED"
+      ]
     },
     {
       "source_stable_id": "eaf4:IMPERFECTION_TEXTURE_PROFILE:wipe_marks_uh4scioc:uh4scioc",
       "catalog_wear_id": "eaf4b_560a1a00053287b4aa7685e3",
       "reviewed_source_fingerprint": "f003fcf09a0826fc222030502c42e571cdde358c05605b631403a8a782cae028",
       "selected_resolution": "1K",
+      "decision": "APPROVED",
       "decision_revision": 1,
       "semantic_category": "IMPERFECTION_MASK",
       "cause_tags": [
@@ -1153,10 +640,7 @@
       "supported_uses": [
         "TINTED_OPACITY_LAYER",
         "WEAR_OPACITY_MODULATION"
-      ],
-      "status": "APPROVED",
-      "current_source_fingerprint": "f003fcf09a0826fc222030502c42e571cdde358c05605b631403a8a782cae028",
-      "effective_status": "APPROVED"
+      ]
     }
   ]
 }

@@ -1092,7 +1092,7 @@ func validate_wear_source() -> bool:
             status_counts[status] += 1
         if status == "APPROVED":
             approved[record["catalog_wear_id"]] = record
-    if status_counts != {"APPROVED": 12, "DEFERRED": 2}:
+    if status_counts != {"APPROVED": 27, "DEFERRED": 1}:
         return false
     var instances: Array = manifest.get("instances", [])
     if instances.size() != 4:

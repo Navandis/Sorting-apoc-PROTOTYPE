@@ -35,9 +35,15 @@ class ImperfectionLibraryTests(unittest.TestCase):
         self.assertTrue((LIBRARY / 'manifest.json').exists(), 'experimental library missing')
         rows = json.loads((LIBRARY / 'manifest.json').read_text(encoding='utf-8'))['candidates']
         statuses = {r['slug']:r['status_at_audit'] for r in rows}
-        self.assertEqual(statuses['grunge_tedxadjc'], 'APPROVED')
-        self.assertEqual(statuses['scratched_metal_vdekebbc'], 'DEFERRED')
-        self.assertEqual(sum(s=='UNREVIEWED' for s in statuses.values()), 14)
+        self.assertEqual(set(statuses.values()), {'APPROVED'})
+        catalog = json.loads((ROOT / 'data/environment/wear_catalog/catalog.json').read_text())
+        records = {r['source_stable_id']:r for r in catalog['wear']}
+        for row in rows:
+            record = records[row['stable_id']]
+            self.assertEqual(record['effective_status'], 'APPROVED')
+            self.assertEqual(record['scalar_channel'], row['channel'] + '.red')
+            self.assertEqual(record['supported_uses'], ['TINTED_OPACITY_LAYER', 'WEAR_OPACITY_MODULATION'])
+            self.assertEqual(record['reviewed_source_fingerprint'], row['source_fingerprint'])
         self.assertFalse(any('approval' in r for r in rows))
 
 class SourceAuditFailureTests(unittest.TestCase):

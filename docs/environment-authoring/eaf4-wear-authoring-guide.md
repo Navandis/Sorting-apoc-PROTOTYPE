@@ -34,7 +34,7 @@ Surface Offset M is 0.0005–0.01 metres along local +Z; 0.002 is a useful start
 | Edge Feather | Narrow UV-edge fade for soft sources; hidden for cutout sources. |
 | Mirror U / Mirror V | Flip the texture while retaining the placement. |
 
-**Advanced Surface / Normal Y Flip** changes normal-map convention. **Advanced Imperfection** controls and **Imperfection Enabled** apply only where an approved modulation mask exists. The mask is not a standalone grime preset. Unsupported controls are hidden. The defaults toggle can also hide appearance controls deliberately.
+**Advanced Surface / Normal Y Flip** changes normal-map convention. **Advanced Imperfection** controls and **Imperfection Enabled** apply only where an approved modulation mask exists. These controls retain their existing Grunge binding. Independent approved scalar layers use the separate scalar library. Unsupported controls are hidden. The defaults toggle can also hide appearance controls deliberately.
 
 For approved appearance, enable Use Approved Appearance Defaults. To restore an entire new placement, instance the same library preset afresh. For just size/offset, use the source's `physical_size_m` / `surface_offset_m` in `res://data/environment/wear_catalog/approved_specs/<catalog ID>.tres` as read-only reference; do not edit the approved resource. Source switching deliberately keeps the prior dimensions and appearance, so inspect the new source's restrictions and defaults after switching.
 
@@ -44,15 +44,13 @@ Select a preset instance root and use ordinary **Ctrl+D**. Move the copy and edi
 
 Save the wing, close/reopen the scene and verify your instance-root overrides. Each helper should have one generated visual in the viewport and at runtime. Generated Quad nodes are preview/render output and stay unsaved. Do not edit or manually copy them. Future rooms instance the library files directly; there is no hidden template bank to copy.
 
-## Keep the existing examples and signage separate
+## Keep authored wear and accepted signage separate
 
-The seven existing Road Dust examples remain at:
+The seven rejected original Codex Road Dust placements and their old finish scene were retired on 2026-10-10. The ordinary Road Dust library preset remains approved and available for new human-authored placements.
 
-`WingGameplay/ReceivingSetDressing/ReceivingDecals/ReceivingFinishPass`
+The accepted plaque is independently visible at `WingGameplay/ReceivingSetDressing/ReceivingDecals/ReceivingSignage/LiftEmergencyStopLabel`, instanced from `res://gameplay/logistics_wing/receiving/receiving_emergency_stop_signage.tscn`. Its SVG, material, 0.32 × 0.14 m mesh and world transform are unchanged. Hiding `AuthoredWear` or `ImperfectionExperiments` does not hide it. The red button remains decorative.
 
-Their source is `res://gameplay/logistics_wing/receiving/receiving_finish_pass.tscn`. Select an existing wear helper root and expand **Spec** to edit **Physical Size M**, **Opacity Multiplier**, tint and supported map settings. Task 1's resource-change refresh is active for these older instances too. The canonical wing already exposes their inherited overrides; new presets use the simpler flat interface above. Their present sizes/appearance/placement were preserved, including the wing's pre-existing Traffic_Approach size `(1.805, 1.655)`.
-
-To switch off only the examples, set **Visible** off on both `ReceivingWear_Floor` and `ReceivingWear_LiftZone`. Leave `ReceivingFinishPass` and `ReceivingSignage` visible. The accepted `ReceivingSignage/LiftEmergencyStopLabel` remains with its existing SVG, material, dimensions, transform and button/column relationship. These Road Dust examples are available for authoring review, not an accepted final layout.
+All 16 scalar patterns are separately approved for flat tinted-opacity layers and the existing two Leakage modulation cases; see the [scalar-layer guide](eaf4-imperfection-audition-guide.md). They are not additional conventional wear presets. Conventional preset count remains 11.
 
 ## Troubleshooting
 
@@ -66,10 +64,10 @@ To switch off only the examples, set **Visible** off on both `ReceivingWear_Floo
 | Source dropdown/index stale | Reload the authoring script or reopen Godot after catalog reconciliation; the selector is cached for the script lifetime. Run the one-shot preset audit after approvals/assets change. |
 | Editor and runtime differ in brightness | Use the actual wing environment/camera and inspect property/geometry updates first. Different viewport preview lighting/cameras do not guarantee pixel-identical pictures. |
 
-## Hands-on acceptance still required
+## Hands-on authoring and cleanup review
 
-No genuine editor screenshots were captured: the Windows computer-use helper found Godot but failed window capture twice (`FrameArrived timed out`, then `window capture timed out`). Automated checks and real OpenGL rendering are separate evidence; they do not close editor interaction acceptance.
+The human accepted Task 1/Task 2 editor authoring and the subsequent scalar workflow. Codex did not perform interactive editor or manual F5/F6 checks for the later signage/legacy cleanup. Automated checks and OpenGL game captures are separate evidence; the cleanup awaits the three visual checks in its [checkpoint](../testing/environment-authoring-eaf4-imperfection-approvals-and-receiving-finish-retirement-2026-10-10.md).
 
-In the actual wing editor, place a floor preset and a wall preset under AuthoredWear, focus them with F, edit dimensions/opacity/tint and supported map settings, duplicate with Ctrl+D, switch the copy's source, toggle approved defaults, undo/redo, save/close/reopen and run the wing. Confirm one patch per instance and independent settings. Edit one existing Road Dust Spec, then hide both old wear groups and verify the label remains visible. Capture the selected root/Inspector before and after edits. Remove validation placements unless you intend to retain them as your authored layout. No distinct material-patch preset is currently eligible to test.
+In the actual wing editor, place a floor preset and a wall preset under AuthoredWear, focus them with F, edit dimensions/opacity/tint and supported map settings, duplicate with Ctrl+D, switch the copy's source, toggle approved defaults, undo/redo, save/close/reopen and run the wing. Confirm one patch per instance and independent settings. Hide AuthoredWear and ImperfectionExperiments and verify the independent label remains visible. Capture the selected root/Inspector before and after edits. Remove validation placements unless you intend to retain them as your authored layout. No distinct material-patch preset is currently eligible to test.
 
 Human placement and tuning review is the next step; this workflow does not accept new wear art or close Receiving C1.
