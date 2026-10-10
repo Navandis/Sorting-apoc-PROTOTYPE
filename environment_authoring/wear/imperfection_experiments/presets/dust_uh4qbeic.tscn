@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://environment_authoring/wear/imperfection_experiments/imperfection_audition.gd" id="1"]
+
+[node name="ExperimentalDustUh4Qbeic" type="Node3D"]
+script = ExtResource("1")
+mask_source = "Dust (dust_uh4qbeic) | eaf4:IMPERFECTION_TEXTURE_PROFILE:dust_uh4qbeic:uh4qbeic"

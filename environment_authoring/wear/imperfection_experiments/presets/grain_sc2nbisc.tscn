@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://environment_authoring/wear/imperfection_experiments/imperfection_audition.gd" id="1"]
+
+[node name="ExperimentalGrainSc2Nbisc" type="Node3D"]
+script = ExtResource("1")
+mask_source = "Grain (grain_sc2nbisc) | eaf4:IMPERFECTION_TEXTURE_PROFILE:grain_sc2nbisc:sc2nbisc"

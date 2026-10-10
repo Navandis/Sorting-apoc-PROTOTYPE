@@ -70,3 +70,7 @@ Historical plans, validation reports and earlier master editions retain their or
 The [1 October lift/deck close-out](testing/receiving-c1-lift-enclosure-deck-closeout-2026-10-01.md), CURRENT_STATE and CODEX_BOOTSTRAP supersede the exact older Receiving deck dimensions, physical lift/enclosure baseline and next-step/gate wording in GDD v0.11, Findings v0.11 and VDD v0.8 until the next proportionate master reconciliation. DOCX masters and derived readable extracts remain unchanged.
 
 The [3 October lighting baseline close-out](testing/receiving-c1-lighting-baseline-closeout-2026-10-03.md) and operational docs supersede older Receiving lighting and shaft-material statements until the next proportionate master reconciliation. GDD/VDD/Findings DOCX masters and readable extracts remain unchanged.
+
+## Experimental imperfection audition
+
+[Editor guide](environment-authoring/eaf4-imperfection-audition-guide.md), [source inventory](testing/environment-authoring-imperfection-source-inventory-2026-10-10.md) and [implementation evidence](testing/environment-authoring-imperfection-audition-2026-10-10.md) describe the separate 16-source experimental workflow. These are diagnostics for human review, not approvals or Receiving C1 acceptance.

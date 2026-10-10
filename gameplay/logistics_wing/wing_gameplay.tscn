@@ -1527,6 +1527,9 @@ metadata/purpose = "Visual-only user wear; drag approved presets here and edit t
 
 [node name="OtherRooms" type="Node3D" parent="AuthoredWear"]
 
+[node name="ImperfectionExperiments" type="Node3D" parent="."]
+metadata/purpose = "EXPERIMENTAL / NOT APPROVED: visual-only scalar mask auditions; hide this group independently"
+
 [editable path="Environment"]
 [editable path="Environment/Greybox"]
 [editable path="FunctionalFixtures"]

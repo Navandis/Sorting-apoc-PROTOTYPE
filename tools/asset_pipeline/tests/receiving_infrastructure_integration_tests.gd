@@ -22,6 +22,11 @@ func run():
   check(authored.get_parent() == wing and authored.owner == wing and authored.transform == Transform3D.IDENTITY,"wear home is directly scene-owned, outside gameplay actors")
   var errors = WearGuard.validate(authored)
   check(errors.is_empty(),"authored wear branch rejects gameplay/physics/light authority: " + str(errors))
+ var experiments = wing.get_node_or_null("ImperfectionExperiments")
+ check(experiments != null,"wing has explicit separate experimental visual home")
+ if experiments:
+  check(experiments.get_parent() == wing and experiments.owner == wing and experiments.transform == Transform3D.IDENTITY,"experimental home is directly scene-owned")
+  check(WearGuard.validate_experiments(experiments).is_empty(),"experimental branch rejects gameplay/physics/light authority")
  var dressing = wing.get_node_or_null("ReceivingSetDressing")
  check(dressing != null,"manual art has one editable production owner")
  if dressing:
