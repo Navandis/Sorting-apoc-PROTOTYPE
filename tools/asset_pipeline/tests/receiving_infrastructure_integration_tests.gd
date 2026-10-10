@@ -1,6 +1,8 @@
 extends SceneTree
 # Guards the human-owned manual arrangement and retirement of invisible legacy physics.
 const WING = "res://gameplay/logistics_wing/wing_gameplay.tscn"
+const VISUAL_WEAR = preload("res://environment_authoring/wear/environment_wear_overlay.gd")
+const WEAR_PARENTS = ["ReceivingDecals/ReceivingFinishPass/ReceivingWear_Floor", "ReceivingDecals/ReceivingFinishPass/ReceivingWear_LiftZone"]
 const GROUPS = ["ReceivingDecals","ReceivingPipes","ReceivingElectrical","ReceivingDesk","ReceivingDecorations"]
 var failures = 0
 func _init(): call_deferred("run")
@@ -25,10 +27,18 @@ func run():
   check(dressing.find_children("*","Area3D",true,false).is_empty(),"dressing adds no interaction areas")
   check(dressing.find_children("*","RigidBody3D",true,false).is_empty(),"dressing adds no dynamic bodies")
   for node in dressing.find_children("*","",true,false):
-   check(node.get_script() == null,"art/proxies have no gameplay script: "+str(node.name))
+   var visual_wear = node is EnvironmentWearOverlay and node.get_script() == VISUAL_WEAR and String(dressing.get_path_to(node)).get_base_dir() in WEAR_PARENTS
+   check(node.get_script() == null or visual_wear,"art/proxies have no gameplay script: "+str(node.name))
+   if visual_wear:
+    check(node.get_script().is_tool(),"wear uses the established editor-capable render helper")
+    check(node.spec != null and node.spec.validate().is_empty(),"wear has a usable instance spec")
    if node is Node3D and not node.is_visible_in_tree():
     if node is CollisionShape3D: check(node.disabled,"hidden alternative shape disabled")
     if node is CollisionObject3D: check(node.collision_layer == 0,"hidden alternative has no active collision")
+  var finish = dressing.get_node_or_null("ReceivingDecals/ReceivingFinishPass")
+  if finish:
+   for kind in ["CollisionObject3D","CollisionShape3D","Light3D"]:
+    check(finish.find_children("*",kind,true,false).is_empty(),"finish pass is visual-only: no "+kind)
  check(wing.find_children("ReceivingInfrastructure","",true,false).is_empty(),"no hidden legacy live root")
  check(wing.find_children("CabinetMovementCollision","",true,false).is_empty(),"legacy cabinet collider retired")
  check(wing.find_children("P1_ServiceMain","",true,false).is_empty() and wing.find_children("E1_ElectricalThroughFeed","",true,false).is_empty() and wing.find_children("L1_LiftServiceBranch","",true,false).is_empty(),"legacy P1/E1/L1 subtrees retired")
