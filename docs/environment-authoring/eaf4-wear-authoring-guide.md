@@ -4,7 +4,7 @@ Open `res://gameplay/logistics_wing/wing_gameplay.tscn` in Godot 4.7 Compatibili
 
 ## Place a preset
 
-1. Find `WingGameplay/AuthoredWear` in the Scene tree. Its `Receiving`, `Storage` and `OtherRooms` children are empty visual organization groups. Add plain Node3D room subgroups as needed. Their transforms start at identity; placements use wing coordinates.
+1. Find `WingGameplay/AuthoredWear` in the Scene tree. Its `Receiving`, `Storage` and `OtherRooms` children are visual organization groups; Receiving now contains an accepted authored preset. Add plain Node3D room subgroups as needed. Their transforms start at identity; placements use wing coordinates.
 2. Drag a named `.tscn` from FileSystem onto the appropriate group in the Scene tree. For example, `road_dust_sgzh1so.tscn` is floor dust; `chipped_paint_patch_ui2ncdjfw.tscn` is damage to an applied painted finish. The source suffix distinguishes similarly named cracks/leaks.
 3. Select the **instance root**, not its generated Quad. Read **Approved Usage Notes** and move/rotate the instance onto a compatible surface. New preset instances expose their controls directly; Editable Children and Make Unique are unnecessary.
 4. Edit **Width M**, **Height M** and **Surface Offset M**. The visual should update in the editor without running gameplay. Give instances names describing their cause/location.
@@ -64,10 +64,10 @@ All 16 scalar patterns are separately approved for flat tinted-opacity layers an
 | Source dropdown/index stale | Reload the authoring script or reopen Godot after catalog reconciliation; the selector is cached for the script lifetime. Run the one-shot preset audit after approvals/assets change. |
 | Editor and runtime differ in brightness | Use the actual wing environment/camera and inspect property/geometry updates first. Different viewport preview lighting/cameras do not guarantee pixel-identical pictures. |
 
-## Hands-on authoring and cleanup review
+## Accepted workflow and continuing room authoring
 
-The human accepted Task 1/Task 2 editor authoring and the subsequent scalar workflow. Codex did not perform interactive editor or manual F5/F6 checks for the later signage/legacy cleanup. Automated checks and OpenGL game captures are separate evidence; the cleanup awaits the three visual checks in its [checkpoint](../testing/environment-authoring-eaf4-imperfection-approvals-and-receiving-finish-retirement-2026-10-10.md).
+The human accepted actual Godot editor authoring, duplication and save/reopen, and the later plaque/legacy cleanup checks are recorded in the [accepted milestone](../testing/environment-authoring-eaf4-imperfection-authoring-milestone-closeout-2026-10-10.md). Codex automated/editor-hint and OpenGL results remain distinct from human interaction evidence.
 
-In the actual wing editor, place a floor preset and a wall preset under AuthoredWear, focus them with F, edit dimensions/opacity/tint and supported map settings, duplicate with Ctrl+D, switch the copy's source, toggle approved defaults, undo/redo, save/close/reopen and run the wing. Confirm one patch per instance and independent settings. Hide AuthoredWear and ImperfectionExperiments and verify the independent label remains visible. Capture the selected root/Inspector before and after edits. Remove validation placements unless you intend to retain them as your authored layout. No distinct material-patch preset is currently eligible to test.
+The first manual Receiving wear composition is now completed, human-reviewed and merged into main. Current saved composition has 18 layers (17 separate scalar instances plus one conventional preset), confirmed by scene inventory and human clarification; see the [dated reconciliation](../testing/three-master-document-reconciliation-2026-10-10.md). The earlier unpublished seventeen-layer checkpoint remains historical. Later edits to wear or furnishings are normal authoring and do not reopen completed EAF4 tooling. There is no permanent art freeze, and C1 remains IN PROGRESS.
 
-Human placement and tuning review is the next step; this workflow does not accept new wear art or close Receiving C1.
+Use normal live root controls, duplication, undo/redo and save/reopen for further room work. Broad subtle editable scalar variation can break base-material repetition; localized layers express plausible traffic, service and spillage. Keep both restrained and readable, within approved source/use restrictions. Source/use approval remains distinct from specific scene/art acceptance.
