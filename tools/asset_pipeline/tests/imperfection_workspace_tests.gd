@@ -17,14 +17,14 @@ func run() -> void:
     await process_frame
     await process_frame
     var branch = wing.get_node_or_null("ImperfectionExperiments")
-    check(branch != null, "empty explicit experimental wing group exists")
+    check(branch != null, "explicit experimental wing group exists")
     var guard = load(GUARD)
     check(guard.has_method("validate_experiments"), "separate branch specific guard")
     if branch == null or not guard.has_method("validate_experiments"):
         wing.free()
         quit(1)
         return
-    check(branch.owner == wing and branch.get_parent() == wing and branch.transform == Transform3D.IDENTITY and branch.get_child_count() == 0, "empty scene-owned shipping branch")
+    check(branch.owner == wing and branch.get_parent() == wing and branch.transform == Transform3D.IDENTITY and guard.validate_experiments(branch).is_empty(), "scene-owned branch permits valid saved authoring instances")
     var a = EXP.new()
     a.mask_source = EXP.candidates()[0].stable_id
     branch.add_child(a)
@@ -88,11 +88,13 @@ func run() -> void:
     check(not guard.validate_experiments(branch).is_empty(), "experiment branch does not expand to other authoring scripts")
     approved.free()
     check(guard.validate_experiments(branch).is_empty(), "guard restored")
+    var signage = wing.get_node("ReceivingSetDressing/ReceivingDecals/ReceivingFinishPass/ReceivingSignage")
+    var signage_was_visible = signage.is_visible_in_tree()
     branch.hide()
     check(not a.get_node("Quad").is_visible_in_tree(), "hide all experiments")
     check(wing.get_node("AuthoredWear").is_visible_in_tree(), "approved authoring branch stays visible")
     check(wing.get_node("ReceivingLiftMonitor/SM_KB3D_CPP_PropTV_A/Mesh").is_visible_in_tree() and wing.has_node("ReceivingLiftMonitor/PhosphorDisplay/ScreenViewport"), "CRT stays visible")
-    check(wing.get_node("ReceivingSetDressing/ReceivingDecals/ReceivingFinishPass/ReceivingSignage").is_visible_in_tree(), "signage stays visible")
+    check(signage.is_visible_in_tree() == signage_was_visible, "hiding experiments preserves saved signage visibility")
     wing.free()
     print("IMPERFECTION_WORKSPACE checks=",checks," failures=",failures)
     quit(1 if failures else 0)

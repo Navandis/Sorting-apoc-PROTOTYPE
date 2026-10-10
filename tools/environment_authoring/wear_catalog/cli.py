@@ -38,38 +38,50 @@ def reconcile_decisions(input_path):
     catalog = json.loads(authoring.CATALOG.read_text(encoding="utf-8"))
     index = load_index()
     repository = load_repository()
+    workflow.validate_decision_sources(repository, index, decisions, catalog)
     records = catalog["wear"] + decisions
     latest = workflow.current_fingerprints(repository, index, records)
     masks = workflow.current_imperfection_status(repository, index, records)
-    updated, audit = workflow.reconcile(catalog, decisions, latest, masks)
+    updated, audit = workflow.reconcile(catalog, decisions, latest, masks, source_index=index)
     authoring.write_json(authoring.CATALOG, updated)
     audit_path = PROJECT_ROOT / "reports/environment_wear_catalog/catalog_audit.json"
     authoring.write_json(audit_path, {"changes": audit})
     print("EAF4B_RECONCILE", len(decisions), len(audit), audit_path)
 
 
-def restage_approved():
+def restage_approved(output_dir=None, dry_run=False):
+    """Plan and validate every export first; optional scratch output never writes catalog."""
     catalog = json.loads(authoring.CATALOG.read_text(encoding="utf-8"))
     index = load_index()
     repository = load_repository()
+    # Validate historical/scoped approvals even if freshness would exclude them
+    # from query: an unavailable selected channel must not silently disappear.
+    mask_decisions = [workflow._human_fields(r) for r in catalog["wear"]
+                      if r.get("status") == "APPROVED" and workflow.candidate_by_id(
+                          index, r["source_stable_id"])["source_class"] == "IMPERFECTION_MASK"]
+    workflow.validate_decision_sources(repository, index, mask_decisions, catalog)
     current = workflow.current_fingerprints(repository, index, catalog["wear"])
     masks = workflow.current_imperfection_status(repository, index, catalog["wear"])
     updated, audit = workflow.reconcile(catalog, [], current, masks)
-    authoring.write_json(authoring.CATALOG, updated)
-    target_dir = authoring.DATA / "approved_specs"
-    target_dir.mkdir(parents=True, exist_ok=True)
+    target_dir = Path(output_dir) if output_dir is not None else authoring.DATA / "approved_specs"
     count = 0
     approved_masks = []
+    specs = {}
+    stage_requests = {}
     for record in workflow.query(updated):
         candidate = workflow.candidate_by_id(index, record["source_stable_id"])
-        staged = workflow.stage_current_approved(repository, index, record, authoring.CACHE)
+        staged = workflow.stage_current_approved(repository, index, record, authoring.CACHE, dry_run=True)
+        stage_requests[(record["source_stable_id"], record["selected_resolution"])] = staged
         if candidate["source_class"] == "IMPERFECTION_MASK":
-            scalar = staged["maps"].get("roughness", staged["maps"].get("opacity"))
+            channel, uses = workflow.mask_scope(record, allow_legacy=True)
+            scalar = staged["maps"][channel.split(".")[0]]
             approved_masks.append({"catalog_wear_id": record["catalog_wear_id"],
                                    "source_stable_id": record["source_stable_id"],
                                    "source_fingerprint": staged["source_fingerprint"],
                                    "texture": workflow.CACHE_RESOURCE_ROOT + "/" + scalar["cache_relative"],
-                                   "modulation_only": True})
+                                   "modulation_only": uses == ["WEAR_OPACITY_MODULATION"],
+                                   "scalar_channel": channel, "supported_uses": uses,
+                                   "scalar_sha256": scalar["sha256"]})
             count += 1
             continue
         entry = {"semantic_category": record["semantic_category"], "cause_tags": record["cause_tags"],
@@ -90,21 +102,51 @@ def restage_approved():
         imperfection_resource = ""
         imperfection = record.get("imperfection", {})
         if imperfection.get("source_stable_id"):
+            if staged["catalog_wear_id"] not in workflow.LEAKAGE_MODULATION_IDS or record["render_mode"] != "SOFT_BLEND":
+                raise ValueError("Wear opacity modulation is restricted to the two approved soft Leakage effects")
             mask_candidate = workflow.candidate_by_id(index, imperfection["source_stable_id"])
             if mask_candidate["source_class"] != "IMPERFECTION_MASK":
                 raise ValueError("Approved imperfection reference is not a mask")
+            mask_record = next((r for r in updated["wear"] if r["source_stable_id"] == imperfection["source_stable_id"]), None)
+            if mask_record is None or mask_record.get("effective_status") != "APPROVED":
+                raise ValueError("Dependent mask requires a current APPROVED source decision")
+            if mask_record["selected_resolution"] != imperfection["selected_resolution"] or mask_record["reviewed_source_fingerprint"] != imperfection["source_fingerprint"]:
+                raise ValueError("Dependent mask differs from its reviewed resolution/fingerprint")
+            channel, uses = workflow.mask_scope(mask_record, allow_legacy=True)
+            if "WEAR_OPACITY_MODULATION" not in uses:
+                raise ValueError("Dependent mask is not approved for WEAR_OPACITY_MODULATION")
             mask_staged = workflow.stage_candidate(repository, mask_candidate,
-                                                   imperfection["selected_resolution"], authoring.CACHE)
+                                                   imperfection["selected_resolution"], authoring.CACHE, dry_run=True)
             if mask_staged["source_fingerprint"] != imperfection["source_fingerprint"]:
                 raise ValueError("Approved imperfection mask changed during restaging")
-            mask_maps = mask_staged["maps"]
-            imperfection_resource = mask_maps.get("roughness", mask_maps.get("opacity"))["cache_relative"]
-        (target_dir / (staged["catalog_wear_id"] + ".tres")).write_text(
-            authoring.spec_text(entry, staged, candidate, imperfection_resource), encoding="utf-8")
+            imperfection_resource = mask_staged["maps"][channel.split(".")[0]]["cache_relative"]
+            stage_requests[(mask_record["source_stable_id"], mask_record["selected_resolution"])] = mask_staged
+        specs[staged["catalog_wear_id"] + ".tres"] = authoring.spec_text(entry, staged, candidate, imperfection_resource)
         count += 1
-    authoring.write_json(target_dir / "approved_masks.json",
-                         {"schema_version": 1, "masks": approved_masks})
+    plan = {"catalog": updated, "masks": approved_masks, "specs": specs}
+    if dry_run:
+        return plan
+    # No canonical writes until all scopes, map bindings and resource text pass.
+    cache = target_dir / "cache" if output_dir is not None else authoring.CACHE
+    for (stable_id, resolution), expected in stage_requests.items():
+        workflow.stage_candidate(repository, workflow.candidate_by_id(index, stable_id), resolution, cache,
+                                 expected_fingerprint=expected["source_fingerprint"])
+    if output_dir is None:
+        _write_if_changed(authoring.CATALOG, json.dumps(updated, indent=2, ensure_ascii=False) + "\n")
+    for filename, text in specs.items():
+        _write_if_changed(target_dir / filename, text)
+    _write_if_changed(target_dir / "approved_masks.json", json.dumps(
+        {"schema_version": 1, "masks": approved_masks}, indent=2, ensure_ascii=False) + "\n")
     print("EAF4B_RESTAGE_APPROVED", count, "freshness_changes", len(audit))
+    return plan
+
+
+def _write_if_changed(path, text):
+    path = Path(path)
+    if path.exists() and path.read_text(encoding="utf-8") == text:
+        return
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(text, encoding="utf-8")
 
 
 def main(argv=None):
@@ -115,7 +157,9 @@ def main(argv=None):
         command.add_argument("--batch", required=True)
     command = commands.add_parser("reconcile")
     command.add_argument("--decisions", required=True, help="Project-local human decision file")
-    commands.add_parser("restage-approved")
+    restage = commands.add_parser("restage-approved")
+    restage.add_argument("--output-dir", help="Project-local scratch destination; leaves canonical catalog/specs untouched")
+    restage.add_argument("--dry-run", action="store_true", help="Validate and plan without any output writes")
     rerun = commands.add_parser("capture-rerun")
     rerun.add_argument("--rerun", required=True)
     query = commands.add_parser("query")
@@ -157,7 +201,14 @@ def main(argv=None):
     elif args.command == "reconcile":
         reconcile_decisions(args.decisions)
     elif args.command == "restage-approved":
-        restage_approved()
+        destination = None
+        if args.output_dir:
+            destination = (PROJECT_ROOT / args.output_dir).resolve()
+            if not destination.is_relative_to(PROJECT_ROOT):
+                raise ValueError("Scratch output must be project-local")
+        plan = restage_approved(output_dir=destination, dry_run=args.dry_run)
+        if args.dry_run:
+            print("EAF4B_RESTAGE_DRY_RUN", len(plan["specs"]), "specs", len(plan["masks"]), "masks; no writes")
     else:
         catalog = json.loads(authoring.CATALOG.read_text(encoding="utf-8"))
         for item in workflow.query(catalog, args.category, args.cause, args.capability, args.mode,

@@ -173,8 +173,9 @@ class WearWorkflowTests(unittest.TestCase):
                           "source_class": "IMPERFECTION_MASK", "profile": "IMPERFECTION_TEXTURE_PROFILE",
                           "available_resolutions": ["1K"],
                           "maps_by_resolution": {"1K": {"roughness": [{"relative_path": "other.png"}]}}}
-        index = {**self.index, "logical_candidates": [self.candidate, mask_candidate]}
-        staged = workflow.stage_candidate(self.repo, self.candidate, "2K", self.root / "cache")
+        leakage = {**self.candidate, "stable_id": "eaf4:FAB_DECAL_PROFILE:leakage_tculfbnc:tculfbnc"}
+        index = {**self.index, "logical_candidates": [leakage, mask_candidate]}
+        staged = workflow.stage_candidate(self.repo, leakage, "2K", self.root / "cache")
         mask_staged = workflow.stage_candidate(self.repo, mask_candidate, "1K", self.root / "cache")
         decision = workflow.decision_template(staged, {"semantic_category": "stain",
             "surface_capabilities": ["WALL"], "imperfection": {
@@ -184,8 +185,12 @@ class WearWorkflowTests(unittest.TestCase):
                 "rotation": 45.0, "contrast": 1.8, "strength": 0.6}})
         decision["decision"] = "APPROVED"
         decision["decision_revision"] = 1
-        catalog, _ = workflow.reconcile({"schema_version": 1, "wear": []}, [decision],
-                                         {self.candidate["stable_id"]: staged["source_fingerprint"]})
+        mask_decision = workflow.decision_template(mask_staged, {"semantic_category": "IMPERFECTION_MASK",
+            "scalar_channel": "roughness.red", "supported_uses": ["WEAR_OPACITY_MODULATION"]})
+        mask_decision.update(decision="APPROVED", decision_revision=1)
+        catalog, _ = workflow.reconcile({"schema_version": 1, "wear": []}, [decision, mask_decision],
+                                         {leakage["stable_id"]: staged["source_fingerprint"],
+                                          mask_candidate["stable_id"]: mask_staged["source_fingerprint"]})
         catalog_path = self.root / "catalog.json"
         catalog_path.write_text(json.dumps(catalog), encoding="utf-8")
         with patch.object(authoring, "DATA", self.root), patch.object(authoring, "CATALOG", catalog_path), \
@@ -204,9 +209,14 @@ class WearWorkflowTests(unittest.TestCase):
              patch.object(authoring, "CACHE", self.root / "approved_cache"), \
              patch.object(cli, "load_index", return_value=index), \
              patch.object(cli, "load_repository", return_value=self.repo):
-            cli.restage_approved()
-        stale_catalog = json.loads(catalog_path.read_text(encoding="utf-8"))
-        self.assertEqual(stale_catalog["wear"][0]["effective_status"], "STALE")
+            before = catalog_path.read_bytes()
+            with self.assertRaisesRegex(ValueError, "fingerprint"):
+                cli.restage_approved()
+            self.assertEqual(catalog_path.read_bytes(), before)
+        current = workflow.current_fingerprints(self.repo, index, catalog["wear"])
+        dependent = workflow.current_imperfection_status(self.repo, index, catalog["wear"])
+        stale_catalog, _ = workflow.reconcile(catalog, [], current, dependent)
+        self.assertTrue(all(r["effective_status"] == "STALE" for r in stale_catalog["wear"]))
         self.assertEqual(workflow.query(stale_catalog), [])
 
 
@@ -218,7 +228,9 @@ class WearWorkflowTests(unittest.TestCase):
         index = {**self.index, "logical_candidates": [candidate]}
         staged = workflow.stage_candidate(self.repo, candidate, "1K", self.root / "cache")
         decision = workflow.decision_template(staged, {"semantic_category": "IMPERFECTION_MASK",
-                                                        "surface_capabilities": ["PLANAR_ANY"]})
+                                                        "surface_capabilities": ["PLANAR_ANY"],
+                                                        "scalar_channel": "roughness.red",
+                                                        "supported_uses": ["WEAR_OPACITY_MODULATION"]})
         decision["decision"] = "APPROVED"
         decision["decision_revision"] = 1
         catalog, _ = workflow.reconcile({"schema_version": 1, "wear": []}, [decision],

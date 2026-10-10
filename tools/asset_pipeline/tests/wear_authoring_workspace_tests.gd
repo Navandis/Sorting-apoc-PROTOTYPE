@@ -86,9 +86,10 @@ func run() -> void:
     check(is_equal_approx(traffic.get_node("Quad").material_override.get_shader_parameter("opacity_multiplier"), 0.12), "existing Road Dust live appearance edit")
     traffic.spec.physical_size_m = original_size
     traffic.spec.opacity_multiplier = original_opacity
+    var signage_was_visible = signage.is_visible_in_tree()
     finish.get_node("ReceivingWear_Floor").hide()
     finish.get_node("ReceivingWear_LiftZone").hide()
-    check(signage.is_visible_in_tree(), "hide wear preserves accepted signage")
+    check(signage.is_visible_in_tree() == signage_was_visible, "hide wear preserves saved signage visibility")
     for helper in legacy:
         check(not helper.is_visible_in_tree() and helper.get_child_count() == 1, "legacy visibility and single geometry: " + str(helper.name))
     wing.free()

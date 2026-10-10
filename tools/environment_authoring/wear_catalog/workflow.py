@@ -22,6 +22,62 @@ HUMAN_STATES = {"APPROVED", "REJECTED", "DEFERRED"}
 RENDER_MODES = {"CUTOUT", "SOFT_BLEND"}
 CAPABILITIES = {"PLANAR_ANY", "VERTICAL_PREFERRED", "HORIZONTAL_PREFERRED", "WALL", "FLOOR", "CEILING"}
 CACHE_RESOURCE_ROOT = "res://assets/environment/wear/eaf4_cache"
+SCALAR_CHANNELS = {"opacity.red", "roughness.red"}
+MASK_USES = ("TINTED_OPACITY_LAYER", "WEAR_OPACITY_MODULATION")
+# Original reviewed source, not a default for unannotated future approvals.
+LEGACY_GRUNGE_ID = "eaf4:IMPERFECTION_TEXTURE_PROFILE:grunge_tedxadjc:tedxadjc"
+LEGACY_GRUNGE_FINGERPRINT = "e71aaf2f2092f229536c4a8ffd8e28b52db2c0e9b3924ab6436852a38267504b"
+LEAKAGE_MODULATION_IDS = {"eaf4b_e890439d8e117d36ac05e55c", "eaf4b_cd7701bd0cdb622c63628103"}
+
+
+def mask_scope(record, allow_legacy=False):
+    """Return validated scalar-only usage; never infer approval from map availability."""
+    if "scalar_channel" not in record and "supported_uses" not in record and allow_legacy:
+        if (record.get("source_stable_id") == LEGACY_GRUNGE_ID
+                and record.get("catalog_wear_id") == catalog_id(LEGACY_GRUNGE_ID)
+                and record.get("reviewed_source_fingerprint") == LEGACY_GRUNGE_FINGERPRINT
+                and record.get("selected_resolution") == "1K"
+                and record.get("decision_revision") == 1
+                and record.get("status", record.get("decision")) == "APPROVED"
+                and record.get("semantic_category") == "IMPERFECTION_MASK"
+                and record.get("render_mode") == "SOFT_BLEND"):
+            return "roughness.red", ["WEAR_OPACITY_MODULATION"]
+    channel = record.get("scalar_channel")
+    if not isinstance(channel, str) or channel not in SCALAR_CHANNELS:
+        raise ValueError("Mask decision requires scalar_channel opacity.red or roughness.red")
+    uses = record.get("supported_uses")
+    if (not isinstance(uses, list) or not uses or any(not isinstance(u, str) or u not in MASK_USES for u in uses)
+            or len(set(uses)) != len(uses)):
+        raise ValueError("Mask decision requires nonempty unique supported_uses from " + ", ".join(MASK_USES))
+    if record.get("render_mode") != "SOFT_BLEND" or record.get("patch_mode") or record.get("eaf3_material_id") or record.get("imperfection"):
+        raise ValueError("Scalar mask scope contradicts a material patch or dependent overlay")
+    return channel, [u for u in MASK_USES if u in uses]
+
+
+def validate_decision_sources(repository, index, decisions, catalog):
+    """Read-only approval preflight against indexed originals, before canonical writes."""
+    existing = {r["source_stable_id"]: r for r in catalog["wear"]}
+    for decision in decisions:
+        candidate = candidate_by_id(index, decision["source_stable_id"])
+        if candidate["source_class"] not in ("IMPERFECTION_MASK", "MASKED_DECAL"):
+            raise ValueError("Unsupported decision source class: " + candidate["source_class"])
+        old = existing.get(decision["source_stable_id"])
+        _validate_decision(decision, candidate["source_class"], allow_legacy=old is not None and _human_fields(old) == decision)
+        if candidate["source_class"] != "IMPERFECTION_MASK" or decision["decision"] != "APPROVED":
+            continue
+        channel, _ = mask_scope(decision, allow_legacy=old is not None and _human_fields(old) == decision)
+        maps = select_maps(candidate, decision["selected_resolution"])
+        if channel.split(".")[0] not in maps:
+            raise ValueError("Reviewed scalar_channel unavailable at selected resolution: " + channel)
+        facts = fingerprint_candidate(repository, candidate, decision["selected_resolution"])
+        if facts["source_fingerprint"] != decision["reviewed_source_fingerprint"]:
+            raise ValueError("Reviewed mask fingerprint differs from current guarded source")
+
+
+def _human_fields(record):
+    return {**{k: v for k, v in record.items() if k not in (
+        "effective_status", "current_source_fingerprint", "current_imperfection_fingerprint", "status")},
+        "decision": record["status"]}
 
 
 def _relative_source(value: str) -> str:
@@ -190,8 +246,10 @@ def fingerprint_candidate(repository, candidate, resolution):
     return {"source_fingerprint": fingerprint(anchor), "maps": maps, "interpretation": interpretation}
 
 
-def stage_candidate(repository, candidate, resolution, cache_root):
+def stage_candidate(repository, candidate, resolution, cache_root, dry_run=False, expected_fingerprint=None):
     facts = fingerprint_candidate(repository, candidate, resolution)
+    if expected_fingerprint is not None and facts["source_fingerprint"] != expected_fingerprint:
+        raise ValueError("Approved source fingerprint changed before cache staging")
     cache_root = Path(cache_root)
     group = catalog_id(candidate["stable_id"]) + "/" + resolution.lower()
     staged = {}
@@ -199,6 +257,9 @@ def stage_candidate(repository, candidate, resolution, cache_root):
         suffix = Path(record["source_relative"]).suffix.lower()
         target_relative = group + "/" + channel + suffix
         target = cache_root / target_relative
+        if dry_run:
+            staged[channel] = {**record, "cache_relative": target_relative}
+            continue
         target.parent.mkdir(parents=True, exist_ok=True)
         existing_hash = hashlib.sha256(target.read_bytes()).hexdigest() if target.exists() else None
         if existing_hash != record["sha256"]:
@@ -220,7 +281,7 @@ def stage_candidate(repository, candidate, resolution, cache_root):
 
 def decision_template(staged, hints):
     _reject_external_paths(hints)
-    return {"source_stable_id": staged["source_stable_id"], "catalog_wear_id": staged["catalog_wear_id"],
+    result = {"source_stable_id": staged["source_stable_id"], "catalog_wear_id": staged["catalog_wear_id"],
             "reviewed_source_fingerprint": staged["source_fingerprint"], "selected_resolution": staged["selected_resolution"],
             "decision": "PENDING", "decision_revision": 0,
             "semantic_category": hints.get("semantic_category", ""), "cause_tags": hints.get("cause_tags", []),
@@ -233,10 +294,18 @@ def decision_template(staged, hints):
             "roughness_strength": hints.get("roughness_strength", 1.0),
             "imperfection": hints.get("imperfection", {}),
             "review_notes": hints.get("review_notes", "")}
+    if staged.get("source_class") == "IMPERFECTION_MASK":
+        result["semantic_category"] = hints.get("semantic_category", "IMPERFECTION_MASK")
+        result.update(scalar_channel=hints.get("scalar_channel", ""), supported_uses=hints.get("supported_uses", []))
+    return result
 
 
-def _validate_decision(decision):
+def _validate_decision(decision, source_class=None, allow_legacy=False):
     _reject_external_paths(decision)
+    if decision.get("catalog_wear_id") != catalog_id(decision["source_stable_id"]):
+        raise ValueError("catalog_wear_id differs from authenticated source_stable_id")
+    if source_class is not None and source_class not in ("IMPERFECTION_MASK", "MASKED_DECAL"):
+        raise ValueError("Unsupported decision source class: " + source_class)
     if decision.get("decision") not in HUMAN_STATES:
         raise ValueError("Only explicit human decisions may be reconciled")
     if not isinstance(decision.get("decision_revision"), int) or decision["decision_revision"] < 1:
@@ -247,9 +316,15 @@ def _validate_decision(decision):
         raise ValueError("Unsupported surface capability")
     if not isinstance(decision.get("reviewed_source_fingerprint"), str) or len(decision["reviewed_source_fingerprint"]) != 64:
         raise ValueError("Missing strong fingerprint")
+    if source_class == "IMPERFECTION_MASK" or (source_class is None and (
+            decision.get("semantic_category") == "IMPERFECTION_MASK" or "scalar_channel" in decision or "supported_uses" in decision)):
+        if decision.get("decision") == "APPROVED" or decision.get("scalar_channel") or decision.get("supported_uses"):
+            mask_scope(decision, allow_legacy)
+    elif source_class is not None and ("scalar_channel" in decision or "supported_uses" in decision):
+        raise ValueError("Mask scope fields require an IMPERFECTION_MASK source")
 
 
-def reconcile(catalog, decisions, current_fingerprints, imperfection_current=None):
+def reconcile(catalog, decisions, current_fingerprints, imperfection_current=None, source_index=None):
     if catalog.get("schema_version") != SCHEMA_VERSION or not isinstance(catalog.get("wear"), list):
         raise ValueError("Invalid wear catalog")
     imperfection_current = imperfection_current or {}
@@ -259,14 +334,15 @@ def reconcile(catalog, decisions, current_fingerprints, imperfection_current=Non
         raise ValueError("Duplicate catalog source ID")
     audit = []
     for decision in decisions:
-        _validate_decision(decision)
         stable_id = decision["source_stable_id"]
         old = by_id.get(stable_id)
+        source_class = candidate_by_id(source_index, stable_id)["source_class"] if source_index is not None else None
+        _validate_decision(decision, source_class, allow_legacy=old is not None and _human_fields(old) == decision)
         if old:
             old_rev = old["decision_revision"]
             if decision["decision_revision"] < old_rev:
                 raise ValueError("Cannot rewind human decision revision")
-            if decision["decision_revision"] == old_rev and {**{k: v for k, v in old.items() if k not in ("effective_status", "current_source_fingerprint", "current_imperfection_fingerprint", "status")}, "decision": old["status"]} != decision:
+            if decision["decision_revision"] == old_rev and _human_fields(old) != decision:
                 raise ValueError("Changed human fields require a higher revision")
         new = deepcopy(decision)
         new["status"] = new.pop("decision")
@@ -372,11 +448,10 @@ def current_imperfection_status(repository, index, records):
     return values
 
 
-def stage_current_approved(repository, index, record, cache_root):
+def stage_current_approved(repository, index, record, cache_root, dry_run=False):
     if record.get("status") != "APPROVED" or record.get("effective_status") != "APPROVED":
         raise ValueError("Only current APPROVED wear may be restaged")
     candidate = candidate_by_id(index, record["source_stable_id"])
-    staged = stage_candidate(repository, candidate, record["selected_resolution"], cache_root)
-    if staged["source_fingerprint"] != record["reviewed_source_fingerprint"]:
-        raise ValueError("Approved source changed during restaging")
+    staged = stage_candidate(repository, candidate, record["selected_resolution"], cache_root, dry_run=dry_run,
+                             expected_fingerprint=record["reviewed_source_fingerprint"])
     return staged
