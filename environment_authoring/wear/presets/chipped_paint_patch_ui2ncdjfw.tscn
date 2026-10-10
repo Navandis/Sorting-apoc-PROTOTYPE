@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://environment_authoring/wear/environment_wear_authoring.gd" id="1"]
+
+[node name="ChippedPaintPatchUi2ncdjfw" type="Node3D"]
+script = ExtResource("1")
+approved_source = "Chipped Paint Patch | eaf4b_16c913a6a9cc1926bcc14833"

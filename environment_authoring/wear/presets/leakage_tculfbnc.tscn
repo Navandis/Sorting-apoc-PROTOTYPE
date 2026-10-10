@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://environment_authoring/wear/environment_wear_authoring.gd" id="1"]
+
+[node name="LeakageTculfbnc" type="Node3D"]
+script = ExtResource("1")
+approved_source = "Leakage | eaf4b_cd7701bd0cdb622c63628103"

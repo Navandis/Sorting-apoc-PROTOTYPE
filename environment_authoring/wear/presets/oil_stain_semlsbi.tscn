@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://environment_authoring/wear/environment_wear_authoring.gd" id="1"]
+
+[node name="OilStainSemlsbi" type="Node3D"]
+rotation = Vector3(-1.5707963267948966, 0, 0)
+script = ExtResource("1")
+approved_source = "Oil Stain | eaf4b_16f72d4cb37ef4ee74a9073c"

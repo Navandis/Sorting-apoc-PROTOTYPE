@@ -16,6 +16,16 @@ static var _catalog_loaded := false
         approved_source = value
         _resolve_source()
         request_refresh()
+## Current catalog restrictions for this source; source approval is not universal placement approval.
+@export_multiline var approved_usage_notes: String:
+    get:
+        for source in approved_sources():
+            if source["id"] == source_id():
+                return str(source["record"].get("review_notes", ""))
+        return "Choose a current approved source to see its usage restrictions."
+    set(_value):
+        pass
+
 ## Uses the selected source's appearance defaults. Turn off to return to authored values.
 ## Dimensions, transform, surface offset and mirroring stay authored in either mode.
 @export var use_approved_appearance_defaults := false:
@@ -216,7 +226,9 @@ func _get_configuration_warnings() -> PackedStringArray:
 
 func _validate_property(property: Dictionary) -> void:
     var field: String = property["name"]
-    if field == "spec":
+    if field == "approved_usage_notes":
+        property["usage"] = PROPERTY_USAGE_EDITOR | PROPERTY_USAGE_READ_ONLY
+    elif field == "spec":
         property["usage"] = PROPERTY_USAGE_NONE
     elif field == "approved_source":
         var labels: PackedStringArray = [""]

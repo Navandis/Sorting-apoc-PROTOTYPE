@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://environment_authoring/wear/environment_wear_authoring.gd" id="1"]
+
+[node name="ConcreteCrackSfhmrfg" type="Node3D"]
+script = ExtResource("1")
+approved_source = "Concrete Crack | eaf4b_1215035d1f7cf36ee4b9f3eb"

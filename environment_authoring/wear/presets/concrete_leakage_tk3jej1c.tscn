@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://environment_authoring/wear/environment_wear_authoring.gd" id="1"]
+
+[node name="ConcreteLeakageTk3jej1c" type="Node3D"]
+script = ExtResource("1")
+approved_source = "Concrete Leakage | eaf4b_cdded964c68d6777983af66f"

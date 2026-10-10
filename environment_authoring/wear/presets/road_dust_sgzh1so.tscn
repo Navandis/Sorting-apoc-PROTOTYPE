@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://environment_authoring/wear/environment_wear_authoring.gd" id="1"]
+
+[node name="RoadDustSgzh1so" type="Node3D"]
+rotation = Vector3(-1.5707963267948966, 0, 0)
+script = ExtResource("1")
+approved_source = "Road Dust | eaf4b_7efdf22029c82320d62147c7"

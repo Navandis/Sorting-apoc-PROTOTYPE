@@ -1518,6 +1518,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.628525, 3.6945462, -1.213
 [node name="SM_KB3D_WDC_PropLight_H_Glass2" parent="." unique_id=517906581 instance=ExtResource("65_p6c26")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.53431, 3.7066905, 1.165712)
 
+[node name="AuthoredWear" type="Node3D" parent="."]
+metadata/purpose = "Visual-only user wear; drag approved presets here and edit their instance roots"
+
+[node name="Receiving" type="Node3D" parent="AuthoredWear"]
+
+[node name="Storage" type="Node3D" parent="AuthoredWear"]
+
+[node name="OtherRooms" type="Node3D" parent="AuthoredWear"]
+
 [editable path="Environment"]
 [editable path="Environment/Greybox"]
 [editable path="FunctionalFixtures"]

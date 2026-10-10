@@ -1,5 +1,6 @@
 extends SceneTree
 # Guards the human-owned manual arrangement and retirement of invisible legacy physics.
+const WearGuard = preload("res://tools/asset_pipeline/tests/support/wear_branch_guard.gd")
 const WING = "res://gameplay/logistics_wing/wing_gameplay.tscn"
 const VISUAL_WEAR = preload("res://environment_authoring/wear/environment_wear_overlay.gd")
 const WEAR_PARENTS = ["ReceivingDecals/ReceivingFinishPass/ReceivingWear_Floor", "ReceivingDecals/ReceivingFinishPass/ReceivingWear_LiftZone"]
@@ -15,6 +16,12 @@ func run():
  root.add_child(wing)
  await physics_frame
  await physics_frame
+ var authored = wing.get_node_or_null("AuthoredWear")
+ check(authored != null,"wing has explicit visual-only authoring home")
+ if authored:
+  check(authored.get_parent() == wing and authored.owner == wing and authored.transform == Transform3D.IDENTITY,"wear home is directly scene-owned, outside gameplay actors")
+  var errors = WearGuard.validate(authored)
+  check(errors.is_empty(),"authored wear branch rejects gameplay/physics/light authority: " + str(errors))
  var dressing = wing.get_node_or_null("ReceivingSetDressing")
  check(dressing != null,"manual art has one editable production owner")
  if dressing:

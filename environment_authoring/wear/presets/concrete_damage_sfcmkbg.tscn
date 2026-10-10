@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://environment_authoring/wear/environment_wear_authoring.gd" id="1"]
+
+[node name="ConcreteDamageSfcmkbg" type="Node3D"]
+script = ExtResource("1")
+approved_source = "Concrete Damage | eaf4b_5858bd2916c3227c201ec5a4"
