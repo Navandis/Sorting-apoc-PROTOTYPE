@@ -1,0 +1,93 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Script" path="res://environment_authoring/wear/environment_wear_authoring.gd" id="1"]
+[ext_resource type="PackedScene" path="res://environment_authoring/wear/fixtures/wear_authoring_floor_sample.tscn" id="2"]
+[ext_resource type="Script" path="res://environment_authoring/wear/environment_wear_overlay.gd" id="3"]
+[ext_resource type="Resource" path="res://data/environment/wear_catalog/approved_specs/eaf4b_7efdf22029c82320d62147c7.tres" id="4"]
+
+[sub_resource type="StandardMaterial3D" id="FloorMaterial"]
+albedo_color = Color(0.46, 0.48, 0.5, 1)
+roughness = 0.8
+
+[sub_resource type="BoxMesh" id="Floor"]
+material = SubResource("FloorMaterial")
+size = Vector3(7, 0.1, 5)
+
+[sub_resource type="StandardMaterial3D" id="WallMaterial"]
+albedo_color = Color(0.55, 0.58, 0.49, 1)
+roughness = 0.75
+
+[sub_resource type="BoxMesh" id="Wall"]
+material = SubResource("WallMaterial")
+size = Vector3(6, 2.7, 0.1)
+
+[sub_resource type="Environment" id="Environment"]
+background_mode = 1
+background_color = Color(0.12, 0.14, 0.17, 1)
+ambient_light_source = 3
+ambient_light_color = Color(0.8, 0.85, 1, 1)
+ambient_light_energy = 0.7
+tonemap_mode = 2
+
+[node name="WearAuthoringValidation" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment")
+
+[node name="Light" type="DirectionalLight3D" parent="."]
+rotation = Vector3(-0.9, -0.45, 0)
+light_energy = 1.2
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="."]
+position = Vector3(4, 4, 7)
+rotation = Vector3(-0.44, 0.52, 0)
+current = true
+
+[node name="DiagnosticFloor" type="MeshInstance3D" parent="."]
+position = Vector3(0, -0.05, 0)
+mesh = SubResource("Floor")
+
+[node name="PaintedWall" type="MeshInstance3D" parent="."]
+position = Vector3(0, 1.35, -1.8)
+mesh = SubResource("Wall")
+
+[node name="Floor_Instance_A" parent="." instance=ExtResource("2")]
+position = Vector3(-1.5, 0, 0.5)
+
+[node name="Floor_Instance_B" parent="." instance=ExtResource("2")]
+position = Vector3(0, 0, 0.5)
+
+[node name="Wall_Cutout_Original" type="Node3D" parent="."]
+position = Vector3(-1.7, 1.45, -1.75)
+script = ExtResource("1")
+approved_source = "Chipped Paint Patch | eaf4b_16c913a6a9cc1926bcc14833"
+
+[node name="Wall_Cutout_Copy" type="Node3D" parent="."]
+position = Vector3(-0.15, 1.45, -1.75)
+script = ExtResource("1")
+approved_source = "Chipped Paint Patch | eaf4b_16c913a6a9cc1926bcc14833"
+
+[node name="Wall_PLANAR_ANY" type="Node3D" parent="."]
+position = Vector3(1.5, 1.45, -1.75)
+script = ExtResource("1")
+approved_source = "Concrete Crack | eaf4b_c3b63b5da3fbdda32be47bd0"
+
+[node name="Legacy_Default_Floor" type="Node3D" parent="."]
+position = Vector3(1.5, 0, 0.5)
+rotation = Vector3(-1.5707964, 0, 0)
+script = ExtResource("3")
+spec = ExtResource("4")
+
+[node name="FloorLabel" type="Label3D" parent="."]
+position = Vector3(0, 0.3, 1.4)
+billboard = 1
+text = "Separate scene instances A / B / legacy spec"
+font_size = 44
+outline_size = 8
+
+[node name="WallLabel" type="Label3D" parent="."]
+position = Vector3(0, 2.5, -1.7)
+text = "Cutout original / copy / PLANAR_ANY"
+font_size = 44
+outline_size = 8

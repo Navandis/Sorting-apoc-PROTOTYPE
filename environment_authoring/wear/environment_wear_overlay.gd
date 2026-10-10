@@ -8,24 +8,63 @@ const SOFT = preload("res://environment_authoring/wear/shaders/wear_overlay_soft
 
 @export var spec: EnvironmentWearOverlaySpec:
     set(value):
+        _disconnect_spec()
+        if Engine.is_editor_hint() and is_inside_tree() and value != null:
+            value = value.duplicate(false)
         spec = value
-        if is_inside_tree():
-            regenerate()
+        _connect_spec()
+        request_refresh()
+@export_group("Mirroring")
+## Horizontal texture mirroring, independent of ordinary node rotation.
 @export var mirror_u := false:
     set(value):
         mirror_u = value
-        if is_inside_tree():
-            regenerate()
+        request_refresh()
+## Vertical texture mirroring.
 @export var mirror_v := false:
     set(value):
         mirror_v = value
-        if is_inside_tree():
-            regenerate()
+        request_refresh()
+@export_group("Advanced Imperfection")
 @export var imperfection_enabled := true:
     set(value):
         imperfection_enabled = value
-        if is_inside_tree():
-            regenerate()
+        request_refresh()
+
+var _refresh_pending := false
+
+func _enter_tree() -> void:
+    # Node duplication and separate PackedScene instances must own editable specs.
+    # Texture resources deliberately stay shared.
+    if spec != null:
+        spec = spec.duplicate(false)
+    _connect_spec()
+
+func _exit_tree() -> void:
+    _disconnect_spec()
+
+func _connect_spec() -> void:
+    if spec != null and not spec.changed.is_connected(request_refresh):
+        spec.changed.connect(request_refresh)
+
+func _disconnect_spec() -> void:
+    if spec != null and spec.changed.is_connected(request_refresh):
+        spec.changed.disconnect(request_refresh)
+
+func request_refresh() -> void:
+    if is_inside_tree() and not _refresh_pending:
+        _refresh_pending = true
+        _refresh.call_deferred()
+
+func _refresh() -> void:
+    _refresh_pending = false
+    if is_inside_tree():
+        regenerate()
+        if Engine.is_editor_hint():
+            update_configuration_warnings()
+
+func _get_configuration_warnings() -> PackedStringArray:
+    return PackedStringArray(["Choose a wear spec."]) if spec == null else spec.validate()
 
 func _ready() -> void:
     regenerate()
@@ -37,16 +76,17 @@ func get_mesh_size() -> Vector2:
     return (quad.mesh as QuadMesh).size
 
 func regenerate() -> void:
-    scale = Vector3.ONE
     var quad := get_node_or_null("Quad") as MeshInstance3D
     if quad == null:
         quad = MeshInstance3D.new()
         quad.name = "Quad"
         add_child(quad)
-        if Engine.is_editor_hint():
-            quad.owner = get_tree().edited_scene_root
+    # Preview state is regenerated, never serialized into the authored scene.
+    quad.owner = null
     if spec == null or not spec.validate().is_empty():
         quad.visible = false
+        quad.material_override = null
+        quad.mesh = null
         return
     quad.visible = true
     quad.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
@@ -54,7 +94,10 @@ func regenerate() -> void:
     mesh.size = spec.physical_size_m
     quad.mesh = mesh
     quad.position = Vector3(0.0, 0.0, spec.surface_offset_m)
-    quad.material_override = build_material(spec, mirror_u, mirror_v, imperfection_enabled)
+    quad.material_override = build_material(spec, mirror_u, mirror_v, uses_imperfection())
+
+func uses_imperfection() -> bool:
+    return imperfection_enabled
 
 static func build_material(wear_spec: EnvironmentWearOverlaySpec, flip_u := false, flip_v := false, use_imperfection := true) -> ShaderMaterial:
     if wear_spec == null or not wear_spec.validate().is_empty():

@@ -4,36 +4,126 @@ extends Resource
 
 enum RenderMode { CUTOUT, SOFT_BLEND }
 
-@export var overlay_id := ""
-@export var display_name := ""
-@export var source_stable_id := ""
-@export var source_fingerprint := ""
-@export var semantic_category := ""
-@export var cause_tags: PackedStringArray = []
-@export var surface_capabilities: PackedStringArray = []
-@export var render_mode: RenderMode = RenderMode.CUTOUT
-@export var physical_size_m := Vector2(0.5, 0.5)
-@export_range(0.0005, 0.01, 0.0001) var surface_offset_m := 0.002
-@export var base_color_texture: Texture2D
-@export var opacity_texture: Texture2D
-@export var normal_texture: Texture2D
-@export var roughness_texture: Texture2D
-@export var metallic_texture: Texture2D
-@export var embedded_alpha := false
-@export var atlas_region := Vector4(0.0, 0.0, 1.0, 1.0)
-@export_range(0.0, 1.0) var opacity_multiplier := 1.0
-@export_range(0.0, 1.0) var albedo_strength := 0.5
-@export var albedo_tint := Color.WHITE
-@export_range(0.0, 2.0) var normal_strength := 1.0
-@export var normal_y_flip := false
-@export_range(0.0, 1.0) var roughness_strength := 1.0
-@export_range(0.0, 0.2) var edge_feather := 0.035
-@export var imperfection_mask_texture: Texture2D
-@export var imperfection_scale := Vector2.ONE
-@export_range(-360.0, 360.0) var imperfection_rotation := 0.0
-@export_range(0.1, 4.0) var imperfection_contrast := 1.0
-@export_range(0.0, 1.0) var imperfection_strength := 0.0
-@export_multiline var review_notes := ""
+@export var overlay_id := "":
+    set(value):
+        overlay_id = value
+        emit_changed()
+@export var display_name := "":
+    set(value):
+        display_name = value
+        emit_changed()
+@export var source_stable_id := "":
+    set(value):
+        source_stable_id = value
+        emit_changed()
+@export var source_fingerprint := "":
+    set(value):
+        source_fingerprint = value
+        emit_changed()
+@export var semantic_category := "":
+    set(value):
+        semantic_category = value
+        emit_changed()
+@export var cause_tags: PackedStringArray = []:
+    set(value):
+        cause_tags = value
+        emit_changed()
+@export var surface_capabilities: PackedStringArray = []:
+    set(value):
+        surface_capabilities = value
+        emit_changed()
+@export var render_mode: RenderMode = RenderMode.CUTOUT:
+    set(value):
+        render_mode = value
+        emit_changed()
+@export var physical_size_m := Vector2(0.5, 0.5):
+    set(value):
+        physical_size_m = value
+        emit_changed()
+@export_range(0.0005, 0.01, 0.0001) var surface_offset_m := 0.002:
+    set(value):
+        surface_offset_m = value
+        emit_changed()
+@export var base_color_texture: Texture2D:
+    set(value):
+        base_color_texture = value
+        emit_changed()
+@export var opacity_texture: Texture2D:
+    set(value):
+        opacity_texture = value
+        emit_changed()
+@export var normal_texture: Texture2D:
+    set(value):
+        normal_texture = value
+        emit_changed()
+@export var roughness_texture: Texture2D:
+    set(value):
+        roughness_texture = value
+        emit_changed()
+@export var metallic_texture: Texture2D:
+    set(value):
+        metallic_texture = value
+        emit_changed()
+@export var embedded_alpha := false:
+    set(value):
+        embedded_alpha = value
+        emit_changed()
+@export var atlas_region := Vector4(0.0, 0.0, 1.0, 1.0):
+    set(value):
+        atlas_region = value
+        emit_changed()
+@export_range(0.0, 1.0) var opacity_multiplier := 1.0:
+    set(value):
+        opacity_multiplier = value
+        emit_changed()
+@export_range(0.0, 1.0) var albedo_strength := 0.5:
+    set(value):
+        albedo_strength = value
+        emit_changed()
+@export var albedo_tint := Color.WHITE:
+    set(value):
+        albedo_tint = value
+        emit_changed()
+@export_range(0.0, 2.0) var normal_strength := 1.0:
+    set(value):
+        normal_strength = value
+        emit_changed()
+@export var normal_y_flip := false:
+    set(value):
+        normal_y_flip = value
+        emit_changed()
+@export_range(0.0, 1.0) var roughness_strength := 1.0:
+    set(value):
+        roughness_strength = value
+        emit_changed()
+@export_range(0.0, 0.2) var edge_feather := 0.035:
+    set(value):
+        edge_feather = value
+        emit_changed()
+@export var imperfection_mask_texture: Texture2D:
+    set(value):
+        imperfection_mask_texture = value
+        emit_changed()
+@export var imperfection_scale := Vector2.ONE:
+    set(value):
+        imperfection_scale = value
+        emit_changed()
+@export_range(-360.0, 360.0) var imperfection_rotation := 0.0:
+    set(value):
+        imperfection_rotation = value
+        emit_changed()
+@export_range(0.1, 4.0) var imperfection_contrast := 1.0:
+    set(value):
+        imperfection_contrast = value
+        emit_changed()
+@export_range(0.0, 1.0) var imperfection_strength := 0.0:
+    set(value):
+        imperfection_strength = value
+        emit_changed()
+@export_multiline var review_notes := "":
+    set(value):
+        review_notes = value
+        emit_changed()
 
 func validate() -> PackedStringArray:
     var errors: PackedStringArray = []

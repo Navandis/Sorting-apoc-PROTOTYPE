@@ -7,11 +7,65 @@ const MaterialQuery = preload("res://environment_authoring/environment_material_
 const Overlay = preload("res://environment_authoring/wear/environment_wear_overlay.gd")
 
 enum Mode { EAF3_MATERIAL, EAF4_SOURCE }
-@export var mode: Mode = Mode.EAF3_MATERIAL
-@export var eaf3_material_id := ""
-@export var wear_spec: EnvironmentWearOverlaySpec
-@export var physical_size_m := Vector2(1.0, 1.0)
-@export var surface_offset_m := 0.002
+@export var mode: Mode = Mode.EAF3_MATERIAL:
+    set(value):
+        mode = value
+        request_refresh()
+@export var eaf3_material_id := "":
+    set(value):
+        eaf3_material_id = value
+        request_refresh()
+@export var wear_spec: EnvironmentWearOverlaySpec:
+    set(value):
+        _disconnect_spec()
+        if Engine.is_editor_hint() and is_inside_tree() and value != null:
+            value = value.duplicate(false)
+        wear_spec = value
+        _connect_spec()
+        request_refresh()
+@export var physical_size_m := Vector2(1.0, 1.0):
+    set(value):
+        physical_size_m = value
+        request_refresh()
+@export var surface_offset_m := 0.002:
+    set(value):
+        surface_offset_m = value
+        request_refresh()
+
+var _refresh_pending := false
+
+func _enter_tree() -> void:
+    if wear_spec != null:
+        wear_spec = wear_spec.duplicate(false)
+    _connect_spec()
+
+func _exit_tree() -> void:
+    _disconnect_spec()
+
+func _connect_spec() -> void:
+    if wear_spec != null and not wear_spec.changed.is_connected(request_refresh):
+        wear_spec.changed.connect(request_refresh)
+
+func _disconnect_spec() -> void:
+    if wear_spec != null and wear_spec.changed.is_connected(request_refresh):
+        wear_spec.changed.disconnect(request_refresh)
+
+func request_refresh() -> void:
+    if is_inside_tree() and not _refresh_pending:
+        _refresh_pending = true
+        _refresh.call_deferred()
+
+func _refresh() -> void:
+    _refresh_pending = false
+    if is_inside_tree():
+        regenerate()
+        if Engine.is_editor_hint():
+            update_configuration_warnings()
+
+func _get_configuration_warnings() -> PackedStringArray:
+    if mode == Mode.EAF4_SOURCE:
+        return PackedStringArray(["Choose an EAF4 wear spec."]) if wear_spec == null else wear_spec.validate()
+    return PackedStringArray()
 
 func _ready() -> void:
     regenerate()
@@ -28,17 +82,17 @@ func resolve_material() -> Material:
     return null
 
 func regenerate() -> void:
-    scale = Vector3.ONE
     var quad := get_node_or_null("PatchQuad") as MeshInstance3D
     if quad == null:
         quad = MeshInstance3D.new()
         quad.name = "PatchQuad"
         add_child(quad)
-        if Engine.is_editor_hint():
-            quad.owner = get_tree().edited_scene_root
+    quad.owner = null
     var material := resolve_material()
     quad.visible = material != null
     if material == null:
+        quad.material_override = null
+        quad.mesh = null
         return
     if mode == Mode.EAF4_SOURCE:
         var source_mesh := QuadMesh.new()
