@@ -809,10 +809,11 @@ Assign face ownership at joins: use clean through/butt construction, avoid visib
 
 | Role | Wall | Floor | Ceiling |
 | --- | --- | --- | --- |
-| PRIMARY P01_C02 | Dirty Concrete<br>eaf3b_d335d94fd85c2c95c26b6b8b | Worn Concrete Floor<br>eaf3b_bb32071987faae156ff2d4e8 | Shuttered Concrete Wall<br>eaf3b_6bcd8f817ca2993433e217cc |
-| ALTERNATE P05_C03 | KB3D_BTL_ConcreteRoughPanelBright<br>eaf3b_5a797fbdc766d7e3dc475abf | Worn Concrete Floor<br>eaf3b_bb32071987faae156ff2d4e8 | KB3D_AMC_ConcreteWhite<br>eaf3b_71edb3fc983ed8f7655d9523 |
+| ACTIVE RECEIVING C1 — P05_C02 | KB3D_BTL_ConcreteRoughPanelBright<br>eaf3b_5a797fbdc766d7e3dc475abf | Worn Concrete Floor<br>eaf3b_bb32071987faae156ff2d4e8 | Shuttered Concrete Wall<br>eaf3b_6bcd8f817ca2993433e217cc |
+| HISTORICAL EAF5 PRIMARY P01_C02 | Dirty Concrete<br>eaf3b_d335d94fd85c2c95c26b6b8b | Worn Concrete Floor<br>eaf3b_bb32071987faae156ff2d4e8 | Shuttered Concrete Wall<br>eaf3b_6bcd8f817ca2993433e217cc |
+| HISTORICAL EAF5 ALTERNATE P05_C03 | KB3D_BTL_ConcreteRoughPanelBright<br>eaf3b_5a797fbdc766d7e3dc475abf | Worn Concrete Floor<br>eaf3b_bb32071987faae156ff2d4e8 | KB3D_AMC_ConcreteWhite<br>eaf3b_71edb3fc983ed8f7655d9523 |
 
-The table above retains the HISTORICAL EAF5 primary P01_C02 and alternate P05_C03 unchanged. Production C1 instead uses P05_C02: wall eaf3b_5a797fbdc766d7e3dc475abf / KB3D_BTL_ConcreteRoughPanelBright; floor eaf3b_bb32071987faae156ff2d4e8 / Worn Concrete Floor; ceiling eaf3b_6bcd8f817ca2993433e217cc / Shuttered Concrete Wall. Playable close-range review rejected Dirty Concrete for this approachable wall role; catalog source approval remains intact. P05_C03 is not an active production alternate. [35]
+The first data row is the accepted active Receiving C1 palette, P05_C02. The following two rows preserve the historical EAF5 proof selections and their material values. Playable close-range review rejected Dirty Concrete for the approachable Receiving wall role; catalog source approval remains intact. P05_C03 is not an active production alternate. [35]
 
 ### 34.5 Applied-finish conclusion
 

@@ -40,7 +40,8 @@ This targeted consistency revision records accepted progress through 10 October 
 | Confirmed | A deliberate design decision accepted for the current design. It may still change after evidence from testing. |
 | Provisional | A working target, number, formula, name, or implementation route that requires tuning. |
 | Validate | A design or technical assumption that must be proven through a prototype or playtest. |
-| Deferred | Intentionally outside the first-release target unless later reassessed. |
+| Deferred / later work | Outside the current prototype/milestone; may still be intended for the initial release. The relevant roadmap or section determines release status; this label alone does not exclude it from launch. |
+| Beyond first release | Explicitly outside the initial-release target unless separately reconsidered. |
 | Fallback | A simpler alternative retained in case the preferred implementation is too costly or unclear. |
 
 ### Document conventions
