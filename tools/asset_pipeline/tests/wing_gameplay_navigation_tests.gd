@@ -23,6 +23,10 @@ func _run() -> void:
 	await physics_frame
 	var player := scene.get_node("Player") as CharacterBody3D
 	var routes := [
+		_route("receiving_through_backlog", Vector3(-34.2, PLAYER_FLOOR_Y, 0.6), [
+			Vector3(-29.2, PLAYER_FLOOR_Y, 0.6),
+			Vector3(-26.7, PLAYER_FLOOR_Y, 0.6),
+		]),
 		_route("spawn_to_table_pickup", Vector3(-10.0, PLAYER_FLOOR_Y, -2.5), [
 			Vector3(-10.0, PLAYER_FLOOR_Y, -0.2),
 			Vector3(-9.6, PLAYER_FLOOR_Y, 1.3),
@@ -48,6 +52,7 @@ func _run() -> void:
 	]
 	for record: Dictionary in routes:
 		var result := await _run_route(player, record)
+		print("NAVIGATION_ROUTE ", record["name"], " ", result)
 		_check(
 			bool(result.get("passed", false)),
 			"%s reaches its review stance (%s)" % [record["name"], result.get("note", "")]

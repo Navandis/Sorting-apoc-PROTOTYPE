@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene load_steps=11 format=3]
 
 [ext_resource type="Script" path="res://gameplay/logistics_wing/wing_environment.gd" id="1_environment"]
 [ext_resource type="PackedScene" path="res://greybox/logistics_wing/wing_geometry.tscn" id="2_geometry"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" path="res://gameplay/logistics_wing/receiving/receiving_structural_shell.tscn" id="3_receiving_shell"]
 
 [ext_resource type="PackedScene" path="res://gameplay/logistics_wing/receiving/receiving_lighting.tscn" id="4_receiving_lighting"]
+[ext_resource type="PackedScene" path="res://gameplay/logistics_wing/receiving/receiving_reflections.tscn" id="5_receiving_reflections"]
 
 
 [sub_resource type="Environment" id="Environment_gameplay"]
@@ -108,6 +109,8 @@ mesh = SubResource("BoxMesh_dispatch_east_butt")
 position = Vector3(-36, 0, 0)
 
 [node name="ReceivingLighting" parent="." instance=ExtResource("4_receiving_lighting")]
+
+[node name="ReceivingReflections" parent="." instance=ExtResource("5_receiving_reflections")]
 
 [node name="GameplayEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_gameplay")

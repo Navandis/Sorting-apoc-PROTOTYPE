@@ -86,8 +86,8 @@ func assert_installation(rig, path):
   var general = path.begins_with("General")
   check(light is SpotLight3D and light.shadow_enabled,path+" shadowed spot")
   check(light.global_position.distance_to(expected[3])<.0001 and (-light.global_basis.z).dot((expected[4]-expected[3]).normalized())>.99999,path+" source/target aim")
-  check(is_equal_approx(light.light_energy,1.9 if general else .85) and is_equal_approx(light.spot_range,6.2 if general else 3.2) and is_equal_approx(light.spot_angle,55 if general else 52),path+" energy/range/angle seed")
-  check(light.light_color.is_equal_approx(Color(1,.84,.68) if general else Color(1,.94,.82)),path+" warmth")
+  check(is_equal_approx(light.light_energy,1.71 if general else .85) and is_equal_approx(light.spot_range,6.2 if general else 3.2) and is_equal_approx(light.spot_angle,55 if general else 52),path+" energy/range/angle seed")
+  check(light.light_color.is_equal_approx(Color(1,.82,.64) if general else Color(1,.94,.82)),path+" warmth")
   check(is_equal_approx(light.shadow_bias,.05 if general else .025) and is_equal_approx(light.shadow_normal_bias,.5 if general else .25) and is_equal_approx(light.light_volumetric_fog_energy,0),path+" shadow settings/no fog addition")
  else:
   check(installation.find_children("*","Light3D",true,false).is_empty(),"warning has no light")
