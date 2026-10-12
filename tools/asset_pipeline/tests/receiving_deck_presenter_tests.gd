@@ -287,31 +287,37 @@ func _test_reconstruction_after_released_base_compacts_without_replanning() -> v
 
 func _test_runtime_debug_delivery_is_explicit() -> void:
 	_pending_helpers += 1
-	var runtime := RuntimeScene.instantiate()
-	root.add_child(runtime)
+	var isolated := RuntimeScene.instantiate()
+	root.add_child(isolated)
+	_check(not isolated.run_debug_delivery() and isolated.get_node("ReceivingManager").get_active_batch() == null, "isolated runtime fails closed without the physical installation")
+	isolated.free()
+	var runtime := _spawn_runtime_in_wing()
 	await process_frame
 	var manager := runtime.get_node("ReceivingManager") as ReceivingManager
 	var presenter := runtime.get_node("ReceivingDeckPresenter")
 	_check(manager.get_active_batch() == null, "normal runtime creates no synthetic batch without CLI flag")
-	_check(runtime.call("run_debug_delivery", 1842, 9002, 24), "explicit debug delivery prepares, deposits, and reveals")
+	_check(runtime.call("run_debug_delivery", 1842, 9002, 24), "explicit debug delivery prepares and deposits")
 	var batch := manager.get_active_batch()
 	_check(batch != null and batch.content_seed == 1842 and batch.presentation_seed == 9002 and batch.target_bulk == 24, "debug delivery preserves requested seeds and Bulk")
-	_check(presenter.call("get_presentation_state") == DeckPresenterScript.PresentationState.AVAILABLE, "debug delivery is immediately available")
+	_check(runtime.get_node("ReceivingLiftCycle").get_cycle_state() == 1 and presenter.call("get_presentation_state") == DeckPresenterScript.PresentationState.HIDDEN, "debug delivery enters ARRIVAL with TAKE hidden")
+	_open_debug_cycle(runtime)
+	_check(presenter.call("get_presentation_state") == DeckPresenterScript.PresentationState.AVAILABLE, "debug delivery becomes available only after fully open")
 	_check(not (presenter.call("get_materialized_world_items") as Array).is_empty(), "debug delivery materializes real items")
-	runtime.free()
+	await create_timer(.6).timeout
+	runtime.get_parent().free()
 
-	var mode_runtime := RuntimeScene.instantiate()
-	root.add_child(mode_runtime)
+	var mode_runtime := _spawn_runtime_in_wing()
 	await process_frame
 	_check(mode_runtime.call("_fixture_mode_flag", PackedStringArray()) == DeckPlannerScript.FixtureMode.BARE, "missing fixture flag defaults to bare")
 	_check(mode_runtime.call("_fixture_mode_flag", PackedStringArray(["--receiving-fixture-mode=crates"])) == DeckPlannerScript.FixtureMode.CRATES_ALLOWED, "crate CLI mode parses")
 	_check(mode_runtime.call("_fixture_mode_flag", PackedStringArray(["--receiving-fixture-mode=pallets"])) == DeckPlannerScript.FixtureMode.PALLETS_ALLOWED, "pallet CLI mode parses")
 	_check(mode_runtime.call("_fixture_mode_flag", PackedStringArray(["--receiving-fixture-mode=mixed"])) == DeckPlannerScript.FixtureMode.MIXED, "mixed CLI mode parses")
 	_check(mode_runtime.call("_fixture_mode_flag", PackedStringArray(["--receiving-fixture-mode=unknown"])) == -1, "unknown fixture CLI mode is rejected")
-	_check(mode_runtime.call("run_debug_delivery", 1842, 9001, 24, DeckPlannerScript.FixtureMode.MIXED), "explicit mixed debug delivery prepares and reveals")
+	_check(mode_runtime.call("run_debug_delivery", 1842, 9001, 24, DeckPlannerScript.FixtureMode.MIXED), "explicit mixed debug delivery prepares and deposits")
 	var mixed_manager := mode_runtime.get_node("ReceivingManager") as ReceivingManager
 	_check(not mixed_manager.get_active_batch().presentation_fixtures.is_empty(), "mixed debug delivery persists fixtures")
-	mode_runtime.free()
+	await create_timer(.6).timeout
+	mode_runtime.get_parent().free()
 	_pending_helpers -= 1
 
 
@@ -371,13 +377,17 @@ func _test_fixture_reconstruction_reservation_and_empty_persistence() -> void:
 
 func _test_actual_main_deck_and_fixture_stacks_reject_manual_put() -> void:
 	_pending_helpers += 1
-	var runtime := RuntimeScene.instantiate()
-	root.add_child(runtime)
+	var isolated := RuntimeScene.instantiate()
+	root.add_child(isolated)
+	_check(not isolated.run_debug_delivery() and isolated.get_node("ReceivingManager").get_active_batch() == null, "isolated runtime fails closed without the physical installation")
+	isolated.free()
+	var runtime := _spawn_runtime_in_wing()
 	await process_frame
 	_check(
 		runtime.call("run_debug_delivery", 1842, 9001, 24, DeckPlannerScript.FixtureMode.MIXED),
 		"private PUT regression mixed delivery prepares"
 	)
+	_open_debug_cycle(runtime)
 	await physics_frame
 	await physics_frame
 	var presenter = runtime.get_node("ReceivingDeckPresenter")
@@ -423,7 +433,8 @@ func _test_actual_main_deck_and_fixture_stacks_reject_manual_put() -> void:
 	controller.free()
 	camera.free()
 	carried.free()
-	runtime.free()
+	await create_timer(.6).timeout
+	runtime.get_parent().free()
 	_pending_helpers -= 1
 
 
@@ -620,3 +631,20 @@ func _test_profile_revision_mismatch_fails_closed() -> void:
 	presenter.free()
 	manager.free()
 	await process_frame
+
+
+func _spawn_runtime_in_wing() -> Node3D:
+	var wing = load("res://gameplay/logistics_wing/wing_gameplay.tscn").instantiate()
+	root.add_child(wing)
+	wing.get_node("Player").set_physics_process(false)
+	return wing.get_node("ReceivingRuntime") as Node3D
+
+
+func _open_debug_cycle(runtime: Node) -> void:
+	var cycle = runtime.get_node("ReceivingLiftCycle")
+	cycle.set_process(false)
+	cycle.get_node("Arrival").stop()
+	cycle._process(21.0)
+	cycle.get_node("Opening").stop()
+	cycle._process(6.0)
+	_check(cycle.get_cycle_state() == 4, "test advances through real automatic staging and open endpoint")

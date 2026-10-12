@@ -21,6 +21,8 @@ var _surface_wrappers: Dictionary = {}
 var _fixture_roots: Dictionary = {}
 var _world_items_by_entry_id: Dictionary = {}
 var _released_callbacks: Dictionary = {}
+var _presented_batch_id := ""
+var _lift_pickup_gate: Callable
 
 
 func configure(manager: ReceivingManager, catalog: ItemCatalog, profile: Resource) -> bool:
@@ -43,6 +45,7 @@ func configure(manager: ReceivingManager, catalog: ItemCatalog, profile: Resourc
 
 
 func present_active_batch() -> bool:
+	_presented_batch_id = ""
 	if _manager == null or _profile == null or _catalog == null:
 		return false
 	var batch: LootBatch = _manager.get_active_batch()
@@ -78,10 +81,46 @@ func present_active_batch() -> bool:
 			_rebuild_private_surfaces()
 			_world_items_by_entry_id.clear()
 			return false
+	_presented_batch_id = batch.batch_id
 	return true
 
 
+func set_lift_pickup_gate(gate: Callable) -> void:
+	_lift_pickup_gate = gate
+
+
+func suspend_pickup() -> void:
+	if _state != PresentationState.DRAINED_WAITING_CLOSE:
+		_state = PresentationState.HIDDEN
+	_set_materialized_available(false)
+
+
+func is_active_batch_staged() -> bool:
+	if _manager == null or _presented_batch_id.is_empty() or _presented_batch_id != _manager.get_active_batch_id():
+		return false
+	var remaining := 0
+	for entry: LootBatchEntry in _manager.get_active_batch().entries:
+		if entry.remaining_in_batch:
+			remaining += 1
+	return get_materialized_world_items().size() == remaining
+
+
+func _gate_allows_pickup() -> bool:
+	return _lift_pickup_gate.is_null() or (_lift_pickup_gate.is_valid() and bool(_lift_pickup_gate.call()))
+
+
+func _can_take_entry(batch_id: String, entry_id: String, item_id: String) -> bool:
+	if _state != PresentationState.AVAILABLE or not _gate_allows_pickup() or _manager == null or _manager.get_active_batch_id() != batch_id:
+		return false
+	for entry: LootBatchEntry in _manager.get_active_batch().entries:
+		if entry.entry_id == entry_id:
+			return entry.remaining_in_batch and entry.item_instance_id == item_id
+	return false
+
+
 func reveal_active_batch() -> bool:
+	if not _gate_allows_pickup() or not is_active_batch_staged():
+		return false
 	if _manager == null or _manager.get_active_batch() == null or _manager.get_active_batch().is_drained():
 		return false
 	_state = PresentationState.AVAILABLE
@@ -210,7 +249,7 @@ func _materialize_entry(
 	)
 	storage_entry.host = host
 	storage_entry.world_item = world_item
-	world_item.configure_receiving(host, item, surface, stack_id, item.instance_id)
+	world_item.configure_receiving(host, item, surface, stack_id, item.instance_id, _can_take_entry.bind(batch.batch_id, entry.entry_id, item.instance_id))
 	var fit: Dictionary
 	if is_base:
 		fit = {
@@ -352,6 +391,7 @@ func _set_materialized_available(available: bool) -> void:
 
 
 func _on_active_batch_changed(_batch_id: String) -> void:
+	_presented_batch_id = ""
 	if _manager == null or _manager.get_active_batch() == null:
 		_rebuild_private_surfaces()
 		_world_items_by_entry_id.clear()

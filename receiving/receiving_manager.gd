@@ -6,6 +6,7 @@ const MAX_QUEUED_BATCHES: int = 2
 signal active_batch_changed(batch_id: String)
 signal active_batch_drained(batch_id: String)
 signal deposit_rejected(batch_id: String)
+signal contents_changed
 
 var _active_batch_id: String = ""
 var _queued_batch_ids: Array[String] = []
@@ -34,6 +35,7 @@ func deposit_batch(batch: LootBatch) -> bool:
 		active_batch_changed.emit(_active_batch_id)
 	else:
 		_queued_batch_ids.append(batch.batch_id)
+	contents_changed.emit()
 	return true
 
 
@@ -65,6 +67,7 @@ func release_entry(batch_id: String, entry_id: String, item_instance_id: String)
 		return false
 	if active_batch.is_drained():
 		active_batch_drained.emit(batch_id)
+	contents_changed.emit()
 	return true
 
 
@@ -79,4 +82,5 @@ func retire_drained_active_after_close() -> String:
 		_active_batch_id = _queued_batch_ids[0]
 		_queued_batch_ids.remove_at(0)
 	active_batch_changed.emit(_active_batch_id)
+	contents_changed.emit()
 	return _active_batch_id

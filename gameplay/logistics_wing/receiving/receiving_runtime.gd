@@ -14,12 +14,27 @@ const DEFAULT_TARGET_BULK: int = 24
 
 @onready var receiving_manager: ReceivingManager = $ReceivingManager
 @onready var deck_presenter: Node3D = $ReceivingDeckPresenter
+@onready var lift_cycle: Node3D = $ReceivingLiftCycle
 
 
 func _ready() -> void:
 	if not deck_presenter.call("configure", receiving_manager, item_catalog, deck_profile):
 		push_error("Receiving runtime could not configure its deterministic deck presenter.")
 		return
+	var installation := get_node_or_null("../ReceivingLiftInstallation") as Node3D
+	# Runtime can still be inspected alone; physical deliveries fail closed without art.
+	if installation != null and not lift_cycle.configure(
+		receiving_manager, deck_presenter, installation,
+		get_node_or_null("../Environment/ReceivingLighting/WarningFixtures/W1/Fixture/Mesh"),
+		get_node_or_null("../ReceivingLiftMonitor/PhosphorDisplay"),
+		get_node_or_null("../Environment/ReceivingReflections")
+	):
+		push_error("Receiving runtime could not configure its lift installation.")
+		return
+	_run_cli_debug_delivery.call_deferred()
+
+
+func _run_cli_debug_delivery() -> void:
 	var arguments := OS.get_cmdline_user_args()
 	if not arguments.has("--receiving-deck-debug"):
 		return
@@ -44,7 +59,7 @@ func run_debug_delivery(
 		return false
 	if fixture_mode < DeckPlannerScript.FixtureMode.BARE or fixture_mode > DeckPlannerScript.FixtureMode.MIXED:
 		return false
-	if receiving_manager.get_active_batch() != null:
+	if not lift_cycle.is_configured() or lift_cycle.is_busy() or receiving_manager.get_active_batch() != null:
 		return false
 	var batch_id := "receiving_debug_%d_%d_%d" % [content_seed, presentation_seed, target_bulk]
 	var batch: LootBatch = LootSourceScript.new().generate_committed_batch(
@@ -67,7 +82,7 @@ func run_debug_delivery(
 		return false
 	if not receiving_manager.deposit_batch(batch):
 		return false
-	return bool(deck_presenter.call("reveal_active_batch"))
+	return lift_cycle.get_cycle_state() == ReceivingLiftCycle.State.ARRIVAL
 
 
 func _numeric_flag(arguments: PackedStringArray, flag_name: String, fallback: int) -> int:

@@ -31,6 +31,7 @@ var _storage_stack_id: String = ""
 var _storage_item_key: String = ""
 var _pickup_reach_kind: PickupReachKind = PickupReachKind.LOOSE
 var _pickup_interaction_enabled: bool = true
+var _receiving_pickup_guard: Callable
 
 
 func configure(host: Node3D, definition: ItemDefinition) -> void:
@@ -40,6 +41,7 @@ func configure(host: Node3D, definition: ItemDefinition) -> void:
 	_storage_surface = null
 	_storage_stack_id = ""
 	_storage_item_key = ""
+	_receiving_pickup_guard = Callable()
 	_pickup_reach_kind = PickupReachKind.LOOSE
 	_pickup_interaction_enabled = true
 	_build_interaction_area()
@@ -68,7 +70,8 @@ func configure_receiving(
 	item_instance: ItemInstance,
 	storage_surface: Node,
 	storage_stack_id: String,
-	storage_item_key: String
+	storage_item_key: String,
+	pickup_guard: Callable = Callable()
 ) -> void:
 	## Receiving deck members use storage mechanics without becoming PUT targets.
 	_configure_existing_with_reach(
@@ -79,6 +82,7 @@ func configure_receiving(
 		storage_item_key,
 		PickupReachKind.RECEIVING
 	)
+	_receiving_pickup_guard = pickup_guard
 
 
 func _configure_existing_with_reach(
@@ -99,6 +103,7 @@ func _configure_existing_with_reach(
 	_storage_stack_id = storage_stack_id
 	if _storage_stack_id.is_empty():
 		_storage_stack_id = _storage_item_key
+	_receiving_pickup_guard = Callable()
 	_pickup_reach_kind = pickup_reach_kind
 	_pickup_interaction_enabled = true
 	_build_interaction_area()
@@ -169,6 +174,14 @@ func utility_text() -> String:
 
 
 func can_pickup_into(carried_items: Node) -> bool:
+	# Receiving must enforce the gate in the transfer path as well as collision.
+	# Loose items and ordinary storage retain their established behavior.
+	if _pickup_reach_kind == PickupReachKind.RECEIVING:
+		if not _pickup_interaction_enabled or not is_instance_valid(_host) or _host.is_queued_for_deletion():
+			return false
+		if not _receiving_pickup_guard.is_null():
+			if not _receiving_pickup_guard.is_valid() or not bool(_receiving_pickup_guard.call()):
+				return false
 	if carried_items == null or _item_instance == null:
 		return false
 	if not carried_items.has_method("can_add"):
@@ -206,6 +219,9 @@ func pickup_into(carried_items: Node) -> bool:
 	_storage_surface = null
 	_storage_stack_id = ""
 	_storage_item_key = ""
+
+	if _pickup_reach_kind == PickupReachKind.RECEIVING:
+		set_pickup_interaction_enabled(false)
 
 	# Remove the interaction target immediately so repeated clicks cannot duplicate
 	# the item while queue_free waits for the end of the frame.

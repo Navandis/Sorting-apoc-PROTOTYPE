@@ -70,6 +70,7 @@ func _measure_case(case: Dictionary) -> Dictionary:
 
 	var runtime := scene.get_node("ReceivingRuntime")
 	var delivery_ok := _prepare_case(runtime, case)
+	_open_cycle(runtime)
 	_check(delivery_ok, "%s debug delivery prepares" % String(case["label"]))
 	if not delivery_ok:
 		scene.free()
@@ -351,6 +352,7 @@ func _replay_limiting_boundary(limiting: Dictionary, selected_reach: float) -> v
 	await physics_frame
 	var runtime := scene.get_node("ReceivingRuntime")
 	_check(_prepare_case(runtime, limiting), "limiting replay delivery prepares")
+	_open_cycle(runtime)
 	await physics_frame
 	await physics_frame
 	player.set_physics_process(false)
@@ -457,7 +459,14 @@ func _prepare_case(runtime: Node, case: Dictionary) -> bool:
 		return false
 	if not runtime.get_node("ReceivingManager").deposit_batch(batch):
 		return false
-	var presenter = runtime.get_node("ReceivingDeckPresenter")
-	if not presenter.present_active_batch():
-		return false
-	return bool(presenter.reveal_active_batch())
+	return true
+
+
+func _open_cycle(runtime: Node) -> void:
+	var cycle = runtime.get_node("ReceivingLiftCycle")
+	cycle.set_process(false)
+	cycle.get_node("Arrival").stop()
+	cycle._process(21.0)
+	cycle.get_node("Opening").stop()
+	cycle._process(6.0)
+	_check(cycle.get_cycle_state() == 4, "reach checks wait for the fully open shutter")

@@ -49,6 +49,8 @@ func run() -> void:
 	var runtime := wing.get_node("ReceivingRuntime")
 	check(runtime.position.is_equal_approx(Vector3(-37.41487, .82, 0)), "current Receiving runtime placement")
 	check(runtime.get_node("ReceivingManager").get_active_batch() == null, "ordinary startup has no synthetic cargo")
+	check(runtime.get_node("ReceivingLiftCycle").get_cycle_state() == 0 and not runtime.get_node("ReceivingLiftCycle").is_busy(), "normal configured startup is SEALED_EMPTY")
+	check(is_equal_approx(wing.get_node("ReceivingLiftInstallation/SM_KB3D_NWD_ReuGarageDoorBlue_B").position.y, .086), "startup closes shutter at runtime")
 	check(wing.get_functional_surfaces().size() == 16, "sixteen ordinary surfaces")
 	var greybox := env.get_node("Greybox")
 	check(greybox.get_node("Districts/Receiving/Floor_ReceivingApron/StaticBody3D/CollisionShape3D").shape.size.is_equal_approx(Vector3(7.5, .3, 8)), "current nominal apron")

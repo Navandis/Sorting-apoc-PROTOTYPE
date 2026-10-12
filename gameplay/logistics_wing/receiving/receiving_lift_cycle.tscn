@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://gameplay/logistics_wing/receiving/receiving_lift_cycle.gd" id="1"]
+[ext_resource type="AudioStream" path="res://audio/sfx/receiving/freight_lift/freight_lift_arrival_travel.wav" id="2"]
+[ext_resource type="AudioStream" path="res://audio/sfx/receiving/freight_lift/freight_lift_shutter_open.wav" id="3"]
+[ext_resource type="AudioStream" path="res://audio/sfx/receiving/freight_lift/freight_lift_shutter_close.wav" id="4"]
+[ext_resource type="AudioStream" path="res://audio/sfx/receiving/freight_lift/freight_lift_departure_travel.wav" id="5"]
+
+[node name="ReceivingLiftCycle" type="Node3D"]
+script = ExtResource("1")
+
+[node name="Arrival" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("2")
+volume_db = -3.0
+unit_size = 3.0
+max_distance = 22.0
+
+[node name="Opening" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3")
+volume_db = -3.0
+unit_size = 3.0
+max_distance = 22.0
+
+[node name="Closing" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("4")
+volume_db = -3.0
+unit_size = 3.0
+max_distance = 22.0
+
+[node name="Departure" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("5")
+volume_db = -3.0
+unit_size = 3.0
+max_distance = 22.0
