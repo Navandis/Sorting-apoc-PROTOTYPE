@@ -13,7 +13,7 @@ signal readout_changed
 @export_range(0.0, 1.0, 0.05) var opening_motion_delay_s := 0.15
 @export_range(0.1, 12.0, 0.05) var opening_motion_duration_s := 5.3
 @export_range(0.0, 1.0, 0.05) var closing_motion_delay_s := 0.15
-@export_range(0.1, 12.0, 0.05) var closing_motion_duration_s := 4.4 # 0.15 s delay + 4.40 s motion finishes at 4.55 s, before the 4.65–4.80 s latch gap.
+@export_range(0.1, 12.0, 0.05) var closing_motion_duration_s := 3.25 # 0.15 s delay + 3.25 s motion reaches contact at 3.40 s; the full cue continues.
 @export_group("W1 indication")
 @export_range(1.0, 6.0, 0.1) var amber_pulse_period_s := 2.8
 @export_range(0.0, 3.0, 0.05) var amber_emission_energy := 0.85

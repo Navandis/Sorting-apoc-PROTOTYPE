@@ -142,10 +142,12 @@ func run() -> void:
 	cycle.get_node("Closing").stop()
 	cycle._process(3.0)
 	check(door.position.y > .086 and door.position.y < 3.1416707 and cycle.get_cycle_state() == 5, "closing movement")
-	cycle._process(1.6)
-	check(is_equal_approx(door.position.y, .086) and cycle.get_cycle_state() == 5, "closed endpoint is reached by 4.60 s, before the 4.65–4.80 s latch gap")
+	cycle._process(.3)
+	check(door.position.y > .086 and cycle.get_cycle_state() == 5 and not cycle.can_take_receiving(), "shutter is still moving and TAKE disabled at 3.30 s before contact")
+	cycle._process(.15)
+	check(is_equal_approx(door.position.y, .086) and cycle.get_cycle_state() == 5, "closed endpoint is reached by 3.45 s, aligned with the 3.40 s impact")
 	var closed_pose := door.transform
-	for step: float in [.05, .15, 2.43]:
+	for step: float in [.35, 1.0, 2.43]:
 		cycle._process(step)
 		check(door.transform.is_equal_approx(closed_pose) and cycle.get_cycle_state() == 5 and not cycle.can_take_receiving(), "shutter stays stationary and TAKE disabled throughout latch until 7.23 s")
 	cycle._process(.05)
@@ -269,19 +271,25 @@ func real_time_cycle() -> void:
 	var shutter: Node3D = wing.get_node("ReceivingLiftInstallation/SM_KB3D_NWD_ReuGarageDoorBlue_B")
 	var closed_audio_position := -1.0
 	var closed_pose := Transform3D.IDENTITY
-	var close_deadline := Time.get_ticks_msec() + 12000
+	var closing_start := Time.get_ticks_msec()
+	var last_audio_position := 0.0
+	var close_deadline := closing_start + 12000
 	while cycle.get_cycle_state() == 5 and Time.get_ticks_msec() < close_deadline:
+		last_audio_position = maxf(last_audio_position, closing_audio.get_playback_position())
+		if (Time.get_ticks_msec() - closing_start) / 1000.0 < closing_audio.stream.get_length() - .15:
+			check(closing_audio.playing, "closing audio continues uninterrupted through motion and reverberation")
 		if is_equal_approx(shutter.position.y, .086):
 			if closed_audio_position < 0:
 				closed_audio_position = closing_audio.get_playback_position()
 				closed_pose = shutter.transform
 				print("CLOSING_SYNC closed_audio_s=", closed_audio_position, " cue_length_s=", closing_audio.stream.get_length(), " shutter_y=", shutter.position.y)
-				check(closed_audio_position <= 4.65, "actual shutter reaches CLOSED before latch onset on the playing cue")
-			elif closing_audio.get_playback_position() >= 4.8:
-				check(shutter.transform.is_equal_approx(closed_pose), "actual shutter remains stationary during audible latch")
+				check(closed_audio_position >= 3.30 and closed_audio_position <= 3.50, "actual shutter reaches CLOSED at approximately 3.40 s on the playing cue")
+			else:
+				check(shutter.transform.is_equal_approx(closed_pose), "actual shutter remains stationary throughout remaining reverberation and latch")
 		check(not cycle.can_take_receiving(), "actual CLOSING keeps TAKE disabled")
 		await process_frame
 	check(closed_audio_position >= 0 and cycle.get_cycle_state() == 0, "actual full closing/latching cue finishes before IDLE/departure")
+	check(last_audio_position >= closing_audio.stream.get_length() - .1, "closing playback reaches the full cue endpoint")
 	await capture("closing_latched")
 	check(cycle.is_busy() and cycle.get_node("Departure").playing, "actual departure retains turnaround")
 	var deadline := Time.get_ticks_msec() + 24000
@@ -308,7 +316,7 @@ func capture(label: String) -> Image:
 	var image := root.get_texture().get_image()
 	check(image != null and not image.is_empty(), "renderer produces cycle pixels")
 	if image != null:
-		image.save_png("res://reports/receiving/stage_c_corrections_2026-10-13/" + label + ".png")
+		image.save_png("res://reports/receiving/stage_c_final_timing_2026-10-13/" + label + ".png")
 	return image
 
 func cli_startup() -> void:
