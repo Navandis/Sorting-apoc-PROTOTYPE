@@ -102,6 +102,16 @@ position = Vector3(-35.83, 2.85, 2.2)
 surface_material_override/0 = ExtResource("5")
 surface_material_override/1 = ExtResource("6")
 
+[node name="WarningLight" type="OmniLight3D" parent="WarningFixtures/W1/Fixture"]
+position = Vector3(0.16, 0, 0)
+visible = false
+light_color = Color(1, 0.48, 0.08, 1)
+light_energy = 0.0
+light_volumetric_fog_energy = 0.0
+shadow_enabled = false
+omni_range = 1.8
+omni_attenuation = 2.0
+
 [editable path="TaskFixtures/T1/Fixture"]
 
 [editable path="TaskFixtures/T2/Fixture"]

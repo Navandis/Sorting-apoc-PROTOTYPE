@@ -22,6 +22,10 @@ func check(ok: bool, message: String) -> bool:
 	return ok
 
 func run() -> void:
+	if OS.get_cmdline_user_args().has("--warning-light-render"):
+		await warning_render_compare()
+		finish()
+		return
 	if OS.get_cmdline_user_args().has("--cycle-cli-startup"):
 		await cli_startup()
 		finish()
@@ -47,6 +51,10 @@ func run() -> void:
 	var manager: ReceivingManager = runtime.receiving_manager
 	var presenter = runtime.deck_presenter
 	var ui = wing.get_node("ReceivingLiftMonitor/PhosphorDisplay/ScreenViewport/Interface")
+	var warning_light := wing.get_node_or_null("Environment/ReceivingLighting/WarningFixtures/W1/Fixture/WarningLight") as OmniLight3D
+	check(warning_light != null, "W1 owns a real local warning light")
+	if warning_light != null:
+		check(not warning_light.visible and warning_light.light_energy == 0.0 and not warning_light.shadow_enabled and warning_light.omni_range <= 2.0, "warning starts off and remains localized/non-shadowed")
 	var warning: StandardMaterial3D = wing.get_node("Environment/ReceivingLighting/WarningFixtures/W1/Fixture/Mesh").get_surface_override_material(1)
 	check(manager.get_active_batch() == null and not cycle.is_busy(), "normal startup has no synthetic cargo")
 	check(cycle.get_cycle_state() == 0 and is_equal_approx(door.position.y, .086), "SEALED_EMPTY closes runtime shutter")
@@ -78,10 +86,13 @@ func run() -> void:
 	cycle.get_node("Arrival").stop()
 	cycle._process(19.0)
 	check(cycle.get_cycle_state() == 1 and is_equal_approx(door.position.y, .086), "interrupted audio cannot skip arrival")
+	var amber_light_low: float = warning_light.light_energy if warning_light != null else 0.0
 	var amber_low := warning.emission_energy_multiplier
 	var amber_tint_low := warning.albedo_color
 	cycle._process(.5)
 	check(warning.emission_enabled and warning.emission.r > warning.emission.g and not is_equal_approx(amber_low, warning.emission_energy_multiplier) and not amber_tint_low.is_equal_approx(warning.albedo_color), "slow pulsing amber including visible lens tint")
+	if warning_light != null:
+		check(warning_light.visible and warning_light.light_color.is_equal_approx(Color(1.0, .48, .08)) and not is_equal_approx(amber_light_low, warning_light.light_energy), "real local amber light follows the same slow pulse")
 	cycle._process(1.0)
 	check(cycle.get_cycle_state() == 3 and cycle.get_node("Opening").playing, "staged cargo automatically reveals")
 	check_display(ui, "OPENING", "24", "00", "LIFT SHUTTER OPENING")
@@ -92,6 +103,8 @@ func run() -> void:
 	check(cycle.get_cycle_state() == 4 and is_equal_approx(door.position.y, 3.1416707), "fully-open-only OPEN")
 	check_display(ui, "OPEN", "24", "00", "LOOT READY FOR PICK-UP")
 	check(warning.emission.g > warning.emission.r and is_equal_approx(warning.emission_energy_multiplier, .35), "subdued steady green")
+	if warning_light != null:
+		check(warning_light.visible and warning_light.light_color.is_equal_approx(Color(.22, .65, .32)) and warning_light.light_energy > 0 and warning_light.light_energy < .25, "OPEN casts subdued steady green light")
 	check(Lens.emission_energy_multiplier == 0.0 and not Lens.emission_enabled, "shared warning resource immutable")
 	await create_timer(.3).timeout
 	var settled_refreshes := refreshes
@@ -124,12 +137,18 @@ func run() -> void:
 	check(not warning.emission_enabled and warning.albedo_color.is_equal_approx(Lens.albedo_color) and cycle.get_node("Closing").playing, "close restores unlit lens and starts latch cue")
 	check(manager.get_active_batch() == batch and presenter.get_materialized_fixture_nodes() == fixtures, "fixtures/ownership retained during close")
 	check(not runtime.run_debug_delivery(), "busy delivery cannot be interrupted")
+	if warning_light != null:
+		check(not warning_light.visible and warning_light.light_energy == 0.0, "CLOSING immediately extinguishes actual local illumination")
 	cycle.get_node("Closing").stop()
 	cycle._process(3.0)
 	check(door.position.y > .086 and door.position.y < 3.1416707 and cycle.get_cycle_state() == 5, "closing movement")
-	cycle._process(3.0)
-	check(is_equal_approx(door.position.y, .086) and cycle.get_cycle_state() == 5, "closed endpoint waits for full latch duration")
-	cycle._process(2.0)
+	cycle._process(1.6)
+	check(is_equal_approx(door.position.y, .086) and cycle.get_cycle_state() == 5, "closed endpoint is reached by 4.60 s, before the 4.65–4.80 s latch gap")
+	var closed_pose := door.transform
+	for step: float in [.05, .15, 2.43]:
+		cycle._process(step)
+		check(door.transform.is_equal_approx(closed_pose) and cycle.get_cycle_state() == 5 and not cycle.can_take_receiving(), "shutter stays stationary and TAKE disabled throughout latch until 7.23 s")
+	cycle._process(.05)
 	check(cycle.get_cycle_state() == 0 and cycle.is_busy() and cycle.get_node("Departure").playing, "IDLE retains busy departure")
 	check_display(ui, "IDLE", "CLEAR", "00", "AWAITING EXPEDITION LOOT")
 	check(manager.get_active_batch() == batch, "departure retains drained active")
@@ -246,9 +265,24 @@ func real_time_cycle() -> void:
 		check(item.pickup_into(carried) and carried.get_selected_item() == exact, "real-time exact TAKE")
 		carried.remove_item(exact)
 		await physics_frame
-	await create_timer(2.7).timeout
-	await capture("closing")
-	check(await wait_for_state(cycle, 0, 12.0), "actual close and latch return IDLE")
+	var closing_audio: AudioStreamPlayer3D = cycle.get_node("Closing")
+	var shutter: Node3D = wing.get_node("ReceivingLiftInstallation/SM_KB3D_NWD_ReuGarageDoorBlue_B")
+	var closed_audio_position := -1.0
+	var closed_pose := Transform3D.IDENTITY
+	var close_deadline := Time.get_ticks_msec() + 12000
+	while cycle.get_cycle_state() == 5 and Time.get_ticks_msec() < close_deadline:
+		if is_equal_approx(shutter.position.y, .086):
+			if closed_audio_position < 0:
+				closed_audio_position = closing_audio.get_playback_position()
+				closed_pose = shutter.transform
+				print("CLOSING_SYNC closed_audio_s=", closed_audio_position, " cue_length_s=", closing_audio.stream.get_length(), " shutter_y=", shutter.position.y)
+				check(closed_audio_position <= 4.65, "actual shutter reaches CLOSED before latch onset on the playing cue")
+			elif closing_audio.get_playback_position() >= 4.8:
+				check(shutter.transform.is_equal_approx(closed_pose), "actual shutter remains stationary during audible latch")
+		check(not cycle.can_take_receiving(), "actual CLOSING keeps TAKE disabled")
+		await process_frame
+	check(closed_audio_position >= 0 and cycle.get_cycle_state() == 0, "actual full closing/latching cue finishes before IDLE/departure")
+	await capture("closing_latched")
 	check(cycle.is_busy() and cycle.get_node("Departure").playing, "actual departure retains turnaround")
 	var deadline := Time.get_ticks_msec() + 24000
 	while cycle.is_busy() and Time.get_ticks_msec() < deadline:
@@ -265,16 +299,17 @@ func wait_for_state(cycle: Node, state: int, seconds: float) -> bool:
 		await create_timer(.1).timeout
 	return cycle.get_cycle_state() == state
 
-func capture(label: String) -> void:
+func capture(label: String) -> Image:
 	if DisplayServer.get_name() == "headless":
-		return
+		return null
 	await process_frame
 	await process_frame
 	await RenderingServer.frame_post_draw
 	var image := root.get_texture().get_image()
 	check(image != null and not image.is_empty(), "renderer produces cycle pixels")
 	if image != null:
-		image.save_png("res://reports/receiving/stage_c_2026-10-12/" + label + ".png")
+		image.save_png("res://reports/receiving/stage_c_corrections_2026-10-13/" + label + ".png")
+	return image
 
 func cli_startup() -> void:
 	var wing = load(ProjectSettings.get_setting("application/run/main_scene")).instantiate()
@@ -287,3 +322,64 @@ func cli_startup() -> void:
 	check(runtime.deck_presenter.get_presentation_state() == 0 and not runtime.lift_cycle.can_take_receiving(), "CLI cargo stays non-interactable")
 	await create_timer(.6).timeout
 	wing.free()
+func warning_render_compare() -> void:
+	if not check(DisplayServer.get_name() != "headless", "warning illumination requires an actual renderer"):
+		return
+	var wing := WingScene.instantiate()
+	wing.get_node("Player").enable_held_item_view = false
+	wing.get_node("Player").set_physics_process(false)
+	root.add_child(wing)
+	current_scene = wing
+	var player = wing.get_node("Player")
+	player.set_process_unhandled_input(false)
+	var camera: Camera3D = player.get_node("Camera3D")
+	camera.global_position = Vector3(-33.8, 1.85, 3.45)
+	camera.look_at(Vector3(-35.83, 2.65, 2.7))
+	var runtime = wing.get_node("ReceivingRuntime")
+	var cycle = runtime.lift_cycle
+	cycle.set_process(false)
+	var light: OmniLight3D = wing.get_node("Environment/ReceivingLighting/WarningFixtures/W1/Fixture/WarningLight")
+	await create_timer(.5).timeout
+	await capture("warning_off")
+	check(runtime.run_debug_delivery(1842, 9001, 24, 3), "warning comparison uses normal admission")
+	cycle.get_node("Arrival").stop()
+	cycle._process(.7) # Accepted 2.8 s sine period: first peak.
+	await create_timer(.5).timeout
+	var amber_on := await capture("warning_amber_peak")
+	light.visible = false # Diagnostic only: lens/state/camera/environment stay identical.
+	var amber_off := await capture("warning_amber_lens_only")
+	light.visible = true
+	cycle._process(1.4) # First trough, still ARRIVAL with the same closed shutter.
+	var amber_low := await capture("warning_amber_trough")
+	cycle._process(21.0)
+	cycle.get_node("Opening").stop()
+	cycle._process(6.0)
+	await create_timer(.5).timeout
+	var green_on := await capture("warning_green")
+	light.visible = false
+	var green_off := await capture("warning_green_lens_only")
+	light.visible = true
+	var point := Vector3(-35.849, 2.85, 3.0) # Adjacent concrete, outside the W1 mesh.
+	var projected := camera.unproject_position(point)
+	var image_scale := Vector2(amber_on.get_size()) / camera.get_viewport().get_visible_rect().size
+	var pixel := Vector2i(projected * image_scale)
+	check(pixel.x > 6 and pixel.y > 6 and pixel.x < amber_on.get_width() - 6 and pixel.y < amber_on.get_height() - 6, "concrete comparison patch is inside the fixed camera")
+	var amber_delta := patch_average(amber_on, pixel) - patch_average(amber_off, pixel)
+	var green_delta := patch_average(green_on, pixel) - patch_average(green_off, pixel)
+	var pulse_delta := patch_average(amber_on, pixel) - patch_average(amber_low, pixel)
+	print("W1_RENDER concrete=", point, " pixel=", pixel, " amber_delta=", amber_delta, " green_delta=", green_delta, " pulse_delta=", pulse_delta)
+	check(amber_delta.r > .005 and amber_delta.r > amber_delta.b * 2, "real amber illumination reaches adjacent concrete beyond the lens")
+	check(pulse_delta.r > .003, "amber pulse visibly changes illumination on concrete")
+	check(green_delta.g > .003 and green_delta.g > green_delta.r, "real steady green illumination reaches adjacent concrete")
+	check(maxf(green_delta.g, green_delta.r) < maxf(amber_delta.r, amber_delta.g) * .6, "green surface contribution stays quieter than amber")
+	check(wing.get_node("Environment/ReceivingLighting").find_children("*", "SpotLight3D", true, false).size() == 4, "comparison retains all four production spots")
+	await create_timer(.6).timeout
+	wing.free()
+	current_scene = null
+
+func patch_average(image: Image, center: Vector2i) -> Color:
+	var sum := Color(0, 0, 0, 0)
+	for y in range(center.y - 6, center.y + 7):
+		for x in range(center.x - 6, center.x + 7):
+			sum += image.get_pixel(x, y)
+	return sum / 169.0

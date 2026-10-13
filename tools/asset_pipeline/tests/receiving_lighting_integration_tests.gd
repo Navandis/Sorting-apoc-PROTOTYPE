@@ -44,9 +44,9 @@ func run():
  var rig = env.get_node_or_null("ReceivingLighting")
  if check(rig != null,"environment owns Receiving lighting"):
   check(rig.scene_file_path == RIG and rig.transform == Transform3D.IDENTITY and env.global_transform == Transform3D.IDENTITY,"identity ownership/world coordinates")
-  check(rig.find_children("*","Light3D",true,false).size() == 4,"four sources; no helper fill")
+  check(rig.find_children("*","Light3D",true,false).size() == 5,"four production spots plus one W1 warning source")
   check(rig.find_children("*","SpotLight3D",true,false).size() == 4,"four spots")
-  check(rig.find_children("*","OmniLight3D",true,false).is_empty(),"no local omni")
+  check(rig.find_children("*","OmniLight3D",true,false).size() == 1,"only the authorized local W1 omni")
   check(rig.find_children("*","CollisionObject3D",true,false).is_empty(),"no fixture collision")
   check(rig.get_node_or_null("GeneralFixtures/G3")==null and wing.get_node_or_null("SM_ChainLink_03")==null and wing.get_node_or_null("SM_KB3D_SIN_PropPendantLight_A_Main_transparent")==null,"complete G3 placement retired")
   for name in ["SM_ChainLink_01","SM_ChainLink_02","SM_KB3D_WDC_PropLight_H_Glass","SM_KB3D_WDC_PropLight_H_Glass2"]:
@@ -90,7 +90,12 @@ func assert_installation(rig, path):
   check(light.light_color.is_equal_approx(Color(1,.82,.64) if general else Color(1,.94,.82)),path+" warmth")
   check(is_equal_approx(light.shadow_bias,.05 if general else .025) and is_equal_approx(light.shadow_normal_bias,.5 if general else .25) and is_equal_approx(light.light_volumetric_fog_energy,0),path+" shadow settings/no fog addition")
  else:
-  check(installation.find_children("*","Light3D",true,false).is_empty(),"warning has no light")
+  check(installation.find_children("*","Light3D",true,false).size() == 1,"one W1 local source")
+  var warning = fixture.get_node_or_null("WarningLight") as OmniLight3D
+  if check(warning != null,"warning source follows existing W1 fixture"):
+   check(not warning.shadow_enabled and not warning.visible and warning.light_energy == 0.0,"warning initializes off without shadows")
+   check(warning.position.is_equal_approx(Vector3(.16,0,0)) and warning.global_position.distance_to(Vector3(-35.67,2.85,2.2)) < .001,"warning source just outside the lens")
+   check(is_equal_approx(warning.omni_range,1.8) and is_equal_approx(warning.omni_attenuation,2.0),"localized warning reach/falloff")
  for mesh in fixture.find_children("*","MeshInstance3D",true,false):
   for s in mesh.mesh.get_surface_count():
    var mat = mesh.get_active_material(s)

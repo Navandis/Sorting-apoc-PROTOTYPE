@@ -13,13 +13,17 @@ signal readout_changed
 @export_range(0.0, 1.0, 0.05) var opening_motion_delay_s := 0.15
 @export_range(0.1, 12.0, 0.05) var opening_motion_duration_s := 5.3
 @export_range(0.0, 1.0, 0.05) var closing_motion_delay_s := 0.15
-@export_range(0.1, 12.0, 0.05) var closing_motion_duration_s := 5.6
+@export_range(0.1, 12.0, 0.05) var closing_motion_duration_s := 4.4 # 0.15 s delay + 4.40 s motion finishes at 4.55 s, before the 4.65–4.80 s latch gap.
 @export_group("W1 indication")
 @export_range(1.0, 6.0, 0.1) var amber_pulse_period_s := 2.8
 @export_range(0.0, 3.0, 0.05) var amber_emission_energy := 0.85
 @export_range(0.0, 2.0, 0.05) var green_emission_energy := 0.35
 @export var amber_color := Color(1.0, 0.48, 0.08)
 @export var green_color := Color(0.22, 0.65, 0.32)
+@export_group("W1 localized illumination")
+@export_range(0.0, 3.0, 0.05) var amber_light_energy := 0.85
+@export_range(0.0, 1.0, 0.05) var green_light_energy := 0.15
+@export_range(0.5, 3.0, 0.1) var warning_light_range_m := 1.8
 @export_group("Positional sound")
 @export_range(-24.0, 6.0, 0.5) var audio_volume_db := -3.0
 @export_range(1.0, 8.0, 0.1) var audio_unit_size_m := 3.0
@@ -30,6 +34,7 @@ var _presenter: ReceivingDeckPresenter
 var _shutter: Node3D
 var _reflections: Node
 var _warning: StandardMaterial3D
+var _warning_light: OmniLight3D
 var _warning_off_albedo := Color.WHITE
 var _warning_off_shading := BaseMaterial3D.SHADING_MODE_PER_PIXEL
 var _state := State.SEALED_EMPTY
@@ -71,6 +76,9 @@ func configure(manager: ReceivingManager, presenter: ReceivingDeckPresenter, ins
 	set_as_top_level(true) # Runtime's nonuniform presentation scale is not an audio metric.
 	global_transform = Transform3D(Basis.IDENTITY, _shutter.global_position + Vector3(0, 1.4, 0))
 	if warning_mesh != null:
+		_warning_light = warning_mesh.get_node_or_null("../WarningLight") as OmniLight3D
+		if _warning_light != null:
+			_warning_light.omni_range = warning_light_range_m
 		_warning = warning_mesh.get_surface_override_material(1).duplicate() as StandardMaterial3D
 		# Uniform runtime lens emission allows both colors; original texture/resource stays intact.
 		_warning.emission_texture = null
@@ -215,16 +223,23 @@ func _audio_players() -> Array[AudioStreamPlayer3D]:
 	return [$Arrival, $Opening, $Closing, $Departure]
 
 func _update_warning() -> void:
+	var amber := _state in [State.ARRIVAL, State.SEALED_READY, State.REVEALING]
+	var pulse_scale := 1.0
+	if amber:
+		var pulse := (sin(_warning_elapsed * TAU / maxf(amber_pulse_period_s, .01)) + 1.0) * .5
+		pulse_scale = lerpf(.15, 1.0, pulse)
+	if _warning_light != null:
+		_warning_light.visible = amber or _state == State.OPEN
+		_warning_light.light_color = amber_color if amber else green_color
+		_warning_light.light_energy = amber_light_energy * pulse_scale if amber else green_light_energy if _state == State.OPEN else 0.0
 	if _warning == null:
 		return
-	var amber := _state in [State.ARRIVAL, State.SEALED_READY, State.REVEALING]
 	_warning.emission_enabled = amber or _state == State.OPEN
 	# The metallic source lens otherwise hides the low emission in reflections.
 	_warning.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED if _warning.emission_enabled else _warning_off_shading
 	if amber:
-		var pulse := (sin(_warning_elapsed * TAU / maxf(amber_pulse_period_s, .01)) + 1.0) * .5
 		_warning.emission = amber_color
-		_warning.emission_energy_multiplier = amber_emission_energy * lerpf(.15, 1.0, pulse)
+		_warning.emission_energy_multiplier = amber_emission_energy * pulse_scale
 		_set_warning_tint(amber_color, _warning.emission_energy_multiplier)
 	elif _state == State.OPEN:
 		_warning.emission = green_color

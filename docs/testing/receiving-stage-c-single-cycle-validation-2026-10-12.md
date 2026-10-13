@@ -85,3 +85,38 @@ Human judgement remains pending for synchronization, sound balance near Receivin
 - This validation record.
 
 Stop at this first-cycle handoff. No physical queued-delivery demonstration, push, merge, branch deletion or automatic follow-up.
+
+## 13 October 2026 — bounded audiovisual corrections (current REVISE)
+
+This update supersedes the earlier **5.60 s closing-motion duration** and **lens-only W1 indication** above. The developer has human-validated the existing full-cycle gameplay; these two audiovisual corrections still require normal human review. Stage C remains **REVISE** until explicitly promoted.
+
+**Preflight:** clean `codex/receiving-stage-c-single-cycle` at `3cedce0443ad5a8907d0dd252f6c3b5602da502d`, directly after `31d6e5e`. The developer's preceding EQ commit modifies only the opening/closing WAVs and is preserved. Godot remains `4.7.stable.official.5b4e0cb0f`. All four audio assets/import settings, soundtrack balance and authored installation/room transforms remain unchanged.
+
+**Closing synchronization:** retain the 0.15 s motion delay and set `closing_motion_duration_s = 4.40`, giving a nominal closed endpoint at **4.55 s**, just before the identified 4.65–4.80 s movement/latch gap. Smoothstep interpolation and exact Closed marker remain. CLOSING continues through the full original cue; IDLE, departure and busy-turnaround/retirement rules are unchanged. No WAV editing, splitting, speed change or truncation.
+
+**W1 illumination:** one scene-owned `WarningFixtures/W1/Fixture/WarningLight` OmniLight3D, 0.16 m outside the fixture along local +X, non-shadowed and off by default. Range **1.8 m**, attenuation **2.0**, amber peak energy **0.85**, steady green energy **0.15**. It uses the lens's existing colors and the same 2.8 s pulse factor. Both visibility and energy turn off immediately on CLOSING and remain off in SEALED_EMPTY. Lens appearance/isolation is retained. Four shadowed production spots, G1/G2/T1/T2, KeyLight, WorldEnvironment, ambient/exposure and A30WS probe settings are preserved.
+
+### Fresh technical evidence
+
+Logs and screenshots are local/ignored under `reports/receiving/stage_c_corrections_2026-10-13/`; earlier evidence is preserved.
+
+- Extended cycle regression first reproduced the absent real W1 light and shutter motion continuing past the latch gap, then passed.
+- **Eight final suites PASS:** `receiving_lift_cycle`, `receiving_lighting_integration` (130 checks), `receiving_lift_crt`, `receiving_deck_presenter`, `receiving_reflections_integration`, `receiving_manager`, `wing_startup_parity`, `wing_gameplay_composition` (all have `_tests.gd` suffix). Final logs were checked for diagnostics: only the two existing intentional duplicate-namespace rejection errors in composition remain. Unaffected broader checks reuse the dated 12 October evidence.
+- **Actual full-cue OpenGL run PASS:** `closing_sync_realtime.log` measured shutter CLOSED at playback position **4.545306 s**, Y **0.086**, with cue length **7.239093 s**. Every subsequent rendered latch frame kept the same shutter transform and disabled TAKE; IDLE/departure followed full cue completion. The automatic cycle/retirement completed in about 55.24 s including test waits and captures. No ERROR/SCRIPT ERROR/WARNING diagnostics.
+- **Actual warning-light OpenGL comparison PASS:** same camera, environment and four normal production spots enabled. On/off diagnostic pairs keep the lens and state identical, toggling only the local light temporarily. A 13 × 13 patch on adjacent concrete at **(-35.849, 2.85, 3.0)**, outside the fixture mesh, gained amber RGB **(+0.2178, +0.0578, +0.0022)** and green **(+0.0023, +0.0219, +0.0048)**. Amber peak-to-trough red difference was **0.1699**. This verifies actual surface illumination, its pulse and the quieter green contribution; it does not substitute for human visual judgement.
+- One consolidated read-only final review found no actionable correctness or scope findings. No new runner/capture framework, additional probe, per-frame recapture or global-illumination diagnostic.
+
+Useful fixed-camera production-light comparisons:
+[Off](<D:/Godot Projects/Sorting-apoc-PROTOTYPE/reports/receiving/stage_c_corrections_2026-10-13/warning_off.png>),
+[Amber peak](<D:/Godot Projects/Sorting-apoc-PROTOTYPE/reports/receiving/stage_c_corrections_2026-10-13/warning_amber_peak.png>),
+[Amber trough](<D:/Godot Projects/Sorting-apoc-PROTOTYPE/reports/receiving/stage_c_corrections_2026-10-13/warning_amber_trough.png>),
+[Green](<D:/Godot Projects/Sorting-apoc-PROTOTYPE/reports/receiving/stage_c_corrections_2026-10-13/warning_green.png>).
+The paired `warning_amber_lens_only.png` and `warning_green_lens_only.png` are retained alongside them. No production lighting setting was disabled or saved for these comparisons.
+
+### Human review and changed paths
+
+Use the same prototype launch command above and unload through normal gameplay. Confirm physical closure before the audible latch, natural remaining latch sound, pulsing amber spill, subdued green spill, immediate extinction on closing, intact CRT/TAKE/departure and ordinary storage behavior. Tune `closing_motion_delay_s/duration_s`, `amber_light_energy`, `green_light_energy` and `warning_light_range_m` on `ReceivingRuntime/ReceivingLiftCycle`; relaunch after saved range changes. Existing lens and audio controls remain.
+
+Only five paths change: `receiving_lift_cycle.gd`, `receiving_lighting.tscn` under `gameplay/logistics_wing/receiving/`; `receiving_lift_cycle_tests.gd` and `receiving_lighting_integration_tests.gd` under `tools/asset_pipeline/tests/`; and this validation record.
+
+Known limits: non-shadowed local lighting can penetrate nearby geometry within its bounded range; human intensity/spill judgement remains pending. The existing held-view automation limitation and accepted C1 capture-performance debt remain as recorded above. The separate wing-global-illumination diagnostic and queued-delivery follow-up remain deferred. End with a separate local correction commit; no push, merge or other follow-up.
