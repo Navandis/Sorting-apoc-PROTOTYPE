@@ -23,7 +23,7 @@ visible = false
 
 [node name="Light" parent="Gameplay/Environment/ReceivingLighting/GeneralFixtures/G1" index="1"]
 shadow_bias = 0.3
-light_color = Color(1, 0.9, 0.78, 1)
+light_color = Color(1, 0.84, 0.68, 1)
 light_energy = 2.6
 spot_range = 8.0
 spot_angle = 70.0
@@ -31,21 +31,23 @@ spot_angle = 70.0
 [node name="Light" parent="Gameplay/Environment/ReceivingLighting/GeneralFixtures/G2" index="1"]
 shadow_bias = 0.2
 rotation_degrees = Vector3(-105, 0, 0)
-light_color = Color(1, 0.9, 0.78, 1)
+light_color = Color(1, 0.84, 0.68, 1)
 light_energy = 2.6
 spot_range = 8.0
 spot_angle = 70.0
 
 [node name="Light" parent="Gameplay/Environment/ReceivingLighting/TaskFixtures/T1" index="1"]
 rotation_degrees = Vector3(-68, -155, 0)
-light_energy = 1.15
+light_color = Color(1, 0.91, 0.77, 1)
+light_energy = 0.75
 spot_range = 4.0
 spot_angle = 58.0
 
 [node name="Light" parent="Gameplay/Environment/ReceivingLighting/TaskFixtures/T2" index="1"]
 shadow_bias = 0.1
 rotation_degrees = Vector3(-68, -25, 0)
-light_energy = 1.15
+light_color = Color(1, 0.91, 0.77, 1)
+light_energy = 0.85
 spot_range = 4.0
 spot_angle = 58.0
 
