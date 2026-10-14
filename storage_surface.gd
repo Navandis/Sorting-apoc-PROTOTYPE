@@ -4,6 +4,7 @@ class_name StorageSurface
 const StorageCategoriesScript = preload("res://storage_categories.gd")
 const StorageOrientationScript = preload("res://storage_orientation.gd")
 const StorageStackScript = preload("res://storage_stack.gd")
+const StorageItemOrientationScript = preload("res://storage_item_orientation.gd")
 
 ## Deterministic 2D storage grid attached to one physical shelf level.
 ##
@@ -524,6 +525,34 @@ func commit_stack_entry(entry: StorageStack.Entry, fit: Dictionary) -> bool:
 	if not bool(fit.get("valid", false)) or _item_to_stack.has(entry.item_key):
 		return false
 
+	if (
+		fit.get("footprint", entry.footprint) != entry.footprint
+		or bool(fit.get("rotated", entry.packing_rotated)) != entry.packing_rotated
+	):
+		return false
+	if entry.item != null and (
+		entry.item_key != entry.item.instance_id
+		or entry.can_be_stacked != entry.item.can_be_stacked()
+		or entry.can_support_stack != entry.item.can_support_stack()
+		or entry.auto_stack_group != entry.item.get_auto_stack_group()
+	):
+		return false
+	if entry.item != null and _player_storage_interaction_enabled:
+		var unit_state := int(fit.get("unit_orientation_quarter_turns", semantic_orientation_quarter_turns))
+		var authored: Vector3i = entry.item.get_storage_footprint()
+		if unit_state != semantic_orientation_quarter_turns or entry.footprint != StorageItemOrientationScript.physical_footprint(
+			Vector2i(authored.x, authored.y), unit_state, entry.packing_rotated
+		):
+			return false
+	var proposed_entry: StorageStack.Entry = fit.get("entry") as StorageStack.Entry
+	if proposed_entry != null and (
+		proposed_entry.item != entry.item
+		or proposed_entry.footprint != entry.footprint
+		or proposed_entry.packing_rotated != entry.packing_rotated
+		or not proposed_entry.aligned_bounds.is_equal_approx(entry.aligned_bounds)
+	):
+		return false
+
 	var placement_kind: String = String(fit.get("placement_kind", ""))
 	if placement_kind == "empty":
 		var stack_id: String = String(fit.get("stack_id", entry.item_key))
@@ -537,6 +566,8 @@ func commit_stack_entry(entry: StorageStack.Entry, fit: Dictionary) -> bool:
 			return false
 		var clearance: Dictionary = get_singleton_clearance_result(entry, canonical_host_y_m)
 		if not bool(clearance.get("clearance_ok", false)):
+			return false
+		if not _commit_zone_is_valid(origin, footprint, fit):
 			return false
 		if not reserve_at(stack_id, origin, footprint, entry.packing_rotated):
 			return false
@@ -564,11 +595,40 @@ func commit_stack_entry(entry: StorageStack.Entry, fit: Dictionary) -> bool:
 	var insertion_index: int = int(fit.get("insertion_index", -1))
 	if insertion_index <= 0 or insertion_index > existing_stack.entries.size():
 		return false
+	if (
+		fit.get("origin", existing_stack.surface_origin) != existing_stack.surface_origin
+		or fit.get("base_footprint", existing_stack.base_footprint) != existing_stack.base_footprint
+		or not _commit_zone_is_valid(existing_stack.surface_origin, existing_stack.base_footprint, fit)
+		or not existing_stack._existing_chain_is_valid()
+	):
+		return false
+	var base_host_y_m := get_local_placement_position(
+		existing_stack.surface_origin, existing_stack.base_footprint
+	).y
+	var physical_fit := existing_stack._evaluate_insertion(
+		entry, insertion_index, get_maximum_stack_top_y_m(), base_host_y_m
+	)
+	if not bool(physical_fit.get("valid", false)) or absf(
+		float(fit.get("host_y_m", INF)) - float(physical_fit["host_y_m"])
+	) > StorageStackScript.HEIGHT_EPSILON_M:
+		return false
 	existing_stack.entries.insert(insertion_index, entry)
 	_item_to_stack[entry.item_key] = existing_stack_id
 	_adopt_entry_host(entry)
 	_position_stack_entries(existing_stack)
 	return true
+
+
+func _commit_zone_is_valid(origin: Vector2i, footprint: Vector2i, fit: Dictionary) -> bool:
+	# Receiving keeps its private committed metrics and has no player zoning.
+	if not _player_storage_interaction_enabled:
+		return true
+	if not _footprint_is_storage_enabled(origin, footprint):
+		return false
+	var required_category := String(fit.get("zone_category", ""))
+	if String(fit.get("zone_kind", "")) == "manual" or required_category.is_empty():
+		return true
+	return _footprint_is_inside_zone(origin, footprint, required_category)
 
 
 func remove_stack_entry(stack_id: String, item_key: String) -> bool:

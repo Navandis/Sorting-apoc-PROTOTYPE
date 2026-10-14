@@ -84,11 +84,11 @@ func _test_stack_first_inside_each_zone_tier() -> void:
 	_check(fit.get("stack_id", "") == "general_stack", "General stack selected")
 
 	var unassigned: StorageSurface = _surface(Vector2i(3, 1))
+	_commit_base(unassigned, _entry("unassigned_stack", Vector2i.ONE, 0.10, true, true, &"boxed"), Vector2i(2, 0))
 	unassigned.set_zone_rect(StorageCategoriesScript.FOOD, Vector2i(0, 0), Vector2i(0, 0))
 	unassigned.set_zone_rect(StorageCategoriesScript.GENERAL, Vector2i(1, 0), Vector2i(1, 0))
 	_commit_base(unassigned, _entry("fills_food", Vector2i.ONE, 0.10, false, false, &""), Vector2i.ZERO)
 	_commit_base(unassigned, _entry("fills_general", Vector2i.ONE, 0.10, false, false, &""), Vector2i(1, 0))
-	_commit_base(unassigned, _entry("unassigned_stack", Vector2i.ONE, 0.10, true, true, &"boxed"), Vector2i(2, 0))
 	fit = unassigned.find_zone_stack_or_empty_fit(StorageCategoriesScript.FOOD, incoming)
 	_check(not bool(fit.get("valid", true)), "disabled blank stack is never an automatic fallback")
 	matching.free()

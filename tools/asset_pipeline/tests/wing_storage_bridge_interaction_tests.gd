@@ -8,6 +8,8 @@ const LEGACY_SURFACE_COUNT := 12
 const BRIDGE_RACK_NAME := "ModularRack_GalleryB_Initial"
 const BRIDGE_LADDER_NAME := "FixedLadder_GalleryB_Initial"
 
+# Helpers remain pending until their own body reaches a normal exit.
+var _pending_helpers: int = 0
 var _failed: bool = false
 
 
@@ -16,21 +18,28 @@ func _init() -> void:
 
 
 func _run() -> void:
+	await _run_suite()
+	_finish()
+
+
+func _run_suite() -> void:
+	_pending_helpers += 1
 	if not _check(ResourceLoader.exists(GAMEPLAY_PATH), "continuing gameplay scene exists"):
-		_finish()
+		_pending_helpers -= 1
 		return
 	var packed := load(GAMEPLAY_PATH) as PackedScene
 	if not _check(packed != null, "continuing gameplay scene loads"):
-		_finish()
+		_pending_helpers -= 1
 		return
 	await _test_semantic_orientation_handling(packed)
 	await _test_gallery_b_ladder_bridge(packed)
 	await _test_identity_stack_and_transfer_loop(packed)
 	await _test_rejection_and_rollback_loop(packed)
-	_finish()
+	_pending_helpers -= 1
 
 
 func _test_semantic_orientation_handling(packed: PackedScene) -> void:
+	_pending_helpers += 1
 	var scene := _instantiate_with_regression_seed_fixture(packed)
 	var orientation := scene.get_node(
 		"FunctionalFixtures/SM_MetalShelves_GalleryA_West/StorageUnitOrientation"
@@ -91,9 +100,11 @@ func _test_semantic_orientation_handling(packed: PackedScene) -> void:
 	scene.free()
 	current_scene = null
 	await process_frame
+	_pending_helpers -= 1
 
 
 func _test_gallery_b_ladder_bridge(packed: PackedScene) -> void:
+	_pending_helpers += 1
 	var scene := _instantiate_with_regression_seed_fixture(packed)
 	# The held-item clone is unrelated to climbing and queries a dummy-renderer
 	# material in headless mode; the real carried-item state remains exercised.
@@ -114,6 +125,7 @@ func _test_gallery_b_ladder_bridge(packed: PackedScene) -> void:
 	if player == null or carried == null or rack == null or ladder == null or upper_surface == null:
 		scene.free()
 		current_scene = null
+		_pending_helpers -= 1
 		return
 
 	player.set_process(false)
@@ -149,9 +161,11 @@ func _test_gallery_b_ladder_bridge(packed: PackedScene) -> void:
 	scene.free()
 	current_scene = null
 	await process_frame
+	_pending_helpers -= 1
 
 
 func _test_identity_stack_and_transfer_loop(packed: PackedScene) -> void:
+	_pending_helpers += 1
 	var scene := _instantiate_with_regression_seed_fixture(packed)
 	root.add_child(scene)
 	current_scene = scene
@@ -163,6 +177,7 @@ func _test_identity_stack_and_transfer_loop(packed: PackedScene) -> void:
 	):
 		scene.free()
 		current_scene = null
+		_pending_helpers -= 1
 		return
 
 	var player := scene.get_node("Player")
@@ -180,6 +195,7 @@ func _test_identity_stack_and_transfer_loop(packed: PackedScene) -> void:
 	if rack == null or surfaces.size() != LEGACY_SURFACE_COUNT + authored_levels.size():
 		scene.free()
 		current_scene = null
+		_pending_helpers -= 1
 		return
 
 	var boxed_items: Array[ItemInstance] = await _pickup_and_auto_store_family(
@@ -344,9 +360,11 @@ func _test_identity_stack_and_transfer_loop(packed: PackedScene) -> void:
 
 	scene.free()
 	current_scene = null
+	_pending_helpers -= 1
 
 
 func _test_rejection_and_rollback_loop(packed: PackedScene) -> void:
+	_pending_helpers += 1
 	var scene := _instantiate_with_regression_seed_fixture(packed)
 	root.add_child(scene)
 	current_scene = scene
@@ -355,6 +373,7 @@ func _test_rejection_and_rollback_loop(packed: PackedScene) -> void:
 	if not scene.has_method("get_functional_surfaces"):
 		scene.free()
 		current_scene = null
+		_pending_helpers -= 1
 		return
 
 	var player := scene.get_node("Player")
@@ -423,10 +442,9 @@ func _test_rejection_and_rollback_loop(packed: PackedScene) -> void:
 	_check(bool(valid_fit.get("valid", false)), "rollback fixture obtains a valid pre-commit fit")
 	var race_origin := valid_fit.get("origin", Vector2i.ZERO) as Vector2i
 	var race_footprint := valid_fit.get("footprint", Vector2i.ONE) as Vector2i
-	_check(
-		surface.reserve_at("late_commit_block", race_origin, race_footprint),
-		"rollback fixture invalidates the chosen fit after selection"
-	)
+	carried.item_removed.connect(func(_item):
+		_check(surface.reserve_at("late_commit_block", race_origin, race_footprint), "rollback fixture changes destination during carrying removal")
+	, CONNECT_ONE_SHOT)
 	var slot_before := int(carried.get_selected_index())
 	var owner_census_before := _owner_census(scene)
 	controller.set("_current_fit", valid_fit)
@@ -443,6 +461,7 @@ func _test_rejection_and_rollback_loop(packed: PackedScene) -> void:
 	await process_frame
 	scene.free()
 	current_scene = null
+	_pending_helpers -= 1
 
 
 func _pickup_and_auto_store_family(
@@ -454,6 +473,7 @@ func _pickup_and_auto_store_family(
 	item_ids: Array[StringName],
 	category: String
 ) -> Array[ItemInstance]:
+	_pending_helpers += 1
 	surface.set_zone_rect(category, Vector2i.ZERO, surface.get_grid_size() - Vector2i.ONE)
 	var items: Array[ItemInstance] = []
 	for item_id: StringName in item_ids:
@@ -470,7 +490,9 @@ func _pickup_and_auto_store_family(
 		if not placed:
 			break
 		items.append(item)
-	return items
+	var completed_result_1: Variant = items
+	_pending_helpers -= 1
+	return completed_result_1
 
 
 func _auto_place_selected(
@@ -478,9 +500,12 @@ func _auto_place_selected(
 	carried: Node,
 	surface: StorageSurface
 ) -> bool:
+	_pending_helpers += 1
 	var item: ItemInstance = carried.get_selected_item() as ItemInstance
 	if item == null:
-		return false
+		var completed_result_1: Variant = false
+		_pending_helpers -= 1
+		return completed_result_1
 	var orientations: Array = controller.call(
 		"_entry_orientations_for_item",
 		item,
@@ -494,18 +519,26 @@ func _auto_place_selected(
 	controller.set("_current_surface", surface)
 	controller.set("_current_fit", fit)
 	controller.set("_manual_mode", false)
-	return controller.place_selected()
+	var completed_result_2: Variant = controller.place_selected()
+	_pending_helpers -= 1
+	return completed_result_2
 
 
 func _first_surface_for_rack(surfaces: Array, rack: Node) -> StorageSurface:
+	_pending_helpers += 1
 	for value: Variant in surfaces:
 		var surface := value as StorageSurface
 		if surface != null and rack.is_ancestor_of(surface):
-			return surface
-	return null
+			var completed_result_1: Variant = surface
+			_pending_helpers -= 1
+			return completed_result_1
+	var completed_result_2: Variant = null
+	_pending_helpers -= 1
+	return completed_result_2
 
 
 func _surface_for_rack_level(surfaces: Array, rack: Node, level_name: String) -> StorageSurface:
+	_pending_helpers += 1
 	for value: Variant in surfaces:
 		var surface := value as StorageSurface
 		if (
@@ -513,8 +546,12 @@ func _surface_for_rack_level(surfaces: Array, rack: Node, level_name: String) ->
 			and rack.is_ancestor_of(surface)
 			and String(surface.get_parent().name) == level_name
 		):
-			return surface
-	return null
+			var completed_result_1: Variant = surface
+			_pending_helpers -= 1
+			return completed_result_1
+	var completed_result_2: Variant = null
+	_pending_helpers -= 1
+	return completed_result_2
 
 
 func _assert_family_storage(
@@ -524,11 +561,13 @@ func _assert_family_storage(
 	expected_stack_count: int,
 	expected_largest_stack: int
 ) -> void:
+	_pending_helpers += 1
 	_check(
 		surface.get_stack_count() == expected_stack_count,
 		"%s forms %d clearance-valid stack(s)" % [label, expected_stack_count]
 	)
 	if items.is_empty():
+		_pending_helpers -= 1
 		return
 	var stored_ids: Dictionary = {}
 	var largest_stack := 0
@@ -541,18 +580,23 @@ func _assert_family_storage(
 	_check(stored_ids.size() == items.size(), "%s stores every family member exactly once" % label)
 	for item: ItemInstance in items:
 		_check(stored_ids.get(item.instance_id) == item, "%s preserves identity %s" % [label, item.instance_id])
+	_pending_helpers -= 1
 
 
 func _surface_physical_signature(surface: StorageSurface) -> Dictionary:
-	return {
+	_pending_helpers += 1
+	var completed_result_1: Variant = {
 		"global_transform": surface.global_transform,
 		"grid_size": surface.get_grid_size(),
 		"usable_size_m": surface.get_usable_size_m(),
 		"stack_clearance_m": surface.stack_clearance_m,
 	}
+	_pending_helpers -= 1
+	return completed_result_1
 
 
 func _packing_orientation_signatures(orientations: Array) -> Array[Dictionary]:
+	_pending_helpers += 1
 	var result: Array[Dictionary] = []
 	for value: Variant in orientations:
 		var entry := value as StorageStack.Entry
@@ -561,21 +605,29 @@ func _packing_orientation_signatures(orientations: Array) -> Array[Dictionary]:
 			"packing_rotated": entry.packing_rotated,
 			"aligned_bounds": entry.aligned_bounds,
 		})
-	return result
+	var completed_result_1: Variant = result
+	_pending_helpers -= 1
+	return completed_result_1
 
 
 func _host_for_item_id(seeds: Node, item_id: StringName) -> Node3D:
+	_pending_helpers += 1
 	for child: Node in seeds.get_children():
 		if (
 			StringName(child.get("item_id")) == item_id
 			and not child.is_queued_for_deletion()
 			and child.get_node_or_null("WorldItem") != null
 		):
-			return child as Node3D
-	return null
+			var completed_result_1: Variant = child as Node3D
+			_pending_helpers -= 1
+			return completed_result_1
+	var completed_result_2: Variant = null
+	_pending_helpers -= 1
+	return completed_result_2
 
 
 func _owner_census(scene: Node) -> Dictionary:
+	_pending_helpers += 1
 	var ids: Dictionary = {}
 	var loose := 0
 	var carried_count := 0
@@ -602,16 +654,19 @@ func _owner_census(scene: Node) -> Dictionary:
 				for entry in stack.entries:
 					ids[entry.item.instance_id] = true
 					stored += 1
-	return {
+	var completed_result_1: Variant = {
 		"loose": loose,
 		"carried": carried_count,
 		"stored": stored,
 		"total": loose + carried_count + stored,
 		"unique_ids": ids.size(),
 	}
+	_pending_helpers -= 1
+	return completed_result_1
 
 
 func _instantiate_with_regression_seed_fixture(gameplay_packed: PackedScene) -> Node:
+	_pending_helpers += 1
 	var scene := gameplay_packed.instantiate()
 	var live_setup := scene.get_node_or_null("DevelopmentSetup")
 	if live_setup != null:
@@ -621,10 +676,13 @@ func _instantiate_with_regression_seed_fixture(gameplay_packed: PackedScene) -> 
 	var regression_setup := setup_packed.instantiate()
 	regression_setup.name = "DevelopmentSetup"
 	scene.add_child(regression_setup)
-	return scene
+	var completed_result_1: Variant = scene
+	_pending_helpers -= 1
+	return completed_result_1
 
 
 func _finish() -> void:
+	_check(_pending_helpers == 0, "%d test or fixture helpers did not complete" % _pending_helpers)
 	if _failed:
 		push_error("FAIL: wing storage bridge interaction tests")
 		quit(1)

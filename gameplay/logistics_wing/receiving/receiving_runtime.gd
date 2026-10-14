@@ -19,6 +19,11 @@ const SECOND_PRESENTATION_SEED: int = 9002
 @onready var deck_presenter: Node3D = $ReceivingDeckPresenter
 @onready var lift_cycle: Node3D = $ReceivingLiftCycle
 
+# Debug caller owns a process-local namespace, independent of seeded content.
+# Shared by runtime instances and all preparation routes; reconstruction never
+# calls this allocator. Durable/save identities remain outside this prototype.
+static var _debug_delivery_serial: int = 0
+
 var return_admission: Node
 var _awaiting_debug_started := false
 var _waiting_debug_batch: LootBatch
@@ -125,7 +130,7 @@ func _on_debug_first_batch_open(state: ReceivingLiftCycle.State) -> void:
 
 
 ## Separate opt-in prototype returns. Prepare all four before any deposit.
-## Stable demo IDs are one-shot per runtime; no actual Expedition roster exists.
+## Team labels and the one-shot guard remain local; no actual Expedition roster exists.
 func run_awaiting_lift_debug_delivery(
 	target_bulk: int = DEFAULT_TARGET_BULK,
 	fixture_mode: int = DeckPlannerScript.FixtureMode.BARE
@@ -167,7 +172,10 @@ func _prepare_debug_batch(content_seed: int, presentation_seed: int, target_bulk
 		return null
 	if fixture_mode < DeckPlannerScript.FixtureMode.BARE or fixture_mode > DeckPlannerScript.FixtureMode.MIXED:
 		return null
-	var batch_id := "receiving_debug_%d_%d_%d" % [content_seed, presentation_seed, target_bulk]
+	_debug_delivery_serial += 1
+	var batch_id := "receiving_debug_%d_%d_%d_delivery_%d" % [
+		content_seed, presentation_seed, target_bulk, _debug_delivery_serial
+	]
 	var batch: LootBatch = LootSourceScript.new().generate_committed_batch(
 		item_catalog,
 		prototype_loot_pool,

@@ -282,55 +282,68 @@ func _storage_category_display_text(category: String) -> String:
 
 
 func place_selected() -> bool:
-	if (
-		not has_valid_placement()
-		or _carried_items == null
-		or not _surface_accepts_player_storage_interaction(_current_surface)
-	):
+	if _carried_items == null or not _surface_accepts_player_storage_interaction(_current_surface):
 		return false
-
 	var selected_item: Variant = _carried_items.get_selected_item()
 	if selected_item == null:
 		return false
-	var original_selected_index: int = -1
-	if _carried_items.has_method("get_selected_index"):
-		original_selected_index = int(_carried_items.get_selected_index())
 
-	var removed_item: Variant = _carried_items.remove_selected()
+	# The preview supplies a destination address, never placement authority.
+	var surface: Node = _current_surface
+	var unit_state := int(surface.get_semantic_orientation_quarter_turns())
+	var fit: Dictionary = _command_fit(surface, selected_item, unit_state)
+	_current_fit = fit
+	if not bool(fit.get("valid", false)):
+		return false
+	fit = fit.duplicate(true)
+	fit["unit_orientation_quarter_turns"] = unit_state
+	var carried: Node = _carried_items
+	var original_selected_index := int(carried.get_selected_index())
+	var origin: Vector2i = fit.get("origin", Vector2i.ZERO) as Vector2i
+	var footprint: Vector2i = fit.get("footprint", Vector2i.ONE) as Vector2i
+	var placement_rotated := bool(fit.get("rotated", false))
+	# Removal emits synchronous presentation/selection callbacks. Everything
+	# needed by this command is local before those callbacks can refresh fields.
+	var removed_item: Variant = carried.remove_selected()
 	if removed_item == null:
 		update_target()
 		return false
-
-	var item_key: String = _item_key(removed_item)
-	var origin: Vector2i = _current_fit.get("origin", Vector2i.ZERO) as Vector2i
-	var footprint: Vector2i = _current_fit.get("footprint", Vector2i.ONE) as Vector2i
-	var placement_rotated: bool = bool(_current_fit.get("rotated", _rotated))
-
 	var spawned: bool = _spawn_stored_world_item(
-		removed_item,
-		_current_surface,
-		item_key,
-		origin,
-		footprint,
-		placement_rotated,
-		_current_fit
+		removed_item, surface, _item_key(removed_item), origin, footprint,
+		placement_rotated, fit
 	)
 	if not spawned:
-		var restored: bool = false
-		if _carried_items.has_method("restore_removed_item"):
-			restored = bool(_carried_items.restore_removed_item(
-				removed_item,
-				original_selected_index,
-				original_selected_index
-			))
+		var restored := bool(carried.restore_removed_item(
+			removed_item, original_selected_index, original_selected_index
+		))
 		if not restored:
-			_carried_items.add_item(removed_item)
+			carried.add_item(removed_item)
 		update_target()
 		return false
-
 	reset_rotation()
 	call_deferred("update_target")
 	return true
+
+
+func _command_fit(surface: Node, item: ItemInstance, unit_state: int) -> Dictionary:
+	if _manual_mode:
+		if String(_current_fit.get("placement_kind", "")) == "stack":
+			return _find_manual_stack_target_fit(
+				surface, String(_current_fit.get("stack_id", "")), item, unit_state
+			)
+		if _current_fit.is_empty():
+			return {}
+		var origin: Vector2i = _current_fit.get("origin", Vector2i.ZERO) as Vector2i
+		var footprint: Vector2i = _current_fit.get("footprint", Vector2i.ONE) as Vector2i
+		var local_point: Vector3 = surface.get_local_placement_position(origin, footprint)
+		return surface.find_manual_empty_fit(local_point, _entry_for_item(item, _rotated, unit_state))
+	var orientations := _entry_orientations_for_item(item, unit_state)
+	if orientations.is_empty():
+		return {}
+	return surface.find_zone_stack_or_empty_fit(
+		item.get_storage_category(), orientations[0],
+		orientations[1] if orientations.size() > 1 else null
+	)
 
 
 func _spawn_stored_world_item(
@@ -345,9 +358,17 @@ func _spawn_stored_world_item(
 	var visual_scene: PackedScene = item.get_visual_scene() as PackedScene
 	if visual_scene == null:
 		return false
-	if surface == null or not surface.has_method("commit_stack_entry"):
+	if not is_instance_valid(surface) or not surface.has_method("commit_stack_entry"):
 		return false
 
+	var unit_state := int(placement_fit.get(
+		"unit_orientation_quarter_turns", surface.get_semantic_orientation_quarter_turns()
+	))
+	if unit_state != int(surface.get_semantic_orientation_quarter_turns()):
+		return false
+	var entry := _entry_for_item(item, rotated, unit_state)
+	if entry == null or entry.footprint != footprint or entry.item_key != item_key:
+		return false
 	var effective_fit: Dictionary = placement_fit.duplicate(true)
 	var previous_reservation: Dictionary = {}
 	if effective_fit.is_empty():
@@ -382,7 +403,7 @@ func _spawn_stored_world_item(
 	unit_orientation_root.rotation = Vector3(
 		0.0,
 		StorageItemOrientationScript.unit_yaw_radians(
-			int(surface.get_semantic_orientation_quarter_turns())
+			unit_state
 		),
 		0.0
 	)
@@ -416,13 +437,6 @@ func _spawn_stored_world_item(
 		_restore_reservation(surface, previous_reservation)
 		return false
 
-	var entry: StorageStack.Entry = StorageStackScript.create_entry(
-		item,
-		footprint,
-		rotated,
-		aligned_bounds
-	)
-	entry.item_key = item_key
 	entry.host = host
 
 	var component: WorldItem = WorldItemScript.new()

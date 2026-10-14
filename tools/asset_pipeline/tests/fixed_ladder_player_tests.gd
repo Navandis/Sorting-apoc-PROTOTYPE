@@ -8,6 +8,8 @@ const ItemInstanceScript := preload("res://item_instance.gd")
 
 const EPSILON := 0.003
 
+# Helpers remain pending until their own body reaches a normal exit.
+var _pending_helpers: int = 0
 var _failed := false
 var _host: Node3D
 var _player: CharacterBody3D
@@ -19,6 +21,12 @@ func _init() -> void:
 
 
 func _run() -> void:
+	await _run_suite()
+	_finish()
+
+
+func _run_suite() -> void:
+	_pending_helpers += 1
 	_host = Node3D.new()
 	_host.name = "FixedLadderPlayerTest"
 	root.add_child(_host)
@@ -43,7 +51,7 @@ func _run() -> void:
 		and _player.has_method("_apply_mouse_look"),
 		"player exposes the bounded ladder movement branch"
 	):
-		_finish()
+		_pending_helpers -= 1
 		return
 
 	await _test_attachment_conditions()
@@ -52,10 +60,11 @@ func _run() -> void:
 	await _test_bottom_release_and_suppression()
 	_test_carried_identity_and_zoning_hold()
 	await _test_interaction_rays_ignore_ladder_body()
-	_finish()
+	_pending_helpers -= 1
 
 
 func _test_attachment_conditions() -> void:
+	_pending_helpers += 1
 	_check(_ladder.call("is_player_in_approach_area", _player), "real ApproachArea overlaps the player at the front anchor")
 	var anchor := _ladder.call("get_climb_anchor_world_position") as Vector3
 	var capsule := (_player.get_node("CollisionShape3D") as CollisionShape3D).shape as CapsuleShape3D
@@ -124,9 +133,11 @@ func _test_attachment_conditions() -> void:
 		% [pre_attach_correction, maximum_correction, standoff_clearance]
 	)
 	_check(_near(_player.global_position.x, anchor.x) and _near(_player.global_position.z, anchor.z), "attach fixes X/Z to the climb line")
+	_pending_helpers -= 1
 
 
 func _test_attached_movement_and_yaw() -> void:
+	_pending_helpers += 1
 	var anchor := _ladder.call("get_climb_anchor_world_position") as Vector3
 	_player.global_position.y = 0.25
 	(_player.get_node("Camera3D") as Camera3D).rotation.x = deg_to_rad(70.0)
@@ -179,9 +190,11 @@ func _test_attached_movement_and_yaw() -> void:
 	_check(_near(left_relative, -deg_to_rad(70.0)) and _near(right_relative, deg_to_rad(70.0)), "visible left and right yaw endpoints are exactly centre -/+70 degrees")
 	_check(_near(absf(left_relative), absf(right_relative)) and _near((left_relative + right_relative) * 0.5, 0.0), "visible yaw endpoints have equal magnitude and a zero-offset midpoint")
 	_player.rotation.y = centre
+	_pending_helpers -= 1
 
 
 func _test_top_limit_uses_actual_player_body() -> void:
+	_pending_helpers += 1
 	_player.rotation.y = float(_player.call("get_ladder_yaw_center"))
 	var eye_offset := float(_player.call("get_player_eye_offset_from_root"))
 	var body_top_offset := float(_player.call("get_player_body_top_offset_from_root"))
@@ -219,9 +232,11 @@ func _test_top_limit_uses_actual_player_body() -> void:
 		"low-overhead branch keeps the full capsule below the authored limit"
 	)
 	_ladder.set("overhead_limit_local_y_m", 3.40)
+	_pending_helpers -= 1
 
 
 func _test_bottom_release_and_suppression() -> void:
+	_pending_helpers += 1
 	var anchor := _ladder.call("get_climb_anchor_world_position") as Vector3
 	_player.rotation.y = float(_player.call("get_ladder_yaw_center"))
 	_player.global_position = Vector3(anchor.x, float(_ladder.call("get_bottom_player_root_world_y")) + 0.01, anchor.z)
@@ -247,9 +262,11 @@ func _test_bottom_release_and_suppression() -> void:
 			break
 		await physics_frame
 	_check(bool(_player.call("is_ladder_attached")), "W reapproach can attach again after inner-distance rearm")
+	_pending_helpers -= 1
 
 
 func _test_carried_identity_and_zoning_hold() -> void:
+	_pending_helpers += 1
 	var carried := _player.get_node("CarriedItems") as CarriedItems
 	var definition := load("res://data/items/definitions/loot_000037.tres") as ItemDefinition
 	var item := ItemInstanceScript.new(definition)
@@ -264,9 +281,11 @@ func _test_carried_identity_and_zoning_hold() -> void:
 	_player.set("_zone_editor_open", false)
 	_check(carried.get_selected_item() == item, "carried item identity survives attach, climb, release, and reattach")
 	carried.remove_item(item)
+	_pending_helpers -= 1
 
 
 func _test_interaction_rays_ignore_ladder_body() -> void:
+	_pending_helpers += 1
 	_player.global_position.y = 0.0
 	_player.rotation.y = float(_player.call("get_ladder_yaw_center"))
 	var camera := _player.get_node("Camera3D") as Camera3D
@@ -300,9 +319,11 @@ func _test_interaction_rays_ignore_ladder_body() -> void:
 	await physics_frame
 	_check(_body_ray_hits_ladder(camera.global_position, surface.global_position), "ladder movement body lies between camera and storage target")
 	_check(_player.call("_get_looked_at_storage_surface") == surface, "StorageSurface ray reaches through ladder movement collision")
+	_pending_helpers -= 1
 
 
 func _body_ray_hits_ladder(ray_from: Vector3, ray_to: Vector3) -> bool:
+	_pending_helpers += 1
 	var query := PhysicsRayQueryParameters3D.new()
 	query.from = ray_from
 	query.to = ray_to
@@ -311,16 +332,24 @@ func _body_ray_hits_ladder(ray_from: Vector3, ray_to: Vector3) -> bool:
 	query.collision_mask = 1
 	query.exclude = [_player.get_rid()]
 	var result := _host.get_world_3d().direct_space_state.intersect_ray(query)
-	return result.get("collider") == _ladder.get_node("MovementCollision")
+	var completed_result_1: Variant = result.get("collider") == _ladder.get_node("MovementCollision")
+	_pending_helpers -= 1
+	return completed_result_1
 
 
 func _near(actual: float, expected: float, epsilon: float = EPSILON) -> bool:
-	return absf(actual - expected) <= epsilon
+	_pending_helpers += 1
+	var completed_result_1: Variant = absf(actual - expected) <= epsilon
+	_pending_helpers -= 1
+	return completed_result_1
 
 
 func _camera_back_yaw_world(camera: Camera3D) -> float:
+	_pending_helpers += 1
 	var camera_back := camera.global_basis.z
-	return atan2(camera_back.x, camera_back.z)
+	var completed_result_1: Variant = atan2(camera_back.x, camera_back.z)
+	_pending_helpers -= 1
+	return completed_result_1
 
 
 func _check(condition: bool, message: String) -> bool:
@@ -332,6 +361,7 @@ func _check(condition: bool, message: String) -> bool:
 
 
 func _finish() -> void:
+	_check(_pending_helpers == 0, "%d test or fixture helpers did not complete" % _pending_helpers)
 	if _failed:
 		quit(1)
 	else:

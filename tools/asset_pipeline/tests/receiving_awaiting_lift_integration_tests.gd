@@ -54,12 +54,20 @@ func awaiting_cycles() -> void:
 	var ids: Array[String] = []
 	var commitments := {}
 	for index in 4:
-		var id := "receiving_debug_%d_%d_%d" % [1842 + index, 9001 + index, bulk]
+		var team_id := "prototype_team_%s" % ["A", "B", "C", "D"][index]
+		var id: String = owner.get_return_snapshot(team_id).get("batch_id", "")
+		check(not id.is_empty() and not ids.has(id), "each team retains its distinct allocated batch identity")
 		ids.append(id)
 		var batch: LootBatch = manager.get_deposited_batch(id)
 		if batch != null:
 			commitments[id] = var_to_bytes(batch.to_snapshot())
-	var expected_d: LootBatch = runtime._prepare_debug_batch(1845, 9004, bulk, 3)
+	# Reconstruct the expected existing commitment with D's allocated identity;
+	# preparing a genuinely new debug delivery now intentionally allocates another.
+	var expected_d: LootBatch = Source.new().generate_committed_batch(
+		runtime.item_catalog, runtime.prototype_loot_pool, ids[3], 1845, 9004, bulk,
+		&"prototype", "cli_debug"
+	)
+	check(Planner.new().prepare(expected_d, runtime.item_catalog, runtime.deck_profile, 3).succeeded, "expected D arrangement reconstructs without a new identity")
 	commitments[ids[3]] = var_to_bytes(expected_d.to_snapshot())
 	var manifests: Array = []
 	for index in 4:

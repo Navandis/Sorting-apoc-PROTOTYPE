@@ -7,6 +7,8 @@ const CarriedScript = preload("res://carried_items.gd")
 const SourceScript = preload("res://receiving/prototype_loot_source.gd")
 const PlannerScript = preload("res://receiving/receiving_deck_layout_planner.gd")
 const Lens = preload("res://gameplay/logistics_wing/receiving/lighting/warning_lens.tres")
+# Helpers remain pending until their own body reaches a normal exit.
+var _pending_helpers: int = 0
 var failures := 0
 var states: Array[int] = []
 var refreshes := 0
@@ -22,17 +24,23 @@ func check(ok: bool, message: String) -> bool:
 	return ok
 
 func run() -> void:
+	await run_suite()
+	finish()
+
+
+func run_suite() -> void:
+	_pending_helpers += 1
 	if OS.get_cmdline_user_args().has("--warning-light-render"):
 		await warning_render_compare()
-		finish()
+		_pending_helpers -= 1
 		return
 	if OS.get_cmdline_user_args().has("--cycle-cli-startup"):
 		await cli_startup()
-		finish()
+		_pending_helpers -= 1
 		return
 	if OS.get_cmdline_user_args().has("--cycle-real-time"):
 		await real_time_cycle()
-		finish()
+		_pending_helpers -= 1
 		return
 	var wing := WingScene.instantiate()
 	var door: Node3D = wing.get_node("ReceivingLiftInstallation/SM_KB3D_NWD_ReuGarageDoorBlue_B")
@@ -45,7 +53,7 @@ func run() -> void:
 	var cycle = runtime.get_node_or_null("ReceivingLiftCycle")
 	if not check(cycle != null, "playable runtime owns a lift-cycle coordinator"):
 		wing.free()
-		finish()
+		_pending_helpers -= 1
 		return
 	cycle.set_process(false) # Feed real logic bounded deltas; retain real cargo/art/audio.
 	var manager: ReceivingManager = runtime.receiving_manager
@@ -171,18 +179,26 @@ func run() -> void:
 	await create_timer(.6).timeout
 	wing.free()
 	await test_failed_staging()
-	finish()
+	_pending_helpers -= 1
+
 
 func check_fitting(door: Node3D, authored: Transform3D) -> void:
+	_pending_helpers += 1
 	check(door.basis.is_equal_approx(authored.basis) and door.position.x == authored.origin.x and door.position.z == authored.origin.z, "shutter basis/X/Z fitting preserved")
+	_pending_helpers -= 1
+
 
 func check_display(ui: Node, status: String, deck: String, queue: String, footer: String) -> void:
+	_pending_helpers += 1
 	check(ui.get_node("Status").text == "STATUS : " + status, "CRT status " + status)
 	check(ui.get_node("Deck").text == "DECK   : " + deck, "CRT deck " + deck)
 	check(ui.get_node("Queue").text == "QUEUE  : " + queue, "CRT queue " + queue)
 	check(ui.get_node("Waiting").text == footer, "CRT footer " + footer)
+	_pending_helpers -= 1
+
 
 func check_blocked(presenter: Node, wing: Node, state: String) -> void:
+	_pending_helpers += 1
 	var player = wing.get_node("Player")
 	var camera: Camera3D = player.get_node("Camera3D")
 	var carried = player.get_node("CarriedItems")
@@ -193,8 +209,11 @@ func check_blocked(presenter: Node, wing: Node, state: String) -> void:
 		camera.global_position = shape.global_position + Vector3(1, .3, 0)
 		camera.look_at(shape.global_position)
 		check(player._get_looked_at_world_item() == null, state + " has no Receiving ray target")
+	_pending_helpers -= 1
+
 
 func test_queue_readout(runtime: Node, ui: Node) -> void:
+	_pending_helpers += 1
 	# Deposited queue readout only; no physical second delivery driven here.
 	var batches: Array[LootBatch] = []
 	for index in 4:
@@ -208,13 +227,17 @@ func test_queue_readout(runtime: Node, ui: Node) -> void:
 	check(runtime.receiving_manager.deposit_batch(batches[2]), "second waiting batch admitted")
 	check(ui.get_node("Queue").text == "QUEUE  : 02", "actual queue reaches two")
 	check(not runtime.receiving_manager.deposit_batch(batches[3]) and ui.get_node("Queue").text == "QUEUE  : 02", "capacity rejection preserves readout")
+	_pending_helpers -= 1
+
 
 func finish() -> void:
+	check(_pending_helpers == 0, "%d test or fixture helpers did not complete" % _pending_helpers)
 	print("receiving_lift_cycle_tests: %s (%d failures)" % ["PASS" if failures == 0 else "FAIL", failures])
 	quit(0 if failures == 0 else 1)
 
 
 func test_failed_staging() -> void:
+	_pending_helpers += 1
 	var wing := WingScene.instantiate()
 	root.add_child(wing)
 	var runtime = wing.get_node("ReceivingRuntime")
@@ -232,8 +255,11 @@ func test_failed_staging() -> void:
 	check(var_to_bytes(batch.to_snapshot()) == commitment and runtime.receiving_manager.get_active_batch() == batch, "failed staging never retires or rerolls cargo")
 	await create_timer(.6).timeout
 	wing.free()
+	_pending_helpers -= 1
+
 
 func real_time_cycle() -> void:
+	_pending_helpers += 1
 	var wing := WingScene.instantiate()
 	wing.get_node("Player").enable_held_item_view = false # Do not create and destroy a viewmodel within a single test frame.
 	wing.get_node("Player").set_physics_process(false)
@@ -300,16 +326,25 @@ func real_time_cycle() -> void:
 	print("CYCLE_REALTIME total_s=", (Time.get_ticks_msec() - start) / 1000.0)
 	wing.free()
 	current_scene = null
+	_pending_helpers -= 1
+
 
 func wait_for_state(cycle: Node, state: int, seconds: float) -> bool:
+	_pending_helpers += 1
 	var deadline := Time.get_ticks_msec() + int(seconds * 1000)
 	while cycle.get_cycle_state() != state and Time.get_ticks_msec() < deadline:
 		await create_timer(.1).timeout
-	return cycle.get_cycle_state() == state
+	var completed_result_1: Variant = cycle.get_cycle_state() == state
+	_pending_helpers -= 1
+	return completed_result_1
+
 
 func capture(label: String) -> Image:
+	_pending_helpers += 1
 	if DisplayServer.get_name() == "headless":
-		return null
+		var completed_result_1: Variant = null
+		_pending_helpers -= 1
+		return completed_result_1
 	await process_frame
 	await process_frame
 	await RenderingServer.frame_post_draw
@@ -317,9 +352,13 @@ func capture(label: String) -> Image:
 	check(image != null and not image.is_empty(), "renderer produces cycle pixels")
 	if image != null:
 		image.save_png("res://reports/receiving/stage_c_final_timing_2026-10-13/" + label + ".png")
-	return image
+	var completed_result_2: Variant = image
+	_pending_helpers -= 1
+	return completed_result_2
+
 
 func cli_startup() -> void:
+	_pending_helpers += 1
 	var wing = load(ProjectSettings.get_setting("application/run/main_scene")).instantiate()
 	root.add_child(wing)
 	await process_frame
@@ -330,8 +369,13 @@ func cli_startup() -> void:
 	check(runtime.deck_presenter.get_presentation_state() == 0 and not runtime.lift_cycle.can_take_receiving(), "CLI cargo stays non-interactable")
 	await create_timer(.6).timeout
 	wing.free()
+	_pending_helpers -= 1
+
+
 func warning_render_compare() -> void:
+	_pending_helpers += 1
 	if not check(DisplayServer.get_name() != "headless", "warning illumination requires an actual renderer"):
+		_pending_helpers -= 1
 		return
 	var wing := WingScene.instantiate()
 	wing.get_node("Player").enable_held_item_view = false
@@ -384,10 +428,15 @@ func warning_render_compare() -> void:
 	await create_timer(.6).timeout
 	wing.free()
 	current_scene = null
+	_pending_helpers -= 1
+
 
 func patch_average(image: Image, center: Vector2i) -> Color:
+	_pending_helpers += 1
 	var sum := Color(0, 0, 0, 0)
 	for y in range(center.y - 6, center.y + 7):
 		for x in range(center.x - 6, center.x + 7):
 			sum += image.get_pixel(x, y)
-	return sum / 169.0
+	var completed_result_1: Variant = sum / 169.0
+	_pending_helpers -= 1
+	return completed_result_1

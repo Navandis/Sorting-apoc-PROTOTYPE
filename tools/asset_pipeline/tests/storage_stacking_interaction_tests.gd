@@ -9,6 +9,8 @@ const StorageSurfaceScript = preload("res://storage_surface.gd")
 
 const CATALOG_PATH: String = "res://data/items/item_catalog.tres"
 
+# Helpers remain pending until their own body reaches a normal exit.
+var _pending_helpers: int = 0
 var _failed: bool = false
 var _definitions: Dictionary = {}
 
@@ -18,12 +20,19 @@ func _init() -> void:
 
 
 func _run() -> void:
+	await _run_suite()
+	_finish()
+
+
+func _run_suite() -> void:
+	_pending_helpers += 1
 	var probe: StoragePlacementController = StoragePlacementControllerScript.new()
 	for method_name: StringName in [&"_entry_for_item", &"_entry_orientations_for_item"]:
 		if not probe.has_method(method_name):
 			push_error("StoragePlacementController.%s is missing" % method_name)
 			probe.free()
 			quit(1)
+			_pending_helpers -= 1
 			return
 	probe.free()
 	_definitions = _definitions_by_id()
@@ -42,14 +51,11 @@ func _run() -> void:
 	_test_contextual_manual_orientation_preserves_preference()
 	_test_manual_terminal_and_ghost_final_parity(&"loot_000039")
 	_test_manual_terminal_and_ghost_final_parity(&"loot_000006")
-	if _failed:
-		quit(1)
-		return
-	print("PASS: storage stacking interaction tests")
-	quit(0)
+	_pending_helpers -= 1
 
 
 func _test_manual_stack_target_respects_surface_interaction_opt_out() -> void:
+	_pending_helpers += 1
 	var surface: StorageSurface = StorageSurfaceScript.new()
 	root.add_child(surface)
 	surface.configure(&"private_receiving_fixture", 0.801, 0.801, 0.10, 1.0)
@@ -75,6 +81,7 @@ func _test_manual_stack_target_respects_surface_interaction_opt_out() -> void:
 		camera.free()
 		carried.free()
 		surface.free()
+		_pending_helpers -= 1
 		return
 	var base_world_item: WorldItem = stack.entries[0].world_item as WorldItem
 	var pickup_shape := base_world_item.get_node_or_null("PickupArea/PickupShape") as CollisionShape3D
@@ -84,6 +91,7 @@ func _test_manual_stack_target_respects_surface_interaction_opt_out() -> void:
 		camera.free()
 		carried.free()
 		surface.free()
+		_pending_helpers -= 1
 		return
 
 	var target_position: Vector3 = pickup_shape.global_position
@@ -126,9 +134,11 @@ func _test_manual_stack_target_respects_surface_interaction_opt_out() -> void:
 	camera.free()
 	carried.free()
 	surface.free()
+	_pending_helpers -= 1
 
 
 func _test_canonical_first_and_alternate_only_at_nonzero_state() -> void:
+	_pending_helpers += 1
 	var both_context := _context(Vector2i(5, 5), 1.0)
 	var both_surface := both_context["surface"] as StorageSurface
 	var both_controller := both_context["controller"] as StoragePlacementController
@@ -204,9 +214,11 @@ func _test_canonical_first_and_alternate_only_at_nonzero_state() -> void:
 		"alternate reservation matches selected footprint"
 	)
 	_free_context(alternate_context)
+	_pending_helpers -= 1
 
 
 func _test_committed_item_orientation_is_stable() -> void:
+	_pending_helpers += 1
 	var context := _context(Vector2i(8, 4), 1.0)
 	var surface := context["surface"] as StorageSurface
 	var controller := context["controller"] as StoragePlacementController
@@ -247,9 +259,11 @@ func _test_committed_item_orientation_is_stable() -> void:
 		"new item uses the updated state 2 Front"
 	)
 	_free_context(context)
+	_pending_helpers -= 1
 
 
 func _test_flat_media_and_pose_cache() -> void:
+	_pending_helpers += 1
 	var context: Dictionary = _context(Vector2i(8, 8), 1.0)
 	var surface: StorageSurface = context["surface"] as StorageSurface
 	var controller: StoragePlacementController = context["controller"] as StoragePlacementController
@@ -275,9 +289,11 @@ func _test_flat_media_and_pose_cache() -> void:
 	_check(surface.get_reservation_count() == 1, "flat-media upper item owns no cells")
 	_check(_targetable(stack.entries[0]) and _targetable(stack.entries[1]), "both flat-media members are individually targetable")
 	_free_context(context)
+	_pending_helpers -= 1
 
 
 func _test_real_flat_media_bidirectional_stack() -> void:
+	_pending_helpers += 1
 	var context: Dictionary = _context(Vector2i(8, 8), 1.0)
 	var surface: StorageSurface = context["surface"] as StorageSurface
 	var controller: StoragePlacementController = context["controller"] as StoragePlacementController
@@ -294,9 +310,11 @@ func _test_real_flat_media_bidirectional_stack() -> void:
 	_check(surface.get_reservation(cd.instance_id).get("footprint", Vector2i.ZERO) == Vector2i(2, 2), "reverse flat-media reservation remains 2x2")
 	_check(stack != null and stack.is_auto_coherent(), "reverse flat-media stack remains auto coherent")
 	_free_context(context)
+	_pending_helpers -= 1
 
 
 func _test_expanded_flat_media_base_promotion() -> void:
+	_pending_helpers += 1
 	var context: Dictionary = _context(Vector2i(8, 8), 1.0)
 	var surface: StorageSurface = context["surface"] as StorageSurface
 	var controller: StoragePlacementController = context["controller"] as StoragePlacementController
@@ -314,9 +332,11 @@ func _test_expanded_flat_media_base_promotion() -> void:
 	_check(surface.get_reservation(book.instance_id).get("footprint", Vector2i.ZERO) == Vector2i(3, 2), "promotion fixture expands reservation to synthetic Book footprint")
 	_check(carried.get_item_count() == 0, "successful promotion consumes selected Book")
 	_free_context(context)
+	_pending_helpers -= 1
 
 
 func _test_failed_base_promotion_restores_exact_carry_state() -> void:
+	_pending_helpers += 1
 	var context: Dictionary = _context(Vector2i(8, 8), 1.0)
 	var surface: StorageSurface = context["surface"] as StorageSurface
 	var controller: StoragePlacementController = context["controller"] as StoragePlacementController
@@ -346,7 +366,9 @@ func _test_failed_base_promotion_restores_exact_carry_state() -> void:
 	var keys_before: Array[String] = []
 	for entry in stack_before.entries:
 		keys_before.append(entry.item_key)
-	_check(surface.reserve_at("late_blocker", Vector2i(2, 3), Vector2i.ONE), "late blocker invalidates selected expansion")
+	carried.item_removed.connect(func(_item):
+		_check(surface.reserve_at("late_blocker", Vector2i(2, 3), Vector2i.ONE), "late blocker invalidates command expansion during removal")
+	, CONNECT_ONE_SHOT)
 	controller.set("_current_surface", surface)
 	controller.set("_current_fit", fit)
 	controller.set("_manual_mode", false)
@@ -361,9 +383,11 @@ func _test_failed_base_promotion_restores_exact_carry_state() -> void:
 	_check(keys_after == keys_before, "failed promotion preserves original stack order")
 	_check(surface.get_stack_id_for_item(cd.instance_id) == cd.instance_id, "failed promotion preserves original owner")
 	_free_context(context)
+	_pending_helpers -= 1
 
 
 func _test_manual_larger_item_never_promotes_base() -> void:
+	_pending_helpers += 1
 	var context: Dictionary = _context(Vector2i(8, 8), 1.0)
 	var surface: StorageSurface = context["surface"] as StorageSurface
 	var controller: StoragePlacementController = context["controller"] as StoragePlacementController
@@ -379,9 +403,11 @@ func _test_manual_larger_item_never_promotes_base() -> void:
 	_check(fit.get("placement_kind", "") != "base_promotion", "manual fit never returns promotion kind")
 	_check(surface.get_storage_stack(cd.instance_id).entries[0].item == cd, "manual attempt leaves current base unchanged")
 	_free_context(context)
+	_pending_helpers -= 1
 
 
 func _test_general_round_cans_and_visible_middle_retrieval() -> void:
+	_pending_helpers += 1
 	var context: Dictionary = _context(Vector2i(5, 5), 0.40)
 	var surface: StorageSurface = context["surface"] as StorageSurface
 	var controller: StoragePlacementController = context["controller"] as StoragePlacementController
@@ -427,9 +453,11 @@ func _test_general_round_cans_and_visible_middle_retrieval() -> void:
 	_check(stack.entries[1].item == metal_top, "upper can remains in relative order")
 	_check(stack.entries[1].host.position.y < top_y_before, "upper can compresses deterministically")
 	_free_context(context)
+	_pending_helpers -= 1
 
 
 func _test_removed_base_manual_empty_placement_on_same_surface() -> void:
+	_pending_helpers += 1
 	var context: Dictionary = _context(Vector2i(10, 6), 1.0)
 	var surface: StorageSurface = context["surface"] as StorageSurface
 	var controller: StoragePlacementController = context["controller"] as StoragePlacementController
@@ -455,9 +483,11 @@ func _test_removed_base_manual_empty_placement_on_same_surface() -> void:
 	_check(placed_stack != null and not placed_stack.entries[0].packing_rotated, "same-surface return preserves effective unrotated placement")
 	player.free()
 	_free_context(context)
+	_pending_helpers -= 1
 
 
 func _test_removed_base_auto_promotes_back_on_same_surface() -> void:
+	_pending_helpers += 1
 	var context: Dictionary = _context(Vector2i(10, 6), 1.0)
 	var surface: StorageSurface = context["surface"] as StorageSurface
 	var controller: StoragePlacementController = context["controller"] as StoragePlacementController
@@ -483,9 +513,11 @@ func _test_removed_base_auto_promotes_back_on_same_surface() -> void:
 	var restored_stack: StorageStack = surface.get_storage_stack(base.instance_id)
 	_check(restored_stack != null and restored_stack.entries[0].item == base, "returned original base becomes authoritative again")
 	_free_context(context)
+	_pending_helpers -= 1
 
 
 func _test_removed_base_placement_with_multiple_carried_items() -> void:
+	_pending_helpers += 1
 	var context: Dictionary = _context(Vector2i(10, 6), 1.0)
 	var surface: StorageSurface = context["surface"] as StorageSurface
 	var controller: StoragePlacementController = context["controller"] as StoragePlacementController
@@ -511,9 +543,11 @@ func _test_removed_base_placement_with_multiple_carried_items() -> void:
 	_check(surface.get_stack_id_for_item(base.instance_id) == base.instance_id, "multi-carried base has active same-surface placement")
 	player.free()
 	_free_context(context)
+	_pending_helpers -= 1
 
 
 func _test_contextual_manual_orientation_preserves_preference() -> void:
+	_pending_helpers += 1
 	var context: Dictionary = _context(Vector2i(10, 8), 1.0)
 	var surface: StorageSurface = context["surface"] as StorageSurface
 	var controller: StoragePlacementController = context["controller"] as StoragePlacementController
@@ -557,9 +591,11 @@ func _test_contextual_manual_orientation_preserves_preference() -> void:
 	_check(final_packing.basis.is_equal_approx(ghost_packing_basis), "contextual effective packing yaw matches ghost and final")
 	_check(not committed.packing_rotated, "committed entry records contextual effective orientation")
 	_free_context(context)
+	_pending_helpers -= 1
 
 
 func _test_manual_terminal_and_ghost_final_parity(terminal_id: StringName) -> void:
+	_pending_helpers += 1
 	var context: Dictionary = _context(Vector2i(12, 8), 1.0)
 	var surface: StorageSurface = context["surface"] as StorageSurface
 	var controller: StoragePlacementController = context["controller"] as StoragePlacementController
@@ -598,11 +634,15 @@ func _test_manual_terminal_and_ghost_final_parity(terminal_id: StringName) -> vo
 	var later = controller.call("_entry_for_item", _item(&"loot_000030"), false)
 	_check(not bool(surface.find_manual_stack_fit(stack_id, later).get("valid", true)), "terminal accepts no further item")
 	_free_context(context)
+	_pending_helpers -= 1
 
 
 func _place_auto(controller: StoragePlacementController, carried: CarriedItems, surface: StorageSurface, item: ItemInstance) -> bool:
+	_pending_helpers += 1
 	if not carried.add_item(item):
-		return false
+		var completed_result_1: Variant = false
+		_pending_helpers -= 1
+		return completed_result_1
 	var orientations: Array = controller.call(
 		"_entry_orientations_for_item",
 		item,
@@ -616,7 +656,9 @@ func _place_auto(controller: StoragePlacementController, carried: CarriedItems, 
 	controller.set("_current_surface", surface)
 	controller.set("_current_fit", fit)
 	controller.set("_manual_mode", false)
-	return controller.place_selected()
+	var completed_result_2: Variant = controller.place_selected()
+	_pending_helpers -= 1
+	return completed_result_2
 
 
 func _build_book_cd_stack(
@@ -624,13 +666,16 @@ func _build_book_cd_stack(
 	carried: CarriedItems,
 	surface: StorageSurface
 ) -> ItemInstance:
+	_pending_helpers += 1
 	var base: ItemInstance = _promotion_book()
 	var middle: ItemInstance = _item(&"loot_000031")
 	var top: ItemInstance = _item(&"loot_000031")
 	_check(_place_auto(controller, carried, surface, base), "removed-base fixture Book placed")
 	_check(_place_auto(controller, carried, surface, middle), "removed-base fixture middle CD stacked")
 	_check(_place_auto(controller, carried, surface, top), "removed-base fixture top CD stacked")
-	return base
+	var completed_result_1: Variant = base
+	_pending_helpers -= 1
+	return completed_result_1
 
 
 func _manual_empty_fit(
@@ -640,13 +685,14 @@ func _manual_empty_fit(
 	origin: Vector2i,
 	rotated: bool
 ) -> Dictionary:
+	_pending_helpers += 1
 	var entry = controller.call(
 		"_entry_for_item",
 		item,
 		rotated,
 		surface.get_semantic_orientation_quarter_turns()
 	)
-	return {
+	var completed_result_1: Variant = {
 		"valid": surface.can_place_at(origin, entry.footprint),
 		"placement_kind": "empty",
 		"stack_id": item.instance_id,
@@ -659,19 +705,24 @@ func _manual_empty_fit(
 		"zone_category": "",
 		"host_y_m": surface.get_local_placement_position(origin, entry.footprint).y
 	}
+	_pending_helpers -= 1
+	return completed_result_1
 
 
 func _player_for_storage_dispatch(
 	carried: CarriedItems,
 	controller: StoragePlacementController
 ) -> Node:
+	_pending_helpers += 1
 	var player: Node = PlayerControllerScript.new()
 	var prompt: Label = Label.new()
 	player.add_child(prompt)
 	player.set("carried_items", carried)
 	player.set("_storage_placement", controller)
 	player.set("_interaction_prompt", prompt)
-	return player
+	var completed_result_1: Variant = player
+	_pending_helpers -= 1
+	return completed_result_1
 
 
 func _place_manual_empty(
@@ -681,8 +732,11 @@ func _place_manual_empty(
 	item: ItemInstance,
 	origin: Vector2i
 ) -> bool:
+	_pending_helpers += 1
 	if not carried.add_item(item):
-		return false
+		var completed_result_1: Variant = false
+		_pending_helpers -= 1
+		return completed_result_1
 	var entry = controller.call(
 		"_entry_for_item",
 		item,
@@ -706,10 +760,13 @@ func _place_manual_empty(
 	controller.set("_current_fit", fit)
 	controller.set("_manual_mode", true)
 	controller.set("_rotated", false)
-	return controller.place_selected()
+	var completed_result_2: Variant = controller.place_selected()
+	_pending_helpers -= 1
+	return completed_result_2
 
 
 func _context(size: Vector2i, clearance_m: float) -> Dictionary:
+	_pending_helpers += 1
 	var surface: StorageSurface = StorageSurfaceScript.new()
 	root.add_child(surface)
 	surface.configure(&"interaction_stack", float(size.x) * 0.10 + 0.001, float(size.y) * 0.10 + 0.001, 0.10, clearance_m)
@@ -719,40 +776,58 @@ func _context(size: Vector2i, clearance_m: float) -> Dictionary:
 	var controller: StoragePlacementController = StoragePlacementControllerScript.new()
 	root.add_child(controller)
 	controller.configure(null, carried, 1.8)
-	return {"surface": surface, "carried": carried, "controller": controller}
+	var completed_result_1: Variant = {"surface": surface, "carried": carried, "controller": controller}
+	_pending_helpers -= 1
+	return completed_result_1
 
 
 func _free_context(context: Dictionary) -> void:
+	_pending_helpers += 1
 	(context["controller"] as Node).free()
 	(context["carried"] as Node).free()
 	(context["surface"] as Node).free()
+	_pending_helpers -= 1
 
 
 func _item(item_id: StringName) -> ItemInstance:
-	return ItemInstanceScript.new(_definitions[String(item_id)] as ItemDefinition)
+	_pending_helpers += 1
+	var completed_result_1: Variant = ItemInstanceScript.new(_definitions[String(item_id)] as ItemDefinition)
+	_pending_helpers -= 1
+	return completed_result_1
 
 
 func _promotion_book() -> ItemInstance:
+	_pending_helpers += 1
 	var source: ItemDefinition = _definitions["loot_000030"] as ItemDefinition
 	var definition: ItemDefinition = source.duplicate(true) as ItemDefinition
 	definition.storage_footprint = Vector3i(3, 2, 1)
-	return ItemInstanceScript.new(definition)
+	var completed_result_1: Variant = ItemInstanceScript.new(definition)
+	_pending_helpers -= 1
+	return completed_result_1
 
 
 func _definitions_by_id() -> Dictionary:
+	_pending_helpers += 1
 	var catalogue: Resource = load(CATALOG_PATH)
 	var result: Dictionary = {}
 	for value: Variant in catalogue.get("definitions") as Array:
 		var definition: ItemDefinition = value as ItemDefinition
 		result[String(definition.item_id)] = definition
-	return result
+	var completed_result_1: Variant = result
+	_pending_helpers -= 1
+	return completed_result_1
 
 
 func _targetable(entry) -> bool:
+	_pending_helpers += 1
 	if entry.world_item == null or not is_instance_valid(entry.world_item):
-		return false
+		var completed_result_1: Variant = false
+		_pending_helpers -= 1
+		return completed_result_1
 	var area: Area3D = entry.world_item.get_node_or_null("PickupArea") as Area3D
-	return area != null and area.collision_layer != 0 and area.monitorable
+	var completed_result_2: Variant = area != null and area.collision_layer != 0 and area.monitorable
+	_pending_helpers -= 1
+	return completed_result_2
 
 
 func _check(condition: bool, message: String) -> void:
@@ -760,3 +835,13 @@ func _check(condition: bool, message: String) -> void:
 		return
 	_failed = true
 	push_error("ASSERTION FAILED: %s" % message)
+
+
+func _finish() -> void:
+	_check(_pending_helpers == 0, "%d test or fixture helpers did not complete" % _pending_helpers)
+	if _failed:
+		print("FAIL: storage stacking interaction tests")
+		quit(1)
+		return
+	print("PASS: storage stacking interaction tests")
+	quit(0)
