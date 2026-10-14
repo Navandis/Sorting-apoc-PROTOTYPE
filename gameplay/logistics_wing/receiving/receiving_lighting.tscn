@@ -20,14 +20,14 @@ scale = Vector3(1.65, 1.65, 1.65)
 [node name="Light" type="SpotLight3D" parent="GeneralFixtures/G1"]
 position = Vector3(-34.4, 3.675, -1.2)
 rotation = Vector3(-1.570796327, 0, 0)
-light_color = Color(1, 0.82, 0.64, 1)
-light_energy = 1.71
+light_color = Color(1, 0.84, 0.68, 1)
+light_energy = 2.6
 light_volumetric_fog_energy = 0.0
 shadow_enabled = true
-shadow_bias = 0.05
+shadow_bias = 0.3
 shadow_normal_bias = 0.5
-spot_range = 6.2
-spot_angle = 55.0
+spot_range = 8.0
+spot_angle = 70.0
 
 [node name="G2" type="Node3D" parent="GeneralFixtures"]
 
@@ -37,15 +37,15 @@ scale = Vector3(1.65, 1.65, 1.65)
 
 [node name="Light" type="SpotLight3D" parent="GeneralFixtures/G2"]
 position = Vector3(-30.3, 3.675, 1.2)
-rotation = Vector3(-1.570796327, 0, 0)
-light_color = Color(1, 0.82, 0.64, 1)
-light_energy = 1.71
+light_color = Color(1, 0.84, 0.68, 1)
+light_energy = 2.6
 light_volumetric_fog_energy = 0.0
 shadow_enabled = true
-shadow_bias = 0.05
+shadow_bias = 0.2
 shadow_normal_bias = 0.5
-spot_range = 6.2
-spot_angle = 55.0
+spot_range = 8.0
+spot_angle = 70.0
+rotation_degrees = Vector3(-105, 0, 0)
 
 [node name="TaskFixtures" type="Node3D" parent="."]
 
@@ -60,15 +60,15 @@ surface_material_override/0 = ExtResource("4")
 
 [node name="Light" type="SpotLight3D" parent="TaskFixtures/T1"]
 position = Vector3(-37.4, 2.9, -0.8)
-rotation = Vector3(-1.254698339, -3.112189365, 0)
-light_color = Color(1, 0.94, 0.82, 1)
-light_energy = 0.85
+light_color = Color(1, 0.91, 0.77, 1)
+light_energy = 0.75
 light_volumetric_fog_energy = 0.0
 shadow_enabled = true
 shadow_bias = 0.025
 shadow_normal_bias = 0.25
-spot_range = 3.2
-spot_angle = 52.0
+spot_range = 4.0
+spot_angle = 58.0
+rotation_degrees = Vector3(-68, -155, 0)
 
 [node name="T2" type="Node3D" parent="TaskFixtures"]
 
@@ -81,15 +81,15 @@ surface_material_override/0 = ExtResource("4")
 
 [node name="Light" type="SpotLight3D" parent="TaskFixtures/T2"]
 position = Vector3(-37.4, 2.9, 0.8)
-rotation = Vector3(-1.254698339, -0.0294032882, 0)
-light_color = Color(1, 0.94, 0.82, 1)
+light_color = Color(1, 0.91, 0.77, 1)
 light_energy = 0.85
 light_volumetric_fog_energy = 0.0
 shadow_enabled = true
-shadow_bias = 0.025
+shadow_bias = 0.1
 shadow_normal_bias = 0.25
-spot_range = 3.2
-spot_angle = 52.0
+spot_range = 4.0
+spot_angle = 58.0
+rotation_degrees = Vector3(-68, -25, 0)
 
 [node name="WarningFixtures" type="Node3D" parent="."]
 
@@ -111,6 +111,19 @@ light_volumetric_fog_energy = 0.0
 shadow_enabled = false
 omni_range = 1.8
 omni_attenuation = 2.0
+
+[node name="ApronCeilingBounce" type="SpotLight3D" parent="."]
+position = Vector3(-32.2, 0.65, 0)
+rotation_degrees = Vector3(90, 0, 0)
+light_color = Color(1, 0.88, 0.75, 1)
+light_energy = 0.45
+light_volumetric_fog_energy = 0.0
+shadow_enabled = true
+shadow_bias = 0.03
+shadow_normal_bias = 0.35
+spot_range = 5.8
+spot_angle = 75.0
+metadata/purpose = "Bounded floor-to-ceiling diffuse bounce approximation; toggle Visible to compare practical-only rig"
 
 [editable path="TaskFixtures/T1/Fixture"]
 

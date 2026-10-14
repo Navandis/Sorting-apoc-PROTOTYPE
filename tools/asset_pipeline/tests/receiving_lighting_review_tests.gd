@@ -1,5 +1,5 @@
 extends SceneTree
-# Catches candidate environment writes bleeding into canonical or other instances,
+# Catches review environment writes bleeding into canonical or other instances,
 # losing the real gameplay hierarchy, and relocating authored fixture meshes.
 const REVIEW := "res://gameplay/logistics_wing/review/receiving_lighting_review.tscn"
 const PRODUCTION := "res://gameplay/logistics_wing/wing_gameplay.tscn"
@@ -28,10 +28,14 @@ func run():
     check(env!=canonical_env and env!=other_env,"candidate Environment is private per instance")
     check(env.ambient_light_source==Environment.AMBIENT_SOURCE_DISABLED,"declared zero ambient start")
     check(not wing.get_node("Environment/KeyLight").visible,"global key excluded in candidate")
-    env.tonemap_exposure=2.0
-    check(is_equal_approx(canonical_env.tonemap_exposure,1) and is_equal_approx(other_env.tonemap_exposure,1),"Inspector tuning cannot mutate production or another candidate")
-    env.tonemap_exposure=1
-    check(canonical_env.ambient_light_source==Environment.AMBIENT_SOURCE_SKY and is_equal_approx(canonical_env.ambient_light_energy,.12),"canonical ambient preserved")
+    var canonical_exposure := canonical_env.tonemap_exposure
+    var other_exposure := other_env.tonemap_exposure
+    var review_exposure := env.tonemap_exposure
+    env.tonemap_exposure=review_exposure+1.0
+    check(is_equal_approx(canonical_env.tonemap_exposure,canonical_exposure) and is_equal_approx(other_env.tonemap_exposure,other_exposure),"Inspector tuning cannot mutate production or another review")
+    env.tonemap_exposure=review_exposure
+    check(canonical_env.ambient_light_source==Environment.AMBIENT_SOURCE_DISABLED and not canonical.get_node("Environment/KeyLight").visible,"canonical ambient/key disabled")
+    assert_inherited_lights(canonical.get_node("Environment/ReceivingLighting"),wing.get_node("Environment/ReceivingLighting"))
     var before := {}; var after := {}
     art_transforms(canonical,canonical,before);art_transforms(wing,wing,after)
     check(before==after,"all authored art and structural transforms preserved")
@@ -108,6 +112,22 @@ func run():
     await process_frame
     await process_frame
     finish()
+# Compare inherited properties dynamically: later legitimate production tuning
+# should propagate into the review rather than require new numerical approval gates.
+func assert_inherited_lights(canonical: Node, review: Node):
+    var lights := canonical.find_children("*","Light3D",true,false)
+    check(lights.size()==6 and review.find_children("*","Light3D",true,false).size()==6,"review inherits exactly five spots and W1")
+    check(review.find_children("ApronCeilingBounce","SpotLight3D",true,false).size()==1,"review has no duplicate bounce")
+    for light in lights:
+        var path := canonical.get_path_to(light)
+        var inherited := review.get_node_or_null(path)
+        if not check(inherited!=null and inherited.get_class()==light.get_class(),"inherited light: "+str(path)):
+            continue
+        check(inherited.transform.is_equal_approx(light.transform),"inherited light transform: "+str(path))
+        var properties := ["visible","light_color","light_energy","light_volumetric_fog_energy","light_specular","shadow_enabled","shadow_bias","shadow_normal_bias","shadow_blur","shadow_reverse_cull_face","light_cull_mask"]
+        properties.append_array(["spot_range","spot_angle","spot_attenuation","spot_angle_attenuation"] if light is SpotLight3D else ["omni_range","omni_attenuation"])
+        for property in properties:
+            check(inherited.get(property)==light.get(property),"inherited "+property+": "+str(path))
 func finish():
     print("receiving_lighting_review_tests: ","PASS" if failures==0 else "FAIL"," failures=",failures)
     quit(0 if failures==0 else 1)

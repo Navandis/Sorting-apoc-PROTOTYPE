@@ -11,58 +11,12 @@ reflected_light_source = 2
 tonemap_mode = 2
 
 [node name="ReceivingLightingReview" type="Node3D"]
-metadata/purpose = "Isolated Receiving practical-light pilot; canonical startup unchanged"
+metadata/purpose = "Playable Receiving review; practical lights inherit the human-promoted production rig"
 
 [node name="Gameplay" parent="." instance=ExtResource("1_wing")]
 
 [node name="GameplayEnvironment" parent="Gameplay/Environment" index="4"]
 environment = SubResource("Environment_review")
-
-[node name="KeyLight" parent="Gameplay/Environment" index="5"]
-visible = false
-
-[node name="Light" parent="Gameplay/Environment/ReceivingLighting/GeneralFixtures/G1" index="1"]
-shadow_bias = 0.3
-light_color = Color(1, 0.84, 0.68, 1)
-light_energy = 2.6
-spot_range = 8.0
-spot_angle = 70.0
-
-[node name="Light" parent="Gameplay/Environment/ReceivingLighting/GeneralFixtures/G2" index="1"]
-shadow_bias = 0.2
-rotation_degrees = Vector3(-105, 0, 0)
-light_color = Color(1, 0.84, 0.68, 1)
-light_energy = 2.6
-spot_range = 8.0
-spot_angle = 70.0
-
-[node name="Light" parent="Gameplay/Environment/ReceivingLighting/TaskFixtures/T1" index="1"]
-rotation_degrees = Vector3(-68, -155, 0)
-light_color = Color(1, 0.91, 0.77, 1)
-light_energy = 0.75
-spot_range = 4.0
-spot_angle = 58.0
-
-[node name="Light" parent="Gameplay/Environment/ReceivingLighting/TaskFixtures/T2" index="1"]
-shadow_bias = 0.1
-rotation_degrees = Vector3(-68, -25, 0)
-light_color = Color(1, 0.91, 0.77, 1)
-light_energy = 0.85
-spot_range = 4.0
-spot_angle = 58.0
-
-[node name="ApronCeilingBounce" type="SpotLight3D" parent="Gameplay/Environment/ReceivingLighting"]
-position = Vector3(-32.2, 0.65, 0)
-rotation_degrees = Vector3(90, 0, 0)
-light_color = Color(1, 0.88, 0.75, 1)
-light_energy = 0.45
-light_volumetric_fog_energy = 0.0
-shadow_enabled = true
-shadow_bias = 0.03
-shadow_normal_bias = 0.35
-spot_range = 5.8
-spot_angle = 75.0
-metadata/purpose = "Bounded floor-to-ceiling diffuse bounce approximation; toggle Visible to compare practical-only rig"
 
 [node name="Player" parent="Gameplay" index="3"]
 position = Vector3(-29.6, 0.05, 2.5)

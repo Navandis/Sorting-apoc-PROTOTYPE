@@ -12,7 +12,7 @@
 [sub_resource type="Environment" id="Environment_gameplay"]
 background_mode = 1
 background_color = Color(0.055, 0.06, 0.065, 1)
-ambient_light_source = 3
+ambient_light_source = 1
 ambient_light_color = Color(0.78, 0.81, 0.84, 1)
 ambient_light_energy = 0.12
 reflected_light_source = 2
@@ -116,6 +116,7 @@ position = Vector3(-36, 0, 0)
 environment = SubResource("Environment_gameplay")
 
 [node name="KeyLight" type="DirectionalLight3D" parent="."]
+visible = false
 rotation_degrees = Vector3(-58, -32, 0)
 light_color = Color(1, 0.97, 0.92, 1)
 light_energy = 1.0

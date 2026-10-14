@@ -58,7 +58,9 @@ func run() -> void:
 	var opening = env.get_node("ReceivingStructuralShell/ReceivingEastOpeningWall").piece_spec
 	check(is_equal_approx(opening.opening_width_m, 2.84) and is_equal_approx(opening.opening_height_m, 3.4), "current centred Backlog opening")
 	var lighting := env.get_node("ReceivingLighting")
-	check(lighting.scene_file_path == "res://gameplay/logistics_wing/receiving/receiving_lighting.tscn" and lighting.find_children("*", "SpotLight3D", true, false).size() == 4, "current four-spot Receiving lighting")
+	check(lighting.scene_file_path == "res://gameplay/logistics_wing/receiving/receiving_lighting.tscn" and lighting.find_children("*", "SpotLight3D", true, false).size() == 5, "current five-spot Receiving lighting")
+	check(lighting.find_children("ApronCeilingBounce", "SpotLight3D", true, false).size() == 1, "one inherited ceiling bounce")
+	check(env.get_node("GameplayEnvironment").environment.ambient_light_source == Environment.AMBIENT_SOURCE_DISABLED and not env.get_node("KeyLight").visible, "configured startup disables ambient and key")
 	wing.free()
 	finish()
 
