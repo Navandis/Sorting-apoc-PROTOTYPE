@@ -1,6 +1,6 @@
 # Receiving Stage C — queued deliveries, 14 October 2026
 
-**IMPLEMENTED / TECHNICALLY VERIFIED; awaiting human PROMOTE / REVISE / REJECT.** This local candidate does not promote the queue milestone or reopen promoted C1, single-cycle gameplay or intentional lighting.
+**IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN-PROMOTED — 14 October 2026.** Accepted implementation: `83cbed14aa81d3f5551c07cab95dcd96b54f5fa2`. The dated disposition below supersedes this original technical handoff's pending-review/publication boundary. Promoted C1, single-cycle gameplay and intentional lighting remain closed in their respective scopes.
 
 ## Authority and implementation
 
@@ -62,4 +62,14 @@ Wait for A to open and observe QUEUE 01. Unload through normal TAKE, carrying/st
 
 Technical timed reproduction: use the same executable/path with `--rendering-method gl_compatibility --script res://tools/asset_pipeline/tests/receiving_queued_delivery_tests.gd -- --queue-real-time --receiving-deck-debug --receiving-two-batch-debug --receiving-fixture-mode=mixed`. The same test without user flags runs bounded deterministic integration and promoted-staging rejection.
 
-One local implementation commit only. **No push, merge, branch deletion, reset, cleanup or automatic promotion. Stop for human PROMOTE / REVISE / REJECT.**
+Original technical-handoff boundary: one local implementation commit and no publication pending human review. The following explicit decision supersedes that publication restriction; branch/worktree preservation remains required.
+
+## 14 October 2026 — explicit human PROMOTE and publication authorization
+
+The developer HUMAN-PROMOTED **Receiving Stage C — Two Distinct Back-to-Back Queued Deliveries** after normal in-game testing of implementation `83cbed1`. Two different committed batches, with independent identities/manifests, completed autonomous A → B cycles. B waited FIFO and began arrival only after A's full departure; no overlap was observed. CRT counts/status, warning states, TAKE gating, shutter motion, full audio, lighting and normal carrying/storage were satisfactory.
+
+Approval covers only this two-batch physical queue milestone. **Awaiting Lift/fourth-return backpressure, midnight forfeiture and Expedition integration remain separate later scope.** No new loot-source behavior, UI or wider Stage C close-out is authorized. C1, the Stage C single cycle and intentional Receiving lighting remain HUMAN-PROMOTED and closed.
+
+The unchanged implementation's existing 12-suite validation and full-cue OpenGL evidence above were inspected and reused for acceptance/publication. No new engine test run or performance claim is made. Existing accepted probe/performance debt and held-view diagnostic limitations remain recorded; the developer's normal carrying/storage acceptance is distinct from the automated harness's held-view limitation.
+
+The developer explicitly authorized a targeted acceptance commit, safe fast-forward integration into `main` and normal push to `origin`. Publication includes unchanged implementation `83cbed14aa81d3f5551c07cab95dcd96b54f5fa2` and this documentation disposition. Keep all branches/worktrees and unrelated local files. Stop immediately after independently verifying publication; Awaiting Lift implementation awaits its separate prompt.
