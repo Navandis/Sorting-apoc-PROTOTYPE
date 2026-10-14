@@ -13,7 +13,7 @@ Unfinished / decommissioned underground service-level bunker
 
 Receiving mood references - useful for layering, warmth, material contrast and functional composition. Wear/grime is an upper bound, not the production target.
 
-Version 0.11 | 14 October 2026 | Review edition
+Version 0.11 | 14 October 2026 | Approved current master
 
 Design basis: GDD v0.14; Findings v0.14; accepted compact wing; promoted storage/ladder, Receiving Stage A/B/C and EAF1–EAF5; C1 closed; intentional Receiving lighting integrated, with later saved human authoring.
 
@@ -22,7 +22,7 @@ Design basis: GDD v0.14; Findings v0.14; accepted compact wing; promoted storage
 
 ## 1. Purpose, authority, and status
 
-Version 0.11 reconciles the accepted Receiving room through Stage C closure on 14 October. C1 environment/art, intentional lighting and Stage C in its agreed prototype scope are HUMAN-PROMOTED / CLOSED. GDD v0.14 owns gameplay/scope; Findings v0.14 §34 records implementation/evidence. These are local document-review editions; accepted milestones are not awaiting reacceptance.
+Version 0.11 reconciles the accepted Receiving room through Stage C closure on 14 October. C1 environment/art, intentional lighting and Stage C in its agreed prototype scope are HUMAN-PROMOTED / CLOSED. GDD v0.14 owns gameplay/scope; Findings v0.14 §34 records implementation/evidence. These are approved current masters, promoted on 14 October without version increments; accepted milestones remain closed.
 
 This document governs world-building, environment architecture, composition, material/surface grammar, lighting direction and production protocol. Gameplay, storage, progression and interaction remain with the GDD and accepted records. Technical validity, approved source/use and specific human art acceptance are distinct; this revision does not promote new mechanics.
 
@@ -867,7 +867,7 @@ The accepted initial 10 October wear composition had 18 layers (17 scalar plus o
 
 ### 34.8 Current validation order
 
-1. GDD v0.14, Findings v0.14 and VDD v0.11 are local review editions awaiting documentation review; preserve earlier masters and dated evidence.
+1. GDD v0.14, Findings v0.14 and VDD v0.11 are the approved current masters; preserve earlier masters and dated evidence.
 
 2. Preserve human-promoted/closed C1 environment/art, intentional lighting and Stage C agreed prototype scope. Ordinary energy/color/range/cone/attenuation/shadow and appropriate wear/furnishing tuning uses version control and proportionate visual review; it is not automatically a new milestone or reopening.
 
@@ -916,7 +916,7 @@ Companions at the 11 October checkpoint were GDD v0.13 and Findings v0.13. Secti
 
 ## 37. v0.11 revision and source register
 
-14 October 2026. Local review edition awaiting document review. Active lighting/color, Receiving presentation, current authoring, summaries and validation order now reflect human-promoted Stage C and intentional lighting. World/spatial grammar, Foundation Gate principles, figures and historical records remain. No room relighting, geometry/material/UI change or new visual acceptance is performed.
+14 October 2026. Approved current master; same-edition document promotion authorized. Active lighting/color, Receiving presentation, current authoring, summaries and validation order now reflect human-promoted Stage C and intentional lighting. World/spatial grammar, Foundation Gate principles, figures and historical records remain. No room relighting, geometry/material/UI change or new visual acceptance is performed.
 
 [37] Theatre and live CRT: docs/testing/receiving-stage-c-single-cycle-validation-2026-10-12.md. Distinct full-cue queue: docs/testing/receiving-stage-c-queued-deliveries-validation-2026-10-14.md. Awaiting Lift and final Stage C human closure: docs/testing/receiving-stage-c-awaiting-lift-validation-2026-10-14.md. Intentional lighting diagnosis/candidate, shadow correction, warmth/cage refinement, later human promotion and integration: docs/testing/receiving-intentional-lighting-candidate-2026-10-13.md. Read complete later addenda.
 

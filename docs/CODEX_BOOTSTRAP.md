@@ -34,7 +34,7 @@ Ordinary energy/color/range/cone/attenuation/shadow tuning and appropriate wear/
 
 Evidence: [single cycle](testing/receiving-stage-c-single-cycle-validation-2026-10-12.md), [intentional lighting](testing/receiving-intentional-lighting-candidate-2026-10-13.md), [two distinct FIFO deliveries](testing/receiving-stage-c-queued-deliveries-validation-2026-10-14.md), [Awaiting Lift and final human closure](testing/receiving-stage-c-awaiting-lift-validation-2026-10-14.md). Read each through its later human disposition/publication addendum. The two-batch full-cue demonstration, Awaiting Lift full-cue A-unblock and deterministic five-cycle coverage are distinct; none is a new run by this documentation task.
 
-**Documentation review:** GDD v0.14, VDD v0.11 and Findings v0.14 are new local review editions awaiting human document review. DOCX masters are authoritative; mirrors are generated. See the [reconciliation and QA record](testing/post-stage-c-three-master-reconciliation-2026-10-14.md). This pending review does not demote accepted gameplay or lighting.
+**Approved document masters:** GDD v0.14, VDD v0.11 and Findings v0.14 were approved for promotion/publication on 14 October 2026 without version increments. DOCX masters are authoritative; mirrors are generated. See the [reconciliation and QA record](testing/post-stage-c-three-master-reconciliation-2026-10-14.md). Document approval leaves accepted gameplay and lighting closed.
 
 Current gate order and Receiving invariants:
 
@@ -73,7 +73,7 @@ EAF1, EAF2, EAF3, EAF4 and EAF5 are HUMAN-PROMOTED; EAF5 is CLOSED. The comprehe
 
 Do not treat the 1.80 m eye-height, 2.8 m ceiling trials, proof cage or proof-only 3.5 m TAKE reach as production changes. Irregular frozen piles remain rejected; preserve promoted storage, fixed ladder and deterministic Receiving. Stage C now implements warning/audio/CRT/shutter gating and FIFO pressure. Final Expedition loot bounds, shipped dimensions/future fixture profiles, actual clock/Dispatch/population/persistence, broader furnishing, containers, loot balance, crouch, height-aware placement and general climbing remain later scope. Ordinary appropriate scene tuning follows the present-state policy.
 
-The current review masters are GDD v0.14, Findings v0.14 and VDD v0.11, with generated mirrors, awaiting document review. Accepted gameplay/lighting stays closed. P05_C02 remains active; historical proof palettes do not override production. Use CURRENT_STATE and focused dated records for detail. No next gameplay milestone is selected by documentation.
+The approved current masters are GDD v0.14, Findings v0.14 and VDD v0.11, with generated mirrors; promotion/publication was authorized without version increments. Accepted gameplay/lighting stays closed. P05_C02 remains active; historical proof palettes do not override production. Use CURRENT_STATE and focused dated records for detail. No next gameplay milestone is selected by documentation.
 
 The [1 October lift/deck close-out](testing/receiving-c1-lift-enclosure-deck-closeout-2026-10-01.md) remains the widened lift/deck acceptance source. Current GDD v0.14, Findings v0.14 and VDD v0.11 incorporate its relevant baseline and later compact/shaft/shutter supersessions; previous editions retain their historical values.
 

@@ -9,7 +9,7 @@ FINDINGS
 
 Technical, interaction, asset-pipeline and human-validation record
 
-Version 0.14 | 14 October 2026 | Review edition
+Version 0.14 | 14 October 2026 | Approved current master
 
 Evidence window: retained prototype history through published 14 October Stage C closure at bb6683d28539ff743bc480a9d5d68c4ef3d0ce87, intentional lighting and later human scene authoring. Earlier measurements, REVISE and NOT RUN results remain dated evidence.
 
@@ -31,7 +31,7 @@ Receiving Stage A remains the implemented, technically verified and human-promot
 
 EAF1–EAF5 and Receiving C1 remain promoted/closed in their recorded scopes. Stage C is now HUMAN-PROMOTED / CLOSED in agreed prototype scope following single-cycle, two-batch and Awaiting Lift human acceptance. Intentional Receiving lighting is integrated and later human scene authoring is preserved. Sections 32–33 retain dated C1/A30WS evidence; §34 records the 12–14 October progression.
 
-The first asset-led shell remains rejected and C1A parked/unpromoted. Current companions are GDD v0.14 and VDD v0.11, local review editions awaiting documentation review. This task reconciles published decisions without reopening acceptance, running new game tests or selecting the next milestone.
+The first asset-led shell remains rejected and C1A parked/unpromoted. Current companions are the approved GDD v0.14 and VDD v0.11 masters, promoted with Findings v0.14 without version increments. This task reconciles published decisions without reopening acceptance, running new game tests or selecting the next milestone.
 
 | Area | Current evidence state |
 | --- | --- |
@@ -219,7 +219,7 @@ A zone is implemented as category metadata over hidden deterministic cells on on
 
 ### Why this remains compatible with the GDD
 
-GDD v0.10 retains the zoning rules promoted in the earlier storage gate. The representative catalogue evidence supports preserving that policy; service-space, greybox and continuing-wing updates do not reopen storage mechanics.
+The current GDD v0.14 retains the zoning rules promoted in the earlier storage gate. The representative catalogue evidence supports preserving that policy; service-space, greybox and continuing-wing updates do not reopen storage mechanics.
 
 ## 7. Validated assumptions and unresolved questions
 
@@ -1159,7 +1159,7 @@ This table records current status through published 14 October Stage C closure a
 | EAF4 wear pipeline and catalog | HUMAN-PROMOTED / editor authoring HUMAN-ACCEPTED. Current catalog 28 records: 27 APPROVED/one DEFERRED; eleven conventional presets and sixteen separately approved scalar patterns. |
 | EAF5 Receiving architectural proof | IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN-PROMOTED / CLOSED. |
 | C1A structural-shell branch | PARKED technically verified research; not promoted or production authority. |
-| Receiving Stage C1 | CLOSED / HUMAN-PROMOTED on 11 October as the bounded production environment/art milestone, including published A30WS. Minor art adjustments do not automatically reopen C1. [§33] |
+| Receiving C1 — environment/art | CLOSED / HUMAN-PROMOTED on 11 October as the bounded environment/art milestone. A30WS remains a historically accepted C1 baseline; its practical/global numerical lighting settings were later superseded for current production by separately human-promoted intentional Receiving lighting. The essential reflection probe remains retained. Minor art adjustments do not automatically reopen C1. [§§33–34] |
 | Receiving Stage C agreed prototype scope | IMPLEMENTED / TECHNICALLY VERIFIED / HUMAN-PROMOTED / CLOSED, 14 October: single cycle, distinct FIFO deliveries, Awaiting Lift and explicit simulated-midnight seam. Actual Expedition/clock/Dispatch/population/persistence remains later. [§34] |
 
 Receiving C1 and Stage C are closed in their agreed scopes; intentional lighting is integrated. Current saved human art supersedes old counts/alternatives. Ordinary wear/furnishing/light tuning does not automatically reopen milestones. This document review starts no implementation and selects no next gate.
@@ -1278,7 +1278,7 @@ Human C1 closing decision and this documentation record: docs/testing/receiving-
 
 Tracked production sources inspected, not edited: gameplay/logistics_wing/receiving/receiving_lighting.tscn; gameplay/logistics_wing/receiving/receiving_reflections.tscn; gameplay/logistics_wing/receiving/receiving_reflections.gd. Tracked checks recorded by that report: tools/asset_pipeline/tests/receiving_lighting_integration_tests.gd; receiving_reflections_integration_tests.gd; wing_gameplay_navigation_tests.gd (shortened test names share the same directory). Section 32.7 retains exact individual-slice sources and the dated 10 October authority set; the 11 October set supersedes its current-status pointers.
 
-The v0.13 documentation-review state and QA below belong to 11 October: docs/testing/receiving-c1-human-promotion-documentation-closeout-2026-10-11.md. Section 34 and the current reconciliation note record the new v0.14 review edition; prior masters, mirrors and dated evidence remain unchanged.
+The v0.13 documentation-review state and QA below belong to 11 October: docs/testing/receiving-c1-human-promotion-documentation-closeout-2026-10-11.md. Section 34 and the current reconciliation note record the approved current v0.14 edition; prior masters, mirrors and dated evidence remain unchanged.
 
 ## 34. Stage C and intentional lighting 12–14 October 2026
 
@@ -1340,4 +1340,4 @@ The developer’s successful normal in-game testing promoted Awaiting Lift and c
 
 Timed render harnesses disable held-item rendering and remove carried entries between ordinary pickup_into() calls. Earlier GLES3 material-null errors reproduced with the real held view on the unchanged canonical wing and disappeared when it was disabled; gameplay/held-view code was not repaired. Human normal carrying/storage acceptance is separate evidence. Expected changed-commitment and duplicate-source/namespace rejection diagnostics are intentional fixtures; sandbox Windows certificate-store warnings are host diagnostics, not game defects. Accepted probe costs, unrelated gallery_a_fixture_front failure and prior unrun editor-capture checks retain their exact scope.
 
-Real day scheduling, Expedition generation/teams, Dispatch/scavenger monitoring, medical/recruitment/population consequences, durable persistence/journal recovery and actual timed survival play remain later Systems MVP work. Current docs select no next implementation. GDD v0.14, VDD v0.11 and Findings v0.14 await human documentation review; Stage C/C1/lighting acceptance stays closed. docs/testing/post-stage-c-three-master-reconciliation-2026-10-14.md records source reconciliation, ZIP/XML/media/mirror/layout QA and the documentation-only Git scope. No engine regression, new screenshots, assets, scene changes, push or merge is performed by this documentation task.
+Real day scheduling, Expedition generation/teams, Dispatch/scavenger monitoring, medical/recruitment/population consequences, durable persistence/journal recovery and actual timed survival play remain later Systems MVP work. Current docs select no next implementation. GDD v0.14, VDD v0.11 and Findings v0.14 are approved current masters; Stage C/C1/lighting acceptance stays closed. docs/testing/post-stage-c-three-master-reconciliation-2026-10-14.md records source reconciliation, ZIP/XML/media/mirror/layout QA and the documentation-only Git scope. Document correction and publication add no engine regression, screenshots, assets or scene changes.

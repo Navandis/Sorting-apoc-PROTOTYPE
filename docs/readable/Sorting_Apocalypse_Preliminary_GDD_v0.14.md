@@ -13,13 +13,13 @@ The player never fights or sees a zombie. They run the storeroom that keeps ever
 
 CORE PROMISE  The apocalypse ends at the elevator door.
 
-Version 0.14 | 14 October 2026 | Review edition
+Version 0.14 | 14 October 2026 | Approved current master
 
 Living design | Receiving Stage C is HUMAN-PROMOTED / CLOSED in its agreed prototype scope. C1, Stage A/B, storage, fixed ladder and EAF1–EAF5 retain their accepted dispositions.
 
 The accepted Receiving prototype now runs autonomous deliveries with fully-OPEN TAKE, full departure before FIFO handoff, live CRT and upstream Awaiting Lift with an explicit simulated-midnight seam. Actual Expedition, clock, Dispatch, population and persistence integration remains later Systems MVP work.
 
-Companion review editions: Prototype Findings v0.14; Visual Design & World-Building Direction v0.11. These documents await documentation review; accepted gameplay and lighting milestones remain promoted.
+Companion approved masters: Prototype Findings v0.14; Visual Design & World-Building Direction v0.11. Document promotion approved on 14 October 2026 without version increments; accepted gameplay and lighting milestones remain promoted.
 
 ## Document purpose and status
 
@@ -31,7 +31,7 @@ It is intentionally layered. The document describes the intended full design, a 
 
 This GDD remains the overall gameplay, design and scope authority. Prototype Findings v0.14 records implementation and evidence; VDD v0.11 governs environment, spatial, material and lighting direction. Accepted in-engine geometry and later human decisions govern the prototype; historical schematics and appendices retain dated evidence.
 
-This 14 October review edition reconciles Receiving through published Stage C closure at bb6683d28539ff743bc480a9d5d68c4ef3d0ce87. Established gameplay and balance rules remain. Implemented prototype behavior is distinguished from future Systems MVP integration; this revision selects no next milestone. [R14]
+This approved 14 October edition reconciles Receiving through published Stage C closure at bb6683d28539ff743bc480a9d5d68c4ef3d0ce87. Established gameplay and balance rules remain. Implemented prototype behavior is distinguished from future Systems MVP integration; this revision selects no next milestone. [R14]
 
 ### Decision-status legend
 
@@ -1541,7 +1541,7 @@ The Systems MVP should answer whether sorting and survival form one loop, whethe
 
 Receiving C1 and Stage C are CLOSED / HUMAN-PROMOTED in their agreed scopes. Intentional lighting, single-cycle, two-batch and Awaiting Lift decisions are retained. The first timed obligation and wider Systems MVP remain later work under the existing roadmap; this editorial task chooses and authorizes no next implementation. [R14]
 
-The continuing wing, accepted compact geometry, normal entry, authored palette and promoted storage foundation remain baseline. GDD v0.14, Findings v0.14 and VDD v0.11 are local review editions awaiting document review. Preserve prior editions, dated evidence and ignored licensed assets/import state.
+The continuing wing, accepted compact geometry, normal entry, authored palette and promoted storage foundation remain baseline. GDD v0.14, Findings v0.14 and VDD v0.11 are the approved current masters. Preserve prior editions, dated evidence and ignored licensed assets/import state.
 
 | Stage | Scope | Reported state at this revision |
 | --- | --- | --- |
@@ -1617,7 +1617,7 @@ The continuing wing is now the normal project launch through UID uid://bljf1nlhi
 
 ### 21.3 Current next artifacts and bounded follow-ups
 
-GDD v0.14, Findings v0.14 and VDD v0.11 are local review editions. Receiving C1 and Stage C are CLOSED / HUMAN-PROMOTED in their agreed scopes; ordinary room authoring does not automatically reopen them. This document review selects no next gameplay milestone. [R14]
+GDD v0.14, Findings v0.14 and VDD v0.11 are the approved current masters. Receiving C1 and Stage C are CLOSED / HUMAN-PROMOTED in their agreed scopes; ordinary room authoring does not automatically reopen them. Document publication selects no next gameplay milestone. [R14]
 
 - Preserve the promoted Storage Authoring Foundation, canonical item pose and bounded fixed ladder, including the real-wing rack/ladder bridge.
 
@@ -1651,7 +1651,7 @@ PROVISIONAL  This example demonstrates intended rhythm. Event frequency, values,
 | 16:10 | Hardware team returns with a low-Utility assortment after weak all-round provisioning. | Keep wire and tools, salvage a bulky item when the machine returns, and accept that equal returned Bulk can contain poor future value. |
 | 18:00 | Dinner opens. Daily Meal Coverage will be imperfect. | Use two Rations plus remaining low-density Food and Hydration to reduce tomorrow's treatment-failure risk. |
 | 21:40 | The one-person team returns with poor loot and a recruit candidate. | Accept the candidate despite limited storage to rebuild future team count. |
-| 23:40 | The final clamped expedition arrives and Receiving reaches three deposited batches: one active plus two queued. | Unload enough to prevent an Awaiting Lift team from abandoning its loot at midnight. |
+| 23:40 | Receiving is already full: one active plus two deposited queued batches. The final clamped expedition returns and becomes Awaiting Lift. | Fully empty the active batch, then allow shutter closure, latching and complete outbound departure to release a deposited slot before midnight. Partial unloading releases no slot; enough time is not guaranteed. Illustrative pressure, not a new timing or balance rule. |
 | 00:00 | Night report resolves treatment, Meal Coverage, Bunker Ops effects, Workshop progress, Rations, recruit arrival, and next-day warnings. | Review one screen of cards: one patient recovered, one treatment failed due to Meal Coverage, and maximum Electronics outages are scheduled tomorrow. |
 
 ### A.2 Intended player story
@@ -1969,7 +1969,7 @@ Companions at the 11 October checkpoint: VDD v0.10 and Findings v0.13. R10 retai
 
 ## v0.14 revision and source register
 
-14 October 2026. Local review edition awaiting documentation review. Reconciles active summaries, §§5, 9, 11, 16, 18, 20–21 and Appendix B with published Stage C closure; preserves balances, future night/Expedition design and dated history. No implementation, next-milestone selection, push or merge accompanies this update.
+14 October 2026. Approved current master; same-edition document promotion authorized. Reconciles active summaries, §§5, 9, 11, 16, 18, 20–21 and Appendix B with published Stage C closure; preserves balances, future night/Expedition design and dated history. No gameplay implementation or next-milestone selection accompanies document publication.
 
 R14 — Accepted Receiving behavior and human dispositions: docs/testing/receiving-stage-c-single-cycle-validation-2026-10-12.md; docs/testing/receiving-stage-c-queued-deliveries-validation-2026-10-14.md; docs/testing/receiving-stage-c-awaiting-lift-validation-2026-10-14.md. Each record must be read through its later human-promotion/publication addendum. Final published reference bb6683d28539ff743bc480a9d5d68c4ef3d0ce87.
 

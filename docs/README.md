@@ -8,7 +8,7 @@ Intentional warm practical/task/bounded-bounce lighting supersedes A30WS practic
 
 Actual Expedition, daily clock, Dispatch monitoring, population consequences, durable saves and real time-pressure play remain later Systems MVP work. See [CURRENT_STATE](CURRENT_STATE.md) for current contracts/debt and [CODEX_BOOTSTRAP](CODEX_BOOTSTRAP.md) for preservation rules. No next gameplay milestone is selected here.
 
-The three new editions below are **local review editions awaiting document review**. This does not reopen or demote accepted gameplay/lighting. The [reconciliation/QA record](testing/post-stage-c-three-master-reconciliation-2026-10-14.md) maps sources and checks.
+The three editions below are the **approved current masters**, promoted on 14 October 2026 without version increments. This does not reopen or demote accepted gameplay/lighting. The [reconciliation/QA record](testing/post-stage-c-three-master-reconciliation-2026-10-14.md) maps sources and checks.
 
 ## Read first
 
@@ -43,7 +43,7 @@ Current human-promoted compact baseline: Receiving **8.00 × 7.50 m / 60 m²**, 
 
 - [9 October set-dressing/collision close-out](testing/receiving-c1-set-dressing-collision-closeout-2026-10-09.md): human-accepted manual layout and bounded technical integration, fresh focused tests, retired legacy infrastructure, a dated alternative inventory and the manual visual/proxy maintenance rule. Local ignored assets load in the configured environment; Git publication is not a complete source-art archive. C1 overall is CLOSED / HUMAN-PROMOTED.
 
-- [3 October compact retrofit close-out](testing/receiving-c1-compact-retrofit-closeout-2026-10-03.md): implemented, technically verified and human-promoted compact Receiving/Dispatch/connections, preserved translated lift, two-apron/two-cage lighting and startup parity. Supersedes older dimensions/counts and threshold-overlap debt in historical/master/readable documents; the new 14 October review editions incorporate its relevant current baseline; earlier editions remain unchanged.
+- [3 October compact retrofit close-out](testing/receiving-c1-compact-retrofit-closeout-2026-10-03.md): implemented, technically verified and human-promoted compact Receiving/Dispatch/connections, preserved translated lift, two-apron/two-cage lighting and startup parity. Supersedes older dimensions/counts and threshold-overlap debt in historical/master/readable documents; the approved 14 October editions incorporate its relevant current baseline; earlier editions remain unchanged.
 
 - [3 October first lighting baseline close-out](testing/receiving-c1-lighting-baseline-closeout-2026-10-03.md): historical first baseline with 3 pendants / 2 task strips / 5 shadowed spots; compact close-out supersedes its counts/positions and threshold-overlap debt. Seating/shadow corrections, reinforced-concrete shaft and retained manual hardware remain accepted. Later intentional lighting and human scene authoring supersede that record’s pending emitter/contextual-lighting state; further appropriate refinement remains ordinary authoring.
 
@@ -78,7 +78,7 @@ Current human-promoted compact baseline: Receiving **8.00 × 7.50 m / 60 m²**, 
 
 Storage/content, selected fixed ladder/wing bridge, Receiving Stage A/B/C and EAF1–EAF5 remain promoted in their recorded scopes. C1 and intentional lighting remain closed; C1A stays parked/unpromoted and irregular frozen piles remain rejected. Receiving preserves exact committed content and exact committed item identities on private TAKE-only surfaces, with no PUT/zoning/labels/manual placement/ordinary storage registration. Actual production returns must use the upstream admission owner. See CURRENT_STATE for geometry, reach, authoring workflows and remaining debt.
 
-The current review editions are GDD v0.14, Findings v0.14 and VDD v0.11, with generated same-stem mirrors. Previous masters and dated validation records remain historical. The [new reconciliation](testing/post-stage-c-three-master-reconciliation-2026-10-14.md) records source authority and QA; document review remains pending.
+The approved current masters are GDD v0.14, Findings v0.14 and VDD v0.11, with generated same-stem mirrors. Previous masters and dated validation records remain historical. The [new reconciliation](testing/post-stage-c-three-master-reconciliation-2026-10-14.md) records source authority, the three minor corrections, focused QA and document promotion.
 
 The [30 September C1 close-out](testing/receiving-c1-structural-material-envelope-closeout-2026-09-30.md), CURRENT_STATE and CODEX_BOOTSTRAP supersede the previous editions' historical EAF5 P01_C02 default / P05_C03 alternate and next-C1 statements for current production. P05_C02 is active; Dirty Concrete remains approved in the EAF3 catalog but is rejected for the approachable Receiving wall role. That September close-out did not refresh the masters. The new October editions now incorporate its relevant production supersession. EAF2 winding maintenance is technically verified and human-promoted; threshold geometry is now resolved and only walking-surface material remains deferred. The 1 October lift acceptance remains, with the compact close-out governing ensemble translation, current dimensions and lighting counts.
 
