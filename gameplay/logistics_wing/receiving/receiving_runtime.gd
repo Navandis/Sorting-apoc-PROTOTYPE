@@ -3,6 +3,7 @@ class_name ReceivingRuntime
 
 const DeckPlannerScript = preload("res://receiving/receiving_deck_layout_planner.gd")
 const LootSourceScript = preload("res://receiving/prototype_loot_source.gd")
+const AdmissionScript = preload("res://receiving/awaiting_lift_admission.gd")
 
 const DEFAULT_CONTENT_SEED: int = 1842
 const DEFAULT_PRESENTATION_SEED: int = 9001
@@ -18,6 +19,8 @@ const SECOND_PRESENTATION_SEED: int = 9002
 @onready var deck_presenter: Node3D = $ReceivingDeckPresenter
 @onready var lift_cycle: Node3D = $ReceivingLiftCycle
 
+var return_admission: Node
+var _awaiting_debug_started := false
 var _waiting_debug_batch: LootBatch
 var _debug_first_batch_id := ""
 
@@ -36,12 +39,25 @@ func _ready() -> void:
 	):
 		push_error("Receiving runtime could not configure its lift installation.")
 		return
+	return_admission = AdmissionScript.new()
+	return_admission.name = "AwaitingLiftAdmission"
+	add_child(return_admission)
+	if not return_admission.configure(receiving_manager, item_catalog, deck_profile):
+		push_error("Receiving runtime could not configure upstream return admission.")
+		return
 	_run_cli_debug_delivery.call_deferred()
 
 
 func _run_cli_debug_delivery() -> void:
 	var arguments := OS.get_cmdline_user_args()
 	if not arguments.has("--receiving-deck-debug"):
+		return
+	if arguments.has("--receiving-awaiting-lift-debug"):
+		if not run_awaiting_lift_debug_delivery(
+			_numeric_flag(arguments, "--receiving-target-bulk", DEFAULT_TARGET_BULK),
+			_fixture_mode_flag(arguments)
+		):
+			push_error("Receiving Awaiting Lift debug returns failed before admission.")
 		return
 	if arguments.has("--receiving-two-batch-debug"):
 		if not run_two_batch_debug_delivery(_fixture_mode_flag(arguments)):
@@ -106,6 +122,44 @@ func _on_debug_first_batch_open(state: ReceivingLiftCycle.State) -> void:
 	_debug_first_batch_id = ""
 	if not receiving_manager.deposit_batch(waiting):
 		push_error("Receiving debug queued deposit rejected; committed B was not rerolled.")
+
+
+## Separate opt-in prototype returns. Prepare all four before any deposit.
+## Stable demo IDs are one-shot per runtime; no actual Expedition roster exists.
+func run_awaiting_lift_debug_delivery(
+	target_bulk: int = DEFAULT_TARGET_BULK,
+	fixture_mode: int = DeckPlannerScript.FixtureMode.BARE
+) -> bool:
+	if _awaiting_debug_started or return_admission == null or _waiting_debug_batch != null:
+		return false
+	if not lift_cycle.is_configured() or lift_cycle.is_busy() or receiving_manager.get_active_batch() != null or not return_admission.get_awaiting_returns().is_empty():
+		return false
+	var batches: Array[LootBatch] = []
+	for index in 4:
+		var batch := _prepare_debug_batch(DEFAULT_CONTENT_SEED + index, DEFAULT_PRESENTATION_SEED + index, target_bulk, fixture_mode)
+		if batch == null:
+			return false
+		batches.append(batch)
+	_awaiting_debug_started = true
+	for signal_name: String in ["return_admitted", "return_awaiting_lift", "return_admitted_after_waiting", "return_forfeited_at_midnight"]:
+		return_admission.connect(signal_name, _log_debug_return_event.bind(signal_name))
+	for index in batches.size():
+		var team_id := "prototype_team_%s" % ["A", "B", "C", "D"][index]
+		var definitions: Array[String] = []
+		for entry: LootBatchEntry in batches[index].entries:
+			definitions.append(String(entry.definition_id))
+		print("AWAITING_MANIFEST team=", team_id, " batch=", batches[index].batch_id, " definitions=", definitions)
+		if return_admission.submit_return(team_id, batches[index]) == AdmissionScript.ReturnResult.INVALID:
+			push_error("Receiving prepared prototype return unexpectedly rejected for " + team_id)
+			return false
+	return true
+
+
+func _log_debug_return_event(team_id: String, batch_id: String, event_name: String) -> void:
+	print("AWAITING_RETURN event=", event_name, " team=", team_id, " batch=", batch_id,
+		" status=", return_admission.get_return_status(team_id),
+		" active=", receiving_manager.get_active_batch_id(), " queue=", receiving_manager.get_queued_batch_ids(),
+		" awaiting=", return_admission.get_awaiting_returns())
 
 
 func _prepare_debug_batch(content_seed: int, presentation_seed: int, target_bulk: int, fixture_mode: int) -> LootBatch:

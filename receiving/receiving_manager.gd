@@ -13,20 +13,29 @@ var _queued_batch_ids: Array[String] = []
 var _deposited_batches: Dictionary = {}
 
 
-func deposit_batch(batch: LootBatch) -> bool:
-	var rejected_batch_id: String = "" if batch == null else batch.batch_id
+## Read-only distinction for upstream admission. Invalid always wins over full.
+enum DepositEligibility { INVALID, CAPACITY_FULL, AVAILABLE }
+
+
+func get_deposit_eligibility(batch: LootBatch) -> DepositEligibility:
 	if (
 		batch == null
 		or batch.preparation_state != LootBatch.STATE_PREPARED
 		or batch.is_drained()
 		or batch.batch_id.is_empty()
 		or _deposited_batches.has(batch.batch_id)
-		or (
-			not _active_batch_id.is_empty()
-			and _queued_batch_ids.size() >= MAX_QUEUED_BATCHES
-		)
 	):
-		deposit_rejected.emit(rejected_batch_id)
+		return DepositEligibility.INVALID
+	return DepositEligibility.AVAILABLE if has_deposit_capacity() else DepositEligibility.CAPACITY_FULL
+
+
+func has_deposit_capacity() -> bool:
+	return _active_batch_id.is_empty() or _queued_batch_ids.size() < MAX_QUEUED_BATCHES
+
+
+func deposit_batch(batch: LootBatch) -> bool:
+	if get_deposit_eligibility(batch) != DepositEligibility.AVAILABLE:
+		deposit_rejected.emit("" if batch == null else batch.batch_id)
 		return false
 
 	_deposited_batches[batch.batch_id] = batch
