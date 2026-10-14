@@ -2,24 +2,34 @@
 
 [ext_resource type="Script" uid="uid://biayrmaxttpah" path="res://gameplay/logistics_wing/wing_gameplay.gd" id="1_gameplay"]
 [ext_resource type="PackedScene" path="res://gameplay/logistics_wing/wing_environment.tscn" id="2_environment"]
+[ext_resource type="Texture2D" uid="uid://c87mqtt6g0vrj" path="res://assets/environment/infrastructure/lighting/SM_Lamp_long_T_Lamp_long_BC.png" id="3_du0t1"]
 [ext_resource type="PackedScene" path="res://gameplay/player/gameplay_player.tscn" id="3_player"]
 [ext_resource type="PackedScene" uid="uid://dvfofak5jgwjg" path="res://assets/environment/furniture/work_surfaces/SM_Desk_A01_N1.glb" id="3_pygu1"]
 [ext_resource type="PackedScene" uid="uid://uvdd3n5k2rij" path="res://assets/environment/dressing/decoration/SM_Ind_War_Cable_Power_Rubber_Weathered_03.glb" id="4_cllla"]
+[ext_resource type="Texture2D" uid="uid://yicdpcnk77ad" path="res://assets/environment/infrastructure/lighting/SM_Lamp_long_T_Lamp_long_ORM.png" id="4_e78ty"]
 [ext_resource type="PackedScene" path="res://gameplay/ui/carried_items_hud.tscn" id="4_hud"]
 [ext_resource type="PackedScene" uid="uid://ddunnblmgwyuf" path="res://assets/environment/dressing/decoration/SM_Food_Leftover_FO1_N1.glb" id="5_5ehom"]
+[ext_resource type="Texture2D" uid="uid://bng304euxr44w" path="res://assets/environment/infrastructure/lighting/SM_Lamp_long_MI_Lamp_long_Emissive.png" id="5_7gnqw"]
 [ext_resource type="Script" uid="uid://6qrk22inrvej" path="res://gameplay/logistics_wing/development/seed_host.gd" id="5_8pqnk"]
 [ext_resource type="PackedScene" path="res://gameplay/logistics_wing/functional_fixtures.tscn" id="5_fixtures"]
 [ext_resource type="PackedScene" uid="uid://dqahwgcsham5a" path="res://assets/props/morale/SM_Book_01.glb" id="6_54osu"]
 [ext_resource type="PackedScene" path="res://gameplay/logistics_wing/development/seeded_storage_setup.tscn" id="6_development"]
 [ext_resource type="PackedScene" uid="uid://35txwa8f4omp" path="res://assets/environment/infrastructure/lighting/SM_KB3D_API_TwoBedroom_A_DeskLampB.glb" id="6_gnorf"]
+[ext_resource type="Texture2D" uid="uid://cwr8modtgwuj8" path="res://assets/environment/infrastructure/lighting/SM_Lamp_long_T_Lamp_long_N.png" id="6_kdg1h"]
 [ext_resource type="PackedScene" uid="uid://dwi21utjbv5eb" path="res://assets/environment/infrastructure/lighting/SM_KB3D_API_TwoBedroom_A_DeskLampB_transparent.glb" id="7_3gvbg"]
+[ext_resource type="Texture2D" uid="uid://cpl63knoc0ptj" path="res://assets/environment/infrastructure/lighting/SM_AlarmLight_T_AlarmLight_BC.png" id="7_pvnnl"]
 [ext_resource type="PackedScene" uid="uid://xt5xd2i71gmi" path="res://assets/props/morale/SM_CDStack_01.glb" id="7_tw2hy"]
 [ext_resource type="PackedScene" uid="uid://cfjkh5kcajj3x" path="res://assets/environment/dressing/decoration/SM_Thermos_01.glb" id="8_1bkje"]
+[ext_resource type="Texture2D" uid="uid://dpmk52mfb3fig" path="res://assets/environment/infrastructure/lighting/SM_AlarmLight_T_AlarmLight_ORM.png" id="8_2jn0f"]
 [ext_resource type="PackedScene" uid="uid://cdtpk0sa4cpcp" path="res://assets/props/electronics/SM_ComputerMouse_01.glb" id="8_mouse"]
+[ext_resource type="Texture2D" uid="uid://cx22p7sjdv3n6" path="res://assets/environment/infrastructure/lighting/SM_AlarmLight_MI_AlarmLight_Emissive.png" id="9_eynjs"]
 [ext_resource type="PackedScene" uid="uid://bnkwk3smcnutr" path="res://assets/props/electronics/SM_ComputerTower_01.glb" id="9_tower"]
+[ext_resource type="Texture2D" uid="uid://bsj8o86vwyj4f" path="res://assets/environment/infrastructure/lighting/SM_AlarmLight_T_AlarmLight_N.png" id="10_a66u6"]
 [ext_resource type="PackedScene" uid="uid://bccl7gu0qfqi3" path="res://assets/props/electronics/SM_ElectronicDevice_01.glb" id="10_device"]
+[ext_resource type="Texture2D" uid="uid://b527h6xa0hwoi" path="res://assets/environment/infrastructure/lighting/SM_AlarmLight_MI_Glass_Alarm_SM_AlarmLight_Emissive.png" id="11_j3wqb"]
 [ext_resource type="PackedScene" uid="uid://bxjf574hsfsrk" path="res://assets/props/electronics/SM_Phone_01.glb" id="11_phone"]
 [ext_resource type="PackedScene" uid="uid://b14f7xk05u40g" path="res://assets/props/Food/SM_Bread_1.glb" id="12_bread"]
+[ext_resource type="Texture2D" uid="uid://dr40e5fsgm1o3" path="res://assets/environment/infrastructure/lighting/SM_AlarmLight_MI_Glass_Alarm_SM_AlarmLight_MetallicRoughness.png" id="12_v0url"]
 [ext_resource type="PackedScene" uid="uid://j66y4huec60n" path="res://assets/props/Food/SM_Dry_Goods_01a.glb" id="13_dry_a"]
 [ext_resource type="PackedScene" uid="uid://uge4qvuuyt8f" path="res://assets/props/Food/SM_Dry_Goods_01c.glb" id="14_dry_c"]
 [ext_resource type="PackedScene" uid="uid://bp3cjq3eibwvr" path="res://assets/props/Food/SM_Dry_Goods_01g.glb" id="15_dry_g"]
@@ -141,8 +151,6 @@
 [ext_resource type="PackedScene" uid="uid://umfosx0g1e4e" path="res://assets/environment/dressing/decoration/SM_Wood_Pallet01.glb" id="149_u1qwk"]
 [ext_resource type="PackedScene" uid="uid://d02i2gj7hwpye" path="res://assets/environment/infrastructure/service_props/SM_WallBrace_A.glb" id="150_qjmvj"]
 [ext_resource type="PackedScene" uid="uid://0wav07myac0y" path="res://assets/environment/infrastructure/service_props/SM_KB3D_CPP_PropTV_A.glb" id="151_kr55y"]
-[ext_resource type="PackedScene" uid="uid://c6w1cetcp4yi6" path="res://assets/environment/infrastructure/service_props/SM_OfficeMonitor_02.glb" id="152_0tjjn"]
-[ext_resource type="PackedScene" uid="uid://dc68l3l7wxqti" path="res://assets/environment/infrastructure/service_props/SM_KB3D_CBD_PropPCMonitor_B.glb" id="153_nxht3"]
 [ext_resource type="PackedScene" path="res://gameplay/logistics_wing/receiving/receiving_lift_phosphor_display.tscn" id="154_crt_display"]
 [ext_resource type="PackedScene" uid="uid://h2k4jnxgm853" path="res://assets/environment/infrastructure/cables/SM_Cables04_01.glb" id="155_nxht3"]
 [ext_resource type="PackedScene" uid="uid://2hd4rlk50bq" path="res://assets/environment/infrastructure/cables/SM_Cables06.glb" id="156_76yn2"]
@@ -152,17 +160,12 @@
 [ext_resource type="PackedScene" uid="uid://c67vg31d6pmkq" path="res://assets/environment/infrastructure/cables/SM_ElectricalSupply_Wire02_Corner.glb" id="158_c7vt0"]
 [ext_resource type="PackedScene" path="res://environment_authoring/wear/imperfection_experiments/presets/wipe_marks_uh4scioc.tscn" id="163_uww01"]
 [ext_resource type="PackedScene" path="res://environment_authoring/wear/imperfection_experiments/presets/grunge_tedwdiic.tscn" id="163_vi167"]
-[ext_resource type="PackedScene" path="res://environment_authoring/wear/imperfection_experiments/presets/grain_sc2nbisc.tscn" id="164_noiif"]
-[ext_resource type="PackedScene" path="res://environment_authoring/wear/imperfection_experiments/presets/stains_ulttebjc.tscn" id="164_wmf8m"]
 [ext_resource type="PackedScene" path="res://environment_authoring/wear/imperfection_experiments/presets/dust_uh4rdfvc.tscn" id="165_5kgru"]
 [ext_resource type="PackedScene" path="res://environment_authoring/wear/imperfection_experiments/presets/scratched_metal_vdekebbc.tscn" id="165_jn6lb"]
 [ext_resource type="PackedScene" path="res://environment_authoring/wear/imperfection_experiments/presets/dust_uh4qbeic.tscn" id="166_5uhxw"]
 [ext_resource type="PackedScene" path="res://environment_authoring/wear/imperfection_experiments/presets/grungy_surface_slnnecvc.tscn" id="166_du0t1"]
-[ext_resource type="PackedScene" path="res://environment_authoring/wear/imperfection_experiments/presets/grunge_uh4uaawc.tscn" id="167_e78ty"]
 [ext_resource type="PackedScene" path="res://environment_authoring/wear/imperfection_experiments/presets/stains_ultwabqc.tscn" id="167_yjnqw"]
-[ext_resource type="PackedScene" path="res://environment_authoring/wear/imperfection_experiments/presets/grunge_tjvibebc.tscn" id="168_7gnqw"]
 [ext_resource type="PackedScene" path="res://environment_authoring/wear/imperfection_experiments/presets/dust_uh4qbflc.tscn" id="168_y27sh"]
-[ext_resource type="PackedScene" path="res://environment_authoring/wear/imperfection_experiments/presets/grunge_tedxadjc.tscn" id="169_kdg1h"]
 [ext_resource type="PackedScene" path="res://gameplay/logistics_wing/receiving/receiving_emergency_stop_signage.tscn" id="receiving_signage"]
 [ext_resource type="Script" uid="uid://be6gucor1ya72" path="res://environment_authoring/substrate/environment_substrate_piece.gd" id="shaft_1_x53na"]
 [ext_resource type="Resource" path="res://data/environment/material_catalog/approved_specs/eaf3b_1beac3a311a480af8844ea89.tres" id="shaft_2_rflhy"]
@@ -172,7 +175,84 @@
 [ext_resource type="Texture2D" uid="uid://dmerwhc48dlm0" path="res://assets/environment/materials/kitbash_cache/eaf3b_1beac3a311a480af8844ea89/2k/normal.png" id="shaft_6_h0kxl"]
 [ext_resource type="Texture2D" uid="uid://buvwu7wptxnjv" path="res://assets/environment/materials/kitbash_cache/eaf3b_1beac3a311a480af8844ea89/2k/roughness.png" id="shaft_7_8hvsm"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_5uhxw"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_orc72"]
+resource_local_to_scene = true
+resource_name = "Receiving task_strip"
+cull_mode = 2
+albedo_texture = ExtResource("3_du0t1")
+metallic = 1.0
+metallic_texture = ExtResource("4_e78ty")
+metallic_texture_channel = 2
+roughness_texture = ExtResource("4_e78ty")
+roughness_texture_channel = 1
+emission_enabled = true
+emission = Color(1, 0.94, 0.82, 1)
+emission_energy_multiplier = 0.6
+emission_operator = 1
+emission_texture = ExtResource("5_7gnqw")
+normal_enabled = true
+normal_texture = ExtResource("6_kdg1h")
+ao_enabled = true
+ao_texture = ExtResource("4_e78ty")
+metadata/_gltf_primary_texture_coord = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_efmg7"]
+resource_local_to_scene = true
+resource_name = "Receiving task_strip"
+cull_mode = 2
+albedo_texture = ExtResource("3_du0t1")
+metallic = 1.0
+metallic_texture = ExtResource("4_e78ty")
+metallic_texture_channel = 2
+roughness_texture = ExtResource("4_e78ty")
+roughness_texture_channel = 1
+emission_enabled = true
+emission = Color(1, 0.94, 0.82, 1)
+emission_energy_multiplier = 0.6
+emission_operator = 1
+emission_texture = ExtResource("5_7gnqw")
+normal_enabled = true
+normal_texture = ExtResource("6_kdg1h")
+ao_enabled = true
+ao_texture = ExtResource("4_e78ty")
+metadata/_gltf_primary_texture_coord = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ejs4t"]
+resource_local_to_scene = true
+resource_name = "Receiving warning_body"
+cull_mode = 2
+albedo_texture = ExtResource("7_pvnnl")
+metallic = 1.0
+metallic_texture = ExtResource("8_2jn0f")
+metallic_texture_channel = 2
+roughness_texture = ExtResource("8_2jn0f")
+roughness_texture_channel = 1
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 0.0
+emission_operator = 1
+emission_texture = ExtResource("9_eynjs")
+normal_enabled = true
+normal_texture = ExtResource("10_a66u6")
+ao_enabled = true
+ao_texture = ExtResource("8_2jn0f")
+metadata/_gltf_primary_texture_coord = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kwyoc"]
+resource_local_to_scene = true
+resource_name = "Receiving warning_lens"
+transparency = 4
+albedo_color = Color(0.68235296, 0.6901961, 0.7215686, 1)
+metallic = 1.0
+metallic_texture = ExtResource("12_v0url")
+metallic_texture_channel = 2
+roughness_texture = ExtResource("12_v0url")
+roughness_texture_channel = 1
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 0.0
+emission_operator = 1
+emission_texture = ExtResource("11_j3wqb")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vi167"]
 resource_local_to_scene = true
 size = Vector3(4.04, 3, 0.82)
 
@@ -333,7 +413,7 @@ size = Vector3(0.405, 1.24, 0.23)
 height = 0.87478334
 radius = 0.28701797
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yjnqw"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_noiif"]
 resource_local_to_scene = true
 shading_mode = 0
 albedo_color = Color(0.008, 0.02, 0.014, 1)
@@ -380,6 +460,51 @@ disabled = true
 
 [node name="ReceivingStructuralShell" parent="Environment" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36, 0, 0)
+
+[node name="Fixture" parent="Environment/ReceivingLighting/GeneralFixtures/G1" index="0"]
+transform = Transform3D(1.65, 0, 0, 0, 1.65, 0, 0, 0, 1.65, -34.4, 4.137, -1.2)
+
+[node name="Light" parent="Environment/ReceivingLighting/GeneralFixtures/G1" index="1"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -34.4, 3.675, -1.2)
+
+[node name="Fixture" parent="Environment/ReceivingLighting/GeneralFixtures/G2" index="0"]
+transform = Transform3D(1.65, 0, 0, 0, 1.65, 0, 0, 0, 1.65, -30.3, 4.137, 1.2)
+
+[node name="Light" parent="Environment/ReceivingLighting/GeneralFixtures/G2" index="1"]
+transform = Transform3D(1, 0, 0, 0, -0.25881904, 0.9659258, 0, -0.9659258, -0.25881904, -30.3, 3.675, 1.2)
+
+[node name="Fixture" parent="Environment/ReceivingLighting/TaskFixtures/T1" index="0"]
+transform = Transform3D(0.65, 0, 0, 0, 0.65, 0, 0, 0, 0.65, -37.4, 3.1, -0.8)
+
+[node name="Mesh" parent="Environment/ReceivingLighting/TaskFixtures/T1/Fixture" index="0" unique_id=1247805463]
+surface_material_override/0 = SubResource("StandardMaterial3D_orc72")
+
+[node name="Light" parent="Environment/ReceivingLighting/TaskFixtures/T1" index="1"]
+transform = Transform3D(-0.90630776, 0.3918449, -0.15831563, 0, 0.37460664, 0.92718387, 0.42261833, 0.8403139, -0.3395089, -37.4, 2.9, -0.8)
+
+[node name="Fixture" parent="Environment/ReceivingLighting/TaskFixtures/T2" index="0"]
+transform = Transform3D(0.65, 0, 0, 0, 0.65, 0, 0, 0, 0.65, -37.4, 3.1, 0.8)
+
+[node name="Mesh" parent="Environment/ReceivingLighting/TaskFixtures/T2/Fixture" index="0" unique_id=1247805463]
+surface_material_override/0 = SubResource("StandardMaterial3D_efmg7")
+
+[node name="Light" parent="Environment/ReceivingLighting/TaskFixtures/T2" index="1"]
+transform = Transform3D(0.90630776, 0.39184484, -0.15831561, 0, 0.37460664, 0.92718387, 0.42261827, -0.8403139, 0.3395089, -37.4, 2.9, 0.8)
+
+[node name="Fixture" parent="Environment/ReceivingLighting/WarningFixtures/W1" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.83, 2.85, 2.2)
+
+[node name="Mesh" parent="Environment/ReceivingLighting/WarningFixtures/W1/Fixture" index="0" unique_id=1961491557]
+surface_material_override/0 = SubResource("StandardMaterial3D_ejs4t")
+surface_material_override/1 = SubResource("StandardMaterial3D_kwyoc")
+
+[node name="WarningLight" parent="Environment/ReceivingLighting/WarningFixtures/W1/Fixture" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.16, 0, 0)
+omni_range = 2.5
+omni_attenuation = -0.5
+
+[node name="ApronCeilingBounce" parent="Environment/ReceivingLighting" index="3"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, -32.2, 0.65, 0)
 
 [node name="KeyLight" parent="Environment" index="5"]
 transform = Transform3D(0.8480481, 0.44939703, -0.28081444, 0, 0.52991927, 0.8480481, 0.52991927, -0.7191856, 0.44939703, 0, 0, 0)
@@ -463,7 +588,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.4, 0)
 
 [node name="Shape" parent="FunctionalFixtures/ModularRack_GalleryB_Initial/MovementCollision" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
-shape = SubResource("BoxShape3D_5uhxw")
+shape = SubResource("BoxShape3D_vi167")
 
 [node name="FixedLadder_GalleryB_Initial" parent="FunctionalFixtures" unique_id=806369216 instance=ExtResource("42_ladder")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 1.043639, 0, -8.665108)
@@ -1484,17 +1609,9 @@ transform = Transform3D(1.235, 0, 0, 0, 1.22, 0, 0, 0, 1.665, -36.277256, 2.0607
 
 [node name="Mesh" parent="ReceivingLiftMonitor/SM_KB3D_CPP_PropTV_A" index="0" unique_id=208583326]
 transform = Transform3D(1, 0, 0, 0, 0.9999998, 0, 0, 0, 1, 0.016489029, 0, 0.02396071)
-surface_material_override/1 = SubResource("StandardMaterial3D_yjnqw")
+surface_material_override/1 = SubResource("StandardMaterial3D_noiif")
 
 [node name="PhosphorDisplay" parent="ReceivingLiftMonitor" unique_id=352976086 instance=ExtResource("154_crt_display")]
-
-[node name="SM_OfficeMonitor_02" parent="ReceivingLiftMonitor" unique_id=321225774 instance=ExtResource("152_0tjjn")]
-transform = Transform3D(-4.742686e-08, 0.009468291, 1.0849587, 0, 1.0849587, -0.009468291, -1.085, -4.1387216e-10, -4.742505e-08, -35.929733, 2.4504955, -3.2735615)
-visible = false
-
-[node name="SM_KB3D_CBD_PropPCMonitor_B" parent="ReceivingLiftMonitor" unique_id=1917241600 instance=ExtResource("153_nxht3")]
-transform = Transform3D(1.3836055, 0.32955328, 0, -0.31943047, 1.4274522, 0, 0, 0, 2.155, -36.17277, 2.0046422, -3.2785425)
-visible = false
 
 [node name="SM_ChainLink_01" parent="." unique_id=28053962 instance=ExtResource("64_p6c26")]
 transform = Transform3D(1.12, 0, 0, 0, 1.12, 0, 0, 0, 1.12, -34.39905, 4.212658, -1.1961862)
@@ -1514,9 +1631,9 @@ metadata/purpose = "Visual-only user wear; drag approved presets here and edit t
 [node name="Receiving" type="Node3D" parent="AuthoredWear" unique_id=547755799]
 
 [node name="OilStainSemlsbi" parent="AuthoredWear/Receiving" unique_id=1221535767 instance=ExtResource("158_5uhxw")]
-transform = Transform3D(0.4970189, -0.86773974, -3.7930107e-08, 0, -4.371139e-08, 1, -0.86773974, -0.4970189, -2.1725386e-08, -34.460693, 0, 3.0462887)
-width_m = 1.001
-height_m = 0.941
+transform = Transform3D(0.4970189, -0.86773974, -3.7930107e-08, 0, -4.371139e-08, 1, -0.86773974, -0.4970189, -2.1725386e-08, -34.50549, 0, 3.103183)
+width_m = 1.1509999999999998
+height_m = 1.391
 opacity_multiplier = 0.695
 albedo_strength = 0.542
 albedo_tint = Color(0.029506557, 0.029506557, 0.029506557, 1)
@@ -1533,34 +1650,22 @@ _appearance_initialized = true
 metadata/purpose = "EXPERIMENTAL / NOT APPROVED: visual-only scalar mask auditions; hide this group independently"
 
 [node name="ExperimentalWipeMarksUh4Scioc" parent="ImperfectionExperiments" unique_id=1699741298 instance=ExtResource("163_uww01")]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -31.766415, 0, 0)
-visible = false
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -32.269, 0, 0)
 preview_mode = 1
-width_m = 8.0
+width_m = 7.2410000000000005
 height_m = 8.0
-opacity_multiplier = 1.0
+opacity_multiplier = 0.19
 albedo_tint = Color(0, 0, 0, 1)
-mask_rotation_degrees = -137.143
-
-[node name="ExperimentalStainsUlttebjc" parent="ImperfectionExperiments" unique_id=1683164013 instance=ExtResource("164_wmf8m")]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -31.379, -0.001, 1.7076783)
-visible = false
-preview_mode = 1
-opacity_multiplier = 0.266
-albedo_tint = Color(0.011242399, 0.010257419, 0.016444782, 1)
-mask_repeat = Vector2(0.5, 0.5)
-scalar_contrast = 1.3210000000000002
-scalar_bias = 0.17900000000000005
+mask_rotation_degrees = -79.38799999999998
 
 [node name="ExperimentalScratchedMetalVdekebbc" parent="ImperfectionExperiments" unique_id=880073489 instance=ExtResource("165_jn6lb")]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -32.350647, -0.001, 0)
-visible = false
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -32.351, 4.196, 0)
 preview_mode = 1
 width_m = 7.371
 height_m = 8.0
-opacity_multiplier = 1.0
-albedo_tint = Color(0, 0, 0, 1)
-mask_rotation_degrees = -343.062
+opacity_multiplier = 0.415
+albedo_tint = Color(0.14117648, 0.13725491, 0.10980392, 1)
+mask_rotation_degrees = -145.062
 
 [node name="ExperimentalScratchedMetalVdekebbc3" parent="ImperfectionExperiments" unique_id=1519673995 instance=ExtResource("165_jn6lb")]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -31.716, -0.001, 0)
@@ -1587,32 +1692,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.4, 0.736, -3.851)
 preview_mode = 1
 width_m = 2.941
 height_m = 1.4509999999999998
-opacity_multiplier = 0.475
+opacity_multiplier = 0.26
 albedo_tint = Color(0.12468847, 0.103107534, 0.08512247, 1)
 mask_rotation_degrees = -2.4350000000000023
 scalar_contrast = 3.851
-scalar_bias = -0.10099999999999998
-
-[node name="ExperimentalGrungeUh4Uaawc" parent="ImperfectionExperiments" unique_id=752128683 instance=ExtResource("167_e78ty")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.541374, 0.48763165, 0)
-visible = false
-
-[node name="ExperimentalGrungeTjvibebc" parent="ImperfectionExperiments" unique_id=1260684454 instance=ExtResource("168_7gnqw")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.01621, 0.50840217, 0)
-visible = false
-
-[node name="ExperimentalGrungeTedxadjc" parent="ImperfectionExperiments" unique_id=1649794841 instance=ExtResource("169_kdg1h")]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -32.748753, -0.001, 0.015349984)
-visible = false
-mask_source = "Stains (stains_ulttebjc) | eaf4:IMPERFECTION_TEXTURE_PROFILE:stains_ulttebjc:ulttebjc"
-preview_mode = 2
-width_m = 8.0
-height_m = 8.0
-opacity_multiplier = 0.269
-albedo_tint = Color(0.5793192, 0.48952377, 0.37318972, 1)
-mask_rotation_degrees = 171.39700000000005
-scalar_contrast = 1.015
-scalar_bias = -0.16500000000000004
+scalar_bias = -0.33099999999999996
 
 [node name="ExperimentalGrungeTedwdiic2" parent="ImperfectionExperiments" unique_id=355078315 instance=ExtResource("163_vi167")]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -32.346817, -0.001, 0.04)
@@ -1636,51 +1720,30 @@ mask_rotation_degrees = 54.45400000000001
 scalar_contrast = 0.8119999999999999
 scalar_bias = -0.43899999999999995
 
-[node name="ExperimentalGrainSc2Nbisc" parent="ImperfectionExperiments" unique_id=1747358949 instance=ExtResource("164_noiif")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.53737, 0.71312726, -3.8519201)
-visible = false
-preview_mode = 1
-opacity_multiplier = 0.43
-albedo_tint = Color(0.39215687, 0.36862746, 0.33333334, 1)
-scalar_bias = -0.17300000000000004
-
 [node name="ExperimentalDustUh4Rdfvc" parent="ImperfectionExperiments" unique_id=1630362063 instance=ExtResource("165_5kgru")]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -32.334, -0.001, 0.086)
 preview_mode = 1
 width_m = 7.301
 height_m = 8.0
-opacity_multiplier = 0.84
+opacity_multiplier = 0.395
 albedo_tint = Color(0.06892107, 0.06719954, 0.028370675, 1)
-mask_rotation_degrees = 65.45499999999998
+mask_rotation_degrees = -50.60500000000002
 
 [node name="ExperimentalDustUh4Qbeic" parent="ImperfectionExperiments" unique_id=545813966 instance=ExtResource("166_5uhxw")]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -32.53963, -0.0014449283, 0.13710093)
-visible = false
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -32.282085, -0.0014449283, 0.13710093)
 preview_mode = 1
-width_m = 8.0
+width_m = 7.2010000000000005
 height_m = 8.0
-opacity_multiplier = 0.525
+opacity_multiplier = 0.085
 albedo_tint = Color(0.013577621, 0.020436395, 0.010193489, 1)
 mask_rotation_degrees = 124.034
-scalar_contrast = 1.147
-scalar_bias = 0.4870000000000001
-
-[node name="ExperimentalDustUh4Qbeic2" parent="ImperfectionExperiments" unique_id=1419333335 instance=ExtResource("166_5uhxw")]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -32.53963, -0.0014449283, 0.13710093)
-visible = false
-preview_mode = 1
-width_m = 8.0
-height_m = 8.0
-opacity_multiplier = 0.525
-albedo_tint = Color(0.013577621, 0.020436395, 0.010193489, 1)
-mask_rotation_degrees = 48.127999999999986
 scalar_contrast = 1.147
 scalar_bias = 0.4870000000000001
 
 [node name="ExperimentalStainsUltwabqc" parent="ImperfectionExperiments" unique_id=596583891 instance=ExtResource("167_yjnqw")]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -29.706356, -0.0014449283, 2.516941)
 preview_mode = 1
-opacity_multiplier = 0.909
+opacity_multiplier = 0.729
 albedo_tint = Color(0.0125709735, 0.02220979, 0.00045543347, 1)
 mask_rotation_degrees = -3.117000000000018
 scalar_contrast = 1.3210000000000002
@@ -1691,13 +1754,18 @@ transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -32.
 preview_mode = 1
 width_m = 7.231000000000001
 height_m = 8.0
+opacity_multiplier = 0.475
 albedo_tint = Color(0.0995264, 0.05264502, 0.020411445, 1)
-mask_rotation_degrees = -171.314
-scalar_contrast = 1.254
-scalar_bias = -0.02600000000000002
+mask_rotation_degrees = -124.51400000000001
+scalar_contrast = 1.1960000000000002
+scalar_bias = -0.09599999999999997
 
 [editable path="Environment"]
 [editable path="Environment/Greybox"]
+[editable path="Environment/ReceivingLighting"]
+[editable path="Environment/ReceivingLighting/TaskFixtures/T1/Fixture"]
+[editable path="Environment/ReceivingLighting/TaskFixtures/T2/Fixture"]
+[editable path="Environment/ReceivingLighting/WarningFixtures/W1/Fixture"]
 [editable path="FunctionalFixtures"]
 [editable path="FunctionalFixtures/ModularRack_GalleryB_Initial"]
 [editable path="DevelopmentSetup"]
