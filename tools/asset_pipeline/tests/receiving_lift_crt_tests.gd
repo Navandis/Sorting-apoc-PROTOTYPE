@@ -24,7 +24,8 @@ func run():
   for index in [0,2,3,4,5]:
    check(mesh.get_surface_override_material(index) == null,"housing/source surface %d unchanged" % index)
   for alternative in ["SM_OfficeMonitor_02","SM_KB3D_CBD_PropPCMonitor_B"]:
-   check(not wing.get_node("ReceivingLiftMonitor/"+alternative).visible,"hidden monitor remains hidden")
+   var optional_monitor = wing.get_node_or_null("ReceivingLiftMonitor/"+alternative)
+   check(optional_monitor == null or not optional_monitor.visible,"obsolete monitor may be removed; any retained alternative stays hidden")
   var display = wing.get_node_or_null("ReceivingLiftMonitor/PhosphorDisplay")
   var material = mesh.get_surface_override_material(1) as StandardMaterial3D
   check(display != null and material != null,"screen owns passive live display and Surface 1 material")

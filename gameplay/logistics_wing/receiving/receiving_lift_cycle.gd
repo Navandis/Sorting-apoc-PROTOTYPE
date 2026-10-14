@@ -1,7 +1,7 @@
 extends Node3D
 class_name ReceivingLiftCycle
 
-## One physical delivery. Manager owns deposits/retirement; presenter owns cargo.
+## Consecutive physical deliveries. Manager owns FIFO/retirement; presenter owns cargo.
 ## Audio completion never substitutes for staged cargo, open pose or batch drain.
 enum State { SEALED_EMPTY, ARRIVAL, SEALED_READY, REVEALING, OPEN, CLOSING }
 
@@ -162,15 +162,18 @@ func _process(delta: float) -> void:
 		State.SEALED_EMPTY:
 			if _departing and _elapsed >= _phase_duration and not $Departure.playing:
 				# Safe completed-turnaround retirement. FIFO promotion stays manager-owned.
-				# Physical back-to-back queue activation is the next gate, not this cycle.
 				_retiring = true
-				_presenter.retire_drained_active_after_close()
+				var promoted_id := _presenter.retire_drained_active_after_close()
 				_retiring = false
 				_departing = false
 				_busy = false
 				_cycle_batch_id = ""
 				readout_changed.emit()
 				_request_refresh()
+				# Retirement emits synchronous active-change signals while guarded.
+				# Its return is the explicit handoff after ALL presenter staging
+				# handlers have completed, regardless of their connection order.
+				_on_active_batch_changed(promoted_id)
 
 func _move_shutter(from_y: float, to_y: float, delay_s: float, duration_s: float) -> bool:
 	var progress := clampf((_elapsed - delay_s) / maxf(duration_s, .001), 0.0, 1.0)

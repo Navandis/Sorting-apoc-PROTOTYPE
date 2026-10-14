@@ -1,12 +1,16 @@
 # Sorting Apocalypse current development state
 
+## Stage C queued deliveries — technical review, 14 October 2026
+
+**Back-to-back queued deliveries are IMPLEMENTED / TECHNICALLY VERIFIED in a local candidate; human PROMOTE / REVISE / REJECT is pending.** Two distinct committed manifests use the same lift consecutively, with B queued on A's OPEN signal and automatically incoming only after A's complete departure. See the [queue validation and launch command](testing/receiving-stage-c-queued-deliveries-validation-2026-10-14.md). Single-cycle/C1/intentional-lighting promotions remain intact; this record authorizes no queue promotion, push or merge.
+
 ## Current decision — 14 October 2026
 
 **Intentional Receiving lighting is HUMAN-PROMOTED / INTEGRATED / TECHNICALLY VERIFIED**, following the developer's 14 October promotion of candidate `84f6a31` and authorization to publish it. Canonical `wing_environment.tscn` explicitly disables ambient illumination and retains KeyLight hidden; canonical `receiving_lighting.tscn` owns the warmer G1/G2, balanced T1/T2, accepted shadow correction and one ceiling bounce. The review scene inherits these production lights. One .30 Receiving probe and its established refresh integration remain; W1's functional amber/green/off behavior and calibration are unchanged. See the [promotion, parity evidence and integration record](testing/receiving-intentional-lighting-candidate-2026-10-13.md#human-promote-and-production-integration--14-october-2026).
 
 The intentional production direction is purposeful room lighting, with no automatic broad ambient/KeyLight floor; darkness in unfinished rooms is understood and later room passes need separate authorization. Future explicit design decisions may reconsider that policy. **The promoted numerical settings are adjustable reviewed baselines, not immutable specifications or permanent approval gates.** Ordinary Inspector tuning of energy, color, reach/cone, attenuation, shadow settings and other appropriate light properties needs normal version control and proportionate visual review; it does not automatically reopen C1/Stage C, require a formal audition/new milestone, full gameplay sweep or DOCX cycle. Larger global-policy, fixture or rendering-system changes require their own design discussion.
 
-Receiving C1 remains CLOSED / HUMAN-PROMOTED; Stage C single-cycle gameplay remains HUMAN-PROMOTED. Queued physical deliveries and other room lighting remain future separately scoped work. Historical A30WS acceptance is retained, while its exact practical/global lighting values and statements below that they remain current/unchanged are superseded for current use. The dated Stage C record below remains valid in its accepted gameplay scope. No DOCX-master regeneration or W1 recalibration accompanies this integration.
+Receiving C1 remains CLOSED / HUMAN-PROMOTED; Stage C single-cycle gameplay remains HUMAN-PROMOTED. Queued physical deliveries have the separately scoped local candidate above awaiting human review; other room lighting remains future work. Historical A30WS acceptance is retained, while its exact practical/global lighting values and statements below that they remain current/unchanged are superseded for current use. The dated Stage C record below remains valid in its accepted gameplay scope. No DOCX-master regeneration or W1 recalibration accompanies this integration.
 
 ## Stage C publication record — 13 October 2026 (historical lighting context)
 
