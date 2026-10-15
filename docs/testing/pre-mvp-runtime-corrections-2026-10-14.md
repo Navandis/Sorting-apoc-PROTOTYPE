@@ -1,6 +1,6 @@
 # Pre-MVP runtime corrections — 14 October 2026
 
-Implemented locally in the approved order **R-02 → R-01 → R-03**. Technical checks pass; **independent contextual diff review and developer playtest are pending**. This is a local recovery/review checkpoint, not human PROMOTE or publication. R-04 remains deferred.
+Implemented in the approved order **R-02 → R-01 → R-03** and **HUMAN-PROMOTED on 15 October 2026**. See the final dated promotion/publication addendum below; earlier pending-review/playtest statements remain historical checkpoints. R-04 remains deferred.
 
 ## Source and environment
 
@@ -86,3 +86,14 @@ All **seven affected suites PASS / actual exit 0**, with full console/engine log
 Scoped follow-up review: one fresh read-only reviewer found **no blocking findings** in the four source/test diffs and relevant player/carrying/surface-validator paths. They verified source hashes and saved red/green completion/exit evidence; they did not rerun Godot or review the documentation addendum, rendered/native input, or R-02/R-03/R-04. Their result is preserved in external `focused-review.txt`. This was a single narrow follow-up review, not a repeated full baseline audit.
 
 The developer's normal rendered storage playtest remains **PENDING**: retain real held view, wheel/number selection followed by E, mixed hold-to-store, manual R placement and retrieval from the earlier checklist. Headless/direct-handler evidence does not establish rendered HUD/held view, native input or human acceptance. R-02/R-03 behavior and all Receiving/scene/art/light/audio/definition/metric/master files remain unchanged. R-04 and the future irreversible carrying-signal constraint retain their original dispositions. No newly modified `.godot` file was observed; incidental runtime-profile/cache activity was not exhaustively hashed. Final local commit/patch identifiers are in the delivery and external `final-git.log`; no push, merge, PR, publication or human PROMOTE.
+
+
+## 15 October 2026 — final human promotion and publication authorization
+
+The developer explicitly **HUMAN-PROMOTED** the bounded correction set after completing the normal rendered gameplay playtest: all tested scenarios behaved correctly, with no identified issues or abnormalities. The full baseline engineering review is concluded in its agreed scope. This is the reported human outcome, not a claim of exhaustive native-input or renderer testing.
+
+Accepted linear source: published base `bf26b5320653cd452e99592ed176d0163d9e286f` → initial R-02/R-01/R-03 repair `a2afab1519448864146c5f0d1f8c03dc4a21856c` → manual-address follow-up `7005de7385f155dc0235bfdc685d858a5d7421c6`. Independent review returned REVISE for the two manual-address cases; the follow-up corrected them, its seven affected suites and unchanged reviewer probe passed, and one focused independent review found no blocker. These and the initial 16-suite/six-abort-canary results are preserved prior evidence, not new executions by this publication operation. The final human disposition supersedes the earlier pending-review/playtest stopping points without rewriting their evidence.
+
+Publication preflight verified the repository identity, clean repair branch at `7005de7`, exact two-commit ancestry, local `main` and live `origin/main` at `bf26b53`, and unchanged Godot 4.7 Compatibility configuration. The developer authorized this documentation-only acceptance commit on `codex/pre-mvp-runtime-corrections`, followed by ordinary fast-forward integration into local `main` and normal push to `origin/main`. The exact final remote SHA and ancestry are independently queried and reported in the publication chat. The repair branch and all other worktrees remain preserved; raw/external evidence directories remain unchanged. No gameplay tests are rerun solely for acceptance documentation.
+
+**R-04 remains approved deferred debt:** revisit before reload/restart/menu-driven scene replacement or an applicable scene-lifetime dependency, or earlier if it blocks trustworthy validation. Existing held-view and historical renderer/performance caveats remain unchanged. No game source/test, art/light/audio/scene, DOCX master/mirror, framework or MVP feature change accompanies publication. Stop after verified publication; the first Systems MVP behavior and implementation require a separate developer decision.
