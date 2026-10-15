@@ -20,6 +20,9 @@ var _interaction_distance: float = 1.8
 
 var _current_surface: Node = null
 var _current_fit: Dictionary = {}
+# Manual address is independent of whether the selected item fits there.
+# A stack keeps its identity even when invalid; a point keeps the real ray hit.
+var _manual_target: Dictionary = {}
 var _rotated: bool = false
 var _suppressed: bool = false
 var _manual_mode: bool = false
@@ -60,6 +63,7 @@ func set_interaction_distance(value: float) -> void:
 
 func set_suppressed(value: bool) -> void:
 	_suppressed = value
+	_manual_target = {}
 	if value:
 		_hide_ghost()
 
@@ -171,6 +175,7 @@ func reset_rotation() -> void:
 func update_target() -> void:
 	_current_surface = null
 	_current_fit = {}
+	_manual_target = {}
 
 	if _suppressed or _camera == null or _carried_items == null:
 		_hide_ghost()
@@ -189,6 +194,10 @@ func update_target() -> void:
 			var stack_surface: Node = stack_target.get_storage_surface()
 			if _surface_accepts_player_storage_interaction(stack_surface):
 				_current_surface = stack_surface
+				_manual_target = {
+					"kind": "stack", "surface": stack_surface,
+					"stack_id": stack_target.get_storage_stack_id()
+				}
 				_set_manual_debug_surface(stack_surface)
 				var stack_unit_state := int(
 					stack_surface.get_semantic_orientation_quarter_turns()
@@ -239,6 +248,7 @@ func update_target() -> void:
 		var position_value: Variant = result.get("position", Vector3.ZERO)
 		var hit_world: Vector3 = position_value as Vector3
 		var hit_local: Vector3 = surface.to_local(hit_world)
+		_manual_target = {"kind": "point", "surface": surface, "hit_local": hit_local}
 		var unit_state := int(surface.get_semantic_orientation_quarter_turns())
 		var entry: StorageStack.Entry = _entry_for_item(
 			selected_item,
@@ -282,13 +292,13 @@ func _storage_category_display_text(category: String) -> String:
 
 
 func place_selected() -> bool:
-	if _carried_items == null or not _surface_accepts_player_storage_interaction(_current_surface):
+	if _suppressed or _carried_items == null or not _surface_accepts_player_storage_interaction(_current_surface):
 		return false
 	var selected_item: Variant = _carried_items.get_selected_item()
 	if selected_item == null:
 		return false
 
-	# The preview supplies a destination address, never placement authority.
+	# Revalidate the selected item at the addressed destination before removal.
 	var surface: Node = _current_surface
 	var unit_state := int(surface.get_semantic_orientation_quarter_turns())
 	var fit: Dictionary = _command_fit(surface, selected_item, unit_state)
@@ -327,16 +337,18 @@ func place_selected() -> bool:
 
 func _command_fit(surface: Node, item: ItemInstance, unit_state: int) -> Dictionary:
 	if _manual_mode:
-		if String(_current_fit.get("placement_kind", "")) == "stack":
-			return _find_manual_stack_target_fit(
-				surface, String(_current_fit.get("stack_id", "")), item, unit_state
-			)
-		if _current_fit.is_empty():
+		if _manual_target.get("surface") != surface:
 			return {}
-		var origin: Vector2i = _current_fit.get("origin", Vector2i.ZERO) as Vector2i
-		var footprint: Vector2i = _current_fit.get("footprint", Vector2i.ONE) as Vector2i
-		var local_point: Vector3 = surface.get_local_placement_position(origin, footprint)
-		return surface.find_manual_empty_fit(local_point, _entry_for_item(item, _rotated, unit_state))
+		match String(_manual_target.get("kind", "")):
+			"stack":
+				return _find_manual_stack_target_fit(
+					surface, String(_manual_target.get("stack_id", "")), item, unit_state
+				)
+			"point":
+				return surface.find_manual_empty_fit(
+					_manual_target["hit_local"], _entry_for_item(item, _rotated, unit_state)
+				)
+		return {}
 	var orientations := _entry_orientations_for_item(item, unit_state)
 	if orientations.is_empty():
 		return {}

@@ -475,6 +475,10 @@ func _test_removed_base_manual_empty_placement_on_same_surface() -> void:
 	controller.set("_rotated", false)
 	controller.set("_current_surface", surface)
 	controller.set("_current_fit", _manual_empty_fit(controller, base, surface, Vector2i(5, 2), false))
+	controller.set("_manual_target", {
+		"kind": "point", "surface": surface,
+		"hit_local": surface.get_local_placement_position(Vector2i(5, 2), controller.call("_entry_for_item", base, false, surface.get_semantic_orientation_quarter_turns()).footprint)
+	})
 	var player: Node = _player_for_storage_dispatch(carried, controller)
 	player.call("_attempt_store")
 	_check(carried.get_item_count() == 0, "single carried placement removes the stored item rather than rotating it")
@@ -536,6 +540,10 @@ func _test_removed_base_placement_with_multiple_carried_items() -> void:
 	controller.set_manual_mode(true)
 	controller.set("_current_surface", surface)
 	controller.set("_current_fit", _manual_empty_fit(controller, base, surface, Vector2i(5, 2), false))
+	controller.set("_manual_target", {
+		"kind": "point", "surface": surface,
+		"hit_local": surface.get_local_placement_position(Vector2i(5, 2), controller.call("_entry_for_item", base, false, surface.get_semantic_orientation_quarter_turns()).footprint)
+	})
 	var player: Node = _player_for_storage_dispatch(carried, controller)
 	player.call("_attempt_store")
 	_check(not carried.get_items().has(base), "placed base leaves carried ownership")
@@ -576,6 +584,7 @@ func _test_contextual_manual_orientation_preserves_preference() -> void:
 
 	controller.set("_current_surface", surface)
 	controller.set("_current_fit", fit)
+	controller.set("_manual_target", {"kind": "stack", "surface": surface, "stack_id": stack_id})
 	controller.call("_update_ghost", incoming)
 	var ghost_host: Node3D = controller.get("_ghost_host") as Node3D
 	var ghost_packing: Node3D = controller.get("_ghost_packing_root") as Node3D
@@ -612,6 +621,7 @@ func _test_manual_terminal_and_ghost_final_parity(terminal_id: StringName) -> vo
 	_check(bool(fit.get("valid", false)), "manual terminal ignores empty auto group")
 	controller.set("_current_surface", surface)
 	controller.set("_current_fit", fit)
+	controller.set("_manual_target", {"kind": "stack", "surface": surface, "stack_id": stack_id})
 	controller.call("_update_ghost", terminal)
 	var ghost_host: Node3D = controller.get("_ghost_host") as Node3D
 	var ghost_packing: Node3D = controller.get("_ghost_packing_root") as Node3D
@@ -758,6 +768,10 @@ func _place_manual_empty(
 	}
 	controller.set("_current_surface", surface)
 	controller.set("_current_fit", fit)
+	controller.set("_manual_target", {
+		"kind": "point", "surface": surface,
+		"hit_local": surface.get_local_placement_position(origin, entry.footprint)
+	})
 	controller.set("_manual_mode", true)
 	controller.set("_rotated", false)
 	var completed_result_2: Variant = controller.place_selected()

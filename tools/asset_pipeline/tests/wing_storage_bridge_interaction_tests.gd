@@ -318,6 +318,10 @@ func _test_identity_stack_and_transfer_loop(packed: PackedScene) -> void:
 		}
 		controller.set("_current_surface", manual_surface)
 		controller.set("_current_fit", manual_fit)
+		controller.set("_manual_target", {
+			"kind": "point", "surface": manual_surface,
+			"hit_local": manual_surface.get_local_placement_position(manual_origin, hammer_entry.footprint)
+		})
 		_check(controller.place_selected(), "hammer commits through manual rotated placement")
 		var hammer_stack := manual_surface.get_storage_stack(hammer_item.instance_id)
 		_check(hammer_stack != null, "manual hammer creates one stored stack")
