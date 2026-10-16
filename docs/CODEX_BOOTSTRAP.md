@@ -1,6 +1,6 @@
 # Sorting Apocalypse Codex bootstrap
 
-**16 October 2026 authority update:** GDD v0.14, VDD v0.11 and [Systems MVP v0.2](Sorting_Apocalypse_Systems_MVP_Foundation_Design_and_Progress_v0.2.md) are the active design/phase set. Prototype Findings v0.14 is historical, with live obligations carried into MVP §16. The developer-selected M1 slice is recorded in [its implementation/validation note](testing/m1-persistent-medical-validation-2026-10-16.md); independent review, human playtest and promotion remain pending. Older dated no-next-milestone/three-master statements below retain their historical context.
+**16 October 2026 authority and acceptance update:** GDD v0.14, VDD v0.11 and [Systems MVP v0.2](Sorting_Apocalypse_Systems_MVP_Foundation_Design_and_Progress_v0.2.md) are the active design/phase set. Prototype Findings v0.14 is historical, with inherited obligations retained in MVP §16. **M1 persistent Medical is HUMAN-PROMOTED / CLOSED in its agreed foundation scope**, following independent ACCEPT and successful final human gameplay checks; see [the final acceptance addendum](testing/m1-persistent-medical-validation-2026-10-16.md#16-october-2026--final-human-acceptance-and-independent-review-disposition). CF-07 held-material diagnostics remain disclosed debt. **M2 clock / midnight / HUD is next, NOT IMPLEMENTED and not started.** Older dated no-next-milestone/three-master statements below retain their historical context.
 
 Use the authoritative local project at `D:\Godot Projects\Sorting-apoc-PROTOTYPE`. Verify the branch, working tree, Godot executable and current remote ancestry before modifying anything. Do not reset to a reported SHA or discard editor-authored work.
 
@@ -9,7 +9,7 @@ Read in this order:
 1. `docs/AI_WORKING_GUIDELINES.md`
 2. `docs/CURRENT_STATE.md`
 3. `docs/README.md`
-4. Preliminary GDD v0.14, Prototype Findings v0.14, and VDD v0.11 DOCX masters or their generated readable extracts
+4. Active GDD v0.14, VDD v0.11 and Systems MVP v0.2 DOCX masters or generated extracts; consult historical Prototype Findings v0.14 only as relevant
 5. Only the validation records relevant to the active gate
 
 Use one executor by default and match verification to risk. Reuse established commands and same-state evidence where appropriate. Do not create a new review hierarchy, evidence framework or broad regression loop for a bounded task.
@@ -18,7 +18,7 @@ The normal playable composition is `res://gameplay/logistics_wing/wing_gameplay.
 
 Review-scene supply reuse, reusable ModularRack authoring, Storage Unit Orientation & Zoning Basis, Canonical Item Storage Pose & Shelf-Front Alignment, the standalone fixed-ladder architecture, and the Gallery B wing rack-and-ladder integration are promoted foundations, not pending work. Fixed ladders remain limited to selected taller storage installations; no general climbing, jumping, movable/sliding ladder or shelf-top traversal system is approved.
 
-## Present state — 14 October 2026
+## Historical state — 14 October 2026
 
 **Receiving Stage C overall is HUMAN-PROMOTED / CLOSED in its agreed prototype scope**, published at `bb6683d28539ff743bc480a9d5d68c4ef3d0ce87`. Receiving C1, Stage A/B, single-cycle, intentional lighting and two-batch acceptance retain their dispositions. These completed milestones do not await reacceptance.
 

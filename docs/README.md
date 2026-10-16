@@ -1,8 +1,8 @@
 # Sorting Apocalypse documentation index
 
-**16 October 2026 authority update:** GDD v0.14, VDD v0.11 and [Systems MVP v0.2](Sorting_Apocalypse_Systems_MVP_Foundation_Design_and_Progress_v0.2.md) are the active design/phase set. Prototype Findings v0.14 is historical, with live obligations carried into MVP §16. The developer-selected M1 slice is recorded in [its implementation/validation note](testing/m1-persistent-medical-validation-2026-10-16.md); independent review, human playtest and promotion remain pending. Older dated no-next-milestone/three-master statements below retain their historical context.
+**16 October 2026 authority and acceptance update:** GDD v0.14, VDD v0.11 and [Systems MVP v0.2](Sorting_Apocalypse_Systems_MVP_Foundation_Design_and_Progress_v0.2.md) are the active design/phase set. Prototype Findings v0.14 is historical, with inherited obligations retained in MVP §16. **M1 persistent Medical is HUMAN-PROMOTED / CLOSED in its agreed foundation scope**, following independent ACCEPT and successful final human gameplay checks; see [the final acceptance addendum](testing/m1-persistent-medical-validation-2026-10-16.md#16-october-2026--final-human-acceptance-and-independent-review-disposition). CF-07 held-material diagnostics remain disclosed debt. **M2 clock / midnight / HUD is next, NOT IMPLEMENTED and not started.** Older dated no-next-milestone/three-master statements below retain their historical context.
 
-## Current status — 14 October 2026
+## Historical status — 14 October 2026
 
 Receiving **Stage C overall is HUMAN-PROMOTED / CLOSED in its agreed prototype scope**, published at `bb6683d28539ff743bc480a9d5d68c4ef3d0ce87`. C1, Stage A/B, single-cycle, two-batch and intentional-lighting promotions remain accepted. The autonomous lift now has fully-OPEN TAKE, four-cue theatre/W1 illumination, live read-only CRT, full-outbound FIFO retirement, one-active/two-queued deposited capacity and upstream Awaiting Lift with an explicit simulated-midnight seam. CRT QUEUE counts deposited waiting batches only, excluding upstream teams.
 
@@ -10,7 +10,7 @@ Intentional warm practical/task/bounded-bounce lighting supersedes A30WS practic
 
 Actual Expedition, daily clock, Dispatch monitoring, population consequences, durable saves and real time-pressure play remain later Systems MVP work. See [CURRENT_STATE](CURRENT_STATE.md) for current contracts/debt and [CODEX_BOOTSTRAP](CODEX_BOOTSTRAP.md) for preservation rules. No next gameplay milestone is selected here.
 
-The three editions below are the **approved current masters**, promoted on 14 October 2026 without version increments. This does not reopen or demote accepted gameplay/lighting. The [reconciliation/QA record](testing/post-stage-c-three-master-reconciliation-2026-10-14.md) maps sources and checks.
+The **active master trio** is GDD v0.14, VDD v0.11 and Systems MVP v0.2. Prototype Findings v0.14 remains preserved historical evidence. The [14 October reconciliation/QA record](testing/post-stage-c-three-master-reconciliation-2026-10-14.md) records the earlier three-master checkpoint; the 16 October authority update above supersedes its phase-tracking roles without reopening accepted gameplay/lighting.
 
 ## Read first
 
@@ -20,7 +20,8 @@ The three editions below are the **approved current masters**, promoted on 14 Oc
 | --- | --- | --- |
 | Overall game design | [GDD v0.14](Sorting_Apocalypse_Preliminary_GDD_v0.14.docx) | [Text and tables](readable/Sorting_Apocalypse_Preliminary_GDD_v0.14.md) |
 | Visual, world and spatial direction | [VDD v0.11](Sorting_Apocalypse_Visual_Design_Direction_v0.11.docx) | [Text, tables and images](readable/Sorting_Apocalypse_Visual_Design_Direction_v0.11.md) |
-| Implementation and human evidence | [Findings v0.14](Sorting_Apocalypse_Prototype_Findings_v0.14.docx) | [Text and tables](readable/Sorting_Apocalypse_Prototype_Findings_v0.14.md) |
+| MVP contracts, progress and evidence | [Systems MVP v0.2](Sorting_Apocalypse_Systems_MVP_Foundation_Design_and_Progress_v0.2.docx) | [Text and tables](Sorting_Apocalypse_Systems_MVP_Foundation_Design_and_Progress_v0.2.md) |
+| Historical prototype evidence | [Findings v0.14](Sorting_Apocalypse_Prototype_Findings_v0.14.docx) | [Text and tables](readable/Sorting_Apocalypse_Prototype_Findings_v0.14.md) |
 
 The Markdown editions are generated extracts of the listed DOCX masters. Edit the master and regenerate its extract; do not maintain an independent Markdown authority. Older DOCX editions remain historical records.
 

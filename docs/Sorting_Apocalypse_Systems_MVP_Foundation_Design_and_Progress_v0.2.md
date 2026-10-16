@@ -1,6 +1,6 @@
 # Sorting Apocalypse — Systems MVP Foundation Design & Progress v0.2
 
-> Generated text/table extract of the same-named DOCX master. The DOCX is authoritative; edit it and regenerate this mirror. Page layout, headers and footers are omitted. Approved M1 design refinements, 16 October 2026.
+> Generated text/table extract of the same-named DOCX master. The DOCX is authoritative; edit it and regenerate this mirror. Page layout, headers and footers are omitted. M1 human acceptance close-out, 16 October 2026.
 
 **SORTING APOCALYPSE**
 
@@ -10,7 +10,7 @@ Persistent supplies. Competing obligations.
 
 One continuing storeroom.
 
-Version 0.2  |  16 October 2026  |  Incorporates approved M1 design refinements
+Version 0.2  |  16 October 2026  |  M1 human acceptance close-out
 
 FIRST INTEGRATED TARGET
 
@@ -27,13 +27,13 @@ This is the MVP-phase counterpart to Prototype Findings: a living foundation-des
 
 **DESIGN CONFIRMED IN CONVERSATION ≠ IMPLEMENTED ≠ HUMAN-PROMOTED**
 
-The v0.1 foundation was reviewed and approved by the developer. This v0.2 incorporates later approved M1 behavior and identifies recommendations that remain provisional. Pre-MVP corrections are promoted/published; no Systems MVP gameplay feature has been implemented or playtested by this document update.
+16 October 2026: M1 persistent Medical is HUMAN-PROMOTED / CLOSED in its agreed foundation scope after independent ACCEPT and successful human playtests. This dated status close-out retains edition v0.2 and its design contracts. M2 clock / midnight / HUD is next, NOT IMPLEMENTED. Detailed evidence and limits are recorded in §15.
 
 **ORIENTATION**
 
 ## Reader’s guide & current position
 
-Current position: the prototype foundation phase and bounded engineering checkpoint are complete. The next build is the persistent Medical foundation; automatic day progression follows it. There is no new Systems MVP implementation evidence in this edition.
+Current position: M1 persistent Medical is human-promoted in agreed scope. M2 automatic day progression, midnight and development clock HUD is the next agreed stage, NOT IMPLEMENTED. CF-07 held-material diagnostics remain disclosed debt. The three-consumer allocation target remains future work.
 
 ### How to use this master
 
@@ -76,7 +76,7 @@ A historical statement that Stage C, the fixed ladder, Fuel reconciliation or EA
 
 The DOCX is the editable master; a same-stem readable Markdown extract is derived from it, not maintained independently. Detailed tests and human reviews remain in their dated records; this master summarizes their meaning and links to them. Source code establishes implementation, but an unintended behavior is not automatically a design decision.
 
-The developer approved edition v0.1 in full, then clarified the implementation details recorded in this v0.2. This document update is for user-controlled publication; it does not alter GDD/VDD/Prototype Findings, code, art or repository pointers, nor authorize an M1 code change by itself. At publication, the documentation index and bootstrap should identify the active GDD/VDD/MVP trio and Prototype Findings as historical. No historical file deletion or rewrite is required. [D10–D15; WG]
+The developer approved v0.1, then the M1 refinements in v0.2. The 16 October close-out records later M1 acceptance in §15 without a new design revision. GDD/VDD/Prototype Findings, code and art are unchanged by this update. The active trio is GDD/VDD/MVP; Prototype Findings remains historical. Original drafting-time contracts and decisions are retained through their later supersessions. [D10–D15; WG]
 
 Basis: [D10] developer document-role decision; [H14 §§1, 3–4, 15]; [ER14 §§3, 12]; [WG].
 
@@ -86,9 +86,9 @@ Basis: [D10] developer document-role decision; [H14 §§1, 3–4, 15]; [ER14 §�
 
 ### 2.1 Published reference
 
-During preparation, GitHub main independently resolved to 800fd41a3073208c146af93dc2b9c84118c5f6f5. That commit records final human promotion of the pre-MVP corrections and directly follows 7005de7. The published acceptance record names the prior repair a2afab1 and base bf26b53. These are evidence anchors, never reset targets. [R15; CR15]
+At original drafting, GitHub main independently resolved to 800fd41a3073208c146af93dc2b9c84118c5f6f5. That commit records final human promotion of the pre-MVP corrections and directly follows 7005de7. The acceptance record names repair a2afab1 and base bf26b53. These remain historical evidence anchors, never reset targets. M1 acceptance follows in §15. [R15; CR15]
 
-The authoritative asset-equipped checkout remains D:\Godot Projects\Sorting-apoc-PROTOTYPE, repository Navandis/Sorting-apoc-PROTOTYPE. Godot 4.7 Compatibility is the reported and documented development baseline. This document task did not inspect the Windows working tree, unsaved art, installed executable or ignored assets, and did not rerun Godot. [H14; CR15]
+The authoritative asset-equipped checkout remains D:\Godot Projects\Sorting-apoc-PROTOTYPE, repository Navandis/Sorting-apoc-PROTOTYPE. Godot 4.7 Compatibility remains the development baseline. The original drafting task did not inspect local editor work or assets, or rerun Godot. The 16 October publication preflight verified clean reviewed source and main at 4cdbb13 without running Godot. [H14; CR15; §15]
 
 | Foundation | Disposition carried into MVP |
 | --- | --- |
@@ -96,13 +96,13 @@ The authoritative asset-equipped checkout remains D:\Godot Projects\Sorting-apoc
 | Receiving A/B/C | Exact commitments, private TAKE-only presentation, fully-OPEN gating, FIFO departure and Awaiting Lift remain promoted in their agreed prototype scopes. |
 | C1 / intentional lighting / EAF1–EAF5 | Promoted/closed as recorded. Ordinary later authoring does not automatically reopen them. |
 | Pre-MVP R-01–R-03 | Corrected, independently reviewed, human-playtested and HUMAN-PROMOTED; published in the current main history. |
-| R-04 reflection teardown | Unrepaired, explicitly deferred to reload/restart/menu scene-lifetime dependencies. That trigger is relevant to the new foundation; see §16.1. |
+| R-04 reflection teardown | Originally deferred to reload/restart/menu lifetime work; bounded owner-lifetime repair is now included in accepted M1. See §15 and inherited CF-01 in §16.1. |
 
 ### 2.2 Evidence boundary
 
 The repair record preserves the initial 16 selected suites and six abort canaries, the independent REVISE for two manual-address cases, and the seven-suite/unchanged-probe follow-up with one focused review. The developer subsequently reported correct behavior in all manually tested scenarios and promoted the repairs. These are attributed prior results, not new executions or an exhaustive runtime guarantee. [CR15]
 
-No persistent run, shared Medical/Kitchen/Loadout collector, day clock, midnight auto-save or new ESC menu is established by those repairs. Their status remains CONFIRMED DESIGN / NOT IMPLEMENTED.
+At that pre-MVP checkpoint, persistent Medical and the new ESC menu were NOT IMPLEMENTED. M1 now establishes their agreed scope (§15). Kitchen, Loadout, automatic day clock and midnight auto-save remain NOT IMPLEMENTED; the original repairs did not establish them.
 
 Basis: [PF §§24–30, 34]; [CR15]; [R15].
 
@@ -489,7 +489,7 @@ Basis: [D01–D09]; [CR15]; [GDD §20.2]; [WG; ER14 §§11–12].
 
 ## 14. Acceptance & evidence plan
 
-These are required future checks, not executed results. Use actual owner and player paths where relevant; record when a fixture bypasses native input, physics, held rendering or full-cue timing. Strong expectations concern identity, accounting and event order, not merely PASS text. [ER14; CR15]
+This is the original acceptance plan. M1 execution, review and human disposition are recorded in §15; later-stage checks remain future work. Use actual owner/player paths and disclose fixtures that bypass native input, physics, held rendering or full-cue timing. Identity, accounting and event order remain the invariants. [ER14; CR15]
 
 | Check | Expected observation |
 | --- | --- |
@@ -539,22 +539,22 @@ Basis: [D02–D09]; [WG]; [ER14 §§7–12]; [CR15].
 
 This section replaces Prototype Findings as the active phase tracker. Dated evidence remains external to the master when detailed, and current status is updated here. The table is populated only with established evidence; it contains no projected test result. [D10]
 
-| Workstream | Status at v0.1 | Evidence / next boundary |
+| Workstream | Status at 16 October 2026 | Evidence / next boundary |
 | --- | --- | --- |
 | Prototype foundations | HUMAN-PROMOTED in recorded scopes | PF v0.14 §§24–30, 34; retained history, not a new acceptance task. |
-| Pre-MVP review + repairs | HUMAN-PROMOTED / PUBLISHED | CR15; main 800fd41 verified for this draft. R-04 remains separate. |
-| MVP foundation contracts | CONFIRMED IN CONVERSATION; document DRAFT | D01–D10. Review this master; no source implementation claimed. |
-| M1 persistent Medical | NOT IMPLEMENTED | M1 player-facing choices confirmed on 16 October; technical serialization/restore integration to be designed against local source. No implementation or verification yet. |
-| M2 clock / midnight / HUD | NOT IMPLEMENTED | After M1; exact event ordering and synchronization policy must be defined. |
+| Pre-MVP review + repairs | HUMAN-PROMOTED / PUBLISHED | CR15; historical main 800fd41. Bounded R-04 lifetime repair subsequently accepted within M1. |
+| MVP foundation contracts | CONFIRMED; v0.2 active master | D01–D15; retained design contracts. Only M1 implementation is accepted here. |
+| M1 persistent Medical | HUMAN-PROMOTED / CLOSED | Agreed foundation scope accepted 16 October; reviewed 6c56edf → a7b764e. Final human acceptance and limits below; M2 remains separate. |
+| M2 clock / midnight / HUD | NOT IMPLEMENTED | Next agreed stage; not started. Event ordering and synchronization policy still need a bounded brief. |
 | M3 Kitchen | NOT IMPLEMENTED | Reuses foundation; detailed scenario targets and acceptance policy remain open. |
 | M4 Expedition Loadout | NOT IMPLEMENTED | Reuses foundation; capacity/cap values and team-labelled scenario inputs remain open. |
 | M5 combined allocation | NOT RUN | Requires the continuing three-consumer scenario; no broad survival/economy conclusion yet. |
 
-### 15.1 Update each stage without rewriting history
+### 15.1 16 October 2026 accepted M1 result
 
-Each subsequent entry should state what changed, the reviewed revision, what ran, what did not run, the human result and the final disposition. Keep implementation, technical evidence, independent review, human acceptance and publication separate. Retain a REVISE and its correction rather than replacing the earlier result with an invented earlier PASS.
+Original implementation 6c56edf and final UI/input follow-up a7b764e received independent ACCEPT for the complete base-to-final change. The reviewer found no important new defect; its isolated resumed-admission/failed-save probe exited 0 with zero assertion failures. It did not rerun the prior suites.
 
-Carry-forward IDs in §16 remain stable references. Mark work resolved only with a specific later result; mark a design changed only with a new developer decision. Confirmed later work should not disappear when its implementation stage has not yet been selected. No evidence-quota, quality score or general cleanup backlog is introduced. [D10; ER14 §8]
+The developer reported all five final gameplay-check categories passed without issues and HUMAN-PROMOTED / CLOSED M1 in agreed scope. F opens/closes; distinct E contributes; first ESC closes the panel, next opens the menu; completion closes and disables cues. Evidence: docs/testing/m1-persistent-medical-validation-2026-10-16.md, final acceptance addendum. CF-07 remains. M2 is NOT IMPLEMENTED. These are attributed reports, not an exhaustive native-input audit.
 
 Basis: [D10]; [PF §1]; [CR15; R15]; [ER14 §§8, 10–12].
 
@@ -562,9 +562,9 @@ Basis: [D10]; [PF §1]; [CR15; R15]; [ER14 §§8, 10–12].
 
 ## 16. Carry-forward register
 
-This register groups inherited obligations by their present disposition. It does not import obsolete pending statements or declare all historical issues current. Its entries complement, rather than replace, the preserved source record. Triggers below describe when the work becomes relevant; no completion is claimed. [D10]
+This register preserves inherited obligations and their drafting-time dispositions, not a declaration that all remain unresolved. Accepted M1 (§15) includes bounded CF-01/R-04 lifetime repair, ordinary CF-02 continuation, CF-03 run identity, CF-04 transaction credit and the minimal CF-06 Medical proxy. Broader commitments and CF-07 debt remain; all CF-01–CF-24 entries are retained. [D10]
 
-| ID / source | Carried-forward obligation | Current disposition |
+| ID / source | Carried-forward obligation | Inherited disposition |
 | --- | --- | --- |
 | CF-01<br>CR15; ER-RESULT R-04 | Reflection frame-wait work can resume after its owner is freed. Timer-cooldown deletion was quiet; no item loss or persistent GPU failure was established. | Unrepaired. The menu/reload dependency is now relevant to M1; bound a lifetime correction without relighting or performance redesign. |
 | CF-02<br>PF §§16.5, 25.4; GDD §18.5 | Full-game persistence was not established by batch snapshots. Stored placement orientation must survive instead of being recomputed from current Front. | Normal single-slot continuation is now in M1. Robust crash/journal guarantees remain later under CF-13. |
@@ -636,7 +636,7 @@ Basis: [PF §§2, 14, 17, 24–34]; [VDD §§7, 34]; [H14 §§9–13]; [CR15]; [
 
 ## 17. Resolved M1 decisions & remaining technical choices
 
-M1 player-facing behavior is settled. The table distinguishes those approved decisions from source-dependent engineering and M2–M5 questions; it is not a new approval gate.
+The table retains the original drafting-time M1 decisions and technical choices alongside later-stage questions. Accepted M1 behavior and implementation supersessions are recorded in §15 and its validation note; E-opener/inspectable-panel drafting text is historical. M2–M5 remain unimplemented. This is not a new approval gate.
 
 | Decision | Required clarification / owning stage |
 | --- | --- |
@@ -652,7 +652,7 @@ M1 player-facing behavior is settled. The table distinguishes those approved dec
 | Scenario content | M1–M5: scenario length, inventories, targets, capacities, deliveries, future-demand visibility and behavior after the authored sequence ends. No unapproved balance numbers. |
 | Optional developer controls | M2/M5: time acceleration/skip controls only as bounded testing aids; generated scenarios only if the authored approach proves too rigid. |
 
-Before M1 coding, inspect the asset-equipped source and choose stable IDs, save/restore ownership and the minimal positive Medical fixture data. The family-based Utility estimator remains a proposal, not a mandated rebalance. No additional M1 gameplay decision blocks handoff. [D11–D15; P01]
+The original pre-M1 handoff called for local-source inspection, stable IDs, save/restore owners and minimal positive Medical fixtures; accepted M1 now establishes these (§15). The Utility estimator remains a proposal. M2 requires a separate bounded brief; no M2 implementation is recorded. [D11–D15; P01]
 
 Basis: [D02–D15; P01]; [GDD §§6, 8, 10, 19–21]; [ER14; WG].
 
@@ -660,7 +660,7 @@ Basis: [D02–D15; P01]; [GDD §§6, 8, 10, 19–21]; [ER14; WG].
 
 ## Appendix A. Conversation decisions
 
-These labels identify explicit decisions in the present project conversation. They are not fabricated repository records. Detailed discussion remains in the chat; this register preserves the operative scope and its supersessions.
+These labels preserve the original explicit conversation decisions and their dates. Detailed discussion remains in the chat. The later accepted M1 controls and completion behavior in §15 supersede D13/D15 E-opener and inspectable-panel drafting text; the original records remain traceable.
 
 The v0.1 foundation was approved in full; D11–D15 record subsequent M1 refinements. P01 is deliberately labelled a proposal under evaluation, not a developer-confirmed Utility formula or an M4 overfill decision. [D10–D15; P01]
 
@@ -741,8 +741,8 @@ The established storage, ladder, Receiving and EAF validation records remain ref
 
 Future MVP progress updates modify this master and regenerate its readable extract. Do not append MVP milestones to Prototype Findings. Keep the old master and its mirrors unchanged unless a separately authorized historical correction is needed; any such correction must not rewrite the original evidence state. [D10]
 
-On authorized publication, update docs/README.md and the appropriate operational authority pointers to distinguish the active MVP master from historical Prototype Findings. User plans to publish the edited DOCX and its generated Markdown companion before requesting the separate Codex M1 handoff. This document task itself makes no repository changes. [D10–D15; R15]
+The MVP pair was published at 4cdbb13 before M1 implementation. The 16 October close-out updates current MVP status and the operational fronts to record human-promoted M1 and the active GDD/VDD/MVP trio. Prototype Findings remains historical. This status-only publication does not implement M2. [D10–D15; R15; §15]
 
 ### Edition 0.2 boundary
 
-Edition v0.1 was approved in full by the developer and is retained as a previous document checkpoint. v0.2 integrates the subsequently confirmed M1 UX, save/continuation and Medical-interface decisions through 16 October, while preserving P01 and M2–M5 questions as provisional. The utility guideline is a candidate for future item authoring, not an authored catalogue-value update; loadout-overfill bonus removal is not yet approved. No game code, engine test, asset, historical-master edit, Git publication or M1 implementation is performed by this revision. The user will publish the DOCX/Markdown pair and then commission a bounded Codex handoff.
+Edition v0.1 remains a prior approved checkpoint. v0.2 retains its M1 design refinements and provisional P01/M4 policy. At original drafting, no M1 implementation or Git publication had occurred. This same-edition 16 October close-out records later M1 acceptance (§15); it changes no game code, assets or other masters. M2–M5 remain NOT IMPLEMENTED; no new design revision is authorized.

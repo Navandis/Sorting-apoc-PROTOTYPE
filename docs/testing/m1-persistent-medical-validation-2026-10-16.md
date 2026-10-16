@@ -1,6 +1,6 @@
 # M1 persistent Medical — implementation and validation
 
-16 October 2026. Local candidate; independent contextual review, developer playtest and human PROMOTE remain pending. No M2 work, publication, push, merge or PR is authorized by this record.
+16 October 2026. **M1 HUMAN-PROMOTED / CLOSED in its agreed foundation scope.** See the final human acceptance and independent-review disposition at the end of this record. Earlier pending-review/playtest and no-publication statements below are dated historical checkpoints, superseded by that disposition and the developer's explicit publication authorization. M2 remains NOT IMPLEMENTED.
 
 ## Source and execution
 
@@ -131,3 +131,25 @@ Centering and control containment passed at 1920 × 1080 and resized 1280 × 720
 Red assertions and earlier fixture failures remain in the external folder. The first contribution red attempt aborted after indexing a receipt that the old opener had not created; the corrected red run completed with four expected failures. ESC targeting, buffered input/off-tree shelf fixtures, and one stale reticle assertion were corrected without relaxing behavioral assertions. Shelf input coverage now lives in the rendered test; the original storage command suite is unchanged. Final runs were serial, and no developer process was stopped.
 
 Pending human check: F open/close and first E, held E, invalid selection, ESC panel-close → menu → resume, completion hiding both action cues, and closed-state restart/Continue. Native OS keyboard/mouse feel and subjective readability remain **PENDING HUMAN**. One future independent contextual review must assess combined published-base → final M1, including this follow-up. No independent review was dispatched here; no push, merge, PR, human promotion or M2 work is authorized by this result.
+
+## 16 October 2026 — Final human acceptance and independent-review disposition
+
+**M1 HUMAN-PROMOTED / CLOSED in its agreed foundation scope.** The developer explicitly accepted M1 after the final UI/input follow-up and independent **ACCEPT**, reporting all five requested final gameplay-check categories completed successfully with no issues or unexpected behavior. The accepted source is original implementation `6c56edff05b5e803ad9f17fc5f3b8467e7800f4e` followed by reviewed final UI/input HEAD `a7b764ed4a8eddca25a409fa48646f1056abb9dc`, based on published main `4cdbb139eaf80632ae79c1d3cbb95f23dfd70a4e`.
+
+The independent contextual reviewer examined the complete 58-file base-to-final change and relevant owners, recommended **ACCEPT**, and established no important new correctness defect. Its isolated boundary probe for resumed queued admission and failed-save preservation completed with zero assertion failures and actual exit 0. The reviewer did not independently rerun the full prior suites. This records the supplied review disposition; no unseen reviewer file is asserted to be a repository artifact.
+
+The developer reported these five final categories passed:
+
+1. F open/close, distinct E contribution, ESC panel-close → menu → resume, and no held repetition.
+2. Valid, ineligible and cap-and-waste contribution previews.
+3. Automatic request-completion closure and disabled actionable cues.
+4. Centered layout and readability.
+5. Post-load closed-request state, plus ordinary movement, ladder and storage sanity.
+
+Earlier human reports also covered ordinary Save & Exit/Continue across full application and Godot restarts, player position and camera/ladder height/orientation, carried selection, storage, Medical progress/eligibility, Receiving gameplay/presentation restoration and New Run in the scenarios tried. These are attributed human results, not an exhaustive renderer, native-input or audio audit. The implementation sweep and final follow-up evidence above retain their original scope: affected final checks were 27 contribution, 23 menu and 63 rendered checks plus storage regression, all exit 0; the earlier selected 26-suite sweep is reused for unchanged source, not claimed as rerun here.
+
+Accepted M1 includes the existing Medical proxy, F open/close, distinct E single-item contribution, first ESC closing the panel and subsequent ESC opening the paused menu; centered projected/invalid feedback, whole-item cap-and-waste, completion auto-close/no actionable prompt; one-slot New Run/Continue/Save & Exit; exact gameplay ownership, storage, player/ladder and Receiving continuation; and bounded CF-01/R-04 reflection-lifetime repair.
+
+**Limits and next boundary:** CF-07 held-material diagnostics remain disclosed technical debt and are not repaired by this close-out. The historical Windows certificate-store diagnostic remains separate from gameplay proof. M2 clock/scheduler/developer HUD/midnight auto-save is the next agreed stage, **NOT IMPLEMENTED** and not started by this publication. Kitchen, Loadout, real Expedition/population/treatment, M2–M5 and full Ironman crash/journal hardening remain outside accepted M1.
+
+The developer authorized one documentation-only promotion commit and fast-forward publication of this accepted linear history. This close-out changes no reviewed game source or assets, runs no Godot/gameplay tests and touches no user save slot. The active MVP v0.2 master and generated companion record this acceptance; the Git publication result is verified separately against the live remote ref.
