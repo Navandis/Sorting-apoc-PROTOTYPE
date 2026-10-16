@@ -14,6 +14,7 @@ var status_label: Label
 var pause_status: Label
 var confirmation: ConfirmationDialog
 var _pending_new_run := false
+var _escape_down := false
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -24,8 +25,16 @@ func _ready() -> void:
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.keycode == KEY_ESCAPE:
-		if event.pressed and not event.echo and wing != null and not confirmation.visible:
-			set_menu_open(not menu_open)
+		if not event.pressed:
+			_escape_down = false
+		elif not event.echo and not _escape_down:
+			_escape_down = true
+			if wing != null and not confirmation.visible:
+				var panel := wing.get_node("MedicalContribution/ContributionPanel")
+				if panel.is_open():
+					panel.close_panel()
+				else:
+					set_menu_open(not menu_open)
 		get_viewport().set_input_as_handled()
 	elif menu_open and event is InputEventKey:
 		get_viewport().set_input_as_handled()

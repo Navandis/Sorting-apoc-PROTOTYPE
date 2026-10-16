@@ -60,6 +60,7 @@ var _store_repeat_elapsed: float = 0.0
 var _store_was_held: bool = false
 var world_input_blocked := false
 var _require_e_release := false
+var _require_f_release := false
 var medical_interface: Node
 
 var _interaction_hud: CanvasLayer
@@ -96,6 +97,8 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if not Input.is_key_pressed(KEY_E):
 		_require_e_release = false
+	if not Input.is_key_pressed(KEY_F):
+		_require_f_release = false
 	if _zone_editor_open or world_input_blocked:
 		_reset_store_hold_state()
 		return
@@ -121,6 +124,10 @@ func _unhandled_input(event: InputEvent) -> void:
 				_storage_placement.call("toggle_manual_mode")
 				_update_interaction_target()
 			get_viewport().set_input_as_handled()
+		elif event.keycode == KEY_F and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+			if not _require_f_release and medical_interface != null and medical_interface.is_targeted():
+				medical_interface.open_panel()
+				get_viewport().set_input_as_handled()
 		elif event.keycode == KEY_E and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 			_attempt_store()
 			get_viewport().set_input_as_handled()
@@ -437,10 +444,7 @@ func _register_prototype_world_items() -> void:
 func _attempt_store() -> void:
 	if world_input_blocked or _require_e_release:
 		return
-	if medical_interface != null and medical_interface.is_targeted():
-		medical_interface.open_panel()
-		return
-	## E is the left-hand logistics action: place/store/submit.
+	## E is the left-hand logistics action: place/store.
 	##
 	## AUTO MODE:
 	## The first E interaction with an uninitialized shelf introduces zoning.
@@ -547,7 +551,7 @@ func _update_interaction_target() -> void:
 		if _storage_placement != null:
 			_storage_placement.set_suppressed(true)
 		_set_aim_dot_color(DOT_PLACE)
-		_interaction_prompt.text = "MEDICAL  •  [E] VIEW REQUEST / CONTRIBUTE"
+		_interaction_prompt.text = "MEDICAL  •  [F] Request / Contribute"
 		_interaction_prompt.visible = true
 		return
 	_current_world_item = _get_looked_at_world_item()
@@ -797,6 +801,7 @@ func _on_carried_selection_changed(_selected_index: int) -> void:
 func reset_pending_commands() -> void:
 	_reset_store_hold_state()
 	_require_e_release = true
+	_require_f_release = true
 	_current_world_item = null
 	if _storage_placement != null:
 		_storage_placement.set_suppressed(true)

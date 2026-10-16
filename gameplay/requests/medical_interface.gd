@@ -4,8 +4,11 @@ const PanelScript = preload("res://gameplay/requests/contribution_panel.gd")
 var player: Node3D
 var proxy: Node3D
 var panel: CanvasLayer
+var request: RefCounted
+var action_label: Label3D
 
 func configure(wing: Node, state: RefCounted) -> void:
+	request = state
 	player = wing.get_node("Player")
 	proxy = wing.get_node("Environment/Greybox/Proxies/MedicalInterface")
 	panel = PanelScript.new()
@@ -14,16 +17,29 @@ func configure(wing: Node, state: RefCounted) -> void:
 	panel.configure(state, player.carried_items, is_targeted)
 	panel.panel_closed.connect(_on_closed)
 	player.medical_interface = self
-	var label := Label3D.new()
-	label.text = "MEDICAL\n[E] Request / Contribute"
-	label.font_size = 42
-	label.pixel_size = 0.003
-	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
-	label.no_depth_test = false
-	proxy.add_child(label)
-	label.position.y = 0.75
+	action_label = Label3D.new()
+	action_label.font_size = 42
+	action_label.pixel_size = 0.003
+	action_label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	action_label.no_depth_test = false
+	proxy.add_child(action_label)
+	action_label.position.y = 0.75
+	_refresh_action_label()
+
+func is_active() -> bool:
+	return request != null and not request.closed
+
+func _process(_delta: float) -> void:
+	_refresh_action_label()
+
+func _refresh_action_label() -> void:
+	var text := "MEDICAL\n[F] Request / Contribute" if is_active() else "MEDICAL"
+	if action_label.text != text:
+		action_label.text = text
 
 func is_targeted() -> bool:
+	if not is_active():
+		return false
 	if not is_instance_valid(player) or not is_instance_valid(proxy) or not proxy.is_inside_tree() or not proxy.is_visible_in_tree():
 		return false
 	var camera: Camera3D = player.camera
@@ -45,6 +61,8 @@ func open_panel() -> void:
 	panel.open_panel()
 
 func _on_closed() -> void:
-	player.set_world_input_blocked(false)
+	_refresh_action_label()
+	player.set_world_input_blocked(get_tree().paused)
+	player._update_interaction_target()
 	if not get_tree().paused:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED

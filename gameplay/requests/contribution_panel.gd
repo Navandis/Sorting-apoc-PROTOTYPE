@@ -14,22 +14,18 @@ var item_label: Label
 var _card: PanelContainer
 var _pips: HBoxContainer
 var _open := false
-var _e_down := true
+var _e_down := false
+var _f_down := false
 
 func _ready() -> void:
 	layer = 55
 	visible = false
-	var root := Control.new()
+	var root := CenterContainer.new()
 	root.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(root)
 	_card = PanelContainer.new()
-	_card.set_anchors_and_offsets_preset(Control.PRESET_CENTER_RIGHT)
-	_card.offset_left = -660
-	_card.offset_right = -60
-	_card.offset_top = -220
-	_card.offset_bottom = 220
-	_card.custom_minimum_size = Vector2(600, 400)
+	_card.custom_minimum_size = Vector2(600, 440)
 	root.add_child(_card)
 	var margin := MarginContainer.new()
 	for side: String in ["left", "top", "right", "bottom"]:
@@ -43,6 +39,7 @@ func _ready() -> void:
 	title.add_theme_font_size_override("font_size", 28)
 	column.add_child(title)
 	item_label = Label.new()
+	item_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	column.add_child(item_label)
 	total_label = Label.new()
 	total_label.add_theme_font_size_override("font_size", 24)
@@ -55,10 +52,10 @@ func _ready() -> void:
 	status_label = Label.new()
 	column.add_child(status_label)
 	var hint := Label.new()
-	hint.text = "[E] Submit selected item  •  Wheel / 1–0 select\n[ESC] Pause menu"
+	hint.text = "[E] Submit selected item  •  Wheel / 1–0 select\n[F] Close  •  [ESC] Close panel"
 	column.add_child(hint)
 	var close := Button.new()
-	close.text = "Close without submitting"
+	close.text = "[F] Close"
 	close.focus_mode = Control.FOCUS_NONE
 	close.pressed.connect(close_panel)
 	column.add_child(close)
@@ -74,8 +71,11 @@ func is_open() -> bool:
 	return _open
 
 func open_panel() -> void:
+	if _open or request == null or request.closed:
+		return
 	_open = true
-	_e_down = true
+	_e_down = Input.is_key_pressed(KEY_E)
+	_f_down = Input.is_key_pressed(KEY_F)
 	visible = true
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	refresh()
@@ -99,8 +99,11 @@ func handle_e(pressed: bool, echo: bool) -> void:
 	if not destination_valid.is_valid() or not destination_valid.call():
 		close_panel()
 		return
-	request.submit(carry)
+	var submitted: Dictionary = request.submit(carry)
 	refresh()
+	# Carry notifications run inside submit; release world input only afterward.
+	if submitted.ok and request.closed:
+		close_panel()
 
 func _process(_delta: float) -> void:
 	if _open and (not destination_valid.is_valid() or not destination_valid.call()):
@@ -110,9 +113,16 @@ func _input(event: InputEvent) -> void:
 	if not _open:
 		return
 	if event is InputEventKey and event.keycode == KEY_ESCAPE:
-		return # Run menu retains ESC ownership.
+		return # Run shell explicitly closes this panel before toggling its menu.
 	if event is InputEventKey and event.keycode == KEY_E:
 		handle_e(event.pressed, event.echo)
+		get_viewport().set_input_as_handled()
+	elif event is InputEventKey and event.keycode == KEY_F:
+		if not event.pressed:
+			_f_down = false
+		elif not event.echo and not _f_down:
+			_f_down = true
+			close_panel()
 		get_viewport().set_input_as_handled()
 	elif event is InputEventKey or event is InputEventMouseButton:
 		# Carry selection remains live; world input is separately suppressed.

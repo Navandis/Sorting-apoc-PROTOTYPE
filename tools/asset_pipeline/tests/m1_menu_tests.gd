@@ -20,6 +20,16 @@ func check(ok: bool, message: String) -> bool:
 		push_error("ASSERTION FAILED: " + message)
 	return ok
 
+func key(code: Key, pressed: bool, echo: bool = false) -> void:
+	var event := InputEventKey.new()
+	event.keycode = code
+	event.physical_keycode = code
+	event.pressed = pressed
+	event.echo = echo
+	Input.parse_input_event(event)
+	await process_frame
+	await process_frame
+
 func run() -> void:
 	create_timer(45).timeout.connect(func():
 		push_error("M1 menu helper aborted; completion missing")
@@ -45,6 +55,17 @@ func run() -> void:
 	var wing = shell.wing
 	var player = wing.get_node("Player")
 	player.set_physics_process(false)
+	player.global_position = Vector3(4.3, 0.0, -27.45)
+	await physics_frame
+	await physics_frame
+	player.camera.look_at(wing.get_node("Environment/Greybox/Proxies/MedicalInterface").global_position)
+	var panel = wing.get_node("MedicalContribution/ContributionPanel")
+	player.medical_interface.open_panel()
+	check(panel.is_open(), "ESC fixture targets active Medical panel")
+	await key(KEY_ESCAPE, true)
+	check(not panel.is_open() and not paused and not shell.menu_open, "first ESC closes contribution without menu pause")
+	await key(KEY_ESCAPE, false)
+	shell.set_menu_open(false)
 	# Headless menu checks retain the scene's ordinary held view but keep it empty.
 	var cycle = wing.get_node("ReceivingRuntime/ReceivingLiftCycle")
 	check(wing.get_node("ReceivingRuntime").run_debug_delivery(1842,9001,4,0), "live cue starts through normal debug route")
