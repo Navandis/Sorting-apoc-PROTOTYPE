@@ -1,6 +1,7 @@
 extends Node3D
 
 var _initialized: bool = false
+var restore_pending := false
 
 
 func _ready() -> void:
@@ -8,6 +9,8 @@ func _ready() -> void:
 
 
 func initialize_if_enabled() -> bool:
+	if restore_pending:
+		return true
 	if _initialized:
 		return true
 	var registrar := get_node_or_null("SeedRegistrar")

@@ -20,6 +20,36 @@ var _registered_instance_ids: Array[String] = []
 var _registration_completed: bool = false
 
 
+func capture_state() -> Array[Dictionary]:
+	var hosts: Array[Dictionary] = []
+	for host: Node in get_node(seed_items_path).get_children():
+		if host.is_queued_for_deletion():
+			continue
+		var world := host.get_node_or_null("WorldItem") as WorldItem
+		if world != null:
+			hosts.append({"host": String(host.name), "item": world.get_item_instance().instance_id,
+				"transform": (host as Node3D).transform})
+	return hosts
+
+
+func restore_state(states: Array, items: Dictionary) -> void:
+	var remaining: Dictionary = {}
+	for state: Dictionary in states:
+		remaining[state.host] = state
+	for host: Node in get_node(seed_items_path).get_children():
+		if not remaining.has(String(host.name)):
+			host.free()
+			continue
+		var state: Dictionary = remaining[String(host.name)]
+		(host as Node3D).transform = state.transform
+		var world: WorldItem = WorldItemScript.new()
+		world.name = "WorldItem"
+		host.add_child(world)
+		world.configure_existing(host, items[state.item])
+		_registered_instance_ids.append(state.item)
+	_registration_completed = true
+
+
 func register_existing_hosts() -> bool:
 	if _registration_completed:
 		return true

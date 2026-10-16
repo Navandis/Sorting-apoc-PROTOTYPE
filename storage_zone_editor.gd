@@ -23,6 +23,7 @@ var _allocation_list: VBoxContainer = null
 var _clear_confirmation: ConfirmationDialog = null
 var _active_category: String = StorageCategoriesScript.FOOD
 var _was_tree_paused: bool = false
+var pause_owner: Node
 
 
 func _ready() -> void:
@@ -78,7 +79,10 @@ func open_for_surface(surface: Node) -> void:
 	visible = true
 	_was_tree_paused = get_tree().paused
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	get_tree().paused = true
+	if pause_owner != null:
+		pause_owner.request_pause("zoning", true)
+	else:
+		get_tree().paused = true
 
 
 func close_editor() -> void:
@@ -88,18 +92,21 @@ func close_editor() -> void:
 	_canvas.cancel_drag()
 	visible = false
 
-	get_tree().paused = _was_tree_paused
+	if pause_owner != null:
+		pause_owner.request_pause("zoning", false)
+	else:
+		get_tree().paused = _was_tree_paused
 	editor_closed.emit()
 
 
 func _input(event: InputEvent) -> void:
-	if not visible:
+	if not visible or (pause_owner != null and pause_owner.menu_open):
 		return
 
 	if event is InputEventKey:
 		var key_event: InputEventKey = event as InputEventKey
 		if key_event.pressed and not key_event.echo:
-			if key_event.keycode == KEY_ESCAPE or key_event.keycode == KEY_O:
+			if key_event.keycode == KEY_O or (key_event.keycode == KEY_ESCAPE and pause_owner == null):
 				close_editor()
 				get_viewport().set_input_as_handled()
 

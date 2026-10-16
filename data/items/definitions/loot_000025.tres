@@ -7,6 +7,7 @@
 script = ExtResource("1_11h2o")
 item_id = &"loot_000025"
 display_name = "Medicine Bottle"
+context_utility_overrides = {&"medical_bay": {"utility_id": &"Medical", "value": 5}}
 storage_category = "Medical"
 can_be_stacked = true
 visual_scene = ExtResource("2_lg0hq")

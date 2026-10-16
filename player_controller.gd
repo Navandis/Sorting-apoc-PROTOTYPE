@@ -58,6 +58,9 @@ var _ladder_anchor_xz := Vector2.ZERO
 var _store_hold_elapsed: float = 0.0
 var _store_repeat_elapsed: float = 0.0
 var _store_was_held: bool = false
+var world_input_blocked := false
+var _require_e_release := false
+var medical_interface: Node
 
 var _interaction_hud: CanvasLayer
 var _aim_dot: Panel
@@ -91,7 +94,9 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	if _zone_editor_open:
+	if not Input.is_key_pressed(KEY_E):
+		_require_e_release = false
+	if _zone_editor_open or world_input_blocked:
 		_reset_store_hold_state()
 		return
 
@@ -100,6 +105,8 @@ func _process(delta: float) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if world_input_blocked:
+		return
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		_apply_mouse_look(event.relative)
 
@@ -131,6 +138,8 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if world_input_blocked:
+		return
 	var input_vector := _read_movement_input()
 	_step_movement(delta, input_vector, Input.is_key_pressed(KEY_SHIFT))
 
@@ -426,6 +435,11 @@ func _register_prototype_world_items() -> void:
 
 
 func _attempt_store() -> void:
+	if world_input_blocked or _require_e_release:
+		return
+	if medical_interface != null and medical_interface.is_targeted():
+		medical_interface.open_panel()
+		return
 	## E is the left-hand logistics action: place/store/submit.
 	##
 	## AUTO MODE:
@@ -458,7 +472,7 @@ func _attempt_store() -> void:
 func _update_store_hold(delta: float) -> void:
 	# Initial key-down is handled immediately by _unhandled_input().
 	# This method only generates subsequent auto-store repeats.
-	if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
+	if world_input_blocked or _require_e_release or Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
 		_reset_store_hold_state()
 		return
 
@@ -508,6 +522,8 @@ func _reset_store_hold_state() -> void:
 
 
 func _attempt_pickup_click() -> void:
+	if world_input_blocked:
+		return
 	## Left Mouse Button is the right-hand object-selection action: identify
 	## and retrieve the object currently under the reticle.
 	var target: WorldItem = _get_looked_at_world_item()
@@ -525,6 +541,15 @@ func _attempt_pickup(target: WorldItem) -> void:
 
 
 func _update_interaction_target() -> void:
+	if world_input_blocked:
+		return
+	if medical_interface != null and medical_interface.is_targeted():
+		if _storage_placement != null:
+			_storage_placement.set_suppressed(true)
+		_set_aim_dot_color(DOT_PLACE)
+		_interaction_prompt.text = "MEDICAL  •  [E] VIEW REQUEST / CONTRIBUTE"
+		_interaction_prompt.visible = true
+		return
 	_current_world_item = _get_looked_at_world_item()
 
 	if _storage_placement != null:
@@ -720,7 +745,7 @@ func _build_storage_zone_editor() -> void:
 
 func _on_zone_editor_closed() -> void:
 	_zone_editor_open = false
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if get_tree().paused else Input.MOUSE_MODE_CAPTURED
 
 	if _interaction_hud != null:
 		_interaction_hud.visible = true
@@ -767,6 +792,45 @@ func _on_carried_selection_changed(_selected_index: int) -> void:
 	_refresh_held_item()
 	if _storage_placement != null:
 		_storage_placement.call("reset_rotation")
+
+
+func reset_pending_commands() -> void:
+	_reset_store_hold_state()
+	_require_e_release = true
+	_current_world_item = null
+	if _storage_placement != null:
+		_storage_placement.set_suppressed(true)
+		_storage_placement.reset_rotation()
+
+
+func set_world_input_blocked(blocked: bool) -> void:
+	world_input_blocked = blocked
+	reset_pending_commands()
+
+
+func capture_state(wing: Node) -> Dictionary:
+	var suppressed: Array[String] = []
+	for ladder: Node in get_tree().get_nodes_in_group("fixed_ladders"):
+		if wing.is_ancestor_of(ladder) and ladder._suppressed_players.has(get_instance_id()):
+			suppressed.append(String(wing.get_path_to(ladder)))
+	return {"transform": global_transform, "camera": camera.transform, "pitch": _pitch,
+		"velocity": velocity, "ladder": String(wing.get_path_to(_attached_ladder)) if is_ladder_attached() else "",
+		"ladder_yaw": _ladder_yaw_center, "ladder_anchor": _ladder_anchor_xz, "suppressed_ladders": suppressed}
+
+
+func restore_state(state: Dictionary, wing: Node) -> void:
+	global_transform = state.transform
+	camera.transform = state.camera
+	_pitch = state.pitch
+	velocity = state.velocity
+	_attached_ladder = wing.get_node(state.ladder) if not state.ladder.is_empty() else null
+	_movement_state = MovementState.LADDER_ATTACHED if _attached_ladder != null else MovementState.NORMAL
+	_ladder_yaw_center = state.ladder_yaw
+	_ladder_anchor_xz = state.ladder_anchor
+	for path: String in state.suppressed_ladders:
+		wing.get_node(path).suppress_until_approach_exit(self)
+	reset_pending_commands()
+	_refresh_held_item()
 
 
 func _build_interaction_hud() -> void:

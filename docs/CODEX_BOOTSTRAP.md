@@ -1,5 +1,7 @@
 # Sorting Apocalypse Codex bootstrap
 
+**16 October 2026 authority update:** GDD v0.14, VDD v0.11 and [Systems MVP v0.2](Sorting_Apocalypse_Systems_MVP_Foundation_Design_and_Progress_v0.2.md) are the active design/phase set. Prototype Findings v0.14 is historical, with live obligations carried into MVP §16. The developer-selected M1 slice is recorded in [its implementation/validation note](testing/m1-persistent-medical-validation-2026-10-16.md); independent review, human playtest and promotion remain pending. Older dated no-next-milestone/three-master statements below retain their historical context.
+
 Use the authoritative local project at `D:\Godot Projects\Sorting-apoc-PROTOTYPE`. Verify the branch, working tree, Godot executable and current remote ancestry before modifying anything. Do not reset to a reported SHA or discard editor-authored work.
 
 Read in this order:

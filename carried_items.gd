@@ -49,6 +49,23 @@ func get_slots() -> Array[RefCounted]:
 	return _slots.duplicate()
 
 
+func capture_state() -> Dictionary:
+	var slots: Array = []
+	for item: RefCounted in _slots:
+		slots.append(item.instance_id if item != null else "")
+	return {"slots": slots, "selected": _selected_index, "max_bulk": max_bulk}
+
+
+func restore_state(state: Dictionary, items: Dictionary) -> void:
+	_slots.clear()
+	for id: String in state.slots:
+		_slots.append(items[id] if not id.is_empty() else null)
+	_selected_index = state.selected
+	max_bulk = state.max_bulk
+	contents_changed.emit()
+	selection_changed.emit(_selected_index)
+
+
 func get_items() -> Array[RefCounted]:
 	var items: Array[RefCounted] = []
 	for item in _slots:
@@ -176,6 +193,20 @@ func remove_at(index: int):
 	contents_changed.emit()
 	selection_changed.emit(_selected_index)
 	return removed
+
+
+func commit_selected_consumption(expected: ItemInstance, commit_receipt: Callable) -> bool:
+	if expected == null or get_selected_item() != expected or not commit_receipt.is_valid():
+		return false
+	var index := _selected_index
+	_slots[index] = null
+	_trim_empty_tail()
+	_selected_index = -1 if get_item_count() == 0 else _nearest_occupied_slot(index)
+	commit_receipt.call()
+	item_removed.emit(expected)
+	contents_changed.emit()
+	selection_changed.emit(_selected_index)
+	return true
 
 
 func select_next() -> void:

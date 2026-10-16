@@ -7,6 +7,7 @@
 script = ExtResource("1_cre0t")
 item_id = &"loot_000026"
 display_name = "Bandages 1"
+context_utility_overrides = {&"medical_bay": {"utility_id": &"Medical", "value": 3}}
 storage_category = "Medical"
 storage_footprint = Vector3i(2, 1, 1)
 can_be_stacked = true

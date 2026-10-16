@@ -13,6 +13,21 @@ var _queued_batch_ids: Array[String] = []
 var _deposited_batches: Dictionary = {}
 
 
+func capture_state() -> Dictionary:
+	var batches: Array[Dictionary] = []
+	for batch: LootBatch in _deposited_batches.values():
+		batches.append(batch.to_snapshot())
+	return {"active": _active_batch_id, "queue": _queued_batch_ids.duplicate(), "batches": batches}
+
+
+func restore_state(state: Dictionary, batches: Dictionary) -> void:
+	_active_batch_id = state.active
+	_queued_batch_ids.assign(state.queue)
+	_deposited_batches.clear()
+	for snapshot: Dictionary in state.batches:
+		_deposited_batches[snapshot.batch_id] = batches[snapshot.batch_id]
+
+
 ## Read-only distinction for upstream admission. Invalid always wins over full.
 enum DepositEligibility { INVALID, CAPACITY_FULL, AVAILABLE }
 

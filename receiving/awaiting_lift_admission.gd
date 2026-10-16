@@ -27,6 +27,26 @@ var _pass_scheduled := false
 var _admitting := false
 
 
+func capture_state() -> Dictionary:
+	var pending: Array[Dictionary] = []
+	for entry: Dictionary in _awaiting:
+		pending.append({"team": entry.team_id, "batch": entry.batch.to_snapshot(), "commitment": bytes_to_var(entry.commitment)})
+	return {"returns": _returns.duplicate(true), "batch_teams": _batch_teams.duplicate(), "pending": pending}
+
+
+func restore_state(state: Dictionary, batches: Dictionary) -> void:
+	_returns = state.returns.duplicate(true)
+	_batch_teams = state.batch_teams.duplicate()
+	_awaiting.clear()
+	for entry: Dictionary in state.pending:
+		_awaiting.append({"team_id": entry.team, "batch_id": entry.batch.batch_id,
+			"batch": batches[entry.batch.batch_id], "commitment": var_to_bytes(batches[entry.batch.batch_id].to_snapshot())})
+	_pass_scheduled = false
+	_admitting = false
+	# Deferred scheduling resumes ordinary fairness only after reconstruction.
+	_schedule_admission.call_deferred()
+
+
 func configure(manager: ReceivingManager, catalog: ItemCatalog, profile: Resource) -> bool:
 	if _manager != null or manager == null or catalog == null or profile == null:
 		return false
@@ -94,7 +114,18 @@ func resolve_awaiting_lift_at_midnight() -> Array[Dictionary]:
 	return forfeits
 
 
+func resume_after_pause() -> void:
+	_schedule_admission()
+
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_UNPAUSED:
+		_schedule_admission.call_deferred()
+
+
 func _schedule_admission() -> void:
+	if is_inside_tree() and get_tree().paused:
+		return
 	if _pass_scheduled or _admitting or _awaiting.is_empty() or not is_instance_valid(_manager) or not _manager.has_deposit_capacity():
 		return
 	_pass_scheduled = true
@@ -103,6 +134,8 @@ func _schedule_admission() -> void:
 
 func _admit_awaiting() -> void:
 	_pass_scheduled = false
+	if is_inside_tree() and get_tree().paused:
+		return
 	if _admitting or not is_instance_valid(_manager):
 		return
 	_admitting = true

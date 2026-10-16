@@ -23,9 +23,16 @@ func request_refresh() -> void:
 
 
 func _refresh_after_geometry() -> void:
-	# Let synchronous batch reveal and deferred TAKE host deletion finish first.
-	await get_tree().process_frame
-	await get_tree().process_frame
+	# Owner-bound one-shot Callables disappear when this node is freed. A
+	# coroutine awaiting a global frame can outlive its node on scene replacement.
+	get_tree().process_frame.connect(_wait_geometry_frame, CONNECT_ONE_SHOT)
+
+
+func _wait_geometry_frame() -> void:
+	get_tree().process_frame.connect(_capture_settled_geometry, CONNECT_ONE_SHOT)
+
+
+func _capture_settled_geometry() -> void:
 	_refresh_requested = false
 	var presenter := get_node_or_null("../../ReceivingRuntime/ReceivingDeckPresenter")
 	if presenter != null:
@@ -38,7 +45,10 @@ func _refresh_after_geometry() -> void:
 	$InteriorProbe.update_mode = ReflectionProbe.UPDATE_ONCE
 	refresh_started.emit()
 	# Coalesce events during capture; one follow-up includes the latest geometry.
-	await get_tree().create_timer(0.2).timeout
+	get_tree().create_timer(0.2).timeout.connect(_finish_refresh_cooldown, CONNECT_ONE_SHOT)
+
+
+func _finish_refresh_cooldown() -> void:
 	_refresh_pending = false
 	if _refresh_requested:
 		request_refresh()

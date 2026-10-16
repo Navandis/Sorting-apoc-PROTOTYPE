@@ -7,6 +7,7 @@
 script = ExtResource("1_okpsm")
 item_id = &"loot_000028"
 display_name = "Med Kit 4"
+context_utility_overrides = {&"medical_bay": {"utility_id": &"Medical", "value": 8}}
 storage_category = "Medical"
 storage_footprint = Vector3i(5, 4, 1)
 can_be_stacked = true

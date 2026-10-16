@@ -3,6 +3,7 @@ extends SceneTree
 # mask a duplicate UID by registering the canonical scene again.
 const MAIN_UID := "uid://bljf1nlhijej"
 const MAIN_PATH := "res://gameplay/logistics_wing/wing_gameplay.tscn"
+const ENTRY_PATH := "res://gameplay/run/run_shell.tscn"
 var failed := false
 
 func _init() -> void:
@@ -16,13 +17,13 @@ func check(ok: bool, message: String) -> bool:
 
 func run() -> void:
 	var configured := String(ProjectSettings.get_setting("application/run/main_scene", ""))
-	check(configured == MAIN_UID, "configured entry retains intended production UID")
-	var uid := ResourceUID.text_to_id(configured)
+	check(configured == ENTRY_PATH, "configured entry is the distinct launch composition")
+	var uid := ResourceUID.text_to_id(MAIN_UID)
 	var registered := uid != ResourceUID.INVALID_ID and ResourceUID.has_id(uid)
 	check(registered, "main UID registered before scene load")
 	var resolved := ResourceUID.get_id_path(uid) if registered else ""
 	print("STARTUP_REGISTRY configured=", configured, " resolved=", resolved)
-	check(resolved == MAIN_PATH, "configured UID resolves to canonical production before load")
+	check(resolved == MAIN_PATH, "canonical UID resolves to production before either entry loads")
 	var declarations: Array[String] = []
 	collect_main_declarations("res://", declarations)
 	declarations.sort()
@@ -36,7 +37,19 @@ func run() -> void:
 	if not check(packed != null, "configured entry loads as PackedScene"):
 		finish()
 		return
-	var wing := packed.instantiate() as Node3D
+	var save_directory := ""
+	for argument: String in OS.get_cmdline_user_args():
+		if argument.begins_with("--m1-save-dir="): save_directory = argument.trim_prefix("--m1-save-dir=")
+	if not check(save_directory.is_absolute_path() and not save_directory.begins_with(ProjectSettings.globalize_path("res://")), "startup test uses an injected external continuation directory"):
+		finish()
+		return
+	var shell := packed.instantiate()
+	shell.save_service = load("res://gameplay/run/run_save_service.gd").new(save_directory)
+	root.add_child(shell)
+	check(shell.wing == null and shell.launch.visible, "configured entry offers launch before gameplay")
+	shell.free()
+	# Only after the intended entry is verified may we load the canonical wing.
+	var wing := (load(MAIN_PATH) as PackedScene).instantiate() as Node3D
 	root.add_child(wing)
 	await physics_frame
 	await physics_frame

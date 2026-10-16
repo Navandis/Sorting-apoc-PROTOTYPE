@@ -23,6 +23,7 @@ var _world_items_by_entry_id: Dictionary = {}
 var _released_callbacks: Dictionary = {}
 var _presented_batch_id := ""
 var _lift_pickup_gate: Callable
+var restored_items: Dictionary = {}
 
 
 func configure(manager: ReceivingManager, catalog: ItemCatalog, profile: Resource) -> bool:
@@ -181,7 +182,9 @@ func _materialize_group(batch: LootBatch, entries: Array) -> bool:
 		var entry := entries[index] as LootBatchEntry
 		if entry.presentation_surface_id != first_entry.presentation_surface_id:
 			return false
-		var item: ItemInstance = batch.create_item_instance(entry.entry_id, _catalog)
+		var item: ItemInstance = restored_items.get(entry.item_instance_id) as ItemInstance
+		if item == null:
+			item = batch.create_item_instance(entry.entry_id, _catalog)
 		var measured: Dictionary = DeckItemPoseScript.measure_item(item, entry.presentation_quarter_turns)
 		if item == null or not bool(measured.get("valid", false)):
 			return false

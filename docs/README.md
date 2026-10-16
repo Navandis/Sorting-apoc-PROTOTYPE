@@ -1,5 +1,7 @@
 # Sorting Apocalypse documentation index
 
+**16 October 2026 authority update:** GDD v0.14, VDD v0.11 and [Systems MVP v0.2](Sorting_Apocalypse_Systems_MVP_Foundation_Design_and_Progress_v0.2.md) are the active design/phase set. Prototype Findings v0.14 is historical, with live obligations carried into MVP §16. The developer-selected M1 slice is recorded in [its implementation/validation note](testing/m1-persistent-medical-validation-2026-10-16.md); independent review, human playtest and promotion remain pending. Older dated no-next-milestone/three-master statements below retain their historical context.
+
 ## Current status — 14 October 2026
 
 Receiving **Stage C overall is HUMAN-PROMOTED / CLOSED in its agreed prototype scope**, published at `bb6683d28539ff743bc480a9d5d68c4ef3d0ce87`. C1, Stage A/B, single-cycle, two-batch and intentional-lighting promotions remain accepted. The autonomous lift now has fully-OPEN TAKE, four-cue theatre/W1 illumination, live read-only CRT, full-outbound FIFO retirement, one-active/two-queued deposited capacity and upstream Awaiting Lift with an explicit simulated-midnight seam. CRT QUEUE counts deposited waiting batches only, excluding upstream teams.

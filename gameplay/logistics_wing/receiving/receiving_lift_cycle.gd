@@ -152,7 +152,8 @@ func _process(delta: float) -> void:
 					_request_refresh()
 		State.CLOSING:
 			var closed := _move_shutter(_open_y, _closed_y, closing_motion_delay_s, closing_motion_duration_s)
-			if closed and _elapsed >= _phase_duration and not $Closing.playing:
+			if closed and _elapsed >= _phase_duration:
+				$Closing.stop()
 				_departing = true
 				_set_state(State.SEALED_EMPTY)
 				$Arrival.stop()
@@ -160,7 +161,8 @@ func _process(delta: float) -> void:
 				_phase_duration = _cue_duration($Departure)
 				_request_refresh()
 		State.SEALED_EMPTY:
-			if _departing and _elapsed >= _phase_duration and not $Departure.playing:
+			if _departing and _elapsed >= _phase_duration:
+				$Departure.stop()
 				# Safe completed-turnaround retirement. FIFO promotion stays manager-owned.
 				_retiring = true
 				var promoted_id := _presenter.retire_drained_active_after_close()
@@ -259,3 +261,50 @@ func _set_warning_tint(color: Color, intensity: float) -> void:
 func _request_refresh() -> void:
 	if is_instance_valid(_reflections):
 		_reflections.request_refresh()
+
+
+func capture_state() -> Dictionary:
+	return {"state": int(_state), "elapsed": _elapsed, "duration": _phase_duration,
+		"warning_elapsed": _warning_elapsed, "busy": _busy, "departing": _departing,
+		"batch": _cycle_batch_id, "shutter_y": _shutter.position.y if is_instance_valid(_shutter) else _closed_y}
+
+
+func restore_state(state: Dictionary) -> bool:
+	if not _configured:
+		return false
+	for audio: AudioStreamPlayer3D in _audio_players():
+		audio.stop()
+	_state = state.state as State
+	_elapsed = state.elapsed
+	_phase_duration = state.duration
+	_warning_elapsed = state.warning_elapsed
+	_busy = state.busy
+	_departing = state.departing
+	_cycle_batch_id = state.batch
+	_retiring = false
+	_shutter.position.y = state.shutter_y
+	_presenter.suspend_pickup()
+	if _state == State.OPEN and not _presenter.reveal_active_batch():
+		return false
+	match _state:
+		State.ARRIVAL: _recover_cue($Arrival, _elapsed)
+		State.REVEALING:
+			_recover_cue($Arrival, _phase_duration + _elapsed)
+			_recover_cue($Opening, _elapsed)
+		State.CLOSING: _recover_cue($Closing, _elapsed)
+		State.SEALED_EMPTY:
+			if _departing: _recover_cue($Departure, _elapsed)
+	_update_warning()
+	readout_changed.emit()
+	_request_refresh()
+	return true
+
+
+func _recover_cue(audio: AudioStreamPlayer3D, logical_offset: float) -> void:
+	if logical_offset < _cue_duration(audio):
+		audio.play(maxf(0.0, logical_offset) * audio.pitch_scale)
+
+
+func set_menu_audio_paused(paused: bool) -> void:
+	for audio: AudioStreamPlayer3D in _audio_players():
+		audio.stream_paused = paused

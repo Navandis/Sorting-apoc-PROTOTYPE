@@ -28,6 +28,8 @@ var return_admission: Node
 var _awaiting_debug_started := false
 var _waiting_debug_batch: LootBatch
 var _debug_first_batch_id := ""
+var restore_pending := false
+var run_identity: RefCounted
 
 
 func _ready() -> void:
@@ -50,10 +52,13 @@ func _ready() -> void:
 	if not return_admission.configure(receiving_manager, item_catalog, deck_profile):
 		push_error("Receiving runtime could not configure upstream return admission.")
 		return
-	_run_cli_debug_delivery.call_deferred()
+	if not restore_pending:
+		_run_cli_debug_delivery.call_deferred()
 
 
 func _run_cli_debug_delivery() -> void:
+	if restore_pending:
+		return
 	var arguments := OS.get_cmdline_user_args()
 	if not arguments.has("--receiving-deck-debug"):
 		return
@@ -176,6 +181,8 @@ func _prepare_debug_batch(content_seed: int, presentation_seed: int, target_bulk
 	var batch_id := "receiving_debug_%d_%d_%d_delivery_%d" % [
 		content_seed, presentation_seed, target_bulk, _debug_delivery_serial
 	]
+	if run_identity != null:
+		batch_id = run_identity.allocate("cargo")
 	var batch: LootBatch = LootSourceScript.new().generate_committed_batch(
 		item_catalog,
 		prototype_loot_pool,
@@ -195,6 +202,27 @@ func _prepare_debug_batch(content_seed: int, presentation_seed: int, target_bulk
 		push_error("Receiving deck preparation failed: %s" % String(diagnostics.failure_reason))
 		return null
 	return batch
+
+
+func capture_state() -> Dictionary:
+	return {"manager": receiving_manager.capture_state(), "admission": return_admission.capture_state(),
+		"cycle": lift_cycle.capture_state(), "debug_started": _awaiting_debug_started,
+		"pending_debug": _waiting_debug_batch.to_snapshot() if _waiting_debug_batch != null else {},
+		"debug_first": _debug_first_batch_id}
+
+
+func restore_state(state: Dictionary, batches: Dictionary, items: Dictionary) -> bool:
+	receiving_manager.restore_state(state.manager, batches)
+	return_admission.restore_state(state.admission, batches)
+	_awaiting_debug_started = state.debug_started
+	_debug_first_batch_id = state.debug_first
+	_waiting_debug_batch = batches[state.pending_debug.batch_id] if not state.pending_debug.is_empty() else null
+	if _waiting_debug_batch != null:
+		lift_cycle.state_changed.connect(_on_debug_first_batch_open)
+	deck_presenter.restored_items = items
+	if not state.manager.active.is_empty() and not deck_presenter.present_active_batch():
+		return false
+	return lift_cycle.restore_state(state.cycle)
 
 
 func _numeric_flag(arguments: PackedStringArray, flag_name: String, fallback: int) -> int:

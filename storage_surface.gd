@@ -141,6 +141,97 @@ func get_grid_size() -> Vector2i:
 	return grid_size
 
 
+func capture_state() -> Dictionary:
+	var stacks: Array[Dictionary] = []
+	for stack: StorageStack in _stacks.values():
+		var members: Array[Dictionary] = []
+		for entry: StorageStack.Entry in stack.entries:
+			var poses: Dictionary = {}
+			_capture_representation_poses(entry.host, entry.host, poses)
+			members.append({"item": entry.item_key, "footprint": entry.footprint,
+				"packing": entry.packing_rotated, "bounds": entry.aligned_bounds,
+				"height": entry.posed_height_m, "stackable": entry.can_be_stacked,
+				"support": entry.can_support_stack, "group": entry.auto_stack_group, "poses": poses})
+		stacks.append({"id": stack.stack_id, "origin": stack.surface_origin,
+			"footprint": stack.base_footprint, "entries": members})
+	return {"id": String(surface_id), "grid": grid_size, "cell_size": cell_size_m,
+		"name": custom_display_name, "zones_initialized": _zones_initialized,
+		"zones": _zone_cells.duplicate(), "cells": _cells.duplicate(),
+		"reservations": _reservations.duplicate(true), "stacks": stacks,
+		"orientation": semantic_orientation_quarter_turns}
+
+
+func _capture_representation_poses(node: Node3D, host: Node3D, poses: Dictionary) -> void:
+	if node == null:
+		return
+	poses[String(host.get_path_to(node))] = node.transform
+	if node != host and not node.scene_file_path.is_empty():
+		return
+	for child: Node in node.get_children():
+		if child is Node3D and not child is WorldItem and not child is CollisionObject3D:
+			_capture_representation_poses(child, host, poses)
+
+
+func restore_state(state: Dictionary, items: Dictionary, placement: Node) -> bool:
+	# Snapshot validation precedes this method. This is an owner reconstruction,
+	# deliberately independent of the rules for accepting a NEW placement.
+	if state.id != String(surface_id) or state.grid != grid_size or state.cell_size != cell_size_m:
+		return false
+	for stack: StorageStack in _stacks.values():
+		for entry: StorageStack.Entry in stack.entries:
+			if is_instance_valid(entry.host): entry.host.free()
+	_stacks.clear()
+	_item_to_stack.clear()
+	_cells.assign(state.cells)
+	_zone_cells.assign(state.zones)
+	_zones_initialized = state.zones_initialized
+	custom_display_name = state.name
+	semantic_orientation_quarter_turns = state.orientation
+	_reservations = state.reservations.duplicate(true)
+	for saved_stack: Dictionary in state.stacks:
+		var stack := StorageStackScript.new()
+		stack.stack_id = saved_stack.id
+		stack.surface = self
+		stack.surface_origin = saved_stack.origin
+		stack.base_footprint = saved_stack.footprint
+		for member: Dictionary in saved_stack.entries:
+			var item: ItemInstance = items[member.item]
+			var host := Node3D.new()
+			host.name = "Restored_" + item.instance_id.validate_node_name()
+			add_child(host)
+			var unit := Node3D.new()
+			unit.name = "StoredUnitOrientationYaw"
+			host.add_child(unit)
+			var packing := Node3D.new()
+			packing.name = "StoredPackingYaw"
+			unit.add_child(packing)
+			var visual := item.definition.visual_scene.instantiate()
+			placement._disable_embedded_nodes(visual)
+			var pose: Dictionary = placement.build_visual_pose_for_item(packing, visual, item, member.packing)
+			if not pose.get("valid", false): return false
+			for path: String in member.poses:
+				var target := host.get_node_or_null(path) as Node3D
+				if target == null: return false
+				target.transform = member.poses[path]
+			var entry := StorageStackScript.create_entry(item, member.footprint, member.packing, member.bounds)
+			entry.posed_height_m = member.height
+			entry.can_be_stacked = member.stackable
+			entry.can_support_stack = member.support
+			entry.auto_stack_group = StringName(member.group)
+			entry.host = host
+			var world := WorldItem.new()
+			world.name = "WorldItem"
+			host.add_child(world)
+			world.configure_existing(host, item, self, stack.stack_id, entry.item_key)
+			entry.world_item = world
+			stack.entries.append(entry)
+			_item_to_stack[entry.item_key] = stack.stack_id
+		_stacks[stack.stack_id] = stack
+	_refresh_debug_occupancy()
+	occupancy_changed.emit()
+	return true
+
+
 func set_semantic_orientation_quarter_turns(value: int) -> void:
 	semantic_orientation_quarter_turns = (
 		StorageOrientationScript.normalize_quarter_turns(value)
