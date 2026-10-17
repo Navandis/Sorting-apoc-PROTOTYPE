@@ -52,7 +52,7 @@ func run() -> void:
 	await process_frame
 	var snapshot: Dictionary = snapshots.capture(wing)
 	check(not snapshot.is_empty() and snapshots.validate(snapshot).is_empty(), "coherent real-wing snapshot validates")
-	check(snapshot.request.credited.Medical == 3 and snapshot.request.spent[0].item_id == bandage_id, "partial contribution and exact consumed identity captured")
+	check(snapshot.schedule.requests[0].credited.Medical == 3 and snapshot.schedule.requests[0].spent[0].item_id == bandage_id, "partial contribution and exact consumed identity captured")
 	var saved: Dictionary = service.save_snapshot(snapshot, {"year":2026,"month":10,"day":16,"hour":12,"minute":34})
 	check(saved.ok and saved.path.get_file().begins_with("Save_"), "production save service writes timestamped snapshot")
 	var first_path: String = saved.path
@@ -87,7 +87,7 @@ func run() -> void:
 	check(restore_scene.medical_request.submit(restored_carry).ok and restore_scene.medical_request.closed, "partial continuation reaches its one closed result")
 	await process_frame
 	var closed: Dictionary = snapshots.capture(restore_scene)
-	check(service.save_snapshot(closed).ok and service.load_snapshot().snapshot.request == closed.request, "closed request and exact spent receipts survive the same production slot")
+	check(service.save_snapshot(closed).ok and service.load_snapshot().snapshot.schedule.requests[0] == closed.schedule.requests[0], "closed request and exact spent receipts survive the same production slot")
 	restore_scene.free()
 	var closed_scene = load("res://gameplay/logistics_wing/wing_gameplay.tscn").instantiate()
 	closed_scene.get_node("Player").enable_held_item_view = false

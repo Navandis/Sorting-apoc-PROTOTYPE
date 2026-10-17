@@ -5,6 +5,7 @@ const Service = preload("res://gameplay/run/run_save_service.gd")
 var failures := 0
 var checks := 0
 var external_dir := ""
+var _pending_helpers := 0
 
 func _init() -> void:
 	run.call_deferred()
@@ -71,6 +72,18 @@ func run() -> void:
 	wing.configure_new_run()
 	root.add_child(wing)
 	wing.set_process(false)
+	await populate_physical_fixture(wing)
+	var snapshot := snapshots.capture(wing)
+	var validation := snapshots.validate(snapshot)
+	check(validation.is_empty(), "full physical snapshot validates: " + validation)
+	var written := service.save_snapshot(snapshot)
+	check(written.ok, "production service saves cross-process fixture: " + written.get("error", ""))
+	print("M1_PROCESS_SAVE ", written.get("path", ""), " run=", snapshot.run.id)
+	wing.free()
+	finish()
+
+func populate_physical_fixture(wing: Node3D) -> void:
+	_pending_helpers += 1
 	var player = wing.get_node("Player")
 	player.set_physics_process(false)
 	var cycle = wing.get_node("ReceivingRuntime/ReceivingLiftCycle")
@@ -116,17 +129,11 @@ func run() -> void:
 	player.velocity = Vector3.ZERO
 	var runtime = wing.get_node("ReceivingRuntime")
 	check(runtime.run_awaiting_lift_debug_delivery(4, 3), "real upstream route owns active + two FIFO + one waiting")
-	cycle._process(1.2345678912345)
+	wing.run_schedule.advance(1.2345678912345)
 	await process_frame
-	var snapshot := snapshots.capture(wing)
-	var validation := snapshots.validate(snapshot)
-	check(validation.is_empty(), "full physical snapshot validates: " + validation)
-	var written := service.save_snapshot(snapshot)
-	check(written.ok, "production service saves cross-process fixture: " + written.get("error", ""))
-	print("M1_PROCESS_SAVE ", written.get("path", ""), " run=", snapshot.run.id)
-	wing.free()
-	finish()
+	_pending_helpers -= 1
 
 func finish() -> void:
+	check(_pending_helpers == 0, "all physical fixture helpers completed")
 	print("M1_CONTINUATION_COMPLETE checks=", checks, " failures=", failures)
 	quit(1 if failures else 0)

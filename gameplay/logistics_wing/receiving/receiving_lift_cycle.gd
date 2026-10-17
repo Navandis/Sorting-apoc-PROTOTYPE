@@ -48,6 +48,7 @@ var _departing := false
 var _retiring := false
 var _cycle_batch_id := ""
 var _configured := false
+var externally_driven := false
 
 func _ready() -> void:
 	set_process(false)
@@ -132,6 +133,21 @@ func get_queued_batch_count() -> int:
 	return _manager.get_queued_batch_ids().size() if _manager != null else 0
 
 func _process(delta: float) -> void:
+	if not externally_driven:
+		advance_time(delta)
+
+## Persistent runs split at this owner's real-time mechanical endpoints.
+func seconds_to_boundary() -> float:
+	match _state:
+		State.ARRIVAL, State.CLOSING:
+			return maxf(0.0, _phase_duration - _elapsed)
+		State.REVEALING:
+			return maxf(0.0, opening_motion_delay_s + opening_motion_duration_s - _elapsed)
+		State.SEALED_EMPTY:
+			if _departing: return maxf(0.0, _phase_duration - _elapsed)
+	return INF
+
+func advance_time(delta: float, settle_endpoint: bool = true) -> void:
 	if not _configured:
 		return
 	_elapsed += delta
@@ -140,6 +156,15 @@ func _process(delta: float) -> void:
 	if not is_instance_valid(_shutter):
 		_presenter.suspend_pickup()
 		return
+	if not settle_endpoint:
+		if _state == State.REVEALING:
+			_move_shutter(_closed_y, _open_y, opening_motion_delay_s, opening_motion_duration_s)
+		elif _state == State.CLOSING:
+			_move_shutter(_open_y, _closed_y, closing_motion_delay_s, closing_motion_duration_s)
+		return
+	settle_boundary()
+
+func settle_boundary() -> void:
 	match _state:
 		State.ARRIVAL:
 			if _elapsed >= _phase_duration and _presenter.is_active_batch_staged():

@@ -2,8 +2,10 @@ extends RefCounted
 
 var run_id: String
 var next_sequence := 1
-var gameplay_seconds := 0.0
-var scenario := "m1_medical_v1"
+var clock: RefCounted
+var gameplay_seconds: float:
+	get: return clock.elapsed if clock != null else 0.0
+var scenario := "m2_medical_supply"
 
 func _init() -> void:
 	run_id = Crypto.new().generate_random_bytes(12).hex_encode()
@@ -19,5 +21,4 @@ func capture_state() -> Dictionary:
 func restore_state(state: Dictionary) -> void:
 	run_id = state.id
 	next_sequence = state.next_sequence
-	gameplay_seconds = state.gameplay_seconds
 	scenario = state.scenario

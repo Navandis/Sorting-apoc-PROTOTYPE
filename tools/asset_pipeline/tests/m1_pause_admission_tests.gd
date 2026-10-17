@@ -11,7 +11,7 @@ func check(ok: bool, message: String) -> void:
 
 func run() -> void:
 	var wing: Node3D = load("res://gameplay/logistics_wing/wing_gameplay.tscn").instantiate()
-	wing.configure_new_run()
+	# Standalone deferred-owner regression; M2 clock-bound cutoff is covered separately.
 	wing.get_node("Player").enable_held_item_view = false
 	root.add_child(wing)
 	wing.get_node("Player").set_physics_process(false)

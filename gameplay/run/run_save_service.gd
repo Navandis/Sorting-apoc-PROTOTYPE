@@ -5,6 +5,7 @@ const Snapshot = preload("res://gameplay/run/run_snapshot.gd")
 const POINTER := "active-slot.json"
 const MAX_SAVE_BYTES := 16 * 1024 * 1024
 var directory: String
+var last_disk_write_ms := 0.0
 
 func _init(destination: String = "user://saves") -> void:
 	directory = ProjectSettings.globalize_path(destination)
@@ -46,6 +47,7 @@ func _read_snapshot(path: String) -> Dictionary:
 	return {"ok": true, "snapshot": state}
 
 func save_snapshot(state: Dictionary, local_time: Dictionary = {}) -> Dictionary:
+	last_disk_write_ms = 0.0
 	var validation := Snapshot.new().validate(state)
 	if not validation.is_empty(): return _failure(validation)
 	var codec := Codec.new()
@@ -115,12 +117,14 @@ func _rollback_snapshot(final_path: String, backup_path: String, pointer_stage: 
 	DirAccess.remove_absolute(pointer_stage)
 
 func _write_file(path: String, contents: String) -> String:
+	var started := Time.get_ticks_usec()
 	var file := FileAccess.open(path, FileAccess.WRITE)
 	if file == null: return "Cannot write save: " + error_string(FileAccess.get_open_error())
 	file.store_string(contents)
 	file.flush()
 	var result := file.get_error()
 	file.close()
+	last_disk_write_ms += (Time.get_ticks_usec() - started) / 1000.0
 	if result != OK:
 		DirAccess.remove_absolute(path)
 		return "Save write failed: " + error_string(result)

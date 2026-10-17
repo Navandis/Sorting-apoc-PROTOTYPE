@@ -25,6 +25,7 @@ var _batch_teams: Dictionary = {}
 var _awaiting: Array[Dictionary] = []
 var _pass_scheduled := false
 var _admitting := false
+var admission_open := true
 
 
 func capture_state() -> Dictionary:
@@ -60,7 +61,7 @@ func configure(manager: ReceivingManager, catalog: ItemCatalog, profile: Resourc
 
 
 func submit_return(team_id: String, batch: LootBatch) -> ReturnResult:
-	if not is_instance_valid(_manager) or team_id.is_empty() or _returns.has(team_id):
+	if not admission_open or not is_instance_valid(_manager) or team_id.is_empty() or _returns.has(team_id):
 		return ReturnResult.INVALID
 	if not _is_compatible_prepared(batch) or _batch_teams.has(batch.batch_id):
 		return ReturnResult.INVALID
@@ -117,6 +118,12 @@ func resolve_awaiting_lift_at_midnight() -> Array[Dictionary]:
 func resume_after_pause() -> void:
 	_schedule_admission()
 
+## Clock coordinator calls this at a known pre-midnight logical boundary.
+## Midnight itself intentionally keeps the existing no-flush forfeiture method.
+func settle_before_boundary() -> void:
+	if admission_open:
+		_admit_awaiting()
+
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_UNPAUSED:
@@ -124,6 +131,8 @@ func _notification(what: int) -> void:
 
 
 func _schedule_admission() -> void:
+	if not admission_open:
+		return
 	if is_inside_tree() and get_tree().paused:
 		return
 	if _pass_scheduled or _admitting or _awaiting.is_empty() or not is_instance_valid(_manager) or not _manager.has_deposit_capacity():
@@ -134,6 +143,8 @@ func _schedule_admission() -> void:
 
 func _admit_awaiting() -> void:
 	_pass_scheduled = false
+	if not admission_open:
+		return
 	if is_inside_tree() and get_tree().paused:
 		return
 	if _admitting or not is_instance_valid(_manager):

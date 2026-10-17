@@ -15,6 +15,9 @@ var pause_status: Label
 var confirmation: ConfirmationDialog
 var _pending_new_run := false
 var _escape_down := false
+var report_view: CanvasLayer
+var midnight_save_status := ""
+var _transition_started_usec := 0
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -136,6 +139,16 @@ func _publish_run(candidate: Node3D) -> void:
 	wing.name = "WingGameplay"
 	wing.get_node("Player")._zone_editor.pause_owner = self
 	pause_owners.clear()
+	wing.run_schedule.night_started.connect(_on_night_started)
+	wing.run_schedule.night_ready.connect(_on_night_ready)
+	var pending: bool = wing.run_schedule.phase == "REPORT_PENDING"
+	wing.get_node("ReceivingRuntime").return_admission.admission_open = not pending
+	if pending:
+		pause_owners["night_report"] = true
+		midnight_save_status = "Continuation saved."
+		report_view.present(wing.run_schedule.report, midnight_save_status)
+	else:
+		report_view.hide()
 	menu_open = false
 	pause_menu.hide()
 	launch.hide()
@@ -153,6 +166,7 @@ func save_and_exit() -> bool:
 		return false
 	wing.free()
 	wing = null
+	report_view.hide()
 	pause_owners.clear()
 	menu_open = false
 	get_tree().paused = false
@@ -174,6 +188,10 @@ func _show_launch() -> void:
 	status_label.text = "One continuing run" if slot.ok else slot.error
 
 func _build_ui() -> void:
+	report_view = load("res://gameplay/run/night_report.gd").new()
+	add_child(report_view)
+	report_view.begin_day.connect(begin_next_day)
+	report_view.first_frame.connect(_on_report_first_frame)
 	var layer := CanvasLayer.new()
 	layer.layer = 100
 	add_child(layer)
@@ -195,6 +213,41 @@ func _build_ui() -> void:
 	confirmation.confirmed.connect(confirm_new_run)
 	confirmation.canceled.connect(cancel_new_run)
 	add_child(confirmation)
+
+func _on_night_started() -> void:
+	_transition_started_usec = Time.get_ticks_usec()
+	var panel := wing.get_node("MedicalContribution/ContributionPanel")
+	panel.close_panel()
+	request_pause("night_report", true)
+
+func _on_night_ready() -> void:
+	var capture_started := Time.get_ticks_usec()
+	var snapshot := Snapshot.new().capture(wing)
+	var write_started := Time.get_ticks_usec()
+	var saved: Dictionary = save_service.save_snapshot(snapshot)
+	var presentation_started := Time.get_ticks_usec()
+	wing.run_schedule.transition_metrics.capture_ms = (write_started - capture_started) / 1000.0
+	wing.run_schedule.transition_metrics.write_ms = (presentation_started - write_started) / 1000.0
+	wing.run_schedule.transition_metrics.disk_write_ms = save_service.last_disk_write_ms
+	midnight_save_status = "Continuation saved." if saved.ok else "Automatic save failed. Progress since the last successful save is not saved."
+	if not saved.ok: push_warning("Midnight automatic save failed: " + saved.error)
+	report_view.present(wing.run_schedule.report, midnight_save_status)
+	wing.run_schedule.transition_metrics.presentation_setup_ms = (Time.get_ticks_usec() - presentation_started) / 1000.0
+	wing.run_schedule.transition_metrics.response_ms = (Time.get_ticks_usec() - _transition_started_usec) / 1000.0
+	print("M2_MIDNIGHT_TIMING ", wing.run_schedule.transition_metrics)
+
+func _on_report_first_frame() -> void:
+	if wing != null and _transition_started_usec > 0:
+		wing.run_schedule.transition_metrics.first_report_frame_ms = (Time.get_ticks_usec() - _transition_started_usec) / 1000.0
+		print("M2_REPORT_FIRST_FRAME_MS ", wing.run_schedule.transition_metrics.first_report_frame_ms)
+		_transition_started_usec = 0
+
+func begin_next_day() -> void:
+	if wing == null or wing.run_schedule.phase != "REPORT_PENDING": return
+	wing.run_schedule.begin_day()
+	report_view.hide()
+	request_pause("night_report", false)
+	wing.get_node("Player").reset_pending_commands()
 
 func _menu_card(layer: CanvasLayer, title: String, translucent: bool) -> Control:
 	var root := Control.new()

@@ -3,12 +3,14 @@ extends RefCounted
 const Codec = preload("res://gameplay/run/state_codec.gd")
 const Catalog = preload("res://prototype_item_catalog.gd")
 const WING := "res://gameplay/logistics_wing/wing_gameplay.tscn"
-const SCHEMA := 1
+const SCHEMA := 2
 var _error := ""
 
 func capture(wing: Node) -> Dictionary:
-	if wing.run_identity == null or wing.restoring or wing.medical_request.transaction_active or not wing.get_initialization_error().is_empty():
+	if wing.run_identity == null or wing.run_schedule == null or wing.restoring or not wing.get_initialization_error().is_empty():
 		return {}
+	for request: RefCounted in wing.run_schedule.requests:
+		if request.transaction_active: return {}
 	var items: Dictionary = {}
 	var player := wing.get_node("Player")
 	for item: ItemInstance in player.carried_items.get_items():
@@ -32,7 +34,8 @@ func capture(wing: Node) -> Dictionary:
 			if entry.remaining_in_batch and not items.has(entry.item_instance_id):
 				items[entry.item_instance_id] = {"definition": String(entry.definition_id), "contaminated": false}
 	return {"schema": SCHEMA, "content": content_fingerprint(), "run": wing.run_identity.capture_state(),
-		"request": wing.medical_request.capture_state(), "items": items, "carry": player.carried_items.capture_state(),
+		"clock": wing.run_schedule.clock.capture_state(), "schedule": wing.run_schedule.capture_state(),
+		"items": items, "carry": player.carried_items.capture_state(),
 		"hosts": hosts, "surfaces": surfaces, "player": player.capture_state(wing), "receiving": receiving}
 
 func _record_item(items: Dictionary, item: ItemInstance) -> void:
@@ -59,30 +62,21 @@ func _fields(value: Variant, fields: Dictionary, label: String) -> bool:
 
 func validate(state: Dictionary) -> String:
 	_error = ""
-	if not _fields(state, {"schema":TYPE_INT,"content":TYPE_STRING,"run":TYPE_DICTIONARY,"request":TYPE_DICTIONARY,
+	if state.get("schema") == 1: return "M1 continuation is incompatible with the M2 timed scenario; save left untouched. Confirm New Run to replace it."
+	if not _fields(state, {"schema":TYPE_INT,"content":TYPE_STRING,"run":TYPE_DICTIONARY,"clock":TYPE_DICTIONARY,"schedule":TYPE_DICTIONARY,
 		"items":TYPE_DICTIONARY,"carry":TYPE_DICTIONARY,"hosts":TYPE_ARRAY,"surfaces":TYPE_DICTIONARY,
 		"player":TYPE_DICTIONARY,"receiving":TYPE_DICTIONARY}, "Snapshot"): return _error
-	if state.schema != SCHEMA: return "Unsupported save schema %s (supported: 1)" % state.schema
+	if state.schema != SCHEMA: return "Unsupported save schema %s (supported: 2)" % state.schema
 	if state.content != content_fingerprint(): return "Save's physical item data is incompatible with this build"
 	if not _fields(state.run, {"id":TYPE_STRING,"scenario":TYPE_STRING,"next_sequence":TYPE_INT,"gameplay_seconds":TYPE_FLOAT}, "Run"): return _error
-	if state.run.id.length() != 24 or not state.run.id.is_valid_hex_number(false) or state.run.next_sequence < 1 or state.run.scenario != "m1_medical_v1" or state.run.gameplay_seconds < 0.0:
+	if state.run.id.length() != 24 or not state.run.id.is_valid_hex_number(false) or state.run.next_sequence < 1 or not is_finite(state.run.gameplay_seconds) or state.run.gameplay_seconds < 0.0:
 		return "Unsupported run identity, scenario or logical time"
-	if not _fields(state.request, {"id":TYPE_STRING,"destination":TYPE_STRING,"targets":TYPE_DICTIONARY,
-		"credited":TYPE_DICTIONARY,"spent":TYPE_ARRAY,"closed":TYPE_BOOL,"result":TYPE_DICTIONARY}, "Request"): return _error
-	var request: Dictionary = state.request
-	if not request.id.begins_with(state.run.id + ":medical:") or request.destination != "medical_bay" or request.targets != {"Medical":12} or not _fields(request.credited, {"Medical":TYPE_INT}, "Medical credit"):
-		return "Unsupported Medical request"
-	var total := 0
+	var timed = load("res://gameplay/run/timed_state_validation.gd").new()
+	var timed_error: String = timed.validate(state)
+	if not timed_error.is_empty(): return timed_error
 	var spent_ids: Dictionary = {}
-	for receipt: Variant in request.spent:
-		if not _fields(receipt, {"item_id":TYPE_STRING,"definition_id":TYPE_STRING,"lane":TYPE_STRING,"applied":TYPE_INT,"wasted":TYPE_INT}, "Contribution receipt"): return _error
-		if receipt.item_id.is_empty() or spent_ids.has(receipt.item_id) or state.items.has(receipt.item_id) or receipt.lane != "Medical" or receipt.applied <= 0 or receipt.wasted < 0 or Catalog.get_definition_by_id(StringName(receipt.definition_id)) == null:
-			return "Inconsistent spent-item receipt"
-		spent_ids[receipt.item_id] = true
-		total += int(receipt.applied)
-	if total != request.credited.Medical or total > 12 or request.closed != (total == 12): return "Inconsistent Medical total/closure"
-	if request.closed and request.result != {"Medical":{"required":12,"supplied":12,"unmet":0}}: return "Inconsistent closed request result"
-	if not request.closed and not request.result.is_empty(): return "Open request has a resolution"
+	for request: Dictionary in state.schedule.requests:
+		for receipt: Dictionary in request.spent: spent_ids[receipt.item_id] = true
 	for id: String in state.items:
 		if not _fields(state.items[id], {"definition":TYPE_STRING,"contaminated":TYPE_BOOL}, "Item"): return _error
 		if id.is_empty() or Catalog.get_definition_by_id(StringName(state.items[id].definition)) == null or state.items[id].definition in ["loot_000034", "loot_000036"]: return "Unsupported item identity/definition"
@@ -119,8 +113,9 @@ func validate(state: Dictionary) -> String:
 
 func _validate_allocator(state: Dictionary) -> String:
 	var ids: Array = state.items.keys()
-	ids.append(state.request.id)
-	for receipt: Dictionary in state.request.spent: ids.append(receipt.item_id)
+	for request: Dictionary in state.schedule.requests:
+		ids.append(request.id)
+		for receipt: Dictionary in request.spent: ids.append(receipt.item_id)
 	for batch: Dictionary in _batch_states(state.receiving): ids.append(batch.batch_id)
 	ids.append_array(state.receiving.admission.batch_teams.keys())
 	var highest := 0

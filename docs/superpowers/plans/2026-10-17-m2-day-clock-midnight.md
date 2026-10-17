@@ -1,0 +1,48 @@
+# M2 day clock and midnight implementation plan
+
+**Execution:** one implementer, using executing-plans/TDD proportionately under `AI_WORKING_GUIDELINES.md`. The supplied handoff authorizes this plan and inline execution; no extra approval or delegated review. Deliver local commits; contextual review and human playtest follow delivery.
+
+**Goal:** one continuing M1 world gains authoritative time, finite timed Medical/cargo, strict midnight ordering, and a saved completed report.
+
+**Authority:** external approved `C:/Users/Boschetar/Dropbox/Sorting Apocalypse/Sorting_Apocalypse_M2_Day_Clock_Scheduling_Midnight_Design_v0.2.md`; MVP v0.3 §§4–9, 13–19. Base/live main `2cad0d766930ae2d5197171146ef253eb1087ad5`. Godot `4.7.stable.official.5b4e0cb0f`, existing Compatibility/imports and canonical run shell/wing.
+
+## Owners and interfaces
+
+- New `gameplay/run/run_clock.gd`: value owner `elapsed`, `day`, `day_elapsed`, saved rate/start/latest-return configuration; `advance(delta)`, `until_midnight()`, `begin_next_day()`, calendar text and exact capture/restore. Run identity retains allocator; its elapsed exposure reads this owner.
+- New `gameplay/run/run_scenario.gd`: finite definition capture/validation and ordered due events. Default three-day table exactly matches the specification. Stable case-sensitive IDs, actual opening/departure keys, no random manifest generation.
+- New `gameplay/run/run_schedule.gd`: run-scoped coordination, request history/current binding, issued occurrence markers, actual admissions, resolved day/report and `ACTIVE`/`REPORT_PENDING` phase. `advance(delta)` splits at scenario, request, lift and midnight boundaries; stops at the report and discards excess delta. Runtime owners retain their queues and transfers.
+- Wing configures new/continued timed owners differently, binds the station after coherent restoration, and drives schedule advancement. `run_identity.gd` no longer independently accumulates time.
+- `contribution_request.gd`: saved occurrence ID/day, opening/deadline/closure time and reason; shared-clock callable checked by preview/submit; `expire(now)` records zero/partial results without consuming. History owns exact receipts; Medical can bind null. Panel reads the same clock and closes when inactive.
+- `receiving_runtime.gd`: `prepare_manifest(...)` builds exact committed entries, allocates once and uses the existing deck planner; scheduler submits through admission. Lift exposes `seconds_to_boundary()`, `advance_time(delta, settle_endpoint)` and endpoint settlement; externally driven only in persistent runs. Admission exposes bounded logical settlement and closes the opportunity before its existing no-flush midnight method. Deferred ordinary/pause behavior stays available.
+- Snapshot schema 2 saves clock, scenario definitions/revision, occurrences, requests/history/current binding, resolved report/phase and Receiving admission facts through existing exact codec. Retains one remaining-item map and all existing physical owners. M1 schema is rejected before reconstruction with explanatory Continue status. No replay on load.
+- Shell acquires night pause before exact-midnight mechanics, captures/saves once after next-day setup, and shows a new compact `night_report.gd` view. `_publish_run` establishes report pause before gameplay publication; Begin Day only changes phase/presentation. Persistent `clock_hud.gd` reads owners even when paused. Separate menu/zoning/loading/report holds remain.
+
+## Increments and proof
+
+- [x] Clock/scenario: failing missing-owner/rate/schedule assertions, implement, then focused `m2_clock_tests.gd`; prove 150 s/hour, 2550 s/day, configuration, invalid/overlapping/adjacent windows and stable ordering.
+- [x] Timed Medical/history: failing expiry/transaction assertions in `m2_request_tests.gd`, implement half-open windows/history/rebinding/deadline UI; retain M1 contribution/input tests and receipt uniqueness.
+- [x] Receiving chronology: failing large-vs-segmented/midnight assertions in `m2_schedule_tests.gd` and focused admission integration; implement exact manifests, mechanical splits and logical pre-boundary admission. Prove strict exact cutoff, old-waiter priority, full turnaround, mid-phase preservation and no overnight work.
+- [x] Night/preservation: failing report-pause/save/load assertions in `m2_night_tests.gd`; extend existing snapshot/service/shell and run actual separate-process pre-midnight/report/post-dismissal cases. Preserve same-name failed replacement and old-schema files. Exercise restored storage retrieval/restorage and ladder rearm/movement.
+- [x] Integrated evidence: run selected affected M1 and Receiving/storage/ladder/startup/lifetime suites serially, render held-view HUD/panel/report/warning at 1920×1080 and 1280×720, inspect diagnostics and measure computation/capture/write/presentation separately. Self-review complete diff, record one validation/playtest note and external patch/hash. Commit local candidate only.
+
+## Integration checks and constraints
+
+Clock→request uses absolute active elapsed deadlines computed with saved configuration. Clock→lift advances real seconds, never engine time scale. Lift→admission settles work at its actual boundary; midnight closes admission before endpoint settlement. Schedule→snapshot captures coherent prepared state; snapshot→shell restores phase before enabling play. Report totals are frozen before next-day start events. Shared-interface contracts agree with the approved spec; no unresolved conflict at preflight.
+
+Fresh external evidence/save root: `C:/Users/Boschetar/.codex/attachments/m2-2026-10-17-a` (all ancestors checked for reparse points; outside every listed worktree). Every executor save injects a subdirectory here. Never touch actual developer saves. Preserve raw failed attempts and command/exit records; no test framework, licensed asset copies, masters/mirrors, art edits, M3, push/merge/PR or publication.
+
+Review focus: boundary/frame partition equivalence and stale E; deferred pre-midnight versus exact-midnight admission; report-pending/nested pause; replacement failure/old schema; cross-day history plus exact physical continuation. Each is covered by the increments above and remains a focus for the user's one later contextual review.
+
+## Execution ledger
+
+Preflight: clean asset-equipped primary checkout, no Godot process found. Default Git TLS failed with SEC_E_NO_CREDENTIALS; read-only OpenSSL ref query succeeded and matched baseline. Branch metadata required sandbox escalation; authorized branch created successfully. Working in this existing checkout follows explicit asset-preservation instruction instead of creating an assetless worktree. No reset/stash/cleanup.
+
+Implementation: `run_clock.gd` saves elapsed/day/config and derives day progress. `run_identity.gameplay_seconds` is a read-only clock view. `run_schedule.gd` owns issued definitions/history and transition state, while `timed_state_validation.gd` validates those saved relationships for the existing snapshot. Closed `wing.medical_request` remains a reference to the latest history entry for existing callers; the station binds only the active occurrence or null. No duplicate request owner or root-level M1 `request` record remains in schema 2.
+
+Receiving: `seconds_to_boundary()` / `advance_time(delta, false)` / `settle_boundary()` coordinate production elapsed with the lift without accelerating theatre. `settle_before_boundary()` performs bounded logical admission before midnight; the existing forfeiture method still does not flush. Admission closes before exact-time mechanics, opens for next-day start preparation only, and remains held during the report. Exact manifest feasibility uses the same planner on temporary preflight values without allocating run identities or submitting returns; Continue does not repeat preparation.
+
+Verification so far: six core suites and six separate-process cases passed; 36 selected serial checks passed with completion markers/exit 0. Normal scenario runs through Day 5; partial/fulfilled/zero history, adjacent windows, half-open transactions, exact-time Receiving, nested pause, same-name replacement rollback and M1 incompatibility are covered. Strengthened mid-phase separate-process and final held rendering checks complete the final increment. Full commands, exits and honest failed attempts are external; no independently dispatched review.
+
+Final evidence: six strengthened mid-phase writer/reader cases passed (24/19 pre-midnight, 26/18 report-pending, 26/18 active-next-day checks). They preserve full exact snapshots and exercise actual restored stack retrieval/restorage, rotated ladder movement/rearm and Receiving TAKE after remaining travel. Ideal quarter-/half-second phase assertions allow 1 ns for measured binary arithmetic (observed error 2.27e-13 s); codec/save/load equality remains exact. Final rendered M1 63/63 and M2 36/36 pass at both resolutions with real held view, synthetic input only. Reflection deletion probe completes both windows; deliberate abort exits 2 with no completion. Final rendered first report frame: 43.84 ms. Known certificate-store and CF-07 diagnostics are retained; intentional rejection signatures and failed fixture attempts are indexed externally.
+
+Final self-review: complete owning diff checked against the five handoff focus areas; no unresolved functional defect identified. This is author self-review, not the user's subsequent independent contextual review. No new design ruling, unrequested feature, deferred polish implementation or expanded durability claim. Stopping at the authorized local branch checkpoint; M1 remains accepted and M2 human/review/publication gates remain separate.

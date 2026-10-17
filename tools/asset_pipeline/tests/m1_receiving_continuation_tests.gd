@@ -17,7 +17,9 @@ func check(ok: bool, message: String) -> bool:
 
 func fresh_wing() -> Node3D:
 	var wing: Node3D = load(Snapshots.WING).instantiate()
-	wing.configure_new_run()
+	var definition: Dictionary = load("res://gameplay/run/run_scenario.gd").new().default_definition()
+	definition.events = []
+	wing.configure_new_run(definition)
 	wing.get_node("Player").enable_held_item_view = false
 	root.add_child(wing)
 	wing.set_process(false)
@@ -54,7 +56,7 @@ func run() -> void:
 	var runtime = wing.get_node("ReceivingRuntime")
 	check(runtime.run_awaiting_lift_debug_delivery(4,3), "four committed returns use upstream contract")
 	var cycle = runtime.lift_cycle
-	cycle._process(1.2345678912345)
+	wing.run_schedule.advance(1.2345678912345)
 	for i: int in 3:
 		wing = round_trip(wing, "incoming repeated %d" % i)
 		runtime = wing.get_node("ReceivingRuntime")
@@ -63,13 +65,13 @@ func run() -> void:
 	var original_active: String = runtime.receiving_manager.get_active_batch_id()
 	var queue: PackedStringArray = runtime.receiving_manager.get_queued_batch_ids()
 	var remaining: float = cycle._phase_duration - cycle._elapsed
-	cycle._process(remaining)
-	cycle._process(0.73123456789)
+	wing.run_schedule.advance(remaining)
+	wing.run_schedule.advance(0.73123456789)
 	wing = round_trip(wing, "opening")
 	runtime = wing.get_node("ReceivingRuntime")
 	cycle = runtime.lift_cycle
 	check(not cycle.can_take_receiving(), "opening remains gated")
-	cycle._process(6.0)
+	wing.run_schedule.advance(6.0)
 	check(cycle.can_take_receiving(), "fully OPEN gate restored from actual shutter endpoint")
 	var take: WorldItem = runtime.deck_presenter.get_materialized_world_items()[0]
 	check(take.pickup_into(wing.get_node("Player/CarriedItems")), "real OPEN TAKE changes live cargo")
@@ -77,27 +79,27 @@ func run() -> void:
 	runtime = wing.get_node("ReceivingRuntime")
 	cycle = runtime.lift_cycle
 	check(runtime.deck_presenter.get_materialized_world_items().size() == 3 and cycle.can_take_receiving(), "remaining OPEN cargo resumes indefinitely")
-	cycle._process(123.456)
+	wing.run_schedule.advance(123.456)
 	check(cycle.get_cycle_state() == 4, "OPEN has no deadline")
 	for world: WorldItem in runtime.deck_presenter.get_materialized_world_items():
 		check(world.pickup_into(wing.get_node("Player/CarriedItems")), "drain through actual TAKE")
-	cycle._process(1.123456789)
+	wing.run_schedule.advance(1.123456789)
 	wing = round_trip(wing, "closing")
 	runtime = wing.get_node("ReceivingRuntime")
 	cycle = runtime.lift_cycle
 	check(cycle.get_cycle_state() == 5 and runtime.receiving_manager.get_active_batch_id() == original_active, "closing retains drained active ownership")
-	cycle._process(cycle._phase_duration - cycle._elapsed)
+	wing.run_schedule.advance(cycle._phase_duration - cycle._elapsed)
 	check(cycle.get_cycle_state() == 0 and cycle.is_busy(), "IDLE outbound remains busy")
-	cycle._process(1.0000000123)
+	wing.run_schedule.advance(1.0000000123)
 	for i: int in 2:
 		wing = round_trip(wing, "busy outbound repeated %d" % i)
 		runtime = wing.get_node("ReceivingRuntime")
 		cycle = runtime.lift_cycle
 		check(runtime.receiving_manager.get_active_batch_id() == original_active, "load does not retire or admit early")
 	var outbound_remaining: float = cycle._phase_duration - cycle._elapsed
-	cycle._process(outbound_remaining - 0.001)
+	wing.run_schedule.advance(outbound_remaining - 0.001)
 	check(runtime.receiving_manager.get_active_batch_id() == original_active, "capacity retained until full logical outbound")
-	cycle._process(0.00101)
+	wing.run_schedule.advance(0.00101)
 	check(runtime.receiving_manager.get_active_batch_id() == queue[0] and cycle.get_cycle_state() == 1, "exactly one FIFO promotion starts next incoming")
 	await process_frame
 	check(runtime.receiving_manager.get_queued_batch_ids().size() == 2 and runtime.return_admission.get_awaiting_returns().is_empty(), "upstream oldest waiting admitted only after genuine capacity release")
@@ -119,8 +121,8 @@ func run() -> void:
 	wing = round_trip(wing, "pending helper B")
 	runtime = wing.get_node("ReceivingRuntime")
 	cycle = runtime.lift_cycle
-	cycle._process(cycle._phase_duration)
-	cycle._process(6.0)
+	wing.run_schedule.advance(cycle._phase_duration)
+	wing.run_schedule.advance(6.0)
 	check(runtime._waiting_debug_batch == null and runtime.receiving_manager.get_queued_batch_ids() == PackedStringArray([pending_id]), "restored helper deposits exact pending B once at A OPEN")
 	wing.free()
 	# Deletion in BOTH global-frame waits, then normal latest-state coalescing.

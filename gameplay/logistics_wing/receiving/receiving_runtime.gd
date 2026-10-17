@@ -225,6 +225,37 @@ func restore_state(state: Dictionary, batches: Dictionary, items: Dictionary) ->
 	return lift_cycle.restore_state(state.cycle)
 
 
+## Exact controlled content uses the established committed batch and preparation
+## contracts. Allocation occurs once; capacity pressure is handled by admission.
+func prepare_manifest(manifest: Array, event_id: String, presentation_seed: int) -> LootBatch:
+	if run_identity == null: return null
+	return _prepare_exact_manifest(manifest, event_id, presentation_seed, run_identity.allocate("cargo"), true)
+
+func can_prepare_manifest(manifest: Array, event_id: String, presentation_seed: int) -> bool:
+	# Feasibility check only: no run allocation, slot, submission or physical owner.
+	return _prepare_exact_manifest(manifest, event_id, presentation_seed, "scenario_preflight:" + event_id, false) != null
+
+func _prepare_exact_manifest(manifest: Array, event_id: String, presentation_seed: int, batch_id: String, log_failure: bool) -> LootBatch:
+	if manifest.is_empty(): return null
+	var definitions: Array[ItemDefinition] = []
+	var bulk := 0
+	for id: String in manifest:
+		var definition := item_catalog.get_definition_by_id(StringName(id))
+		if definition == null or id in ["loot_000034", "loot_000036"]: return null
+		definitions.append(definition)
+		bulk += definition.bulk
+	var entries: Array[LootBatchEntry] = []
+	for index in definitions.size():
+		entries.append(LootBatchEntry.new("entry_%04d" % index, "%s:item_%04d" % [batch_id, index], definitions[index].item_id))
+	var batch := LootBatch.create_committed(batch_id, &"scenario", event_id, bulk, bulk, 0, presentation_seed, entries)
+	if batch == null: return null
+	var diagnostics = DeckPlannerScript.new().prepare(batch, item_catalog, deck_profile, DeckPlannerScript.FixtureMode.BARE)
+	if not diagnostics.succeeded:
+		if log_failure: push_error("Authored cargo preparation failed for %s: %s" % [event_id, diagnostics.failure_reason])
+		return null
+	return batch
+
+
 func _numeric_flag(arguments: PackedStringArray, flag_name: String, fallback: int) -> int:
 	var prefix := "%s=" % flag_name
 	for argument: String in arguments:

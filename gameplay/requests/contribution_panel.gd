@@ -11,6 +11,7 @@ var total_label: Label
 var gain_label: Label
 var status_label: Label
 var item_label: Label
+var deadline_label: Label
 var _card: PanelContainer
 var _pips: HBoxContainer
 var _open := false
@@ -38,6 +39,8 @@ func _ready() -> void:
 	title.text = "MEDICAL  /  CONTRIBUTION"
 	title.add_theme_font_size_override("font_size", 28)
 	column.add_child(title)
+	deadline_label = Label.new()
+	column.add_child(deadline_label)
 	item_label = Label.new()
 	item_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	column.add_child(item_label)
@@ -71,7 +74,7 @@ func is_open() -> bool:
 	return _open
 
 func open_panel() -> void:
-	if _open or request == null or request.closed:
+	if _open or request == null or not request.is_accepting():
 		return
 	_open = true
 	_e_down = Input.is_key_pressed(KEY_E)
@@ -106,8 +109,19 @@ func handle_e(pressed: bool, echo: bool) -> void:
 		close_panel()
 
 func _process(_delta: float) -> void:
-	if _open and (not destination_valid.is_valid() or not destination_valid.call()):
-		close_panel()
+	if _open:
+		if request == null or not request.is_accepting() or not destination_valid.is_valid() or not destination_valid.call():
+			close_panel()
+		else:
+			_refresh_deadline()
+
+func _refresh_deadline() -> void:
+	if request == null or request.deadline < 0.0:
+		deadline_label.text = ""
+		return
+	var clock: RefCounted = request.time_source.get_object()
+	var remaining: float = maxf(0.0, request.deadline - request.current_time()) * float(clock.config.rate)
+	deadline_label.text = "Deadline %s  ·  %s remaining" % [clock.time_text(float(clock.config.day_start) + (request.deadline - (request.day - 1) * clock.day_duration()) * float(clock.config.rate)), clock.time_text(remaining)]
 
 func _input(event: InputEvent) -> void:
 	if not _open:
@@ -134,6 +148,7 @@ func refresh() -> void:
 	if request == null or carry == null:
 		return
 	var item: ItemInstance = carry.get_selected_item()
+	_refresh_deadline()
 	preview_state = request.preview(item)
 	invalid_highlight = preview_state.status == "ineligible"
 	item_label.text = item.get_display_name() if item != null else "No carried item selected"

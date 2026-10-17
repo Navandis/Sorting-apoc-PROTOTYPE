@@ -27,7 +27,16 @@ func configure(wing: Node, state: RefCounted) -> void:
 	_refresh_action_label()
 
 func is_active() -> bool:
-	return request != null and not request.closed
+	return request != null and request.is_accepting()
+
+func bind_request(state: RefCounted) -> void:
+	if request != state:
+		panel.close_panel()
+		request = state
+		panel.request = state
+	elif not is_active():
+		panel.close_panel()
+	_refresh_action_label()
 
 func _process(_delta: float) -> void:
 	_refresh_action_label()

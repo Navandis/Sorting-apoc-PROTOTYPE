@@ -5,12 +5,15 @@ var run_identity: RefCounted
 var medical_request: RefCounted
 var restoring := false
 var _continue_state: Dictionary = {}
+var run_schedule: RefCounted
 
 
-func configure_new_run() -> void:
+func configure_new_run(definition: Dictionary = {}) -> void:
 	run_identity = load("res://gameplay/run/run_identity.gd").new()
-	medical_request = load("res://gameplay/requests/contribution_request.gd").new(
-		run_identity.allocate("medical"), "medical_bay", {"Medical": 12})
+	run_schedule = load("res://gameplay/run/run_schedule.gd").new()
+	run_schedule.initialize(definition)
+	run_identity.clock = run_schedule.clock
+	run_identity.scenario = String(run_schedule.definition.get("id", ""))
 
 
 func configure_continue(state: Dictionary) -> void:
@@ -18,8 +21,11 @@ func configure_continue(state: Dictionary) -> void:
 	_continue_state = state
 	run_identity = load("res://gameplay/run/run_identity.gd").new()
 	run_identity.restore_state(state.run)
-	medical_request = load("res://gameplay/requests/contribution_request.gd").new()
-	medical_request.restore_state(state.request)
+	run_schedule = load("res://gameplay/run/run_schedule.gd").new()
+	run_schedule.clock.restore_state(state.clock)
+	run_schedule.restore_state(state.schedule)
+	run_identity.clock = run_schedule.clock
+	medical_request = run_schedule.latest_request()
 
 
 func _enter_tree() -> void:
@@ -40,17 +46,22 @@ func _enter_tree() -> void:
 
 
 func _ready() -> void:
-	if medical_request == null:
+	if run_schedule == null:
 		medical_request = load("res://gameplay/requests/contribution_request.gd").new("medical-prototype")
 	var interface: Node = load("res://gameplay/requests/medical_interface.gd").new()
 	interface.name = "MedicalContribution"
 	add_child(interface)
 	interface.configure(self, medical_request)
+	if run_schedule != null:
+		run_schedule.bind(self)
+		var clock_hud = load("res://gameplay/run/clock_hud.gd").new()
+		clock_hud.schedule = run_schedule
+		add_child(clock_hud)
 
 
 func _process(delta: float) -> void:
-	if run_identity != null and not restoring:
-		run_identity.gameplay_seconds += delta
+	if run_schedule != null and not restoring:
+		run_schedule.advance(delta)
 
 
 func is_development_setup_active() -> bool:
@@ -71,6 +82,7 @@ func _remove_development_setup() -> void:
 		setup.queue_free()
 
 func get_initialization_error() -> String:
+	if run_schedule != null and not run_schedule.error.is_empty(): return run_schedule.error
 	var setup := get_node_or_null("DevelopmentSetup")
 	if setup == null:
 		return "Persistent run requires the authored DevelopmentSetup"
