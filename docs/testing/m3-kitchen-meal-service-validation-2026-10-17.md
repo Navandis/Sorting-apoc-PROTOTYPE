@@ -68,3 +68,46 @@ Review the complete **base → delivery HEAD** diff against the external approve
 4. Observe audible cue pause/resume and complete outbound before FIFO promotion. Leave cargo behind, reach midnight, inspect all six supplied/required pairs, open/close the report menu, then Continue a pending report and verify actual stock, ladder and stored poses. After Day 3, existing stock continues without new authored events and subsequent coverage is N/A.
 
 No M3 promotion/publication is implied. Full-game continuous Ironman durability, CF-07, misleading 019 naming and final economy/workload tuning remain outside this delivery.
+
+## 17 October 2026 — human-playtest UI/input follow-up
+
+The original candidate `7d3d6c7b710fa0a822848e3ee6d67d8761efe0d0` subsequently received independent **ACCEPT**, with no BLOCKER/IMPORTANT correctness issue established and a fresh 33-check boundary probe passing with exit 0. That review and all original evidence remain intact. The developer then reported other requested behaviors manually validated and four corrections: Firewood rejected only the Food row visually; released W left movement after a request panel closed; zoning ESC opened the Game Menu; and contribution/zoning close-key hints were redundant. The supplied follow-up attachment was text-only; the captures below are new synthetic fixtures, not the developer's recording. M3 remains **not human-promoted / not published**.
+
+Preflight again found the clean feature branch at `7d3d6c7`, all five existing worktrees, and live remote main at `3465098d1910be0bb697416cb4e8bf6d1058cfb8`. The process-list fallback found no running Godot process; the CIM query was access-denied. No reset, stash, branch switch, other-worktree change or process termination was used. The follow-up is a new linear commit, not an amendment; its exact delivery HEAD and clean final status are recorded externally in `final-git.txt`.
+
+### Correction and causal evidence
+
+- Shared preview now distinguishes an item with no usable Utility from a recognized full lane. The former highlights all request lanes red; the latter highlights only that lane. Committed fill stays green, eligible projection stays on its lane, and rejection spends nothing. Utility values, receipts and eligibility rules are unchanged.
+- Actual synthetic W/F input reproduced stale locomotion at both real stations: after W was released during the panel, F, ESC and expiry each left about **0.02 m** of horizontal travel. Direct key state was false; velocity had remained `(0, 0, -1.2)` while physics returned early. Opening a contribution panel now clears locomotion. Ordinary ESC pause reproduced the same mechanism, so explicit Game Menu opening also clears it. Continue and general pause synchronization do not clear saved velocity. Held W resumes normally after close; no player/ladder serialization change was made.
+- The run shell routes a distinct ESC to zoning before contribution/menu handling. Zoning cancels its clear confirmation first, otherwise closes itself; O remains supported. Independent pause owners, cursor capture and the report hold remain authoritative.
+- Removed only the redundant contribution close-instruction line and zoning `[O / ESC] CLOSE` label. The selected-item instruction, buttons, shortcuts, category explanation and tooltips remain.
+
+### Focused verification
+
+Fresh external evidence: **`C:/Users/Boschetar/.codex/attachments/m3-ui-followup-2026-10-17-a`**. All shell SaveServices were injected to this root before entering the tree; the developer's actual `user://saves` was untouched. Godot remains `4.7.stable.official.5b4e0cb0f` / Compatibility, with the original recorded executable hash.
+
+| Final log stem | Completed result / actual exit |
+| --- | --- |
+| `green-2` — new `m3_modal_followup_tests.gd` | **233 checks, 0 failures / 0** |
+| `m3-contribution` | 24 checks, 0 failures / 0 |
+| `m1-menu` | 23 checks, 0 failures / 0 |
+| `m2-night` | 15 checks, 0 failures / 0 |
+| `fixed-ladder` | PASS / 0 |
+| `m1-rendered-2` | 63 checks, 0 failures / 0 |
+| `m3-rendered` | 50 checks, 0 failures / 0 |
+
+The new suite checks both rejection scopes and lane orders, unchanged Medical feedback, exact item retention/one receipt, neutral empty selection, both stations with W released before F/ESC/expiry close, six post-close physics frames, and W held across close. It covers zoning-first ESC, release/echo suppression, O, clear-confirmation precedence, independent pause owners, ordinary menu drift, exact nonzero saved-velocity restoration, real reversible shelf hold-E, report menu/Continue and helper completion. Existing affected-owner tests cover normal transactions, storage/ladder, lift audio stream pause and remaining F/E/ESC paths. No 27-run full sweep was repeated.
+
+The initial RED run completed **179 checks / 29 failures / exit 1**. An initial corrected attempt failed with exit 1 due to a new inferred-boolean GDScript parse error; the declaration was corrected explicitly, and this attempt is not counted as passing. The first legacy M1 rendered run completed **63 checks / 1 failure / exit 1** because its fixture used ESC to create the now-forbidden menu behind zoning. It now explicitly acquires a separate menu hold and verifies that zoning ESC preserves that hold/cursor. All failed attempts and raw logs remain preserved. The new suite also checks that all eleven sections complete, alongside its watchdog and failure exit.
+
+Both console and engine logs were inspected. Final scoped diagnostics are the known certificate-store error at `os_windows.cpp:2582`; the intentional `missing_seed_definition` rejection in `m1-menu`; and CF-07 material-null messages, **16** in `m1-rendered-2` and **36** in `m3-rendered` (console counts), at GLES3 material-storage lines 2592/2579/2618/2630. No new script error, assertion failure or leak signature remains in final runs. `git diff --check` passes.
+
+Six selected captures under `green-2/` were rendered and visually inspected: `kitchen-ineligible-{1920,1280}.png`, `medical-ineligible-{1920,1280}.png`, and `zoning-{1920,1280}.png`. Shared panels are centered/contained; rejection preserves green committed fill, the redundant labels are absent, and Close controls remain reachable. These compact preview fixtures use test targets, not changed scenario targets. `commands.txt`, result JSON, paired raw logs, `corrective.patch` (`7d3d6c7` → delivery), and `base-to-final.patch` (published M2 → delivery) are external delivery evidence.
+
+### Preservation and next gate
+
+No scenario, schedule, Utility/Bulk data, cargo identity/capacity/reach, save schema, authored scene/art, licensed asset, master DOCX/Markdown or continuous Ironman work changed. M1/M2 accepted dispositions, M3's nine meals/three Medical windows/twelve 16-item returns, and `loot_000019` Hydration +3 / unchanged **Food Can** name remain preserved.
+
+**M4 design follow-up only:** evaluate provisional authored Bulk for physical items against the player's **10-Bulk** carry limit, Expedition outgoing/team load and return capacity, and feasibility/compatibility of larger Receiving manifests. No Bulk rebalance or M4/M5 scenario was implemented here. CF-07, certificate-store and item-name debt remain separate.
+
+Synthetic input is not conclusive native-keyboard/mouse or human-hearing verification. This implementer verification does not independently accept its own correction. The next gate is **one focused independent review of `7d3d6c7` → final candidate**, plus developer retest of the four observations. Human promotion and any Git publication require a later explicit authorization; no merge, push or PR was performed.

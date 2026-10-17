@@ -160,10 +160,11 @@ func run() -> void:
 	await key(KEY_F, false)
 	await key(KEY_E, false)
 	player._open_zone_editor_for_surface(wing.get_functional_surfaces()[0])
+	# Acquire a separate menu hold explicitly; ESC belongs to zoning first.
+	shell.set_menu_open(true)
 	await key(KEY_ESCAPE, true)
 	await key(KEY_ESCAPE, false)
-	player._zone_editor.close_editor()
-	check(paused and shell.menu_open and Input.mouse_mode == Input.MOUSE_MODE_VISIBLE, "native nested menu retains visible cursor when zoning closes beneath it")
+	check(not player._zone_editor.visible and paused and shell.menu_open and Input.mouse_mode == Input.MOUSE_MODE_VISIBLE, "zoning ESC retains independently opened menu and visible cursor")
 	check(shell.save_and_exit(), "rendered partial run saves before unload")
 	await capture("06-launch-continue")
 	check(not shell.continue_button.disabled and shell.continue_run(), "rendered Continue loads partial run")

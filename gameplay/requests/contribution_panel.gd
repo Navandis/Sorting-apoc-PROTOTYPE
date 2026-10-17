@@ -54,7 +54,7 @@ func _ready() -> void:
 	status_label = Label.new()
 	column.add_child(status_label)
 	var hint := Label.new()
-	hint.text = "[E] Submit selected item  •  Wheel / 1–0 select\n[F] Close  •  [ESC] Close panel"
+	hint.text = "[E] Submit selected item  •  Wheel / 1–0 select"
 	column.add_child(hint)
 	var close := Button.new()
 	close.text = "[F] Close"
@@ -182,6 +182,7 @@ func refresh() -> void:
 		var committed: int = request.credited[lane]
 		var target: int = request.targets[lane]
 		var projected: int = preview_state.projected if preview_state.lane == lane else committed
+		var rejected: bool = invalid_highlight and (preview_state.reason == "utility" or preview_state.lane == lane)
 		row.label.text = "%s   %d / %d" % [lane,committed,target]
 		if preview_state.status == "eligible" and preview_state.lane == lane:
 			row.label.text += "  →  %d / %d" % [projected,target]
@@ -195,7 +196,7 @@ func refresh() -> void:
 			pip.custom_minimum_size = Vector2(minf(36.0,maxf(1.0,(552.0-3.0*(target-1))/target)),24)
 			var pip_style := StyleBoxFlat.new()
 			pip_style.bg_color = Color(0.26,0.62,0.42) if state == "committed" else Color(0.05,0.12,0.11)
-			pip_style.border_color = Color(0.7,1,0.72) if state == "projected" else style.border_color if invalid_highlight and preview_state.lane == lane else Color(0.22,0.3,0.27)
+			pip_style.border_color = Color(0.7,1,0.72) if state == "projected" else style.border_color if rejected else Color(0.22,0.3,0.27)
 			pip_style.set_border_width_all(3 if state == "projected" else 1)
 			pip.add_theme_stylebox_override("panel",pip_style)
 			row.pips.add_child(pip)

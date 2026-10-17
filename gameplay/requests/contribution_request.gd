@@ -39,6 +39,7 @@ func preview(item: ItemInstance) -> Dictionary:
 		value = 0 if value <= 1 else int(ceil(value / 2.0))
 	if not targets.has(lane) or value <= 0:
 		state.status = "ineligible"
+		state.reason = "utility"
 		return state
 	state.lane = lane
 	state.target = targets[lane]

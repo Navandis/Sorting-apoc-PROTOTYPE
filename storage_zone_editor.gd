@@ -99,6 +99,13 @@ func close_editor() -> void:
 	editor_closed.emit()
 
 
+func close_top_modal() -> void:
+	if _clear_confirmation.visible:
+		_clear_confirmation.hide()
+	else:
+		close_editor()
+
+
 func _input(event: InputEvent) -> void:
 	if not visible or (pause_owner != null and pause_owner.menu_open):
 		return
@@ -106,8 +113,11 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventKey:
 		var key_event: InputEventKey = event as InputEventKey
 		if key_event.pressed and not key_event.echo:
-			if key_event.keycode == KEY_O or (key_event.keycode == KEY_ESCAPE and pause_owner == null):
+			if key_event.keycode == KEY_O and not _clear_confirmation.visible:
 				close_editor()
+				get_viewport().set_input_as_handled()
+			elif key_event.keycode == KEY_ESCAPE and pause_owner == null:
+				close_top_modal()
 				get_viewport().set_input_as_handled()
 
 
@@ -204,12 +214,6 @@ func _build_category_panel(main_row: HBoxContainer) -> void:
 	var spacer: Control = Control.new()
 	spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	side.add_child(spacer)
-
-	var close_hint: Label = Label.new()
-	close_hint.text = "[O / ESC] CLOSE"
-	close_hint.add_theme_color_override("font_color", TEXT_MUTED)
-	close_hint.add_theme_font_size_override("font_size", 13)
-	side.add_child(close_hint)
 
 
 func _build_center_panel(main_row: HBoxContainer) -> void:

@@ -33,8 +33,12 @@ func _input(event: InputEvent) -> void:
 		elif not event.echo and not _escape_down:
 			_escape_down = true
 			if wing != null and not confirmation.visible:
-				var panel: CanvasLayer = wing.get_node("Player").active_contribution_panel()
-				if panel != null and panel.is_open():
+				var player := wing.get_node("Player")
+				var editor: CanvasLayer = player._zone_editor
+				var panel: CanvasLayer = player.active_contribution_panel()
+				if editor.visible:
+					editor.close_top_modal()
+				elif panel != null and panel.is_open():
 					panel.close_panel()
 				else:
 					set_menu_open(not menu_open)
@@ -58,6 +62,8 @@ func _sync_pause() -> void:
 
 func set_menu_open(opened: bool) -> void:
 	if wing == null: return
+	if opened and not menu_open:
+		wing.get_node("Player").velocity = Vector3.ZERO
 	var panel: CanvasLayer = wing.get_node("Player").active_contribution_panel()
 	if panel != null: panel.close_panel()
 	menu_open = opened

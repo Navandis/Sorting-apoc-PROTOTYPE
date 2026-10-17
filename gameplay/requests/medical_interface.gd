@@ -74,6 +74,8 @@ func open_panel() -> void:
 	var previous: Node = player.active_contribution_interface
 	if previous != null and previous != self: previous.panel.close_panel()
 	player.active_contribution_interface = self
+	# A non-pausing modal stops walking; released keys must not resume old velocity.
+	player.velocity = Vector3.ZERO
 	player.set_world_input_blocked(true)
 	panel.open_panel()
 
