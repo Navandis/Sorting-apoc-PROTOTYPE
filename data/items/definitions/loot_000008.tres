@@ -6,6 +6,8 @@
 [resource]
 script = ExtResource("1_ewrh4")
 item_id = &"loot_000008"
+utility_id = &"Food"
+utility_value = 3
 display_name = "Dry Goods 01a"
 storage_category = "Food"
 can_be_stacked = true

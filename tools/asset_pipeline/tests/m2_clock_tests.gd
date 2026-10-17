@@ -35,7 +35,7 @@ func run() -> void:
 	copy.advance(1.25)
 	check(copy.elapsed == 2551.25 and copy.calendar_seconds() == 25230.0, "exact restored coordinates use saved rate")
 	var scenario = load("res://gameplay/run/run_scenario.gd").new()
-	var definition: Dictionary = scenario.default_definition()
+	var definition: Dictionary = load("res://tools/asset_pipeline/tests/m2_mechanical_fixture.gd").new().definition()
 	check(scenario.validate(definition).is_empty(), "approved finite scenario is valid")
 	var late := definition.duplicate(true)
 	late.events[0].at = 75540.0

@@ -5,7 +5,7 @@ var next_sequence := 1
 var clock: RefCounted
 var gameplay_seconds: float:
 	get: return clock.elapsed if clock != null else 0.0
-var scenario := "m2_medical_supply"
+var scenario := "m3_kitchen_meal_service"
 
 func _init() -> void:
 	run_id = Crypto.new().generate_random_bytes(12).hex_encode()

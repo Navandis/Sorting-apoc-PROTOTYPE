@@ -82,7 +82,7 @@ func run() -> void:
 	wing.free()
 	finish()
 
-func populate_physical_fixture(wing: Node3D) -> void:
+func populate_physical_fixture(wing: Node3D, with_debug_returns: bool = true) -> void:
 	_pending_helpers += 1
 	var player = wing.get_node("Player")
 	player.set_physics_process(false)
@@ -128,7 +128,7 @@ func populate_physical_fixture(wing: Node3D) -> void:
 	player.camera.rotation.x = -0.22
 	player.velocity = Vector3.ZERO
 	var runtime = wing.get_node("ReceivingRuntime")
-	check(runtime.run_awaiting_lift_debug_delivery(4, 3), "real upstream route owns active + two FIFO + one waiting")
+	if with_debug_returns: check(runtime.run_awaiting_lift_debug_delivery(4, 3), "real upstream route owns active + two FIFO + one waiting")
 	wing.run_schedule.advance(1.2345678912345)
 	await process_frame
 	_pending_helpers -= 1

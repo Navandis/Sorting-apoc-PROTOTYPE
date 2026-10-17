@@ -67,7 +67,7 @@ func run() -> void:
 func history_and_adjacent_windows() -> void:
 	_pending_helpers += 1
 	var wing = load("res://gameplay/logistics_wing/wing_gameplay.tscn").instantiate()
-	wing.configure_new_run()
+	wing.configure_new_run(load("res://tools/asset_pipeline/tests/m2_mechanical_fixture.gd").new().definition())
 	wing.get_node("Player").enable_held_item_view = false
 	root.add_child(wing)
 	wing.set_process(false)
@@ -101,7 +101,7 @@ func history_and_adjacent_windows() -> void:
 	invalid.items[receipt.item_id] = {"definition":receipt.definition_id,"contaminated":false}
 	check(validator.validate(invalid).contains("cross-history"), "spent identity cannot retain live physical ownership")
 	wing.free()
-	var definition: Dictionary = load("res://gameplay/run/run_scenario.gd").new().default_definition()
+	var definition: Dictionary = load("res://tools/asset_pipeline/tests/m2_mechanical_fixture.gd").new().definition()
 	definition.events = [{"id":"medical_001","kind":"medical","day":1,"at":25200.0,"deadline":25224.0,"targets":{"Medical":12}},
 		{"id":"medical_002","kind":"medical","day":1,"at":25224.0,"deadline":25248.0,"targets":{"Medical":12}}]
 	wing = load("res://gameplay/logistics_wing/wing_gameplay.tscn").instantiate()

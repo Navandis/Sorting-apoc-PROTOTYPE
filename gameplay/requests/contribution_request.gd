@@ -16,6 +16,7 @@ var deadline := -1.0 # Untimed standalone prototype/test consumers retain M1 beh
 var closed_at := -1.0
 var closure_reason := ""
 var time_source: Callable
+var item_already_spent: Callable
 
 func _init(id: String = "", context: String = "medical_bay", lanes: Dictionary = {"Medical": 12}) -> void:
 	request_id = id
@@ -28,7 +29,7 @@ func preview(item: ItemInstance) -> Dictionary:
 	var lane := String(targets.keys()[0])
 	var state := {"status": "closed" if not is_accepting() else "empty", "lane": lane,
 		"target": targets[lane], "committed": credited[lane], "projected": credited[lane],
-		"applied": 0, "wasted": 0, "remainder": maxi(0, int(targets[lane]) - int(credited[lane]))}
+		"applied": 0, "wasted": 0, "reason":"", "remainder": maxi(0, int(targets[lane]) - int(credited[lane]))}
 	if not is_accepting() or item == null or item.definition == null:
 		return state
 	var utility: Dictionary = item.definition.get_utility_for_context(StringName(destination))
@@ -36,12 +37,22 @@ func preview(item: ItemInstance) -> Dictionary:
 	var value := int(utility.get("value", 0))
 	if item.contaminated:
 		value = 0 if value <= 1 else int(ceil(value / 2.0))
-	if not targets.has(lane) or value <= 0 or int(credited[lane]) >= int(targets[lane]):
+	if not targets.has(lane) or value <= 0:
 		state.status = "ineligible"
 		return state
 	state.lane = lane
 	state.target = targets[lane]
 	state.committed = credited[lane]
+	state.projected = credited[lane]
+	state.remainder = int(targets[lane]) - int(credited[lane])
+	if int(credited[lane]) >= int(targets[lane]):
+		state.status = "ineligible"
+		state.reason = "full"
+		return state
+	if spent.any(func(receipt): return receipt.item_id == item.instance_id) or (item_already_spent.is_valid() and item_already_spent.call(item.instance_id)):
+		state.status = "ineligible"
+		state.reason = "spent"
+		return state
 	state.applied = mini(value, int(targets[lane]) - int(credited[lane]))
 	state.wasted = value - int(state.applied)
 	state.projected = int(credited[lane]) + int(state.applied)

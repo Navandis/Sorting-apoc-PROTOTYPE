@@ -78,7 +78,7 @@ func run() -> void:
 	shell = load("res://gameplay/run/run_shell.tscn").instantiate()
 	shell.save_service = load("res://gameplay/run/run_save_service.gd").new(old_dir)
 	root.add_child(shell)
-	check(shell.continue_button.disabled and shell.status_label.text.contains("M1 continuation is incompatible"), "old M1 Continue disabled with explicit incompatibility explanation")
+	check(shell.continue_button.disabled and shell.status_label.text.contains("Prior continuation is incompatible"), "old M1 Continue disabled with explicit incompatibility explanation")
 	check(not shell.continue_run() and shell.wing == null, "old Continue never resets or converts")
 	shell.request_new_run()
 	check(shell.confirmation.visible, "replacement requires existing confirmation")
@@ -95,9 +95,10 @@ func run() -> void:
 	candidate.free()
 	candidate = load("res://gameplay/logistics_wing/wing_gameplay.tscn").instantiate()
 	invalid = load("res://gameplay/run/run_scenario.gd").new().default_definition()
-	invalid.events[1].manifest = []
-	invalid.events[1].manifest.resize(2000)
-	invalid.events[1].manifest.fill("loot_000028")
+	var invalid_return: Dictionary = invalid.events.filter(func(e): return e.kind == "return")[0]
+	invalid_return.manifest = []
+	invalid_return.manifest.resize(2000)
+	invalid_return.manifest.fill("loot_000028")
 	candidate.configure_new_run(invalid)
 	candidate.get_node("Player").enable_held_item_view = false
 	root.add_child(candidate)

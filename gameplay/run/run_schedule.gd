@@ -38,28 +38,43 @@ func bind(wing: Node) -> void:
 				return
 	for request: RefCounted in requests:
 		request.time_source = clock.current_time
+		request.item_already_spent = has_spent_item
 	if not wing.restoring and error.is_empty(): _activate_due()
-	_bind_medical()
+	_bind_stations()
 
 func current_time() -> float:
 	return clock.elapsed
 
-func latest_request() -> RefCounted:
-	return requests.back() if not requests.is_empty() else null
-
-func active_request() -> RefCounted:
-	for request: RefCounted in requests:
-		if request.is_accepting(): return request
+func latest_request(destination: String = "medical_bay") -> RefCounted:
+	for index: int in range(requests.size()-1,-1,-1):
+		if requests[index].destination == destination: return requests[index]
 	return null
 
-func _bind_medical() -> void:
+func active_request(destination: String = "medical_bay") -> RefCounted:
+	for request: RefCounted in requests:
+		if request.destination == destination and request.is_accepting(): return request
+	return null
+
+func has_spent_item(id: String) -> bool:
+	for request: RefCounted in requests:
+		for receipt: Dictionary in request.spent:
+			if receipt.item_id == id: return true
+	return false
+
+func _bind_stations() -> void:
 	_wing.medical_request = latest_request()
 	var interface := _wing.get_node_or_null("MedicalContribution")
 	if interface != null: interface.bind_request(active_request())
+	interface = _wing.get_node_or_null("KitchenContribution")
+	if interface != null: interface.bind_request(active_request("kitchen"))
 
 func advance(delta: float) -> void:
 	if phase != "ACTIVE" or not error.is_empty() or not is_finite(delta) or delta < 0.0: return
 	if _wing.is_inside_tree() and _wing.get_tree().paused: return
+	# Anchor the final calendar coordinate once, while preserving the exact
+	# remaining delta for mechanics. Repeated subtraction can undershoot an
+	# authored time; subtracting a rounded calendar endpoint can shorten a phase.
+	var endpoint: float = minf(clock.elapsed + delta, clock.day * clock.day_duration())
 	var remaining := delta
 	# Deferred vacancy work from the preceding frame belongs to the current time.
 	_runtime.return_admission.settle_before_boundary()
@@ -71,8 +86,9 @@ func advance(delta: float) -> void:
 		step = minf(step, _until_event())
 		step = minf(step, _runtime.lift_cycle.seconds_to_boundary())
 		clock.advance(step)
+		if step == remaining: clock.elapsed = endpoint
 		_runtime.lift_cycle.advance_time(step, false)
-		remaining = maxf(0.0, remaining - step)
+		remaining = maxf(0.0, remaining-step)
 		if clock.until_midnight() == 0.0:
 			_resolve_midnight()
 			return
@@ -84,7 +100,7 @@ func advance(delta: float) -> void:
 		if step == 0.0 and before == _runtime.lift_cycle.capture_state():
 			_fail("A mechanical boundary could not settle; simulation held")
 			return
-	_bind_medical()
+	_bind_stations()
 
 func _until_event() -> float:
 	var until := INF
@@ -102,7 +118,7 @@ func _close_due() -> void:
 			due.append({"id":request.occurrence_id, "opened_at":request.opened_at, "request":request})
 	due.sort_custom(Scenario.new().closure_before)
 	for entry: Dictionary in due: entry.request.expire(clock.elapsed)
-	_bind_medical()
+	_bind_stations()
 
 func _activate_due() -> void:
 	var due: Array = []
@@ -110,13 +126,14 @@ func _activate_due() -> void:
 		if not issued.has(event.id) and clock.timestamp(event.day, event.at) <= clock.elapsed: due.append(event)
 	due.sort_custom(Scenario.new().activation_before)
 	for event: Dictionary in due:
-		if event.kind == "medical":
-			var request = Request.new(_wing.run_identity.allocate("medical"), "medical_bay", event.targets)
+		if event.kind in ["medical","kitchen"]:
+			var request = Request.new(_wing.run_identity.allocate(event.kind), Scenario.new().destination_for(event.kind), event.targets)
 			request.occurrence_id = event.id
 			request.day = event.day
 			request.opened_at = clock.elapsed
 			request.deadline = clock.timestamp(event.day, event.deadline)
 			request.time_source = clock.current_time
+			request.item_already_spent = has_spent_item
 			requests.append(request)
 			issued[event.id] = {"at":clock.elapsed, "request":request.request_id}
 		else:
@@ -128,7 +145,7 @@ func _activate_due() -> void:
 			if _runtime.return_admission.submit_return(event.id, batch) == AwaitingLiftAdmission.ReturnResult.INVALID:
 				_fail("Prepared authored return was rejected: " + event.id)
 				return
-	_bind_medical()
+	_bind_stations()
 
 func _record_admission(team: String, batch: String) -> void:
 	admissions.append({"team":team, "batch":batch, "day":clock.day, "at":clock.elapsed})
@@ -143,7 +160,8 @@ func _resolve_midnight() -> void:
 	_close_due()
 	var medical: Array = []
 	for request: RefCounted in requests:
-		if request.day == clock.day: medical.append(request.capture_state())
+		if request.day == clock.day and request.destination == "medical_bay": medical.append(request.capture_state())
+	var meals := meal_records_for_day(clock.day)
 	var admitted: Array = []
 	for entry: Dictionary in admissions:
 		if entry.day == clock.day: admitted.append(entry.duplicate(true))
@@ -151,7 +169,7 @@ func _resolve_midnight() -> void:
 	var backlog: Array = []
 	if not manager.get_active_batch_id().is_empty(): backlog.append(manager.get_active_batch_id())
 	backlog.append_array(Array(manager.get_queued_batch_ids()))
-	report = {"day":clock.day, "medical":medical, "admitted":admitted,
+	report = {"day":clock.day, "medical":medical, "meals":meals, "meal_coverage":meal_coverage(meals), "admitted":admitted,
 		"forfeits":forfeits.duplicate(true), "backlog":backlog, "scenario_complete":scenario_complete_at(clock.day + 1)}
 	resolved_day = clock.day
 	clock.begin_next_day()
@@ -176,6 +194,26 @@ func scenario_complete_at(day: int) -> bool:
 		if event.day >= day: return false
 	return true
 
+func meal_records_for_day(day: int) -> Array:
+	var meals: Array = []
+	for event: Dictionary in definition.events:
+		if event.kind != "kitchen" or event.day != day: continue
+		for request: RefCounted in requests:
+			if request.occurrence_id == event.id:
+				var record: Dictionary = request.capture_state()
+				record["meal"] = event.meal
+				meals.append(record)
+	meals.sort_custom(func(a,b): return a.opened_at < b.opened_at)
+	return meals
+
+static func meal_coverage(meals: Array) -> Variant:
+	if meals.is_empty(): return null
+	var coverage := 0.0
+	for meal: Dictionary in meals:
+		for lane: String in ["Food","Hydration"]:
+			coverage += minf(1.0,float(meal.credited[lane])/float(meal.targets[lane]))
+	return 100.0*coverage/(meals.size()*2)
+
 func scenario_complete() -> bool:
 	return scenario_complete_at(clock.day)
 
@@ -198,6 +236,7 @@ func restore_state(state: Dictionary) -> void:
 		var request = Request.new()
 		request.restore_state(record)
 		request.time_source = clock.current_time
+		request.item_already_spent = has_spent_item
 		requests.append(request)
 	issued = state.issued.duplicate(true)
 	admissions = state.admissions.duplicate(true)

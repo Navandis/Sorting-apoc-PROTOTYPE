@@ -17,6 +17,9 @@ var _pips: HBoxContainer
 var _open := false
 var _e_down := false
 var _f_down := false
+var lane_rows: Dictionary = {}
+var _rows: VBoxContainer
+var _title: Label
 
 func _ready() -> void:
 	layer = 55
@@ -35,21 +38,17 @@ func _ready() -> void:
 	var column := VBoxContainer.new()
 	column.add_theme_constant_override("separation", 14)
 	margin.add_child(column)
-	var title := Label.new()
-	title.text = "MEDICAL  /  CONTRIBUTION"
-	title.add_theme_font_size_override("font_size", 28)
-	column.add_child(title)
+	_title = Label.new()
+	_title.add_theme_font_size_override("font_size", 28)
+	column.add_child(_title)
 	deadline_label = Label.new()
 	column.add_child(deadline_label)
 	item_label = Label.new()
 	item_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	column.add_child(item_label)
-	total_label = Label.new()
-	total_label.add_theme_font_size_override("font_size", 24)
-	column.add_child(total_label)
-	_pips = HBoxContainer.new()
-	_pips.add_theme_constant_override("separation", 5)
-	column.add_child(_pips)
+	_rows = VBoxContainer.new()
+	_rows.add_theme_constant_override("separation", 14)
+	column.add_child(_rows)
 	gain_label = Label.new()
 	column.add_child(gain_label)
 	status_label = Label.new()
@@ -151,13 +150,12 @@ func refresh() -> void:
 	_refresh_deadline()
 	preview_state = request.preview(item)
 	invalid_highlight = preview_state.status == "ineligible"
+	_title.text = "KITCHEN  /  MEAL SERVICE" if request.destination == "kitchen" else "MEDICAL  /  CONTRIBUTION"
 	item_label.text = item.get_display_name() if item != null else "No carried item selected"
-	total_label.text = "%s   %d / %d  →  %d / %d" % [preview_state.lane, preview_state.committed,
-		preview_state.target, preview_state.projected, preview_state.target]
 	gain_label.text = "+%d applied  /  %d wasted" % [preview_state.applied, preview_state.wasted] if preview_state.status == "eligible" else ""
 	match preview_state.status:
 		"eligible": status_label.text = "After submission: %d remaining" % preview_state.remainder
-		"ineligible": status_label.text = "Selected item not eligible"
+		"ineligible": status_label.text = preview_state.lane + " requirement already met" if preview_state.reason == "full" else "Selected item not eligible for Kitchen" if request.destination == "kitchen" else "Selected item not eligible"
 		"closed": status_label.text = "Request complete — supplies received"
 		_: status_label.text = "Carry an eligible item to contribute"
 	var style := StyleBoxFlat.new()
@@ -165,17 +163,43 @@ func refresh() -> void:
 	style.border_color = Color(1, 0.25, 0.22) if invalid_highlight else Color(0.35, 0.65, 0.48)
 	style.set_border_width_all(2)
 	_card.add_theme_stylebox_override("panel", style)
-	for child: Node in _pips.get_children():
-		child.free()
+	if lane_rows.keys() != request.targets.keys():
+		for child: Node in _rows.get_children(): child.free()
+		lane_rows.clear()
+		for lane: String in request.targets:
+			var column := VBoxContainer.new()
+			_rows.add_child(column)
+			var label := Label.new()
+			label.add_theme_font_size_override("font_size", 24)
+			column.add_child(label)
+			var pips := HBoxContainer.new()
+			pips.add_theme_constant_override("separation", 3)
+			column.add_child(pips)
+			lane_rows[lane] = {"label":label,"pips":pips,"states":[]}
 	pip_states.clear()
-	for i: int in range(int(preview_state.target)):
-		var state := "committed" if i < int(preview_state.committed) else "projected" if i < int(preview_state.projected) else "empty"
-		pip_states.append(state)
-		var pip := Panel.new()
-		pip.custom_minimum_size = Vector2(36, 24)
-		var pip_style := StyleBoxFlat.new()
-		pip_style.bg_color = Color(0.26, 0.62, 0.42) if state == "committed" else Color(0.05, 0.12, 0.11)
-		pip_style.border_color = Color(0.7, 1, 0.72) if state == "projected" else style.border_color if invalid_highlight else Color(0.22, 0.3, 0.27)
-		pip_style.set_border_width_all(3 if state == "projected" else 1)
-		pip.add_theme_stylebox_override("panel", pip_style)
-		_pips.add_child(pip)
+	for lane: String in lane_rows:
+		var row: Dictionary = lane_rows[lane]
+		var committed: int = request.credited[lane]
+		var target: int = request.targets[lane]
+		var projected: int = preview_state.projected if preview_state.lane == lane else committed
+		row.label.text = "%s   %d / %d" % [lane,committed,target]
+		if preview_state.status == "eligible" and preview_state.lane == lane:
+			row.label.text += "  →  %d / %d" % [projected,target]
+		for child: Node in row.pips.get_children(): child.free()
+		row.states.clear()
+		for i: int in target:
+			var state := "committed" if i < committed else "projected" if i < projected else "empty"
+			row.states.append(state)
+			var pip := Panel.new()
+			pip.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			pip.custom_minimum_size = Vector2(minf(36.0,maxf(1.0,(552.0-3.0*(target-1))/target)),24)
+			var pip_style := StyleBoxFlat.new()
+			pip_style.bg_color = Color(0.26,0.62,0.42) if state == "committed" else Color(0.05,0.12,0.11)
+			pip_style.border_color = Color(0.7,1,0.72) if state == "projected" else style.border_color if invalid_highlight and preview_state.lane == lane else Color(0.22,0.3,0.27)
+			pip_style.set_border_width_all(3 if state == "projected" else 1)
+			pip.add_theme_stylebox_override("panel",pip_style)
+			row.pips.add_child(pip)
+		if lane == preview_state.lane:
+			total_label = row.label
+			_pips = row.pips
+			pip_states.assign(row.states)

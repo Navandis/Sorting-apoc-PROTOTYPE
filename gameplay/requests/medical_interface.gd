@@ -6,17 +6,22 @@ var proxy: Node3D
 var panel: CanvasLayer
 var request: RefCounted
 var action_label: Label3D
+var destination := "medical_bay"
+var station_title := "MEDICAL"
 
-func configure(wing: Node, state: RefCounted) -> void:
+func configure(wing: Node, state: RefCounted, context: String = "medical_bay", proxy_name: String = "MedicalInterface", title: String = "MEDICAL") -> void:
+	destination = context
+	station_title = title
 	request = state
 	player = wing.get_node("Player")
-	proxy = wing.get_node("Environment/Greybox/Proxies/MedicalInterface")
+	proxy = wing.get_node("Environment/Greybox/Proxies/" + proxy_name)
 	panel = PanelScript.new()
 	panel.name = "ContributionPanel"
 	add_child(panel)
 	panel.configure(state, player.carried_items, is_targeted)
 	panel.panel_closed.connect(_on_closed)
-	player.medical_interface = self
+	player.contribution_interfaces.append(self)
+	if destination == "medical_bay": player.medical_interface = self
 	action_label = Label3D.new()
 	action_label.font_size = 42
 	action_label.pixel_size = 0.003
@@ -42,7 +47,7 @@ func _process(_delta: float) -> void:
 	_refresh_action_label()
 
 func _refresh_action_label() -> void:
-	var text := "MEDICAL\n[F] Request / Contribute" if is_active() else "MEDICAL"
+	var text := station_title + "\n[F] Request / Contribute" if is_active() else station_title
 	if action_label.text != text:
 		action_label.text = text
 
@@ -66,12 +71,16 @@ func is_targeted() -> bool:
 func open_panel() -> void:
 	if not is_targeted():
 		return
+	var previous: Node = player.active_contribution_interface
+	if previous != null and previous != self: previous.panel.close_panel()
+	player.active_contribution_interface = self
 	player.set_world_input_blocked(true)
 	panel.open_panel()
 
 func _on_closed() -> void:
 	_refresh_action_label()
-	player.set_world_input_blocked(get_tree().paused)
+	if player.active_contribution_interface == self: player.active_contribution_interface = null
+	player.set_world_input_blocked(get_tree().paused or player.active_contribution_interface != null)
 	player._update_interaction_target()
 	if not get_tree().paused:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED

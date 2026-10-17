@@ -20,7 +20,7 @@ func check(ok: bool, message: String) -> bool:
 func new_wing(definition: Dictionary = {}) -> Node:
 	var wing = load("res://gameplay/logistics_wing/wing_gameplay.tscn").instantiate()
 	wing.get_node("Player").enable_held_item_view = false
-	wing.configure_new_run(definition)
+	wing.configure_new_run(load("res://tools/asset_pipeline/tests/m2_mechanical_fixture.gd").new().definition() if definition.is_empty() else definition)
 	root.add_child(wing)
 	wing.set_process(false)
 	wing.get_node("Player").set_physics_process(false)
@@ -66,7 +66,7 @@ func run() -> void:
 
 func next_day_start() -> void:
 	_pending_helpers += 1
-	var definition: Dictionary = load("res://gameplay/run/run_scenario.gd").new().default_definition()
+	var definition: Dictionary = load("res://tools/asset_pipeline/tests/m2_mechanical_fixture.gd").new().definition()
 	definition.events = [definition.events[0], definition.events[1]]
 	definition.events[1].day = 2
 	definition.events[1].at = 25200.0

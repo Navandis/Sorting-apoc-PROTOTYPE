@@ -33,8 +33,8 @@ func _input(event: InputEvent) -> void:
 		elif not event.echo and not _escape_down:
 			_escape_down = true
 			if wing != null and not confirmation.visible:
-				var panel := wing.get_node("MedicalContribution/ContributionPanel")
-				if panel.is_open():
+				var panel: CanvasLayer = wing.get_node("Player").active_contribution_panel()
+				if panel != null and panel.is_open():
 					panel.close_panel()
 				else:
 					set_menu_open(not menu_open)
@@ -52,13 +52,14 @@ func _sync_pause() -> void:
 	get_tree().paused = paused
 	if wing != null:
 		wing.get_node("ReceivingRuntime/ReceivingLiftCycle").set_menu_audio_paused(paused)
-		wing.get_node("Player").set_world_input_blocked(paused)
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if paused else Input.MOUSE_MODE_CAPTURED
+		var panel_open: bool = wing.get_node("Player").active_contribution_panel() != null
+		wing.get_node("Player").set_world_input_blocked(paused or panel_open)
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if paused or panel_open else Input.MOUSE_MODE_CAPTURED
 
 func set_menu_open(opened: bool) -> void:
 	if wing == null: return
-	var panel := wing.get_node("MedicalContribution/ContributionPanel")
-	if panel.is_open(): panel.close_panel()
+	var panel: CanvasLayer = wing.get_node("Player").active_contribution_panel()
+	if panel != null: panel.close_panel()
 	menu_open = opened
 	pause_menu.visible = opened
 	request_pause("menu", opened)
@@ -216,8 +217,8 @@ func _build_ui() -> void:
 
 func _on_night_started() -> void:
 	_transition_started_usec = Time.get_ticks_usec()
-	var panel := wing.get_node("MedicalContribution/ContributionPanel")
-	panel.close_panel()
+	var panel: CanvasLayer = wing.get_node("Player").active_contribution_panel()
+	if panel != null: panel.close_panel()
 	request_pause("night_report", true)
 
 func _on_night_ready() -> void:

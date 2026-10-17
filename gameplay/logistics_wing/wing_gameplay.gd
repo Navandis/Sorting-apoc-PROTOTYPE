@@ -53,6 +53,10 @@ func _ready() -> void:
 	add_child(interface)
 	interface.configure(self, medical_request)
 	if run_schedule != null:
+		var kitchen: Node = load("res://gameplay/requests/medical_interface.gd").new()
+		kitchen.name = "KitchenContribution"
+		add_child(kitchen)
+		kitchen.configure(self, null, "kitchen", "KitchenInterface", "KITCHEN")
 		run_schedule.bind(self)
 		var clock_hud = load("res://gameplay/run/clock_hud.gd").new()
 		clock_hud.schedule = run_schedule
@@ -96,4 +100,6 @@ func get_initialization_error() -> String:
 		return "Receiving failed to initialize; previous continuation retained"
 	if get_functional_surfaces().size() != 16 or get_node_or_null("MedicalContribution") == null:
 		return "Canonical gameplay owners failed to initialize"
+	if run_schedule != null and get_node_or_null("KitchenContribution") == null:
+		return "Kitchen station failed to initialize"
 	return ""

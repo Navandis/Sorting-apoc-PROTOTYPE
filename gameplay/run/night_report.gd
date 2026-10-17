@@ -26,16 +26,16 @@ func _ready() -> void:
 	card.custom_minimum_size = Vector2(780, 0)
 	center.add_child(card)
 	var margin := MarginContainer.new()
-	for side: String in ["left", "right", "top", "bottom"]: margin.add_theme_constant_override("margin_" + side, 30)
+	for side: String in ["left", "right", "top", "bottom"]: margin.add_theme_constant_override("margin_" + side, 24)
 	card.add_child(margin)
 	var column := VBoxContainer.new()
-	column.add_theme_constant_override("separation", 20)
+	column.add_theme_constant_override("separation", 14)
 	margin.add_child(column)
 	title = Label.new()
 	title.add_theme_font_size_override("font_size", 30)
 	column.add_child(title)
 	body = Label.new()
-	body.add_theme_font_size_override("font_size", 22)
+	body.add_theme_font_size_override("font_size", 20)
 	body.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	column.add_child(body)
 	save_status = Label.new()
@@ -65,7 +65,11 @@ func present(report: Dictionary, status: String) -> void:
 		fulfilled += int(request.closure_reason == "fulfilled")
 		expired += int(request.closure_reason == "expired")
 		for receipt: Dictionary in request.spent: waste += int(receipt.wasted)
-	body.text = "MEDICAL\nRequired %d  ·  Credited %d  ·  Unmet %d\nFulfilled %d  ·  Expired %d  ·  Excess discarded %d\n\nRECEIVING\nHauls admitted %d  ·  Midnight forfeits %d\nDeposited backlog carried forward %d" % [required, supplied, unmet, fulfilled, expired, waste, report.admitted.size(), report.forfeits.size(), report.backlog.size()]
+	body.text = "MEDICAL\nRequired %d  ·  Credited %d  ·  Unmet %d\nFulfilled %d  ·  Expired %d  ·  Excess discarded %d\n\nMEAL SERVICE\nDaily Meal Coverage: %s" % [required, supplied, unmet, fulfilled, expired, waste, "N/A" if report.meal_coverage == null else "%.1f%%" % report.meal_coverage]
+	if report.meals.is_empty(): body.text += "\nNo Meal Service scheduled"
+	for meal: Dictionary in report.meals:
+		body.text += "\n%s  ·  Food %d/%d  ·  Hydration %d/%d  ·  %s" % [meal.meal,meal.credited.Food,meal.targets.Food,meal.credited.Hydration,meal.targets.Hydration,meal.closure_reason.capitalize()]
+	body.text += "\n\nRECEIVING\nHauls admitted %d  ·  Midnight forfeits %d\nDeposited backlog carried forward %d" % [report.admitted.size(), report.forfeits.size(), report.backlog.size()]
 	if report.scenario_complete: body.text += "\n\nAuthored scenario complete."
 	save_status.text = status
 	begin_button.text = "Begin Day %d" % (int(report.day) + 1)

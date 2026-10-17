@@ -52,6 +52,7 @@ func run() -> void:
 	if not check(evidence_dir.is_absolute_path() and not evidence_dir.begins_with(ProjectSettings.globalize_path("res://")), "external render/save destination required"):
 		finish()
 		return
+	DirAccess.make_dir_recursive_absolute(evidence_dir)
 	var service_script = load("res://gameplay/run/run_save_service.gd")
 	print("M1_NORMAL_SAVE_DIRECTORY ", service_script.new().directory)
 	print("M1_RENDERER ", RenderingServer.get_current_rendering_method(), " display=", DisplayServer.get_name())
@@ -92,7 +93,7 @@ func run() -> void:
 	await key(KEY_E, true, true)
 	await key(KEY_E, true)
 	check(panel.is_open() and wing.medical_request.credited.Medical == 0 and player.carried_items.get_item_count() == 1, "held/echo F cannot close opener and preheld E requires release")
-	check(wing.find_children("ContributionPanel", "CanvasLayer", true, false).size() == 1 and not paused and player.world_input_blocked, "one non-pausing panel owns world input")
+	check(wing.find_children("ContributionPanel", "CanvasLayer", true, false).filter(func(p): return p.is_open()).size() == 1 and not paused and player.world_input_blocked, "one non-pausing panel owns world input")
 	await key(KEY_E, false)
 	await key(KEY_F, false)
 	await key(KEY_F, true)

@@ -6,6 +6,8 @@
 [resource]
 script = ExtResource("1_tdnvf")
 item_id = &"loot_000006"
+utility_id = &"Food"
+utility_value = 6
 display_name = "Bread 1"
 storage_category = "Food"
 storage_footprint = Vector3i(3, 2, 1)

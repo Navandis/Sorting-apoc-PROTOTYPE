@@ -6,6 +6,8 @@
 [resource]
 script = ExtResource("1_d6tau")
 item_id = &"loot_000021"
+utility_id = &"Hydration"
+utility_value = 4
 display_name = "Orange Juice 1"
 storage_category = "Hydration"
 can_be_stacked = true
