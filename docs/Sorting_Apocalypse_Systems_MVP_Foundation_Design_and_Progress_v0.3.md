@@ -1,6 +1,6 @@
 # Sorting Apocalypse — Systems MVP Foundation Design & Progress v0.3
 
-> Generated text/table extract of the same-named DOCX master. The DOCX is authoritative; edit it and regenerate this companion. Page layout, headers and footers are omitted. M1 published; M2 design approved; corrected full-game Ironman/randomness contract. 17 October 2026.
+> Generated text/table extract of the same-named DOCX master. The DOCX is authoritative; edit it and regenerate this companion. Page layout, headers and footers are omitted. M1 published; M2 human-promoted / closed; status-only acceptance close-out. 17 October 2026.
 
 **SORTING APOCALYPSE**
 
@@ -11,7 +11,7 @@ FOUNDATION DESIGN
 Persistent supplies. Competing obligations.
 One continuing storeroom.
 
-Version 0.3  \|  17 October 2026  \|  M1 published · M2 design approved
+Version 0.3  \|  17 October 2026  \|  M2 human-promoted / closed
 
 FIRST INTEGRATED TARGET
 Medical → Kitchen → Expedition Loadout, sharing physical supplies, request accounting and one persistent run. Meaningful allocation testing begins with the combined three-consumer loop.
@@ -27,13 +27,13 @@ This is the MVP-phase counterpart to Prototype Findings: a living foundation-des
 
 **DESIGN CONFIRMED IN CONVERSATION ≠ IMPLEMENTED ≠ HUMAN-PROMOTED**
 
-M1 is HUMAN-PROMOTED / PUBLISHED / CLOSED. The developer approved the M2 design, with the full-game Ironman/randomness clarification recorded in §19. M2 remains NOT IMPLEMENTED. This edition updates design and evidence; it makes no game or repository changes.
+M1 remains HUMAN-PROMOTED / PUBLISHED / CLOSED. M2 is technically verified, independently ACCEPTED and HUMAN-PROMOTED / CLOSED after all final human playtests passed. Publication is authorized, subject to safe fast-forward and live remote verification (§15). M3 Kitchen is next, NOT IMPLEMENTED.
 
 **ORIENTATION**
 
 ## Reader’s guide &amp; current position
 
-Current position: M1 is human-promoted and published at 36d527d. M2 clock, scheduling, midnight and HUD design is approved; implementation has not begun. Full-game continuous preservation is a retained design obligation, not an M2 feature claim. CF-07 remains disclosed debt.
+Current position: M2 clock, scheduling, midnight and HUD are HUMAN-PROMOTED / CLOSED (§15). M1 stays published/closed; M3 Kitchen is next, NOT IMPLEMENTED. Full-game continuous preservation remains unimplemented. CF-07 and the Windows certificate-store diagnostic remain disclosed.
 
 ### How to use this master
 
@@ -77,7 +77,7 @@ A historical statement that Stage C, the fixed ladder, Fuel reconciliation or EA
 
 The DOCX is the editable master; a same-stem readable Markdown extract is derived from it, not maintained independently. Detailed tests and human reviews remain in their dated records; this master summarizes their meaning and links to them. Source code establishes implementation, but an unintended behavior is not automatically a design decision.
 
-v0.1 and v0.2 remain preserved editions. Published v0.2 records M1’s 16 October acceptance; this v0.3 retains that result, incorporates the approved M2 specification and corrects the full-game randomness premise. GDD/VDD/Prototype Findings and game source remain unchanged. The active trio is GDD/VDD/MVP; the new files await user-controlled publication. [D10, D16–D21; PUB16]
+v0.1 and v0.2 remain preserved editions. v0.3 was published at 2cad0d7; this status-only close-out retains its edition, approved design and full-game randomness contract. The active trio remains GDD v0.14 / VDD v0.11 / MVP v0.3. M2 acceptance is recorded in §15; other masters and game source are unchanged by this close-out.
 
 Basis: [D10] developer document-role decision; [H14 §§1, 3–4, 15]; [ER14 §§3, 12]; [WG].
 
@@ -87,9 +87,9 @@ Basis: [D10] developer document-role decision; [H14 §§1, 3–4, 15]; [ER14 §�
 
 ### 2.1 Published reference
 
-Published main was independently rechecked at 36d527d9333a7fedafb803a262ab4a84059381db for this update. The accepted linear M1 history is 4cdbb13 → 6c56edf → a7b764e → 36d527d; the last commit records promotion. The earlier 800fd41 pre-MVP repair close-out remains historical. These are evidence anchors, never reset targets. [PUB16; R17]
+Publication preflight on 17 October verified local main and live GitHub main at 2cad0d766930ae2d5197171146ef253eb1087ad5. Reviewed M2 follows linearly: 524edf1 → c7bbf44; one docs-only promotion commit follows. M1’s accepted 4cdbb13 → 6c56edf → a7b764e → 36d527d history remains closed. These are evidence anchors, never reset targets. [PUB16; §15]
 
-The authoritative asset-equipped checkout remains D:\Godot Projects\Sorting-apoc-PROTOTYPE, repository Navandis/Sorting-apoc-PROTOTYPE. Godot 4.7 Compatibility is the documented baseline. This document update reads published evidence; it does not inspect Windows working state, unsaved art or the installed engine, and runs no Godot tests. [H14; M1; R17]
+The authoritative asset-equipped checkout remains D:\Godot Projects\Sorting-apoc-PROTOTYPE, repository Navandis/Sorting-apoc-PROTOTYPE. Publication preflight verified the clean reviewed checkout and retained Godot 4.7 Compatibility configuration. No Godot run, import scan or access to the developer’s user://saves is required or performed by this documentation close-out.
 
 | Foundation | Disposition carried into MVP |
 | --- | --- |
@@ -103,7 +103,7 @@ The authoritative asset-equipped checkout remains D:\Godot Projects\Sorting-apoc
 
 The repair record preserves the initial 16 selected suites and six abort canaries, the independent REVISE for two manual-address cases, and the seven-suite/unchanged-probe follow-up with one focused review. The developer subsequently reported correct behavior in all manually tested scenarios and promoted the repairs. These are attributed prior results, not new executions or an exhaustive runtime guarantee. [CR15]
 
-The earlier pre-MVP corrections did not implement persistence. Accepted M1 now establishes ordinary Medical, menu and continuation behavior (§15). M2 design is approved but not implemented; Kitchen, Loadout and full-game continuous Ironman durability also remain later implementation.
+The earlier pre-MVP corrections did not implement persistence. Accepted M1 establishes ordinary Medical, menu and continuation; accepted M2 adds calendar, timed requests and midnight (§15). Kitchen, Loadout and full-game continuous Ironman durability remain unimplemented.
 
 Basis: [PF §§24–30, 34]; [CR15]; [R15].
 
@@ -471,7 +471,7 @@ Stage labels M1–M5 are document tracking identifiers. They do not rename accep
 | Stage | Deliverable | Exit evidence |
 | --- | --- | --- |
 | M1<br>Persistent Medical | Accepted: MedicalInterface, F panel toggle/E one-item contribution, cap-and-waste, single-slot continuation and full pause; exact player/storage/Receiving recovery. | HUMAN-PROMOTED / PUBLISHED / CLOSED. Independent ACCEPT and successful final human checks; see §15. |
-| M2<br>Clock &amp; midnight | Approved design: 42.5-minute day, persistent clock, timed Medical/authored cargo, hard cutoff, completed-results report and same-path midnight save. | Stable deadlines through load; full pause; single transition/save; no duplicated requests/deliveries or drift. |
+| M2<br>Clock &amp; midnight | Accepted: provisional 42.5-minute day, shared clock, timed Medical/authored cargo, hard cutoff, applied-results report and same-path midnight save. | HUMAN-PROMOTED / CLOSED. Technical verification, independent ACCEPT and all final human playtests passed; see §15. |
 | M3<br>Kitchen | Food/Hydration requests at meal times through the existing collector and persistence. | Shared-code reuse, lane/cap behavior, partial fulfillment and saved request progression. |
 | M4<br>Loadout | Team-labelled five-lane requests, Outgoing Bulk/capacity and approved destination policy; no Expedition simulation. | Cross-destination competition, exact expenditure and continued identities/accounting after restart. |
 | M5<br>Combined scenarios | Authored multi-day test sequence using all three consumers, continuing stock and organization. | Developer and later unfamiliar-player observations of reserves, tradeoffs, retrieval and causal understanding. |
@@ -490,7 +490,7 @@ Basis: [D01–D09]; [CR15]; [GDD §20.2]; [WG; ER14 §§11–12].
 
 ## 14. Acceptance &amp; evidence plan
 
-Acceptance checks below span stages: M1 evidence is recorded in §15; M2 checks are specified in §18.5 and have not run. Use actual owner/player paths and distinguish direct/synthetic fixtures from native input, held rendering and human audio assessment. [M1; M2 §10]
+Acceptance checks below span stages. M1 and M2 execution, independent acceptance and human promotion are recorded in §15; later-stage checks remain future work. Distinguish direct/synthetic fixtures from native input, held rendering and human audio assessment. [M1; §15; M2 §10]
 
 | Check | Expected observation |
 | --- | --- |
@@ -538,15 +538,15 @@ Basis: [D02–D09]; [WG]; [ER14 §§7–12]; [CR15].
 
 ## 15. Active MVP progress record
 
-This section replaces Prototype Findings as the active phase tracker. Dated evidence remains external to the master when detailed, and current status is updated here. The table is populated only with established evidence; it contains no projected test result. [D10]
+Current phase status follows established evidence; detailed dated records preserve the original runs and limits. Prototype Findings remains historical. [D10]
 
 | Workstream | Status at 17 October 2026 | Evidence / next boundary |
 | --- | --- | --- |
 | Prototype foundations | HUMAN-PROMOTED in recorded scopes | PF retained as historical evidence; no new acceptance task. |
 | Pre-MVP review + repairs | HUMAN-PROMOTED / PUBLISHED | R-01–R-03 accepted; bounded R-04 subsequently repaired within M1. |
-| MVP foundation contracts | CONFIRMED; v0.3 revised master | D01–D21; this edition is not yet published. |
+| MVP foundation contracts | CONFIRMED; v0.3 active master | D01–D21; v0.3 published at 2cad0d7. |
 | M1 persistent Medical | HUMAN-PROMOTED / PUBLISHED / CLOSED | 6c56edf → a7b764e → 36d527d; independent ACCEPT and successful human play. |
-| M2 clock / midnight / HUD | DESIGN APPROVED / NOT IMPLEMENTED | M2 specification v0.2; §18. Codex handoff follows document reconciliation. |
+| M2 clock / midnight / HUD | HUMAN-PROMOTED / CLOSED | 524edf1 → c7bbf44; ACCEPT and final human pass; §15.2. |
 | M3 Kitchen | NOT IMPLEMENTED | Shared collector; later request and combined-scenario testing. |
 | M4 Expedition Loadout | NOT IMPLEMENTED | Capacity/overfill and morning-window tuning remain later. |
 | M5 combined allocation | NOT RUN | Requires persistent three-consumer scenarios; no economy conclusion. |
@@ -555,7 +555,13 @@ This section replaces Prototype Findings as the active phase tracker. Dated evid
 
 Original M1 6c56edf and UI follow-up a7b764e received independent ACCEPT for the complete base-to-final change. The reviewer established no important new defect; its isolated admission/resave probe reported zero failures and exit 0, without repeating prior suites. The developer then passed all five final gameplay categories and HUMAN-PROMOTED M1. [M1]
 
-Publication 36d527d follows the two accepted commits. Reported checks cover save/reopen, exact player/ladder/storage/cargo restoration, Medical previews/credit, F/E/ESC, auto-closure and New Run. All are attributed evidence, not fresh tests by this edition. CF-07 persists. M2 design is approved but unimplemented; prior results do not establish M2 behavior. [PUB16; D16, D20]
+Publication 36d527d follows the two accepted commits. Prior checks cover exact player/ladder/storage/cargo recovery, Medical previews/credit, F/E/ESC, auto-closure and New Run. These are attributed results, not fresh tests by this close-out. CF-07 persists. [PUB16; D16]
+
+### 15.2 17 October 2026 M2 human promotion
+
+Base 2cad0d7 → implementation 524edf1 → reviewed final c7bbf44. Design v0.2 was approved; the implementer reported technical verification. Independent ACCEPT found no BLOCKER or IMPORTANT issue; its bulk-versus-32,998-fractional-step probe reported 19 checks, zero failures, exit 0. The developer reported all final playtests passed without unexpected behavior and HUMAN-PROMOTED / CLOSED M2. These are attributed prior results, not reruns.
+
+Publication is authorized; PUBLISHED requires safe linear fast-forward and live remote confirmation, recorded in the executor’s final report. Detailed scope, prior failures and retained CF-07/certificate/Ironman limits: docs/testing/m2-day-clock-midnight-validation-2026-10-17.md. M3–M5 remain unimplemented; no full-game durability or economy claim is made.
 
 Basis: [D10]; [PF §1]; [CR15; R15]; [ER14 §§8, 10–12].
 
@@ -637,7 +643,7 @@ Basis: [PF §§2, 14, 17, 24–34]; [VDD §§7, 34]; [H14 §§9–13]; [CR15]; [
 
 ## 17. Current decisions &amp; implementation boundaries
 
-M1 is accepted and published; M2 specification v0.2 records approved design, including the corrected full-game randomness premise. Remaining engineering choices belong to the bounded source-led handoff. They are not another general gameplay-design gate. P01 and final M4 overfill remain open. [D16–D21; M2]
+M1 remains accepted/published/closed. M2 specification v0.2 remains the approved design; implementation 524edf1 and final c7bbf44 are independently accepted and human-promoted (§15). M3 Kitchen is next, NOT IMPLEMENTED; P01 and final M4 overfill remain open. This close-out introduces no new design gate. [D16–D21; M2]
 
 | Decision | Current disposition / remaining boundary |
 | --- | --- |
@@ -653,11 +659,11 @@ M1 is accepted and published; M2 specification v0.2 records approved design, inc
 | Scenario / compatibility | M2 approved: three authored days, no refill after exhaustion; new schema/scenario, old M1 saves retained but not silently converted. |
 | Full-game randomness | Settled principle (§19): continuous Ironman state, early natural commitment, narrow residual loss; incidental uncommitted rerolls tolerated. |
 
-Next: prepare the M2 Codex implementation handoff after this master reconciliation. No new M1 work, production changes, game tests or publication occurs in this document task. The full-game 2–3-real-second loss target is not an M2 test threshold. [D20–D21; M2 §§9–12]
+Next: M3 Kitchen, NOT IMPLEMENTED; no M3 design or implementation starts in this publication. M2 is HUMAN-PROMOTED / CLOSED (§15). Full-game continuous Ironman preservation, journaling, rotating recovery and the ideal 2–3-real-second loss target remain NOT IMPLEMENTED; M2’s midnight and Save &amp; Exit share the existing service. [D20–D21; M2 §§9–12]
 
 Basis: [D02–D15; P01]; [GDD §§6, 8, 10, 19–21]; [ER14; WG].
 
-**18.1  APPROVED M2 / NOT IMPLEMENTED**
+**18.1  APPROVED M2 / ACCEPTED SCOPE IN §15**
 
 ## 18. M2 approved design
 
@@ -771,7 +777,7 @@ The persistent DAY N · HH:MM:SS HUD reads the shared clock in every room. Medic
 | Presentation / input | Visible clock, F/E/ESC, nested pause and cue continuity remain usable; no queued action on resume. |
 | Scenario / preservation | No repeating refill after exhaustion; M1 ladder/storage/lifetime behavior preserved; CF-07 remains explicitly disclosed. |
 
-These are future checks, not results. Reuse unchanged M1 evidence explicitly; run focused changed-owner tests, one contextual review and human checks. Use isolated external test-save paths. No broad audit, new framework, source cleanup, engine installation or M3/M4 implementation is authorized by design approval. [M2 §10; WG]
+This is the approved M2 evidence plan. Its execution, independent ACCEPT and final human promotion are attributed in §15 and the linked validation record; it is not a new run by this close-out. The approved contracts remain unchanged. M3/M4 implementation, broad audits, new frameworks and engine changes remain outside this publication. [M2 §10; WG]
 
 **19.1  FULL-GAME IRONMAN CONTRACT**
 
@@ -827,7 +833,7 @@ M2 may replay an isolated pre-midnight test snapshot to verify deterministic sch
 
 These labels preserve explicit conversation decisions and their dates. D13/D15 retain the original E-opener discussion as history; D16 and current §§5/11 supersede it with accepted F/E/ESC and completed-request behavior. New D17–D21 record M2 approval and the full-game preservation/randomness clarification.
 
-v0.1 and v0.2 were approved and remain historical checkpoints. P01 stays a proposal, not an accepted formula or final M4 overfill decision. The new M2 design is approved; implementation and its future acceptance remain separate. [D16–D21]
+v0.1 and v0.2 remain approved historical checkpoints. P01 remains a proposal, not a final M4 overfill policy. M2 design approval and later technical verification, independent acceptance and human promotion are distinct; the final disposition is recorded in §15. [D16–D21]
 
 | Key | Decision recorded |
 | --- | --- |
@@ -947,8 +953,8 @@ The established storage, ladder, Receiving and EAF validation records remain ref
 
 Future MVP progress updates modify this master and regenerate its readable extract. Do not append MVP milestones to Prototype Findings. Keep the old master and its mirrors unchanged unless a separately authorized historical correction is needed; any such correction must not rewrite the original evidence state. [D10]
 
-The v0.2 pair was published before M1; its close-out then recorded M1 acceptance. This v0.3 carries that outcome forward and adds M2/whole-game principles. User-controlled publication should point to the new active edition, retaining older masters and the separate M2 specification. No Git changes are made here. [PUB16; D20–D21]
+The v0.2 pair recorded M1 acceptance; v0.3 was published at 2cad0d7 with approved M2 and full-game principles. This same-edition close-out records accepted M2 in §15 and corrects operational authority pointers. Older masters, Prototype Findings and the external M2 v0.2 specification remain preserved. Publication requires live remote verification; the executor’s final report records the resulting SHA.
 
 ### Edition 0.3 boundary
 
-This edition incorporates approved M2 design and the corrected full-game randomness contract, while preserving M1’s published acceptance and all CF entries. The editable uploaded v0.2 was reconciled with its published generated text at 36d527d; the published binary could not be downloaded through the available text connector. No game tests, source changes, other-master edits, saves, Git commits or publication accompany this document revision. [R17; D20–D21]
+Edition v0.3 retains approved M2 design, the corrected full-game randomness contract, M1’s published acceptance and all CF-01–CF-24 obligations. The original uploaded-v0.2 reconciliation at 36d527d remains historical [R17]. This 17 October status-only close-out adds M2 human promotion without a new edition, production changes, Godot tests, save access or edits to other masters. [§15; D20–D21]
