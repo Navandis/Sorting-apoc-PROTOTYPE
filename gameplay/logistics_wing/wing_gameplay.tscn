@@ -115,6 +115,7 @@
 [ext_resource type="PackedScene" uid="uid://bkh54ln3iv78o" path="res://assets/environment/dressing/decoration/SM_Toolbox_Prestaged_A01_N1.glb" id="111_2iqdd"]
 [ext_resource type="PackedScene" uid="uid://1produrbj1hy" path="res://assets/environment/dressing/decoration/SM_Toolbox_Prestaged_B01_N1.glb" id="112_xlboq"]
 [ext_resource type="PackedScene" uid="uid://bptno52y2jlrs" path="res://assets/environment/dressing/decoration/SM_Food_Leftover_HO1_N1.glb" id="113_y5jed"]
+[ext_resource type="PackedScene" uid="uid://ci4801gc754jc" path="res://assets/environment/dressing/decoration/SM_SM_Flashlight_01.glb" id="113_y27sh"]
 [ext_resource type="PackedScene" uid="uid://cjroodaim28p3" path="res://assets/environment/dressing/debris/SM_Cardboard_02a.glb" id="114_ityum"]
 [ext_resource type="PackedScene" uid="uid://cvuekdxcj13om" path="res://assets/environment/dressing/debris/SM_Cardboard_01a.glb" id="115_n5jcu"]
 [ext_resource type="PackedScene" uid="uid://bpaw43oqqowld" path="res://assets/environment/dressing/decoration/SM_AllenWrench_A01_N1.glb" id="116_5ip33"]
@@ -140,8 +141,6 @@
 [ext_resource type="PackedScene" uid="uid://2xmxm4c55cno" path="res://assets/environment/dressing/decoration/SM_KB3D_WHS_PropPlasticTubCart_A_TubYlwA.glb" id="137_qfugg"]
 [ext_resource type="PackedScene" uid="uid://dealtr25tnqb7" path="res://assets/environment/dressing/decoration/SM_KB3D_WHS_PropDolly_A_Main.glb" id="138_u1qwk"]
 [ext_resource type="PackedScene" uid="uid://8jo0cxdgkd2i" path="res://assets/environment/dressing/decoration/SM_KB3D_WHS_PropDolly_A_Wheels.glb" id="139_qjmvj"]
-[ext_resource type="PackedScene" uid="uid://q0044h7dows7" path="res://assets/environment/dressing/decoration/SM_KB3D_HOH_PropFlashlight_A.glb" id="140_kr55y"]
-[ext_resource type="PackedScene" uid="uid://dmearc6wdrjpr" path="res://assets/environment/dressing/decoration/SM_KB3D_HOH_PropFlashlight_A_glasss.glb" id="141_0tjjn"]
 [ext_resource type="PackedScene" uid="uid://rwwwldgh7grk" path="res://assets/environment/dressing/decoration/SM_KB3D_HOH_PropScotchTape_A.glb" id="142_nxht3"]
 [ext_resource type="PackedScene" uid="uid://djwujtx3l5tps" path="res://assets/environment/dressing/decoration/SM_KB3D_HOH_PropTire_A.glb" id="143_76yn2"]
 [ext_resource type="PackedScene" uid="uid://basbbk00rauf1" path="res://assets/environment/dressing/containers/SM_Ind_Aba_Storage_Barrel_Metal_Blue_01.glb" id="144_c7vt0"]
@@ -175,7 +174,7 @@
 [ext_resource type="Texture2D" uid="uid://dmerwhc48dlm0" path="res://assets/environment/materials/kitbash_cache/eaf3b_1beac3a311a480af8844ea89/2k/normal.png" id="shaft_6_h0kxl"]
 [ext_resource type="Texture2D" uid="uid://buvwu7wptxnjv" path="res://assets/environment/materials/kitbash_cache/eaf3b_1beac3a311a480af8844ea89/2k/roughness.png" id="shaft_7_8hvsm"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_orc72"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y6mxs"]
 resource_local_to_scene = true
 resource_name = "Receiving task_strip"
 cull_mode = 2
@@ -196,7 +195,7 @@ ao_enabled = true
 ao_texture = ExtResource("4_e78ty")
 metadata/_gltf_primary_texture_coord = 0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_efmg7"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uww01"]
 resource_local_to_scene = true
 resource_name = "Receiving task_strip"
 cull_mode = 2
@@ -217,7 +216,7 @@ ao_enabled = true
 ao_texture = ExtResource("4_e78ty")
 metadata/_gltf_primary_texture_coord = 0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ejs4t"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wmf8m"]
 resource_local_to_scene = true
 resource_name = "Receiving warning_body"
 cull_mode = 2
@@ -237,7 +236,7 @@ ao_enabled = true
 ao_texture = ExtResource("8_2jn0f")
 metadata/_gltf_primary_texture_coord = 0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kwyoc"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jn6lb"]
 resource_local_to_scene = true
 resource_name = "Receiving warning_lens"
 transparency = 4
@@ -252,7 +251,7 @@ emission_energy_multiplier = 0.0
 emission_operator = 1
 emission_texture = ExtResource("11_j3wqb")
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_vi167"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_du0t1"]
 resource_local_to_scene = true
 size = Vector3(4.04, 3, 0.82)
 
@@ -413,7 +412,7 @@ size = Vector3(0.405, 1.24, 0.23)
 height = 0.87478334
 radius = 0.28701797
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_noiif"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e78ty"]
 resource_local_to_scene = true
 shading_mode = 0
 albedo_color = Color(0.008, 0.02, 0.014, 1)
@@ -477,7 +476,7 @@ transform = Transform3D(1, 0, 0, 0, -0.25881904, 0.9659258, 0, -0.9659258, -0.25
 transform = Transform3D(0.65, 0, 0, 0, 0.65, 0, 0, 0, 0.65, -37.4, 3.1, -0.8)
 
 [node name="Mesh" parent="Environment/ReceivingLighting/TaskFixtures/T1/Fixture" index="0" unique_id=1247805463]
-surface_material_override/0 = SubResource("StandardMaterial3D_orc72")
+surface_material_override/0 = SubResource("StandardMaterial3D_y6mxs")
 
 [node name="Light" parent="Environment/ReceivingLighting/TaskFixtures/T1" index="1"]
 transform = Transform3D(-0.90630776, 0.3918449, -0.15831563, 0, 0.37460664, 0.92718387, 0.42261833, 0.8403139, -0.3395089, -37.4, 2.9, -0.8)
@@ -486,7 +485,7 @@ transform = Transform3D(-0.90630776, 0.3918449, -0.15831563, 0, 0.37460664, 0.92
 transform = Transform3D(0.65, 0, 0, 0, 0.65, 0, 0, 0, 0.65, -37.4, 3.1, 0.8)
 
 [node name="Mesh" parent="Environment/ReceivingLighting/TaskFixtures/T2/Fixture" index="0" unique_id=1247805463]
-surface_material_override/0 = SubResource("StandardMaterial3D_efmg7")
+surface_material_override/0 = SubResource("StandardMaterial3D_uww01")
 
 [node name="Light" parent="Environment/ReceivingLighting/TaskFixtures/T2" index="1"]
 transform = Transform3D(0.90630776, 0.39184484, -0.15831561, 0, 0.37460664, 0.92718387, 0.42261827, -0.8403139, 0.3395089, -37.4, 2.9, 0.8)
@@ -495,8 +494,8 @@ transform = Transform3D(0.90630776, 0.39184484, -0.15831561, 0, 0.37460664, 0.92
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.83, 2.85, 2.2)
 
 [node name="Mesh" parent="Environment/ReceivingLighting/WarningFixtures/W1/Fixture" index="0" unique_id=1961491557]
-surface_material_override/0 = SubResource("StandardMaterial3D_ejs4t")
-surface_material_override/1 = SubResource("StandardMaterial3D_kwyoc")
+surface_material_override/0 = SubResource("StandardMaterial3D_wmf8m")
+surface_material_override/1 = SubResource("StandardMaterial3D_jn6lb")
 
 [node name="WarningLight" parent="Environment/ReceivingLighting/WarningFixtures/W1/Fixture" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.16, 0, 0)
@@ -588,7 +587,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.4, 0)
 
 [node name="Shape" parent="FunctionalFixtures/ModularRack_GalleryB_Initial/MovementCollision" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
-shape = SubResource("BoxShape3D_vi167")
+shape = SubResource("BoxShape3D_du0t1")
 
 [node name="FixedLadder_GalleryB_Initial" parent="FunctionalFixtures" unique_id=806369216 instance=ExtResource("42_ladder")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 1.043639, 0, -8.665108)
@@ -1326,17 +1325,14 @@ transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -29.
 [node name="ReceivingDesk" type="Node3D" parent="ReceivingSetDressing" unique_id=815730021]
 transform = Transform3D(-0.9099612, 0, -0.4146933, 0, 1, 0, 0.4146933, 0, -0.9099612, -30.801361, 0.9993936, 3.645598)
 
+[node name="SM_SM_Flashlight_01" parent="ReceivingSetDressing/ReceivingDesk" unique_id=1698637178 instance=ExtResource("113_y27sh")]
+transform = Transform3D(-0.9831258, 0, -0.18293047, 0, 1, 0, 0.18293047, 0, -0.9831258, -0.4020176, 0.007358551, -0.18462372)
+
 [node name="SM_KB3D_API_TwoBedroom_A_DeskLampB" parent="ReceivingSetDressing/ReceivingDesk" unique_id=699625178 instance=ExtResource("6_gnorf")]
 transform = Transform3D(-0.0753459, 0, -0.99715745, 0, 1, 0, 0.99715745, 0, -0.0753459, -1.616354, 0.2399615, -0.7857952)
 
 [node name="SM_KB3D_API_TwoBedroom_A_DeskLampB_transparent" parent="ReceivingSetDressing/ReceivingDesk" unique_id=753390941 instance=ExtResource("7_3gvbg")]
 transform = Transform3D(-0.0753459, 0, -0.99715745, 0, 1, 0, 0.99715745, 0, -0.0753459, -1.616354, 0.2399615, -0.7857952)
-
-[node name="SM_KB3D_HOH_PropFlashlight_A" parent="ReceivingSetDressing/ReceivingDesk" unique_id=459484775 instance=ExtResource("140_kr55y")]
-transform = Transform3D(-0.9681476, 0, -0.25037995, 0, 1, 0, 0.25037995, 0, -0.9681476, -0.38155365, 0.00077700615, -0.19606209)
-
-[node name="SM_KB3D_HOH_PropFlashlight_A_glasss" parent="ReceivingSetDressing/ReceivingDesk" unique_id=692408560 instance=ExtResource("141_0tjjn")]
-transform = Transform3D(-0.9681476, 0, -0.25037995, 0, 1, 0, 0.25037995, 0, -0.9681476, -0.38155365, 0.00077700615, -0.19606209)
 
 [node name="SM_KB3D_HOH_PropScotchTape_A" parent="ReceivingSetDressing/ReceivingDesk" unique_id=777544684 instance=ExtResource("142_nxht3")]
 transform = Transform3D(-0.9099612, 0, 0.4146933, 0, 1, 0, -0.4146933, 0, -0.9099612, -2.4229336, -0.33964813, 0.71030617)
@@ -1407,7 +1403,7 @@ transform = Transform3D(0.04667282, 0, -1.0689816, 0, 1.07, 0, 1.0689816, 0, 0.0
 transform = Transform3D(-0.37460652, 0, 0.92718387, 0, 1, 0, -0.92718387, 0, -0.37460652, -1.9780407, 0.0059486628, 0.2987547)
 
 [node name="SM_Thermos_01" parent="ReceivingSetDressing/ReceivingDesk" unique_id=2123335265 instance=ExtResource("8_1bkje")]
-transform = Transform3D(-0.31868523, 0, -1.0423722, 0, 1.09, 0, 1.0423722, 0, -0.31868523, -2.2850666, 0.0020610094, 0.22192001)
+transform = Transform3D(-0.45833066, 0, -0.9889556, 0, 1.0899999, 0, 0.9889556, 0, -0.45833066, -2.2850647, 0.0020610094, 0.22192001)
 
 [node name="ReceivingDecorations" type="Node3D" parent="ReceivingSetDressing" unique_id=647698513]
 transform = Transform3D(-0.018813225, 0.997989, 0.060530405, -0.036076266, 0.059824117, -0.9975569, -0.99917203, -0.02095097, 0.034878235, -35.791737, 0.6614795, 3.2287724)
@@ -1495,11 +1491,11 @@ transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -29.044374, 0.0014810562, 2.
 metadata/visual_target = NodePath("../../ReceivingDesk/SM_Desk_A01_N1")
 
 [node name="LongTop" type="CollisionShape3D" parent="ReceivingSetDressing/CollisionProxies/DeskMovement" unique_id=432673665]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.008, 0.973, -1.046)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0080001, 0.973, -1.1279774)
 shape = SubResource("Receiving_DeskMovement_LongTop")
 
 [node name="ReturnTop" type="CollisionShape3D" parent="ReceivingSetDressing/CollisionProxies/DeskMovement" unique_id=504600556]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0315, 0.973, 0.069)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0315001, 0.973, -0.06671715)
 shape = SubResource("Receiving_DeskMovement_ReturnTop")
 
 [node name="CabinetSupport" type="CollisionShape3D" parent="ReceivingSetDressing/CollisionProxies/DeskMovement" unique_id=990403312]
@@ -1507,7 +1503,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.035, 0.47, -1.402)
 shape = SubResource("Receiving_DeskMovement_CabinetSupport")
 
 [node name="OuterLeg" type="CollisionShape3D" parent="ReceivingSetDressing/CollisionProxies/DeskMovement" unique_id=1092940835]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.649, 0.48, 0.331)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6567342, 0.48, 0.27581978)
 shape = SubResource("Receiving_DeskMovement_OuterLeg")
 
 [node name="StoolMovement" type="StaticBody3D" parent="ReceivingSetDressing/CollisionProxies" unique_id=112030977]
@@ -1609,7 +1605,7 @@ transform = Transform3D(1.235, 0, 0, 0, 1.22, 0, 0, 0, 1.665, -36.277256, 2.0607
 
 [node name="Mesh" parent="ReceivingLiftMonitor/SM_KB3D_CPP_PropTV_A" index="0" unique_id=208583326]
 transform = Transform3D(1, 0, 0, 0, 0.9999998, 0, 0, 0, 1, 0.016489029, 0, 0.02396071)
-surface_material_override/1 = SubResource("StandardMaterial3D_noiif")
+surface_material_override/1 = SubResource("StandardMaterial3D_e78ty")
 
 [node name="PhosphorDisplay" parent="ReceivingLiftMonitor" unique_id=352976086 instance=ExtResource("154_crt_display")]
 
@@ -1652,7 +1648,7 @@ metadata/purpose = "EXPERIMENTAL / NOT APPROVED: visual-only scalar mask auditio
 [node name="ExperimentalWipeMarksUh4Scioc" parent="ImperfectionExperiments" unique_id=1699741298 instance=ExtResource("163_uww01")]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -32.269, 0, 0)
 preview_mode = 1
-width_m = 7.2410000000000005
+width_m = 7.241
 height_m = 8.0
 opacity_multiplier = 0.19
 albedo_tint = Color(0, 0, 0, 1)
@@ -1756,9 +1752,9 @@ width_m = 7.231000000000001
 height_m = 8.0
 opacity_multiplier = 0.475
 albedo_tint = Color(0.0995264, 0.05264502, 0.020411445, 1)
-mask_rotation_degrees = -124.51400000000001
+mask_rotation_degrees = -124.514
 scalar_contrast = 1.1960000000000002
-scalar_bias = -0.09599999999999997
+scalar_bias = -0.09599999999999996
 
 [editable path="Environment"]
 [editable path="Environment/Greybox"]
