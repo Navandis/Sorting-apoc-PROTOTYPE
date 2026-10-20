@@ -533,7 +533,7 @@ func _assert_cross_family_item_orientation(scene: Node) -> void:
 	var controller := scene.get_node("Player/StoragePlacementController") as StoragePlacementController
 	var carried := scene.get_node("Player/CarriedItems") as CarriedItems
 	var definition := load(
-		"res://data/items/definitions/loot_000037.tres"
+		"res://data/items/definitions/loot_000041.tres"
 	) as ItemDefinition
 	var cases := [
 		{

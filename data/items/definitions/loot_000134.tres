@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_nghua"]
+[ext_resource type="PackedScene" path="res://assets/props/morale/SM_KB3D_ENC_Coffee_Sack.glb" id="2_lmurq"]
+
+[resource]
+script = ExtResource("1_nghua")
+item_id = &"loot_000134"
+display_name = "Coffee Sack"
+storage_category = "Morale"
+storage_footprint = Vector3i(5, 5, 1)
+can_be_stacked = true
+visual_scene = ExtResource("2_lmurq")

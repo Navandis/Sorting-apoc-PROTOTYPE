@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_ac7sa"]
+[ext_resource type="PackedScene" path="res://assets/props/electronics/SM_KB3D_LCA_Microwave_A_Main.glb" id="2_dfk31"]
+
+[resource]
+script = ExtResource("1_ac7sa")
+item_id = &"loot_000119"
+display_name = "Microwave"
+storage_category = "Electronics"
+storage_footprint = Vector3i(6, 6, 1)
+can_be_stacked = true
+can_support_stack = true
+visual_scene = ExtResource("2_dfk31")

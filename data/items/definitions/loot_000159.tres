@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_ipbbs"]
+[ext_resource type="PackedScene" path="res://assets/props/protection/SM_Riot_Shield_01.glb" id="2_815uh"]
+
+[resource]
+script = ExtResource("1_ipbbs")
+item_id = &"loot_000159"
+display_name = "Riot Shield 01"
+storage_category = "Protection"
+storage_footprint = Vector3i(6, 12, 1)
+can_be_stacked = true
+visual_scene = ExtResource("2_815uh")

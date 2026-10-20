@@ -110,7 +110,7 @@ func _test_bulk_budget_has_strictly_bounded_overshoot() -> void:
 func _test_generated_content_stays_in_explicit_pool() -> void:
 	_pending_helpers += 1
 	var batch: LootBatch = _generate("batch_pool")
-	_check(PrototypePool.item_definition_ids.size() == 40)
+	_check(PrototypePool.item_definition_ids.size() == 35)
 	for definition_id: StringName in _definition_sequence(batch):
 		_check(PrototypePool.item_definition_ids.has(definition_id))
 	_pending_helpers -= 1

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_2rs3m"]
+[ext_resource type="PackedScene" path="res://assets/props/medical/SM_Saline_Solution_01.glb" id="2_nhguk"]
+
+[resource]
+script = ExtResource("1_2rs3m")
+item_id = &"loot_000127"
+display_name = "Saline Solution 01"
+storage_category = "Medical"
+storage_footprint = Vector3i(1, 2, 1)
+can_be_stacked = true
+visual_scene = ExtResource("2_nhguk")

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_ygnio"]
+[ext_resource type="PackedScene" path="res://assets/props/morale/SM_Books_Stack_01.glb" id="2_s5jw4"]
+
+[resource]
+script = ExtResource("1_ygnio")
+item_id = &"loot_000128"
+display_name = "Books Stack 01"
+storage_category = "Morale"
+storage_footprint = Vector3i(3, 3, 1)
+can_be_stacked = true
+can_support_stack = true
+auto_stack_group = &"flat_media"
+visual_scene = ExtResource("2_s5jw4")

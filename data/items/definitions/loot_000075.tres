@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_hycqj"]
+[ext_resource type="PackedScene" path="res://assets/props/Hydration/SM_KB3D_SIN_PropAppleJuice_A_Main.glb" id="2_x26y1"]
+
+[resource]
+script = ExtResource("1_hycqj")
+item_id = &"loot_000075"
+display_name = "Apple Juice"
+storage_category = "Hydration"
+storage_footprint = Vector3i(2, 2, 1)
+can_be_stacked = true
+visual_scene = ExtResource("2_x26y1")

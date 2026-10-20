@@ -149,7 +149,7 @@ func _test_canonical_first_and_alternate_only_at_nonzero_state() -> void:
 		Vector2i.ZERO,
 		both_surface.get_grid_size() - Vector2i.ONE
 	)
-	var canonical_item := _item(&"loot_000005")
+	var canonical_item := _item(&"loot_000007")
 	var both_orientations := both_controller.call(
 		"_entry_orientations_for_item",
 		canonical_item,
@@ -187,7 +187,7 @@ func _test_canonical_first_and_alternate_only_at_nonzero_state() -> void:
 		Vector2i.ZERO,
 		alternate_surface.get_grid_size() - Vector2i.ONE
 	)
-	var alternate_item := _item(&"loot_000005")
+	var alternate_item := _item(&"loot_000007")
 	var alternate_orientations := alternate_controller.call(
 		"_entry_orientations_for_item",
 		alternate_item,
@@ -223,7 +223,7 @@ func _test_committed_item_orientation_is_stable() -> void:
 	var surface := context["surface"] as StorageSurface
 	var controller := context["controller"] as StoragePlacementController
 	var carried := context["carried"] as CarriedItems
-	var first := _item(&"loot_000005")
+	var first := _item(&"loot_000007")
 	surface.set_semantic_orientation_quarter_turns(0)
 	_check(
 		_place_manual_empty(controller, carried, surface, first, Vector2i.ZERO),
@@ -245,7 +245,7 @@ func _test_committed_item_orientation_is_stable() -> void:
 		"existing item does not live-realign"
 	)
 
-	var second := _item(&"loot_000005")
+	var second := _item(&"loot_000007")
 	_check(
 		_place_manual_empty(controller, carried, surface, second, Vector2i(4, 0)),
 		"new item commits after orientation change"
@@ -345,7 +345,7 @@ func _test_failed_base_promotion_restores_exact_carry_state() -> void:
 	var cd: ItemInstance = _item(&"loot_000031")
 	_check(_place_manual_empty(controller, carried, surface, cd, Vector2i(3, 3)), "rollback fixture CD base placed")
 	var filler_left: ItemInstance = _item(&"loot_000022")
-	var filler_middle: ItemInstance = _item(&"loot_000023")
+	var filler_middle: ItemInstance = _item(&"loot_000022")
 	var book: ItemInstance = _promotion_book()
 	_check(carried.add_item(filler_left), "rollback filler left added")
 	_check(carried.add_item(filler_middle), "rollback filler middle added")

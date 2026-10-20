@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_yy48q"]
+[ext_resource type="PackedScene" path="res://assets/props/Weapons/SM_KitchenKnife_01.glb" id="2_8dhbw"]
+
+[resource]
+script = ExtResource("1_yy48q")
+item_id = &"loot_000105"
+display_name = "Kitchen Knife 01"
+storage_category = "Weapons"
+storage_footprint = Vector3i(1, 6, 1)
+can_be_stacked = true
+visual_scene = ExtResource("2_8dhbw")

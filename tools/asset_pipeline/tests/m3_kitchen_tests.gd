@@ -21,7 +21,7 @@ func run() -> void:
 	var definition: Dictionary = scenario.default_definition()
 	check(definition.revision == 3 and definition.events.size() == 24, "M3 revision captures 12 requests and 12 substantial returns")
 	check(scenario.validate(definition).is_empty(), "approved M3 definition validates")
-	var values := {5:5, 6:6, 7:5, 8:3, 9:3, 10:3, 11:14, 12:7, 19:3, 20:4, 21:4, 22:3, 23:3}
+	var values := {6:6, 7:5, 8:3, 9:3, 10:3, 11:14, 12:7, 19:3, 20:4, 21:4, 22:3}
 	for number: int in values:
 		var item = load("res://data/items/definitions/loot_%06d.tres" % number)
 		check(item.utility_value == values[number] and item.utility_id == (&"Food" if number < 19 else &"Hydration"), "approved static Utility: " + str(number))

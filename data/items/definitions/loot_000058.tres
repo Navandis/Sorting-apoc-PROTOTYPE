@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_r11k2"]
+[ext_resource type="PackedScene" path="res://assets/props/Food/SM_KB3D_SHG_SmokedFish_01.glb" id="2_gm1t2"]
+
+[resource]
+script = ExtResource("1_r11k2")
+item_id = &"loot_000058"
+display_name = "Smoked Fish 01"
+storage_category = "Food"
+storage_footprint = Vector3i(3, 8, 1)
+can_be_stacked = true
+visual_scene = ExtResource("2_gm1t2")

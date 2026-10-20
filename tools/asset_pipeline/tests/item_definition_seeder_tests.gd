@@ -188,15 +188,15 @@ func _test_apply_plan_preserves_existing_definition_bytes() -> void:
 	existing.storage_category = "Medical"
 	existing.storage_footprint = Vector3i(8, 9, 1)
 	existing.storage_rotation_degrees = Vector3(10.0, 20.0, 30.0)
-	existing.visual_scene = load("res://assets/props/Food/cereal_box.glb") as PackedScene
+	existing.visual_scene = load("res://assets/props/Food/SM_CerealBox_2.glb") as PackedScene
 	assert(ResourceSaver.save(existing, existing_path) == OK)
 	var before_bytes: PackedByteArray = FileAccess.get_file_as_bytes(existing_path)
 
 	var existing_seed: Dictionary = _seed_record(
-		&"loot_000001", "res://assets/props/Food/cereal_box.glb"
+		&"loot_000001", "res://assets/props/Food/SM_CerealBox_2.glb"
 	)
 	var missing_seed: Dictionary = _seed_record(
-		&"loot_000002", "res://assets/props/Hydration/soda_can.glb"
+		&"loot_000002", "res://assets/props/Hydration/SM_SodaCan.glb"
 	)
 	var apply_result: Dictionary = ItemDefinitionSeederScript.apply_seed_plan(
 		{

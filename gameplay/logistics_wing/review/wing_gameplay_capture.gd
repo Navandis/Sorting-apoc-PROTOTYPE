@@ -153,7 +153,7 @@ func _prepare_state(target_state: String) -> bool:
 	if target_state == _prepared_state:
 		return true
 	if _prepared_state == "initial":
-		if not _pickup_seed(&"loot_000005"):
+		if not _pickup_seed(&"loot_000007"):
 			return false
 		_prepared_state = "carrying"
 		await get_tree().process_frame
@@ -162,7 +162,7 @@ func _prepare_state(target_state: String) -> bool:
 	if _prepared_state == "carrying":
 		if not _place_selected(0, "Food"):
 			return false
-		if not _pickup_seed(&"loot_000005"):
+		if not _pickup_seed(&"loot_000007"):
 			return false
 		if not _place_selected(0, "Food"):
 			return false

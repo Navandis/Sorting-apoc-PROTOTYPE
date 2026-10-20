@@ -22,13 +22,8 @@
 [ext_resource type="PackedScene" uid="uid://dgks5ecsp6m1g" path="res://assets/environment/infrastructure/pipes/SM_L_Pipe_Joint.glb" id="27_facbu"]
 [ext_resource type="PackedScene" uid="uid://7mg4ullo4rwq" path="res://assets/environment/infrastructure/pipes/SM_L_Pipe_4m_02.glb" id="28_b1qrp"]
 [ext_resource type="PackedScene" uid="uid://cishdxkklrqmv" path="res://assets/environment/furniture/storage/SM_ClothesCabinet.glb" id="29_come4"]
-[ext_resource type="PackedScene" uid="uid://c4kxmdoy5ghhb" path="res://assets/props/Food/cereal_box.glb" id="31_4lmeg"]
-[ext_resource type="PackedScene" uid="uid://cp1sjrsu2hmme" path="res://assets/props/Weapons/hammer.glb" id="32_0cp0l"]
 [ext_resource type="Script" uid="uid://1fv0g57wrv2q" path="res://environment_collision.gd" id="32_env"]
 [ext_resource type="Script" uid="uid://bhtvbpp0ge2oh" path="res://storage_shelf_clearance_context.gd" id="32_storage_clearance"]
-[ext_resource type="PackedScene" uid="uid://l0kqvj1n6wrl" path="res://assets/props/medical/pill_bottle.glb" id="33_d2t1y"]
-[ext_resource type="PackedScene" uid="uid://b7qmkaqc25vq1" path="res://assets/props/Hydration/soda_can.glb" id="34_gngh3"]
-[ext_resource type="PackedScene" uid="uid://bqgbb88i4fa7q" path="res://assets/props/Weapons/tennis_racket.glb" id="35_0n3wm"]
 [ext_resource type="PackedScene" uid="uid://ch2lfbgkqqmeo" path="res://assets/props/Weapons/SM_Gun_AssaultRifle.glb" id="36_qnost"]
 [ext_resource type="PackedScene" uid="uid://d2f5gxaaygr2h" path="res://assets/props/Weapons/SM_Gun_Pistol.glb" id="37_wnkbs"]
 [ext_resource type="PackedScene" uid="uid://8ljy0ilc1v0b" path="res://assets/props/Hydration/SM_Metal_Can_01a.glb" id="38_f6a44"]
@@ -48,9 +43,7 @@
 [ext_resource type="PackedScene" uid="uid://dhb54nxp7thnb" path="res://assets/props/Food/SM_Watermelon_1.glb" id="55_rnkwl"]
 [ext_resource type="PackedScene" uid="uid://cc7btwnebcfs5" path="res://assets/props/medical/SM_MedKit_4.glb" id="56_ruth0"]
 [ext_resource type="PackedScene" uid="uid://d30pld4bfmigb" path="res://assets/props/medical/SM_Bandages_1.glb" id="57_rm4vd"]
-[ext_resource type="PackedScene" uid="uid://cmjxsqwov3mrk" path="res://assets/props/protection/SM_Gloves_02.glb" id="61_pjyto"]
 [ext_resource type="PackedScene" uid="uid://biswlt5augumx" path="res://assets/props/protection/SM_Boots_01.glb" id="61_sm6fg"]
-[ext_resource type="PackedScene" uid="uid://bw673hmx2ws5g" path="res://assets/props/protection/SM_Pants_02.glb" id="62_kkkcx"]
 [ext_resource type="PackedScene" uid="uid://cyag5i6w8fjq4" path="res://assets/props/protection/SM_Armor_02.glb" id="62_sm6fg"]
 [ext_resource type="PackedScene" uid="uid://d2ky67y4v3cux" path="res://assets/props/Fuel/SM_FuelCanister.glb" id="63_34ol3"]
 [ext_resource type="PackedScene" uid="uid://1pwvsst3kpkv" path="res://assets/props/Fuel/SM_GasCanister_01.glb" id="64_c2n8d"]
@@ -369,36 +362,6 @@ current = true
 [node name="CarriedItems" type="Node" parent="CharacterBody3D" unique_id=412371128]
 script = ExtResource("45_carried")
 
-[node name="cereal_box2" parent="." unique_id=1499502266 instance=ExtResource("31_4lmeg")]
-transform = Transform3D(0.08528391, 0, 0.9963568, 0, 1, 0, -0.9963568, 0, 0.08528391, 0.7504256, 1.1602838, 1.6571634)
-
-[node name="hammer2" parent="." unique_id=697065288 instance=ExtResource("32_0cp0l")]
-transform = Transform3D(0.4226182, 0, 0.90630776, 0, 1, 0, -0.90630776, 0, 0.4226182, 0.73021716, 1.1844506, 2.2748308)
-
-[node name="pill_bottle2" parent="." unique_id=1908774533 instance=ExtResource("33_d2t1y")]
-transform = Transform3D(-0.27305102, 0, 0.9619996, 0, 1, 0, -0.9619996, 0, -0.27305102, 1.0770863, 1.7932353, 2.2518427)
-
-[node name="soda_can2" parent="." unique_id=404422195 instance=ExtResource("34_gngh3")]
-transform = Transform3D(-0.0365846, 0, -0.9993306, 0, 1, 0, 0.9993306, 0, -0.0365846, 0.7090013, 1.1625279, 2.5347645)
-
-[node name="tennis_racket2" parent="." unique_id=940861469 instance=ExtResource("35_0n3wm")]
-transform = Transform3D(-0.8892565, 0, -0.4574088, 0, 1, 0, 0.4574088, 0, -0.8892565, 0.8889028, 1.7827967, 1.6671005)
-
-[node name="cereal_box" parent="." unique_id=1803137268 instance=ExtResource("31_4lmeg")]
-transform = Transform3D(-0.0365846, 0, -0.9993306, 0, 1, 0, 0.9993306, 0, -0.0365846, 7.17101, 0.8691014, 4.774314)
-
-[node name="hammer" parent="." unique_id=768591276 instance=ExtResource("32_0cp0l")]
-transform = Transform3D(0.009869133, 0, -0.9999513, 0, 1, 0, 0.9999513, 0, 0.009869133, 6.934069, 0.8790555, 4.965283)
-
-[node name="pill_bottle" parent="." unique_id=981129278 instance=ExtResource("33_d2t1y")]
-transform = Transform3D(0.34271312, 0, -0.93944013, 0, 1, 0, 0.93944013, 0, 0.34271312, 7.157028, 0.8790555, 5.5454874)
-
-[node name="soda_can" parent="." unique_id=111884405 instance=ExtResource("34_gngh3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.279328, 0.8790555, 5.1462345)
-
-[node name="tennis_racket" parent="." unique_id=691865242 instance=ExtResource("35_0n3wm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.9815784, 0.8790555, 5.5934134)
-
 [node name="SM_Gun_AssaultRifle" parent="." unique_id=181902982 instance=ExtResource("36_qnost")]
 transform = Transform3D(-4.0410622e-08, -0.9244873, 0.38121298, 0.99999994, -4.3711385e-08, 0, 1.6663348e-08, 0.38121295, 0.92448735, 5.6062098, 0.907, 1.5000076)
 
@@ -560,14 +523,8 @@ transform = Transform3D(-0.6703862, -0.7420123, 3.243439e-08, 0, -4.371139e-08, 
 [node name="SM_Boots_01" parent="." unique_id=771713134 instance=ExtResource("61_sm6fg")]
 transform = Transform3D(0.06174671, 0, -0.9980919, 0, 1, 0, 0.9980919, 0, 0.06174671, 6.3313847, 0.89772666, 1.3259745)
 
-[node name="SM_Gloves_02glb" parent="." unique_id=1426791045 instance=ExtResource("61_pjyto")]
-transform = Transform3D(-0.10742575, -0.0074684517, -0.99418503, 0.01131686, 0.9998977, -0.008734256, 0.99414873, -0.012189327, -0.10733022, 6.505295, 0.90406513, 2.117067)
-
 [node name="SM_Armor_02" parent="." unique_id=169366838 instance=ExtResource("62_sm6fg")]
 transform = Transform3D(-0.040163722, 0, -0.99919313, 0, 1, 0, 0.99919313, 0, -0.040163722, 6.4325128, 0.87884796, 1.7210119)
-
-[node name="SM_Pants_02" parent="." unique_id=1157430247 instance=ExtResource("62_kkkcx")]
-transform = Transform3D(0.08196157, 0, -0.9966355, 0, 1, 0, 0.9966355, 0, 0.08196157, 6.2566304, 0.8658608, 0.95979965)
 
 [node name="SM_FuelCanister" parent="." unique_id=613471909 instance=ExtResource("63_34ol3")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 5.711, 0.856, 0.732)

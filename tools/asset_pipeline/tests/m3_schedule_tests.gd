@@ -25,14 +25,14 @@ func run() -> void:
 		return
 	check(wing.get_node("MedicalContribution").request == medical and wing.get_node("KitchenContribution").request == kitchen and wing.medical_request == medical, "independent occurrence binding")
 	var carry = wing.get_node("Player/CarriedItems")
-	for pair: Array in [["loot_000025",medical],["loot_000005",kitchen],["loot_000019",kitchen]]:
+	for pair: Array in [["loot_000025",medical],["loot_000007",kitchen],["loot_000019",kitchen]]:
 		var worlds: Array = wing.get_node("DevelopmentSetup/SeedItems").get_children().filter(func(host): return String(host.item_id) == pair[0])
 		var item: ItemInstance = worlds[0].get_node("WorldItem").get_item_instance()
 		check(worlds[0].get_node("WorldItem").pickup_into(carry), "real seed TAKE for contribution")
 		carry.select_index(carry.get_slots().find(item))
 		check(pair[1].submit(carry).ok, "real selected item transaction")
 	check(medical.credited.Medical == 5 and kitchen.credited == {"Food":5,"Hydration":3}, "simultaneous partial histories")
-	var duplicate := ItemInstance.new(load("res://data/items/definitions/loot_000005.tres"),medical.spent[0].item_id)
+	var duplicate := ItemInstance.new(load("res://data/items/definitions/loot_000007.tres"),medical.spent[0].item_id)
 	carry.add_item(duplicate)
 	check(not kitchen.submit(carry).ok and carry.get_selected_item()==duplicate,"runtime rejects already-spent identity from other department")
 	carry.remove_item(duplicate)
@@ -75,8 +75,8 @@ func run() -> void:
 	var full_lane_wing = new_wing(authored)
 	full_lane_wing.run_schedule.advance(300.0)
 	var full_lane = full_lane_wing.run_schedule.active_request("kitchen")
-	for id: String in ["loot_000005","loot_000006","loot_000007","loot_000011"]:
-		var host = full_lane_wing.get_node("DevelopmentSetup/SeedItems").get_children().filter(func(h): return String(h.item_id)==id)[0]
+	for id: String in ["loot_000007","loot_000006","loot_000007","loot_000011"]:
+		var host = full_lane_wing.get_node("DevelopmentSetup/SeedItems").get_children().filter(func(h): return String(h.item_id)==id and not h.is_queued_for_deletion())[0]
 		var held = full_lane_wing.get_node("Player/CarriedItems")
 		check(host.get_node("WorldItem").pickup_into(held) and full_lane.submit(held).ok,"actual whole-item contribution to one-full-lane fixture")
 	check(not full_lane.closed and full_lane.credited=={"Food":30,"Hydration":0} and snapshot.validate(snapshot.capture(full_lane_wing)).is_empty(),"full Food/empty Hydration is a valid open persisted occurrence")

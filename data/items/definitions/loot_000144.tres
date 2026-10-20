@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_41f45"]
+[ext_resource type="PackedScene" path="res://assets/props/protection/SM_Baseball_cap_01.glb" id="2_37md7"]
+
+[resource]
+script = ExtResource("1_41f45")
+item_id = &"loot_000144"
+display_name = "Baseball cap 01"
+storage_category = "Protection"
+storage_footprint = Vector3i(2, 3, 1)
+can_be_stacked = true
+visual_scene = ExtResource("2_37md7")

@@ -97,6 +97,11 @@ var _failed := false
 
 
 func _init() -> void:
+	# Closed initial-catalogue evidence; unavailable after the authorized retirements.
+	print("RETIRED_FIXTURE: initial 42-item content checkpoint; use pre_m4_catalogue_tests / pre_m4_physical_tests")
+	quit(2)
+	return
+
 	var catalogue: Resource = load(CATALOG_PATH)
 	_check(catalogue != null)
 	var definitions: Array = catalogue.get("definitions") as Array

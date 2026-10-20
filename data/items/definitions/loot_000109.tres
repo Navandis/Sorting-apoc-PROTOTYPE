@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_wfc3v"]
+[ext_resource type="PackedScene" path="res://assets/props/Weapons/SM_Pitchfork_02.glb" id="2_0m63y"]
+
+[resource]
+script = ExtResource("1_wfc3v")
+item_id = &"loot_000109"
+display_name = "Pitchfork 02"
+storage_category = "Weapons"
+storage_footprint = Vector3i(3, 14, 1)
+can_be_stacked = true
+visual_scene = ExtResource("2_0m63y")
+storage_rotation_degrees = Vector3(90, 0, 0)

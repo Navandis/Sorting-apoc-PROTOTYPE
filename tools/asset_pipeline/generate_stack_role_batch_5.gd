@@ -1,6 +1,11 @@
 extends SceneTree
 const StackRoleAuthoringScript = preload("res://tools/asset_pipeline/stack_role_authoring.gd")
 func _init() -> void:
+	# Closed initial-catalogue evidence; unavailable after the authorized retirements.
+	print("RETIRED_FIXTURE: initial 42-item content checkpoint; use pre_m4_catalogue_tests / pre_m4_physical_tests")
+	quit(2)
+	return
+
 	var file := FileAccess.open("res://reports/asset_pipeline/main_scene_loot_audit.json", FileAccess.READ)
 	if file == null: quit(1); return
 	var json := JSON.new()

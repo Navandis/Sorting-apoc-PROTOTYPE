@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_thtsb"]
+[ext_resource type="PackedScene" path="res://assets/props/Weapons/SM_KB3D_SIN_Shotgun_single_02.glb" id="2_u7ely"]
+
+[resource]
+script = ExtResource("1_thtsb")
+item_id = &"loot_000098"
+display_name = "Shotgun single 02"
+storage_category = "Weapons"
+storage_footprint = Vector3i(2, 11, 1)
+can_be_stacked = true
+visual_scene = ExtResource("2_u7ely")
+storage_rotation_degrees = Vector3(0, 0, 90)

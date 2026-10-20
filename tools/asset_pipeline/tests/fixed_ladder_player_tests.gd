@@ -268,7 +268,7 @@ func _test_bottom_release_and_suppression() -> void:
 func _test_carried_identity_and_zoning_hold() -> void:
 	_pending_helpers += 1
 	var carried := _player.get_node("CarriedItems") as CarriedItems
-	var definition := load("res://data/items/definitions/loot_000037.tres") as ItemDefinition
+	var definition := load("res://data/items/definitions/loot_000041.tres") as ItemDefinition
 	var item := ItemInstanceScript.new(definition)
 	_check(carried.add_item(item), "test item enters carried inventory")
 	_check(carried.get_selected_item() == item, "carried item identity is established before ladder movement")
@@ -302,7 +302,7 @@ func _test_interaction_rays_ignore_ladder_body() -> void:
 	var world_item := WorldItemScript.new() as WorldItem
 	world_item.name = "WorldItem"
 	item_host.add_child(world_item)
-	world_item.configure(item_host, load("res://data/items/definitions/loot_000037.tres") as ItemDefinition)
+	world_item.configure(item_host, load("res://data/items/definitions/loot_000041.tres") as ItemDefinition)
 	await physics_frame
 	camera.look_at(item_host.global_position, Vector3.UP)
 	await physics_frame

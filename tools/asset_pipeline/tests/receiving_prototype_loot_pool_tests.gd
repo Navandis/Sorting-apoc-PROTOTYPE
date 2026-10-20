@@ -25,12 +25,12 @@ func _run_suite() -> void:
 	_pending_helpers += 1
 	_check(PrototypePool.pool_id == &"prototype_receiving_pool")
 	_check(PrototypePool.revision == 1)
-	_check(PrototypePool.item_definition_ids.size() == 40)
+	_check(PrototypePool.item_definition_ids.size() == 35)
 	_check(not PrototypePool.item_definition_ids.has(&"loot_000034"))
 	_check(not PrototypePool.item_definition_ids.has(&"loot_000036"))
 	_check(PrototypePool.validate_against_catalog(PersistentItemCatalog).is_empty())
-	_check(PrototypePool.resolve_definitions(PersistentItemCatalog).size() == 40)
-	_check((PersistentItemCatalog.get("definitions") as Array).size() == 42)
+	_check(PrototypePool.resolve_definitions(PersistentItemCatalog).size() == 35)
+	_check((PersistentItemCatalog.get("definitions") as Array).size() == 155)
 	_assert_exact_expected_ids()
 	_pending_helpers -= 1
 
@@ -41,15 +41,15 @@ func _assert_exact_expected_ids() -> void:
 	_pending_helpers += 1
 	var expected_ids: Array[StringName] = [
 		&"loot_000001", &"loot_000002", &"loot_000003", &"loot_000004",
-		&"loot_000005", &"loot_000006", &"loot_000007", &"loot_000008",
+		&"loot_000006", &"loot_000007", &"loot_000008",
 		&"loot_000009", &"loot_000010", &"loot_000011", &"loot_000012",
 		&"loot_000013", &"loot_000014", &"loot_000015", &"loot_000016",
 		&"loot_000017", &"loot_000018", &"loot_000019", &"loot_000020",
-		&"loot_000021", &"loot_000022", &"loot_000023", &"loot_000024",
+		&"loot_000021", &"loot_000022",
 		&"loot_000025", &"loot_000026", &"loot_000027", &"loot_000028",
 		&"loot_000029", &"loot_000030", &"loot_000031", &"loot_000032",
-		&"loot_000033", &"loot_000035", &"loot_000037", &"loot_000038",
-		&"loot_000039", &"loot_000040", &"loot_000041", &"loot_000042",
+		&"loot_000033", &"loot_000035", &"loot_000038",
+		&"loot_000039", &"loot_000040", &"loot_000041",
 	]
 	_check(PrototypePool.item_definition_ids == expected_ids)
 	_pending_helpers -= 1

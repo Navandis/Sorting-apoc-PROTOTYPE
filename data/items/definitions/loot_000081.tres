@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_vclmc"]
+[ext_resource type="PackedScene" path="res://assets/props/Hydration/SM_Watercooler_bottle_02.glb" id="2_p8ybt"]
+
+[resource]
+script = ExtResource("1_vclmc")
+item_id = &"loot_000081"
+display_name = "Watercooler bottle 02"
+storage_category = "Hydration"
+storage_footprint = Vector3i(3, 3, 1)
+can_be_stacked = true
+visual_scene = ExtResource("2_p8ybt")

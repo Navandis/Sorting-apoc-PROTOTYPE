@@ -25,6 +25,11 @@ const EXPECTED_STORAGE_ROTATIONS: Dictionary = {
 
 
 func _init() -> void:
+	# Closed initial-catalogue evidence; unavailable after the authorized retirements.
+	print("RETIRED_FIXTURE: initial 42-item content checkpoint; use pre_m4_catalogue_tests / pre_m4_physical_tests")
+	quit(2)
+	return
+
 	_test_initial_seed_matches_manifest_and_current_audit()
 	print("PASS: item catalog initial seed tests")
 	quit(0)

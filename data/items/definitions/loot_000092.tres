@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_gwjbs"]
+[ext_resource type="PackedScene" path="res://assets/props/Weapons/SM_KB3D_MIL_LandMine_01.glb" id="2_biour"]
+
+[resource]
+script = ExtResource("1_gwjbs")
+item_id = &"loot_000092"
+display_name = "Land Mine 01"
+storage_category = "Weapons"
+storage_footprint = Vector3i(4, 4, 1)
+can_be_stacked = true
+visual_scene = ExtResource("2_biour")

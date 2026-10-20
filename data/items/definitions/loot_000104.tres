@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_xvcl1"]
+[ext_resource type="PackedScene" path="res://assets/props/Weapons/SM_KB3D_WAR_Molotov_Cocktail_01.glb" id="2_fdf0y"]
+
+[resource]
+script = ExtResource("1_xvcl1")
+item_id = &"loot_000104"
+display_name = "Molotov Cocktail 01"
+storage_category = "Weapons"
+can_be_stacked = true
+visual_scene = ExtResource("2_fdf0y")

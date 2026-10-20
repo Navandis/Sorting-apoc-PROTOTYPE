@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_roany"]
+[ext_resource type="PackedScene" path="res://assets/props/morale/SM_KB3D_SIR_Bottle_Sake_01.glb" id="2_brtfu"]
+
+[resource]
+script = ExtResource("1_roany")
+item_id = &"loot_000138"
+display_name = "Bottle Sake 01"
+storage_category = "Morale"
+can_be_stacked = true
+visual_scene = ExtResource("2_brtfu")

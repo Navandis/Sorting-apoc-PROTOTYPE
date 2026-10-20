@@ -89,7 +89,7 @@ func run():
     # Exercise ordinary storage through the existing player placement controller.
     var food_host: Node = null
     for host in wing.get_node("DevelopmentSetup/SeedItems").get_children():
-        if StringName(host.get("item_id"))==&"loot_000005":
+        if StringName(host.get("item_id"))==&"loot_000007":
             food_host=host
             break
     if check(food_host!=null,"ordinary approved food seed remains available"):

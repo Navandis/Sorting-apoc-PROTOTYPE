@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_00fvg"]
+[ext_resource type="PackedScene" path="res://assets/props/protection/SM_KB3D_SIS_BikeHelmet_01.glb" id="2_tyt2y"]
+
+[resource]
+script = ExtResource("1_00fvg")
+item_id = &"loot_000150"
+display_name = "Bike Helmet 01"
+storage_category = "Protection"
+storage_footprint = Vector3i(3, 2, 1)
+can_be_stacked = true
+visual_scene = ExtResource("2_tyt2y")

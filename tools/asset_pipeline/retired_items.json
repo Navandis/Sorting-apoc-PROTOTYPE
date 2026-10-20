@@ -1,0 +1,47 @@
+{
+	"highest_historically_allocated": 42,
+	"items": [
+		{
+			"item_id": "loot_000005",
+			"source_path": "res://assets/props/Food/cereal_box.glb",
+			"reason": "Superseded early placeholder",
+			"source_cleanup": "Retained on disk; excluded from onboarding. No ignored assets deleted."
+		},
+		{
+			"item_id": "loot_000023",
+			"source_path": "res://assets/props/Hydration/soda_can.glb",
+			"reason": "Superseded early placeholder",
+			"source_cleanup": "Retained on disk; excluded from onboarding. No ignored assets deleted."
+		},
+		{
+			"item_id": "loot_000024",
+			"source_path": "res://assets/props/medical/pill_bottle.glb",
+			"reason": "Superseded early placeholder",
+			"source_cleanup": "Retained on disk; excluded from onboarding. No ignored assets deleted."
+		},
+		{
+			"item_id": "loot_000034",
+			"source_path": "res://assets/props/protection/SM_Gloves_02.glb",
+			"reason": "Retired unresolved blocked clothing source; not repaired",
+			"source_cleanup": "Retained on disk; excluded from onboarding. No ignored assets deleted."
+		},
+		{
+			"item_id": "loot_000036",
+			"source_path": "res://assets/props/protection/SM_Pants_02.glb",
+			"reason": "Retired unresolved blocked clothing source; not repaired",
+			"source_cleanup": "Retained on disk; excluded from onboarding. No ignored assets deleted."
+		},
+		{
+			"item_id": "loot_000037",
+			"source_path": "res://assets/props/Weapons/hammer.glb",
+			"reason": "Superseded early placeholder",
+			"source_cleanup": "Retained on disk; excluded from onboarding. No ignored assets deleted."
+		},
+		{
+			"item_id": "loot_000042",
+			"source_path": "res://assets/props/Weapons/tennis_racket.glb",
+			"reason": "Superseded early placeholder",
+			"source_cleanup": "Retained on disk; excluded from onboarding. No ignored assets deleted."
+		}
+	]
+}

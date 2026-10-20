@@ -64,7 +64,7 @@ func _test_semantic_orientation_handling(packed: PackedScene) -> void:
 
 	var stored_items: Array[ItemInstance] = []
 	for index: int in range(2):
-		var host := _host_for_item_id(seeds, &"loot_000005")
+		var host := _host_for_item_id(seeds, &"loot_000007")
 		_check(host != null, "semantic Food fixture finds cereal host %d" % index)
 		if host == null:
 			break
@@ -130,7 +130,7 @@ func _test_gallery_b_ladder_bridge(packed: PackedScene) -> void:
 
 	player.set_process(false)
 	player.set_physics_process(false)
-	var carried_item := ItemInstance.new(load("res://data/items/definitions/loot_000037.tres") as ItemDefinition)
+	var carried_item := ItemInstance.new(load("res://data/items/definitions/loot_000041.tres") as ItemDefinition)
 	_check(carried.add_item(carried_item), "Gallery B ladder check carries an existing item definition")
 	var anchor := ladder.get_climb_anchor_world_position()
 	var ladder_forward := ladder.get_ladder_forward_world()
@@ -200,11 +200,11 @@ func _test_identity_stack_and_transfer_loop(packed: PackedScene) -> void:
 
 	var boxed_items: Array[ItemInstance] = await _pickup_and_auto_store_family(
 		player, carried, controller, seeds, surfaces[0] as StorageSurface,
-		[&"loot_000005", &"loot_000005", &"loot_000007"], "Food"
+		[&"loot_000007", &"loot_000007", &"loot_000007"], "Food"
 	)
 	var can_items: Array[ItemInstance] = await _pickup_and_auto_store_family(
 		player, carried, controller, seeds, surfaces[4] as StorageSurface,
-		[&"loot_000022", &"loot_000022", &"loot_000023"], "Hydration"
+		[&"loot_000022", &"loot_000022", &"loot_000022"], "Hydration"
 	)
 	var media_items: Array[ItemInstance] = await _pickup_and_auto_store_family(
 		player, carried, controller, seeds, surfaces[1] as StorageSurface,
@@ -271,22 +271,22 @@ func _test_identity_stack_and_transfer_loop(packed: PackedScene) -> void:
 			"cross-shelf transfer preserves identity"
 		)
 
-	var hammer_host := _host_for_item_id(seeds, &"loot_000037")
-	_check(hammer_host != null, "hammer seed remains available for manual loop")
-	if hammer_host != null:
-		var hammer_world := hammer_host.get_node("WorldItem") as WorldItem
-		var hammer_item: ItemInstance = hammer_world.get_item_instance()
-		player.call("_attempt_pickup", hammer_world)
-		_check(carried.get_selected_item() == hammer_item, "hammer pickup preserves identity")
+	var asymmetric_host := _host_for_item_id(seeds, &"loot_000013")
+	_check(asymmetric_host != null, "asymmetric seed remains available for manual loop")
+	if asymmetric_host != null:
+		var asymmetric_world := asymmetric_host.get_node("WorldItem") as WorldItem
+		var asymmetric_item: ItemInstance = asymmetric_world.get_item_instance()
+		player.call("_attempt_pickup", asymmetric_world)
+		_check(carried.get_selected_item() == asymmetric_item, "asymmetric pickup preserves identity")
 		var manual_surface := surfaces[9] as StorageSurface
 		var manual_physical_before := _surface_physical_signature(manual_surface)
 		manual_surface.set_semantic_orientation_quarter_turns(0)
 		var packing_before := _packing_orientation_signatures(
-			controller.call("_entry_orientations_for_item", hammer_item, 0) as Array
+			controller.call("_entry_orientations_for_item", asymmetric_item, 0) as Array
 		)
 		manual_surface.set_semantic_orientation_quarter_turns(3)
 		var packing_after := _packing_orientation_signatures(
-			controller.call("_entry_orientations_for_item", hammer_item, 3) as Array
+			controller.call("_entry_orientations_for_item", asymmetric_item, 3) as Array
 		)
 		_check(
 			packing_before[0]["footprint"] != packing_after[0]["footprint"],
@@ -301,34 +301,34 @@ func _test_identity_stack_and_transfer_loop(packed: PackedScene) -> void:
 		_check(not bool(controller.get("_rotated")), "Manual mode starts with native packing orientation")
 		controller.toggle_rotation()
 		_check(bool(controller.get("_rotated")), "Manual R rotation still selects the 90-degree packing entry")
-		var hammer_entry = controller.call("_entry_for_item", hammer_item, true, 3)
+		var asymmetric_entry = controller.call("_entry_for_item", asymmetric_item, true, 3)
 		var manual_origin := Vector2i(1, 1)
 		var manual_fit := {
-			"valid": manual_surface.can_place_at(manual_origin, hammer_entry.footprint),
+			"valid": manual_surface.can_place_at(manual_origin, asymmetric_entry.footprint),
 			"placement_kind": "empty",
-			"stack_id": hammer_item.instance_id,
+			"stack_id": asymmetric_item.instance_id,
 			"insertion_index": 0,
 			"origin": manual_origin,
-			"footprint": hammer_entry.footprint,
-			"base_footprint": hammer_entry.footprint,
+			"footprint": asymmetric_entry.footprint,
+			"base_footprint": asymmetric_entry.footprint,
 			"rotated": true,
 			"zone_kind": "manual",
 			"zone_category": "",
-			"host_y_m": manual_surface.get_local_placement_position(manual_origin, hammer_entry.footprint).y,
+			"host_y_m": manual_surface.get_local_placement_position(manual_origin, asymmetric_entry.footprint).y,
 		}
 		controller.set("_current_surface", manual_surface)
 		controller.set("_current_fit", manual_fit)
 		controller.set("_manual_target", {
 			"kind": "point", "surface": manual_surface,
-			"hit_local": manual_surface.get_local_placement_position(manual_origin, hammer_entry.footprint)
+			"hit_local": manual_surface.get_local_placement_position(manual_origin, asymmetric_entry.footprint)
 		})
-		_check(controller.place_selected(), "hammer commits through manual rotated placement")
-		var hammer_stack := manual_surface.get_storage_stack(hammer_item.instance_id)
-		_check(hammer_stack != null, "manual hammer creates one stored stack")
-		if hammer_stack != null:
-			_check(hammer_stack.entries[0].item == hammer_item, "manual placement keeps exact hammer instance")
-			_check(hammer_stack.entries[0].packing_rotated, "manual placement records R rotation")
-			var stored_host: Node3D = hammer_stack.entries[0].host
+		_check(controller.place_selected(), "asymmetric commits through manual rotated placement")
+		var asymmetric_stack := manual_surface.get_storage_stack(asymmetric_item.instance_id)
+		_check(asymmetric_stack != null, "manual asymmetric creates one stored stack")
+		if asymmetric_stack != null:
+			_check(asymmetric_stack.entries[0].item == asymmetric_item, "manual placement keeps exact asymmetric instance")
+			_check(asymmetric_stack.entries[0].packing_rotated, "manual placement records R rotation")
+			var stored_host: Node3D = asymmetric_stack.entries[0].host
 			var unit_yaw := stored_host.get_node("StoredUnitOrientationYaw") as Node3D
 			var packing_yaw := unit_yaw.get_node("StoredPackingYaw") as Node3D
 			_check(
@@ -343,12 +343,12 @@ func _test_identity_stack_and_transfer_loop(packed: PackedScene) -> void:
 				"manual stored packing root records the additional turn"
 			)
 			_check(
-				manual_surface.get_reservation(hammer_item.instance_id).get("footprint")
-				== hammer_entry.footprint,
+				manual_surface.get_reservation(asymmetric_item.instance_id).get("footprint")
+				== asymmetric_entry.footprint,
 				"manual reservation matches combined visual parity"
 			)
 			_check(
-				manual_surface.get_reservation(hammer_item.instance_id).get("origin") == manual_origin,
+				manual_surface.get_reservation(asymmetric_item.instance_id).get("origin") == manual_origin,
 				"manual placement keeps the physical nearest-cell origin under semantic state 3"
 			)
 		_check(_surface_physical_signature(manual_surface) == manual_physical_before, "semantic state 3 leaves manual target physical surface unchanged")
@@ -385,7 +385,7 @@ func _test_rejection_and_rollback_loop(packed: PackedScene) -> void:
 	var controller := scene.get_node("Player/StoragePlacementController") as StoragePlacementController
 	var seeds := scene.get_node("DevelopmentSetup/SeedItems")
 	var surfaces := scene.call("get_functional_surfaces") as Array
-	var cereal_host := _host_for_item_id(seeds, &"loot_000005")
+	var cereal_host := _host_for_item_id(seeds, &"loot_000007")
 	var cereal_world := cereal_host.get_node("WorldItem") as WorldItem
 	var cereal_item: ItemInstance = cereal_world.get_item_instance()
 	player.call("_attempt_pickup", cereal_world)
@@ -678,6 +678,15 @@ func _instantiate_with_regression_seed_fixture(gameplay_packed: PackedScene) -> 
 		live_setup.free()
 	var setup_packed := load(DEVELOPMENT_SETUP_PATH) as PackedScene
 	var regression_setup := setup_packed.instantiate()
+	# The retained hammer's 1x1 Footprint cannot exercise observable packing
+	# parity. Use retained asymmetric firewood in this disposable 12-host fixture.
+	# The production seed scene and approved definitions remain untouched.
+	var asymmetric_host:=regression_setup.get_node("SeedItems/Hammer")
+	asymmetric_host.item_id=&"loot_000013"
+	asymmetric_host.get_node("Visual").free()
+	var asymmetric_visual: Node3D=load("res://data/items/definitions/loot_000013.tres").visual_scene.instantiate()
+	asymmetric_visual.name="Visual"
+	asymmetric_host.add_child(asymmetric_visual)
 	regression_setup.name = "DevelopmentSetup"
 	scene.add_child(regression_setup)
 	var completed_result_1: Variant = scene

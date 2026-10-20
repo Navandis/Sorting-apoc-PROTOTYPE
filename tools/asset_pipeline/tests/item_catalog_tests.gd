@@ -21,7 +21,7 @@ func _init() -> void:
 func _test_unique_definitions_resolve_from_both_indexes_once() -> void:
 	var definition: ItemDefinition = _definition(
 		&"loot_000001",
-		"res://assets/props/Food/cereal_box.glb"
+		"res://assets/props/Food/SM_CerealBox_2.glb"
 	)
 	var catalog: Variant = ItemCatalogScript.new()
 	var definitions: Array[ItemDefinition] = [definition]
@@ -30,7 +30,7 @@ func _test_unique_definitions_resolve_from_both_indexes_once() -> void:
 	assert(catalog.get_definition_by_id(&"loot_000001") == definition)
 	assert(
 		catalog.get_definition_by_visual_path(
-			"res://assets/props/Food/cereal_box.glb"
+			"res://assets/props/Food/SM_CerealBox_2.glb"
 		) == definition
 	)
 	assert(catalog.get_index_build_count() == 1)
@@ -44,11 +44,11 @@ func _test_unique_definitions_resolve_from_both_indexes_once() -> void:
 func _test_duplicate_id_invalidates_only_that_id_lookup() -> void:
 	var first: ItemDefinition = _definition(
 		&"loot_000001",
-		"res://assets/props/Food/cereal_box.glb"
+		"res://assets/props/Food/SM_CerealBox_2.glb"
 	)
 	var second: ItemDefinition = _definition(
 		&"loot_000001",
-		"res://assets/props/Hydration/soda_can.glb"
+		"res://assets/props/Hydration/SM_SodaCan.glb"
 	)
 	var catalog: Variant = ItemCatalogScript.new()
 	var definitions: Array[ItemDefinition] = [first, second]
@@ -65,11 +65,11 @@ func _test_duplicate_id_invalidates_only_that_id_lookup() -> void:
 func _test_duplicate_visual_path_invalidates_only_that_path_lookup() -> void:
 	var first: ItemDefinition = _definition(
 		&"loot_000001",
-		"res://assets/props/Food/cereal_box.glb"
+		"res://assets/props/Food/SM_CerealBox_2.glb"
 	)
 	var second: ItemDefinition = _definition(
 		&"loot_000002",
-		"res://assets/props/Food/cereal_box.glb"
+		"res://assets/props/Food/SM_CerealBox_2.glb"
 	)
 	var catalog: Variant = ItemCatalogScript.new()
 	var definitions: Array[ItemDefinition] = [first, second]
@@ -80,7 +80,7 @@ func _test_duplicate_visual_path_invalidates_only_that_path_lookup() -> void:
 	assert(catalog.get_definition_by_id(&"loot_000002") == second)
 	assert(_errors_contain(
 		catalog.get_validation_errors(),
-		"Duplicate ItemDefinition visual path 'res://assets/props/Food/cereal_box.glb'"
+		"Duplicate ItemDefinition visual path 'res://assets/props/Food/SM_CerealBox_2.glb'"
 	))
 
 
@@ -88,7 +88,7 @@ func _test_duplicate_visual_path_invalidates_only_that_path_lookup() -> void:
 # legacy 11 hard-coded paths instead of the persistent catalogue membership.
 func _test_compatibility_facade_resolves_every_persistent_visual() -> void:
 	var members: Array = PersistentItemCatalog.get("definitions") as Array
-	assert(members.size() == 42)
+	assert(members.size() == 155)
 	for member_value: Variant in members:
 		var definition: ItemDefinition = member_value as ItemDefinition
 		assert(definition != null)
@@ -122,14 +122,14 @@ func _test_node_scene_path_is_primary_and_name_mapping_is_fallback_only() -> voi
 	bread_node.free()
 
 	var fallback_node: Node3D = Node3D.new()
-	fallback_node.name = "cereal_box_without_scene_path"
+	fallback_node.name = "SM_Gun_Pistol_without_scene_path"
 	var fallback_definition: ItemDefinition = (
 		PrototypeItemCatalogScript.create_definition_for_node(fallback_node)
 	)
 	assert(fallback_definition != null)
 	assert(
 		fallback_definition.visual_scene.resource_path
-		== "res://assets/props/Food/cereal_box.glb"
+		== "res://assets/props/Weapons/SM_Gun_Pistol.glb"
 	)
 	fallback_node.free()
 

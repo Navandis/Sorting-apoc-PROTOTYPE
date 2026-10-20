@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_4rngc"]
+[ext_resource type="PackedScene" path="res://assets/props/medical/SM_Military_Med_crate_01.glb" id="2_0ayyt"]
+
+[resource]
+script = ExtResource("1_4rngc")
+item_id = &"loot_000126"
+display_name = "Military Med crate 01"
+storage_category = "Medical"
+storage_footprint = Vector3i(11, 4, 1)
+can_be_stacked = true
+can_support_stack = true
+visual_scene = ExtResource("2_0ayyt")

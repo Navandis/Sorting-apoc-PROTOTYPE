@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_pnpjm"]
+[ext_resource type="PackedScene" path="res://assets/props/Food/SM_KB3D_SFR_Eggplants_Crate_01.glb" id="2_sorov"]
+
+[resource]
+script = ExtResource("1_pnpjm")
+item_id = &"loot_000055"
+display_name = "Eggplants Crate 01"
+storage_category = "Food"
+storage_footprint = Vector3i(6, 4, 1)
+can_be_stacked = true
+visual_scene = ExtResource("2_sorov")

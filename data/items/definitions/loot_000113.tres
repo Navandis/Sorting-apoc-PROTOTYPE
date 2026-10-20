@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_4ehdw"]
+[ext_resource type="PackedScene" path="res://assets/props/Weapons/SM_combat_knife_01.glb" id="2_m2jqh"]
+
+[resource]
+script = ExtResource("1_4ehdw")
+item_id = &"loot_000113"
+display_name = "combat knife 01"
+storage_category = "Weapons"
+storage_footprint = Vector3i(5, 1, 1)
+can_be_stacked = true
+visual_scene = ExtResource("2_m2jqh")
+storage_rotation_degrees = Vector3(90, 0, 0)

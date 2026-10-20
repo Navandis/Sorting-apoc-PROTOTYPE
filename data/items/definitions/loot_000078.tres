@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_748wt"]
+[ext_resource type="PackedScene" path="res://assets/props/Hydration/SM_KB3D_SIS_WaterBottle_01.glb" id="2_3alh5"]
+
+[resource]
+script = ExtResource("1_748wt")
+item_id = &"loot_000078"
+display_name = "Water Bottle 01"
+storage_category = "Hydration"
+can_be_stacked = true
+visual_scene = ExtResource("2_3alh5")

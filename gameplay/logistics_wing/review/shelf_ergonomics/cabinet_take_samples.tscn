@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://cae6njfkp5lcu" path="res://gameplay/logistics_wing/review/shelf_ergonomics/cabinet_take_samples.gd" id="1_samples"]
 [ext_resource type="Script" uid="uid://6qrk22inrvej" path="res://gameplay/logistics_wing/development/seed_host.gd" id="2_host"]
 [ext_resource type="Script" uid="uid://btkjw475usxpx" path="res://gameplay/logistics_wing/development/seed_registrar.gd" id="3_registrar"]
-[ext_resource type="PackedScene" uid="uid://l0kqvj1n6wrl" path="res://assets/props/medical/pill_bottle.glb" id="4_painkillers"]
+[ext_resource type="PackedScene" path="res://assets/props/medical/SM_CoughSyrup_01.glb" id="4_painkillers"]
 [ext_resource type="PackedScene" uid="uid://dqahwgcsham5a" path="res://assets/props/morale/SM_Book_01.glb" id="5_book"]
 [ext_resource type="PackedScene" uid="uid://cdtpk0sa4cpcp" path="res://assets/props/electronics/SM_ComputerMouse_01.glb" id="6_mouse"]
 [ext_resource type="PackedScene" uid="uid://d2ky67y4v3cux" path="res://assets/props/Fuel/SM_FuelCanister.glb" id="7_fuel"]
@@ -35,7 +35,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.536743e-07, -0.14910015, 0.
 [node name="Painkillers_MidBay" type="Node3D" parent="FullHeightHosts/SeedItems" unique_id=1948422544]
 transform = Transform3D(-3.6199901e-06, 0, 1, 0, 1, 0, -1, 0, -3.6199901e-06, 15.05, 1.27, -12.3)
 script = ExtResource("2_host")
-item_id = &"loot_000024"
+item_id = &"loot_000027"
 
 [node name="Visual" parent="FullHeightHosts/SeedItems/Painkillers_MidBay" unique_id=2130035418 instance=ExtResource("4_painkillers")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.536743e-07, -0.85624576, 0.14025402)
@@ -83,7 +83,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.536743e-07, 0, 0.2606926)
 [node name="Painkillers_MidBay" type="Node3D" parent="LoweredHosts/SeedItems" unique_id=1870521332]
 transform = Transform3D(-3.6199901e-06, 0, 1, 0, 1, 0, -1, 0, -3.6199901e-06, 15.05, 0.79, -12.3)
 script = ExtResource("2_host")
-item_id = &"loot_000024"
+item_id = &"loot_000027"
 
 [node name="Visual" parent="LoweredHosts/SeedItems/Painkillers_MidBay" unique_id=392510158 instance=ExtResource("4_painkillers")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9073486e-06, -0.50866795, -0.46578693)

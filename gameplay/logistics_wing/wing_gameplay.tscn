@@ -44,7 +44,6 @@
 [ext_resource type="PackedScene" uid="uid://8ljy0ilc1v0b" path="res://assets/props/Hydration/SM_Metal_Can_01a.glb" id="24_food_can"]
 [ext_resource type="PackedScene" uid="uid://dh5ddv7dw4lut" path="res://assets/props/Hydration/SM_MilkCarton_1.glb" id="25_milk"]
 [ext_resource type="PackedScene" uid="uid://doyaywovvlj7e" path="res://assets/props/Hydration/SM_OrangeJuice_1.glb" id="26_orange_juice"]
-[ext_resource type="PackedScene" uid="uid://l0kqvj1n6wrl" path="res://assets/props/medical/pill_bottle.glb" id="27_painkillers"]
 [ext_resource type="PackedScene" uid="uid://b5kdjjl24ncie" path="res://assets/props/medical/SM_Antibiotics_01.glb" id="28_antibiotics"]
 [ext_resource type="PackedScene" uid="uid://d30pld4bfmigb" path="res://assets/props/medical/SM_Bandages_1.glb" id="29_bandages"]
 [ext_resource type="PackedScene" uid="uid://1ku6jrgkqaxx" path="res://assets/props/medical/SM_CoughSyrup_01.glb" id="30_cough_syrup"]
@@ -56,7 +55,6 @@
 [ext_resource type="PackedScene" uid="uid://d2f5gxaaygr2h" path="res://assets/props/Weapons/SM_Gun_Pistol.glb" id="36_pistol"]
 [ext_resource type="PackedScene" uid="uid://dotocyn70iqyv" path="res://assets/props/Weapons/SM_Gun_Shotgun.glb" id="37_shotgun"]
 [ext_resource type="PackedScene" uid="uid://bpfa3ngufieor" path="res://assets/props/Weapons/SM_Hammer_3.glb" id="38_hammer_3"]
-[ext_resource type="PackedScene" uid="uid://bqgbb88i4fa7q" path="res://assets/props/Weapons/tennis_racket.glb" id="39_racket"]
 [ext_resource type="PackedScene" uid="uid://b2r5iiqby2gbi" path="res://assets/environment/furniture/work_surfaces/SM_Table.glb" id="40_table"]
 [ext_resource type="PackedScene" path="res://gameplay/logistics_wing/storage/modular_rack.tscn" id="41_modular_rack"]
 [ext_resource type="PackedScene" path="res://gameplay/traversal/fixed_ladder/fixed_ladder.tscn" id="42_ladder"]
@@ -810,13 +808,6 @@ item_id = &"loot_000021"
 
 [node name="Visual" parent="DevelopmentSetup/SeedItems/Hydration_OrangeJuice" unique_id=578109121 instance=ExtResource("26_orange_juice")]
 
-[node name="Medical_Painkillers" type="Node3D" parent="DevelopmentSetup/SeedItems" index="33" unique_id=1814789625]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.86478, 0.884, 3.209626)
-script = ExtResource("5_8pqnk")
-item_id = &"loot_000024"
-
-[node name="Visual" parent="DevelopmentSetup/SeedItems/Medical_Painkillers" unique_id=460930005 instance=ExtResource("27_painkillers")]
-
 [node name="Medical_Antibiotics" type="Node3D" parent="DevelopmentSetup/SeedItems" index="34" unique_id=1390819660]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.0920925, 0.884, 3.234186)
 script = ExtResource("5_8pqnk")
@@ -893,13 +884,6 @@ script = ExtResource("5_8pqnk")
 item_id = &"loot_000041"
 
 [node name="Visual" parent="DevelopmentSetup/SeedItems/Weapons_Hammer3" unique_id=213957802 instance=ExtResource("38_hammer_3")]
-
-[node name="Weapons_TennisRacket" type="Node3D" parent="DevelopmentSetup/SeedItems" index="45" unique_id=779046070]
-transform = Transform3D(3.1391647e-07, 0, 1, 0, 1, 0, -1, 0, 3.1391647e-07, -14.256044, 0.881, -3.8393233)
-script = ExtResource("5_8pqnk")
-item_id = &"loot_000042"
-
-[node name="Visual" parent="DevelopmentSetup/SeedItems/Weapons_TennisRacket" unique_id=336093353 instance=ExtResource("39_racket")]
 
 [node name="ReceivingRuntime" parent="." unique_id=1625899199 instance=ExtResource("44_receiving")]
 transform = Transform3D(-4.851964e-08, 0, 1, 0, 1.225, 0, -1.11, 0, -4.371139e-08, -37.41487, 0.82, 0)

@@ -11,11 +11,6 @@ const DEFINITION_DIRECTORY: String = "res://data/items/definitions"
 const METAL_CAN_PATH: String = "res://assets/props/Hydration/SM_Metal_Can_01a.glb"
 
 const LEGACY_DISPLAY_NAMES: Dictionary = {
-	"res://assets/props/Food/cereal_box.glb": "Cereal Box",
-	"res://assets/props/medical/pill_bottle.glb": "Painkillers",
-	"res://assets/props/Weapons/hammer.glb": "Hammer",
-	"res://assets/props/Hydration/soda_can.glb": "Soda Can",
-	"res://assets/props/Weapons/tennis_racket.glb": "Tennis Racket",
 	"res://assets/props/Weapons/SM_Gun_AssaultRifle.glb": "Assault Rifle",
 	"res://assets/props/Weapons/SM_Gun_Pistol.glb": "Pistol",
 	"res://assets/props/Weapons/SM_Gun_Shotgun.glb": "Shotgun",

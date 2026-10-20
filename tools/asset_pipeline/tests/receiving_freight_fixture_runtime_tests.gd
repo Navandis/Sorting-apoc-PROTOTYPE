@@ -308,7 +308,7 @@ func _test_lazy_activation_and_surface_preferences() -> void:
 	_check(small_pallet_fallback.presentation_fixtures.is_empty(), "Small does not activate pallet while MainDeck accepts it")
 	_check(small_pallet_fallback.entries[0].presentation_surface_id == &"MainDeck", "Small pallet fallback keeps MainDeck preference")
 
-	var medium := _controlled_batch("medium", [&"loot_000005"])
+	var medium := _controlled_batch("medium", [&"loot_000007"])
 	var medium_result = DeckPlannerScript.new().prepare(
 		medium, PersistentItemCatalog, ProofProfile, DeckPlannerScript.FixtureMode.PALLETS_ALLOWED
 	)
@@ -330,7 +330,7 @@ func _test_large_priority_preserves_non_large_positions() -> void:
 	var ids: Array[StringName] = [
 		&"loot_000022", # Small
 		&"loot_000013", # Large 4x1
-		&"loot_000005", # Medium 3x1
+		&"loot_000007", # Medium 3x1
 		&"loot_000014", # Large 6x4
 		&"loot_000026", # Small
 	]
@@ -343,7 +343,7 @@ func _test_large_priority_preserves_non_large_positions() -> void:
 	for entry: LootBatchEntry in reordered:
 		reordered_ids.append(entry.definition_id)
 	_check(
-		reordered_ids == [&"loot_000022", &"loot_000014", &"loot_000005", &"loot_000013", &"loot_000026"],
+		reordered_ids == [&"loot_000022", &"loot_000014", &"loot_000007", &"loot_000013", &"loot_000026"],
 		"bulky Large moves ahead only within pre-existing Large positions"
 	)
 

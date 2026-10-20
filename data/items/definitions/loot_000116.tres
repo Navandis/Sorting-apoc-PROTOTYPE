@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_yj7vb"]
+[ext_resource type="PackedScene" path="res://assets/props/electronics/SM_ComputerCard_01.glb" id="2_7camh"]
+
+[resource]
+script = ExtResource("1_yj7vb")
+item_id = &"loot_000116"
+display_name = "Computer Card 01"
+storage_category = "Electronics"
+storage_footprint = Vector3i(3, 3, 1)
+can_be_stacked = true
+visual_scene = ExtResource("2_7camh")

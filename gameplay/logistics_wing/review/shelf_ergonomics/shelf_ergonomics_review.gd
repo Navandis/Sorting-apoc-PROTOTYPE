@@ -241,7 +241,7 @@ func _seed_review_samples() -> void:
 	var surfaces := _manager.get_surfaces()
 	# Each legal functional sample is placed by the real controller, creating a
 	# reservation and WorldItem through the established storage path.
-	_store_sample(carried, controller, surfaces[1] as StorageSurface, &"loot_000024")
+	_store_sample(carried, controller, surfaces[1] as StorageSurface, &"loot_000027")
 	_store_sample(carried, controller, surfaces[2] as StorageSurface, &"loot_000030")
 	_store_sample(carried, controller, surfaces[5] as StorageSurface, &"loot_000001")
 	_store_sample(carried, controller, surfaces[4] as StorageSurface, &"loot_000015")

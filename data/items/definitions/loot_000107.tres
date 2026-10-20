@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_bsnlt"]
+[ext_resource type="PackedScene" path="res://assets/props/Weapons/SM_Nailed_bat_01.glb" id="2_aaejc"]
+
+[resource]
+script = ExtResource("1_bsnlt")
+item_id = &"loot_000107"
+display_name = "Nailed bat 01"
+storage_category = "Weapons"
+storage_footprint = Vector3i(8, 2, 1)
+can_be_stacked = true
+visual_scene = ExtResource("2_aaejc")

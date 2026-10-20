@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_bhq1b"]
+[ext_resource type="PackedScene" path="res://assets/props/electronics/SM_KB3D_HOH_VHS_Player_01.glb" id="2_cc6a2"]
+
+[resource]
+script = ExtResource("1_bhq1b")
+item_id = &"loot_000118"
+display_name = "VHS Player 01"
+storage_category = "Electronics"
+storage_footprint = Vector3i(5, 4, 1)
+can_be_stacked = true
+can_support_stack = true
+visual_scene = ExtResource("2_cc6a2")
+storage_rotation_degrees = Vector3(0, 90, 0)

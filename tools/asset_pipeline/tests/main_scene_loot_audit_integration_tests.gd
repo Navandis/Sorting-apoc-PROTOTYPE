@@ -44,6 +44,11 @@ const PRINTER_BATCH_ONE_NOTE: String = "Flat stable base; irregular exposed-elec
 
 
 func _init() -> void:
+	# Closed initial-catalogue evidence; unavailable after the authorized retirements.
+	print("RETIRED_FIXTURE: initial 42-item content checkpoint; use pre_m4_catalogue_tests / pre_m4_physical_tests")
+	quit(2)
+	return
+
 	var manifest_before: PackedByteArray = FileAccess.get_file_as_bytes(MANIFEST_PATH)
 	var registry_before: PackedByteArray = FileAccess.get_file_as_bytes(REGISTRY_PATH)
 	var output: Array[String] = []

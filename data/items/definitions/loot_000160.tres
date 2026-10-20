@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_ufkf5"]
+[ext_resource type="PackedScene" path="res://assets/props/protection/SM_Sneakers_01.glb" id="2_l522j"]
+
+[resource]
+script = ExtResource("1_ufkf5")
+item_id = &"loot_000160"
+display_name = "Sneakers 01"
+storage_category = "Protection"
+storage_footprint = Vector3i(3, 4, 1)
+can_be_stacked = true
+visual_scene = ExtResource("2_l522j")

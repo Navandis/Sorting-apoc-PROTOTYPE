@@ -73,6 +73,11 @@ const EXPECTED_CANDIDATES: Dictionary = {
 
 
 func _init() -> void:
+	# Closed initial-catalogue evidence; unavailable after the authorized retirements.
+	print("RETIRED_FIXTURE: initial 42-item content checkpoint; use pre_m4_catalogue_tests / pre_m4_physical_tests")
+	quit(2)
+	return
+
 	_test_exact_candidate_table()
 	_test_phase_one_migration_approves_only_exact_nine()
 	_test_batch_one_apply_approves_only_human_decisions()

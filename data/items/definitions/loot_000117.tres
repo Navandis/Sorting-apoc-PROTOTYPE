@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_tlcb5"]
+[ext_resource type="PackedScene" path="res://assets/props/electronics/SM_DVD_Player_01.glb" id="2_61fnc"]
+
+[resource]
+script = ExtResource("1_tlcb5")
+item_id = &"loot_000117"
+display_name = "DVD Player 01"
+storage_category = "Electronics"
+storage_footprint = Vector3i(6, 4, 1)
+can_be_stacked = true
+can_support_stack = true
+visual_scene = ExtResource("2_61fnc")

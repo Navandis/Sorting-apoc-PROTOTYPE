@@ -64,6 +64,10 @@ var _last_build_error := ""
 
 
 func _ready() -> void:
+	push_error("RETIRED_FIXTURE: physics-pile content requires retired definitions; historical results remain archived.")
+	get_tree().quit(2)
+	return
+
 	_parse_arguments(OS.get_cmdline_user_args())
 	if auto_start:
 		call_deferred("_start_proof")

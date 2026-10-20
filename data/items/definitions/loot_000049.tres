@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_vlll1"]
+[ext_resource type="PackedScene" path="res://assets/props/Food/SM_KB3D_ENC_Almonds_Sack.glb" id="2_1ls7e"]
+
+[resource]
+script = ExtResource("1_vlll1")
+item_id = &"loot_000049"
+display_name = "Almonds Sack"
+storage_category = "Food"
+storage_footprint = Vector3i(7, 5, 1)
+can_be_stacked = true
+visual_scene = ExtResource("2_1ls7e")

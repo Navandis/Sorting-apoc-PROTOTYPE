@@ -35,6 +35,11 @@ func _init() -> void:
 
 
 func _run() -> int:
+	for arg: String in OS.get_cmdline_user_args():
+		if arg.begins_with("--apply-") or arg == "--reconcile-fuel-canister-maintenance":
+			push_error("RETIRED_MIGRATION: closed initial-42 approvals must not be replayed on the expanded catalogue.")
+			return 2
+
 	var current_assets: Array[Dictionary] = []
 	for scene_record: Dictionary in MainSceneLootAdapterScript.enumerate_loot_instances(MAIN_SCENE_PATH):
 		current_assets.append(_manifest_asset(scene_record))

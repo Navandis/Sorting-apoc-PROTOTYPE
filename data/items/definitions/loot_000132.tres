@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_u8fdf"]
+[ext_resource type="PackedScene" path="res://assets/props/morale/SM_KB3D_CPI_BeerKeg_01.glb" id="2_ksx44"]
+
+[resource]
+script = ExtResource("1_u8fdf")
+item_id = &"loot_000132"
+display_name = "Beer Keg 01"
+storage_category = "Morale"
+storage_footprint = Vector3i(5, 6, 1)
+can_be_stacked = true
+visual_scene = ExtResource("2_ksx44")

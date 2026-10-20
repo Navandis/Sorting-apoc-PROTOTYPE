@@ -33,7 +33,7 @@ func run() -> void:
 			shell.free()
 			finish()
 			return
-		for id: String in ["loot_000005","loot_000019"]:
+		for id: String in ["loot_000007","loot_000019"]:
 			var host = wing.get_node("DevelopmentSetup/SeedItems").get_children().filter(func(h): return String(h.item_id)==id)[0]
 			var item: ItemInstance = host.get_node("WorldItem").get_item_instance()
 			check(host.get_node("WorldItem").pickup_into(carry), "actual seed TAKE for partial Kitchen")

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_2usg6"]
+[ext_resource type="PackedScene" path="res://assets/props/protection/SM_KB3D_SIS_FourFoldedShirtsBundle_02.glb" id="2_ud1ws"]
+
+[resource]
+script = ExtResource("1_2usg6")
+item_id = &"loot_000155"
+display_name = "Four Folded Shirts Bundle 02"
+storage_category = "Protection"
+storage_footprint = Vector3i(4, 4, 1)
+can_be_stacked = true
+visual_scene = ExtResource("2_ud1ws")

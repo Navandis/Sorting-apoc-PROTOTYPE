@@ -5,14 +5,14 @@
 [ext_resource type="PackedScene" uid="uid://b2r5iiqby2gbi" path="res://assets/environment/furniture/work_surfaces/SM_Table.glb" id="3_table"]
 [ext_resource type="Script" path="res://gameplay/logistics_wing/development/seed_host.gd" id="4_host"]
 [ext_resource type="Script" path="res://gameplay/logistics_wing/development/seed_registrar.gd" id="5_registrar"]
-[ext_resource type="PackedScene" path="res://assets/props/Food/cereal_box.glb" id="6_cereal_a"]
+[ext_resource type="PackedScene" path="res://assets/props/Food/SM_CerealBox_2.glb" id="6_cereal_a"]
 [ext_resource type="PackedScene" path="res://assets/props/Food/SM_CerealBox_2.glb" id="7_cereal_b"]
 [ext_resource type="PackedScene" path="res://assets/props/Hydration/SM_SodaCan.glb" id="8_soda_a"]
-[ext_resource type="PackedScene" path="res://assets/props/Hydration/soda_can.glb" id="9_soda_b"]
+[ext_resource type="PackedScene" path="res://assets/props/Hydration/SM_SodaCan.glb" id="9_soda_b"]
 [ext_resource type="PackedScene" path="res://assets/props/medical/SM_MedKit_4.glb" id="10_medkit"]
 [ext_resource type="PackedScene" path="res://assets/props/morale/SM_Book_01.glb" id="11_book"]
 [ext_resource type="PackedScene" path="res://assets/props/morale/SM_CDStack_01.glb" id="12_cd"]
-[ext_resource type="PackedScene" path="res://assets/props/Weapons/hammer.glb" id="13_hammer"]
+[ext_resource type="PackedScene" path="res://assets/props/Weapons/SM_Hammer_3.glb" id="13_hammer"]
 
 [node name="DevelopmentSetup" type="Node3D"]
 script = ExtResource("1_setup")
@@ -34,7 +34,7 @@ position = Vector3(-7.8, 0, 2.65)
 position = Vector3(-12.0, 0.96, 2.35)
 rotation = Vector3(0, 0.174533, 0)
 script = ExtResource("4_host")
-item_id = &"loot_000005"
+item_id = &"loot_000007"
 
 [node name="Visual" parent="SeedItems/CerealBox_A" instance=ExtResource("6_cereal_a")]
 
@@ -42,7 +42,7 @@ item_id = &"loot_000005"
 position = Vector3(-11.4, 0.96, 2.35)
 rotation = Vector3(0, -0.122173, 0)
 script = ExtResource("4_host")
-item_id = &"loot_000005"
+item_id = &"loot_000007"
 
 [node name="Visual" parent="SeedItems/CerealBox_B" instance=ExtResource("6_cereal_a")]
 
@@ -73,7 +73,7 @@ item_id = &"loot_000022"
 position = Vector3(-11.2, 0.96, 2.9)
 rotation = Vector3(0, -0.10472, 0)
 script = ExtResource("4_host")
-item_id = &"loot_000023"
+item_id = &"loot_000022"
 
 [node name="Visual" parent="SeedItems/SodaCan_Classic" instance=ExtResource("9_soda_b")]
 
@@ -121,7 +121,7 @@ item_id = &"loot_000031"
 position = Vector3(-7.1, 0.98, 2.9)
 rotation = Vector3(0, 1.3962634, 0)
 script = ExtResource("4_host")
-item_id = &"loot_000037"
+item_id = &"loot_000041"
 
 [node name="Visual" parent="SeedItems/Hammer" instance=ExtResource("13_hammer")]
 

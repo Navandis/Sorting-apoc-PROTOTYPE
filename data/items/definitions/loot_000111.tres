@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_aoace"]
+[ext_resource type="PackedScene" path="res://assets/props/Weapons/SM_Short_Axe_01.glb" id="2_cmuve"]
+
+[resource]
+script = ExtResource("1_aoace")
+item_id = &"loot_000111"
+display_name = "Short Axe 01"
+storage_category = "Weapons"
+storage_footprint = Vector3i(6, 3, 1)
+can_be_stacked = true
+visual_scene = ExtResource("2_cmuve")
+storage_rotation_degrees = Vector3(90, 0, 0)

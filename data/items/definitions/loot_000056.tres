@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_k1vw7"]
+[ext_resource type="PackedScene" path="res://assets/props/Food/SM_KB3D_SFR_Potatotes_Crate.glb" id="2_8tddx"]
+
+[resource]
+script = ExtResource("1_k1vw7")
+item_id = &"loot_000056"
+display_name = "Potatoes Crate"
+storage_category = "Food"
+storage_footprint = Vector3i(5, 6, 1)
+can_be_stacked = true
+visual_scene = ExtResource("2_8tddx")

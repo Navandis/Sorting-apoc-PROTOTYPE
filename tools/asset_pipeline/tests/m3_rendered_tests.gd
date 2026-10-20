@@ -41,7 +41,7 @@ func run() -> void:
 	var kitchen = wing.get_node("KitchenContribution")
 	var medical = wing.get_node("MedicalContribution")
 	var carry = player.carried_items
-	take_seed(wing,"loot_000005")
+	take_seed(wing,"loot_000007")
 	await aim_at(player,kitchen)
 	await key(KEY_E,true)
 	await key(KEY_F,true)

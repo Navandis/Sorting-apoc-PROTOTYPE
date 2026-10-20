@@ -54,16 +54,6 @@ static func _catalogue() -> Resource:
 
 
 static func _scene_path_from_name(node_name: String) -> String:
-	if node_name.begins_with("cereal_box"):
-		return "res://assets/props/Food/cereal_box.glb"
-	if node_name.begins_with("pill_bottle"):
-		return "res://assets/props/medical/pill_bottle.glb"
-	if node_name.begins_with("hammer"):
-		return "res://assets/props/Weapons/hammer.glb"
-	if node_name.begins_with("soda_can"):
-		return "res://assets/props/Hydration/soda_can.glb"
-	if node_name.begins_with("tennis_racket"):
-		return "res://assets/props/Weapons/tennis_racket.glb"
 	if node_name.begins_with("SM_Gun_AssaultRifle"):
 		return "res://assets/props/Weapons/SM_Gun_AssaultRifle.glb"
 	if node_name.begins_with("SM_Gun_Pistol"):

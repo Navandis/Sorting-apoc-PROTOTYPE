@@ -20,6 +20,11 @@ const EXPECTED_BATCH_FIVE_IDS: PackedStringArray = ["loot_000013", "loot_000037"
 
 
 func _init() -> void:
+	# Closed initial-catalogue evidence; unavailable after the authorized retirements.
+	print("RETIRED_FIXTURE: initial 42-item content checkpoint; use pre_m4_catalogue_tests / pre_m4_physical_tests")
+	quit(2)
+	return
+
 	var records: Array[Dictionary] = []
 	for item_id: String in ["loot_000021", "loot_000003", "loot_000099", "loot_000007", "loot_000020"]:
 		records.append(_record(item_id))

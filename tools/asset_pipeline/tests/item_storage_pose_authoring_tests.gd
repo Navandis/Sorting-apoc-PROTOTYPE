@@ -1,7 +1,7 @@
 extends SceneTree
 
 const FIXTURE_PATH := "res://gameplay/dev/item_storage_pose/item_storage_pose_authoring.tscn"
-const ASYMMETRIC_DEFINITION_PATH := "res://data/items/definitions/loot_000037.tres"
+const ASYMMETRIC_DEFINITION_PATH := "res://data/items/definitions/loot_000041.tres"
 const ROUND_TRIP_PATH := "user://canonical_item_pose_authoring_round_trip.tscn"
 const ItemDefinitionScript = preload("res://item_definition.gd")
 

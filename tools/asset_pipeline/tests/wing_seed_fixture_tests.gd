@@ -5,14 +5,12 @@ const CATALOGUE_PATH := "res://data/items/item_catalog.tres"
 const FIXTURE_NAMESPACE := "wing_seed_v1"
 const TEMP_ROUND_TRIP_PATH := "user://wing_seed_fixture_transform_test.tscn"
 const EXPECTED_MULTISET := {
-	"loot_000005": 2,
-	"loot_000007": 1,
-	"loot_000022": 2,
-	"loot_000023": 1,
+	"loot_000007": 3,
+	"loot_000022": 3,
 	"loot_000028": 2,
 	"loot_000030": 1,
 	"loot_000031": 2,
-	"loot_000037": 1,
+	"loot_000041": 1,
 }
 
 var _failed: bool = false
@@ -290,7 +288,7 @@ func _test_invalid_declaration(
 		var original_visual := host.call("get_authored_visual") as Node3D
 		host.remove_child(original_visual)
 		original_visual.free()
-		var different_host := seeds.get_child(2)
+		var different_host := seeds.get_child(3) # Soda differs from all three retained cereal hosts.
 		var different_visual := (different_host.call("get_authored_visual") as Node3D).duplicate()
 		host.add_child(different_visual)
 

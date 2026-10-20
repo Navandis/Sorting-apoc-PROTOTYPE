@@ -8,18 +8,18 @@ const CarriedItemsScript = preload("res://carried_items.gd")
 
 
 func _init() -> void:
-	_test_exact_pickup_registration_route_resolves_all_42_assets()
+	_test_exact_pickup_registration_route_resolves_all_retained_seed_assets()
 	print("PASS: item catalog coverage tests")
 	quit(0)
 
 
 # Catches any catalogue omission that would leave a main-scene GLB inert when
 # player_controller calls create_definition_for_node during registration.
-func _test_exact_pickup_registration_route_resolves_all_42_assets() -> void:
+func _test_exact_pickup_registration_route_resolves_all_retained_seed_assets() -> void:
 	var records: Array[Dictionary] = MainSceneLootAdapterScript.enumerate_loot_instances(
 		"res://main.tscn"
 	)
-	assert(records.size() == 42)
+	assert(records.size() == 35)
 	var resolved_count: int = 0
 	for record: Dictionary in records:
 		var source_path: String = String(record["source_path"])
@@ -40,4 +40,4 @@ func _test_exact_pickup_registration_route_resolves_all_42_assets() -> void:
 		carried_items.free()
 		host.free()
 		resolved_count += 1
-	assert(resolved_count == 42)
+	assert(resolved_count == 35)

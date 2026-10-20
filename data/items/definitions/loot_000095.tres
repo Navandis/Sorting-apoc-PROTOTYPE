@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_wbhhl"]
+[ext_resource type="PackedScene" path="res://assets/props/Weapons/SM_KB3D_SIN_BulletBox_Small_04.glb" id="2_1vvjd"]
+
+[resource]
+script = ExtResource("1_wbhhl")
+item_id = &"loot_000095"
+display_name = "Bullet Box Small 04"
+storage_category = "Weapons"
+storage_footprint = Vector3i(2, 3, 1)
+can_be_stacked = true
+can_support_stack = true
+visual_scene = ExtResource("2_1vvjd")

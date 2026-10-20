@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_3l86r"]
+[ext_resource type="PackedScene" path="res://assets/props/Weapons/SM_KB3D_HOH_DoubleBarreledShotgun_01.glb" id="2_8hglk"]
+
+[resource]
+script = ExtResource("1_3l86r")
+item_id = &"loot_000088"
+display_name = "Double Barreled Shotgun 01"
+storage_category = "Weapons"
+storage_footprint = Vector3i(3, 13, 1)
+can_be_stacked = true
+visual_scene = ExtResource("2_8hglk")
+storage_rotation_degrees = Vector3(0, 0, 90)

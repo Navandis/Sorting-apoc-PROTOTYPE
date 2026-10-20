@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_7nahl"]
+[ext_resource type="PackedScene" path="res://assets/props/Weapons/SM_KB3D_HOH_Chainsaw_02.glb" id="2_i1xbh"]
+
+[resource]
+script = ExtResource("1_7nahl")
+item_id = &"loot_000087"
+display_name = "Chainsaw 02"
+storage_category = "Weapons"
+storage_footprint = Vector3i(3, 10, 1)
+can_be_stacked = true
+visual_scene = ExtResource("2_i1xbh")

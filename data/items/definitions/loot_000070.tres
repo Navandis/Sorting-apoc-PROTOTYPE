@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_nwfy0"]
+[ext_resource type="PackedScene" path="res://assets/props/Fuel/SM_KB3D_LAB_Nitro_Fuel_Tank_01.glb" id="2_u86kd"]
+
+[resource]
+script = ExtResource("1_nwfy0")
+item_id = &"loot_000070"
+display_name = "Nitro Fuel Tank 01"
+storage_category = "Fuel"
+storage_footprint = Vector3i(3, 3, 1)
+can_be_stacked = true
+visual_scene = ExtResource("2_u86kd")

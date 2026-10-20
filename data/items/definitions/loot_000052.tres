@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_fxaut"]
+[ext_resource type="PackedScene" path="res://assets/props/Food/SM_KB3D_PAR_Lemons_Crate_01.glb" id="2_nkttt"]
+
+[resource]
+script = ExtResource("1_fxaut")
+item_id = &"loot_000052"
+display_name = "Lemons Crate 01"
+storage_category = "Food"
+storage_footprint = Vector3i(5, 4, 1)
+can_be_stacked = true
+visual_scene = ExtResource("2_nkttt")

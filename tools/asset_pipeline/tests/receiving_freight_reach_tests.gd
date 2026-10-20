@@ -96,7 +96,8 @@ func _measure_case(case: Dictionary) -> Dictionary:
 	player.set("receiving_interaction_distance", configured_reach)
 	var camera := player.get_node("Camera3D") as Camera3D
 	var carried = player.get_node("CarriedItems")
-	carried.set("max_bulk", 99999)
+	# One measured TAKE is handed off before the next; use normal player capacity.
+	carried.set("max_bulk", 10)
 	var records: Array[Dictionary] = []
 	while not (presenter.call("get_materialized_world_items") as Array).is_empty():
 		var candidate := _nearest_exposed_candidate(
@@ -161,7 +162,7 @@ func _measure_case(case: Dictionary) -> Dictionary:
 			_check(false, "production TAKE failed; stop rather than repeat the same blocked target")
 			break
 		_check(carried.get_selected_item() == item, "%s step %d TAKE transfers the measured item" % [String(case["label"]), records.size() - 1])
-		carried.call("remove_item", item)
+		_after_measured_take(scene,item)
 		await physics_frame
 
 	var drained: bool = records.size() == initial_count and bool(batch.is_drained())
@@ -175,6 +176,10 @@ func _measure_case(case: Dictionary) -> Dictionary:
 		"drained": drained,
 		"fixture_visuals_clean": fixture_visuals_clean,
 	}
+
+
+func _after_measured_take(scene: Node, item: ItemInstance) -> void:
+	scene.get_node("Player/CarriedItems").remove_item(item)
 
 
 func _assert_production_seating(presenter: Node) -> void:
