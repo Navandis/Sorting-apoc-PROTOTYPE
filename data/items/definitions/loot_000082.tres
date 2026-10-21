@@ -1,12 +1,12 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://sw3t1cvngopy"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_dfj42"]
-[ext_resource type="PackedScene" path="res://assets/props/Weapons/SM_BaseballBat_01.glb" id="2_pcdcj"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_dfj42"]
+[ext_resource type="PackedScene" uid="uid://xrk14xw6u12w" path="res://assets/props/Weapons/SM_BaseballBat_01.glb" id="2_pcdcj"]
 
 [resource]
 script = ExtResource("1_dfj42")
 item_id = &"loot_000082"
-display_name = "Baseball Bat 01"
+display_name = "Baseball Bat"
 storage_category = "Weapons"
 storage_footprint = Vector3i(10, 1, 1)
 can_be_stacked = true

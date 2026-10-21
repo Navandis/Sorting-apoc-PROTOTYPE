@@ -1,13 +1,14 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://d30fdersgv4dd"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_pewwn"]
-[ext_resource type="PackedScene" path="res://assets/props/Weapons/SM_KB3D_WAR_FragGrenade_01.glb" id="2_7fuw7"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_pewwn"]
+[ext_resource type="PackedScene" uid="uid://ch8x0vc6dfae4" path="res://assets/props/Weapons/SM_KB3D_WAR_FragGrenade_01.glb" id="2_7fuw7"]
 
 [resource]
 script = ExtResource("1_pewwn")
 item_id = &"loot_000101"
-display_name = "Frag Grenade 01"
+display_name = "Frag Grenade"
 storage_category = "Weapons"
 storage_footprint = Vector3i(2, 2, 1)
 can_be_stacked = true
 visual_scene = ExtResource("2_7fuw7")
+storage_rotation_degrees = Vector3(0, -90, 0)

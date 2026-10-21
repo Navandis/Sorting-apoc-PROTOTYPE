@@ -1,14 +1,14 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://bsvoaotf3cm6m"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_k06an"]
-[ext_resource type="PackedScene" path="res://assets/props/electronics/SM_Boombox_radio_01.glb" id="2_ucjht"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_k06an"]
+[ext_resource type="PackedScene" uid="uid://2a8nbkevk2ft" path="res://assets/props/electronics/SM_Boombox_radio_01.glb" id="2_ucjht"]
 
 [resource]
 script = ExtResource("1_k06an")
 item_id = &"loot_000115"
-display_name = "Boombox radio 01"
+display_name = "Boombox Radio"
 storage_category = "Electronics"
 storage_footprint = Vector3i(5, 2, 1)
 can_be_stacked = true
 visual_scene = ExtResource("2_ucjht")
-storage_rotation_degrees = Vector3(0, 90, 0)
+storage_rotation_degrees = Vector3(0, -90, 0)

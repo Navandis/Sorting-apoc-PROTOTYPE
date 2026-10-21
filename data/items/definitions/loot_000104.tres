@@ -1,12 +1,13 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://c6843pxnmrmq0"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_xvcl1"]
-[ext_resource type="PackedScene" path="res://assets/props/Weapons/SM_KB3D_WAR_Molotov_Cocktail_01.glb" id="2_fdf0y"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_xvcl1"]
+[ext_resource type="PackedScene" uid="uid://vkq0ij7u7xi7" path="res://assets/props/Weapons/SM_KB3D_WAR_Molotov_Cocktail_01.glb" id="2_fdf0y"]
 
 [resource]
 script = ExtResource("1_xvcl1")
 item_id = &"loot_000104"
-display_name = "Molotov Cocktail 01"
+display_name = "Molotov Cocktail"
 storage_category = "Weapons"
 can_be_stacked = true
 visual_scene = ExtResource("2_fdf0y")
+storage_rotation_degrees = Vector3(0, -45, 0)

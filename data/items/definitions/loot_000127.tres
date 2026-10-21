@@ -1,13 +1,13 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://cfcvdhxloyq3k"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_2rs3m"]
-[ext_resource type="PackedScene" path="res://assets/props/medical/SM_Saline_Solution_01.glb" id="2_nhguk"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_2rs3m"]
+[ext_resource type="PackedScene" uid="uid://b6c2geouu2846" path="res://assets/props/medical/SM_Saline_Solution_01.glb" id="2_nhguk"]
 
 [resource]
 script = ExtResource("1_2rs3m")
 item_id = &"loot_000127"
-display_name = "Saline Solution 01"
+display_name = "Saline Solution"
 storage_category = "Medical"
-storage_footprint = Vector3i(1, 2, 1)
 can_be_stacked = true
 visual_scene = ExtResource("2_nhguk")
+storage_rotation_degrees = Vector3(0, -170, 0)

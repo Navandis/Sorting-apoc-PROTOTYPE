@@ -1,16 +1,15 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://cyhswgahaat3i"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_vkxp5"]
-[ext_resource type="PackedScene" path="res://assets/props/Hydration/SM_SodaCan.glb" id="2_hbm2g"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_vkxp5"]
+[ext_resource type="PackedScene" uid="uid://o46hr8fxwj3w" path="res://assets/props/Hydration/SM_SodaCan.glb" id="2_hbm2g"]
 
 [resource]
 script = ExtResource("1_vkxp5")
 item_id = &"loot_000022"
+display_name = "Soda Can"
 utility_id = &"Hydration"
 utility_value = 3
-display_name = "Soda Can"
 storage_category = "Hydration"
-storage_footprint = Vector3i(1, 1, 1)
 can_be_stacked = true
 can_support_stack = true
 auto_stack_group = &"round_cans"

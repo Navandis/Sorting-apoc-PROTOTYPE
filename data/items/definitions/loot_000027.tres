@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_udr6d")
 item_id = &"loot_000027"
-display_name = "Medicine Bottle"
+display_name = "Cough Syrup"
 storage_category = "Medical"
 can_be_stacked = true
 visual_scene = ExtResource("2_ts674")

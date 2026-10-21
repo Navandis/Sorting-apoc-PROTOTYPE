@@ -1,13 +1,13 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://bocbi0x5q2oit"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_ndl0c"]
-[ext_resource type="PackedScene" path="res://assets/props/Weapons/SM_KB3D_SIN_IntGarage_A_ClawHammer01.glb" id="2_yg4hl"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_ndl0c"]
+[ext_resource type="PackedScene" uid="uid://dpcnkv3q6d0wx" path="res://assets/props/Weapons/SM_KB3D_SIN_IntGarage_A_ClawHammer01.glb" id="2_yg4hl"]
 
 [resource]
 script = ExtResource("1_ndl0c")
 item_id = &"loot_000096"
-display_name = "Claw Hammer01"
+display_name = "Claw Hammer"
 storage_category = "Weapons"
-storage_footprint = Vector3i(4, 2, 1)
+storage_footprint = Vector3i(3, 2, 1)
 can_be_stacked = true
 visual_scene = ExtResource("2_yg4hl")

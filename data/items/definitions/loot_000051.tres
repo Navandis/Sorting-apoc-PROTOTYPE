@@ -1,13 +1,14 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://kroppvmn1b8n"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_vuluy"]
-[ext_resource type="PackedScene" path="res://assets/props/Food/SM_KB3D_LVC_RawFish_Medium_02.glb" id="2_v6t63"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_vuluy"]
+[ext_resource type="PackedScene" uid="uid://dihaukyhuopoi" path="res://assets/props/Food/SM_KB3D_LVC_RawFish_Medium_02.glb" id="2_v6t63"]
 
 [resource]
 script = ExtResource("1_vuluy")
 item_id = &"loot_000051"
-display_name = "Raw Fish Medium 02"
+display_name = "Raw Fish Medium"
 storage_category = "Food"
-storage_footprint = Vector3i(3, 8, 1)
+storage_footprint = Vector3i(8, 2, 1)
 can_be_stacked = true
 visual_scene = ExtResource("2_v6t63")
+storage_rotation_degrees = Vector3(0, -90, 0)

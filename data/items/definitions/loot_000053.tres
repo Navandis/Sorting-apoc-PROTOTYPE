@@ -1,12 +1,12 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://dytr3y7pgmp7g"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_34fvu"]
-[ext_resource type="PackedScene" path="res://assets/props/Food/SM_KB3D_SFR_Apples_Crate_01.glb" id="2_gswip"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_34fvu"]
+[ext_resource type="PackedScene" uid="uid://qba6ki1oxcdb" path="res://assets/props/Food/SM_KB3D_SFR_Apples_Crate_01.glb" id="2_gswip"]
 
 [resource]
 script = ExtResource("1_34fvu")
 item_id = &"loot_000053"
-display_name = "Apples Crate 01"
+display_name = "Apples Crate"
 storage_category = "Food"
 storage_footprint = Vector3i(6, 4, 1)
 can_be_stacked = true

@@ -1,13 +1,14 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://ysimu4kamgyk"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_pigm2"]
-[ext_resource type="PackedScene" path="res://assets/props/Weapons/SM_KB3D_HOH_BearTrap_02.glb" id="2_u80mf"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_pigm2"]
+[ext_resource type="PackedScene" uid="uid://boi2xidn5gb17" path="res://assets/props/Weapons/SM_KB3D_HOH_BearTrap_02.glb" id="2_u80mf"]
 
 [resource]
 script = ExtResource("1_pigm2")
 item_id = &"loot_000086"
-display_name = "Bear Trap 02"
+display_name = "Bear Trap"
 storage_category = "Weapons"
-storage_footprint = Vector3i(5, 7, 1)
+storage_footprint = Vector3i(7, 5, 1)
 can_be_stacked = true
 visual_scene = ExtResource("2_u80mf")
+storage_rotation_degrees = Vector3(0, -90, 0)

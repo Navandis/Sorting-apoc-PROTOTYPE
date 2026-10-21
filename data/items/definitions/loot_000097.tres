@@ -1,14 +1,14 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://cg0lur2kelhta"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_xqs0a"]
-[ext_resource type="PackedScene" path="res://assets/props/Weapons/SM_KB3D_SIN_PropAssaultRifle_A_Main.glb" id="2_r6ybk"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_xqs0a"]
+[ext_resource type="PackedScene" uid="uid://bvcgfga56cycy" path="res://assets/props/Weapons/SM_KB3D_SIN_PropAssaultRifle_A_Main.glb" id="2_r6ybk"]
 
 [resource]
 script = ExtResource("1_xqs0a")
 item_id = &"loot_000097"
 display_name = "Assault Rifle"
 storage_category = "Weapons"
-storage_footprint = Vector3i(3, 9, 1)
+storage_footprint = Vector3i(9, 3, 1)
 can_be_stacked = true
 visual_scene = ExtResource("2_r6ybk")
-storage_rotation_degrees = Vector3(0, 0, 90)
+storage_rotation_degrees = Vector3(0, -90, 90)

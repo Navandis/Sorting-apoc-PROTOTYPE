@@ -1,12 +1,13 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://cu1h4jxglbp0g"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_3536j"]
-[ext_resource type="PackedScene" path="res://assets/props/morale/SM_PackOfCigarettes_01.glb" id="2_i4onl"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_3536j"]
+[ext_resource type="PackedScene" uid="uid://jbbqy1uluq7o" path="res://assets/props/morale/SM_PackOfCigarettes_01.glb" id="2_i4onl"]
 
 [resource]
 script = ExtResource("1_3536j")
 item_id = &"loot_000141"
-display_name = "Pack Of Cigarettes 01"
+display_name = "Cigarettes Pack"
 storage_category = "Morale"
 can_be_stacked = true
 visual_scene = ExtResource("2_i4onl")
+storage_rotation_degrees = Vector3(0, -90, 0)

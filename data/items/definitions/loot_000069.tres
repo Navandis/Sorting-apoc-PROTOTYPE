@@ -1,13 +1,14 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://dgaf0ykoww474"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_k7w5k"]
-[ext_resource type="PackedScene" path="res://assets/props/Fuel/SM_KB3D_FST_GasTank_02.glb" id="2_og8a7"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_k7w5k"]
+[ext_resource type="PackedScene" uid="uid://damimrrxy1yyj" path="res://assets/props/Fuel/SM_KB3D_FST_GasTank_02.glb" id="2_og8a7"]
 
 [resource]
 script = ExtResource("1_k7w5k")
 item_id = &"loot_000069"
-display_name = "Gas Tank 02"
+display_name = "Methane Cylinder"
 storage_category = "Fuel"
 storage_footprint = Vector3i(4, 4, 1)
 can_be_stacked = true
 visual_scene = ExtResource("2_og8a7")
+storage_rotation_degrees = Vector3(0, -130, 0)

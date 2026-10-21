@@ -1,14 +1,13 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://b1o8r60g4e2lt"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_i2q1h"]
-[ext_resource type="PackedScene" path="res://assets/props/protection/SM_Sweater_01.glb" id="2_rocvh"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_i2q1h"]
+[ext_resource type="PackedScene" uid="uid://dhp8kaagctrk4" path="res://assets/props/protection/SM_Sweater_01.glb" id="2_rocvh"]
 
 [resource]
 script = ExtResource("1_i2q1h")
 item_id = &"loot_000161"
-display_name = "Sweater 01"
+display_name = "Sweater"
 storage_category = "Protection"
-storage_footprint = Vector3i(6, 7, 1)
+storage_footprint = Vector3i(6, 2, 1)
 can_be_stacked = true
 visual_scene = ExtResource("2_rocvh")
-storage_rotation_degrees = Vector3(-90, 0, 0)

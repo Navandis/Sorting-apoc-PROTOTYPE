@@ -1,14 +1,14 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://dsmyhpqlmag2g"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_lnvei"]
-[ext_resource type="PackedScene" path="res://assets/props/Food/SM_KB3D_LCA_KetchupBottle_01.glb" id="2_7rl1h"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_lnvei"]
+[ext_resource type="PackedScene" uid="uid://bt7ie8f14cx1t" path="res://assets/props/Food/SM_KB3D_LCA_KetchupBottle_01.glb" id="2_7rl1h"]
 
 [resource]
 script = ExtResource("1_lnvei")
 item_id = &"loot_000050"
-display_name = "Ketchup Bottle 01"
+display_name = "Ketchup Bottle"
 storage_category = "Food"
 storage_footprint = Vector3i(2, 1, 1)
 can_be_stacked = true
 visual_scene = ExtResource("2_7rl1h")
-storage_rotation_degrees = Vector3(0, 90, 0)
+storage_rotation_degrees = Vector3(0, -90, 0)

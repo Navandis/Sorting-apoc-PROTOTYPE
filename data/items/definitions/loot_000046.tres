@@ -1,12 +1,12 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://bwfdo8hy7wnyi"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_v45kh"]
-[ext_resource type="PackedScene" path="res://assets/props/Food/SM_KB3D_ATL_Corn_Sack_01.glb" id="2_i2wse"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_v45kh"]
+[ext_resource type="PackedScene" uid="uid://b5td11lufx075" path="res://assets/props/Food/SM_KB3D_ATL_Corn_Sack_01.glb" id="2_i2wse"]
 
 [resource]
 script = ExtResource("1_v45kh")
 item_id = &"loot_000046"
-display_name = "Corn Sack 01"
+display_name = "Corn Sack"
 storage_category = "Food"
 storage_footprint = Vector3i(4, 7, 1)
 can_be_stacked = true

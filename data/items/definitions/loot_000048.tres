@@ -1,12 +1,12 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://bvi3xsy2uhhex"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_a365a"]
-[ext_resource type="PackedScene" path="res://assets/props/Food/SM_KB3D_DMZ_Zucchini_Crate_02.glb" id="2_vdo12"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_a365a"]
+[ext_resource type="PackedScene" uid="uid://c478u2evtox73" path="res://assets/props/Food/SM_KB3D_DMZ_Zucchini_Crate_02.glb" id="2_vdo12"]
 
 [resource]
 script = ExtResource("1_a365a")
 item_id = &"loot_000048"
-display_name = "Zucchini Crate 02"
+display_name = "Zucchini Crate"
 storage_category = "Food"
 storage_footprint = Vector3i(5, 4, 1)
 can_be_stacked = true

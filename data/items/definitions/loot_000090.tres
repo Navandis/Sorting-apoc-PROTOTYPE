@@ -1,14 +1,13 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://cbmlvb5qmstyu"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_jvjnw"]
-[ext_resource type="PackedScene" path="res://assets/props/Weapons/SM_KB3D_HOH_SledgeHammer_01.glb" id="2_tk72c"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_jvjnw"]
+[ext_resource type="PackedScene" uid="uid://bqmbr1pi2rwsa" path="res://assets/props/Weapons/SM_KB3D_HOH_SledgeHammer_01.glb" id="2_tk72c"]
 
 [resource]
 script = ExtResource("1_jvjnw")
 item_id = &"loot_000090"
-display_name = "Sledge Hammer 01"
+display_name = "Sledgehammer"
 storage_category = "Weapons"
 storage_footprint = Vector3i(10, 2, 1)
-can_be_stacked = true
 visual_scene = ExtResource("2_tk72c")
-storage_rotation_degrees = Vector3(0, 0, 90)
+storage_rotation_degrees = Vector3(90, 0, 90)

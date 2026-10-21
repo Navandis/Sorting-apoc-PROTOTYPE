@@ -1,14 +1,14 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://dvlrbgm28hu4l"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_vlf1i"]
-[ext_resource type="PackedScene" path="res://assets/props/Weapons/SM_crowbar_02.glb" id="2_wba8i"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_vlf1i"]
+[ext_resource type="PackedScene" uid="uid://bgk4xqr76tnls" path="res://assets/props/Weapons/SM_crowbar_02.glb" id="2_wba8i"]
 
 [resource]
 script = ExtResource("1_vlf1i")
 item_id = &"loot_000114"
-display_name = "crowbar 02"
+display_name = "Crowbar"
 storage_category = "Weapons"
-storage_footprint = Vector3i(3, 8, 1)
+storage_footprint = Vector3i(8, 3, 1)
 can_be_stacked = true
 visual_scene = ExtResource("2_wba8i")
-storage_rotation_degrees = Vector3(90, 0, 0)
+storage_rotation_degrees = Vector3(90, 90, 0)

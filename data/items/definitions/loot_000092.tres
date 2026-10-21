@@ -1,12 +1,12 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://7eoum6aku54e"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_gwjbs"]
-[ext_resource type="PackedScene" path="res://assets/props/Weapons/SM_KB3D_MIL_LandMine_01.glb" id="2_biour"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_gwjbs"]
+[ext_resource type="PackedScene" uid="uid://nlbfh1s6v2si" path="res://assets/props/Weapons/SM_KB3D_MIL_LandMine_01.glb" id="2_biour"]
 
 [resource]
 script = ExtResource("1_gwjbs")
 item_id = &"loot_000092"
-display_name = "Land Mine 01"
+display_name = "Land Mine"
 storage_category = "Weapons"
 storage_footprint = Vector3i(4, 4, 1)
 can_be_stacked = true

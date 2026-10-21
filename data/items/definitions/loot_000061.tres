@@ -1,14 +1,14 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://b2by73vmjtqtv"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_af4j0"]
-[ext_resource type="PackedScene" path="res://assets/props/Food/SM_MysteryMeat_Carcass_Medium_01.glb" id="2_n8gvv"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_af4j0"]
+[ext_resource type="PackedScene" uid="uid://3r5bnihub1ko" path="res://assets/props/Food/SM_MysteryMeat_Carcass_Medium_01.glb" id="2_n8gvv"]
 
 [resource]
 script = ExtResource("1_af4j0")
 item_id = &"loot_000061"
-display_name = "Mystery Meat Carcass Medium 01"
+display_name = "Mystery Meat Medium"
 storage_category = "Food"
-storage_footprint = Vector3i(10, 3, 1)
+storage_footprint = Vector3i(11, 4, 1)
 can_be_stacked = true
 visual_scene = ExtResource("2_n8gvv")
-storage_rotation_degrees = Vector3(0, 0, 90)
+storage_rotation_degrees = Vector3(50, 0, 90)

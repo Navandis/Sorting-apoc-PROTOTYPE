@@ -1,13 +1,15 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://boh3ojchul716"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_ks17x"]
-[ext_resource type="PackedScene" path="res://assets/props/protection/SM_KB3D_SIS_FoldedShirt_02.glb" id="2_5q7pe"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_ks17x"]
+[ext_resource type="PackedScene" uid="uid://bmuskwrnck433" path="res://assets/props/protection/SM_KB3D_SIS_FoldedShirt_02.glb" id="2_5q7pe"]
 
 [resource]
 script = ExtResource("1_ks17x")
 item_id = &"loot_000153"
-display_name = "Folded Shirt 02"
+display_name = "Folded Shirt"
 storage_category = "Protection"
-storage_footprint = Vector3i(4, 3, 1)
+storage_footprint = Vector3i(3, 4, 1)
 can_be_stacked = true
+can_support_stack = true
 visual_scene = ExtResource("2_5q7pe")
+storage_rotation_degrees = Vector3(0, -90, 0)

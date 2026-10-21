@@ -1,13 +1,13 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://borahkwhus1c5"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_m8oc2"]
-[ext_resource type="PackedScene" path="res://assets/props/protection/SM_Armor_02.glb" id="2_2q0xq"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_m8oc2"]
+[ext_resource type="PackedScene" uid="uid://cyag5i6w8fjq4" path="res://assets/props/protection/SM_Armor_02.glb" id="2_2q0xq"]
 
 [resource]
 script = ExtResource("1_m8oc2")
 item_id = &"loot_000032"
-display_name = "Armor 02"
+display_name = "Police Vest"
 storage_category = "Protection"
-storage_footprint = Vector3i(3, 3, 1)
+storage_footprint = Vector3i(4, 3, 1)
 can_be_stacked = true
 visual_scene = ExtResource("2_2q0xq")

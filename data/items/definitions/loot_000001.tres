@@ -1,12 +1,12 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://ceniaw5yj56tr"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_ebrrx"]
-[ext_resource type="PackedScene" path="res://assets/props/electronics/SM_ComputerMouse_01.glb" id="2_me73x"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_ebrrx"]
+[ext_resource type="PackedScene" uid="uid://cdtpk0sa4cpcp" path="res://assets/props/electronics/SM_ComputerMouse_01.glb" id="2_me73x"]
 
 [resource]
 script = ExtResource("1_ebrrx")
 item_id = &"loot_000001"
-display_name = "Computer Mouse 01"
+display_name = "Computer Mouse"
 storage_category = "Electronics"
 storage_footprint = Vector3i(1, 2, 1)
 can_be_stacked = true

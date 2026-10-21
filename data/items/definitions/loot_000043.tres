@@ -1,14 +1,15 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://by6t7oomdunot"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_tw03n"]
-[ext_resource type="PackedScene" path="res://assets/props/Food/SM_Dry_Goods_01h.glb" id="2_sj1u5"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_tw03n"]
+[ext_resource type="PackedScene" uid="uid://dc1uaa7a1h2tx" path="res://assets/props/Food/SM_Dry_Goods_01h.glb" id="2_sj1u5"]
 
 [resource]
 script = ExtResource("1_tw03n")
 item_id = &"loot_000043"
-display_name = "Dry Goods 01h"
+display_name = "Canned Corn"
 storage_category = "Food"
 can_be_stacked = true
 can_support_stack = true
 auto_stack_group = &"round_cans"
 visual_scene = ExtResource("2_sj1u5")
+storage_rotation_degrees = Vector3(0, -90, 0)

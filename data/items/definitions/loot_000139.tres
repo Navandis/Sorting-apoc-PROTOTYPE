@@ -1,14 +1,14 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://rnu1j10t3dx2"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_pkfuw"]
-[ext_resource type="PackedScene" path="res://assets/props/morale/SM_KB3D_SIS_IntRecordStore_AcousticGuitar_01.glb" id="2_bn3un"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_pkfuw"]
+[ext_resource type="PackedScene" uid="uid://wt3fem48lj2t" path="res://assets/props/morale/SM_KB3D_SIS_IntRecordStore_AcousticGuitar_01.glb" id="2_bn3un"]
 
 [resource]
 script = ExtResource("1_pkfuw")
 item_id = &"loot_000139"
-display_name = "Acoustic Guitar 01"
+display_name = "Acoustic Guitar"
 storage_category = "Morale"
-storage_footprint = Vector3i(5, 13, 1)
+storage_footprint = Vector3i(13, 2, 1)
 can_be_stacked = true
 visual_scene = ExtResource("2_bn3un")
-storage_rotation_degrees = Vector3(-90, 0, 0)
+storage_rotation_degrees = Vector3(180, 180, 90)

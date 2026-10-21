@@ -1,14 +1,14 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://b1ticfvone3qt"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_tdnvf"]
-[ext_resource type="PackedScene" path="res://assets/props/Food/SM_Bread_1.glb" id="2_kvxym"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_tdnvf"]
+[ext_resource type="PackedScene" uid="uid://b14f7xk05u40g" path="res://assets/props/Food/SM_Bread_1.glb" id="2_kvxym"]
 
 [resource]
 script = ExtResource("1_tdnvf")
 item_id = &"loot_000006"
+display_name = "Bread Loaf"
 utility_id = &"Food"
 utility_value = 6
-display_name = "Bread 1"
 storage_category = "Food"
 storage_footprint = Vector3i(3, 2, 1)
 can_be_stacked = true

@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_kymk2")
 item_id = &"loot_000018"
-display_name = "Propane Tank 02"
+display_name = "Propane Cylinder"
 storage_category = "Fuel"
 storage_footprint = Vector3i(3, 3, 1)
 can_be_stacked = true

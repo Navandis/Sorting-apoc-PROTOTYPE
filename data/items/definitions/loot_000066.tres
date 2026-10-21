@@ -1,12 +1,12 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://buag8cimscnxd"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_ym463"]
-[ext_resource type="PackedScene" path="res://assets/props/Food/SM_Pumpkin_Large_01.glb" id="2_co106"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_ym463"]
+[ext_resource type="PackedScene" uid="uid://bdlhjxrv7wg4o" path="res://assets/props/Food/SM_Pumpkin_Large_01.glb" id="2_co106"]
 
 [resource]
 script = ExtResource("1_ym463")
 item_id = &"loot_000066"
-display_name = "Pumpkin Large 01"
+display_name = "Pumpkin Large"
 storage_category = "Food"
 storage_footprint = Vector3i(4, 4, 1)
 can_be_stacked = true

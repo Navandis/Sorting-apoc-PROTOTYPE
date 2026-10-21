@@ -1,15 +1,15 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://bmo42rjq3kfb2"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_cinvp"]
-[ext_resource type="PackedScene" path="res://assets/props/electronics/SM_KB3D_SIS_Guitar_Amp_01.glb" id="2_vxucw"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_cinvp"]
+[ext_resource type="PackedScene" uid="uid://vpjbqd1ef2eb" path="res://assets/props/electronics/SM_KB3D_SIS_Guitar_Amp_01.glb" id="2_vxucw"]
 
 [resource]
 script = ExtResource("1_cinvp")
 item_id = &"loot_000120"
-display_name = "Guitar Amp 01"
+display_name = "Guitar Amp"
 storage_category = "Electronics"
 storage_footprint = Vector3i(6, 4, 1)
 can_be_stacked = true
 can_support_stack = true
 visual_scene = ExtResource("2_vxucw")
-storage_rotation_degrees = Vector3(0, 90, 0)
+storage_rotation_degrees = Vector3(0, -90, 0)

@@ -1,12 +1,12 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://y8ubrdv1ki4y"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_4rngc"]
-[ext_resource type="PackedScene" path="res://assets/props/medical/SM_Military_Med_crate_01.glb" id="2_0ayyt"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_4rngc"]
+[ext_resource type="PackedScene" uid="uid://diwd1i3vs404j" path="res://assets/props/medical/SM_Military_Med_crate_01.glb" id="2_0ayyt"]
 
 [resource]
 script = ExtResource("1_4rngc")
 item_id = &"loot_000126"
-display_name = "Military Med crate 01"
+display_name = "Military Med Crate"
 storage_category = "Medical"
 storage_footprint = Vector3i(11, 4, 1)
 can_be_stacked = true

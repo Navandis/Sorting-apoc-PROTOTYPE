@@ -1,13 +1,14 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://bl1d72p2srxom"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_4bvg5"]
-[ext_resource type="PackedScene" path="res://assets/props/morale/SM_KB3D_API_VR_Headset_01.glb" id="2_vcw8h"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_4bvg5"]
+[ext_resource type="PackedScene" uid="uid://creeqeetkfkrs" path="res://assets/props/morale/SM_KB3D_API_VR_Headset_01.glb" id="2_vcw8h"]
 
 [resource]
 script = ExtResource("1_4bvg5")
 item_id = &"loot_000131"
-display_name = "VR Headset 01"
+display_name = "VR Headset"
 storage_category = "Morale"
-storage_footprint = Vector3i(4, 3, 1)
+storage_footprint = Vector3i(3, 4, 1)
 can_be_stacked = true
 visual_scene = ExtResource("2_vcw8h")
+storage_rotation_degrees = Vector3(0, -90, 0)

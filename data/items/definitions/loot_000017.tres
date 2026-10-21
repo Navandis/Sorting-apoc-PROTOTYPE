@@ -6,9 +6,9 @@
 [resource]
 script = ExtResource("1_226s2")
 item_id = &"loot_000017"
-display_name = "Gas Cylinder 01"
+display_name = "Methane Cylinder"
 storage_category = "Fuel"
-storage_footprint = Vector3i(4, 3, 1)
+storage_footprint = Vector3i(4, 4, 1)
 can_be_stacked = true
 visual_scene = ExtResource("2_hmwjr")
 storage_rotation_degrees = Vector3(0, -90, 0)

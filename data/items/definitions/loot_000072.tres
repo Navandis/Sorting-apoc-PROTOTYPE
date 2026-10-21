@@ -1,13 +1,13 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://bingta5xbdxhg"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_gf66d"]
-[ext_resource type="PackedScene" path="res://assets/props/Hydration/SM_KB3D_AMP_EnergyDrink_01.glb" id="2_g2vc1"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_gf66d"]
+[ext_resource type="PackedScene" uid="uid://dxc1i8tukuctc" path="res://assets/props/Hydration/SM_KB3D_AMP_EnergyDrink_01.glb" id="2_g2vc1"]
 
 [resource]
 script = ExtResource("1_gf66d")
 item_id = &"loot_000072"
-display_name = "Energy Drink 01"
+display_name = "Energy Drink"
 storage_category = "Hydration"
-storage_footprint = Vector3i(2, 2, 1)
 can_be_stacked = true
 visual_scene = ExtResource("2_g2vc1")
+storage_rotation_degrees = Vector3(0, -90, 0)

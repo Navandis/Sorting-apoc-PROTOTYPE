@@ -1,13 +1,14 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://ccu62yn7mjose"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_e74jn"]
-[ext_resource type="PackedScene" path="res://assets/props/protection/SM_KB3D_SIN_GasMask_A.glb" id="2_vx42t"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_e74jn"]
+[ext_resource type="PackedScene" uid="uid://d1hdi8glecq7f" path="res://assets/props/protection/SM_KB3D_SIN_GasMask_A.glb" id="2_vx42t"]
 
 [resource]
 script = ExtResource("1_e74jn")
 item_id = &"loot_000147"
-display_name = "Gas Mask A"
+display_name = "Gas Mask"
 storage_category = "Protection"
-storage_footprint = Vector3i(3, 2, 1)
+storage_footprint = Vector3i(2, 5, 1)
 can_be_stacked = true
 visual_scene = ExtResource("2_vx42t")
+storage_rotation_degrees = Vector3(0, -90, 70)

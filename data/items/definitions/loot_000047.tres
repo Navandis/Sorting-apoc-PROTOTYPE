@@ -1,12 +1,12 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://b702d5mereek0"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_747kn"]
-[ext_resource type="PackedScene" path="res://assets/props/Food/SM_KB3D_DMZ_LettuceHead_02.glb" id="2_nk0a8"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_747kn"]
+[ext_resource type="PackedScene" uid="uid://clklv8tvvj34p" path="res://assets/props/Food/SM_KB3D_DMZ_LettuceHead_02.glb" id="2_nk0a8"]
 
 [resource]
 script = ExtResource("1_747kn")
 item_id = &"loot_000047"
-display_name = "Lettuce Head 02"
+display_name = "Lettuce Head"
 storage_category = "Food"
 storage_footprint = Vector3i(6, 6, 1)
 can_be_stacked = true

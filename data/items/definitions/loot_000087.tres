@@ -1,13 +1,14 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://xomny33ch06h"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_7nahl"]
-[ext_resource type="PackedScene" path="res://assets/props/Weapons/SM_KB3D_HOH_Chainsaw_02.glb" id="2_i1xbh"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_7nahl"]
+[ext_resource type="PackedScene" uid="uid://cebccn22gqsef" path="res://assets/props/Weapons/SM_KB3D_HOH_Chainsaw_02.glb" id="2_i1xbh"]
 
 [resource]
 script = ExtResource("1_7nahl")
 item_id = &"loot_000087"
-display_name = "Chainsaw 02"
+display_name = "Chainsaw"
 storage_category = "Weapons"
-storage_footprint = Vector3i(3, 10, 1)
+storage_footprint = Vector3i(10, 3, 1)
 can_be_stacked = true
 visual_scene = ExtResource("2_i1xbh")
+storage_rotation_degrees = Vector3(0, -90, 0)

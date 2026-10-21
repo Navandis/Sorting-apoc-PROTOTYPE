@@ -6,9 +6,9 @@
 [resource]
 script = ExtResource("1_ggv6r")
 item_id = &"loot_000019"
+display_name = "Cola Can"
 utility_id = &"Hydration"
 utility_value = 3
-display_name = "Food Can"
 storage_category = "Hydration"
 can_be_stacked = true
 can_support_stack = true

@@ -1,12 +1,12 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://cm2m2yo8m4v16"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_vn6r4"]
-[ext_resource type="PackedScene" path="res://assets/props/Fuel/SM_OxygenTank_01.glb" id="2_pxo3i"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_vn6r4"]
+[ext_resource type="PackedScene" uid="uid://p474v731331r" path="res://assets/props/Fuel/SM_OxygenTank_01.glb" id="2_pxo3i"]
 
 [resource]
 script = ExtResource("1_vn6r4")
 item_id = &"loot_000071"
-display_name = "Oxygen Tank 01"
+display_name = "Oxygen Tank"
 storage_category = "Fuel"
 storage_footprint = Vector3i(2, 2, 1)
 can_be_stacked = true

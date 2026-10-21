@@ -1,12 +1,13 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://civf68js1471u"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_lp660"]
-[ext_resource type="PackedScene" path="res://assets/props/Hydration/SM_KB3D_SIS_WaterBottle_02.glb" id="2_pcblc"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_lp660"]
+[ext_resource type="PackedScene" uid="uid://3u2hvdjk2oow" path="res://assets/props/Hydration/SM_KB3D_SIS_WaterBottle_02.glb" id="2_pcblc"]
 
 [resource]
 script = ExtResource("1_lp660")
 item_id = &"loot_000079"
-display_name = "Water Bottle 02"
+display_name = "Water Bottle"
 storage_category = "Hydration"
 can_be_stacked = true
 visual_scene = ExtResource("2_pcblc")
+storage_rotation_degrees = Vector3(0, -30, 0)

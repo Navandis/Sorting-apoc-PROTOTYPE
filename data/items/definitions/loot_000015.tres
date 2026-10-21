@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_cvlu1")
 item_id = &"loot_000015"
-display_name = "Fuel Canister"
+display_name = "Jerry Can"
 storage_category = "Fuel"
 storage_footprint = Vector3i(4, 2, 1)
 can_be_stacked = true

@@ -1,12 +1,12 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://70fsuyybrahf"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_d01ex"]
-[ext_resource type="PackedScene" path="res://assets/props/Food/SM_KB3D_SFR_Bananas_Crate_01.glb" id="2_6t2v2"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_d01ex"]
+[ext_resource type="PackedScene" uid="uid://bd6m68mojgy7k" path="res://assets/props/Food/SM_KB3D_SFR_Bananas_Crate_01.glb" id="2_6t2v2"]
 
 [resource]
 script = ExtResource("1_d01ex")
 item_id = &"loot_000054"
-display_name = "Bananas Crate 01"
+display_name = "Bananas Crate"
 storage_category = "Food"
 storage_footprint = Vector3i(6, 4, 1)
 can_be_stacked = true

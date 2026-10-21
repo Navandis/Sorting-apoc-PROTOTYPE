@@ -1,14 +1,14 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://cqm2hfm5qj20j"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_d647g"]
-[ext_resource type="PackedScene" path="res://assets/props/morale/SM_KB3D_API_Dartboard_01.glb" id="2_76qr3"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_d647g"]
+[ext_resource type="PackedScene" uid="uid://b8edhha1qd7nd" path="res://assets/props/morale/SM_KB3D_API_Dartboard_01.glb" id="2_76qr3"]
 
 [resource]
 script = ExtResource("1_d647g")
 item_id = &"loot_000130"
-display_name = "Dartboard 01"
+display_name = "Dartboard"
 storage_category = "Morale"
-storage_footprint = Vector3i(5, 5, 1)
+storage_footprint = Vector3i(4, 2, 1)
 can_be_stacked = true
 visual_scene = ExtResource("2_76qr3")
-storage_rotation_degrees = Vector3(0, 0, 90)
+storage_rotation_degrees = Vector3(0, -90, 0)

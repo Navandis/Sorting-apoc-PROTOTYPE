@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_7171i")
 item_id = &"loot_000003"
-display_name = "Electronic Device 01"
+display_name = "Electronic Device"
 storage_category = "Electronics"
 storage_footprint = Vector3i(5, 3, 1)
 can_be_stacked = true

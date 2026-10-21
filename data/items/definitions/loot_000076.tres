@@ -1,12 +1,13 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://chr331po7v2rx"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_hhq56"]
-[ext_resource type="PackedScene" path="res://assets/props/Hydration/SM_KB3D_SIN_SkimMilk_Carton_02.glb" id="2_bhmd3"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_hhq56"]
+[ext_resource type="PackedScene" uid="uid://bokruq61jjcmr" path="res://assets/props/Hydration/SM_KB3D_SIN_SkimMilk_Carton_02.glb" id="2_bhmd3"]
 
 [resource]
 script = ExtResource("1_hhq56")
 item_id = &"loot_000076"
-display_name = "Skim Milk Carton 02"
+display_name = "Skim Milk"
 storage_category = "Hydration"
 can_be_stacked = true
 visual_scene = ExtResource("2_bhmd3")
+storage_rotation_degrees = Vector3(0, -90, 0)

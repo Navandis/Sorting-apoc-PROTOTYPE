@@ -1,12 +1,12 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://b8qln85mgvx7g"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_oo82d"]
-[ext_resource type="PackedScene" path="res://assets/props/Weapons/SM_KB3D_API_Plunger_01.glb" id="2_rhshs"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_oo82d"]
+[ext_resource type="PackedScene" uid="uid://c2ovdwylq6hxc" path="res://assets/props/Weapons/SM_KB3D_API_Plunger_01.glb" id="2_rhshs"]
 
 [resource]
 script = ExtResource("1_oo82d")
 item_id = &"loot_000085"
-display_name = "Plunger 01"
+display_name = "Toilet Plunger"
 storage_category = "Weapons"
 storage_footprint = Vector3i(2, 2, 1)
 can_be_stacked = true

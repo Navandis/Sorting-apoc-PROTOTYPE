@@ -1,13 +1,14 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://svyn3kgjm7gl"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_18a2n"]
-[ext_resource type="PackedScene" path="res://assets/props/Food/SM_Soft_Pretzels_Stack_01.glb" id="2_s66qh"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_18a2n"]
+[ext_resource type="PackedScene" uid="uid://fd34w8kpum1x" path="res://assets/props/Food/SM_Soft_Pretzels_Stack_01.glb" id="2_s66qh"]
 
 [resource]
 script = ExtResource("1_18a2n")
 item_id = &"loot_000067"
-display_name = "Soft Pretzels Stack 01"
+display_name = "Soft Pretzels"
 storage_category = "Food"
 storage_footprint = Vector3i(2, 2, 1)
 can_be_stacked = true
 visual_scene = ExtResource("2_s66qh")
+storage_rotation_degrees = Vector3(0, 90, 0)

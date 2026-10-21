@@ -1,14 +1,15 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://m34p1fjw0uba"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_3gxmw"]
-[ext_resource type="PackedScene" path="res://assets/props/Food/SM_Dry_Goods_NN_01a.glb" id="2_voljy"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_3gxmw"]
+[ext_resource type="PackedScene" uid="uid://cfgp1ds6o3ybj" path="res://assets/props/Food/SM_Dry_Goods_NN_01a.glb" id="2_voljy"]
 
 [resource]
 script = ExtResource("1_3gxmw")
 item_id = &"loot_000044"
-display_name = "Dry Goods NN 01a"
+display_name = "Canned Potatoes"
 storage_category = "Food"
 can_be_stacked = true
 can_support_stack = true
 auto_stack_group = &"round_cans"
 visual_scene = ExtResource("2_voljy")
+storage_rotation_degrees = Vector3(0, -90, 0)

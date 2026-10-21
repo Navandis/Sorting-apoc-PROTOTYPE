@@ -1,14 +1,12 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://v1sau2g0gnou"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_p78ee"]
-[ext_resource type="PackedScene" path="res://assets/props/Weapons/SM_Pickaxe_03.glb" id="2_td5jl"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_p78ee"]
+[ext_resource type="PackedScene" uid="uid://320pfys0esy6" path="res://assets/props/Weapons/SM_Pickaxe_03.glb" id="2_td5jl"]
 
 [resource]
 script = ExtResource("1_p78ee")
 item_id = &"loot_000108"
-display_name = "Pickaxe 03"
+display_name = "Pickaxe"
 storage_category = "Weapons"
-storage_footprint = Vector3i(10, 7, 1)
-can_be_stacked = true
+storage_footprint = Vector3i(10, 2, 1)
 visual_scene = ExtResource("2_td5jl")
-storage_rotation_degrees = Vector3(90, 0, 0)

@@ -1,13 +1,14 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://cj71dmjkjvrqb"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_wopkf"]
-[ext_resource type="PackedScene" path="res://assets/props/Weapons/SM_KB3D_SDM_HockeyStick_01.glb" id="2_gmtdw"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_wopkf"]
+[ext_resource type="PackedScene" uid="uid://c2h4k05g075tt" path="res://assets/props/Weapons/SM_KB3D_SDM_HockeyStick_01.glb" id="2_gmtdw"]
 
 [resource]
 script = ExtResource("1_wopkf")
 item_id = &"loot_000093"
-display_name = "Hockey Stick 01"
+display_name = "Hockey Stick"
 storage_category = "Weapons"
-storage_footprint = Vector3i(19, 3, 1)
+storage_footprint = Vector3i(19, 2, 1)
 can_be_stacked = true
 visual_scene = ExtResource("2_gmtdw")
+storage_rotation_degrees = Vector3(60, 0, 0)

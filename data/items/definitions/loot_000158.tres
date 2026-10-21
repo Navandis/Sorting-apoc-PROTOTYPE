@@ -1,14 +1,13 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://ytcitdpitgpv"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_opkec"]
-[ext_resource type="PackedScene" path="res://assets/props/protection/SM_Military_Vest_01.glb" id="2_0aton"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_opkec"]
+[ext_resource type="PackedScene" uid="uid://dyx4n4ds8x32a" path="res://assets/props/protection/SM_Military_Vest_01.glb" id="2_0aton"]
 
 [resource]
 script = ExtResource("1_opkec")
 item_id = &"loot_000158"
-display_name = "Military Vest 01"
+display_name = "Military Vest"
 storage_category = "Protection"
-storage_footprint = Vector3i(4, 5, 1)
+storage_footprint = Vector3i(4, 4, 1)
 can_be_stacked = true
 visual_scene = ExtResource("2_0aton")
-storage_rotation_degrees = Vector3(-90, 0, 0)

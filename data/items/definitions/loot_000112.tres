@@ -1,12 +1,12 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://b1gavislh5iq6"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_g3x0n"]
-[ext_resource type="PackedScene" path="res://assets/props/Weapons/SM_WoodAxe_01.glb" id="2_cqu4s"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_g3x0n"]
+[ext_resource type="PackedScene" uid="uid://cgf61p56trplg" path="res://assets/props/Weapons/SM_WoodAxe_01.glb" id="2_cqu4s"]
 
 [resource]
 script = ExtResource("1_g3x0n")
 item_id = &"loot_000112"
-display_name = "Wood Axe 01"
+display_name = "Wood Axe"
 storage_category = "Weapons"
 storage_footprint = Vector3i(8, 2, 1)
 can_be_stacked = true

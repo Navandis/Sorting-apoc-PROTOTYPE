@@ -1,13 +1,13 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://j7qa15na2wlv"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_pn07i"]
-[ext_resource type="PackedScene" path="res://assets/props/morale/SM_WhiskeyBottle_02.glb" id="2_senou"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_pn07i"]
+[ext_resource type="PackedScene" uid="uid://ccawpc22d30il" path="res://assets/props/morale/SM_WhiskeyBottle_02.glb" id="2_senou"]
 
 [resource]
 script = ExtResource("1_pn07i")
 item_id = &"loot_000142"
-display_name = "Whiskey Bottle 02"
+display_name = "Whiskey Bottle"
 storage_category = "Morale"
-storage_footprint = Vector3i(2, 2, 1)
 can_be_stacked = true
 visual_scene = ExtResource("2_senou")
+storage_rotation_degrees = Vector3(0, -134, 0)

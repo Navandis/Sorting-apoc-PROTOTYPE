@@ -1,12 +1,12 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://bt8piv8pk65ln"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_g55yf"]
-[ext_resource type="PackedScene" path="res://assets/props/electronics/SM_Turntables_01.glb" id="2_2ms5u"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_g55yf"]
+[ext_resource type="PackedScene" uid="uid://btfbavo81host" path="res://assets/props/electronics/SM_Turntables_01.glb" id="2_2ms5u"]
 
 [resource]
 script = ExtResource("1_g55yf")
 item_id = &"loot_000123"
-display_name = "Turntables 01"
+display_name = "Turntables"
 storage_category = "Electronics"
 storage_footprint = Vector3i(9, 5, 1)
 can_be_stacked = true

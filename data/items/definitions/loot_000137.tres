@@ -1,12 +1,14 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://qc00g0h7gaku"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_46uuu"]
-[ext_resource type="PackedScene" path="res://assets/props/morale/SM_KB3D_SDM_American_Ball_01.glb" id="2_fcwmd"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_46uuu"]
+[ext_resource type="PackedScene" uid="uid://bt3j3klnuvpx3" path="res://assets/props/morale/SM_KB3D_SDM_American_Ball_01.glb" id="2_fcwmd"]
 
 [resource]
 script = ExtResource("1_46uuu")
 item_id = &"loot_000137"
-display_name = "American Ball 01"
+display_name = "Football"
 storage_category = "Morale"
-storage_footprint = Vector3i(2, 4, 1)
+storage_footprint = Vector3i(3, 2, 1)
+can_be_stacked = true
 visual_scene = ExtResource("2_fcwmd")
+storage_rotation_degrees = Vector3(0, -90, 0)

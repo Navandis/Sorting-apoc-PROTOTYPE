@@ -1,12 +1,12 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://hnb34wlqrje4"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_in07e"]
-[ext_resource type="PackedScene" path="res://assets/props/Hydration/SM_KB3D_SIN_ColaBottle_01.glb" id="2_sw33j"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_in07e"]
+[ext_resource type="PackedScene" uid="uid://b1q4ukvi43j3h" path="res://assets/props/Hydration/SM_KB3D_SIN_ColaBottle_01.glb" id="2_sw33j"]
 
 [resource]
 script = ExtResource("1_in07e")
 item_id = &"loot_000073"
-display_name = "Cola Bottle 01"
+display_name = "Cola Bottle"
 storage_category = "Hydration"
 can_be_stacked = true
 visual_scene = ExtResource("2_sw33j")

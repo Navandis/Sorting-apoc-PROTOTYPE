@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_jy33b")
 item_id = &"loot_000035"
-display_name = "Hard Hat 01"
+display_name = "Hard Hat"
 storage_category = "Protection"
 storage_footprint = Vector3i(3, 2, 1)
 can_be_stacked = true
