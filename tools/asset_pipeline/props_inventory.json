@@ -1,6 +1,6 @@
 {
 	"baseline": "53805a97ec43455920e3ceffb6f7acd98001f5b6",
-	"status": "Human authoring reconciled 2026-10-21: 150 current physical reviews; five rescaled definitions pending explicit human re-review. All current source fingerprints reconciled with explicit developer confirmation; prior hashes retained in source_confirmation history. Pickaxe LOD representation remains unresolved.",
+	"status": "PRE-M4 PHYSICAL AUTHORING HUMAN-ACCEPTED / RECORDS RECONCILED / LOCAL CANDIDATE READY FOR PUBLICATION DECISION / NOT PUBLISHED. 2026-10-21: 155 current physical reviews / 0 pending; five post-scale reviews explicitly accepted. Authored Footprint exceptions 027 (1x1), 154/155 (3x4) accepted with geometric overhang retained. All source confirmations remain accepted with prior hashes/history preserved. Original proposal fields and flags are historical; current physical decisions are in review_status/human_review and item_authoring_review.json. Pickaxe 108 co-located-LOD representation caveat remains unresolved; no universal neighboring-placement visual test is claimed.",
 	"models": [
 		{
 			"source_path": "res://assets/props/Food/SM_Bread_1.glb",
@@ -5093,7 +5093,7 @@
 			"stack_notes": "Can rest on a larger support; uneven or narrow top is conservatively denied as support.",
 			"group_notes": "Explicit None: no established compatible player-facing form group proposed.",
 			"entity_interpretation": "One usable object",
-			"review_status": "POST_SCALE_HUMAN_REVIEW_PENDING",
+			"review_status": "HUMAN_REVIEWED_2026_10_21",
 			"utility_placeholder": {
 				"utility_id": "None",
 				"utility_value": 0,
@@ -5127,8 +5127,8 @@
 					2,
 					1
 				],
-				"post_correction_physical_status": "POST_SCALE_HUMAN_REVIEW_PENDING",
-				"notes": "2026-10-21: developer comprehensively reviewed all 155 items and saved external .tres authoring; immutable checkpoint 170ea01. Current saved names, pose/+Z Front, Footprint and support-role decisions retained. Requested uniform scale correction now applied; post-scaling scale, pose, Footprint and geometry-dependent stack/group acceptance PENDING explicit human re-review.",
+				"post_correction_physical_status": "HUMAN_REVIEWED_2026_10_21",
+				"notes": "2026-10-21: developer comprehensively reviewed all 155 items and saved external .tres authoring; immutable checkpoint 170ea01. Current saved names, pose/+Z Front, Footprint and support-role decisions retained. Requested uniform scale correction now applied; post-scaling scale, pose, Footprint and geometry-dependent stack/group acceptance PENDING explicit human re-review.\n2026-10-21 FINAL HUMAN ACCEPTANCE (supersedes earlier pending post-scale entries above): developer separately visually reviewed and accepted all five uniformly scaled items, including current saved pose/+Z Front, Footprint and stack/support authoring; no outstanding visual inconsistencies reported. This records the explicit developer decision, not automated visual approval.",
 				"observed_source_fingerprint": "9fe804b095acbbe8f2d1adb8d18e59e10ee332abd4c3da35912a4cde09282edc"
 			}
 		},
@@ -12287,7 +12287,7 @@
 			],
 			"source_changed": false,
 			"flags": [],
-			"review_status": "POST_SCALE_HUMAN_REVIEW_PENDING",
+			"review_status": "HUMAN_REVIEWED_2026_10_21",
 			"human_review": {
 				"date": "2026-10-21",
 				"checkpoint": "170ea01",
@@ -12316,8 +12316,8 @@
 					1,
 					1
 				],
-				"post_correction_physical_status": "POST_SCALE_HUMAN_REVIEW_PENDING",
-				"notes": "2026-10-21: developer comprehensively reviewed all 155 items and saved external .tres authoring; immutable checkpoint 170ea01. Current saved names, pose/+Z Front, Footprint and support-role decisions retained. Requested uniform scale correction now applied; post-scaling scale, pose, Footprint and geometry-dependent stack/group acceptance PENDING explicit human re-review.",
+				"post_correction_physical_status": "HUMAN_REVIEWED_2026_10_21",
+				"notes": "2026-10-21: developer comprehensively reviewed all 155 items and saved external .tres authoring; immutable checkpoint 170ea01. Current saved names, pose/+Z Front, Footprint and support-role decisions retained. Requested uniform scale correction now applied; post-scaling scale, pose, Footprint and geometry-dependent stack/group acceptance PENDING explicit human re-review.\n2026-10-21 FINAL HUMAN ACCEPTANCE (supersedes earlier pending post-scale entries above): developer separately visually reviewed and accepted all five uniformly scaled items, including current saved pose/+Z Front, Footprint and stack/support authoring; no outstanding visual inconsistencies reported. This records the explicit developer decision, not automated visual approval.",
 				"observed_source_fingerprint": "7a921edc40b390590fd9f36bf5eada1bb4f3575a8c49b18350ba7826c0c9434d"
 			}
 		},
@@ -12474,7 +12474,7 @@
 			],
 			"source_changed": false,
 			"flags": [],
-			"review_status": "POST_SCALE_HUMAN_REVIEW_PENDING",
+			"review_status": "HUMAN_REVIEWED_2026_10_21",
 			"human_review": {
 				"date": "2026-10-21",
 				"checkpoint": "170ea01",
@@ -12503,8 +12503,8 @@
 					2,
 					1
 				],
-				"post_correction_physical_status": "POST_SCALE_HUMAN_REVIEW_PENDING",
-				"notes": "2026-10-21: developer comprehensively reviewed all 155 items and saved external .tres authoring; immutable checkpoint 170ea01. Current saved names, pose/+Z Front, Footprint and support-role decisions retained. Requested uniform scale correction now applied; post-scaling scale, pose, Footprint and geometry-dependent stack/group acceptance PENDING explicit human re-review.",
+				"post_correction_physical_status": "HUMAN_REVIEWED_2026_10_21",
+				"notes": "2026-10-21: developer comprehensively reviewed all 155 items and saved external .tres authoring; immutable checkpoint 170ea01. Current saved names, pose/+Z Front, Footprint and support-role decisions retained. Requested uniform scale correction now applied; post-scaling scale, pose, Footprint and geometry-dependent stack/group acceptance PENDING explicit human re-review.\n2026-10-21 FINAL HUMAN ACCEPTANCE (supersedes earlier pending post-scale entries above): developer separately visually reviewed and accepted all five uniformly scaled items, including current saved pose/+Z Front, Footprint and stack/support authoring; no outstanding visual inconsistencies reported. This records the explicit developer decision, not automated visual approval. Developer explicitly retains authored 1x1 Footprint after visual review: posed X/Z approximately 105.225/105.291 mm against 100/100 mm reservation; suggested 2x2 is not approved. Centered overhang approximately 2.612/2.646 mm per side knowingly accepted. Geometric overhang remains present; general bounds/Footprint warning logic is unchanged. Acceptance does not claim every hypothetical neighboring placement was visually tested.",
 				"observed_source_fingerprint": "df65c2a162cba24514f8ca4d4491da16abb918f79f1204dd6fb111750354c1ea"
 			}
 		},
@@ -13611,7 +13611,7 @@
 			"stack_notes": "Rigid container with broad bottom and flat top/rim; propose both roles.",
 			"group_notes": "Propose existing round_cans for the rendered rigid cylindrical food/drink container; check rim contact and relative diameter.",
 			"entity_interpretation": "One usable object",
-			"review_status": "POST_SCALE_HUMAN_REVIEW_PENDING",
+			"review_status": "HUMAN_REVIEWED_2026_10_21",
 			"utility_placeholder": {
 				"utility_id": "None",
 				"utility_value": 0,
@@ -13645,8 +13645,8 @@
 					2,
 					1
 				],
-				"post_correction_physical_status": "POST_SCALE_HUMAN_REVIEW_PENDING",
-				"notes": "2026-10-21: developer comprehensively reviewed all 155 items and saved external .tres authoring; immutable checkpoint 170ea01. Current saved names, pose/+Z Front, Footprint and support-role decisions retained. Requested uniform scale correction now applied; post-scaling scale, pose, Footprint and geometry-dependent stack/group acceptance PENDING explicit human re-review.",
+				"post_correction_physical_status": "HUMAN_REVIEWED_2026_10_21",
+				"notes": "2026-10-21: developer comprehensively reviewed all 155 items and saved external .tres authoring; immutable checkpoint 170ea01. Current saved names, pose/+Z Front, Footprint and support-role decisions retained. Requested uniform scale correction now applied; post-scaling scale, pose, Footprint and geometry-dependent stack/group acceptance PENDING explicit human re-review.\n2026-10-21 FINAL HUMAN ACCEPTANCE (supersedes earlier pending post-scale entries above): developer separately visually reviewed and accepted all five uniformly scaled items, including current saved pose/+Z Front, Footprint and stack/support authoring; no outstanding visual inconsistencies reported. This records the explicit developer decision, not automated visual approval.",
 				"observed_source_fingerprint": "e7e1af3fd7d291d7e3e174890e3c93f135f93605664d8a747e55214335665904"
 			}
 		},
@@ -14993,7 +14993,7 @@
 			"stack_notes": "Can rest on a larger support; uneven or narrow top is conservatively denied as support.",
 			"group_notes": "Explicit None: no established compatible player-facing form group proposed.",
 			"entity_interpretation": "One usable object",
-			"review_status": "POST_SCALE_HUMAN_REVIEW_PENDING",
+			"review_status": "HUMAN_REVIEWED_2026_10_21",
 			"utility_placeholder": {
 				"utility_id": "None",
 				"utility_value": 0,
@@ -15027,8 +15027,8 @@
 					1,
 					1
 				],
-				"post_correction_physical_status": "POST_SCALE_HUMAN_REVIEW_PENDING",
-				"notes": "2026-10-21: developer comprehensively reviewed all 155 items and saved external .tres authoring; immutable checkpoint 170ea01. Current saved names, pose/+Z Front, Footprint and support-role decisions retained. Requested uniform scale correction now applied; post-scaling scale, pose, Footprint and geometry-dependent stack/group acceptance PENDING explicit human re-review.",
+				"post_correction_physical_status": "HUMAN_REVIEWED_2026_10_21",
+				"notes": "2026-10-21: developer comprehensively reviewed all 155 items and saved external .tres authoring; immutable checkpoint 170ea01. Current saved names, pose/+Z Front, Footprint and support-role decisions retained. Requested uniform scale correction now applied; post-scaling scale, pose, Footprint and geometry-dependent stack/group acceptance PENDING explicit human re-review.\n2026-10-21 FINAL HUMAN ACCEPTANCE (supersedes earlier pending post-scale entries above): developer separately visually reviewed and accepted all five uniformly scaled items, including current saved pose/+Z Front, Footprint and stack/support authoring; no outstanding visual inconsistencies reported. This records the explicit developer decision, not automated visual approval.",
 				"observed_source_fingerprint": "670339605ce288747ae201024c20145752cba18be8cf1e633d66cf49205e3416"
 			}
 		},
@@ -16861,7 +16861,7 @@
 					1
 				],
 				"post_correction_physical_status": "HUMAN_REVIEWED_2026_10_21",
-				"notes": "2026-10-21: developer comprehensively reviewed all 155 items and saved external .tres authoring; immutable checkpoint 170ea01. Current saved names, pose/+Z Front, Footprint and support-role decisions retained.",
+				"notes": "2026-10-21: developer comprehensively reviewed all 155 items and saved external .tres authoring; immutable checkpoint 170ea01. Current saved names, pose/+Z Front, Footprint and support-role decisions retained.\n2026-10-21 FINAL HUMAN FOOTPRINT ACCEPTANCE (supersedes earlier contact/overhang review requests): existing saved authoring and folded_clothing membership/support decisions retained. Developer explicitly retains authored 3x4 Footprint after visual review: folded-clothing width approximately 348.588 mm against 300 mm reservation; suggested 4x4 is not approved. Soft-clothing overhang knowingly accepted. Geometric overhang remains present; general bounds/Footprint warning logic is unchanged. Acceptance does not claim every hypothetical neighboring placement was visually tested.",
 				"observed_source_fingerprint": "05b134425528f0a52eb581c7e54ecc9dd73778fb4cb8dd7c4ecb40aea9cc8882"
 			}
 		},
@@ -16971,7 +16971,7 @@
 					1
 				],
 				"post_correction_physical_status": "HUMAN_REVIEWED_2026_10_21",
-				"notes": "2026-10-21: developer comprehensively reviewed all 155 items and saved external .tres authoring; immutable checkpoint 170ea01. Current saved names, pose/+Z Front, Footprint and support-role decisions retained.",
+				"notes": "2026-10-21: developer comprehensively reviewed all 155 items and saved external .tres authoring; immutable checkpoint 170ea01. Current saved names, pose/+Z Front, Footprint and support-role decisions retained.\n2026-10-21 FINAL HUMAN FOOTPRINT ACCEPTANCE (supersedes earlier contact/overhang review requests): existing saved authoring and folded_clothing membership/support decisions retained. Developer explicitly retains authored 3x4 Footprint after visual review: folded-clothing width approximately 359.252 mm against 300 mm reservation; suggested 4x4 is not approved. Soft-clothing overhang knowingly accepted. Geometric overhang remains present; general bounds/Footprint warning logic is unchanged. Acceptance does not claim every hypothetical neighboring placement was visually tested.",
 				"observed_source_fingerprint": "0cac0a1ad1db2bee8f8e36708934bd4779a20f3d8931d4180f22b379b281f2fe"
 			}
 		},

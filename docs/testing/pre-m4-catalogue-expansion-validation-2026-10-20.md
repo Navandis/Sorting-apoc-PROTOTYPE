@@ -1,5 +1,7 @@
 # Pre-M4 catalogue first pass — 20 October 2026
 
+Current disposition is recorded in the [21 October final human acceptance addendum](#21-october-2026--final-human-acceptance-and-record-reconciliation). Earlier pending statements below are dated history, superseded only by the explicit decisions in that addendum.
+
 **CATALOGUED / TECHNICALLY CHECKED / HUMAN PHYSICAL REVIEW PENDING.** This implements the developer-approved first pass only. It does not approve physical proposals, calibrate Utility/Bulk, implement Dispatch/M4 or promote a milestone.
 
 ## Scope and preservation
@@ -156,3 +158,51 @@ $evidence = 'C:/Users/Boschetar/.codex/attachments/pre-m4-followup-2026-10-21'
 For a new continuation reproduction, use a **fresh external directory**, writer followed by reader, with the established `pre_m4_continuation_tests.gd -- --evidence-dir=... --mode=write/read` arguments. The external `run-regressions.ps1` records the remaining owner commands. No new normal-scenario loot, Utility/Bulk calibration, Dispatch/M4, merge, push, PR or publication was performed.
 
 **Human handoff:** reopen `res://gameplay/dev/item_storage_pose/item_storage_pose_authoring.tscn`, select its root, and assign each external `res://data/items/definitions/loot_000025.tres`, `000027.tres`, `000075.tres`, `000129.tres`, `000141.tres` in turn. Inspect corrected scale, canonical +Z Front, resting pose, saved versus suggested Footprint, and stack/support suitability; use Packing Rotated only as a preview. Resolve 027's explicit 1×1 versus 2×2 decision, save any deliberate edits to the external resources and reopen them. Report final acceptance before later reconciliation/publication authorization. Inspect the actual folded-clothing stack for soft contact/overhang aesthetics without a blanket re-review of other items. The separate five-source confirmation is complete and requires no further source decision.
+
+## 21 October 2026 — final human acceptance and record reconciliation
+
+**PRE-M4 PHYSICAL AUTHORING HUMAN-ACCEPTED / RECORDS RECONCILED / LOCAL CANDIDATE READY FOR PUBLICATION DECISION / NOT PUBLISHED.** Current dependency validation supports **155 current physical reviews / 0 pending**, with **155 active / seven retired**. This supersedes the preceding post-scale/Footprint handoff; it does not resolve the separate pickaxe representation caveat or authorize publication.
+
+### Human decisions and retained exceptions
+
+Authority is the developer's explicit final instruction supplied for this reconciliation, following comprehensive physical review of all 155 items. The developer separately visually reviewed and accepted **025 at 1.50×** and **027 / 075 / 129 / 141 at 1.20×**, reporting no outstanding visual inconsistencies. The five scale, pose/Front, Footprint and geometry-dependent stack/group records now approve the actual saved values and current source fingerprints. This is recorded human acceptance; the executor's measurements do not provide visual approval.
+
+The developer also explicitly directs retention of these authored Footprints:
+
+| Item | Retained Footprint | Current geometric difference / accepted disposition |
+| --- | --- | --- |
+| `loot_000027` | **1 × 1** | Posed X/Z **105.225 / 105.291 mm** against **100 / 100 mm** reservation. The suggested **2 × 2** is not approved. Centered overhang approximately **2.612 / 2.646 mm per side** is knowingly accepted. |
+| `loot_000154` | **3 × 4** | Folded-clothing width **348.588 mm** against **300 mm** reservation. Suggested **4 × 4** is not approved; soft-clothing overhang accepted after human visual review. |
+| `loot_000155` | **3 × 4** | Folded-clothing width **359.252 mm** against **300 mm** reservation. Suggested **4 × 4** is not approved; soft-clothing overhang accepted after human visual review. |
+
+These remain geometric deviations, recorded as **OVERRIDE_APPROVED** with explicit final notes. General bounds/Footprint warning logic remains unchanged. The approved `folded_clothing` revision 1 membership is still exactly **152–155**, with all saved stack/support decisions intact. Human acceptance includes the three exceptions; it does not assert every hypothetical neighboring placement was visually tested.
+
+### Bounded reconciliation and preservation
+
+Read-only preflight found clean `codex/pre-m4-catalogue-expansion` at **`fe85aa902d0a61dc15cfbaf644ed9ef5166f0e14`**, with immutable developer checkpoint **`170ea013dec7e9cc463173bba78759d5cd16fcbc`** in its ancestry, and no running Godot process. Live remote `main` was read at **`53805a97ec43455920e3ceffb6f7acd98001f5b6`** through per-command OpenSSL. No reset, amend, rebase or other worktree change was used.
+
+The existing schema 2.0, `apply_scale_review_reconciliation`, `stack_role_snapshot`, `apply_auto_group_approvals` and `review_evidence` helpers were reused. Only the five explicitly accepted post-scale items enter approval helpers; no blanket reapproval was performed. Manifest/inventory changes affect **seven item records**: the five final post-scale approvals, plus final Footprint/group notes on already-current 154/155. Of the other 150 current reviews, **148 are entirely unchanged and two retain identical approval snapshots/statuses with appended decision notes only**. All seven retired records, prior notes/fingerprints, original proposal fields/flags and the accepted five-source confirmation history remain intact. Original inventory proposal flags are explicitly historical; current state comes from `review_status`, `human_review` and the existing review manifest.
+
+All **155 external ItemDefinition files and 162 source models are unchanged**. Tracked-file hash comparison permits only the two review/evidence JSON files, this validation record and a bounded test correction. The current-registry test still expected four classes despite the already-approved fifth class: its exact production expectation now requires five classes including `folded_clothing`. No production code, definition, registry, visual scale, pose/Front, Footprint, stack/support role, group membership, Utility/Bulk, production manifest or scene was changed. Earlier implementation/checkpoint commits remain intact; this reconciliation is a new local commit, whose exact SHA/diff are recorded externally to avoid a self-referential hash here.
+
+### Fresh focused checks versus reused technical proof
+
+Fresh evidence root: `C:/Users/Boschetar/.codex/attachments/pre-m4-final-human-acceptance-2026-10-21`. Engine **4.7.stable.official.5b4e0cb0f**, Compatibility; executions were serial. Every engine process redirected `APPDATA` and `LOCALAPPDATA` to that root's isolated `runtime-profile`; these focused checks neither instantiate the continuation service nor access the developer's active save.
+
+| Newly executed focused check | Result |
+| --- | --- |
+| Current catalogue/review/geometry reconciliation probe | Exit 0; **155 current / 0 pending / seven retired**; all five review stages current per active item, no stale/dependency contradictions, all 155 source hashes and group references current. Fresh posed bounds for the seven affected items confirm actual saved scales/Footprints and all three retained deviations. Exact five registry classes/revision 1 and four clothing members confirmed. |
+| `pre_m4_catalogue_tests.gd` | Exit 0, zero failures; **35 retained + 120 additions**, seven exclusions, 162-source accounting, identity reservations and unchanged 35-member production pool. |
+| `authoring_review_manifest_tests.gd` | Exit 0; PASS with no script/assertion errors. |
+| `auto_stack_group_registry_tests.gd` after expectation correction | Exit 0; PASS with no script/assertion errors; current five-class registry verified. |
+| Onboarding dry-run and `--apply` | Both exit 0; **0 additions / total 155**. |
+| Current main-scene audit | Exit 0; **35** retained scene sources audited. |
+| Preservation comparison | **155 definitions / 162 GLBs unchanged**; all proposal/source-confirmation history, 148 unrelated active review records and seven retired records preserved. Across focused engine checks, all **158** protected definition/catalogue/manifest/inventory hashes unchanged. |
+
+`final-results.json` selects the seven passing final runs and preserves exact commands, completion markers, exit codes and diagnostics. `verified.json` retains current full-precision measurements; `preservation-results.json` and `checks-preservation.json` record the comparisons. The external `reconcile.gd`, `apply.cjs` and `verify-preservation.cjs` are bounded execution evidence using the existing review system, not a new tracked review-state system. `run-focused.ps1` and `focused-results.json` preserve execution history. The first candidate's raw-versus-normalized JSON comparison failure and the stale four-class assertion (which misleadingly emitted PASS/exit 0) are retained separately as failed attempts, not passing evidence; the runner checked script/assertion output as well as exit status.
+
+The final selected logs contain **zero script errors, assertion failures or leak signatures**. Each discloses the known Windows certificate-store diagnostic. CF-07 remains separate known debt; it was not emitted by these focused checks and was not suppressed or repaired.
+
+**Attributed historical proof, not rerun here:** the preceding 21 October follow-up's actual workbench/scale probe, nine-item production physical check, three Receiving manifests / 12 TAKEs and handoffs, rendered four-member clothing stack, storage owners and persistence/separate continuation writer/reader (**26 / 7 / 18 checks**) remain the same-production-code and same-geometry evidence. Their logs remain under `pre-m4-followup-2026-10-21`, with source-confirmation refreshes identified there; the original full 120-item sweep remains dated 20 October. This reconciliation changed review metadata/documentation and one verification expectation only, so it did not repeat those physical/Receiving/continuation sweeps or relabel them as fresh.
+
+**Retained caveat and stopping point:** `loot_000108` / `SM_Pickaxe_03.glb` still has its co-located-LOD representation flag, notes and `UNRESOLVED_LOD_REPRESENTATION` status. The final Footprint decisions do not resolve it. The candidate is ready for a separate developer publication decision with this disclosed caveat and existing diagnostic debt; no merge, push, PR, publication, cleanup, save migration or M4 work is included.

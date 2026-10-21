@@ -68,8 +68,9 @@ func _test_production_registry_is_exact() -> void:
 	assert(AutoStackGroupRegistryScript.validate_registry(registry).is_empty())
 	assert(String(registry["schema_version"]) == "1.0")
 	var classes: Dictionary = registry["classes"] as Dictionary
-	assert(classes.keys().size() == 4)
+	assert(classes.keys().size() == 5)
 	assert(classes.has("flat_media"))
+	assert(classes.has("folded_clothing"))
 	assert(classes.has("round_cans"))
 	assert(classes.has("boxed_food"))
 	assert(classes.has("medical_boxes"))
