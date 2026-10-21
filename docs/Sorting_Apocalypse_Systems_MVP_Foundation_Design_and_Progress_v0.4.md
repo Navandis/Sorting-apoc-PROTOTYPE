@@ -1,6 +1,6 @@
 # Sorting Apocalypse — Systems MVP Foundation Design & Progress v0.4
 
-> Generated text/table extract from the v0.4 DOCX master. The DOCX remains authoritative; edit it first and regenerate this Markdown. Page layout and running headers/footers are omitted. M1/M2 published; M3 human-promoted / closed; publication requires live remote confirmation; 17 October 2026.
+> Generated text/table extract from the v0.4 DOCX master. The DOCX remains authoritative; edit it first and regenerate this Markdown. Page layout and running headers/footers are omitted. M1–M3 published/closed; pre-M4 physical catalogue human-accepted/closed in physical scope; publication requires live remote confirmation; Utility/Bulk calibration next; 21 October 2026.
 
 **SORTING APOCALYPSE**
 
@@ -10,7 +10,7 @@ FOUNDATION DESIGN
 
 Persistent supplies. Competing obligations.<br>One continuing storeroom.
 
-Version 0.4  \|  17 October 2026  \|  M3 human-promoted / closed
+Version 0.4  \|  21 October 2026  \|  Pre-M4 physical catalogue human-accepted
 
 FIRST INTEGRATED TARGET<br>Medical → Kitchen → Expedition Loadout, sharing physical supplies, request accounting and one persistent run. Meaningful allocation testing begins with the combined three-consumer loop.
 
@@ -25,13 +25,13 @@ This is the MVP-phase counterpart to Prototype Findings: a living foundation-des
 
 **DESIGN CONFIRMED IN CONVERSATION ≠ IMPLEMENTED ≠ HUMAN-PROMOTED**
 
-M1/M2 remain HUMAN-PROMOTED / PUBLISHED / CLOSED. M2 publication: 3465098d1910be0bb697416cb4e8bf6d1058cfb8. M3 Kitchen is HUMAN-PROMOTED / CLOSED after independent ACCEPT decisions and successful developer retests of all four UI/input corrections. Publication is authorized; PUBLISHED requires live remote confirmation (§15.3). CF-07 and full-game Ironman durability remain deferred.
+M1–M3 remain HUMAN-PROMOTED / PUBLISHED / CLOSED in their accepted scopes. Pre-M4 physical catalogue authoring is HUMAN-ACCEPTED / CLOSED IN PHYSICAL SCOPE (§15.4): 155 active, seven retired, 155 current reviews / zero pending. Publication is authorized and becomes PUBLISHED only after independent live remote verification. Utility/Bulk calibration is next; M4 Dispatch is NOT IMPLEMENTED. CF-07 and full-game Ironman durability remain deferred.
 
 **ORIENTATION**
 
 ## Reader’s guide &amp; current position
 
-Current position: M3 Kitchen Meal Service is HUMAN-PROMOTED / CLOSED (§15.3). M1/M2 remain published/closed. M4 Expedition Loadout is next, NOT IMPLEMENTED, including provisional item-specific Bulk authoring. Publication of this close-out requires safe fast-forward and live remote confirmation; see the executor’s final report.
+Current position: the 155-item physical catalogue is human-accepted (§15.4); M1–M3 remain closed. Utility/Bulk calibration across retained items and additions is next, before M4 Expedition Loadout/Dispatch, which is NOT IMPLEMENTED. This publication close-out changes documents only; live remote confirmation belongs in the final report.
 
 ### How to use this master
 
@@ -44,11 +44,11 @@ Read §§1–3 for authority and baseline; §§4–12 for shared contracts; §§
 | 6 | Single-slot persistence, preserved state and reconstruction. | 8–10 |
 | 7–9 | Authoritative gameplay time, presentation synchronization, midnight, menu and HUD. | 11–14 |
 | 10–12 | Authored scenarios; Medical/Kitchen; Expedition Loadout. | 15–17 |
-| 13–15 | Delivery stages, acceptance and current progress. | 18–22 |
-| 16–17 | Carried-forward obligations and remaining decisions. | 23–27 |
-| 18–19 | Accepted M2 design; full-game Ironman/randomness direction. | 28–34 |
-| 20 | Approved M3 Kitchen design; four deliveries/day and provisional Utility authoring. | 35–38 |
-| A–B | Dated decisions, published evidence checkpoints and edition maintenance. | 39–44 |
+| 13–15 | Delivery stages, acceptance and current progress. | 18–23 |
+| 16–17 | Carried-forward obligations and remaining decisions. | 24–28 |
+| 18–19 | Accepted M2 design; full-game Ironman/randomness direction. | 29–35 |
+| 20 | Approved M3 Kitchen design; four deliveries/day and provisional Utility authoring. | 36–39 |
+| A–B | Dated decisions, published evidence checkpoints and edition maintenance. | 40–45 |
 
 ### Status vocabulary
 
@@ -76,7 +76,7 @@ A historical statement that Stage C, the fixed ladder, Fuel reconciliation or EA
 
 The DOCX is the editable master; a same-stem readable Markdown extract is derived from it, not maintained independently. Detailed tests and human reviews remain in their dated records; this master summarizes their meaning and links to them. Source code establishes implementation, but an unintended behavior is not automatically a design decision.
 
-v0.1–v0.3 remain preserved editions. v0.3 was published at 2cad0d7 and M2 promotion at 3465098. This same-edition v0.4 close-out uses the verified developer-approved v0.4 master, preserves its Kitchen design and all CF-01–CF-24 obligations, and records M3 acceptance (§15.3). GDD/VDD, historical editions and game source are unchanged by this documentation commit.
+v0.1–v0.3 remain preserved editions. This same-edition v0.4 update records accepted M3 (§15.3) and pre-M4 physical catalogue completion (§15.4), retaining all CF-01–CF-24 obligations. GDD/VDD, historical editions, game code and authored item data are unchanged by this documentation commit.
 
 *Basis: [D10] developer document-role decision; [H14 §§1, 3–4, 15]; [ER14 §§3, 12]; [WG].*
 
@@ -150,7 +150,7 @@ Build one collection system that can be extended, not three disposable consumers
 
 ### 4.1 Existing type and ownership boundaries
 
-ItemDefinition already exposes primary Utility, destination-specific overrides, Bulk and a separate Storage Category. ItemInstance remains durable physical identity; WorldItem and held/HUD objects are representations. Use the existing contextual Utility path rather than treating Storage Category as a destination’s consumption rule. Current data support does not establish that every scenario item has been economically balanced or validated for the new consumers. [SRC15; GDD §6]
+ItemDefinition already exposes primary Utility, destination-specific overrides, Bulk and a separate Storage Category. ItemInstance remains durable physical identity; WorldItem and held/HUD objects are representations. Use the existing contextual Utility path rather than treating Storage Category as a destination’s consumption rule. Current data support does not establish that every scenario item has been economically balanced or validated for the new consumers. [SRC15; GDD §6] The 21 October physical acceptance covers 155 active items; it assigns no new Utility/Bulk values (§15.4).
 
 A controlled requirement of 12 Medical Utility can later be replaced by patient-derived demand of 12 without changing the collector. That is the intended extensibility test—not a mandate for a large generic framework. [D02]
 
@@ -539,7 +539,7 @@ Do not turn this design task into an engine rerun. During implementation, focuse
 
 This section replaces Prototype Findings as the active phase tracker. Dated evidence remains external to the master when detailed, and current status is updated here. The table is populated only with established evidence; it contains no projected test result. [D10]
 
-| Workstream | Status at 17 October 2026 | Evidence / next boundary |
+| Workstream | Status at 21 October 2026 | Evidence / next boundary |
 | --- | --- | --- |
 | Prototype foundations | HUMAN-PROMOTED in recorded scopes | PF retained as historical evidence; no new acceptance task. |
 | Pre-MVP review + repairs | HUMAN-PROMOTED / PUBLISHED | R-01–R-03 accepted; bounded R-04 subsequently repaired within M1. |
@@ -547,7 +547,7 @@ This section replaces Prototype Findings as the active phase tracker. Dated evid
 | M1 persistent Medical | HUMAN-PROMOTED / PUBLISHED / CLOSED | 6c56edf → a7b764e → 36d527d; independent ACCEPT and successful human play. |
 | M2 clock / midnight / HUD | HUMAN-PROMOTED / PUBLISHED / CLOSED | 524edf1 → c7bbf44 → 3465098; independent ACCEPT and final human PASS (§15.2). |
 | M3 Kitchen | HUMAN-PROMOTED / CLOSED | 7d3d6c7 → a0f066a; independent ACCEPT decisions and successful native retests; publication gate in §15.3. |
-| M4 Expedition Loadout | NOT IMPLEMENTED | Next: provisional item-specific Bulk authoring and carrying/handling pressure; Receiving/Loadout effects. Values and overfill remain open. |
+| M4 Expedition Loadout | NOT IMPLEMENTED | Next: Utility/Bulk calibration for all 155 items (§15.4). M4 remains later; overfill open. |
 | M5 combined allocation | NOT RUN | Requires persistent three-consumer scenarios; no economy conclusion. |
 
 ### 15.1 Accepted M1 implementation and publication
@@ -567,6 +567,20 @@ M2 is HUMAN-PROMOTED / PUBLISHED / CLOSED. Its clock, timed Medical, authored de
 Base 3465098 → original 7d3d6c7 → corrective a0f066a. Prior executor evidence reports 27 successful proof runs; the original independent ACCEPT included a 33-check/zero-failure/exit-0 probe. The developer’s full-day native playtest passed broad M3 flows and retained overnight cargo, but identified four UI/input issues. The corrective implementation reported RED 179/29/1, then PASS 233/0/0 and six affected-owner regressions. Focused independent ACCEPT included a valid 25/0/0 probe; the earlier synthetic duplicate-down probe failure remains explained in the validation record. These are attributed prior results, not reruns.
 
 The developer successfully retested all four corrections: both Kitchen lanes red for unrelated items; no movement after W is released during a panel; zoning-first ESC; redundant close hints removed. M3 is HUMAN-PROMOTED / CLOSED. Publication is authorized with this docs-only commit; PUBLISHED applies only after independent live remote confirmation in the executor’s final report. Detailed acceptance and retained failures: docs/testing/m3-kitchen-meal-service-validation-2026-10-17.md. M1/M2 stay closed. No final economy, item-specific Bulk balance or full-game Ironman claim is made.
+
+### 15.4 Pre M4 physical catalogue acceptance and publication
+
+21 October 2026: HUMAN-ACCEPTED / CLOSED IN PHYSICAL SCOPE. The developer reviewed all 155 active items (35 retained + 120 additions), then accepted five scale corrections and three intentional Footprint exceptions. All 155 physical reviews are current; zero are pending. Seven retired IDs stay reserved and excluded: 005, 023, 024, 034, 036, 037, 042 (loot_000 prefix). All 162 source models remain on disk; old Gloves/Pants 034/036 were retired, not repaired.
+
+Saved names, canonical +Z Front/pose, Footprints and stack/support decisions are authority. Tracked visual_scale carries 025 = 1.50 and 027/075/129/141 = 1.20. Retain 027 at 1×1 despite 105.225×105.291 mm horizontal bounds; centered overhang is about 2.6 mm per side. Retain 154/155 at 3×4 despite widths 348.588/359.252 mm against 300 mm reserved. General warnings remain; acceptance does not certify every neighboring placement.
+
+folded_clothing revision 1 is approved for exactly 152–155 and bypasses no support, horizontal-fit or clearance rule. Separately confirmed source changes 008/009/010/043/044 retain old/current hashes and provenance. These are distinct from the five scaled items. 019 is now Cola Can, retaining Hydration +3; its old name debt is resolved. Pickaxe 108 / SM_Pickaxe_03.glb retains its co-located-LOD representation caveat. CF-07 and certificate-store diagnostics remain separate debt.
+
+Controlled physical/Receiving/continuation proof is attributed to the 20–21 October executor record, not rerun for publication. The final reconciliation reports seven passing focused checks and unchanged definitions/sources. Normal recurring M3 content remains the retained 35-item pool with approved placeholder substitutions; additions are controlled-test content, not new normal inflow. Original M3 design tables in §20 retain dated history.
+
+Next is Utility/Bulk calibration for retained items AND additions, using stable IDs and developer reference/ranking guidance. New-item None/0 Utility and Bulk 1 remain temporary; existing Utility and player capacity 10 are unchanged. Player Bulk 15 is an approved later target, not implemented. Per-scavenger 25 Bulk and 5/6/3/4/4 requirements are earlier provisional references to recheck, not shipped M4 values. No Dispatch, final economy or M4 promotion is implied.
+
+Publication lineage: 53805a9 → 5faa40b → 170ea01 → fe85aa9 → accepted candidate 6040edeec9884b5a31ef88e368be124b85388deb → at most one documentation commit. Safe fast-forward and normal push are authorized; mark PUBLISHED only after independent live remote SHA verification. Evidence: docs/testing/pre-m4-catalogue-expansion-validation-2026-10-20.md, final acceptance/publication addenda. No Godot run, save operation, source cleanup or asset redistribution accompanies this close-out.
 
 *Basis: [D10]; [PF §1]; [CR15; R15]; [ER14 §§8, 10–12].*
 
@@ -599,7 +613,7 @@ A dependency entering scope is not retroactive demotion of the accepted prototyp
 | CF-08<br>PF §§33.3, 34.3 | Accepted one-machine probe cost: about 3.56 s added cold initialization, 125–132 ms first cargo refresh, 8–10 ms later refresh. No fresh profile here. | Credible workload, repeated loading or other-hardware impact. No speculative performance rewrite. |
 | CF-09<br>PF §33.3 | Pre-existing gallery_a_fixture_front navigation failure; unrelated to reflection integration. | A relevant route/installation change or observed gameplay obstruction. Do not label it repaired. |
 | CF-10<br>PF §§25.6, 33.3, 34.7 | Historical unrun editor/selection captures remain NOT RUN; scoped certificate-store, scan-aborted and shutdown RID/ObjectDB diagnostics retain their source context. | Changed signatures or affected editor/runtime workflow. No blanket suppression or universal error-free claim. |
-| CF-11<br>PF §§24.2–24.3, 25.5–25.6 | Gloves loot_000034 and Pants loot_000036 remain blocked. Current pool is 40 eligible of 42 definitions; Fuel is reconciled/eligible. | Separate source/pose/content approval. Scenarios must not silently enable blocked items. |
+| CF-11<br>PF §§24.2–24.3, 25.5–25.6 | Historical 42 definitions / 40 eligible is superseded: 155 active / seven retired, 155 current physical reviews. Gloves 034/Pants 036 are retired, not repaired; Fuel remains eligible. [§15.4] | Never recycle retired IDs or reintroduce excluded sources through scenarios. Retain retirement history; any new source/content approval is separate. |
 | CF-12<br>PF §§12.3, 24.3, 25.6, 26.3 | Deep/opaque shelf readability, thin-item targeting, context-specific ladder ergonomics and optional four-way display rotation remain limited/open. Book edge excursion/tolerances are recorded accepted evidence, not a new bug. | Actual content/installation or UX evidence. No universal ladder/depth rule or broader traversal system follows. |
 
 CF-12’s accepted calibration example is the Book 2×2 override’s measured 0.289 mm front-edge excursion within the documented 0.5 mm visual-bounds tolerance; fixture/grid calibration retains its separate 0.02 mm tolerance. Preserve the distinction instead of widening all tests. [PF §25.6]
@@ -648,7 +662,7 @@ Rejected/parked: irregular frozen piles remain rejected; C1A remains parked/unpr
 
 ## 17. Current decisions &amp; implementation boundaries
 
-M1/M2 remain HUMAN-PROMOTED / PUBLISHED / CLOSED. M3 Kitchen is HUMAN-PROMOTED / CLOSED (§15.3), retaining approved v0.2 design, loot_000019 Hydration +3/name debt and no M2-save migration. M4 Expedition Loadout is next, NOT IMPLEMENTED. General P01 and final loadout overfill remain open.
+M1–M3 remain HUMAN-PROMOTED / PUBLISHED / CLOSED. Pre-M4 physical authoring is human-accepted (§15.4), including Cola Can 019 / Hydration +3 and seven permanent retirements. Utility/Bulk calibration is next across retained and new items; M4 Expedition Loadout/Dispatch is NOT IMPLEMENTED. General P01 and final loadout overfill remain open.
 
 | Decision | Current disposition / remaining boundary |
 | --- | --- |
@@ -664,9 +678,9 @@ M1/M2 remain HUMAN-PROMOTED / PUBLISHED / CLOSED. M3 Kitchen is HUMAN-PROMOTED /
 | Scenario / compatibility | M2 scenario/schema accepted. For M3 use new revision and explicit fresh New Run; do not build M2-save migration; normal incompatibility/overwrite handling remains. |
 | Full-game randomness | Settled principle (§19): continuous Ironman state, early natural commitment, narrow residual loss; incidental uncommitted rerolls tolerated. |
 | M3 Kitchen / meals | ACCEPTED: 09/14/18 meals, 3-hour windows, Food/Hydration targets 30/24, 36/24, 36/30; read-only Meal Coverage; no effects (§15.3). |
-| M3 cargo / Utility | ACCEPTED provisional fixture: four 16-item hauls/day; loot_000019 Hydration +3/name debt; all current initial Bulk 1. M4 item-specific authoring remains (§17). |
+| M3 cargo / Utility | Accepted provisional fixture: four 16-item hauls/day; retained 35-item pool and approved retired-placeholder substitutions. Cola Can 019 retains Hydration +3; Bulk remains 1. Expanded-catalogue calibration is next (§15.4). |
 
-M4 requires provisional item-specific Bulk authoring, including player carrying/handling pressure, Receiving manifest feasibility and Expedition Loadout capacity effects. Current tested initial Bulk values are all 1; no numerical rebalance is settled here. Eventual loadout overfill remains open. No M4 implementation is authorized by this close-out; full-game continuous Ironman remains NOT IMPLEMENTED.
+Next numerical work includes item-specific Utility and Bulk across all 155 items, with player carrying/handling pressure, Receiving feasibility and later Expedition Loadout capacity effects. Current capacity remains 10; the approved later player target of 15 is not implemented. Existing values and temporary new-item None/0 Utility and Bulk 1 remain unchanged. Earlier per-scavenger 25 Bulk and 5/6/3/4/4 requirements need rechecking against the expanded catalogue. Overfill remains open. M4 Dispatch and full-game continuous Ironman remain NOT IMPLEMENTED.
 
 *Basis: [D02–D15; P01]; [GDD §§6, 8, 10, 19–21]; [ER14; WG].*
 
@@ -882,7 +896,7 @@ Apply the approved M3 provisional P01-inspired area scaling as STATIC authored p
 | 000022 | Soda Can | Hydration +3 | 1×1 |
 | 000023 | Soda Can | Hydration +3 | 1×1 |
 
-Explicit authoring debt: loot_000019 has Hydration Storage Category and receives Hydration +3. Its display name “Food Can” is misleading and should later be renamed toward “Soda Can,” but renaming is OUT OF SCOPE for M3. No Food override, rename, recategorization or asset replacement is approved. [D23]
+Historical M3 name debt: loot_000019 retained Hydration Storage Category / Hydration +3 while its misleading Food Can name was out of scope for M3. The 21 October developer physical authoring renamed it Cola Can; that display-name debt is now resolved. Utility/category are unchanged. [D23; §15.4]
 
 **20.3  FOUR SUBSTANTIAL HAULS PER DAY**
 
@@ -933,7 +947,7 @@ This acceptance-only v0.4 close-out preserves the approved Kitchen design. No so
 
 These labels preserve explicit conversation decisions and their dates. D13/D15 E-opener discussion is historical; D16 supersedes it with accepted F/E/ESC. D17–D21 record M2 and full-game preservation principles; D22–D23 record developer-approved M3 and the corrected Hydration item mapping. The later acceptance status is in §15.
 
-v0.1–v0.3 remain historical editions. v0.3 recorded M2 publication; v0.4 now records accepted M3 (§15.3), retaining its approved provisional authored values. General P01, item-specific Bulk balance and final M4 loadout overfill remain unsettled.
+v0.1–v0.3 remain historical editions. v0.4 records accepted M3 (§15.3) and pre-M4 physical catalogue completion (§15.4). Original M3 Utility/basket tables retain dated design history; approved retirement substitutions and the current 155-item catalogue are recorded in §15.4. General P01, numerical calibration and final M4 overfill remain unsettled.
 
 | Key | Decision recorded |
 | --- | --- |
@@ -1064,4 +1078,4 @@ v0.2 recorded M1 closeout; v0.3 and M2 promotion were published at 2cad0d7 and 3
 
 ### Edition 0.4 acceptance boundary
 
-Edition v0.4 retains all approved contracts, §§18–19 and CF-01–CF-24, and records M3 acceptance without changing provisional meal/haul/Utility values or loot_000019 Hydration +3/name debt. M4 Bulk authoring and carrying pressure are next requirements, without assigned values. No game tests, production changes or save operations are performed by this documentation task.
+Edition v0.4 retains all approved contracts, §§18–19 and CF-01–CF-24. The 21 October close-out records 155 human-accepted physical items, seven retirements, accepted scale/Footprint exceptions and resolved Cola Can name debt (§15.4), without numerical calibration or M4 implementation. No game test, production change or save operation is performed by this documentation task.
