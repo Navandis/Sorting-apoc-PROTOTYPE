@@ -17,3 +17,4 @@ storage_category = "Medical"
 can_be_stacked = true
 visual_scene = ExtResource("2_lg0hq")
 storage_rotation_degrees = Vector3(0, 200, 0)
+visual_scale = 1.5

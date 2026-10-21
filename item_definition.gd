@@ -1,3 +1,4 @@
+@tool
 extends Resource
 class_name ItemDefinition
 
@@ -43,6 +44,9 @@ class_name ItemDefinition
 
 # The same PackedScene is reused in the world, held-item view and HUD preview.
 @export var visual_scene: PackedScene
+## Uniform geometry factor, independent of pose, reservation and view fitting.
+## Keep visual_scene pointing at the original source for catalogue identity.
+@export_range(0.01, 10.0, 0.01, "or_greater") var visual_scale: float = 1.0
 @export var icon: Texture2D
 
 # Live HUD preview presentation data.
@@ -65,6 +69,17 @@ class_name ItemDefinition
 # storage unit's authored Front, then applies the optional 90° packing turn.
 # The item's authored world scale is preserved.
 @export var storage_rotation_degrees: Vector3 = Vector3.ZERO
+
+
+func apply_visual_scale(visual: Node) -> void:
+	if not visual is Node3D:
+		return
+	# A placed GLB may reach both pose construction and WorldItem registration.
+	# Remember the applied factor so registration/rebinding cannot compound it.
+	var previous: float = float(visual.get_meta(&"item_visual_scale", 1.0))
+	if not is_equal_approx(previous, visual_scale):
+		(visual as Node3D).scale *= visual_scale / previous
+		visual.set_meta(&"item_visual_scale", visual_scale)
 
 
 func get_utility_for_context(context_id: StringName) -> Dictionary:

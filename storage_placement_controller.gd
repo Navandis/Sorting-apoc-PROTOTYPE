@@ -586,6 +586,8 @@ func build_visual_pose_for_item(
 	item,
 	packing_rotated: bool
 ) -> Dictionary:
+	if item is ItemInstance and item.definition != null:
+		item.definition.apply_visual_scale(visual)
 	var correction_degrees: Vector3 = Vector3.ZERO
 	if item.has_method("get_storage_rotation_degrees"):
 		correction_degrees = item.get_storage_rotation_degrees()

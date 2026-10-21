@@ -13,3 +13,4 @@ can_be_stacked = true
 can_support_stack = true
 visual_scene = ExtResource("2_sl4qi")
 storage_rotation_degrees = Vector3(0, -90, 0)
+auto_stack_group = &"folded_clothing"

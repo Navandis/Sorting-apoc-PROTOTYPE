@@ -91,6 +91,7 @@ func refresh_preview() -> void:
 	packing_root.name = "PackingYaw"
 	preview_root.add_child(packing_root)
 	var visual := item_definition.visual_scene.instantiate()
+	item_definition.apply_visual_scale(visual)
 	_disable_embedded_nodes(visual)
 	var result := StorageVisualPoseScript.build_visual(
 		packing_root,
@@ -171,6 +172,7 @@ func _update_footprint_preview() -> void:
 func _measure_canonical_footprint() -> Dictionary:
 	var measurement_root := Node3D.new()
 	var visual := item_definition.visual_scene.instantiate()
+	item_definition.apply_visual_scale(visual)
 	_disable_embedded_nodes(visual)
 	var result := StorageVisualPoseScript.build_visual(
 		measurement_root,
@@ -204,6 +206,7 @@ func _authoring_fingerprint() -> Array:
 		item_definition.resource_path,
 		item_definition.storage_rotation_degrees,
 		item_definition.storage_footprint,
+		item_definition.visual_scale,
 		visual_instance_id,
 		visual_path,
 		show_packing_rotated,

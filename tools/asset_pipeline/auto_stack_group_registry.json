@@ -11,6 +11,11 @@
 			"compatibility_revision": 1,
 			"description": "Compatible flat media intended to form predictable narrowing automatic stacks."
 		},
+		"folded_clothing": {
+			"approval_status": "APPROVED",
+			"compatibility_revision": 1,
+			"description": "Folded clothing"
+		},
 		"medical_boxes": {
 			"approval_status": "APPROVED",
 			"compatibility_revision": 1,

@@ -105,6 +105,8 @@ func _build_item_preview() -> void:
 	packing_root.name = "CanonicalStoredPose"
 	root.add_child(packing_root)
 	var visual := preview_item_definition.visual_scene.instantiate()
+	preview_item_definition.apply_visual_scale(visual)
+	preview_item_definition.apply_visual_scale(visual)
 	_disable_embedded_nodes(visual)
 	var result := StorageVisualPoseScript.build_visual(
 		packing_root,
@@ -283,6 +285,8 @@ func _authoring_fingerprint() -> Array:
 			preview_item_definition.resource_path,
 			preview_item_definition.item_id,
 			preview_item_definition.visual_scene,
+			preview_item_definition.visual_scale,
+			preview_item_definition.visual_scale,
 			preview_item_definition.storage_rotation_degrees,
 			preview_item_definition.storage_footprint,
 		]

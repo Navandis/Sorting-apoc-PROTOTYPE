@@ -107,6 +107,8 @@ func create_temporary_body(definition: ItemDefinition, body_name: String) -> Rig
 		_last_build_error = "%s visual_scene does not instantiate as Node3D" % String(definition.item_id)
 		return null
 	visual.name = "VisualRoot"
+	definition.apply_visual_scale(visual)
+	definition.apply_visual_scale(visual)
 
 	var points := PackedVector3Array()
 	_collect_mesh_vertices(visual, Transform3D.IDENTITY, points)

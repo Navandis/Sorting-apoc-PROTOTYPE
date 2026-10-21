@@ -103,6 +103,7 @@ func _audit_asset(scene_record: Dictionary, cell_size_m: float) -> Dictionary:
 	var existing_footprint: Vector3i = Vector3i.ZERO
 	var bulk: int = 0
 	var storage_rotation_degrees: Vector3 = Vector3.ZERO
+	var visual_scale := 1.0
 	var can_be_stacked: bool = false
 	var can_support_stack: bool = false
 	var auto_stack_group: String = ""
@@ -113,6 +114,7 @@ func _audit_asset(scene_record: Dictionary, cell_size_m: float) -> Dictionary:
 		existing_footprint = definition.storage_footprint
 		bulk = definition.bulk
 		storage_rotation_degrees = definition.storage_rotation_degrees
+		visual_scale = definition.visual_scale
 		can_be_stacked = definition.can_be_stacked
 		can_support_stack = definition.can_support_stack
 		auto_stack_group = String(definition.auto_stack_group)
@@ -149,7 +151,7 @@ func _audit_asset(scene_record: Dictionary, cell_size_m: float) -> Dictionary:
 		)
 		var posed_result: Dictionary = LootAuditCoreScript.aggregate_posed_contributors(
 			contributor_to_asset_root,
-			authored_pose
+			authored_pose.scaled(Vector3.ONE * visual_scale)
 		)
 		has_posed_bounds = bool(posed_result.get("valid", false))
 		if has_posed_bounds:
@@ -210,6 +212,7 @@ func _audit_asset(scene_record: Dictionary, cell_size_m: float) -> Dictionary:
 		"raw_orientation_b": String(raw_footprint["orientation_b"]),
 		"existing_footprint": _serialize_vector3i(existing_footprint),
 		"storage_rotation_degrees": _vector3_array(storage_rotation_degrees) if has_item_definition else [],
+		"visual_scale": visual_scale,
 		"posed_effective_bounds": _serialize_bounds(posed_effective_bounds, has_posed_bounds),
 		"posed_width_m": posed_effective_bounds.size.abs().x if has_posed_bounds else 0.0,
 		"posed_height_m": posed_effective_bounds.size.abs().y if has_posed_bounds else 0.0,

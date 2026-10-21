@@ -238,6 +238,7 @@ func pickup_into(carried_items: Node) -> bool:
 func _build_interaction_area() -> void:
 	if _host == null or _definition == null:
 		return
+	_apply_authored_visual_scale(_host)
 
 	_bounds = AABB()
 	_bounds_valid = false
@@ -279,6 +280,14 @@ func _apply_pickup_interaction_state() -> void:
 		return
 	_interaction_area.collision_layer = PICKUP_COLLISION_LAYER if _pickup_interaction_enabled else 0
 	_interaction_area.monitorable = _pickup_interaction_enabled
+
+
+func _apply_authored_visual_scale(node: Node) -> void:
+	if _definition.visual_scene != null and node.scene_file_path == _definition.visual_scene.resource_path:
+		_definition.apply_visual_scale(node)
+		return
+	for child: Node in node.get_children():
+		_apply_authored_visual_scale(child)
 
 
 func _scan_mesh_bounds(node: Node, accumulated_transform: Transform3D) -> void:

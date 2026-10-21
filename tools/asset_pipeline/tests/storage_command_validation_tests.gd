@@ -11,6 +11,11 @@ func _run() -> void:
 func _run_regressions() -> void:
 	_pending_helpers += 1
 	_definitions = _definitions_by_id()
+	# This command-regression fixture needs distinct 2x2/3x3 reservations.
+	# Human catalogue Footprints are content authority, so isolate the old shape.
+	var armor_fixture := (_definitions["loot_000032"] as ItemDefinition).duplicate() as ItemDefinition
+	armor_fixture.storage_footprint = Vector3i(3, 3, 1)
+	_definitions["loot_000032"] = armor_fixture
 	_test_selection_command(Vector2i(2, 2), false)
 	_test_selection_command(Vector2i(4, 4), true)
 	_test_selection_command(Vector2i(4, 4), true, true)

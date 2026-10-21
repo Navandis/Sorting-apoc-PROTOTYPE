@@ -52,6 +52,7 @@ static func build_visual(
 ) -> Dictionary:
 	if host == null or visual == null or item == null:
 		return {"valid": false}
+	item.definition.apply_visual_scale(visual)
 	var normalized := normalize_quarter_turns(quarter_turns)
 	host.rotation = Vector3(0.0, PI if normalized >= 2 else 0.0, 0.0)
 	var packing_root := Node3D.new()

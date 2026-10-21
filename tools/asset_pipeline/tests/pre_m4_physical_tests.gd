@@ -29,17 +29,25 @@ func _run() -> void:
 	var catalogue: ItemCatalog=load(CATALOG_PATH)
 	var results: Array[Dictionary]=[]
 	var selected_id:=""
+	var followup := OS.get_cmdline_user_args().has("--followup")
+	var followup_ids := ["loot_000025", "loot_000027", "loot_000075", "loot_000129", "loot_000141", "loot_000152", "loot_000153", "loot_000154", "loot_000155"]
 	for arg: String in OS.get_cmdline_user_args():
 		if arg.begins_with("--item-id="): selected_id=arg.trim_prefix("--item-id=")
 	for record: Dictionary in inventory.models:
-		if record.disposition!="new": continue
+		if followup:
+			if not record.item_id in followup_ids: continue
+		elif record.disposition!="new": continue
 		if not selected_id.is_empty() and record.item_id!=selected_id: continue
 		var definition:=catalogue.get_definition_by_id(StringName(record.item_id))
 		var item:=ItemInstance.new(definition,"physical:"+record.item_id)
 		var measurement:=StorageVisualPose.measure_item(item,false)
 		var size: Vector3=measurement.posed_bounds.size
 		_check(measurement.valid and size.is_finite() and size.x>0 and size.y>0 and size.z>0,"Finite nonempty posed bounds "+record.item_id)
-		_check(definition.storage_footprint.x==maxi(1,ceili(size.x/0.10)) and definition.storage_footprint.y==maxi(1,ceili(size.z/0.10)),"Workbench footprint convention "+record.item_id)
+		if record.has("human_review"):
+			var saved: Array = record.human_review.storage_footprint
+			_check(definition.storage_footprint == Vector3i(saved[0], saved[1], saved[2]), "Saved human Footprint preserved " + record.item_id)
+		else:
+			_check(definition.storage_footprint.x==maxi(1,ceili(size.x/0.10)) and definition.storage_footprint.y==maxi(1,ceili(size.z/0.10)),"Workbench footprint convention "+record.item_id)
 		var carry:=CarriedItems.new()
 		root.add_child(carry)
 		var controller:=StoragePlacementController.new()
@@ -76,11 +84,13 @@ func _run() -> void:
 				_check(entry.world_item.pickup_into(carry) and carry.get_selected_item()==item,"Actual shelf retrieve preserves identity "+record.item_id)
 				_check(compatible.get_stack_count()==0,"Retrieval frees reservation "+record.item_id)
 		results.append({"item_id":record.item_id,"size_m":[size.x,size.y,size.z],"footprint":[definition.storage_footprint.x,definition.storage_footprint.y],"surface":String(compatible.surface_id) if compatible else "NONE","packing_rotated":chosen.get("rotated",false)})
+		results.back()["surface_clearance_m"] = compatible.stack_clearance_m if compatible != null else 0.0
+		results.back()["horizontal_reservation_contains_bounds"] = size.x <= definition.storage_footprint.x * 0.10 and size.z <= definition.storage_footprint.y * 0.10
 		controller.free()
 		carry.free()
 		await process_frame
 		completed+=1
-	_check(completed==(120 if selected_id.is_empty() else 1),"All requested candidates reached physical completion")
+	_check(completed==((9 if followup else 120) if selected_id.is_empty() else 1),"All requested candidates reached physical completion")
 	var file:=FileAccess.open(evidence_dir.path_join("physical-results.json" if selected_id.is_empty() else "physical-"+selected_id+".json"),FileAccess.WRITE)
 	file.store_string(JSON.stringify({"items":results,"blockers":blockers},"\t",true))
 	file.close()

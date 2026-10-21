@@ -26,7 +26,7 @@ func run() -> void:
 		var item = load("res://data/items/definitions/loot_%06d.tres" % number)
 		check(item.utility_value == values[number] and item.utility_id == (&"Food" if number < 19 else &"Hydration"), "approved static Utility: " + str(number))
 	var can = load("res://data/items/definitions/loot_000019.tres")
-	check(can.display_name == "Food Can" and can.storage_category == "Hydration" and can.context_utility_overrides.is_empty(), "019 retains name/category and no compensating override")
+	check(can.display_name == "Cola Can" and can.storage_category == "Hydration" and can.context_utility_overrides.is_empty(), "019 preserves developer-reviewed name, Hydration category and no compensating override")
 	for number: int in [25,26,28]:
 		check(load("res://data/items/definitions/loot_%06d.tres" % number).get_utility_for_context(&"medical_bay").value == {25:5,26:3,28:8}[number], "accepted Medical unchanged")
 	var orders := [["A","B","C","D"],["C","D","A","B"],["B","A","D","C"]]

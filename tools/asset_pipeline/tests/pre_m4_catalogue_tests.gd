@@ -33,7 +33,11 @@ func _init() -> void:
 		if record.disposition=="new":
 			check(definition.utility_id==&"None" and definition.utility_value==0 and definition.bulk==1,"Temporary numerical placeholders only")
 			for field: String in ["scale_review","storage_pose_review","footprint_review","stack_role_review","auto_group_review"]:
-				check(manifest.assets[record.item_id][field].status=="UNREVIEWED","Machine proposal is not approval: "+record.item_id+" "+field)
+				var status: String = manifest.assets[record.item_id][field].status
+				if record.has("human_review") and record.review_status == "HUMAN_REVIEWED_2026_10_21":
+					check(status in ["APPROVED", "DEFAULT_POSE_APPROVED", "CUSTOM_POSE_APPROVED", "GEOMETRY_APPROVED", "OVERRIDE_APPROVED"], "Explicit human decision reconciled: " + record.item_id + " " + field)
+				else:
+					check(status=="UNREVIEWED","Pending physical review is not approval: "+record.item_id+" "+field)
 	check(counts=={"retained":35,"new":120,"retired":7},"Exact dispositions")
 	var old_catalogue:=ItemCatalog.new()
 	old_catalogue.definitions=[Catalog.get_definition_by_id(&"loot_000041")]

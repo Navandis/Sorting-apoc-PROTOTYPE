@@ -17,6 +17,7 @@ static func measure_item(item: ItemInstance, packing_rotated: bool) -> Dictionar
 
 	var packing_root: Node3D = Node3D.new()
 	var visual: Node = visual_scene.instantiate()
+	item.definition.apply_visual_scale(visual)
 	var result: Dictionary = build_visual(
 		packing_root,
 		visual,

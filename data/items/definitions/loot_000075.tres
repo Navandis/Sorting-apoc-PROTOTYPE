@@ -12,3 +12,4 @@ storage_footprint = Vector3i(2, 2, 1)
 can_be_stacked = true
 visual_scene = ExtResource("2_x26y1")
 storage_rotation_degrees = Vector3(0, -90, 0)
+visual_scale = 1.2

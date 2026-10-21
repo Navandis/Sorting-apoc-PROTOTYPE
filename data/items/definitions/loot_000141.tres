@@ -11,3 +11,4 @@ storage_category = "Morale"
 can_be_stacked = true
 visual_scene = ExtResource("2_i4onl")
 storage_rotation_degrees = Vector3(0, -90, 0)
+visual_scale = 1.2

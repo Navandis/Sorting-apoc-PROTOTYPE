@@ -53,6 +53,8 @@ func _apply_item(item) -> void:
 		return
 
 	_current_visual = visual_scene.instantiate()
+	if item is ItemInstance and item.definition != null:
+		item.definition.apply_visual_scale(_current_visual)
 	_center_root.add_child(_current_visual)
 	_disable_embedded_nonvisual_nodes(_current_visual)
 

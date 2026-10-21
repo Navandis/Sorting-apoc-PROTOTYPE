@@ -19,9 +19,13 @@ func _run() -> void:
 		indices=[6,7,13,24,25,28] # Six refined clothing/instrument poses; retain each exact mixed manifest.
 	if OS.get_cmdline_user_args().has("--basketball-role"):
 		indices=[3] # Exact mixed manifest containing loot_000136.
+	var followup := OS.get_cmdline_user_args().has("--followup")
+	if followup: indices = [0, 1, 2]
 	for index: int in indices:
 		var manifest: Array=[]
 		for quarter: int in 4: manifest.append(ids[index+quarter*30])
+		if followup:
+			manifest = [["loot_000025", "loot_000027", "loot_000075", "loot_000129"], ["loot_000141", "loot_000152", "loot_000153", "loot_000155"], ["loot_000154", "loot_000022", "loot_000031", "loot_000006"]][index]
 		var result:=await _measure_case({"label":"new_%03d" % index,"manifest":manifest,"index":index,"content_seed":0,"fixture_mode":DeckPlannerScript.FixtureMode.BARE})
 		_check(result.drained and result.records.size()==4,"Exact mixed manifest completely drained")
 		for record: Dictionary in result.records:

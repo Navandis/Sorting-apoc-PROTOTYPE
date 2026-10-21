@@ -47,7 +47,7 @@ func content_fingerprint() -> String:
 	for definition: ItemDefinition in catalog.definitions:
 		physical[String(definition.item_id)] = [definition.bulk, definition.storage_footprint,
 			definition.storage_rotation_degrees, definition.can_be_stacked, definition.can_support_stack,
-			definition.auto_stack_group, definition.visual_scene.resource_path if definition.visual_scene != null else ""]
+			definition.auto_stack_group, definition.visual_scene.resource_path if definition.visual_scene != null else "", definition.visual_scale]
 	return Codec.new().stringify(physical).sha256_text()
 
 func _fields(value: Variant, fields: Dictionary, label: String) -> bool:

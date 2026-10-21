@@ -85,3 +85,74 @@ Run serially and use a new external evidence directory for fresh verification. T
 Human decisions are not inferred from `.tres` saves. Subsequent reconciliation of actual saved values and decision provenance remains a separately authorized step after the developer reports review complete. Do not rerun machine proposals over human edits.
 
 For an intentional future inventory rerun: `onboard_props.gd` defaults to validation/dry-run; `-- --apply` creates missing inventory definitions and review records only. It skips registered existing definitions, reserves retired paths/IDs, refuses stale sources and does not add items to production inflow. New/unaccounted files require explicit inventory proposals before application.
+
+## 21 October 2026 — human checkpoint, uniform scale and folded clothing follow-up
+
+**HUMAN AUTHORING CHECKPOINTED / FIVE SCALE ITEMS PENDING HUMAN RE-REVIEW / NOT PUBLISHED.** Focused implementation is delivered locally. The developer subsequently confirmed the five changed source GLBs were intentional and included in the completed physical review; their source-fingerprint reconciliation is now complete. **150 reviews are current; only the five post-scale physical reviews remain pending.** No milestone promotion or final post-scaling physical acceptance is claimed.
+
+Checkpoint **`170ea013dec7e9cc463173bba78759d5cd16fcbc`** contains exactly the developer's **152 modified ItemDefinition `.tres` files**, from the reported comprehensive review of all **155** active items. Preflight found the requested branch at `5faa40baea44bdedef8b06447b244e05402fc4c5`, no running Godot process and no other working-tree changes. Live remote `main` was verified at `53805a97ec43455920e3ceffb6f7acd98001f5b6` using a per-command OpenSSL backend after Windows Schannel refused the initial read. Staged blobs, committed blobs and working-file SHA-256 values all preserved the original bytes; the checkpoint left a clean tree. No other worktree was modified.
+
+The second commit adds `ItemDefinition.visual_scale`, default **1.0**, and an idempotent geometry transform. It retains each original `visual_scene` GLB path, preserving catalogue, raw-host registration, source fingerprint and onboarding identity. Tracked data stores **1.5** for `loot_000025` and **1.2** for `loot_000027`, `000075`, `000129`, `000141`. This is independent of ignored import metadata and licensed binaries. Uniform scaling feeds loose/world registration before pickup-collider construction, shared storage measurements, committed/ghost/restored storage poses, Receiving measurement/materialization, held and HUD pre-fit bounds, and the actual pose workbench. Existing freight preview and temporary physics-proof hull construction consume the same factor. `@tool` permits the resource helper in editor previews; live workbench refresh includes scale. Snapshot content fingerprints include the factor, retaining explainable incompatible-save rejection. Existing HUD framing, held fitting, Front, pose, Footprint, stack/support flags, Utility, Bulk and carrying capacity are preserved.
+
+All **155** definitions were compared against the immutable checkpoint: **146** remain byte-identical, and the other **9** differ only by their one added scale/group property line. Every pre-existing authored byte remains intact. No source assets, saves, catalogue entries, retirements, inflow schedules or other worktrees were changed. Counts remain **155 active / 7 retired / 162 source models**; the production recurring pool remains the same 35 retained members.
+
+### Measured scale consequences
+
+Bounds below are authoritative runtime-renderable canonical posed **X × Y × Z**, in millimetres, rounded for display. `scaled-items.json` retains the full precision and pre-correction bounds. Clearance includes the existing 6 mm seating gap. Each affected item completed real pickup, placement and retrieval on production surface `SM_MetalShelves_GalleryA_West_level_1`, with **0.82 m** clearance. Mechanical reservation success does not certify horizontal containment.
+
+| Item | Uniform factor | Posed bounds, mm | Saved Footprint | Suggested Footprint | Required clearance, mm |
+| --- | ---: | --- | --- | --- | ---: |
+| `loot_000025` | 1.50 | 94.234 × 127.554 × 94.215 | 1 × 1 | 1 × 1 | 133.554 |
+| `loot_000027` | 1.20 | 105.225 × 167.451 × 105.291 | **1 × 1** | **2 × 2** | 173.451 |
+| `loot_000075` | 1.20 | 122.366 × 199.874 × 122.366 | 2 × 2 | 2 × 2 | 205.874 |
+| `loot_000129` | 1.20 | 131.040 × 197.065 × 131.040 | 2 × 2 | 2 × 2 | 203.065 |
+| `loot_000141` | 1.20 | 62.142 × 132.607 × 42.194 | 1 × 1 | 1 × 1 | 138.607 |
+
+**`loot_000027` is an explicit pending Footprint correction/override decision.** Its new X/Z dimensions exceed its reservation by **5.225 / 5.291 mm total**, approximately **2.612 / 2.646 mm per centered side**. The workbench warning is verified. Its 1×1 Footprint was not silently enlarged; shelf insertion under existing abstract reservation rules is not presented as accepted safe packing. The other four scaled items remain inside their saved horizontal reservations. All five scale/pose/Footprint and geometry-dependent role/group review stages remain `UNREVIEWED` pending the developer's post-correction inspection.
+
+### Group and review reconciliation
+
+The existing registry now contains approved class **`folded_clothing`**, description **"Folded clothing"**, compatibility revision **1**, assigned to exactly **`loot_000152`–`loot_000155`**. Their saved physical authoring is unchanged. Actual controller insertion forms one mixed stack containing all four, with top **0.243148 m** in the 1.5 m clearance fixture. Negative cases exercise an unrelated group, incoming resting-role refusal, a non-supporting same-group singleton, oversized horizontal fit and clearance refusal with exact carried-item retention. Production-shelf handoffs also cover all four individually.
+
+The rendered stack is a technical contact aid, not final aesthetic approval. Preserve and inspect the existing soft-clothing overrides: **154** measures **0.348588 m** X and **155** measures **0.359252 m** X against their approved **0.300 m** reserved width; both suggest 4×4 while retaining saved 3×4. Their new group records disclose these overhangs and recommend visual review of contact and adjacent packing. No supporting flag or Footprint was changed to force the stack. The slightly irregular cloth contours still warrant the requested relationship/aesthetic follow-up.
+
+Existing manifest schema **2.0** and its dependency/approval helpers were reused against the actual external definitions. Inventory proposal fields, source identities, flags and the seven retired review records are retained; current saved values and dated checkpoint provenance are recorded separately. The five confirmed source fingerprints and their source-change flags are updated, with former hashes and flags retained in explicit `human_review.source_confirmation` history and prior review notes. `loot_000019` now uses the developer's saved **"Cola Can"** name; its Hydration +3 and other utility data are untouched. The command regression uses an isolated copy of the old 3×3 armour fixture rather than reverting the developer's current Footprint. Pickaxe **`loot_000108` / `SM_Pickaxe_03.glb`** retains its unresolved co-located-LOD representation flag and notes; comprehensive physical review is not treated as explicit representation resolution.
+
+**Pre-existing source discrepancy resolved by explicit developer confirmation on 21 October:** current GLB SHA-256 values differed from recorded inventory fingerprints for **`loot_000008`, `000009`, `000010`, `000043`, `000044`** (`SM_Dry_Goods_01a`, `01c`, `01g`, `01h`, `NN_01a`). File timestamps predate this execution. The initial delivery retained the old hashes and blocked onboarding; the developer then explicitly confirmed these current GLBs were intentionally updated and included in the completed physical review. The five current hashes and dependent review snapshots have now been reconciled through the existing approval helpers. Both old and accepted hashes remain recorded in source-confirmation history and external `source-fingerprint-mismatches.json`. Source files and all `.tres` files were unchanged during this metadata reconciliation. Counts are now **150 current reviews / 5 pending post-scale reviews / 0 pending source confirmations**. The other 150 physical definitions require no blanket re-review. The second local commit is amended to retain the requested two-commit structure; checkpoint `170ea01` remains immutable.
+
+### Targeted verification and reproducibility
+
+Engine: `D:/AI Tools/Godot-4.7-Codex/Godot_v4.7-stable_win64_console.exe`, **4.7.stable.official.5b4e0cb0f**, Compatibility. Engine runs were serial. All save/continuation writes used explicitly injected paths below the new external evidence root; the developer's active continuation was not read, migrated, modified or deleted.
+
+| Proof | Result |
+| --- | --- |
+| Catalogue | Exit 0; 155 active, 7 excluded/retired, unique source/ID mappings, allocation reservations and 35-member normal pool retained. |
+| Follow-up scale/group probe | Exit 0; exact five factors from real bounds, actual workbench rendered geometry/warning, held/HUD pre-fit bounds, idempotent raw GLB registration, pickup collider, store/retrieve, temporary physics hull factor and scale-sensitive snapshot fingerprint. |
+| Production physical owner, `--followup` | Exit 0; all 9 changed definitions complete pickup/store/retrieve, 0 mechanically incompatible production surfaces; explicit containment results disclose 027/154/155 overhang. |
+| Receiving owner, `--followup` | Exit 0; 3 exact mixed manifests, 12 progressive production-ray TAKEs and 12 production-shelf handoffs/retrievals; 0 identity-loss or surface blockers. |
+| Rendered follow-up | Exit 0; Compatibility GPU run and actual four-member stack captured as `folded-clothing-mixed.png`; no final human acceptance inferred. |
+| Storage owners | Stack rules, stack clearance, actual stacking interaction and command validation all exit 0. |
+| Medical / Kitchen / M3 schedule / contribution | Exit 0; respectively **24 / 69 / 43 / 24** checks, zero failures. |
+| Persistence / separate continuation writer / reader | Exit 0; respectively **26 / 7 / 18** checks, zero failures. |
+| External authoring roundtrip / editor scan / current audit | Exit 0; saved/reopened isolated definition, normal editor scan, and 35-source current main-scene audit. Audit posed bounds include authored scale and expose `visual_scale`. |
+| Onboarding dry-run and `--apply` | After explicit source confirmation, **both exit 0**, **0 additions / total 155**. All **158** protected definition/catalogue/manifest/inventory hashes remain unchanged by both runs. Successful onboarding/idempotence is verified; the initial stale-source refusal logs remain historical evidence. |
+
+The **21 selected final logs all exit 0** after source confirmation. Catalogue, current audit and both onboarding modes were refreshed; the other 17 passing runs are reused from the same geometry/gameplay state because this confirmation changes review metadata only. Script errors/assertions/leak signatures were checked independently of completion markers: **zero** in the selected final logs. The known Windows certificate-store diagnostic remains disclosed. Existing CF-07 material-null debt was neither suppressed nor repaired; it was not emitted by this rendered follow-up. Initial red checks, stale test expectations, failed helper attempts and initial exit-1 stale-source refusals are retained separately and do not support passing claims.
+
+External evidence root: `C:/Users/Boschetar/.codex/attachments/pre-m4-followup-2026-10-21`. It contains the immutable file/hash inventory and diff, `checkpoint-paths.txt`, both commit file lists, `definition-preservation.json`, `scaled-items.json`, `clothing-stack.json`, `physical-results.json`, rendered stack, source discrepancies, exact regression runner/commands and `final-results.json` with individual diagnostics. `source-confirmation/` retains the prior partial state, explicit five-source reconciliation evidence and refreshed logs/hash-preservation checks. Final commit SHA/file-list evidence is external to avoid a self-referential commit hash in this document.
+
+Core focused commands, from the project root:
+
+```powershell
+$engine = 'D:/AI Tools/Godot-4.7-Codex/Godot_v4.7-stable_win64_console.exe'
+$evidence = 'C:/Users/Boschetar/.codex/attachments/pre-m4-followup-2026-10-21'
+& $engine --headless --path . --script res://tools/asset_pipeline/tests/pre_m4_followup_tests.gd -- "--evidence-dir=$evidence"
+& $engine --headless --path . --script res://tools/asset_pipeline/tests/pre_m4_physical_tests.gd -- --followup "--evidence-dir=$evidence"
+& $engine --headless --path . --script res://tools/asset_pipeline/tests/pre_m4_receiving_tests.gd -- --followup
+& $engine --headless --path . --script res://tools/asset_pipeline/tests/pre_m4_catalogue_tests.gd
+& $engine --headless --path . --script res://tools/asset_pipeline/onboard_props.gd -- --apply
+```
+
+For a new continuation reproduction, use a **fresh external directory**, writer followed by reader, with the established `pre_m4_continuation_tests.gd -- --evidence-dir=... --mode=write/read` arguments. The external `run-regressions.ps1` records the remaining owner commands. No new normal-scenario loot, Utility/Bulk calibration, Dispatch/M4, merge, push, PR or publication was performed.
+
+**Human handoff:** reopen `res://gameplay/dev/item_storage_pose/item_storage_pose_authoring.tscn`, select its root, and assign each external `res://data/items/definitions/loot_000025.tres`, `000027.tres`, `000075.tres`, `000129.tres`, `000141.tres` in turn. Inspect corrected scale, canonical +Z Front, resting pose, saved versus suggested Footprint, and stack/support suitability; use Packing Rotated only as a preview. Resolve 027's explicit 1×1 versus 2×2 decision, save any deliberate edits to the external resources and reopen them. Report final acceptance before later reconciliation/publication authorization. Inspect the actual folded-clothing stack for soft contact/overhang aesthetics without a blanket re-review of other items. The separate five-source confirmation is complete and requires no further source decision.
