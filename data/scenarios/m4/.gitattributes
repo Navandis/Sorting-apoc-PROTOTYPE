@@ -1,0 +1,2 @@
+# Preserve the delivered packet bytes, including the CSV's CRLF line endings.
+* -text

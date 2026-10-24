@@ -65,6 +65,11 @@ func _ready() -> void:
 		kitchen.name = "KitchenContribution"
 		add_child(kitchen)
 		kitchen.configure(self, null, "kitchen", "KitchenInterface", "KITCHEN")
+		if run_schedule.definition.get("revision") == 4:
+			var dispatch: Node = load("res://gameplay/requests/dispatch_interface.gd").new()
+			dispatch.name = "DispatchContribution"
+			add_child(dispatch)
+			dispatch.configure(self,null)
 		run_schedule.bind(self)
 		var clock_hud = load("res://gameplay/run/clock_hud.gd").new()
 		clock_hud.schedule = run_schedule

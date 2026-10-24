@@ -102,6 +102,16 @@ func run() -> void:
 	var vetoed := item("Food", 3)
 	select(carry, vetoed)
 	check(not global.submit(carry, func(): return false).ok and carry.get_selected_item() == vetoed, "Commit recipient/time validator rejects intact")
+	carry.remove_item(vetoed)
+	var timed = script.new("commit-clock",1,7)
+	var now := {"value":0.0}
+	timed.deadline = 1.0
+	timed.time_source = func(): return now.value
+	var late := item("Food",3)
+	select(carry,late)
+	check(not timed.submit(carry,func():
+		now.value = 1.0
+		return true).ok and carry.get_selected_item() == late and timed.spent.is_empty(),"Time is revalidated at commit, after preview and recipient validation")
 	carry.free()
 	finish()
 

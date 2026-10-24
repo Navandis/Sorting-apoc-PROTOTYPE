@@ -4,6 +4,7 @@ extends RefCounted
 const Scenario = preload("res://gameplay/run/run_scenario.gd")
 const Clock = preload("res://gameplay/run/run_clock.gd")
 const Catalog = preload("res://prototype_item_catalog.gd")
+const Loadout = preload("res://gameplay/requests/dispatch_loadout.gd")
 var _error := ""
 
 func fields(value: Variant, shape: Dictionary, label: String) -> bool:
@@ -38,6 +39,13 @@ func validate(state: Dictionary) -> String:
 		var issued: Dictionary = saved.issued[id]
 		var event: Dictionary = events[id]
 		if not issued.get("at") is float or issued.at != clock.timestamp(event.day, event.at) or issued.at > clock.elapsed: return "Occurrence timestamp mismatch"
+		if event.kind == "dispatch":
+			if not issued.get("teams") is Array or issued.teams.size() != Loadout.form_members(event.ready).size(): return "Issued roster/team count mismatch"
+			var team_ids: Dictionary = {}
+			for team: Variant in issued.teams:
+				if not team is String or not team.begins_with(state.run.id+":dispatch:") or team_ids.has(team): return "Invalid durable daily team identity"
+				team_ids[team] = true
+			continue
 		var reference := "batch" if event.kind == "return" else "request"
 		if not issued.get(reference) is String or not issued[reference].begins_with(state.run.id + (":cargo:" if event.kind == "return" else ":" + event.kind + ":")): return "Invalid occurrence identity"
 	for event: Dictionary in saved.definition.events:
@@ -49,22 +57,41 @@ func validate(state: Dictionary) -> String:
 	for request: Variant in saved.requests:
 		if not fields(request, {"id":TYPE_STRING,"destination":TYPE_STRING,"targets":TYPE_DICTIONARY,"credited":TYPE_DICTIONARY,"spent":TYPE_ARRAY,"closed":TYPE_BOOL,"result":TYPE_DICTIONARY,
 			"occurrence_id":TYPE_STRING,"day":TYPE_INT,"opened_at":TYPE_FLOAT,"deadline":TYPE_FLOAT,"closed_at":TYPE_FLOAT,"closure_reason":TYPE_STRING}, "Timed request"): return _error
-		if ids.has(request.id) or occurrences.has(request.occurrence_id) or not events.has(request.occurrence_id): return "Duplicate or unknown request occurrence"
+		var event_key: String = request.occurrence_id.get_slice(":",0)
+		if ids.has(request.id) or occurrences.has(request.occurrence_id) or not events.has(event_key): return "Duplicate or unknown request occurrence"
 		ids[request.id] = true
 		occurrences[request.occurrence_id] = request
-		var event: Dictionary = events[request.occurrence_id]
-		if event.kind not in ["medical","kitchen"] or not saved.issued.has(event.id) or saved.issued[event.id].request != request.id or request.day != event.day or request.destination != Scenario.new().destination_for(event.kind) or request.targets != event.targets or request.opened_at != clock.timestamp(event.day, event.at) or request.deadline != clock.timestamp(event.day, event.deadline): return "Request/definition binding mismatch"
+		var event: Dictionary = events[event_key]
+		var dispatch: bool = event.kind == "dispatch"
+		if event.kind not in ["medical","kitchen","dispatch"] or not saved.issued.has(event.id) or request.day != event.day or request.destination != Scenario.new().destination_for(event.kind) or request.opened_at != clock.timestamp(event.day,event.at) or request.deadline != clock.timestamp(event.day,event.deadline): return "Request/definition binding mismatch"
+		if dispatch:
+			if not fields(request,{"members":TYPE_INT,"display_index":TYPE_INT,"outgoing_bulk":TYPE_INT,"dispatch_result":TYPE_DICTIONARY},"Dispatch request"): return _error
+			var roster := Loadout.form_members(event.ready)
+			if request.display_index < 1 or request.display_index > roster.size() or request.members != roster[request.display_index-1] or request.occurrence_id != "%s:team_%03d" % [event.id,request.display_index] or saved.issued[event.id].teams[request.display_index-1] != request.id: return "Request/daily team formation mismatch"
+			var required: Dictionary = {}
+			for lane: String in Loadout.PER_MEMBER: required[lane] = Loadout.PER_MEMBER[lane] * request.members
+			if request.targets != required: return "Dispatch member-scaled requirements mismatch"
+		else:
+			if request.occurrence_id != event.id or saved.issued[event.id].get("request") != request.id or request.targets != event.targets: return "Request/definition binding mismatch"
 		if request.credited.size() != request.targets.size(): return "Unexpected historical credit lanes"
 		var totals: Dictionary = {}
 		for lane: String in request.targets:
 			if not request.credited.get(lane) is int: return "Missing integer lane credit"
 			totals[lane] = 0
+		var outgoing := 0
 		for receipt: Variant in request.spent:
-			if not fields(receipt, {"item_id":TYPE_STRING,"definition_id":TYPE_STRING,"lane":TYPE_STRING,"applied":TYPE_INT,"wasted":TYPE_INT}, "Contribution receipt"): return _error
+			if not fields(receipt, {"item_id":TYPE_STRING,"definition_id":TYPE_STRING,"lane":TYPE_STRING,"raw":TYPE_INT,"applied":TYPE_INT,"wasted":TYPE_INT,"bulk":TYPE_INT,"contaminated":TYPE_BOOL}, "Contribution receipt"): return _error
 			if receipt.item_id.is_empty() or spent.has(receipt.item_id) or state.items.has(receipt.item_id) or not totals.has(receipt.lane) or receipt.applied <= 0 or receipt.wasted < 0 or receipt.definition_id in ["loot_000034","loot_000036"] or Catalog.get_definition_by_id(StringName(receipt.definition_id)) == null: return "Inconsistent cross-history spent-item receipt"
 			spent[receipt.item_id] = true
+			var definition: ItemDefinition = Catalog.get_definition_by_id(StringName(receipt.definition_id))
+			var utility: Dictionary = definition.get_utility_for_context(StringName(request.destination))
+			var raw := int(utility.value)
+			if receipt.contaminated: raw = 0 if raw <= 1 else int(ceil(raw/2.0))
+			if receipt.lane != String(utility.utility_id) or receipt.raw != raw or receipt.bulk != definition.bulk or receipt.applied != mini(raw,int(request.targets[receipt.lane])-int(totals[receipt.lane])) or receipt.wasted != raw-receipt.applied: return "Receipt differs from approved full-item Utility/Bulk"
+			outgoing += receipt.bulk
 			totals[receipt.lane] += receipt.applied
 			if totals[receipt.lane] > request.targets[receipt.lane] or (receipt.wasted > 0 and totals[receipt.lane] != request.targets[receipt.lane]): return "Invalid historical cap/waste"
+		if dispatch and (request.outgoing_bulk != outgoing or outgoing > Loadout.BULK_PER_MEMBER * request.members): return "Invalid Dispatch outgoing Bulk/capacity"
 		var fulfilled := true
 		var expected_result: Dictionary = {}
 		for lane: String in request.targets:
@@ -75,18 +102,28 @@ func validate(state: Dictionary) -> String:
 			expected_result[lane] = {"required":target,"supplied":total,"unmet":target-total}
 		if request.closed:
 			if request.result != expected_result: return "Inconsistent request result"
-			if request.closure_reason == "fulfilled":
+			if request.closure_reason == ("full" if dispatch else "fulfilled"):
 				if not fulfilled or not is_finite(request.closed_at) or request.closed_at < request.opened_at or request.closed_at >= request.deadline: return "Invalid fulfilled request timing"
-			elif request.closure_reason == "expired":
+			elif request.closure_reason == ("cutoff" if dispatch else "expired"):
 				if fulfilled or request.closed_at != request.deadline: return "Invalid expired request timing"
+			elif dispatch and request.closure_reason == "manual":
+				if fulfilled or not is_finite(request.closed_at) or request.closed_at < request.opened_at or request.closed_at >= request.deadline: return "Invalid manual Dispatch timing"
 			else: return "Unsupported request closure reason"
 			if request.closed_at > clock.elapsed: return "Request closed in the future"
+			if dispatch:
+				var capacity: int = Loadout.BULK_PER_MEMBER * request.members
+				var expected_dispatch := {"team_id":request.id,"display_index":request.display_index,"members":request.members,"day":request.day,"reason":request.closure_reason,"at":request.closed_at,"capacity":capacity,"outgoing_bulk":outgoing,"return_capacity":capacity-outgoing,"lanes":expected_result}
+				if request.dispatch_result != expected_dispatch: return "Immutable Dispatch result differs from committed loadout"
 		else:
-			if active.has(request.destination): return "Multiple active requests at one destination"
+			if not dispatch and active.has(request.destination): return "Multiple active requests at one destination"
 			active[request.destination] = true
 			if not request.result.is_empty() or not request.closure_reason.is_empty() or request.closed_at != -1.0 or fulfilled or request.opened_at > clock.elapsed or request.deadline <= clock.elapsed: return "Invalid active request"
+			if dispatch and not request.dispatch_result.is_empty(): return "Open team has a terminal Dispatch result"
 	for id: String in saved.issued:
-		if events[id].kind != "return" and not occurrences.has(id): return "Issued request occurrence has no history"
+		if events[id].kind == "dispatch":
+			for index: int in saved.issued[id].teams.size():
+				if not occurrences.has("%s:team_%03d" % [id,index+1]): return "Issued team has no retained loadout"
+		elif events[id].kind != "return" and not occurrences.has(id): return "Issued request occurrence has no history"
 	var receiving: Dictionary = state.receiving
 	if not receiving.get("admission") is Dictionary or not receiving.admission.get("returns") is Dictionary: return "Missing timed Receiving owner"
 	if not receiving.get("manager") is Dictionary or not receiving.manager.get("batches") is Array or not receiving.admission.get("pending") is Array: return "Missing timed cargo records"
@@ -116,18 +153,22 @@ func validate(state: Dictionary) -> String:
 	if saved.resolved_day == 0:
 		if not saved.report.is_empty(): return "Report exists before first resolution"
 	else:
-		if not fields(saved.report, {"day":TYPE_INT,"medical":TYPE_ARRAY,"meals":TYPE_ARRAY,"admitted":TYPE_ARRAY,"forfeits":TYPE_ARRAY,"backlog":TYPE_ARRAY,"scenario_complete":TYPE_BOOL}, "Night report"): return _error
+		if not fields(saved.report, {"day":TYPE_INT,"medical":TYPE_ARRAY,"dispatch":TYPE_ARRAY,"meals":TYPE_ARRAY,"admitted":TYPE_ARRAY,"forfeits":TYPE_ARRAY,"backlog":TYPE_ARRAY,"scenario_complete":TYPE_BOOL}, "Night report"): return _error
 		if saved.report.day != saved.resolved_day: return "Report/resolved day mismatch"
+		if saved.report.get("clock_config") != saved.definition.config: return "Report calendar differs from authoritative clock configuration"
 		var expected_medical: Array = []
+		var expected_dispatch: Array = []
 		var expected_meals: Array = []
 		for request: Dictionary in saved.requests:
 			if request.day != saved.resolved_day: continue
 			if request.destination == "medical_bay": expected_medical.append(request)
-			else:
+			elif request.destination == "dispatch": expected_dispatch.append(request)
+			elif request.destination == "kitchen":
 				var meal: Dictionary = request.duplicate(true)
 				meal["meal"] = events[request.occurrence_id].meal
 				expected_meals.append(meal)
 		if saved.report.medical != expected_medical: return "Report differs from retained closed results"
+		if saved.report.dispatch != expected_dispatch: return "Report differs from immutable Dispatch results"
 		expected_meals.sort_custom(func(a,b): return a.opened_at < b.opened_at)
 		if saved.report.meals != expected_meals: return "Meal report differs from retained closed results"
 		var expected_coverage: Variant = load("res://gameplay/run/run_schedule.gd").meal_coverage(expected_meals)

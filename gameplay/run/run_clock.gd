@@ -1,7 +1,7 @@
 extends RefCounted
 
 ## Only active simulation advances elapsed. Calendar gaps never advance mechanics.
-var config := {"rate": 24.0, "day_start": 25200.0, "latest_return": 85200.0}
+var config := {"rate": 24.0, "day_start": 21600.0, "latest_return": 85200.0}
 var elapsed := 0.0
 var day := 1
 

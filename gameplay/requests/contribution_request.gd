@@ -86,7 +86,7 @@ func _record_contribution(item: ItemInstance, proposed: Dictionary) -> void:
 	credited[proposed.lane] = proposed.projected
 	spent.append({"item_id": item.instance_id, "definition_id": String(item.definition.item_id),
 		"lane": proposed.lane, "raw": int(proposed.applied) + int(proposed.wasted),
-		"applied": proposed.applied, "wasted": proposed.wasted, "bulk": item.get_bulk()})
+		"applied": proposed.applied, "wasted": proposed.wasted, "bulk": item.get_bulk(), "contaminated": item.contaminated})
 	var fulfilled := true
 	for lane: String in targets:
 		if int(credited[lane]) < int(targets[lane]): fulfilled = false

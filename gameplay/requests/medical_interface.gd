@@ -15,7 +15,7 @@ func configure(wing: Node, state: RefCounted, context: String = "medical_bay", p
 	request = state
 	player = wing.get_node("Player")
 	proxy = wing.get_node("Environment/Greybox/Proxies/" + proxy_name)
-	panel = PanelScript.new()
+	panel = _new_panel()
 	panel.name = "ContributionPanel"
 	add_child(panel)
 	panel.configure(state, player.carried_items, is_targeted)
@@ -30,6 +30,9 @@ func configure(wing: Node, state: RefCounted, context: String = "medical_bay", p
 	proxy.add_child(action_label)
 	action_label.position.y = 0.75
 	_refresh_action_label()
+
+func _new_panel() -> CanvasLayer:
+	return PanelScript.new()
 
 func is_active() -> bool:
 	return request != null and request.is_accepting()
@@ -66,6 +69,9 @@ func is_targeted() -> bool:
 		return false
 	var query := PhysicsRayQueryParameters3D.create(from, to, 1, [player.get_rid()])
 	var obstruction := player.get_world_3d().direct_space_state.intersect_ray(query)
+	# The deeper Dispatch work surface can be hit well before its center.
+	# Its own collision is the recipient, not an intervening obstruction.
+	if obstruction.get("collider") is Node and proxy.is_ancestor_of(obstruction.collider): return true
 	return obstruction.is_empty() or from.distance_to(obstruction.position) + 0.15 >= from.distance_to(proxy.global_position)
 
 func open_panel() -> void:

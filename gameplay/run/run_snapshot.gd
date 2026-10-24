@@ -3,7 +3,7 @@ extends RefCounted
 const Codec = preload("res://gameplay/run/state_codec.gd")
 const Catalog = preload("res://prototype_item_catalog.gd")
 const WING := "res://gameplay/logistics_wing/wing_gameplay.tscn"
-const SCHEMA := 3
+const SCHEMA := 4
 var _error := ""
 
 func capture(wing: Node) -> Dictionary:
@@ -47,7 +47,9 @@ func content_fingerprint() -> String:
 	for definition: ItemDefinition in catalog.definitions:
 		physical[String(definition.item_id)] = [definition.bulk, definition.storage_footprint,
 			definition.storage_rotation_degrees, definition.can_be_stacked, definition.can_support_stack,
-			definition.auto_stack_group, definition.visual_scene.resource_path if definition.visual_scene != null else "", definition.visual_scale]
+			definition.auto_stack_group, definition.visual_scene.resource_path if definition.visual_scene != null else "", definition.visual_scale,
+			definition.utility_id, definition.utility_value, definition.context_utility_overrides]
+	physical["pose_contract"] = "m4_vertex_vertical_seating"
 	return Codec.new().stringify(physical).sha256_text()
 
 func _fields(value: Variant, fields: Dictionary, label: String) -> bool:
@@ -62,11 +64,11 @@ func _fields(value: Variant, fields: Dictionary, label: String) -> bool:
 
 func validate(state: Dictionary) -> String:
 	_error = ""
-	if state.get("schema") in [1,2]: return "Prior continuation is incompatible with the M3 scenario; save left untouched. Confirm New Run to replace it."
+	if state.get("schema") in [1,2,3]: return "Prior continuation is incompatible with the M4 catalogue/scenario; save left untouched. Confirm New Run to replace it."
 	if not _fields(state, {"schema":TYPE_INT,"content":TYPE_STRING,"run":TYPE_DICTIONARY,"clock":TYPE_DICTIONARY,"schedule":TYPE_DICTIONARY,
 		"items":TYPE_DICTIONARY,"carry":TYPE_DICTIONARY,"hosts":TYPE_ARRAY,"surfaces":TYPE_DICTIONARY,
 		"player":TYPE_DICTIONARY,"receiving":TYPE_DICTIONARY}, "Snapshot"): return _error
-	if state.schema != SCHEMA: return "Unsupported save schema %s (supported: 3)" % state.schema
+	if state.schema != SCHEMA: return "Unsupported save schema %s (supported: 4)" % state.schema
 	if state.content != content_fingerprint(): return "Save's physical item data is incompatible with this build"
 	if not _fields(state.run, {"id":TYPE_STRING,"scenario":TYPE_STRING,"next_sequence":TYPE_INT,"gameplay_seconds":TYPE_FLOAT}, "Run"): return _error
 	if state.run.id.length() != 24 or not state.run.id.is_valid_hex_number(false) or state.run.next_sequence < 1 or not is_finite(state.run.gameplay_seconds) or state.run.gameplay_seconds < 0.0:
@@ -89,7 +91,7 @@ func validate(state: Dictionary) -> String:
 			if not _claim(id, "carrying", state.items, owners): return _error
 			bulk += Catalog.get_definition_by_id(StringName(state.items[id].definition)).bulk
 	var selected: int = state.carry.selected
-	if state.carry.max_bulk < bulk or state.carry.max_bulk < 1 or (selected == -1 and not owners.is_empty()) or (selected != -1 and (selected < 0 or selected >= state.carry.slots.size() or state.carry.slots[selected].is_empty())):
+	if state.carry.max_bulk < bulk or state.carry.max_bulk != 20 or (selected == -1 and not owners.is_empty()) or (selected != -1 and (selected < 0 or selected >= state.carry.slots.size() or state.carry.slots[selected].is_empty())):
 		return "Invalid carrying selection/capacity"
 	var host_names: Dictionary = {}
 	for host: Variant in state.hosts:
@@ -121,7 +123,7 @@ func _validate_allocator(state: Dictionary) -> String:
 	var highest := 0
 	for id: String in ids:
 		var parts := id.split(":")
-		if parts.size() >= 3 and parts[0] == state.run.id and parts[1] in ["cargo", "medical", "kitchen"]:
+		if parts.size() >= 3 and parts[0] == state.run.id and parts[1] in ["cargo", "medical", "kitchen", "dispatch", "seed"]:
 			if not parts[2].is_valid_int() or int(parts[2]) < 1: return "Invalid allocated run identity"
 			highest = maxi(highest, int(parts[2]))
 	if state.run.next_sequence <= highest: return "Saved allocation sequence would reuse an existing identity"

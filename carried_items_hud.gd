@@ -11,6 +11,7 @@ class_name CarriedItemsHUD
 var _carried_items: Node
 var _slot_row: HBoxContainer
 var _bulk_label: Label
+var _bottom: VBoxContainer
 
 const SELECTED_BG := Color(0.14, 0.18, 0.16, 0.96)
 const NORMAL_BG := Color(0.055, 0.06, 0.06, 0.88)
@@ -27,6 +28,8 @@ func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_build_ui()
+	resized.connect(_refresh)
+	get_window().size_changed.connect(_refresh)
 
 	_carried_items = get_node_or_null(carried_items_path)
 	if _carried_items == null:
@@ -39,18 +42,11 @@ func _ready() -> void:
 
 
 func _build_ui() -> void:
-	var bottom: VBoxContainer = VBoxContainer.new()
+	_bottom = VBoxContainer.new()
+	var bottom: VBoxContainer = _bottom
 	bottom.name = "BottomStrip"
 	bottom.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	bottom.alignment = BoxContainer.ALIGNMENT_CENTER
-	bottom.anchor_left = 0.5
-	bottom.anchor_right = 0.5
-	bottom.anchor_top = 1.0
-	bottom.anchor_bottom = 1.0
-	bottom.offset_left = -650.0
-	bottom.offset_right = 650.0
-	bottom.offset_top = -166.0
-	bottom.offset_bottom = -14.0
 	add_child(bottom)
 
 	_bulk_label = Label.new()
@@ -73,25 +69,26 @@ func _refresh() -> void:
 	for child in _slot_row.get_children():
 		child.queue_free()
 
+	var viewport := get_viewport().get_visible_rect().size
+	var window := Vector2(get_window().size)
+	if window.x < 320.0 or window.y < 240.0: window = viewport
+	var pixels_per_unit := maxf(0.01,minf(window.x/viewport.x,window.y/viewport.y))
+	_bottom.size = Vector2(window.x-32.0,140.0)
+	_bottom.scale = Vector2.ONE/pixels_per_unit
+	_bottom.position = Vector2(viewport.x/2.0-_bottom.size.x/(2.0*pixels_per_unit),viewport.y-154.0/pixels_per_unit)
 	var slots: Array = _carried_items.get_slots()
 	var selected_index: int = _carried_items.get_selected_index()
-	var visible_count: int = slots.size()
-	if visible_count > max_visible_slots:
-		visible_count = max_visible_slots
+	var available: int = maxi(1, int((window.x - 32.0) / 124.0))
+	var visible_count: int = mini(slots.size(), mini(max_visible_slots, available))
+	var first: int = clampi(selected_index - visible_count + 1, 0, maxi(0, slots.size()-visible_count))
 
-	for index in range(visible_count):
+	for index in range(first, first+visible_count):
 		var slot_item: Variant = slots[index]
 		if slot_item == null:
 			_slot_row.add_child(_make_empty_slot(index))
 		else:
 			_slot_row.add_child(_make_slot(slot_item, index, index == selected_index))
 
-	if slots.size() > max_visible_slots:
-		var extra: Label = Label.new()
-		extra.text = "+%d" % (slots.size() - max_visible_slots)
-		extra.add_theme_color_override("font_color", SECONDARY_TEXT)
-		extra.add_theme_font_size_override("font_size", 16)
-		_slot_row.add_child(extra)
 
 	if _carried_items.get_item_count() == 0:
 		var empty: Label = Label.new()
@@ -104,6 +101,10 @@ func _refresh() -> void:
 		_carried_items.get_current_bulk(),
 		_carried_items.max_bulk
 	]
+	if slots.size() > visible_count:
+		_bulk_label.text += "   •   Showing %d–%d / %d" % [first+1,first+visible_count,slots.size()]
+	var active: ItemInstance = _carried_items.get_selected_item()
+	if active != null: _bulk_label.text += "   ·   " + active.get_display_name()
 
 
 func _on_selection_changed(_selected_index: int) -> void:
@@ -112,7 +113,8 @@ func _on_selection_changed(_selected_index: int) -> void:
 
 func _make_slot(item, index: int, selected: bool) -> Control:
 	var panel: PanelContainer = PanelContainer.new()
-	panel.custom_minimum_size = Vector2(118.0, 132.0)
+	panel.name = "Slot_%d" % index
+	panel.custom_minimum_size = Vector2(118.0, 108.0)
 	panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 	var style: StyleBoxFlat = StyleBoxFlat.new()
@@ -138,7 +140,7 @@ func _make_slot(item, index: int, selected: bool) -> Control:
 	column.add_child(_make_icon_area(item))
 
 	var name_label: Label = Label.new()
-	var number_text: String = "0" if index == 9 else str(index + 1)
+	var number_text: String = "0" if index == 9 else str(index + 1) if index < 9 else "#%d" % (index+1)
 	name_label.text = "%s  %s" % [number_text, _shorten(String(item.get_display_name()), 13)]
 	name_label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -159,7 +161,7 @@ func _make_slot(item, index: int, selected: bool) -> Control:
 
 func _make_icon_area(item) -> Control:
 	var holder: CenterContainer = CenterContainer.new()
-	holder.custom_minimum_size = Vector2(106.0, 80.0)
+	holder.custom_minimum_size = Vector2(106.0, 58.0)
 	holder.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 	var icon_texture: Texture2D = null
@@ -168,7 +170,7 @@ func _make_icon_area(item) -> Control:
 
 	if icon_texture != null:
 		var icon_rect: TextureRect = TextureRect.new()
-		icon_rect.custom_minimum_size = Vector2(102.0, 76.0)
+		icon_rect.custom_minimum_size = Vector2(102.0, 54.0)
 		icon_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		icon_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		icon_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -179,7 +181,7 @@ func _make_icon_area(item) -> Control:
 	# Temporary fallback until the planned editor/offline thumbnail baker writes
 	# real model thumbnails into ItemDefinition.icon.
 	var fallback: PanelContainer = PanelContainer.new()
-	fallback.custom_minimum_size = Vector2(86.0, 68.0)
+	fallback.custom_minimum_size = Vector2(86.0, 52.0)
 	fallback.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 	var fallback_style: StyleBoxFlat = StyleBoxFlat.new()
@@ -211,7 +213,7 @@ func _make_icon_area(item) -> Control:
 
 func _make_empty_slot(index: int) -> Control:
 	var panel: PanelContainer = PanelContainer.new()
-	panel.custom_minimum_size = Vector2(118.0, 132.0)
+	panel.custom_minimum_size = Vector2(118.0, 108.0)
 	panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 	var style: StyleBoxFlat = StyleBoxFlat.new()
@@ -225,7 +227,7 @@ func _make_empty_slot(index: int) -> Control:
 	panel.add_theme_stylebox_override("panel", style)
 
 	var label: Label = Label.new()
-	var number_text: String = "0" if index == 9 else str(index + 1)
+	var number_text: String = "0" if index == 9 else str(index + 1) if index < 9 else "#%d" % (index+1)
 	label.text = "%s\nEMPTY" % number_text
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER

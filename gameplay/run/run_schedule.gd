@@ -194,7 +194,7 @@ func _resolve_midnight() -> void:
 	var backlog: Array = []
 	if not manager.get_active_batch_id().is_empty(): backlog.append(manager.get_active_batch_id())
 	backlog.append_array(Array(manager.get_queued_batch_ids()))
-	report = {"day":clock.day, "medical":medical, "dispatch":dispatch, "meals":meals, "meal_coverage":meal_coverage(meals), "admitted":admitted,
+	report = {"day":clock.day, "clock_config":clock.config.duplicate(true), "medical":medical, "dispatch":dispatch, "meals":meals, "meal_coverage":meal_coverage(meals), "admitted":admitted,
 		"forfeits":forfeits.duplicate(true), "backlog":backlog, "scenario_complete":scenario_complete_at(clock.day + 1)}
 	resolved_day = clock.day
 	clock.begin_next_day()
