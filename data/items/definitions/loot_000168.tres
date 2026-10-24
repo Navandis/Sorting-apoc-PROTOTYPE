@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_v42qy"]
+[ext_resource type="PackedScene" path="res://assets/props/Hydration/SM_Juice_BagBox_01.glb" id="2_scn4j"]
+
+[resource]
+script = ExtResource("1_v42qy")
+item_id = &"loot_000168"
+display_name = "Apple Juice Bag-in-Box (7-8 L)"
+storage_category = "Hydration"
+storage_footprint = Vector3i(3, 4, 1)
+can_be_stacked = true
+can_support_stack = true
+visual_scene = ExtResource("2_scn4j")

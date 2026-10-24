@@ -88,7 +88,7 @@ func _test_duplicate_visual_path_invalidates_only_that_path_lookup() -> void:
 # legacy 11 hard-coded paths instead of the persistent catalogue membership.
 func _test_compatibility_facade_resolves_every_persistent_visual() -> void:
 	var members: Array = PersistentItemCatalog.get("definitions") as Array
-	assert(members.size() == 155)
+	assert(members.size() == 167)
 	for member_value: Variant in members:
 		var definition: ItemDefinition = member_value as ItemDefinition
 		assert(definition != null)

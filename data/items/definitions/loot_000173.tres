@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_2snx4"]
+[ext_resource type="PackedScene" path="res://assets/props/protection/SM_LeatherGloves_01.glb" id="2_qfcb6"]
+
+[resource]
+script = ExtResource("1_2snx4")
+item_id = &"loot_000173"
+display_name = "Leather Gloves (Pair)"
+storage_category = "Protection"
+storage_footprint = Vector3i(2, 3, 1)
+can_be_stacked = true
+visual_scene = ExtResource("2_qfcb6")
+storage_rotation_degrees = Vector3(80.2063, -105.0137, -104.8046)

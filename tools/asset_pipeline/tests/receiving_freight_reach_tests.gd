@@ -201,7 +201,7 @@ func _assert_production_seating(presenter: Node) -> void:
 			for index: int in range(mesh.mesh.get_surface_count()):
 				for vertex: Vector3 in mesh.mesh.surface_get_arrays(index)[Mesh.ARRAY_VERTEX]:
 					bottom = minf(bottom, (mesh.global_transform * vertex).y)
-		_check(absf(bottom - host.global_position.y - 0.006) < 0.0001, "production cargo retains 6 mm visual seating offset without inherited vertical stretch")
+		_check(absf(bottom - host.global_position.y - 0.006) < 0.0001, "production cargo retains 6 mm visual seating offset without inherited vertical stretch: %s gap=%f m" % [world_item.get_item_instance().definition.item_id, bottom - host.global_position.y])
 		var support_y: float = plate_y if surface.surface_id == &"MainDeck" else surface.global_position.y
 		_check(bottom >= support_y - 0.0001, "production cargo does not penetrate its actual support surface")
 		_check(surface.global_basis.get_scale().is_equal_approx(Vector3.ONE), "private metric cargo surfaces remain scale-isolated")

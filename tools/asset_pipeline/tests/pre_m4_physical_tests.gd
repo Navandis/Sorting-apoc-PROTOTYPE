@@ -30,17 +30,32 @@ func _run() -> void:
 	var results: Array[Dictionary]=[]
 	var selected_id:=""
 	var followup := OS.get_cmdline_user_args().has("--followup")
+	var topup := OS.get_cmdline_user_args().has("--topup")
+	var original := OS.get_cmdline_user_args().has("--original-120")
 	var followup_ids := ["loot_000025", "loot_000027", "loot_000075", "loot_000129", "loot_000141", "loot_000152", "loot_000153", "loot_000154", "loot_000155"]
 	for arg: String in OS.get_cmdline_user_args():
 		if arg.begins_with("--item-id="): selected_id=arg.trim_prefix("--item-id=")
 	for record: Dictionary in inventory.models:
 		if followup:
 			if not record.item_id in followup_ids: continue
-		elif record.disposition!="new": continue
+		elif topup:
+			if record.disposition!="topup": continue
+		elif original:
+			if record.disposition!="new": continue
+		elif not record.disposition in ["new", "topup"]: continue
 		if not selected_id.is_empty() and record.item_id!=selected_id: continue
 		var definition:=catalogue.get_definition_by_id(StringName(record.item_id))
 		var item:=ItemInstance.new(definition,"physical:"+record.item_id)
 		var measurement:=StorageVisualPose.measure_item(item,false)
+		var visual: Node3D=definition.visual_scene.instantiate()
+		_check(visual.transform.is_equal_approx(Transform3D.IDENTITY),"Accepted unit source root transform "+record.item_id)
+		visual.free()
+		var workbench: Node3D=load("res://gameplay/dev/item_storage_pose/item_storage_pose_authoring.tscn").instantiate()
+		root.add_child(workbench)
+		workbench.item_definition=definition
+		workbench.refresh_preview()
+		_check(workbench.get_preview_contract().valid and workbench.get_preview_contract().storage_rotation_degrees==definition.storage_rotation_degrees,"Actual workbench exposes authored pose/Footprint "+record.item_id)
+		workbench.free()
 		var size: Vector3=measurement.posed_bounds.size
 		_check(measurement.valid and size.is_finite() and size.x>0 and size.y>0 and size.z>0,"Finite nonempty posed bounds "+record.item_id)
 		if record.has("human_review"):
@@ -90,7 +105,8 @@ func _run() -> void:
 		carry.free()
 		await process_frame
 		completed+=1
-	_check(completed==((9 if followup else 120) if selected_id.is_empty() else 1),"All requested candidates reached physical completion")
+	_check(completed==((9 if followup else (12 if topup else (120 if original else 132))) if selected_id.is_empty() else 1),"All requested candidates reached physical completion")
+	_check(blockers.is_empty(),"Every requested item has a legitimate production storage surface")
 	var file:=FileAccess.open(evidence_dir.path_join("physical-results.json" if selected_id.is_empty() else "physical-"+selected_id+".json"),FileAccess.WRITE)
 	file.store_string(JSON.stringify({"items":results,"blockers":blockers},"\t",true))
 	file.close()

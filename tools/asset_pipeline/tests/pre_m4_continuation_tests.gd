@@ -18,6 +18,8 @@ func run() -> void:
 	if mode=="write":
 		var inventory: Dictionary=JSON.parse_string(FileAccess.get_file_as_string("res://tools/asset_pipeline/props_inventory.json"))
 		var names: Array=["SM_Dry_Goods_01h","SM_KB3D_SDM_HockeyStick_01","SM_KB3D_SIS_FourFoldedShirtsBundle_01","SM_KB3D_SIS_HikingBoots_01","SM_KB3D_HOK_PropBasketball_01","SM_KB3D_SIS_IntRecordStore_AcousticGuitar_01","SM_Military_Med_crate_01","SM_KB3D_LVC_RawFish_Medium_02"]
+		if OS.get_cmdline_user_args().has("--topup"):
+			names=["SM_MysteryMeat_Carcass_Large_01","SM_Charcoal_Bag_03","SM_Lighter_Fluid_Can_02","SM_6L_Water_Bottle_02","SM_Bottles_Crate_01","SM_Juice_BagBox_01","SM_OJ_LargeJug_01","SM_Water_6Pack_03"]
 		var ids: Array=[]
 		for name: String in names:
 			ids.append(inventory.models.filter(func(r):return r.source_path.get_file().get_basename()==name)[0].item_id)

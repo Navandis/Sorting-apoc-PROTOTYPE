@@ -42,7 +42,7 @@ func _init() -> void:
 # a real catalog resource. This exact membership is an approved boundary.
 func _test_real_catalog_and_pool_boundary() -> void:
 	_check(PersistentItemCatalog.get_validation_errors().is_empty(), "valid real catalog")
-	_check((PersistentItemCatalog.get("definitions") as Array).size() == 155, "155-definition catalog")
+	_check((PersistentItemCatalog.get("definitions") as Array).size() == 167, "167-definition catalog; normal pool still exactly 35")
 	_check(PrototypePool.pool_id == &"prototype_receiving_pool", "real pool identity")
 	_check(PrototypePool.revision == 1, "real pool revision")
 	var expected_ids: Array[StringName] = [

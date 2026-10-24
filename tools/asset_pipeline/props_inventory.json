@@ -17823,6 +17823,1727 @@
 				"notes": "2026-10-21: developer comprehensively reviewed all 155 items and saved external .tres authoring; immutable checkpoint 170ea01. Current saved names, pose/+Z Front, Footprint and support-role decisions retained.",
 				"observed_source_fingerprint": "8850adb149951557c82b5b7c141bedf46049b387adc9edffa218a303f8e87723"
 			}
+		},
+		{
+			"dependencies": [
+				"embedded",
+				"embedded",
+				"embedded"
+			],
+			"imported_dimensions_m": [
+				0.194619297981262,
+				1.22635233402252,
+				0.504498362541199
+			],
+			"imported_root_transform": {
+				"basis": [
+					[
+						1,
+						0,
+						0
+					],
+					[
+						0,
+						1,
+						0
+					],
+					[
+						0,
+						0,
+						1
+					]
+				],
+				"origin": [
+					0,
+					0,
+					0
+				]
+			},
+			"materials": [
+				"MI_KB3D_HOH_CarcassA.001"
+			],
+			"mesh_count": 1,
+			"mesh_nodes": [
+				{
+					"mesh": 0,
+					"name": "SM_KB3D_HOH_PropCarcass_A",
+					"translation": [
+						0,
+						-0.00610925070941448,
+						0
+					]
+				}
+			],
+			"meshes": [
+				{
+					"bounds": [
+						{
+							"max": [
+								0.0973100811243057,
+								1.23521745204926,
+								0.252249330282211
+							],
+							"min": [
+								-0.0973092094063759,
+								0.00886508543044328,
+								-0.252249002456665
+							]
+						}
+					],
+					"name": "SM_KB3D_HOH_PropCarcass_A",
+					"submeshes": 1
+				}
+			],
+			"source_fingerprint": "58fab1b615d49ccf649a5d33488373ab02c9a3786c5eac4ee1e003c1f6cca3a9",
+			"source_metadata": {
+				"generator": "Khronos glTF Blender I/O v5.2.39",
+				"version": "2.0"
+			},
+			"source_path": "res://assets/props/Food/SM_MysteryMeat_Carcass_Large_01.glb",
+			"item_id": "loot_000163",
+			"disposition": "topup",
+			"batch": "PRE_M4_TWELVE_ITEM_TOPUP_2026_10_24",
+			"definition_path": "res://data/items/definitions/loot_000163.tres",
+			"display_name": "Large Mystery-Meat Carcass",
+			"storage_category": "Food",
+			"rotation": [
+				0,
+				0,
+				90
+			],
+			"can_be_stacked": true,
+			"can_support_stack": false,
+			"auto_stack_group": "",
+			"scale_notes": "Irregular venison-reference carcass, not roast piglet or smaller meat. One 1.23 m entity; preserve source scale.",
+			"pose_notes": "Rotate the long hanging Y axis onto X; broad side rests horizontally, meat profile faces +Z. Confirm stable contact and semantic Front.",
+			"stack_notes": "Irregular carcass may rest on a sufficiently large support; no credible flat supporting top.",
+			"group_notes": "Explicit None: no proven existing compatibility class for this geometry; category alone does not imply a group. Gloves are not assigned folded_clothing.",
+			"license": "Not supplied in GLB metadata; local source rights unchanged; do not infer redistribution permission.",
+			"flags": [
+				"VISUAL_REVIEW_RECOMMENDED",
+				"IRREGULAR_REVIEW"
+			],
+			"review_status": "UNREVIEWED",
+			"numerical_status": "Utility None/0 and Bulk 1 are temporary physical-onboarding placeholders; no capacity-derived values.",
+			"submesh_count": 1
+		},
+		{
+			"dependencies": [
+				"embedded",
+				"embedded",
+				"embedded",
+				"embedded"
+			],
+			"imported_dimensions_m": [
+				0.249774187803268,
+				0.400000005960464,
+				0.192232549190521
+			],
+			"imported_root_transform": {
+				"basis": [
+					[
+						1,
+						0,
+						0
+					],
+					[
+						0,
+						1,
+						0
+					],
+					[
+						0,
+						0,
+						1
+					]
+				],
+				"origin": [
+					0,
+					0,
+					0
+				]
+			},
+			"materials": [
+				"Charcoal_bag_label2",
+				"Material_0"
+			],
+			"mesh_count": 3,
+			"mesh_nodes": [
+				{
+					"mesh": 0,
+					"name": "Charcoal_bag_label2",
+					"rotation": [
+						0,
+						-0.707106828689575,
+						0.707106828689575,
+						3.09086232164191e-8
+					],
+					"scale": [
+						0.247663110494614,
+						0.247663110494614,
+						0.247663110494614
+					],
+					"translation": [
+						0.00378883979283273,
+						0.111182697117329,
+						0.0977177023887634
+					]
+				},
+				{
+					"mesh": 1,
+					"name": "Charcoal_bag_label2.001",
+					"rotation": [
+						0,
+						-0.707106828689575,
+						0.707106828689575,
+						3.09086232164191e-8
+					],
+					"scale": [
+						0.247663110494614,
+						0.247663110494614,
+						0.247663110494614
+					],
+					"translation": [
+						-0.00189441861584782,
+						0.151439130306244,
+						-0.120140582323074
+					]
+				},
+				{
+					"mesh": 2,
+					"name": "Mesh_0"
+				}
+			],
+			"meshes": [
+				{
+					"bounds": [
+						{
+							"max": [
+								0.402491003274918,
+								0.166715994477272,
+								0.439935863018036
+							],
+							"min": [
+								-0.397389203310013,
+								0.00686663389205932,
+								-0.504315793514252
+							]
+						}
+					],
+					"name": "Charcoal_bag_label2",
+					"submeshes": 1
+				},
+				{
+					"bounds": [
+						{
+							"max": [
+								0.360092848539352,
+								-0.096603512763977,
+								0.578251838684082
+							],
+							"min": [
+								-0.371308356523514,
+								-0.240710407495499,
+								-0.454794943332672
+							]
+						}
+					],
+					"name": "Charcoal_bag_label2.001",
+					"submeshes": 1
+				},
+				{
+					"bounds": [
+						{
+							"max": [
+								0.126254081726074,
+								0.400000005960464,
+								0.0955336466431618
+							],
+							"min": [
+								-0.123520106077194,
+								0,
+								-0.0957451835274696
+							]
+						}
+					],
+					"name": "Mesh_0",
+					"submeshes": 1
+				}
+			],
+			"source_fingerprint": "b76ec27dda948743f02522aaa844cc1e067ae4cfaae994d4d17eb857ab639a53",
+			"source_metadata": {
+				"generator": "Khronos glTF Blender I/O v5.2.39",
+				"version": "2.0"
+			},
+			"source_path": "res://assets/props/Fuel/SM_Charcoal_Bag_03.glb",
+			"item_id": "loot_000164",
+			"disposition": "topup",
+			"batch": "PRE_M4_TWELVE_ITEM_TOPUP_2026_10_24",
+			"definition_path": "res://data/items/definitions/loot_000164.tres",
+			"display_name": "BBQ Charcoal Bag",
+			"storage_category": "Fuel",
+			"rotation": [
+				0,
+				0,
+				0
+			],
+			"can_be_stacked": true,
+			"can_support_stack": false,
+			"auto_stack_group": "",
+			"scale_notes": "One 0.40 m bag. Two label meshes belong to the bag, not separate loot.",
+			"pose_notes": "Upright on authored broad base; flame graphic faces +Z. Review soft-base stability.",
+			"stack_notes": "Soft bag can rest on support; folded/crimped top cannot support cargo.",
+			"group_notes": "Explicit None: no proven existing compatibility class for this geometry; category alone does not imply a group. Gloves are not assigned folded_clothing.",
+			"license": "Not supplied in GLB metadata; local source rights unchanged; do not infer redistribution permission.",
+			"flags": [
+				"VISUAL_REVIEW_RECOMMENDED",
+				"MULTI_MESH",
+				"IRREGULAR_REVIEW"
+			],
+			"review_status": "UNREVIEWED",
+			"numerical_status": "Utility None/0 and Bulk 1 are temporary physical-onboarding placeholders; no capacity-derived values.",
+			"submesh_count": 3
+		},
+		{
+			"dependencies": [
+				"embedded",
+				"embedded",
+				"embedded",
+				"embedded"
+			],
+			"imported_dimensions_m": [
+				0.0716259852051735,
+				0.180000007152557,
+				0.0356507897377014
+			],
+			"imported_root_transform": {
+				"basis": [
+					[
+						1,
+						0,
+						0
+					],
+					[
+						0,
+						1,
+						0
+					],
+					[
+						0,
+						0,
+						1
+					]
+				],
+				"origin": [
+					0,
+					0,
+					0
+				]
+			},
+			"materials": [
+				"LighterFluid_front_label",
+				"Material_0"
+			],
+			"mesh_count": 2,
+			"mesh_nodes": [
+				{
+					"mesh": 0,
+					"name": "LighterFluid_front_label",
+					"rotation": [
+						0.707106828689575,
+						0,
+						0,
+						0.707106828689575
+					],
+					"scale": [
+						0.121579192578793,
+						1.04278790950775,
+						0.121579192578793
+					],
+					"translation": [
+						0.00027407691231928,
+						0.0779596418142319,
+						0.0167186949402094
+					]
+				},
+				{
+					"mesh": 1,
+					"name": "Mesh_0"
+				}
+			],
+			"meshes": [
+				{
+					"bounds": [
+						{
+							"max": [
+								0.267548590898514,
+								-0.00007201917469501,
+								0.500124216079712
+							],
+							"min": [
+								-0.271199375391006,
+								-0.00578869599848985,
+								-0.500739276409149
+							]
+						}
+					],
+					"name": "LighterFluid_front_label",
+					"submeshes": 1
+				},
+				{
+					"bounds": [
+						{
+							"max": [
+								0.0357704311609268,
+								0.180000007152557,
+								0.0177841559052467
+							],
+							"min": [
+								-0.0358555540442467,
+								0,
+								-0.0178666319698095
+							]
+						}
+					],
+					"name": "Mesh_0",
+					"submeshes": 1
+				}
+			],
+			"source_fingerprint": "dca42c74e048a2a8733f30df9da256ce7ed37807867bcc4384a42bfe1d4df3d9",
+			"source_metadata": {
+				"generator": "Khronos glTF Blender I/O v5.2.39",
+				"version": "2.0"
+			},
+			"source_path": "res://assets/props/Fuel/SM_Lighter_Fluid_Can_02.glb",
+			"item_id": "loot_000165",
+			"disposition": "topup",
+			"batch": "PRE_M4_TWELVE_ITEM_TOPUP_2026_10_24",
+			"definition_path": "res://data/items/definitions/loot_000165.tres",
+			"display_name": "Lighter Fluid Can (330 ml)",
+			"storage_category": "Fuel",
+			"rotation": [
+				0,
+				0,
+				0
+			],
+			"can_be_stacked": true,
+			"can_support_stack": false,
+			"auto_stack_group": "",
+			"scale_notes": "One approximately 330 ml can; 0.18 m source height retained. Label is assembled decoration.",
+			"pose_notes": "Upright on can base; separately named front label lies at +Z.",
+			"stack_notes": "Rigid can may rest on support; protruding nozzle and cap deny supporting top.",
+			"group_notes": "Explicit None: no proven existing compatibility class for this geometry; category alone does not imply a group. Gloves are not assigned folded_clothing.",
+			"license": "Not supplied in GLB metadata; local source rights unchanged; do not infer redistribution permission.",
+			"flags": [
+				"VISUAL_REVIEW_RECOMMENDED",
+				"MULTI_MESH"
+			],
+			"review_status": "UNREVIEWED",
+			"numerical_status": "Utility None/0 and Bulk 1 are temporary physical-onboarding placeholders; no capacity-derived values.",
+			"submesh_count": 2
+		},
+		{
+			"dependencies": [
+				"embedded",
+				"embedded",
+				"embedded"
+			],
+			"imported_dimensions_m": [
+				0.209035575389862,
+				0.419999986886978,
+				0.205400675535202
+			],
+			"imported_root_transform": {
+				"basis": [
+					[
+						1,
+						0,
+						0
+					],
+					[
+						0,
+						1,
+						0
+					],
+					[
+						0,
+						0,
+						1
+					]
+				],
+				"origin": [
+					0,
+					0,
+					0
+				]
+			},
+			"materials": [
+				null
+			],
+			"mesh_count": 1,
+			"mesh_nodes": [
+				{
+					"matrix": [
+						1,
+						0,
+						0,
+						0,
+						0,
+						1,
+						0,
+						0,
+						0,
+						0,
+						1,
+						0,
+						0,
+						0,
+						0,
+						1
+					],
+					"mesh": 0
+				}
+			],
+			"meshes": [
+				{
+					"bounds": [
+						{
+							"max": [
+								0.104506194591522,
+								0.419999986886978,
+								0.102564096450806
+							],
+							"min": [
+								-0.10452938079834,
+								0,
+								-0.102836586534977
+							]
+						}
+					],
+					"submeshes": 1
+				}
+			],
+			"source_fingerprint": "2b243806adc522bacaaf3c600a0a4969451db924ec592590d348a0b692d4dd6c",
+			"source_metadata": {
+				"generator": "pygltflib@v1.16.5",
+				"version": "2.0"
+			},
+			"source_path": "res://assets/props/Hydration/SM_6L_Water_Bottle_02.glb",
+			"item_id": "loot_000166",
+			"disposition": "topup",
+			"batch": "PRE_M4_TWELVE_ITEM_TOPUP_2026_10_24",
+			"definition_path": "res://data/items/definitions/loot_000166.tres",
+			"display_name": "Water Bottle (6 L)",
+			"storage_category": "Hydration",
+			"rotation": [
+				0,
+				0,
+				0
+			],
+			"can_be_stacked": true,
+			"can_support_stack": false,
+			"auto_stack_group": "",
+			"scale_notes": "One 6 L bottle, 0.42 m tall. Capacity is descriptive only, no Utility/Bulk inference.",
+			"pose_notes": "Upright on molded base; handle/label orientation provisionally source +Z.",
+			"stack_notes": "Bottle may rest on support; handle and narrow cap cannot support cargo.",
+			"group_notes": "Explicit None: no proven existing compatibility class for this geometry; category alone does not imply a group. Gloves are not assigned folded_clothing.",
+			"license": "Not supplied in GLB metadata; local source rights unchanged; do not infer redistribution permission.",
+			"flags": [
+				"VISUAL_REVIEW_RECOMMENDED"
+			],
+			"review_status": "UNREVIEWED",
+			"numerical_status": "Utility None/0 and Bulk 1 are temporary physical-onboarding placeholders; no capacity-derived values.",
+			"submesh_count": 1
+		},
+		{
+			"dependencies": [
+				"embedded",
+				"embedded",
+				"embedded",
+				"embedded",
+				"embedded",
+				"embedded",
+				"embedded",
+				"embedded",
+				"embedded",
+				"embedded"
+			],
+			"imported_dimensions_m": [
+				0.410984814167023,
+				0.240000009536743,
+				0.41089802980423
+			],
+			"imported_root_transform": {
+				"basis": [
+					[
+						1,
+						0,
+						0
+					],
+					[
+						0,
+						1,
+						0
+					],
+					[
+						0,
+						0,
+						1
+					]
+				],
+				"origin": [
+					0,
+					0,
+					0
+				]
+			},
+			"materials": [
+				"Material_0.001",
+				"MI_KB3D_SIN_GlassRedDark_SM_ColaBottle_01",
+				"MI_KB3D_SIN_AtlasCornerShop"
+			],
+			"mesh_count": 1,
+			"mesh_nodes": [
+				{
+					"mesh": 0,
+					"name": "Mesh_0",
+					"scale": [
+						0.800000011920929,
+						0.800000011920929,
+						0.800000011920929
+					]
+				}
+			],
+			"meshes": [
+				{
+					"bounds": [
+						{
+							"max": [
+								0.256571859121323,
+								0.300000011920929,
+								0.256556212902069
+							],
+							"min": [
+								-0.257159143686295,
+								0,
+								-0.257066309452057
+							]
+						},
+						{
+							"max": [
+								0.216129958629608,
+								0.285565823316574,
+								0.209937781095505
+							],
+							"min": [
+								-0.213557824492455,
+								0.00463989377021789,
+								-0.207891836762428
+							]
+						},
+						{
+							"max": [
+								0.216265827417374,
+								0.287295490503311,
+								0.210075125098228
+							],
+							"min": [
+								-0.213694348931313,
+								0.0502428486943245,
+								-0.208029180765152
+							]
+						}
+					],
+					"name": "Mesh_0.001",
+					"submeshes": 3
+				}
+			],
+			"source_fingerprint": "4fcccfe89c7a7ee691c609413e1da3138b69f23ac608497d4fc53915db02b689",
+			"source_metadata": {
+				"generator": "Khronos glTF Blender I/O v5.2.39",
+				"version": "2.0"
+			},
+			"source_path": "res://assets/props/Hydration/SM_Bottles_Crate_01.glb",
+			"item_id": "loot_000167",
+			"disposition": "topup",
+			"batch": "PRE_M4_TWELVE_ITEM_TOPUP_2026_10_24",
+			"definition_path": "res://data/items/definitions/loot_000167.tres",
+			"display_name": "Soda Bottle Crate (20 Bottles)",
+			"storage_category": "Hydration",
+			"rotation": [
+				0,
+				0,
+				0
+			],
+			"can_be_stacked": true,
+			"can_support_stack": false,
+			"auto_stack_group": "",
+			"scale_notes": "One crate with twenty visible soda bottles, 6.6-10 L intended total. Three material surfaces are crate/glass/bottle details. Preserve authored internal 0.8 mesh scale; root is unit.",
+			"pose_notes": "Crate upright on base, source +Z open side provisionally shelf-front.",
+			"stack_notes": "Crate can rest on support; protruding bottle tops have no demonstrated compatible supporting rim.",
+			"group_notes": "Explicit None: no proven existing compatibility class for this geometry; category alone does not imply a group. Gloves are not assigned folded_clothing.",
+			"license": "Not supplied in GLB metadata; local source rights unchanged; do not infer redistribution permission.",
+			"flags": [
+				"VISUAL_REVIEW_RECOMMENDED"
+			],
+			"review_status": "UNREVIEWED",
+			"numerical_status": "Utility None/0 and Bulk 1 are temporary physical-onboarding placeholders; no capacity-derived values.",
+			"submesh_count": 3
+		},
+		{
+			"dependencies": [
+				"embedded",
+				"embedded",
+				"embedded",
+				"embedded",
+				"embedded"
+			],
+			"imported_dimensions_m": [
+				0.285533100366592,
+				0.411807686090469,
+				0.30041778087616
+			],
+			"imported_root_transform": {
+				"basis": [
+					[
+						1,
+						0,
+						0
+					],
+					[
+						0,
+						1,
+						0
+					],
+					[
+						0,
+						0,
+						1
+					]
+				],
+				"origin": [
+					0,
+					0,
+					0
+				]
+			},
+			"materials": [
+				"Material_0",
+				"Label_front_back",
+				"Label_sides"
+			],
+			"mesh_count": 5,
+			"mesh_nodes": [
+				{
+					"mesh": 0,
+					"name": "Juice_box_main"
+				},
+				{
+					"mesh": 1,
+					"name": "Label_front",
+					"rotation": [
+						0.707106828689575,
+						0,
+						0,
+						0.707106828689575
+					],
+					"scale": [
+						0.356789141893387,
+						1.0218026638031,
+						0.377225190401077
+					],
+					"translation": [
+						0,
+						0.191334053874016,
+						0.0845599547028542
+					]
+				},
+				{
+					"mesh": 2,
+					"name": "Label_front.001",
+					"rotation": [
+						0.707106828689575,
+						0,
+						0,
+						0.707106828689575
+					],
+					"scale": [
+						0.356789141893387,
+						1.0218026638031,
+						0.409999996423721
+					],
+					"translation": [
+						0,
+						0.173138961195946,
+						-0.118449330329895
+					]
+				},
+				{
+					"mesh": 3,
+					"name": "Label_left",
+					"rotation": [
+						0.5,
+						0.50000011920929,
+						-0.500000059604645,
+						0.5
+					],
+					"scale": [
+						0.375388324260712,
+						0.375388324260712,
+						0.379999995231628
+					],
+					"translation": [
+						-0.118392236530781,
+						0.173498570919037,
+						-0.0171861778944731
+					]
+				},
+				{
+					"mesh": 4,
+					"name": "Label_right",
+					"rotation": [
+						0.5,
+						0.500000059604645,
+						-0.5,
+						0.499999940395355
+					],
+					"scale": [
+						0.375,
+						0.375,
+						0.379999995231628
+					],
+					"translation": [
+						0.118766322731972,
+						0.173498570919037,
+						-0.0171861778944731
+					]
+				}
+			],
+			"meshes": [
+				{
+					"bounds": [
+						{
+							"max": [
+								0.117620699107647,
+								0.349999994039536,
+								0.119373798370361
+							],
+							"min": [
+								-0.117654740810394,
+								0,
+								-0.118149623274803
+							]
+						}
+					],
+					"name": "Mesh_0",
+					"submeshes": 1
+				},
+				{
+					"bounds": [
+						{
+							"max": [
+								0.400142639875412,
+								0,
+								0.5
+							],
+							"min": [
+								-0.400142639875412,
+								0,
+								-0.5
+							]
+						}
+					],
+					"name": "Label_front",
+					"submeshes": 1
+				},
+				{
+					"bounds": [
+						{
+							"max": [
+								0.400142639875412,
+								0,
+								0.5
+							],
+							"min": [
+								-0.400142639875412,
+								0,
+								-0.5
+							]
+						}
+					],
+					"name": "Label_front.001",
+					"submeshes": 1
+				},
+				{
+					"bounds": [
+						{
+							"max": [
+								0.400142639875412,
+								0,
+								0.5
+							],
+							"min": [
+								-0.400142639875412,
+								0,
+								-0.5
+							]
+						}
+					],
+					"name": "Label_left",
+					"submeshes": 1
+				},
+				{
+					"bounds": [
+						{
+							"max": [
+								0.400142639875412,
+								0,
+								0.5
+							],
+							"min": [
+								-0.400142639875412,
+								0,
+								-0.5
+							]
+						}
+					],
+					"name": "Label_right",
+					"submeshes": 1
+				}
+			],
+			"source_fingerprint": "df04f6622dafdb82ee645a6b6cb552749acd013d1e57fc82205a7c2edb51d7a9",
+			"source_metadata": {
+				"generator": "Khronos glTF Blender I/O v5.2.39",
+				"version": "2.0"
+			},
+			"source_path": "res://assets/props/Hydration/SM_Juice_BagBox_01.glb",
+			"item_id": "loot_000168",
+			"disposition": "topup",
+			"batch": "PRE_M4_TWELVE_ITEM_TOPUP_2026_10_24",
+			"definition_path": "res://data/items/definitions/loot_000168.tres",
+			"display_name": "Apple Juice Bag-in-Box (7-8 L)",
+			"storage_category": "Hydration",
+			"rotation": [
+				0,
+				0,
+				0
+			],
+			"can_be_stacked": true,
+			"can_support_stack": true,
+			"auto_stack_group": "",
+			"scale_notes": "One 7-8 L carton. Four label planes are attached packaging, not a showcase. Label extents exceed the body: retain conservative whole-source bounds.",
+			"pose_notes": "Upright carton, apple illustration/dispenser toward +Z. Review front and top-contact credibility.",
+			"stack_notes": "Rigid carton may rest on support and provisionally support a smaller object on its broad closed top; verify top rigidity and label overhang.",
+			"group_notes": "Explicit None: no proven existing compatibility class for this geometry; category alone does not imply a group. Gloves are not assigned folded_clothing.",
+			"license": "Not supplied in GLB metadata; local source rights unchanged; do not infer redistribution permission.",
+			"flags": [
+				"VISUAL_REVIEW_RECOMMENDED",
+				"MULTI_MESH"
+			],
+			"review_status": "UNREVIEWED",
+			"numerical_status": "Utility None/0 and Bulk 1 are temporary physical-onboarding placeholders; no capacity-derived values.",
+			"submesh_count": 5
+		},
+		{
+			"dependencies": [
+				"embedded",
+				"embedded",
+				"embedded",
+				"embedded"
+			],
+			"imported_dimensions_m": [
+				0.172013372182846,
+				0.280000001192093,
+				0.166710168123245
+			],
+			"imported_root_transform": {
+				"basis": [
+					[
+						1,
+						0,
+						0
+					],
+					[
+						0,
+						1,
+						0
+					],
+					[
+						0,
+						0,
+						1
+					]
+				],
+				"origin": [
+					0,
+					0,
+					0
+				]
+			},
+			"materials": [
+				"Material_0",
+				"OJ_Front_label"
+			],
+			"mesh_count": 2,
+			"mesh_nodes": [
+				{
+					"mesh": 0,
+					"name": "Mesh_0"
+				},
+				{
+					"mesh": 1,
+					"name": "OJ_Front_label",
+					"rotation": [
+						0.707106828689575,
+						0,
+						0,
+						0.707106828689575
+					],
+					"scale": [
+						0.188793733716011,
+						0.188793733716011,
+						0.188793733716011
+					],
+					"translation": [
+						0.00164446153212338,
+						0.105456233024597,
+						-0.0834221467375755
+					]
+				}
+			],
+			"meshes": [
+				{
+					"bounds": [
+						{
+							"max": [
+								0.0860829800367355,
+								0.280000001192093,
+								0.0832880213856697
+							],
+							"min": [
+								-0.0859303995966911,
+								0,
+								-0.0834211781620979
+							]
+						}
+					],
+					"name": "Mesh_0",
+					"submeshes": 1
+				},
+				{
+					"bounds": [
+						{
+							"max": [
+								0.400142639875412,
+								0,
+								0.5
+							],
+							"min": [
+								-0.400142639875412,
+								0,
+								-0.5
+							]
+						}
+					],
+					"name": "OJ_Front_label",
+					"submeshes": 1
+				}
+			],
+			"source_fingerprint": "7f2508809d1d6f5e90f0d0218db2b4fec6191760499c6c85bc1f62ef08baf86e",
+			"source_metadata": {
+				"generator": "Khronos glTF Blender I/O v5.2.39",
+				"version": "2.0"
+			},
+			"source_path": "res://assets/props/Hydration/SM_OJ_LargeJug_01.glb",
+			"item_id": "loot_000169",
+			"disposition": "topup",
+			"batch": "PRE_M4_TWELVE_ITEM_TOPUP_2026_10_24",
+			"definition_path": "res://data/items/definitions/loot_000169.tres",
+			"display_name": "Orange Juice Jug (4-5 L)",
+			"storage_category": "Hydration",
+			"rotation": [
+				0,
+				180,
+				0
+			],
+			"can_be_stacked": true,
+			"can_support_stack": false,
+			"auto_stack_group": "",
+			"scale_notes": "One 4-5 L jug, 0.28 m tall; capacity plausibility requires human review, with no scale normalization.",
+			"pose_notes": "Yaw 180 degrees puts the named source -Z orange label at canonical +Z; retain upright base.",
+			"stack_notes": "Jug may rest on support; handle/shoulder and narrow cap deny supporting top.",
+			"group_notes": "Explicit None: no proven existing compatibility class for this geometry; category alone does not imply a group. Gloves are not assigned folded_clothing.",
+			"license": "Not supplied in GLB metadata; local source rights unchanged; do not infer redistribution permission.",
+			"flags": [
+				"VISUAL_REVIEW_RECOMMENDED",
+				"MULTI_MESH"
+			],
+			"review_status": "UNREVIEWED",
+			"numerical_status": "Utility None/0 and Bulk 1 are temporary physical-onboarding placeholders; no capacity-derived values.",
+			"submesh_count": 2
+		},
+		{
+			"dependencies": [
+				"embedded",
+				"embedded",
+				"embedded"
+			],
+			"imported_dimensions_m": [
+				0.32710474729538,
+				0.310000002384186,
+				0.226542323827744
+			],
+			"imported_root_transform": {
+				"basis": [
+					[
+						1,
+						0,
+						0
+					],
+					[
+						0,
+						1,
+						0
+					],
+					[
+						0,
+						0,
+						1
+					]
+				],
+				"origin": [
+					0,
+					0,
+					0
+				]
+			},
+			"materials": [
+				null
+			],
+			"mesh_count": 1,
+			"mesh_nodes": [
+				{
+					"matrix": [
+						1,
+						0,
+						0,
+						0,
+						0,
+						1,
+						0,
+						0,
+						0,
+						0,
+						1,
+						0,
+						0,
+						0,
+						0,
+						1
+					],
+					"mesh": 0
+				}
+			],
+			"meshes": [
+				{
+					"bounds": [
+						{
+							"max": [
+								0.163474977016449,
+								0.310000002384186,
+								0.113183192908764
+							],
+							"min": [
+								-0.163629755377769,
+								0,
+								-0.113359123468399
+							]
+						}
+					],
+					"submeshes": 1
+				}
+			],
+			"source_fingerprint": "41a4d714ed83a2ff0504798971895fba243672b1e81367d20000b3d5a0da925a",
+			"source_metadata": {
+				"generator": "pygltflib@v1.16.5",
+				"version": "2.0"
+			},
+			"source_path": "res://assets/props/Hydration/SM_Water_6Pack_03.glb",
+			"item_id": "loot_000170",
+			"disposition": "topup",
+			"batch": "PRE_M4_TWELVE_ITEM_TOPUP_2026_10_24",
+			"definition_path": "res://data/items/definitions/loot_000170.tres",
+			"display_name": "Water Bottle Six-Pack (9-12 L)",
+			"storage_category": "Hydration",
+			"rotation": [
+				0,
+				0,
+				0
+			],
+			"can_be_stacked": true,
+			"can_support_stack": false,
+			"auto_stack_group": "",
+			"scale_notes": "One bundled six-pack, 9-12 L intended total, six visible caps; do not decompose.",
+			"pose_notes": "Six bottles upright in retained wrap; broad three-bottle row faces +Z.",
+			"stack_notes": "Bundle may rest on support; six bottle shoulders/caps are not a flat load-bearing top.",
+			"group_notes": "Explicit None: no proven existing compatibility class for this geometry; category alone does not imply a group. Gloves are not assigned folded_clothing.",
+			"license": "Not supplied in GLB metadata; local source rights unchanged; do not infer redistribution permission.",
+			"flags": [
+				"VISUAL_REVIEW_RECOMMENDED"
+			],
+			"review_status": "UNREVIEWED",
+			"numerical_status": "Utility None/0 and Bulk 1 are temporary physical-onboarding placeholders; no capacity-derived values.",
+			"submesh_count": 1
+		},
+		{
+			"dependencies": [
+				"embedded",
+				"embedded",
+				"embedded"
+			],
+			"imported_dimensions_m": [
+				0.276222288608551,
+				0.291126400232315,
+				0.215198323130608
+			],
+			"imported_root_transform": {
+				"basis": [
+					[
+						1,
+						0,
+						0
+					],
+					[
+						0,
+						1,
+						0
+					],
+					[
+						0,
+						0,
+						1
+					]
+				],
+				"origin": [
+					0,
+					0,
+					0
+				]
+			},
+			"materials": [
+				"HelmetMat"
+			],
+			"mesh_count": 4,
+			"mesh_nodes": [
+				{
+					"mesh": 0,
+					"name": "HelmetPiece1_low_HelmetMat_0"
+				},
+				{
+					"mesh": 1,
+					"name": "HelmetPiece2_low_HelmetMat_0"
+				},
+				{
+					"mesh": 2,
+					"name": "HelmetPiece3_low_HelmetMat_0"
+				},
+				{
+					"mesh": 3,
+					"name": "HelmetPiece4_low_HelmetMat_0"
+				}
+			],
+			"meshes": [
+				{
+					"bounds": [
+						{
+							"max": [
+								0.0875439122319222,
+								0.222720488905907,
+								0.13481305539608
+							],
+							"min": [
+								-0.0876422822475433,
+								0.00080494489520788,
+								-0.0803852677345276
+							]
+						}
+					],
+					"name": "HelmetPiece1_low_HelmetMat_0",
+					"submeshes": 1
+				},
+				{
+					"bounds": [
+						{
+							"max": [
+								0.138111144304276,
+								0.291931331157684,
+								0.0355169028043747
+							],
+							"min": [
+								-0.138111144304276,
+								0.0842771753668785,
+								-0.063972219824791
+							]
+						}
+					],
+					"name": "HelmetPiece2_low_HelmetMat_0",
+					"submeshes": 1
+				},
+				{
+					"bounds": [
+						{
+							"max": [
+								0.106598123908043,
+								0.158742696046829,
+								0.0463298447430134
+							],
+							"min": [
+								-0.106598123908043,
+								0.0846298933029175,
+								-0.00146121834404766
+							]
+						}
+					],
+					"name": "HelmetPiece3_low_HelmetMat_0",
+					"submeshes": 1
+				},
+				{
+					"bounds": [
+						{
+							"max": [
+								0.0608486793935299,
+								0.180789351463318,
+								0.123168438673019
+							],
+							"min": [
+								-0.0608486793935299,
+								0.137514978647232,
+								0.0728408843278885
+							]
+						}
+					],
+					"name": "HelmetPiece4_low_HelmetMat_0",
+					"submeshes": 1
+				}
+			],
+			"source_fingerprint": "fe943460ed4de7b0978afdfd3b7d7c016b2025eb90442de1dbcd9556521d63bd",
+			"source_metadata": {
+				"generator": "Khronos glTF Blender I/O v5.2.39",
+				"version": "2.0"
+			},
+			"source_path": "res://assets/props/protection/SM_Cosplay_helmet_01.glb",
+			"item_id": "loot_000171",
+			"disposition": "topup",
+			"batch": "PRE_M4_TWELVE_ITEM_TOPUP_2026_10_24",
+			"definition_path": "res://data/items/definitions/loot_000171.tres",
+			"display_name": "Cosplay Helmet",
+			"storage_category": "Protection",
+			"rotation": [
+				0,
+				0,
+				0
+			],
+			"can_be_stacked": true,
+			"can_support_stack": false,
+			"auto_stack_group": "",
+			"scale_notes": "Four complementary helmet pieces form one wearable, not four alternate examples.",
+			"pose_notes": "Upright open-bottom rim, source face/eye openings at +Z. Review contact around projecting face and wings.",
+			"stack_notes": "Helmet may rest on a broad support; curved crown and projections deny supporting top.",
+			"group_notes": "Explicit None: no proven existing compatibility class for this geometry; category alone does not imply a group. Gloves are not assigned folded_clothing.",
+			"license": "Not supplied in GLB metadata; local source rights unchanged; do not infer redistribution permission.",
+			"flags": [
+				"VISUAL_REVIEW_RECOMMENDED",
+				"MULTI_MESH",
+				"IRREGULAR_REVIEW"
+			],
+			"review_status": "UNREVIEWED",
+			"numerical_status": "Utility None/0 and Bulk 1 are temporary physical-onboarding placeholders; no capacity-derived values.",
+			"submesh_count": 4
+		},
+		{
+			"dependencies": [
+				"embedded",
+				"embedded",
+				"embedded"
+			],
+			"imported_dimensions_m": [
+				0.301527440547943,
+				0.146201923489571,
+				0.334180235862732
+			],
+			"imported_root_transform": {
+				"basis": [
+					[
+						1,
+						0,
+						0
+					],
+					[
+						0,
+						1,
+						0
+					],
+					[
+						0,
+						0,
+						1
+					]
+				],
+				"origin": [
+					0,
+					0,
+					0
+				]
+			},
+			"materials": [
+				"m_hat"
+			],
+			"mesh_count": 3,
+			"mesh_nodes": [
+				{
+					"mesh": 0,
+					"name": "Hat_m_hat_0"
+				},
+				{
+					"mesh": 1,
+					"name": "Hat_m_hat_0"
+				},
+				{
+					"mesh": 2,
+					"name": "Hat_m_hat_0"
+				}
+			],
+			"meshes": [
+				{
+					"bounds": [
+						{
+							"max": [
+								14.5694971084595,
+								6.77415227890015,
+								16.1664257049561
+							],
+							"min": [
+								-14.448224067688,
+								0.142710268497467,
+								-11.7172842025757
+							]
+						}
+					],
+					"name": "Hat_m_hat_0",
+					"submeshes": 1
+				},
+				{
+					"bounds": [
+						{
+							"max": [
+								15.0775852203369,
+								14.5678195953369,
+								16.6605205535889
+							],
+							"min": [
+								-15.0751609802246,
+								-0.0523737855255604,
+								-16.7575035095215
+							]
+						}
+					],
+					"name": "Hat_m_hat_0",
+					"submeshes": 1
+				},
+				{
+					"bounds": [
+						{
+							"max": [
+								-6.36204481124878,
+								0.409568279981613,
+								-7.01099395751953
+							],
+							"min": [
+								-13.1205749511719,
+								0.294527530670166,
+								-14.4491910934448
+							]
+						}
+					],
+					"name": "Hat_m_hat_0",
+					"submeshes": 1
+				}
+			],
+			"source_fingerprint": "3ce9f949a9f8ea558dcb91b68a69f9984b66228f652dc5459e6f577e3c975b59",
+			"source_metadata": {
+				"generator": "fab-model-conversion",
+				"version": "2.0"
+			},
+			"source_path": "res://assets/props/protection/SM_Fedora_Hat_01.glb",
+			"item_id": "loot_000172",
+			"disposition": "topup",
+			"batch": "PRE_M4_TWELVE_ITEM_TOPUP_2026_10_24",
+			"definition_path": "res://data/items/definitions/loot_000172.tres",
+			"display_name": "Fedora",
+			"storage_category": "Protection",
+			"rotation": [
+				0,
+				0,
+				0
+			],
+			"can_be_stacked": true,
+			"can_support_stack": false,
+			"auto_stack_group": "",
+			"scale_notes": "Three meshes form brim/crown/trim of one hat. Internal centimeter conversion yields plausible 0.30 x 0.15 x 0.33 m at unit root; do not normalize source.",
+			"pose_notes": "Upright brim down; asymmetric brim/band detail provisionally source +Z.",
+			"stack_notes": "Hat may rest on support; soft curved crown cannot credibly support cargo.",
+			"group_notes": "Explicit None: no proven existing compatibility class for this geometry; category alone does not imply a group. Gloves are not assigned folded_clothing.",
+			"license": "Not supplied in GLB metadata; local source rights unchanged; do not infer redistribution permission.",
+			"flags": [
+				"VISUAL_REVIEW_RECOMMENDED",
+				"MULTI_MESH",
+				"IRREGULAR_REVIEW"
+			],
+			"review_status": "UNREVIEWED",
+			"numerical_status": "Utility None/0 and Bulk 1 are temporary physical-onboarding placeholders; no capacity-derived values.",
+			"submesh_count": 3
+		},
+		{
+			"dependencies": [
+				"embedded",
+				"embedded",
+				"embedded"
+			],
+			"imported_dimensions_m": [
+				0.194658905267715,
+				0.282660126686096,
+				0.200327783823013
+			],
+			"imported_root_transform": {
+				"basis": [
+					[
+						1,
+						0,
+						0
+					],
+					[
+						0,
+						1,
+						0
+					],
+					[
+						0,
+						0,
+						1
+					]
+				],
+				"origin": [
+					0,
+					0,
+					0
+				]
+			},
+			"materials": [
+				"Material_1"
+			],
+			"mesh_count": 2,
+			"mesh_nodes": [
+				{
+					"mesh": 0,
+					"name": "file1",
+					"rotation": [
+						-0.0219625234603882,
+						0.0824884995818138,
+						-0.00181829556822776,
+						0.996348321437836
+					],
+					"translation": [
+						0,
+						0,
+						0.0204597357660532
+					]
+				},
+				{
+					"mesh": 1,
+					"name": "file1.001",
+					"rotation": [
+						0.00532075110822916,
+						-0.993133664131165,
+						-0.0500341765582561,
+						0.105612024664879
+					],
+					"translation": [
+						-0.0245516747236252,
+						0.00136398244649171,
+						-0.0395554974675179
+					]
+				}
+			],
+			"meshes": [
+				{
+					"bounds": [
+						{
+							"max": [
+								0.0756276696920395,
+								0.270000010728836,
+								0.0575646087527275
+							],
+							"min": [
+								-0.0738740414381027,
+								0,
+								-0.053035244345665
+							]
+						}
+					],
+					"name": "Mesh_0.001",
+					"submeshes": 1
+				},
+				{
+					"bounds": [
+						{
+							"max": [
+								0.0756276696920395,
+								0.270000010728836,
+								0.0575646087527275
+							],
+							"min": [
+								-0.0738740414381027,
+								0,
+								-0.053035244345665
+							]
+						}
+					],
+					"name": "Mesh_0.002",
+					"submeshes": 1
+				}
+			],
+			"source_fingerprint": "aa3f6c6eede41fed5be7720d37c4391fcce88039e8c94d0f467b35c56a4516cb",
+			"source_metadata": {
+				"generator": "Khronos glTF Blender I/O v5.2.39",
+				"version": "2.0"
+			},
+			"source_path": "res://assets/props/protection/SM_LeatherGloves_01.glb",
+			"item_id": "loot_000173",
+			"disposition": "topup",
+			"batch": "PRE_M4_TWELVE_ITEM_TOPUP_2026_10_24",
+			"definition_path": "res://data/items/definitions/loot_000173.tres",
+			"display_name": "Leather Gloves (Pair)",
+			"storage_category": "Protection",
+			"rotation": [
+				80.2063,
+				-105.0137,
+				-104.8046
+			],
+			"can_be_stacked": true,
+			"can_support_stack": false,
+			"auto_stack_group": "",
+			"scale_notes": "Two separate glove meshes form one leather pair; entirely new identity, unrelated to retired loot_000034.",
+			"pose_notes": "Lay the pair on broad sides, fingers toward canonical +Z. Derived by aligning the first glove local broad face to the shelf plane while retaining both source-node transforms. Plain X=90 left a measured 14.456 mm AABB-versus-vertex gap; this pose restores the production 6 mm vertex seating offset. Offset pair stability still needs human review.",
+			"stack_notes": "Offset soft pair may rest on support; uneven fingers/cuffs deny supporting top.",
+			"group_notes": "Explicit None: no proven existing compatibility class for this geometry; category alone does not imply a group. Gloves are not assigned folded_clothing.",
+			"license": "Not supplied in GLB metadata; local source rights unchanged; do not infer redistribution permission.",
+			"flags": [
+				"VISUAL_REVIEW_RECOMMENDED",
+				"MULTI_MESH",
+				"IRREGULAR_REVIEW"
+			],
+			"review_status": "UNREVIEWED",
+			"numerical_status": "Utility None/0 and Bulk 1 are temporary physical-onboarding placeholders; no capacity-derived values.",
+			"submesh_count": 2
+		},
+		{
+			"dependencies": [
+				"embedded",
+				"embedded",
+				"embedded",
+				"embedded"
+			],
+			"imported_dimensions_m": [
+				0.35945463180542,
+				0.379999995231628,
+				0.373596489429474
+			],
+			"imported_root_transform": {
+				"basis": [
+					[
+						1,
+						0,
+						0
+					],
+					[
+						0,
+						1,
+						0
+					],
+					[
+						0,
+						0,
+						1
+					]
+				],
+				"origin": [
+					0,
+					0,
+					0
+				]
+			},
+			"materials": [
+				"Material_0"
+			],
+			"mesh_count": 1,
+			"mesh_nodes": [
+				{
+					"mesh": 0,
+					"name": "Mesh_0"
+				}
+			],
+			"meshes": [
+				{
+					"bounds": [
+						{
+							"max": [
+								0.179537445306778,
+								0.379999995231628,
+								0.186588779091835
+							],
+							"min": [
+								-0.179917171597481,
+								0,
+								-0.187007710337639
+							]
+						}
+					],
+					"name": "Mesh_0",
+					"submeshes": 1
+				}
+			],
+			"source_fingerprint": "2d3ecd989bf6af4679d24e9b0f650349ae9e51217971f4ce602f3cea0e90f640",
+			"source_metadata": {
+				"generator": "Khronos glTF Blender I/O v4.4.55",
+				"version": "2.0"
+			},
+			"source_path": "res://assets/props/protection/SM_Wellies_01.glb",
+			"item_id": "loot_000174",
+			"disposition": "topup",
+			"batch": "PRE_M4_TWELVE_ITEM_TOPUP_2026_10_24",
+			"definition_path": "res://data/items/definitions/loot_000174.tres",
+			"display_name": "Rubber Wellies (Pair)",
+			"storage_category": "Protection",
+			"rotation": [
+				0,
+				0,
+				0
+			],
+			"can_be_stacked": true,
+			"can_support_stack": false,
+			"auto_stack_group": "",
+			"scale_notes": "Both boots remain one 0.38 m-high pair. No mesh edits or decomposition.",
+			"pose_notes": "Pair upright on soles; toes provisionally toward +Z, verify source front.",
+			"stack_notes": "Pair may rest on support; two open boot shafts do not form a supporting top.",
+			"group_notes": "Explicit None: no proven existing compatibility class for this geometry; category alone does not imply a group. Gloves are not assigned folded_clothing.",
+			"license": "Not supplied in GLB metadata; local source rights unchanged; do not infer redistribution permission.",
+			"flags": [
+				"VISUAL_REVIEW_RECOMMENDED"
+			],
+			"review_status": "UNREVIEWED",
+			"numerical_status": "Utility None/0 and Bulk 1 are temporary physical-onboarding placeholders; no capacity-derived values.",
+			"submesh_count": 1
 		}
-	]
+	],
+	"topup_status": "2026-10-24: twelve machine-proposed additions; original 155 human approvals preserved; all five new review stages UNREVIEWED; NOT PUBLISHED."
 }

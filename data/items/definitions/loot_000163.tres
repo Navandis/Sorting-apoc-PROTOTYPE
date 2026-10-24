@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_k147y"]
+[ext_resource type="PackedScene" path="res://assets/props/Food/SM_MysteryMeat_Carcass_Large_01.glb" id="2_f2hp0"]
+
+[resource]
+script = ExtResource("1_k147y")
+item_id = &"loot_000163"
+display_name = "Large Mystery-Meat Carcass"
+storage_category = "Food"
+storage_footprint = Vector3i(13, 6, 1)
+can_be_stacked = true
+visual_scene = ExtResource("2_f2hp0")
+storage_rotation_degrees = Vector3(0, 0, 90)

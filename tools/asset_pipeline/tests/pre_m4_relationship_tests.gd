@@ -34,7 +34,13 @@ func _run() -> void:
 	var ball_entry=controller.call("_entry_for_item",ball,false)
 	var support_entry=surface.get_storage_stack(broad_support.instance_id).entries[0]
 	_check(StorageStack.footprint_fits(ball_entry.footprint,support_entry.footprint),"Ball horizontal footprint fits broad support; denial must exercise role")
-	_check(not ball.definition.can_be_stacked and not surface.find_manual_stack_fit(broad_support.instance_id,ball_entry).valid,"Rounded non-stackable new ball denied atop otherwise compatible support")
+	_check(ball.definition.can_be_stacked and not ball.definition.can_support_stack and surface.find_manual_stack_fit(broad_support.instance_id,ball_entry).valid,"Human-approved basketball can rest on support without becoming a supporting top")
+	# Exercise denial with an isolated role variant; never revert accepted content.
+	var denied_definition: ItemDefinition=ball.definition.duplicate()
+	denied_definition.can_be_stacked=false
+	var denied_ball:=ItemInstance.new(denied_definition,"role-denied-ball")
+	var denied_entry=controller.call("_entry_for_item",denied_ball,false)
+	_check(not surface.find_manual_stack_fit(broad_support.instance_id,denied_entry).valid,"Explicit rest-role denial blocks otherwise fitting geometry")
 	_free_context(context)
 	context=_context(Vector2i(15,15),1.5)
 	surface=context.surface

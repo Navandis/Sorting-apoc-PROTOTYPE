@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_nb74f"]
+[ext_resource type="PackedScene" path="res://assets/props/Fuel/SM_Charcoal_Bag_03.glb" id="2_q2mcw"]
+
+[resource]
+script = ExtResource("1_nb74f")
+item_id = &"loot_000164"
+display_name = "BBQ Charcoal Bag"
+storage_category = "Fuel"
+storage_footprint = Vector3i(3, 2, 1)
+can_be_stacked = true
+visual_scene = ExtResource("2_q2mcw")

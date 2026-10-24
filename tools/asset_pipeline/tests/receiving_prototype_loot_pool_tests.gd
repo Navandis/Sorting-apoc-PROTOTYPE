@@ -30,7 +30,7 @@ func _run_suite() -> void:
 	_check(not PrototypePool.item_definition_ids.has(&"loot_000036"))
 	_check(PrototypePool.validate_against_catalog(PersistentItemCatalog).is_empty())
 	_check(PrototypePool.resolve_definitions(PersistentItemCatalog).size() == 35)
-	_check((PersistentItemCatalog.get("definitions") as Array).size() == 155)
+	_check((PersistentItemCatalog.get("definitions") as Array).size() == 167)
 	_assert_exact_expected_ids()
 	_pending_helpers -= 1
 

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://item_definition.gd" id="1_x2x7q"]
+[ext_resource type="PackedScene" path="res://assets/props/protection/SM_Cosplay_helmet_01.glb" id="2_i1qlg"]
+
+[resource]
+script = ExtResource("1_x2x7q")
+item_id = &"loot_000171"
+display_name = "Cosplay Helmet"
+storage_category = "Protection"
+storage_footprint = Vector3i(3, 3, 1)
+can_be_stacked = true
+visual_scene = ExtResource("2_i1qlg")

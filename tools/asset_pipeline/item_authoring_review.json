@@ -12127,6 +12127,799 @@
 				"reviewed_source_fingerprint": "8850adb149951557c82b5b7c141bedf46049b387adc9edffa218a303f8e87723",
 				"status": "CUSTOM_POSE_APPROVED"
 			}
+		},
+		"loot_000163": {
+			"auto_group_review": {
+				"flags": [
+					"VISUAL_REVIEW_RECOMMENDED"
+				],
+				"notes": "Machine proposal: Explicit None: no proven existing compatibility class for this geometry; category alone does not imply a group. Gloves are not assigned folded_clothing.",
+				"reviewed_auto_stack_group": "",
+				"reviewed_registry_compatibility_revision": 0,
+				"reviewed_stack_role_snapshot": {},
+				"status": "UNREVIEWED"
+			},
+			"footprint_review": {
+				"notes": "Machine proposal: canonical X/Z bounds, ceil at 0.10 m, minimum one cell; human overrides pending.",
+				"reviewed_footprint": [
+					0,
+					0,
+					0
+				],
+				"reviewed_rotation_degrees": [
+					0,
+					0,
+					0
+				],
+				"reviewed_source_fingerprint": "",
+				"status": "UNREVIEWED"
+			},
+			"item_id": "loot_000163",
+			"scale_review": {
+				"notes": "Machine proposal: measured imported scale unchanged. Irregular venison-reference carcass, not roast piglet or smaller meat. One 1.23 m entity; preserve source scale.",
+				"reviewed_source_fingerprint": "",
+				"status": "UNREVIEWED"
+			},
+			"source_fingerprint": "58fab1b615d49ccf649a5d33488373ab02c9a3786c5eac4ee1e003c1f6cca3a9",
+			"source_path": "res://assets/props/Food/SM_MysteryMeat_Carcass_Large_01.glb",
+			"stack_role_review": {
+				"flags": [
+					"IRREGULAR_SHAPE",
+					"RESTING_STABILITY_AMBIGUOUS",
+					"VISUAL_REVIEW_RECOMMENDED"
+				],
+				"notes": "Machine proposal: Irregular carcass may rest on a sufficiently large support; no credible flat supporting top.",
+				"reviewed_can_be_stacked": false,
+				"reviewed_can_support_stack": false,
+				"reviewed_footprint": [
+					0,
+					0,
+					0
+				],
+				"reviewed_rotation_degrees": [
+					0,
+					0,
+					0
+				],
+				"reviewed_source_fingerprint": "",
+				"status": "UNREVIEWED"
+			},
+			"storage_pose_review": {
+				"notes": "Machine proposal: Rotate the long hanging Y axis onto X; broad side rests horizontally, meat profile faces +Z. Confirm stable contact and semantic Front.",
+				"reviewed_rotation_degrees": [
+					0,
+					0,
+					0
+				],
+				"reviewed_source_fingerprint": "",
+				"status": "UNREVIEWED"
+			}
+		},
+		"loot_000164": {
+			"auto_group_review": {
+				"flags": [
+					"VISUAL_REVIEW_RECOMMENDED"
+				],
+				"notes": "Machine proposal: Explicit None: no proven existing compatibility class for this geometry; category alone does not imply a group. Gloves are not assigned folded_clothing.",
+				"reviewed_auto_stack_group": "",
+				"reviewed_registry_compatibility_revision": 0,
+				"reviewed_stack_role_snapshot": {},
+				"status": "UNREVIEWED"
+			},
+			"footprint_review": {
+				"notes": "Machine proposal: canonical X/Z bounds, ceil at 0.10 m, minimum one cell; human overrides pending.",
+				"reviewed_footprint": [
+					0,
+					0,
+					0
+				],
+				"reviewed_rotation_degrees": [
+					0,
+					0,
+					0
+				],
+				"reviewed_source_fingerprint": "",
+				"status": "UNREVIEWED"
+			},
+			"item_id": "loot_000164",
+			"scale_review": {
+				"notes": "Machine proposal: measured imported scale unchanged. One 0.40 m bag. Two label meshes belong to the bag, not separate loot.",
+				"reviewed_source_fingerprint": "",
+				"status": "UNREVIEWED"
+			},
+			"source_fingerprint": "b76ec27dda948743f02522aaa844cc1e067ae4cfaae994d4d17eb857ab639a53",
+			"source_path": "res://assets/props/Fuel/SM_Charcoal_Bag_03.glb",
+			"stack_role_review": {
+				"flags": [
+					"IRREGULAR_SHAPE",
+					"RESTING_STABILITY_AMBIGUOUS",
+					"VISUAL_REVIEW_RECOMMENDED"
+				],
+				"notes": "Machine proposal: Soft bag can rest on support; folded/crimped top cannot support cargo.",
+				"reviewed_can_be_stacked": false,
+				"reviewed_can_support_stack": false,
+				"reviewed_footprint": [
+					0,
+					0,
+					0
+				],
+				"reviewed_rotation_degrees": [
+					0,
+					0,
+					0
+				],
+				"reviewed_source_fingerprint": "",
+				"status": "UNREVIEWED"
+			},
+			"storage_pose_review": {
+				"notes": "Machine proposal: Upright on authored broad base; flame graphic faces +Z. Review soft-base stability.",
+				"reviewed_rotation_degrees": [
+					0,
+					0,
+					0
+				],
+				"reviewed_source_fingerprint": "",
+				"status": "UNREVIEWED"
+			}
+		},
+		"loot_000165": {
+			"auto_group_review": {
+				"flags": [
+					"VISUAL_REVIEW_RECOMMENDED"
+				],
+				"notes": "Machine proposal: Explicit None: no proven existing compatibility class for this geometry; category alone does not imply a group. Gloves are not assigned folded_clothing.",
+				"reviewed_auto_stack_group": "",
+				"reviewed_registry_compatibility_revision": 0,
+				"reviewed_stack_role_snapshot": {},
+				"status": "UNREVIEWED"
+			},
+			"footprint_review": {
+				"notes": "Machine proposal: canonical X/Z bounds, ceil at 0.10 m, minimum one cell; human overrides pending.",
+				"reviewed_footprint": [
+					0,
+					0,
+					0
+				],
+				"reviewed_rotation_degrees": [
+					0,
+					0,
+					0
+				],
+				"reviewed_source_fingerprint": "",
+				"status": "UNREVIEWED"
+			},
+			"item_id": "loot_000165",
+			"scale_review": {
+				"notes": "Machine proposal: measured imported scale unchanged. One approximately 330 ml can; 0.18 m source height retained. Label is assembled decoration.",
+				"reviewed_source_fingerprint": "",
+				"status": "UNREVIEWED"
+			},
+			"source_fingerprint": "dca42c74e048a2a8733f30df9da256ce7ed37807867bcc4384a42bfe1d4df3d9",
+			"source_path": "res://assets/props/Fuel/SM_Lighter_Fluid_Can_02.glb",
+			"stack_role_review": {
+				"flags": [
+					"VISUAL_REVIEW_RECOMMENDED"
+				],
+				"notes": "Machine proposal: Rigid can may rest on support; protruding nozzle and cap deny supporting top.",
+				"reviewed_can_be_stacked": false,
+				"reviewed_can_support_stack": false,
+				"reviewed_footprint": [
+					0,
+					0,
+					0
+				],
+				"reviewed_rotation_degrees": [
+					0,
+					0,
+					0
+				],
+				"reviewed_source_fingerprint": "",
+				"status": "UNREVIEWED"
+			},
+			"storage_pose_review": {
+				"notes": "Machine proposal: Upright on can base; separately named front label lies at +Z.",
+				"reviewed_rotation_degrees": [
+					0,
+					0,
+					0
+				],
+				"reviewed_source_fingerprint": "",
+				"status": "UNREVIEWED"
+			}
+		},
+		"loot_000166": {
+			"auto_group_review": {
+				"flags": [
+					"VISUAL_REVIEW_RECOMMENDED"
+				],
+				"notes": "Machine proposal: Explicit None: no proven existing compatibility class for this geometry; category alone does not imply a group. Gloves are not assigned folded_clothing.",
+				"reviewed_auto_stack_group": "",
+				"reviewed_registry_compatibility_revision": 0,
+				"reviewed_stack_role_snapshot": {},
+				"status": "UNREVIEWED"
+			},
+			"footprint_review": {
+				"notes": "Machine proposal: canonical X/Z bounds, ceil at 0.10 m, minimum one cell; human overrides pending.",
+				"reviewed_footprint": [
+					0,
+					0,
+					0
+				],
+				"reviewed_rotation_degrees": [
+					0,
+					0,
+					0
+				],
+				"reviewed_source_fingerprint": "",
+				"status": "UNREVIEWED"
+			},
+			"item_id": "loot_000166",
+			"scale_review": {
+				"notes": "Machine proposal: measured imported scale unchanged. One 6 L bottle, 0.42 m tall. Capacity is descriptive only, no Utility/Bulk inference.",
+				"reviewed_source_fingerprint": "",
+				"status": "UNREVIEWED"
+			},
+			"source_fingerprint": "2b243806adc522bacaaf3c600a0a4969451db924ec592590d348a0b692d4dd6c",
+			"source_path": "res://assets/props/Hydration/SM_6L_Water_Bottle_02.glb",
+			"stack_role_review": {
+				"flags": [
+					"VISUAL_REVIEW_RECOMMENDED"
+				],
+				"notes": "Machine proposal: Bottle may rest on support; handle and narrow cap cannot support cargo.",
+				"reviewed_can_be_stacked": false,
+				"reviewed_can_support_stack": false,
+				"reviewed_footprint": [
+					0,
+					0,
+					0
+				],
+				"reviewed_rotation_degrees": [
+					0,
+					0,
+					0
+				],
+				"reviewed_source_fingerprint": "",
+				"status": "UNREVIEWED"
+			},
+			"storage_pose_review": {
+				"notes": "Machine proposal: Upright on molded base; handle/label orientation provisionally source +Z.",
+				"reviewed_rotation_degrees": [
+					0,
+					0,
+					0
+				],
+				"reviewed_source_fingerprint": "",
+				"status": "UNREVIEWED"
+			}
+		},
+		"loot_000167": {
+			"auto_group_review": {
+				"flags": [
+					"VISUAL_REVIEW_RECOMMENDED"
+				],
+				"notes": "Machine proposal: Explicit None: no proven existing compatibility class for this geometry; category alone does not imply a group. Gloves are not assigned folded_clothing.",
+				"reviewed_auto_stack_group": "",
+				"reviewed_registry_compatibility_revision": 0,
+				"reviewed_stack_role_snapshot": {},
+				"status": "UNREVIEWED"
+			},
+			"footprint_review": {
+				"notes": "Machine proposal: canonical X/Z bounds, ceil at 0.10 m, minimum one cell; human overrides pending.",
+				"reviewed_footprint": [
+					0,
+					0,
+					0
+				],
+				"reviewed_rotation_degrees": [
+					0,
+					0,
+					0
+				],
+				"reviewed_source_fingerprint": "",
+				"status": "UNREVIEWED"
+			},
+			"item_id": "loot_000167",
+			"scale_review": {
+				"notes": "Machine proposal: measured imported scale unchanged. One crate with twenty visible soda bottles, 6.6-10 L intended total. Three material surfaces are crate/glass/bottle details. Preserve authored internal 0.8 mesh scale; root is unit.",
+				"reviewed_source_fingerprint": "",
+				"status": "UNREVIEWED"
+			},
+			"source_fingerprint": "4fcccfe89c7a7ee691c609413e1da3138b69f23ac608497d4fc53915db02b689",
+			"source_path": "res://assets/props/Hydration/SM_Bottles_Crate_01.glb",
+			"stack_role_review": {
+				"flags": [
+					"VISUAL_REVIEW_RECOMMENDED"
+				],
+				"notes": "Machine proposal: Crate can rest on support; protruding bottle tops have no demonstrated compatible supporting rim.",
+				"reviewed_can_be_stacked": false,
+				"reviewed_can_support_stack": false,
+				"reviewed_footprint": [
+					0,
+					0,
+					0
+				],
+				"reviewed_rotation_degrees": [
+					0,
+					0,
+					0
+				],
+				"reviewed_source_fingerprint": "",
+				"status": "UNREVIEWED"
+			},
+			"storage_pose_review": {
+				"notes": "Machine proposal: Crate upright on base, source +Z open side provisionally shelf-front.",
+				"reviewed_rotation_degrees": [
+					0,
+					0,
+					0
+				],
+				"reviewed_source_fingerprint": "",
+				"status": "UNREVIEWED"
+			}
+		},
+		"loot_000168": {
+			"auto_group_review": {
+				"flags": [
+					"VISUAL_REVIEW_RECOMMENDED"
+				],
+				"notes": "Machine proposal: Explicit None: no proven existing compatibility class for this geometry; category alone does not imply a group. Gloves are not assigned folded_clothing.",
+				"reviewed_auto_stack_group": "",
+				"reviewed_registry_compatibility_revision": 0,
+				"reviewed_stack_role_snapshot": {},
+				"status": "UNREVIEWED"
+			},
+			"footprint_review": {
+				"notes": "Machine proposal: canonical X/Z bounds, ceil at 0.10 m, minimum one cell; human overrides pending.",
+				"reviewed_footprint": [
+					0,
+					0,
+					0
+				],
+				"reviewed_rotation_degrees": [
+					0,
+					0,
+					0
+				],
+				"reviewed_source_fingerprint": "",
+				"status": "UNREVIEWED"
+			},
+			"item_id": "loot_000168",
+			"scale_review": {
+				"notes": "Machine proposal: measured imported scale unchanged. One 7-8 L carton. Four label planes are attached packaging, not a showcase. Label extents exceed the body: retain conservative whole-source bounds.",
+				"reviewed_source_fingerprint": "",
+				"status": "UNREVIEWED"
+			},
+			"source_fingerprint": "df04f6622dafdb82ee645a6b6cb552749acd013d1e57fc82205a7c2edb51d7a9",
+			"source_path": "res://assets/props/Hydration/SM_Juice_BagBox_01.glb",
+			"stack_role_review": {
+				"flags": [
+					"SUPPORT_SURFACE_AMBIGUOUS",
+					"VISUAL_REVIEW_RECOMMENDED"
+				],
+				"notes": "Machine proposal: Rigid carton may rest on support and provisionally support a smaller object on its broad closed top; verify top rigidity and label overhang.",
+				"reviewed_can_be_stacked": false,
+				"reviewed_can_support_stack": false,
+				"reviewed_footprint": [
+					0,
+					0,
+					0
+				],
+				"reviewed_rotation_degrees": [
+					0,
+					0,
+					0
+				],
+				"reviewed_source_fingerprint": "",
+				"status": "UNREVIEWED"
+			},
+			"storage_pose_review": {
+				"notes": "Machine proposal: Upright carton, apple illustration/dispenser toward +Z. Review front and top-contact credibility.",
+				"reviewed_rotation_degrees": [
+					0,
+					0,
+					0
+				],
+				"reviewed_source_fingerprint": "",
+				"status": "UNREVIEWED"
+			}
+		},
+		"loot_000169": {
+			"auto_group_review": {
+				"flags": [
+					"VISUAL_REVIEW_RECOMMENDED"
+				],
+				"notes": "Machine proposal: Explicit None: no proven existing compatibility class for this geometry; category alone does not imply a group. Gloves are not assigned folded_clothing.",
+				"reviewed_auto_stack_group": "",
+				"reviewed_registry_compatibility_revision": 0,
+				"reviewed_stack_role_snapshot": {},
+				"status": "UNREVIEWED"
+			},
+			"footprint_review": {
+				"notes": "Machine proposal: canonical X/Z bounds, ceil at 0.10 m, minimum one cell; human overrides pending.",
+				"reviewed_footprint": [
+					0,
+					0,
+					0
+				],
+				"reviewed_rotation_degrees": [
+					0,
+					0,
+					0
+				],
+				"reviewed_source_fingerprint": "",
+				"status": "UNREVIEWED"
+			},
+			"item_id": "loot_000169",
+			"scale_review": {
+				"notes": "Machine proposal: measured imported scale unchanged. One 4-5 L jug, 0.28 m tall; capacity plausibility requires human review, with no scale normalization.",
+				"reviewed_source_fingerprint": "",
+				"status": "UNREVIEWED"
+			},
+			"source_fingerprint": "7f2508809d1d6f5e90f0d0218db2b4fec6191760499c6c85bc1f62ef08baf86e",
+			"source_path": "res://assets/props/Hydration/SM_OJ_LargeJug_01.glb",
+			"stack_role_review": {
+				"flags": [
+					"VISUAL_REVIEW_RECOMMENDED"
+				],
+				"notes": "Machine proposal: Jug may rest on support; handle/shoulder and narrow cap deny supporting top.",
+				"reviewed_can_be_stacked": false,
+				"reviewed_can_support_stack": false,
+				"reviewed_footprint": [
+					0,
+					0,
+					0
+				],
+				"reviewed_rotation_degrees": [
+					0,
+					0,
+					0
+				],
+				"reviewed_source_fingerprint": "",
+				"status": "UNREVIEWED"
+			},
+			"storage_pose_review": {
+				"notes": "Machine proposal: Yaw 180 degrees puts the named source -Z orange label at canonical +Z; retain upright base.",
+				"reviewed_rotation_degrees": [
+					0,
+					0,
+					0
+				],
+				"reviewed_source_fingerprint": "",
+				"status": "UNREVIEWED"
+			}
+		},
+		"loot_000170": {
+			"auto_group_review": {
+				"flags": [
+					"VISUAL_REVIEW_RECOMMENDED"
+				],
+				"notes": "Machine proposal: Explicit None: no proven existing compatibility class for this geometry; category alone does not imply a group. Gloves are not assigned folded_clothing.",
+				"reviewed_auto_stack_group": "",
+				"reviewed_registry_compatibility_revision": 0,
+				"reviewed_stack_role_snapshot": {},
+				"status": "UNREVIEWED"
+			},
+			"footprint_review": {
+				"notes": "Machine proposal: canonical X/Z bounds, ceil at 0.10 m, minimum one cell; human overrides pending.",
+				"reviewed_footprint": [
+					0,
+					0,
+					0
+				],
+				"reviewed_rotation_degrees": [
+					0,
+					0,
+					0
+				],
+				"reviewed_source_fingerprint": "",
+				"status": "UNREVIEWED"
+			},
+			"item_id": "loot_000170",
+			"scale_review": {
+				"notes": "Machine proposal: measured imported scale unchanged. One bundled six-pack, 9-12 L intended total, six visible caps; do not decompose.",
+				"reviewed_source_fingerprint": "",
+				"status": "UNREVIEWED"
+			},
+			"source_fingerprint": "41a4d714ed83a2ff0504798971895fba243672b1e81367d20000b3d5a0da925a",
+			"source_path": "res://assets/props/Hydration/SM_Water_6Pack_03.glb",
+			"stack_role_review": {
+				"flags": [
+					"VISUAL_REVIEW_RECOMMENDED"
+				],
+				"notes": "Machine proposal: Bundle may rest on support; six bottle shoulders/caps are not a flat load-bearing top.",
+				"reviewed_can_be_stacked": false,
+				"reviewed_can_support_stack": false,
+				"reviewed_footprint": [
+					0,
+					0,
+					0
+				],
+				"reviewed_rotation_degrees": [
+					0,
+					0,
+					0
+				],
+				"reviewed_source_fingerprint": "",
+				"status": "UNREVIEWED"
+			},
+			"storage_pose_review": {
+				"notes": "Machine proposal: Six bottles upright in retained wrap; broad three-bottle row faces +Z.",
+				"reviewed_rotation_degrees": [
+					0,
+					0,
+					0
+				],
+				"reviewed_source_fingerprint": "",
+				"status": "UNREVIEWED"
+			}
+		},
+		"loot_000171": {
+			"auto_group_review": {
+				"flags": [
+					"VISUAL_REVIEW_RECOMMENDED"
+				],
+				"notes": "Machine proposal: Explicit None: no proven existing compatibility class for this geometry; category alone does not imply a group. Gloves are not assigned folded_clothing.",
+				"reviewed_auto_stack_group": "",
+				"reviewed_registry_compatibility_revision": 0,
+				"reviewed_stack_role_snapshot": {},
+				"status": "UNREVIEWED"
+			},
+			"footprint_review": {
+				"notes": "Machine proposal: canonical X/Z bounds, ceil at 0.10 m, minimum one cell; human overrides pending.",
+				"reviewed_footprint": [
+					0,
+					0,
+					0
+				],
+				"reviewed_rotation_degrees": [
+					0,
+					0,
+					0
+				],
+				"reviewed_source_fingerprint": "",
+				"status": "UNREVIEWED"
+			},
+			"item_id": "loot_000171",
+			"scale_review": {
+				"notes": "Machine proposal: measured imported scale unchanged. Four complementary helmet pieces form one wearable, not four alternate examples.",
+				"reviewed_source_fingerprint": "",
+				"status": "UNREVIEWED"
+			},
+			"source_fingerprint": "fe943460ed4de7b0978afdfd3b7d7c016b2025eb90442de1dbcd9556521d63bd",
+			"source_path": "res://assets/props/protection/SM_Cosplay_helmet_01.glb",
+			"stack_role_review": {
+				"flags": [
+					"IRREGULAR_SHAPE",
+					"RESTING_STABILITY_AMBIGUOUS",
+					"VISUAL_REVIEW_RECOMMENDED"
+				],
+				"notes": "Machine proposal: Helmet may rest on a broad support; curved crown and projections deny supporting top.",
+				"reviewed_can_be_stacked": false,
+				"reviewed_can_support_stack": false,
+				"reviewed_footprint": [
+					0,
+					0,
+					0
+				],
+				"reviewed_rotation_degrees": [
+					0,
+					0,
+					0
+				],
+				"reviewed_source_fingerprint": "",
+				"status": "UNREVIEWED"
+			},
+			"storage_pose_review": {
+				"notes": "Machine proposal: Upright open-bottom rim, source face/eye openings at +Z. Review contact around projecting face and wings.",
+				"reviewed_rotation_degrees": [
+					0,
+					0,
+					0
+				],
+				"reviewed_source_fingerprint": "",
+				"status": "UNREVIEWED"
+			}
+		},
+		"loot_000172": {
+			"auto_group_review": {
+				"flags": [
+					"VISUAL_REVIEW_RECOMMENDED"
+				],
+				"notes": "Machine proposal: Explicit None: no proven existing compatibility class for this geometry; category alone does not imply a group. Gloves are not assigned folded_clothing.",
+				"reviewed_auto_stack_group": "",
+				"reviewed_registry_compatibility_revision": 0,
+				"reviewed_stack_role_snapshot": {},
+				"status": "UNREVIEWED"
+			},
+			"footprint_review": {
+				"notes": "Machine proposal: canonical X/Z bounds, ceil at 0.10 m, minimum one cell; human overrides pending.",
+				"reviewed_footprint": [
+					0,
+					0,
+					0
+				],
+				"reviewed_rotation_degrees": [
+					0,
+					0,
+					0
+				],
+				"reviewed_source_fingerprint": "",
+				"status": "UNREVIEWED"
+			},
+			"item_id": "loot_000172",
+			"scale_review": {
+				"notes": "Machine proposal: measured imported scale unchanged. Three meshes form brim/crown/trim of one hat. Internal centimeter conversion yields plausible 0.30 x 0.15 x 0.33 m at unit root; do not normalize source.",
+				"reviewed_source_fingerprint": "",
+				"status": "UNREVIEWED"
+			},
+			"source_fingerprint": "3ce9f949a9f8ea558dcb91b68a69f9984b66228f652dc5459e6f577e3c975b59",
+			"source_path": "res://assets/props/protection/SM_Fedora_Hat_01.glb",
+			"stack_role_review": {
+				"flags": [
+					"IRREGULAR_SHAPE",
+					"RESTING_STABILITY_AMBIGUOUS",
+					"VISUAL_REVIEW_RECOMMENDED"
+				],
+				"notes": "Machine proposal: Hat may rest on support; soft curved crown cannot credibly support cargo.",
+				"reviewed_can_be_stacked": false,
+				"reviewed_can_support_stack": false,
+				"reviewed_footprint": [
+					0,
+					0,
+					0
+				],
+				"reviewed_rotation_degrees": [
+					0,
+					0,
+					0
+				],
+				"reviewed_source_fingerprint": "",
+				"status": "UNREVIEWED"
+			},
+			"storage_pose_review": {
+				"notes": "Machine proposal: Upright brim down; asymmetric brim/band detail provisionally source +Z.",
+				"reviewed_rotation_degrees": [
+					0,
+					0,
+					0
+				],
+				"reviewed_source_fingerprint": "",
+				"status": "UNREVIEWED"
+			}
+		},
+		"loot_000173": {
+			"auto_group_review": {
+				"flags": [
+					"VISUAL_REVIEW_RECOMMENDED"
+				],
+				"notes": "Machine proposal: Explicit None: no proven existing compatibility class for this geometry; category alone does not imply a group. Gloves are not assigned folded_clothing.",
+				"reviewed_auto_stack_group": "",
+				"reviewed_registry_compatibility_revision": 0,
+				"reviewed_stack_role_snapshot": {},
+				"status": "UNREVIEWED"
+			},
+			"footprint_review": {
+				"notes": "Machine proposal: canonical X/Z bounds, ceil at 0.10 m, minimum one cell; human overrides pending.",
+				"reviewed_footprint": [
+					0,
+					0,
+					0
+				],
+				"reviewed_rotation_degrees": [
+					0,
+					0,
+					0
+				],
+				"reviewed_source_fingerprint": "",
+				"status": "UNREVIEWED"
+			},
+			"item_id": "loot_000173",
+			"scale_review": {
+				"notes": "Machine proposal: measured imported scale unchanged. Two separate glove meshes form one leather pair; entirely new identity, unrelated to retired loot_000034.",
+				"reviewed_source_fingerprint": "",
+				"status": "UNREVIEWED"
+			},
+			"source_fingerprint": "aa3f6c6eede41fed5be7720d37c4391fcce88039e8c94d0f467b35c56a4516cb",
+			"source_path": "res://assets/props/protection/SM_LeatherGloves_01.glb",
+			"stack_role_review": {
+				"flags": [
+					"IRREGULAR_SHAPE",
+					"RESTING_STABILITY_AMBIGUOUS",
+					"SOFT_OR_DEFORMABLE_FORM",
+					"POSE_DEPENDENT",
+					"VISUAL_REVIEW_RECOMMENDED"
+				],
+				"notes": "Machine proposal: Offset soft pair may rest on support; uneven fingers/cuffs deny supporting top.",
+				"reviewed_can_be_stacked": false,
+				"reviewed_can_support_stack": false,
+				"reviewed_footprint": [
+					0,
+					0,
+					0
+				],
+				"reviewed_rotation_degrees": [
+					0,
+					0,
+					0
+				],
+				"reviewed_source_fingerprint": "",
+				"status": "UNREVIEWED"
+			},
+			"storage_pose_review": {
+				"notes": "Machine proposal: Lay the pair on broad sides, fingers toward canonical +Z. Derived by aligning the first glove local broad face to the shelf plane while retaining both source-node transforms. Plain X=90 left a measured 14.456 mm AABB-versus-vertex gap; this pose restores the production 6 mm vertex seating offset. Offset pair stability still needs human review.",
+				"reviewed_rotation_degrees": [
+					0,
+					0,
+					0
+				],
+				"reviewed_source_fingerprint": "",
+				"status": "UNREVIEWED"
+			}
+		},
+		"loot_000174": {
+			"auto_group_review": {
+				"flags": [
+					"VISUAL_REVIEW_RECOMMENDED"
+				],
+				"notes": "Machine proposal: Explicit None: no proven existing compatibility class for this geometry; category alone does not imply a group. Gloves are not assigned folded_clothing.",
+				"reviewed_auto_stack_group": "",
+				"reviewed_registry_compatibility_revision": 0,
+				"reviewed_stack_role_snapshot": {},
+				"status": "UNREVIEWED"
+			},
+			"footprint_review": {
+				"notes": "Machine proposal: canonical X/Z bounds, ceil at 0.10 m, minimum one cell; human overrides pending.",
+				"reviewed_footprint": [
+					0,
+					0,
+					0
+				],
+				"reviewed_rotation_degrees": [
+					0,
+					0,
+					0
+				],
+				"reviewed_source_fingerprint": "",
+				"status": "UNREVIEWED"
+			},
+			"item_id": "loot_000174",
+			"scale_review": {
+				"notes": "Machine proposal: measured imported scale unchanged. Both boots remain one 0.38 m-high pair. No mesh edits or decomposition.",
+				"reviewed_source_fingerprint": "",
+				"status": "UNREVIEWED"
+			},
+			"source_fingerprint": "2d3ecd989bf6af4679d24e9b0f650349ae9e51217971f4ce602f3cea0e90f640",
+			"source_path": "res://assets/props/protection/SM_Wellies_01.glb",
+			"stack_role_review": {
+				"flags": [
+					"VISUAL_REVIEW_RECOMMENDED"
+				],
+				"notes": "Machine proposal: Pair may rest on support; two open boot shafts do not form a supporting top.",
+				"reviewed_can_be_stacked": false,
+				"reviewed_can_support_stack": false,
+				"reviewed_footprint": [
+					0,
+					0,
+					0
+				],
+				"reviewed_rotation_degrees": [
+					0,
+					0,
+					0
+				],
+				"reviewed_source_fingerprint": "",
+				"status": "UNREVIEWED"
+			},
+			"storage_pose_review": {
+				"notes": "Machine proposal: Pair upright on soles; toes provisionally toward +Z, verify source front.",
+				"reviewed_rotation_degrees": [
+					0,
+					0,
+					0
+				],
+				"reviewed_source_fingerprint": "",
+				"status": "UNREVIEWED"
+			}
 		}
 	},
 	"schema_version": "2.0"
