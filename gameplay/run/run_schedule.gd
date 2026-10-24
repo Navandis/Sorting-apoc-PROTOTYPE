@@ -6,6 +6,7 @@ signal night_ready
 const Clock = preload("res://gameplay/run/run_clock.gd")
 const Scenario = preload("res://gameplay/run/run_scenario.gd")
 const Request = preload("res://gameplay/requests/contribution_request.gd")
+const Loadout = preload("res://gameplay/requests/dispatch_loadout.gd")
 var clock = Clock.new()
 var definition: Dictionary = {}
 var requests: Array = []
@@ -61,12 +62,20 @@ func has_spent_item(id: String) -> bool:
 			if receipt.item_id == id: return true
 	return false
 
+func dispatch_requests(day: int = -1) -> Array:
+	var selected: Array = []
+	for request: RefCounted in requests:
+		if request.destination == "dispatch" and request.day == (clock.day if day < 0 else day): selected.append(request)
+	return selected
+
 func _bind_stations() -> void:
 	_wing.medical_request = latest_request()
 	var interface := _wing.get_node_or_null("MedicalContribution")
 	if interface != null: interface.bind_request(active_request())
 	interface = _wing.get_node_or_null("KitchenContribution")
 	if interface != null: interface.bind_request(active_request("kitchen"))
+	interface = _wing.get_node_or_null("DispatchContribution")
+	if interface != null: interface.bind_teams(dispatch_requests())
 
 func advance(delta: float) -> void:
 	if phase != "ACTIVE" or not error.is_empty() or not is_finite(delta) or delta < 0.0: return
@@ -126,7 +135,21 @@ func _activate_due() -> void:
 		if not issued.has(event.id) and clock.timestamp(event.day, event.at) <= clock.elapsed: due.append(event)
 	due.sort_custom(Scenario.new().activation_before)
 	for event: Dictionary in due:
-		if event.kind in ["medical","kitchen"]:
+		if event.kind == "dispatch":
+			var members := Loadout.form_members(event.ready)
+			var ids: Array = []
+			for index: int in members.size():
+				var request = Loadout.new(_wing.run_identity.allocate("dispatch"), members[index], index+1)
+				request.occurrence_id = "%s:team_%03d" % [event.id,index+1]
+				request.day = event.day
+				request.opened_at = clock.timestamp(event.day,event.at)
+				request.deadline = clock.timestamp(event.day,event.deadline)
+				request.time_source = clock.current_time
+				request.item_already_spent = has_spent_item
+				requests.append(request)
+				ids.append(request.request_id)
+			issued[event.id] = {"at":clock.elapsed,"teams":ids}
+		elif event.kind in ["medical","kitchen"]:
 			var request = Request.new(_wing.run_identity.allocate(event.kind), Scenario.new().destination_for(event.kind), event.targets)
 			request.occurrence_id = event.id
 			request.day = event.day
@@ -159,8 +182,10 @@ func _resolve_midnight() -> void:
 	_runtime.lift_cycle.settle_boundary()
 	_close_due()
 	var medical: Array = []
+	var dispatch: Array = []
 	for request: RefCounted in requests:
 		if request.day == clock.day and request.destination == "medical_bay": medical.append(request.capture_state())
+		if request.day == clock.day and request.destination == "dispatch": dispatch.append(request.capture_state())
 	var meals := meal_records_for_day(clock.day)
 	var admitted: Array = []
 	for entry: Dictionary in admissions:
@@ -169,7 +194,7 @@ func _resolve_midnight() -> void:
 	var backlog: Array = []
 	if not manager.get_active_batch_id().is_empty(): backlog.append(manager.get_active_batch_id())
 	backlog.append_array(Array(manager.get_queued_batch_ids()))
-	report = {"day":clock.day, "medical":medical, "meals":meals, "meal_coverage":meal_coverage(meals), "admitted":admitted,
+	report = {"day":clock.day, "medical":medical, "dispatch":dispatch, "meals":meals, "meal_coverage":meal_coverage(meals), "admitted":admitted,
 		"forfeits":forfeits.duplicate(true), "backlog":backlog, "scenario_complete":scenario_complete_at(clock.day + 1)}
 	resolved_day = clock.day
 	clock.begin_next_day()
@@ -233,7 +258,7 @@ func restore_state(state: Dictionary) -> void:
 	definition = state.definition.duplicate(true)
 	requests.clear()
 	for record: Dictionary in state.requests:
-		var request = Request.new()
+		var request = Loadout.new() if record.destination == "dispatch" else Request.new()
 		request.restore_state(record)
 		request.time_source = clock.current_time
 		request.item_already_spent = has_spent_item

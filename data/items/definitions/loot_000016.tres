@@ -6,6 +6,9 @@
 [resource]
 script = ExtResource("1_bj77b")
 item_id = &"loot_000016"
+bulk = 6
+utility_value = 30
+utility_id = &"Fuel"
 display_name = "Gas Canister"
 storage_category = "Fuel"
 storage_footprint = Vector3i(4, 2, 1)

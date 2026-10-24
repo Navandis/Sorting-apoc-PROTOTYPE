@@ -6,9 +6,10 @@
 [resource]
 script = ExtResource("1_711mt")
 item_id = &"loot_000011"
+bulk = 12
 display_name = "Roast Piglet"
 utility_id = &"Food"
-utility_value = 14
+utility_value = 66
 storage_category = "Food"
 storage_footprint = Vector3i(10, 5, 1)
 visual_scene = ExtResource("2_vwoue")

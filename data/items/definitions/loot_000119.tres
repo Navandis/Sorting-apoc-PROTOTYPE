@@ -6,6 +6,9 @@
 [resource]
 script = ExtResource("1_ac7sa")
 item_id = &"loot_000119"
+bulk = 10
+utility_value = 16
+utility_id = &"Electronics"
 display_name = "Microwave Oven"
 storage_category = "Electronics"
 storage_footprint = Vector3i(6, 5, 1)

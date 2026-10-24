@@ -6,6 +6,9 @@
 [resource]
 script = ExtResource("1_tejmg")
 item_id = &"loot_000124"
+bulk = 1
+utility_value = 6
+utility_id = &"Medical"
 display_name = "Painkillers"
 storage_category = "Medical"
 can_be_stacked = true

@@ -6,6 +6,9 @@
 [resource]
 script = ExtResource("1_4rngc")
 item_id = &"loot_000126"
+bulk = 12
+utility_value = 60
+utility_id = &"Medical"
 display_name = "Military Med Crate"
 storage_category = "Medical"
 storage_footprint = Vector3i(11, 4, 1)

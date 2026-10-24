@@ -6,6 +6,9 @@
 [resource]
 script = ExtResource("1_2rs3m")
 item_id = &"loot_000127"
+bulk = 2
+utility_value = 7
+utility_id = &"Medical"
 display_name = "Saline Solution"
 storage_category = "Medical"
 can_be_stacked = true

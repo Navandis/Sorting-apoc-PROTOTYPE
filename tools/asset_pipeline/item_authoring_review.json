@@ -12156,9 +12156,9 @@
 			},
 			"item_id": "loot_000163",
 			"scale_review": {
-				"notes": "Machine proposal: measured imported scale unchanged. Irregular venison-reference carcass, not roast piglet or smaller meat. One 1.23 m entity; preserve source scale.\n2026-10-24: source fingerprint and visual_scale=1.0 unchanged; separate human scale acceptance was not reported. UNREVIEWED: confirm source/world scale plausibility; do not regenerate accepted pose/Footprint/roles.",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"notes": "Machine proposal: measured imported scale unchanged. Irregular venison-reference carcass, not roast piglet or smaller meat. One 1.23 m entity; preserve source scale.\n2026-10-24: source fingerprint and visual_scale=1.0 unchanged; separate human scale acceptance was not reported. UNREVIEWED: confirm source/world scale plausibility; do not regenerate accepted pose/Footprint/roles.\n2026-10-24 M4 locked handoff: developer explicitly approves the saved 163–174 scales. Geometry unchanged; separate Auto Stack Group approval remains pending.",
+				"reviewed_source_fingerprint": "58fab1b615d49ccf649a5d33488373ab02c9a3786c5eac4ee1e003c1f6cca3a9",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "58fab1b615d49ccf649a5d33488373ab02c9a3786c5eac4ee1e003c1f6cca3a9",
 			"source_path": "res://assets/props/Food/SM_MysteryMeat_Carcass_Large_01.glb",
@@ -12219,9 +12219,9 @@
 			},
 			"item_id": "loot_000164",
 			"scale_review": {
-				"notes": "Machine proposal: measured imported scale unchanged. One 0.40 m bag. Two label meshes belong to the bag, not separate loot.\n2026-10-24: source fingerprint and visual_scale=1.0 unchanged; separate human scale acceptance was not reported. UNREVIEWED: confirm source/world scale plausibility; do not regenerate accepted pose/Footprint/roles.",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"notes": "Machine proposal: measured imported scale unchanged. One 0.40 m bag. Two label meshes belong to the bag, not separate loot.\n2026-10-24: source fingerprint and visual_scale=1.0 unchanged; separate human scale acceptance was not reported. UNREVIEWED: confirm source/world scale plausibility; do not regenerate accepted pose/Footprint/roles.\n2026-10-24 M4 locked handoff: developer explicitly approves the saved 163–174 scales. Geometry unchanged; separate Auto Stack Group approval remains pending.",
+				"reviewed_source_fingerprint": "b76ec27dda948743f02522aaa844cc1e067ae4cfaae994d4d17eb857ab639a53",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "b76ec27dda948743f02522aaa844cc1e067ae4cfaae994d4d17eb857ab639a53",
 			"source_path": "res://assets/props/Fuel/SM_Charcoal_Bag_03.glb",
@@ -12282,9 +12282,9 @@
 			},
 			"item_id": "loot_000165",
 			"scale_review": {
-				"notes": "Machine proposal: measured imported scale unchanged. One approximately 330 ml can; 0.18 m source height retained. Label is assembled decoration.\n2026-10-24: source fingerprint and visual_scale=1.0 unchanged; separate human scale acceptance was not reported. UNREVIEWED: confirm source/world scale plausibility; do not regenerate accepted pose/Footprint/roles.",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"notes": "Machine proposal: measured imported scale unchanged. One approximately 330 ml can; 0.18 m source height retained. Label is assembled decoration.\n2026-10-24: source fingerprint and visual_scale=1.0 unchanged; separate human scale acceptance was not reported. UNREVIEWED: confirm source/world scale plausibility; do not regenerate accepted pose/Footprint/roles.\n2026-10-24 M4 locked handoff: developer explicitly approves the saved 163–174 scales. Geometry unchanged; separate Auto Stack Group approval remains pending.",
+				"reviewed_source_fingerprint": "dca42c74e048a2a8733f30df9da256ce7ed37807867bcc4384a42bfe1d4df3d9",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "dca42c74e048a2a8733f30df9da256ce7ed37807867bcc4384a42bfe1d4df3d9",
 			"source_path": "res://assets/props/Fuel/SM_Lighter_Fluid_Can_02.glb",
@@ -12345,9 +12345,9 @@
 			},
 			"item_id": "loot_000166",
 			"scale_review": {
-				"notes": "Machine proposal: measured imported scale unchanged. One 6 L bottle, 0.42 m tall. Capacity is descriptive only, no Utility/Bulk inference.\n2026-10-24: source fingerprint and visual_scale=1.0 unchanged; separate human scale acceptance was not reported. UNREVIEWED: confirm source/world scale plausibility; do not regenerate accepted pose/Footprint/roles.",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"notes": "Machine proposal: measured imported scale unchanged. One 6 L bottle, 0.42 m tall. Capacity is descriptive only, no Utility/Bulk inference.\n2026-10-24: source fingerprint and visual_scale=1.0 unchanged; separate human scale acceptance was not reported. UNREVIEWED: confirm source/world scale plausibility; do not regenerate accepted pose/Footprint/roles.\n2026-10-24 M4 locked handoff: developer explicitly approves the saved 163–174 scales. Geometry unchanged; separate Auto Stack Group approval remains pending.",
+				"reviewed_source_fingerprint": "2b243806adc522bacaaf3c600a0a4969451db924ec592590d348a0b692d4dd6c",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "2b243806adc522bacaaf3c600a0a4969451db924ec592590d348a0b692d4dd6c",
 			"source_path": "res://assets/props/Hydration/SM_6L_Water_Bottle_02.glb",
@@ -12408,9 +12408,9 @@
 			},
 			"item_id": "loot_000167",
 			"scale_review": {
-				"notes": "Machine proposal: measured imported scale unchanged. One crate with twenty visible soda bottles, 6.6-10 L intended total. Three material surfaces are crate/glass/bottle details. Preserve authored internal 0.8 mesh scale; root is unit.\n2026-10-24: source fingerprint and visual_scale=1.0 unchanged; separate human scale acceptance was not reported. UNREVIEWED: confirm source/world scale plausibility; do not regenerate accepted pose/Footprint/roles.",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"notes": "Machine proposal: measured imported scale unchanged. One crate with twenty visible soda bottles, 6.6-10 L intended total. Three material surfaces are crate/glass/bottle details. Preserve authored internal 0.8 mesh scale; root is unit.\n2026-10-24: source fingerprint and visual_scale=1.0 unchanged; separate human scale acceptance was not reported. UNREVIEWED: confirm source/world scale plausibility; do not regenerate accepted pose/Footprint/roles.\n2026-10-24 M4 locked handoff: developer explicitly approves the saved 163–174 scales. Geometry unchanged; separate Auto Stack Group approval remains pending.",
+				"reviewed_source_fingerprint": "4fcccfe89c7a7ee691c609413e1da3138b69f23ac608497d4fc53915db02b689",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "4fcccfe89c7a7ee691c609413e1da3138b69f23ac608497d4fc53915db02b689",
 			"source_path": "res://assets/props/Hydration/SM_Bottles_Crate_01.glb",
@@ -12471,9 +12471,9 @@
 			},
 			"item_id": "loot_000168",
 			"scale_review": {
-				"notes": "Machine proposal: measured imported scale unchanged. One 7-8 L carton. Four label planes are attached packaging, not a showcase. Label extents exceed the body: retain conservative whole-source bounds.\n2026-10-24: source fingerprint and visual_scale=1.0 unchanged; separate human scale acceptance was not reported. UNREVIEWED: confirm source/world scale plausibility; do not regenerate accepted pose/Footprint/roles.",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"notes": "Machine proposal: measured imported scale unchanged. One 7-8 L carton. Four label planes are attached packaging, not a showcase. Label extents exceed the body: retain conservative whole-source bounds.\n2026-10-24: source fingerprint and visual_scale=1.0 unchanged; separate human scale acceptance was not reported. UNREVIEWED: confirm source/world scale plausibility; do not regenerate accepted pose/Footprint/roles.\n2026-10-24 M4 locked handoff: developer explicitly approves the saved 163–174 scales. Geometry unchanged; separate Auto Stack Group approval remains pending.",
+				"reviewed_source_fingerprint": "df04f6622dafdb82ee645a6b6cb552749acd013d1e57fc82205a7c2edb51d7a9",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "df04f6622dafdb82ee645a6b6cb552749acd013d1e57fc82205a7c2edb51d7a9",
 			"source_path": "res://assets/props/Hydration/SM_Juice_BagBox_01.glb",
@@ -12534,9 +12534,9 @@
 			},
 			"item_id": "loot_000169",
 			"scale_review": {
-				"notes": "Machine proposal: measured imported scale unchanged. One 4-5 L jug, 0.28 m tall; capacity plausibility requires human review, with no scale normalization.\n2026-10-24: source fingerprint and visual_scale=1.0 unchanged; separate human scale acceptance was not reported. UNREVIEWED: confirm source/world scale plausibility; do not regenerate accepted pose/Footprint/roles.",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"notes": "Machine proposal: measured imported scale unchanged. One 4-5 L jug, 0.28 m tall; capacity plausibility requires human review, with no scale normalization.\n2026-10-24: source fingerprint and visual_scale=1.0 unchanged; separate human scale acceptance was not reported. UNREVIEWED: confirm source/world scale plausibility; do not regenerate accepted pose/Footprint/roles.\n2026-10-24 M4 locked handoff: developer explicitly approves the saved 163–174 scales. Geometry unchanged; separate Auto Stack Group approval remains pending.",
+				"reviewed_source_fingerprint": "7f2508809d1d6f5e90f0d0218db2b4fec6191760499c6c85bc1f62ef08baf86e",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "7f2508809d1d6f5e90f0d0218db2b4fec6191760499c6c85bc1f62ef08baf86e",
 			"source_path": "res://assets/props/Hydration/SM_OJ_LargeJug_01.glb",
@@ -12597,9 +12597,9 @@
 			},
 			"item_id": "loot_000170",
 			"scale_review": {
-				"notes": "Machine proposal: measured imported scale unchanged. One bundled six-pack, 9-12 L intended total, six visible caps; do not decompose.\n2026-10-24: source fingerprint and visual_scale=1.0 unchanged; separate human scale acceptance was not reported. UNREVIEWED: confirm source/world scale plausibility; do not regenerate accepted pose/Footprint/roles.",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"notes": "Machine proposal: measured imported scale unchanged. One bundled six-pack, 9-12 L intended total, six visible caps; do not decompose.\n2026-10-24: source fingerprint and visual_scale=1.0 unchanged; separate human scale acceptance was not reported. UNREVIEWED: confirm source/world scale plausibility; do not regenerate accepted pose/Footprint/roles.\n2026-10-24 M4 locked handoff: developer explicitly approves the saved 163–174 scales. Geometry unchanged; separate Auto Stack Group approval remains pending.",
+				"reviewed_source_fingerprint": "41a4d714ed83a2ff0504798971895fba243672b1e81367d20000b3d5a0da925a",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "41a4d714ed83a2ff0504798971895fba243672b1e81367d20000b3d5a0da925a",
 			"source_path": "res://assets/props/Hydration/SM_Water_6Pack_03.glb",
@@ -12660,9 +12660,9 @@
 			},
 			"item_id": "loot_000171",
 			"scale_review": {
-				"notes": "Machine proposal: measured imported scale unchanged. Four complementary helmet pieces form one wearable, not four alternate examples.\n2026-10-24: source fingerprint and visual_scale=1.0 unchanged; separate human scale acceptance was not reported. UNREVIEWED: confirm source/world scale plausibility; do not regenerate accepted pose/Footprint/roles.",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"notes": "Machine proposal: measured imported scale unchanged. Four complementary helmet pieces form one wearable, not four alternate examples.\n2026-10-24: source fingerprint and visual_scale=1.0 unchanged; separate human scale acceptance was not reported. UNREVIEWED: confirm source/world scale plausibility; do not regenerate accepted pose/Footprint/roles.\n2026-10-24 M4 locked handoff: developer explicitly approves the saved 163–174 scales. Geometry unchanged; separate Auto Stack Group approval remains pending.",
+				"reviewed_source_fingerprint": "fe943460ed4de7b0978afdfd3b7d7c016b2025eb90442de1dbcd9556521d63bd",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "fe943460ed4de7b0978afdfd3b7d7c016b2025eb90442de1dbcd9556521d63bd",
 			"source_path": "res://assets/props/protection/SM_Cosplay_helmet_01.glb",
@@ -12723,9 +12723,9 @@
 			},
 			"item_id": "loot_000172",
 			"scale_review": {
-				"notes": "Machine proposal: measured imported scale unchanged. Three meshes form brim/crown/trim of one hat. Internal centimeter conversion yields plausible 0.30 x 0.15 x 0.33 m at unit root; do not normalize source.\n2026-10-24: source fingerprint and visual_scale=1.0 unchanged; separate human scale acceptance was not reported. UNREVIEWED: confirm source/world scale plausibility; do not regenerate accepted pose/Footprint/roles.",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"notes": "Machine proposal: measured imported scale unchanged. Three meshes form brim/crown/trim of one hat. Internal centimeter conversion yields plausible 0.30 x 0.15 x 0.33 m at unit root; do not normalize source.\n2026-10-24: source fingerprint and visual_scale=1.0 unchanged; separate human scale acceptance was not reported. UNREVIEWED: confirm source/world scale plausibility; do not regenerate accepted pose/Footprint/roles.\n2026-10-24 M4 locked handoff: developer explicitly approves the saved 163–174 scales. Geometry unchanged; separate Auto Stack Group approval remains pending.",
+				"reviewed_source_fingerprint": "3ce9f949a9f8ea558dcb91b68a69f9984b66228f652dc5459e6f577e3c975b59",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "3ce9f949a9f8ea558dcb91b68a69f9984b66228f652dc5459e6f577e3c975b59",
 			"source_path": "res://assets/props/protection/SM_Fedora_Hat_01.glb",
@@ -12786,9 +12786,9 @@
 			},
 			"item_id": "loot_000173",
 			"scale_review": {
-				"notes": "Machine proposal: measured imported scale unchanged. Two separate glove meshes form one leather pair; entirely new identity, unrelated to retired loot_000034.\n2026-10-24: source fingerprint and visual_scale=1.0 unchanged; separate human scale acceptance was not reported. UNREVIEWED: confirm source/world scale plausibility; do not regenerate accepted pose/Footprint/roles.",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"notes": "Machine proposal: measured imported scale unchanged. Two separate glove meshes form one leather pair; entirely new identity, unrelated to retired loot_000034.\n2026-10-24: source fingerprint and visual_scale=1.0 unchanged; separate human scale acceptance was not reported. UNREVIEWED: confirm source/world scale plausibility; do not regenerate accepted pose/Footprint/roles.\n2026-10-24 M4 locked handoff: developer explicitly approves the saved 163–174 scales. Geometry unchanged; separate Auto Stack Group approval remains pending.",
+				"reviewed_source_fingerprint": "aa3f6c6eede41fed5be7720d37c4391fcce88039e8c94d0f467b35c56a4516cb",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "aa3f6c6eede41fed5be7720d37c4391fcce88039e8c94d0f467b35c56a4516cb",
 			"source_path": "res://assets/props/protection/SM_LeatherGloves_01.glb",
@@ -12849,9 +12849,9 @@
 			},
 			"item_id": "loot_000174",
 			"scale_review": {
-				"notes": "Machine proposal: measured imported scale unchanged. Both boots remain one 0.38 m-high pair. No mesh edits or decomposition.\n2026-10-24: source fingerprint and visual_scale=1.0 unchanged; separate human scale acceptance was not reported. UNREVIEWED: confirm source/world scale plausibility; do not regenerate accepted pose/Footprint/roles.",
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"notes": "Machine proposal: measured imported scale unchanged. Both boots remain one 0.38 m-high pair. No mesh edits or decomposition.\n2026-10-24: source fingerprint and visual_scale=1.0 unchanged; separate human scale acceptance was not reported. UNREVIEWED: confirm source/world scale plausibility; do not regenerate accepted pose/Footprint/roles.\n2026-10-24 M4 locked handoff: developer explicitly approves the saved 163–174 scales. Geometry unchanged; separate Auto Stack Group approval remains pending.",
+				"reviewed_source_fingerprint": "2d3ecd989bf6af4679d24e9b0f650349ae9e51217971f4ce602f3cea0e90f640",
+				"status": "APPROVED"
 			},
 			"source_fingerprint": "2d3ecd989bf6af4679d24e9b0f650349ae9e51217971f4ce602f3cea0e90f640",
 			"source_path": "res://assets/props/protection/SM_Wellies_01.glb",

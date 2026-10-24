@@ -6,11 +6,14 @@
 [resource]
 script = ExtResource("1_11h2o")
 item_id = &"loot_000025"
+bulk = 1
+utility_value = 8
+utility_id = &"Medical"
 display_name = "Antibiotics"
 context_utility_overrides = {
 &"medical_bay": {
 "utility_id": &"Medical",
-"value": 5
+"value": 8
 }
 }
 storage_category = "Medical"

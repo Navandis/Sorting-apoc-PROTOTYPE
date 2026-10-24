@@ -6,6 +6,9 @@
 [resource]
 script = ExtResource("1_xteww")
 item_id = &"loot_000162"
+bulk = 3
+utility_value = 24
+utility_id = &"Protection"
 display_name = "Tactical Helmet"
 storage_category = "Protection"
 storage_footprint = Vector3i(4, 2, 1)

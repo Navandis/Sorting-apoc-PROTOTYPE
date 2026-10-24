@@ -6,6 +6,9 @@
 [resource]
 script = ExtResource("1_bhq1b")
 item_id = &"loot_000118"
+bulk = 4
+utility_value = 10
+utility_id = &"Electronics"
 display_name = "VHS Player"
 storage_category = "Electronics"
 storage_footprint = Vector3i(5, 3, 1)

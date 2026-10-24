@@ -6,6 +6,9 @@
 [resource]
 script = ExtResource("1_g55yf")
 item_id = &"loot_000123"
+bulk = 10
+utility_value = 26
+utility_id = &"Electronics"
 display_name = "Turntables"
 storage_category = "Electronics"
 storage_footprint = Vector3i(9, 5, 1)

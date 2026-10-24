@@ -6,6 +6,9 @@
 [resource]
 script = ExtResource("1_kshmd")
 item_id = &"loot_000068"
+bulk = 12
+utility_value = 64
+utility_id = &"Fuel"
 display_name = "Propane Tank"
 storage_category = "Fuel"
 storage_footprint = Vector3i(5, 5, 1)

@@ -6,6 +6,9 @@
 [resource]
 script = ExtResource("1_1sxj3")
 item_id = &"loot_000014"
+bulk = 8
+utility_value = 18
+utility_id = &"Fuel"
 display_name = "Firewood Pile"
 storage_category = "Fuel"
 storage_footprint = Vector3i(7, 4, 1)

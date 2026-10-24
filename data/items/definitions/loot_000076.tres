@@ -6,6 +6,9 @@
 [resource]
 script = ExtResource("1_hhq56")
 item_id = &"loot_000076"
+bulk = 2
+utility_value = 7
+utility_id = &"Hydration"
 display_name = "Skim Milk"
 storage_category = "Hydration"
 can_be_stacked = true

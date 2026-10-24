@@ -6,6 +6,9 @@
 [resource]
 script = ExtResource("1_prbh5")
 item_id = &"loot_000129"
+bulk = 2
+utility_value = 18
+utility_id = &"Morale"
 display_name = "Coffee Tin"
 storage_category = "Morale"
 storage_footprint = Vector3i(2, 2, 1)

@@ -6,6 +6,9 @@
 [resource]
 script = ExtResource("1_bax0w")
 item_id = &"loot_000165"
+bulk = 1
+utility_value = 3
+utility_id = &"Fuel"
 display_name = "Lighter Fluid Can"
 storage_category = "Fuel"
 can_be_stacked = true

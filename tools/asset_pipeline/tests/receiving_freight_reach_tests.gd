@@ -97,7 +97,7 @@ func _measure_case(case: Dictionary) -> Dictionary:
 	var camera := player.get_node("Camera3D") as Camera3D
 	var carried = player.get_node("CarriedItems")
 	# One measured TAKE is handed off before the next; use normal player capacity.
-	carried.set("max_bulk", 10)
+	# Retain the production carrying limit; ten shortcuts are not a Bulk limit.
 	var records: Array[Dictionary] = []
 	while not (presenter.call("get_materialized_world_items") as Array).is_empty():
 		var candidate := _nearest_exposed_candidate(

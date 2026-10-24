@@ -6,6 +6,9 @@
 [resource]
 script = ExtResource("1_ddgub")
 item_id = &"loot_000059"
+bulk = 3
+utility_value = 18
+utility_id = &"Food"
 display_name = "Meat Pie"
 storage_category = "Food"
 storage_footprint = Vector3i(3, 3, 1)

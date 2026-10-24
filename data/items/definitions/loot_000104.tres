@@ -6,6 +6,9 @@
 [resource]
 script = ExtResource("1_xvcl1")
 item_id = &"loot_000104"
+bulk = 2
+utility_value = 28
+utility_id = &"Weapons"
 display_name = "Molotov Cocktail"
 storage_category = "Weapons"
 can_be_stacked = true

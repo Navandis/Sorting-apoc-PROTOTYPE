@@ -6,6 +6,9 @@
 [resource]
 script = ExtResource("1_pkfuw")
 item_id = &"loot_000139"
+bulk = 8
+utility_value = 40
+utility_id = &"Morale"
 display_name = "Acoustic Guitar"
 storage_category = "Morale"
 storage_footprint = Vector3i(13, 2, 1)

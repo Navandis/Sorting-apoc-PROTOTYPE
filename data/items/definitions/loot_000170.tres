@@ -6,6 +6,9 @@
 [resource]
 script = ExtResource("1_phh00")
 item_id = &"loot_000170"
+bulk = 8
+utility_value = 42
+utility_id = &"Hydration"
 display_name = "Water Bottle Six-Pack"
 storage_category = "Hydration"
 storage_footprint = Vector3i(4, 3, 1)

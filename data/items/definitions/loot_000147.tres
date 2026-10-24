@@ -6,6 +6,9 @@
 [resource]
 script = ExtResource("1_e74jn")
 item_id = &"loot_000147"
+bulk = 2
+utility_value = 12
+utility_id = &"Protection"
 display_name = "Gas Mask"
 storage_category = "Protection"
 storage_footprint = Vector3i(2, 5, 1)

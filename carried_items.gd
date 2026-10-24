@@ -10,7 +10,7 @@ signal selection_changed(selected_index: int)
 signal item_added(item)
 signal item_removed(item)
 
-@export_range(1, 999, 1) var max_bulk: int = 10
+@export_range(1, 999, 1) var max_bulk: int = 20
 
 # Retained only so older prototype scenes load cleanly. Step 3 intentionally
 # starts empty; world pickup now supplies the test items.
@@ -195,9 +195,11 @@ func remove_at(index: int):
 	return removed
 
 
-func commit_selected_consumption(expected: ItemInstance, commit_receipt: Callable) -> bool:
+func commit_selected_consumption(expected: ItemInstance, commit_receipt: Callable, validate: Callable = Callable()) -> bool:
 	if expected == null or get_selected_item() != expected or not commit_receipt.is_valid():
 		return false
+	if validate.is_valid() and not bool(validate.call()): return false
+	if get_selected_item() != expected: return false
 	var index := _selected_index
 	_slots[index] = null
 	_trim_empty_tail()

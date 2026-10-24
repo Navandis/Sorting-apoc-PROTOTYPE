@@ -6,9 +6,10 @@
 [resource]
 script = ExtResource("1_dj76h")
 item_id = &"loot_000020"
+bulk = 2
 display_name = "Milk Carton"
 utility_id = &"Hydration"
-utility_value = 4
+utility_value = 6
 storage_category = "Hydration"
 can_be_stacked = true
 visual_scene = ExtResource("2_8py41")

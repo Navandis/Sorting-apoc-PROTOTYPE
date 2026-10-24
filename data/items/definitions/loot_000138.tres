@@ -6,6 +6,9 @@
 [resource]
 script = ExtResource("1_roany")
 item_id = &"loot_000138"
+bulk = 2
+utility_value = 14
+utility_id = &"Morale"
 display_name = "Sake Bottle"
 storage_category = "Morale"
 can_be_stacked = true

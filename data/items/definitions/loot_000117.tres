@@ -6,6 +6,9 @@
 [resource]
 script = ExtResource("1_tlcb5")
 item_id = &"loot_000117"
+bulk = 5
+utility_value = 12
+utility_id = &"Electronics"
 display_name = "DVD Player"
 storage_category = "Electronics"
 storage_footprint = Vector3i(6, 4, 1)

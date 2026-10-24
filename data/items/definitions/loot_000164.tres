@@ -6,6 +6,9 @@
 [resource]
 script = ExtResource("1_nb74f")
 item_id = &"loot_000164"
+bulk = 3
+utility_value = 10
+utility_id = &"Fuel"
 display_name = "BBQ Charcoal Bag"
 storage_category = "Fuel"
 storage_footprint = Vector3i(3, 2, 1)

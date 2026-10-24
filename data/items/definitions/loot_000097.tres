@@ -6,6 +6,9 @@
 [resource]
 script = ExtResource("1_xqs0a")
 item_id = &"loot_000097"
+bulk = 5
+utility_value = 28
+utility_id = &"Weapons"
 display_name = "Assault Rifle"
 storage_category = "Weapons"
 storage_footprint = Vector3i(9, 3, 1)

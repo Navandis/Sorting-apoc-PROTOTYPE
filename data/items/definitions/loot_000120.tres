@@ -6,6 +6,9 @@
 [resource]
 script = ExtResource("1_cinvp")
 item_id = &"loot_000120"
+bulk = 9
+utility_value = 22
+utility_id = &"Electronics"
 display_name = "Guitar Amp"
 storage_category = "Electronics"
 storage_footprint = Vector3i(6, 4, 1)

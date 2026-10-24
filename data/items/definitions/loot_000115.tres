@@ -6,6 +6,9 @@
 [resource]
 script = ExtResource("1_k06an")
 item_id = &"loot_000115"
+bulk = 4
+utility_value = 16
+utility_id = &"Electronics"
 display_name = "Boombox Radio"
 storage_category = "Electronics"
 storage_footprint = Vector3i(5, 2, 1)

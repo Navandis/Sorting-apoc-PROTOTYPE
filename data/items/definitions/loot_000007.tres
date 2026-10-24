@@ -6,9 +6,10 @@
 [resource]
 script = ExtResource("1_jke63")
 item_id = &"loot_000007"
+bulk = 2
 display_name = "Cereal Box"
 utility_id = &"Food"
-utility_value = 5
+utility_value = 12
 storage_category = "Food"
 storage_footprint = Vector3i(2, 1, 1)
 can_be_stacked = true

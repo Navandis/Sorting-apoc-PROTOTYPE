@@ -6,6 +6,9 @@
 [resource]
 script = ExtResource("1_usql6")
 item_id = &"loot_000039"
+bulk = 2
+utility_value = 16
+utility_id = &"Weapons"
 display_name = "Pistol"
 storage_category = "Weapons"
 storage_footprint = Vector3i(3, 2, 1)

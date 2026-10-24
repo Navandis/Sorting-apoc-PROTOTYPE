@@ -6,6 +6,7 @@ var medical_request: RefCounted
 var restoring := false
 var _continue_state: Dictionary = {}
 var run_schedule: RefCounted
+var _initial_stock_error := ""
 
 
 func configure_new_run(definition: Dictionary = {}) -> void:
@@ -32,8 +33,13 @@ func _enter_tree() -> void:
 	if run_identity != null:
 		var setup := get_node_or_null("DevelopmentSetup")
 		if setup != null:
-			setup.restore_pending = restoring
+			var m4: bool = run_schedule != null and run_schedule.definition.get("revision") == 4
+			setup.restore_pending = restoring or m4
 			setup.get_node("SeedRegistrar").fixture_namespace = run_identity.run_id + ":wing_seed_v1"
+			# Keep the saved authoring palette intact in the scene/standalone review.
+			# M4 owns a complete replacement stock manifest, including on Continue.
+			if m4:
+				for host: Node in setup.get_node("SeedItems").get_children(): host.free()
 		var runtime := get_node("ReceivingRuntime")
 		runtime.restore_pending = restoring
 		runtime.run_identity = run_identity
@@ -46,6 +52,8 @@ func _enter_tree() -> void:
 
 
 func _ready() -> void:
+	if run_schedule != null and run_schedule.definition.get("revision") == 4 and not restoring:
+		_initial_stock_error = get_node("DevelopmentSetup").initialize_manifest(self, run_schedule.definition.initial_seed)
 	if run_schedule == null:
 		medical_request = load("res://gameplay/requests/contribution_request.gd").new("medical-prototype")
 	var interface: Node = load("res://gameplay/requests/medical_interface.gd").new()
@@ -86,6 +94,7 @@ func _remove_development_setup() -> void:
 		setup.queue_free()
 
 func get_initialization_error() -> String:
+	if not _initial_stock_error.is_empty(): return _initial_stock_error
 	if run_schedule != null and not run_schedule.error.is_empty(): return run_schedule.error
 	var setup := get_node_or_null("DevelopmentSetup")
 	if setup == null:

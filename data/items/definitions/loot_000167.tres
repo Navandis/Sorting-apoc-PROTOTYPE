@@ -6,6 +6,9 @@
 [resource]
 script = ExtResource("1_qnmul")
 item_id = &"loot_000167"
+bulk = 8
+utility_value = 32
+utility_id = &"Hydration"
 display_name = "Soda Bottle Crate"
 storage_category = "Hydration"
 storage_footprint = Vector3i(5, 5, 1)

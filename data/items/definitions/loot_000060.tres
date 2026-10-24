@@ -6,6 +6,9 @@
 [resource]
 script = ExtResource("1_6psg3")
 item_id = &"loot_000060"
+bulk = 5
+utility_value = 8
+utility_id = &"Food"
 display_name = "Medium Pickles Jar"
 storage_category = "Food"
 storage_footprint = Vector3i(3, 3, 1)

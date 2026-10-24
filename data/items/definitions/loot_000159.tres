@@ -6,6 +6,9 @@
 [resource]
 script = ExtResource("1_ipbbs")
 item_id = &"loot_000159"
+bulk = 10
+utility_value = 44
+utility_id = &"Protection"
 display_name = "Riot Shield"
 storage_category = "Protection"
 storage_footprint = Vector3i(12, 6, 1)

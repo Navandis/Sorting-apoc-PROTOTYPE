@@ -6,6 +6,9 @@
 [resource]
 script = ExtResource("1_f3i78")
 item_id = &"loot_000080"
+bulk = 12
+utility_value = 70
+utility_id = &"Hydration"
 display_name = "Large Water Jug"
 storage_category = "Hydration"
 storage_footprint = Vector3i(4, 5, 1)

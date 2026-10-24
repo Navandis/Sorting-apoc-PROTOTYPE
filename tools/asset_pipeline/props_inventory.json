@@ -17923,7 +17923,7 @@
 				"VISUAL_REVIEW_RECOMMENDED",
 				"IRREGULAR_REVIEW"
 			],
-			"review_status": "POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
+			"review_status": "SCALE_POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
 			"numerical_status": "Utility None/0 and Bulk 1 are temporary physical-onboarding placeholders; no capacity-derived values.",
 			"submesh_count": 1,
 			"human_review": {
@@ -17955,8 +17955,8 @@
 					1
 				],
 				"observed_source_fingerprint": "58fab1b615d49ccf649a5d33488373ab02c9a3786c5eac4ee1e003c1f6cca3a9",
-				"post_correction_physical_status": "POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
-				"notes": "2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied. Separate scale and Auto Stack Group acceptance remain UNREVIEWED; scale/group values above are observed saved data only."
+				"post_correction_physical_status": "SCALE_POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
+				"notes": "2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied. Separate scale and Auto Stack Group acceptance remain UNREVIEWED; scale/group values above are observed saved data only.\n2026-10-24 M4 locked handoff explicitly approves saved scale; no physical values changed. Auto Stack Group approval remains pending."
 			}
 		},
 		{
@@ -18132,7 +18132,7 @@
 				"MULTI_MESH",
 				"IRREGULAR_REVIEW"
 			],
-			"review_status": "POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
+			"review_status": "SCALE_POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
 			"numerical_status": "Utility None/0 and Bulk 1 are temporary physical-onboarding placeholders; no capacity-derived values.",
 			"submesh_count": 3,
 			"human_review": {
@@ -18164,8 +18164,8 @@
 					1
 				],
 				"observed_source_fingerprint": "b76ec27dda948743f02522aaa844cc1e067ae4cfaae994d4d17eb857ab639a53",
-				"post_correction_physical_status": "POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
-				"notes": "2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied. Separate scale and Auto Stack Group acceptance remain UNREVIEWED; scale/group values above are observed saved data only."
+				"post_correction_physical_status": "SCALE_POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
+				"notes": "2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied. Separate scale and Auto Stack Group acceptance remain UNREVIEWED; scale/group values above are observed saved data only.\n2026-10-24 M4 locked handoff explicitly approves saved scale; no physical values changed. Auto Stack Group approval remains pending."
 			}
 		},
 		{
@@ -18302,7 +18302,7 @@
 				"VISUAL_REVIEW_RECOMMENDED",
 				"MULTI_MESH"
 			],
-			"review_status": "POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
+			"review_status": "SCALE_POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
 			"numerical_status": "Utility None/0 and Bulk 1 are temporary physical-onboarding placeholders; no capacity-derived values.",
 			"submesh_count": 2,
 			"human_review": {
@@ -18334,8 +18334,8 @@
 					1
 				],
 				"observed_source_fingerprint": "dca42c74e048a2a8733f30df9da256ce7ed37807867bcc4384a42bfe1d4df3d9",
-				"post_correction_physical_status": "POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
-				"notes": "2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied. Separate scale and Auto Stack Group acceptance remain UNREVIEWED; scale/group values above are observed saved data only."
+				"post_correction_physical_status": "SCALE_POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
+				"notes": "2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied. Separate scale and Auto Stack Group acceptance remain UNREVIEWED; scale/group values above are observed saved data only.\n2026-10-24 M4 locked handoff explicitly approves saved scale; no physical values changed. Auto Stack Group approval remains pending."
 			}
 		},
 		{
@@ -18447,7 +18447,7 @@
 			"flags": [
 				"VISUAL_REVIEW_RECOMMENDED"
 			],
-			"review_status": "POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
+			"review_status": "SCALE_POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
 			"numerical_status": "Utility None/0 and Bulk 1 are temporary physical-onboarding placeholders; no capacity-derived values.",
 			"submesh_count": 1,
 			"human_review": {
@@ -18479,8 +18479,8 @@
 					1
 				],
 				"observed_source_fingerprint": "2b243806adc522bacaaf3c600a0a4969451db924ec592590d348a0b692d4dd6c",
-				"post_correction_physical_status": "POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
-				"notes": "2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied. Separate scale and Auto Stack Group acceptance remain UNREVIEWED; scale/group values above are observed saved data only."
+				"post_correction_physical_status": "SCALE_POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
+				"notes": "2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied. Separate scale and Auto Stack Group acceptance remain UNREVIEWED; scale/group values above are observed saved data only.\n2026-10-24 M4 locked handoff explicitly approves saved scale; no physical values changed. Auto Stack Group approval remains pending."
 			}
 		},
 		{
@@ -18614,7 +18614,7 @@
 			"flags": [
 				"VISUAL_REVIEW_RECOMMENDED"
 			],
-			"review_status": "POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
+			"review_status": "SCALE_POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
 			"numerical_status": "Utility None/0 and Bulk 1 are temporary physical-onboarding placeholders; no capacity-derived values.",
 			"submesh_count": 3,
 			"human_review": {
@@ -18646,8 +18646,8 @@
 					1
 				],
 				"observed_source_fingerprint": "4fcccfe89c7a7ee691c609413e1da3138b69f23ac608497d4fc53915db02b689",
-				"post_correction_physical_status": "POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
-				"notes": "2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied. Separate scale and Auto Stack Group acceptance remain UNREVIEWED; scale/group values above are observed saved data only."
+				"post_correction_physical_status": "SCALE_POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
+				"notes": "2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied. Separate scale and Auto Stack Group acceptance remain UNREVIEWED; scale/group values above are observed saved data only.\n2026-10-24 M4 locked handoff explicitly approves saved scale; no physical values changed. Auto Stack Group approval remains pending."
 			}
 		},
 		{
@@ -18900,7 +18900,7 @@
 				"VISUAL_REVIEW_RECOMMENDED",
 				"MULTI_MESH"
 			],
-			"review_status": "POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
+			"review_status": "SCALE_POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
 			"numerical_status": "Utility None/0 and Bulk 1 are temporary physical-onboarding placeholders; no capacity-derived values.",
 			"submesh_count": 5,
 			"human_review": {
@@ -18932,8 +18932,8 @@
 					1
 				],
 				"observed_source_fingerprint": "df04f6622dafdb82ee645a6b6cb552749acd013d1e57fc82205a7c2edb51d7a9",
-				"post_correction_physical_status": "POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
-				"notes": "2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied. Separate scale and Auto Stack Group acceptance remain UNREVIEWED; scale/group values above are observed saved data only."
+				"post_correction_physical_status": "SCALE_POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
+				"notes": "2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied. Separate scale and Auto Stack Group acceptance remain UNREVIEWED; scale/group values above are observed saved data only.\n2026-10-24 M4 locked handoff explicitly approves saved scale; no physical values changed. Auto Stack Group approval remains pending."
 			}
 		},
 		{
@@ -19070,7 +19070,7 @@
 				"VISUAL_REVIEW_RECOMMENDED",
 				"MULTI_MESH"
 			],
-			"review_status": "POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
+			"review_status": "SCALE_POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
 			"numerical_status": "Utility None/0 and Bulk 1 are temporary physical-onboarding placeholders; no capacity-derived values.",
 			"submesh_count": 2,
 			"human_review": {
@@ -19102,8 +19102,8 @@
 					1
 				],
 				"observed_source_fingerprint": "7f2508809d1d6f5e90f0d0218db2b4fec6191760499c6c85bc1f62ef08baf86e",
-				"post_correction_physical_status": "POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
-				"notes": "2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied. Separate scale and Auto Stack Group acceptance remain UNREVIEWED; scale/group values above are observed saved data only."
+				"post_correction_physical_status": "SCALE_POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
+				"notes": "2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied. Separate scale and Auto Stack Group acceptance remain UNREVIEWED; scale/group values above are observed saved data only.\n2026-10-24 M4 locked handoff explicitly approves saved scale; no physical values changed. Auto Stack Group approval remains pending."
 			}
 		},
 		{
@@ -19215,7 +19215,7 @@
 			"flags": [
 				"VISUAL_REVIEW_RECOMMENDED"
 			],
-			"review_status": "POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
+			"review_status": "SCALE_POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
 			"numerical_status": "Utility None/0 and Bulk 1 are temporary physical-onboarding placeholders; no capacity-derived values.",
 			"submesh_count": 1,
 			"human_review": {
@@ -19247,8 +19247,8 @@
 					1
 				],
 				"observed_source_fingerprint": "41a4d714ed83a2ff0504798971895fba243672b1e81367d20000b3d5a0da925a",
-				"post_correction_physical_status": "POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
-				"notes": "2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied. Separate scale and Auto Stack Group acceptance remain UNREVIEWED; scale/group values above are observed saved data only."
+				"post_correction_physical_status": "SCALE_POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
+				"notes": "2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied. Separate scale and Auto Stack Group acceptance remain UNREVIEWED; scale/group values above are observed saved data only.\n2026-10-24 M4 locked handoff explicitly approves saved scale; no physical values changed. Auto Stack Group approval remains pending."
 			}
 		},
 		{
@@ -19412,7 +19412,7 @@
 				"MULTI_MESH",
 				"IRREGULAR_REVIEW"
 			],
-			"review_status": "POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
+			"review_status": "SCALE_POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
 			"numerical_status": "Utility None/0 and Bulk 1 are temporary physical-onboarding placeholders; no capacity-derived values.",
 			"submesh_count": 4,
 			"human_review": {
@@ -19444,8 +19444,8 @@
 					1
 				],
 				"observed_source_fingerprint": "fe943460ed4de7b0978afdfd3b7d7c016b2025eb90442de1dbcd9556521d63bd",
-				"post_correction_physical_status": "POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
-				"notes": "2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied. Separate scale and Auto Stack Group acceptance remain UNREVIEWED; scale/group values above are observed saved data only."
+				"post_correction_physical_status": "SCALE_POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
+				"notes": "2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied. Separate scale and Auto Stack Group acceptance remain UNREVIEWED; scale/group values above are observed saved data only.\n2026-10-24 M4 locked handoff explicitly approves saved scale; no physical values changed. Auto Stack Group approval remains pending."
 			}
 		},
 		{
@@ -19587,7 +19587,7 @@
 				"MULTI_MESH",
 				"IRREGULAR_REVIEW"
 			],
-			"review_status": "POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
+			"review_status": "SCALE_POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
 			"numerical_status": "Utility None/0 and Bulk 1 are temporary physical-onboarding placeholders; no capacity-derived values.",
 			"submesh_count": 3,
 			"human_review": {
@@ -19619,8 +19619,8 @@
 					1
 				],
 				"observed_source_fingerprint": "3ce9f949a9f8ea558dcb91b68a69f9984b66228f652dc5459e6f577e3c975b59",
-				"post_correction_physical_status": "POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
-				"notes": "2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied. Separate scale and Auto Stack Group acceptance remain UNREVIEWED; scale/group values above are observed saved data only."
+				"post_correction_physical_status": "SCALE_POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
+				"notes": "2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied. Separate scale and Auto Stack Group acceptance remain UNREVIEWED; scale/group values above are observed saved data only.\n2026-10-24 M4 locked handoff explicitly approves saved scale; no physical values changed. Auto Stack Group approval remains pending."
 			}
 		},
 		{
@@ -19762,7 +19762,7 @@
 				"MULTI_MESH",
 				"IRREGULAR_REVIEW"
 			],
-			"review_status": "POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
+			"review_status": "SCALE_POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
 			"numerical_status": "Utility None/0 and Bulk 1 are temporary physical-onboarding placeholders; no capacity-derived values.",
 			"submesh_count": 2,
 			"human_review": {
@@ -19794,8 +19794,8 @@
 					1
 				],
 				"observed_source_fingerprint": "aa3f6c6eede41fed5be7720d37c4391fcce88039e8c94d0f467b35c56a4516cb",
-				"post_correction_physical_status": "POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
-				"notes": "2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied. Separate scale and Auto Stack Group acceptance remain UNREVIEWED; scale/group values above are observed saved data only."
+				"post_correction_physical_status": "SCALE_POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
+				"notes": "2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied. Separate scale and Auto Stack Group acceptance remain UNREVIEWED; scale/group values above are observed saved data only.\n2026-10-24 M4 locked handoff explicitly approves saved scale; no physical values changed. Auto Stack Group approval remains pending."
 			}
 		},
 		{
@@ -19892,7 +19892,7 @@
 			"flags": [
 				"VISUAL_REVIEW_RECOMMENDED"
 			],
-			"review_status": "POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
+			"review_status": "SCALE_POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
 			"numerical_status": "Utility None/0 and Bulk 1 are temporary physical-onboarding placeholders; no capacity-derived values.",
 			"submesh_count": 1,
 			"human_review": {
@@ -19924,10 +19924,10 @@
 					1
 				],
 				"observed_source_fingerprint": "2d3ecd989bf6af4679d24e9b0f650349ae9e51217971f4ce602f3cea0e90f640",
-				"post_correction_physical_status": "POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
-				"notes": "2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied. Separate scale and Auto Stack Group acceptance remain UNREVIEWED; scale/group values above are observed saved data only."
+				"post_correction_physical_status": "SCALE_POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
+				"notes": "2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied. Separate scale and Auto Stack Group acceptance remain UNREVIEWED; scale/group values above are observed saved data only.\n2026-10-24 M4 locked handoff explicitly approves saved scale; no physical values changed. Auto Stack Group approval remains pending."
 			}
 		}
 	],
-	"topup_status": "2026-10-24: human .tres checkpoint a669c0d5c218696d9f977a505551063e0160b69f; twelve pose/+Z Front, Footprint and stacking reviews reconciled. Current stage counts scale 155, pose 167, Footprint 167, stack role 167, Auto Group 155; twelve separate scale/group decisions remain UNREVIEWED. Original 155 full physical approvals and seven retirements retained; 081/110 naming-only corrections. NOT PUBLISHED."
+	"topup_status": "2026-10-24: human .tres checkpoint a669c0d5c218696d9f977a505551063e0160b69f; twelve pose/+Z Front, Footprint and stacking reviews reconciled. Current stage counts scale 155, pose 167, Footprint 167, stack role 167, Auto Group 155; twelve separate scale/group decisions remain UNREVIEWED. Original 155 full physical approvals and seven retirements retained; 081/110 naming-only corrections. NOT PUBLISHED.\n2026-10-24 M4 handoff: all twelve saved scales explicitly approved; scale/pose/Footprint/roles current for 167; Auto Stack Group remains current for 155, pending for twelve. Saved None behavior unchanged. NOT PUBLISHED."
 }

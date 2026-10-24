@@ -6,9 +6,10 @@
 [resource]
 script = ExtResource("1_ycdss")
 item_id = &"loot_000010"
+bulk = 1
 display_name = "Chicken Stock"
 utility_id = &"Food"
-utility_value = 3
+utility_value = 2
 storage_category = "Food"
 can_be_stacked = true
 can_support_stack = true

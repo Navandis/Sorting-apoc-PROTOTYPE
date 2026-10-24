@@ -6,6 +6,9 @@
 [resource]
 script = ExtResource("1_vclmc")
 item_id = &"loot_000081"
+bulk = 10
+utility_value = 54
+utility_id = &"Hydration"
 display_name = "Watercooler Bottle"
 storage_category = "Hydration"
 storage_footprint = Vector3i(3, 3, 1)

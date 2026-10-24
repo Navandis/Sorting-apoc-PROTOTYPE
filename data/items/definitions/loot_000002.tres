@@ -6,6 +6,9 @@
 [resource]
 script = ExtResource("1_4unj2")
 item_id = &"loot_000002"
+bulk = 8
+utility_value = 28
+utility_id = &"Electronics"
 display_name = "PC Tower"
 storage_category = "Electronics"
 storage_footprint = Vector3i(3, 5, 1)

@@ -6,6 +6,9 @@
 [resource]
 script = ExtResource("1_4bvg5")
 item_id = &"loot_000131"
+bulk = 2
+utility_value = 24
+utility_id = &"Morale"
 display_name = "VR Headset"
 storage_category = "Morale"
 storage_footprint = Vector3i(3, 4, 1)

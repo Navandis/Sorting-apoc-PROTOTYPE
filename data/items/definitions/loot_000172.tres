@@ -6,6 +6,9 @@
 [resource]
 script = ExtResource("1_8xbon")
 item_id = &"loot_000172"
+bulk = 1
+utility_value = 1
+utility_id = &"Protection"
 display_name = "Fedora Hat"
 storage_category = "Protection"
 storage_footprint = Vector3i(4, 4, 1)

@@ -74,6 +74,13 @@ static func build_visual(
 		}
 
 	var posed_bounds: AABB = state["bounds"] as AABB
+	# A rotated mesh's enclosing box can contain empty space below every vertex.
+	# Seat actual geometry vertically while retaining the accepted conservative
+	# horizontal bounds/centering, authored pose, scale and reservation.
+	if state.has("mesh_min_y"):
+		var conservative_top := posed_bounds.end.y
+		posed_bounds.position.y = float(state.mesh_min_y)
+		posed_bounds.size.y = conservative_top - posed_bounds.position.y
 	var posed_center: Vector3 = posed_bounds.position + posed_bounds.size * 0.5
 	var seating_offset: Vector3 = Vector3(
 		-posed_center.x,
@@ -115,6 +122,11 @@ static func _scan_bounds_recursive(
 	if node is MeshInstance3D:
 		var mesh_instance: MeshInstance3D = node as MeshInstance3D
 		if mesh_instance.mesh != null:
+			for surface: int in mesh_instance.mesh.get_surface_count():
+				var arrays := mesh_instance.mesh.surface_get_arrays(surface)
+				for vertex: Vector3 in arrays[Mesh.ARRAY_VERTEX]:
+					var y := (next_transform * vertex).y
+					state["mesh_min_y"] = minf(float(state.get("mesh_min_y", INF)), y)
 			var transformed_bounds: AABB = _transform_bounds(
 				mesh_instance.mesh.get_aabb(),
 				next_transform

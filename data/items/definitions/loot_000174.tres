@@ -6,6 +6,9 @@
 [resource]
 script = ExtResource("1_o38n7")
 item_id = &"loot_000174"
+bulk = 3
+utility_value = 6
+utility_id = &"Protection"
 display_name = "Rubber Wellies"
 storage_category = "Protection"
 storage_footprint = Vector3i(4, 4, 1)

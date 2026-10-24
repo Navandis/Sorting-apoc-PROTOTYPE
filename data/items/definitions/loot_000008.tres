@@ -6,6 +6,7 @@
 [resource]
 script = ExtResource("1_ewrh4")
 item_id = &"loot_000008"
+bulk = 1
 display_name = "Canned Potatoes"
 utility_id = &"Food"
 utility_value = 3

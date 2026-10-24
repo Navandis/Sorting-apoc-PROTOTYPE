@@ -1,0 +1,168 @@
+﻿item_id,display_name,storage_category,utility_lane,bulk,utility,destinations,authoring_status
+loot_000001,Computer Mouse,Electronics,Electronics,1,1,,APPROVED_M4_BASELINE
+loot_000002,PC Tower,Electronics,Electronics,8,28,,APPROVED_M4_BASELINE
+loot_000003,Electronic Device,Electronics,Electronics,5,12,,APPROVED_M4_BASELINE
+loot_000004,Old Phone,Electronics,Electronics,3,6,,APPROVED_M4_BASELINE
+loot_000006,Bread Loaf,Food,Food,2,10,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000007,Cereal Box,Food,Food,2,12,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000008,Canned Potatoes,Food,Food,1,3,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000009,Canned Salmon,Food,Food,1,5,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000010,Chicken Stock,Food,Food,1,2,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000011,Roast Piglet,Food,Food,12,66,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000012,Watermelon,Food,Food,6,10,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000013,Firewood Piece,Fuel,Fuel,2,4,,APPROVED_M4_BASELINE
+loot_000014,Firewood Pile,Fuel,Fuel,8,18,,APPROVED_M4_BASELINE
+loot_000015,Jerry Can,Fuel,Fuel,6,34,,APPROVED_M4_BASELINE
+loot_000016,Gas Canister,Fuel,Fuel,6,30,,APPROVED_M4_BASELINE
+loot_000017,Methane Cylinder,Fuel,Fuel,8,40,,APPROVED_M4_BASELINE
+loot_000018,Propane Cylinder,Fuel,Fuel,7,36,,APPROVED_M4_BASELINE
+loot_000019,Cola Can,Hydration,Hydration,1,3,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000020,Milk Carton,Hydration,Hydration,2,6,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000021,OJ Carton,Hydration,Hydration,2,6,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000022,Soda Can,Hydration,Hydration,1,3,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000025,Antibiotics,Medical,Medical,1,8,medical_bay; dispatch,APPROVED_M4_BASELINE
+loot_000026,Bandages,Medical,Medical,1,4,medical_bay; dispatch,APPROVED_M4_BASELINE
+loot_000027,Cough Syrup,Medical,Medical,1,3,medical_bay; dispatch,APPROVED_M4_BASELINE
+loot_000028,Med Kit,Medical,Medical,4,24,medical_bay; dispatch,APPROVED_M4_BASELINE
+loot_000029,Soccer Ball,Morale,Morale,2,5,,APPROVED_M4_BASELINE
+loot_000030,Book 01,Morale,Morale,1,8,,APPROVED_M4_BASELINE
+loot_000031,CDs Stack,Morale,Morale,2,12,,APPROVED_M4_BASELINE
+loot_000032,Police Vest,Protection,Protection,5,22,dispatch,APPROVED_M4_BASELINE
+loot_000033,Work Boots,Protection,Protection,2,7,dispatch,APPROVED_M4_BASELINE
+loot_000035,Hard Hat,Protection,Protection,2,8,dispatch,APPROVED_M4_BASELINE
+loot_000038,AR-15 Rifle,Weapons,Weapons,5,26,dispatch,APPROVED_M4_BASELINE
+loot_000039,Pistol,Weapons,Weapons,2,16,dispatch,APPROVED_M4_BASELINE
+loot_000040,Pump Shotgun,Weapons,Weapons,5,22,dispatch,APPROVED_M4_BASELINE
+loot_000041,Hammer 3,Weapons,Weapons,1,4,dispatch,APPROVED_M4_BASELINE
+loot_000043,Canned Corn,Food,Food,1,3,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000044,Canned Potatoes,Food,Food,1,4,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000045,Smoked Sausage,Food,Food,2,14,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000046,Corn Sack,Food,Food,12,58,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000047,Lettuce Head,Food,Food,5,1,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000048,Zucchini Crate,Food,Food,8,18,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000049,Almonds Sack,Food,Food,12,74,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000050,Ketchup Bottle,Food,Food,2,4,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000051,Raw Fish Medium,Food,Food,5,20,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000052,Lemons Crate,Food,Food,8,16,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000053,Apples Crate,Food,Food,9,28,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000054,Bananas Crate,Food,Food,9,36,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000055,Eggplants Crate,Food,Food,8,20,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000056,Potatoes Crate,Food,Food,10,44,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000057,Raw Fish Small,Food,Food,3,12,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000058,Smoked Fish Medium,Food,Food,5,24,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000059,Meat Pie,Food,Food,3,18,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000060,Medium Pickles Jar,Food,Food,5,8,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000061,Mystery Meat Medium,Food,Food,7,36,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000062,Mystery Meat Small,Food,Food,4,16,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000063,Pasta Jar Large,Food,Food,4,22,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000064,Pasta Jar Medium,Food,Food,3,16,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000065,Pasta Jar Small,Food,Food,2,10,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000066,Pumpkin Large,Food,Food,6,12,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000067,Soft Pretzels,Food,Food,2,10,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000068,Propane Tank,Fuel,Fuel,12,64,,APPROVED_M4_BASELINE
+loot_000069,Methane Cylinder,Fuel,Fuel,10,52,,APPROVED_M4_BASELINE
+loot_000070,NOS Tank,Fuel,Fuel,8,22,,APPROVED_M4_BASELINE
+loot_000071,Oxygen Tank,Fuel,Fuel,7,12,,APPROVED_M4_BASELINE
+loot_000072,Energy Drink,Hydration,Hydration,2,9,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000073,Cola Bottle,Hydration,Hydration,2,7,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000074,Pineapple Soda Can,Hydration,Hydration,1,3,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000075,Apple Juice,Hydration,Hydration,2,8,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000076,Skim Milk,Hydration,Hydration,2,7,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000077,Green Tea Can,Hydration,Hydration,1,3,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000078,Water Bottle,Hydration,Hydration,2,10,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000079,Water Bottle,Hydration,Hydration,2,10,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000080,Large Water Jug,Hydration,Hydration,12,70,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000081,Watercooler Bottle,Hydration,Hydration,10,54,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000082,Baseball Bat,Weapons,Weapons,3,8,dispatch,APPROVED_M4_BASELINE
+loot_000083,Brass Knuckles,Weapons,Weapons,1,6,dispatch,APPROVED_M4_BASELINE
+loot_000084,Cleaver,Weapons,Weapons,2,10,dispatch,APPROVED_M4_BASELINE
+loot_000085,Toilet Plunger,Weapons,Weapons,1,1,dispatch,APPROVED_M4_BASELINE
+loot_000086,Bear Trap,Weapons,Weapons,8,12,dispatch,APPROVED_M4_BASELINE
+loot_000087,Chainsaw,Weapons,Weapons,9,16,dispatch,APPROVED_M4_BASELINE
+loot_000088,Double Barreled Shotgun,Weapons,Weapons,5,18,dispatch,APPROVED_M4_BASELINE
+loot_000089,Machete,Weapons,Weapons,2,14,dispatch,APPROVED_M4_BASELINE
+loot_000090,Sledgehammer,Weapons,Weapons,7,12,dispatch,APPROVED_M4_BASELINE
+loot_000091,Tennis Racket,Weapons,Weapons,5,1,dispatch,APPROVED_M4_BASELINE
+loot_000092,Land Mine,Weapons,Weapons,5,30,dispatch,APPROVED_M4_BASELINE
+loot_000093,Hockey Stick,Weapons,Weapons,4,3,dispatch,APPROVED_M4_BASELINE
+loot_000094,Bullet Box,Weapons,Weapons,1,5,dispatch,APPROVED_M4_BASELINE
+loot_000095,Bullet Box,Weapons,Weapons,1,6,dispatch,APPROVED_M4_BASELINE
+loot_000096,Claw Hammer,Weapons,Weapons,1,4,dispatch,APPROVED_M4_BASELINE
+loot_000097,Assault Rifle,Weapons,Weapons,5,28,dispatch,APPROVED_M4_BASELINE
+loot_000098,Shotgun single,Weapons,Weapons,4,16,dispatch,APPROVED_M4_BASELINE
+loot_000099,Hunting Rifle,Weapons,Weapons,5,26,dispatch,APPROVED_M4_BASELINE
+loot_000100,Skateboard,Weapons,Weapons,6,3,dispatch,APPROVED_M4_BASELINE
+loot_000101,Frag Grenade,Weapons,Weapons,2,36,dispatch,APPROVED_M4_BASELINE
+loot_000102,Military Ammo Box,Weapons,Weapons,5,12,dispatch,APPROVED_M4_BASELINE
+loot_000103,Military Sniper Rifle,Weapons,Weapons,6,40,dispatch,APPROVED_M4_BASELINE
+loot_000104,Molotov Cocktail,Weapons,Weapons,2,28,dispatch,APPROVED_M4_BASELINE
+loot_000105,Kitchen Knife,Weapons,Weapons,1,7,dispatch,APPROVED_M4_BASELINE
+loot_000106,Large Shovel,Weapons,Weapons,7,10,dispatch,APPROVED_M4_BASELINE
+loot_000107,Nailed Bat,Weapons,Weapons,4,12,dispatch,APPROVED_M4_BASELINE
+loot_000108,Pickaxe,Weapons,Weapons,8,11,dispatch,APPROVED_M4_BASELINE
+loot_000109,Pitchfork,Weapons,Weapons,6,10,dispatch,APPROVED_M4_BASELINE
+loot_000110,Revolver,Weapons,Weapons,2,14,dispatch,APPROVED_M4_BASELINE
+loot_000111,Short Axe,Weapons,Weapons,3,12,dispatch,APPROVED_M4_BASELINE
+loot_000112,Wood Axe,Weapons,Weapons,4,14,dispatch,APPROVED_M4_BASELINE
+loot_000113,Combat Knife,Weapons,Weapons,2,12,dispatch,APPROVED_M4_BASELINE
+loot_000114,Crowbar,Weapons,Weapons,4,11,dispatch,APPROVED_M4_BASELINE
+loot_000115,Boombox Radio,Electronics,Electronics,4,16,,APPROVED_M4_BASELINE
+loot_000116,Computer Card,Electronics,Electronics,1,14,,APPROVED_M4_BASELINE
+loot_000117,DVD Player,Electronics,Electronics,5,12,,APPROVED_M4_BASELINE
+loot_000118,VHS Player,Electronics,Electronics,4,10,,APPROVED_M4_BASELINE
+loot_000119,Microwave Oven,Electronics,Electronics,10,16,,APPROVED_M4_BASELINE
+loot_000120,Guitar Amp,Electronics,Electronics,9,22,,APPROVED_M4_BASELINE
+loot_000121,Guitar Pedal,Electronics,Electronics,1,6,,APPROVED_M4_BASELINE
+loot_000122,Old Laptop,Electronics,Electronics,3,24,,APPROVED_M4_BASELINE
+loot_000123,Turntables,Electronics,Electronics,10,26,,APPROVED_M4_BASELINE
+loot_000124,Painkillers,Medical,Medical,1,6,medical_bay; dispatch,APPROVED_M4_BASELINE
+loot_000125,Trauma Bag,Medical,Medical,7,36,medical_bay; dispatch,APPROVED_M4_BASELINE
+loot_000126,Military Med Crate,Medical,Medical,12,60,medical_bay; dispatch,APPROVED_M4_BASELINE
+loot_000127,Saline Solution,Medical,Medical,2,7,medical_bay; dispatch,APPROVED_M4_BASELINE
+loot_000128,Books Stack,Morale,Morale,3,22,,APPROVED_M4_BASELINE
+loot_000129,Coffee Tin,Morale,Morale,2,18,,APPROVED_M4_BASELINE
+loot_000130,Dartboard,Morale,Morale,3,12,,APPROVED_M4_BASELINE
+loot_000131,VR Headset,Morale,Morale,2,24,,APPROVED_M4_BASELINE
+loot_000132,Beer Keg,Morale,Morale,12,56,,APPROVED_M4_BASELINE
+loot_000133,Teddy Bear,Morale,Morale,1,6,,APPROVED_M4_BASELINE
+loot_000134,Coffee Sack,Morale,Morale,10,72,,APPROVED_M4_BASELINE
+loot_000135,VHS #1,Morale,Morale,1,4,,APPROVED_M4_BASELINE
+loot_000136,Basketball,Morale,Morale,4,5,,APPROVED_M4_BASELINE
+loot_000137,Football,Morale,Morale,3,6,,APPROVED_M4_BASELINE
+loot_000138,Sake Bottle,Morale,Morale,2,14,,APPROVED_M4_BASELINE
+loot_000139,Acoustic Guitar,Morale,Morale,8,40,,APPROVED_M4_BASELINE
+loot_000140,Electric Guitar,Morale,Morale,7,38,,APPROVED_M4_BASELINE
+loot_000141,Cigarettes Pack,Morale,Morale,1,12,,APPROVED_M4_BASELINE
+loot_000142,Whiskey Bottle,Morale,Morale,2,32,,APPROVED_M4_BASELINE
+loot_000143,Balaclava,Protection,Protection,1,2,dispatch,APPROVED_M4_BASELINE
+loot_000144,Baseball Cap,Protection,Protection,1,1,dispatch,APPROVED_M4_BASELINE
+loot_000145,Hard Hat,Protection,Protection,2,8,dispatch,APPROVED_M4_BASELINE
+loot_000146,Hunting Vest,Protection,Protection,5,14,dispatch,APPROVED_M4_BASELINE
+loot_000147,Gas Mask,Protection,Protection,2,12,dispatch,APPROVED_M4_BASELINE
+loot_000148,Gas Mask,Protection,Protection,2,12,dispatch,APPROVED_M4_BASELINE
+loot_000149,Welding Mask,Protection,Protection,3,12,dispatch,APPROVED_M4_BASELINE
+loot_000150,Bike Helmet,Protection,Protection,2,4,dispatch,APPROVED_M4_BASELINE
+loot_000151,Bike Helmet,Protection,Protection,2,4,dispatch,APPROVED_M4_BASELINE
+loot_000152,Folded Shirt,Protection,Protection,1,2,dispatch,APPROVED_M4_BASELINE
+loot_000153,Folded Shirt,Protection,Protection,1,2,dispatch,APPROVED_M4_BASELINE
+loot_000154,Folded Shirts Bundle,Protection,Protection,3,8,dispatch,APPROVED_M4_BASELINE
+loot_000155,Folded Shirts Bundle,Protection,Protection,3,8,dispatch,APPROVED_M4_BASELINE
+loot_000156,Hiking Boots,Protection,Protection,3,9,dispatch,APPROVED_M4_BASELINE
+loot_000157,Leather Jacket,Protection,Protection,4,14,dispatch,APPROVED_M4_BASELINE
+loot_000158,Military Vest,Protection,Protection,6,30,dispatch,APPROVED_M4_BASELINE
+loot_000159,Riot Shield,Protection,Protection,10,44,dispatch,APPROVED_M4_BASELINE
+loot_000160,Sneakers,Protection,Protection,2,3,dispatch,APPROVED_M4_BASELINE
+loot_000161,Sweater,Protection,Protection,2,4,dispatch,APPROVED_M4_BASELINE
+loot_000162,Tactical Helmet,Protection,Protection,3,24,dispatch,APPROVED_M4_BASELINE
+loot_000163,Mystery Meat Large,Food,Food,14,72,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000164,BBQ Charcoal Bag,Fuel,Fuel,3,10,,APPROVED_M4_BASELINE
+loot_000165,Lighter Fluid Can,Fuel,Fuel,1,3,,APPROVED_M4_BASELINE
+loot_000166,Water Bottle (6 L),Hydration,Hydration,5,24,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000167,Soda Bottle Crate,Hydration,Hydration,8,32,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000168,Juice Bag-in-Box,Hydration,Hydration,6,30,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000169,Orange Juice Jug,Hydration,Hydration,4,18,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000170,Water Bottle Six-Pack,Hydration,Hydration,8,42,kitchen; dispatch,APPROVED_M4_BASELINE
+loot_000171,Cosplay Helmet,Protection,Protection,2,2,dispatch,APPROVED_M4_BASELINE
+loot_000172,Fedora Hat,Protection,Protection,1,1,dispatch,APPROVED_M4_BASELINE
+loot_000173,Leather Gloves,Protection,Protection,1,4,dispatch,APPROVED_M4_BASELINE
+loot_000174,Rubber Wellies,Protection,Protection,3,6,dispatch,APPROVED_M4_BASELINE

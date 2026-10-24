@@ -6,6 +6,9 @@
 [resource]
 script = ExtResource("1_d647g")
 item_id = &"loot_000130"
+bulk = 3
+utility_value = 12
+utility_id = &"Morale"
 display_name = "Dartboard"
 storage_category = "Morale"
 storage_footprint = Vector3i(4, 2, 1)

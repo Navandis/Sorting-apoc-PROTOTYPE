@@ -6,6 +6,9 @@
 [resource]
 script = ExtResource("1_a365a")
 item_id = &"loot_000048"
+bulk = 8
+utility_value = 18
+utility_id = &"Food"
 display_name = "Zucchini Crate"
 storage_category = "Food"
 storage_footprint = Vector3i(5, 4, 1)

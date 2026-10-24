@@ -6,6 +6,9 @@
 [resource]
 script = ExtResource("1_4hak8")
 item_id = &"loot_000125"
+bulk = 7
+utility_value = 36
+utility_id = &"Medical"
 display_name = "Trauma Bag"
 storage_category = "Medical"
 storage_footprint = Vector3i(7, 5, 1)

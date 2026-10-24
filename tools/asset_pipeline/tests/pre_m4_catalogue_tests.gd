@@ -42,21 +42,23 @@ func _init() -> void:
 			var evidence: Dictionary=review.review_evidence(manifest.assets[record.item_id],asset,registry)
 			for field: String in current_counts:
 				if evidence[field]: current_counts[field]+=1
-				var confirmed: bool=record.disposition!="topup" or field in ["storage_pose_review_current","footprint_review_current","stack_role_review_current"]
+				var confirmed: bool=record.disposition!="topup" or field in ["scale_review_current","storage_pose_review_current","footprint_review_current","stack_role_review_current"]
 				check(evidence[field]==confirmed,"Exact confirmed human review scope: "+record.item_id+" "+field)
 		if record.disposition in ["new", "topup"]:
-			check(definition.utility_id==&"None" and definition.utility_value==0 and definition.bulk==1,"Temporary numerical placeholders only")
+			var baseline: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/scenarios/m4/Sorting_Apocalypse_M4_Locked_Baseline_24Oct2026.json"))
+			var row: Dictionary = baseline.approved_items.filter(func(r): return r.item_id == record.item_id)[0]
+			check(String(definition.utility_id) == row.utility_lane and definition.utility_value == int(row.utility) and definition.bulk == int(row.bulk),"Approved M4 numbers replace onboarding placeholders")
 			for field: String in ["scale_review","storage_pose_review","footprint_review","stack_role_review","auto_group_review"]:
 				var status: String = manifest.assets[record.item_id][field].status
 				if record.disposition=="topup":
-					var confirmed: bool=field in ["storage_pose_review","footprint_review","stack_role_review"]
-					check((status!="UNREVIEWED")==confirmed,"Top-up approval does not infer scale/group acceptance: "+record.item_id+" "+field)
+					var confirmed: bool=field in ["scale_review","storage_pose_review","footprint_review","stack_role_review"]
+					check((status!="UNREVIEWED")==confirmed,"Top-up group approval remains explicitly pending: "+record.item_id+" "+field)
 				elif record.has("human_review") and record.review_status == "HUMAN_REVIEWED_2026_10_21":
 					check(status in ["APPROVED", "DEFAULT_POSE_APPROVED", "CUSTOM_POSE_APPROVED", "GEOMETRY_APPROVED", "OVERRIDE_APPROVED"], "Explicit human decision reconciled: " + record.item_id + " " + field)
 				else:
 					check(status=="UNREVIEWED","Pending physical review is not approval: "+record.item_id+" "+field)
 	check(counts=={"retained":35,"new":120,"topup":12,"retired":7},"Exact dispositions; original 120 remain historical additions")
-	check(current_counts=={"scale_review_current":155,"storage_pose_review_current":167,"footprint_review_current":167,"stack_role_review_current":167,"auto_group_review_current":155},"Exact stage counts preserve 155 full approvals and twelve scoped reviews")
+	check(current_counts=={"scale_review_current":167,"storage_pose_review_current":167,"footprint_review_current":167,"stack_role_review_current":167,"auto_group_review_current":155},"Exact stage counts include explicit top-up scale approval and pending groups")
 	check(Catalog.get_definition_by_id(&"loot_000081").display_name=="Watercooler Bottle" and Catalog.get_definition_by_id(&"loot_000110").display_name=="Revolver","Two pre-existing name-only corrections")
 	check(adapter.next_sequence(Catalog,retired,manifest)==175,"High-water allocation continues beyond all twelve new reservations")
 	var topup_sources := {

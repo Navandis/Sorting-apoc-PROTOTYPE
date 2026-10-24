@@ -61,7 +61,7 @@ func preview(item: ItemInstance) -> Dictionary:
 	state.status = "eligible"
 	return state
 
-func submit(carry: Node) -> Dictionary:
+func submit(carry: Node, recipient_valid: Callable = Callable()) -> Dictionary:
 	if transaction_active or carry == null:
 		return {"ok": false}
 	var item: ItemInstance = carry.get_selected_item()
@@ -70,19 +70,27 @@ func submit(carry: Node) -> Dictionary:
 		return {"ok": false, "reason": proposed.status}
 	transaction_active = true
 	# No callbacks occur between revalidation, removal and receipt publication.
-	var accepted := bool(carry.commit_selected_consumption(item, func():
-		credited[proposed.lane] = proposed.projected
-		spent.append({"item_id": item.instance_id, "definition_id": String(item.definition.item_id),
-			"lane": proposed.lane, "applied": proposed.applied, "wasted": proposed.wasted})
-		var fulfilled := true
-		for lane: String in targets:
-			if int(credited[lane]) < int(targets[lane]):
-				fulfilled = false
-		if fulfilled:
-			_close("fulfilled", current_time())
+	var accepted := bool(carry.commit_selected_consumption(item,
+		func(): _record_contribution(item, proposed),
+		func():
+			if recipient_valid.is_valid() and not bool(recipient_valid.call()): return false
+			var fresh := preview(item)
+			if fresh.status != "eligible": return false
+			proposed.assign(fresh)
+			return true
 	))
 	transaction_active = false
 	return {"ok": accepted}
+
+func _record_contribution(item: ItemInstance, proposed: Dictionary) -> void:
+	credited[proposed.lane] = proposed.projected
+	spent.append({"item_id": item.instance_id, "definition_id": String(item.definition.item_id),
+		"lane": proposed.lane, "raw": int(proposed.applied) + int(proposed.wasted),
+		"applied": proposed.applied, "wasted": proposed.wasted, "bulk": item.get_bulk()})
+	var fulfilled := true
+	for lane: String in targets:
+		if int(credited[lane]) < int(targets[lane]): fulfilled = false
+	if fulfilled: _close("fulfilled", current_time())
 
 func capture_state() -> Dictionary:
 	return {"id": request_id, "destination": destination, "targets": targets.duplicate(true),
@@ -117,6 +125,7 @@ func expire(now: float) -> void:
 		_close("expired", deadline)
 
 func _close(reason: String, at: float) -> void:
+	if closed: return
 	closed = true
 	closed_at = at
 	closure_reason = reason

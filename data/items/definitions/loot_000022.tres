@@ -6,6 +6,7 @@
 [resource]
 script = ExtResource("1_vkxp5")
 item_id = &"loot_000022"
+bulk = 1
 display_name = "Soda Can"
 utility_id = &"Hydration"
 utility_value = 3

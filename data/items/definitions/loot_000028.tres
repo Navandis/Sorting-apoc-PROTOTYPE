@@ -6,11 +6,14 @@
 [resource]
 script = ExtResource("1_okpsm")
 item_id = &"loot_000028"
+bulk = 4
+utility_value = 24
+utility_id = &"Medical"
 display_name = "Med Kit"
 context_utility_overrides = {
 &"medical_bay": {
 "utility_id": &"Medical",
-"value": 8
+"value": 24
 }
 }
 storage_category = "Medical"

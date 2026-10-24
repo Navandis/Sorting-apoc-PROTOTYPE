@@ -6,6 +6,9 @@
 [resource]
 script = ExtResource("1_vlll1")
 item_id = &"loot_000049"
+bulk = 12
+utility_value = 74
+utility_id = &"Food"
 display_name = "Almonds Sack"
 storage_category = "Food"
 storage_footprint = Vector3i(7, 5, 1)
