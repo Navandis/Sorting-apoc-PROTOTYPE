@@ -96,6 +96,31 @@ func _run() -> void:
 			_check(stack!=null and stack.entries[0].item==item and carry.get_item_count()==0,"Exact stored identity "+record.item_id)
 			if stack!=null:
 				var entry=stack.entries[0]
+				if topup:
+					var upper:=ItemInstance.new(catalogue.get_definition_by_id(&"loot_000022"),"support-probe:"+record.item_id)
+					var upper_entry=controller.call("_entry_for_item",upper,false,compatible.get_semantic_orientation_quarter_turns())
+					var support_fit:=compatible.find_manual_stack_fit(item.instance_id,upper_entry)
+					_check(bool(support_fit.get("valid",false))==(record.item_id=="loot_000168"),"Only reviewed rigid carton supports the retained small can "+record.item_id)
+					if record.item_id=="loot_000168":
+						_check(carry.add_item(upper),"Support probe enters actual carry")
+						controller.set("_current_surface",compatible)
+						controller.set("_current_fit",support_fit)
+						controller.set("_manual_mode",true)
+						controller.set("_rotated",false)
+						controller.set("_manual_target",{"kind":"stack","surface":compatible,"stack_id":item.instance_id})
+						_check(controller.place_selected() and stack.entries.size()==2,"Saved 3x3 carton accepts real manual support placement")
+						if stack.entries.size()==2:
+							_check(stack.entries[1].item==upper and stack.entries[1].world_item.pickup_into(carry),"Supported can retrieval preserves exact identity")
+							carry.remove_item(upper)
+						var oversized:=ItemInstance.new(catalogue.get_definition_by_id(&"loot_000167"),"oversized-support-probe")
+						_check(not compatible.find_manual_stack_fit(item.instance_id,controller.call("_entry_for_item",oversized,false)).valid,"Support approval cannot bypass saved carton Footprint")
+						var duplicate:=ItemInstance.new(definition,"group-none-probe")
+						_check(_place_auto(controller,carry,compatible,duplicate),"None-group duplicate finds an ordinary empty reservation")
+						var separate:=compatible.get_storage_stack(duplicate.instance_id)
+						_check(separate!=null and separate!=stack and stack.entries.size()==1,"Saved None group does not infer automatic stacking")
+						if separate!=null:
+							_check(separate.entries[0].world_item.pickup_into(carry),"Separate None-group item actually retrieved")
+							carry.remove_item(duplicate)
 				_check(entry.world_item.pickup_into(carry) and carry.get_selected_item()==item,"Actual shelf retrieve preserves identity "+record.item_id)
 				_check(compatible.get_stack_count()==0,"Retrieval frees reservation "+record.item_id)
 		results.append({"item_id":record.item_id,"size_m":[size.x,size.y,size.z],"footprint":[definition.storage_footprint.x,definition.storage_footprint.y],"surface":String(compatible.surface_id) if compatible else "NONE","packing_rotated":chosen.get("rotated",false)})

@@ -6079,7 +6079,7 @@
 			"item_id": "loot_000081",
 			"disposition": "new",
 			"definition_path": "res://data/items/definitions/loot_000081.tres",
-			"display_name": "Watercooler bottle 02",
+			"display_name": "Watercooler Bottle",
 			"storage_category": "Hydration",
 			"imported_dimensions_m": [
 				0.271499484777451,
@@ -6176,7 +6176,7 @@
 			"human_review": {
 				"date": "2026-10-21",
 				"checkpoint": "170ea01",
-				"display_name": "Watercooler bBottle",
+				"display_name": "Watercooler Bottle",
 				"storage_rotation_degrees": [
 					0,
 					0,
@@ -6202,7 +6202,7 @@
 					1
 				],
 				"post_correction_physical_status": "HUMAN_REVIEWED_2026_10_21",
-				"notes": "2026-10-21: developer comprehensively reviewed all 155 items and saved external .tres authoring; immutable checkpoint 170ea01. Current saved names, pose/+Z Front, Footprint and support-role decisions retained.",
+				"notes": "2026-10-21: developer comprehensively reviewed all 155 items and saved external .tres authoring; immutable checkpoint 170ea01. Current saved names, pose/+Z Front, Footprint and support-role decisions retained.\n2026-10-24: developer display-name-only correction from 'Watercooler bBottle' to 'Watercooler Bottle'; saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f. All prior physical approvals and snapshots retained.",
 				"observed_source_fingerprint": "b1579e9ff9a251c4a1146fd67f46f9991abc64b7b42714259afb213faefb4b26"
 			}
 		},
@@ -9924,7 +9924,7 @@
 			"item_id": "loot_000110",
 			"disposition": "new",
 			"definition_path": "res://data/items/definitions/loot_000110.tres",
-			"display_name": "Revolver 01",
+			"display_name": "Revolver",
 			"storage_category": "Weapons",
 			"imported_dimensions_m": [
 				0.432394862174988,
@@ -10026,7 +10026,7 @@
 			"human_review": {
 				"date": "2026-10-21",
 				"checkpoint": "170ea01",
-				"display_name": "Revolver 01",
+				"display_name": "Revolver",
 				"storage_rotation_degrees": [
 					-90,
 					0,
@@ -10052,7 +10052,7 @@
 					1
 				],
 				"post_correction_physical_status": "HUMAN_REVIEWED_2026_10_21",
-				"notes": "2026-10-21: developer comprehensively reviewed all 155 items and saved external .tres authoring; immutable checkpoint 170ea01. Current saved names, pose/+Z Front, Footprint and support-role decisions retained.",
+				"notes": "2026-10-21: developer comprehensively reviewed all 155 items and saved external .tres authoring; immutable checkpoint 170ea01. Current saved names, pose/+Z Front, Footprint and support-role decisions retained.\n2026-10-24: developer display-name-only correction from 'Revolver 01' to 'Revolver'; saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f. All prior physical approvals and snapshots retained.",
 				"observed_source_fingerprint": "5cb2ac8467ba2f00ed1d8991e3ce71517324dcef4eec033f072dc9d5c398c19a"
 			}
 		},
@@ -17904,7 +17904,7 @@
 			"disposition": "topup",
 			"batch": "PRE_M4_TWELVE_ITEM_TOPUP_2026_10_24",
 			"definition_path": "res://data/items/definitions/loot_000163.tres",
-			"display_name": "Large Mystery-Meat Carcass",
+			"display_name": "Mystery Meat Large",
 			"storage_category": "Food",
 			"rotation": [
 				0,
@@ -17923,9 +17923,41 @@
 				"VISUAL_REVIEW_RECOMMENDED",
 				"IRREGULAR_REVIEW"
 			],
-			"review_status": "UNREVIEWED",
+			"review_status": "POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
 			"numerical_status": "Utility None/0 and Bulk 1 are temporary physical-onboarding placeholders; no capacity-derived values.",
-			"submesh_count": 1
+			"submesh_count": 1,
+			"human_review": {
+				"date": "2026-10-24",
+				"checkpoint": "a669c0d5c218696d9f977a505551063e0160b69f",
+				"display_name": "Mystery Meat Large",
+				"storage_rotation_degrees": [
+					0.025000000372529,
+					0,
+					90
+				],
+				"storage_footprint": [
+					13,
+					5,
+					1
+				],
+				"can_be_stacked": true,
+				"can_support_stack": false,
+				"auto_stack_group": "",
+				"visual_scale": 1,
+				"posed_dimensions_m": [
+					1.22635233402252,
+					0.19483944773674,
+					0.504583239555359
+				],
+				"suggested_footprint": [
+					13,
+					6,
+					1
+				],
+				"observed_source_fingerprint": "58fab1b615d49ccf649a5d33488373ab02c9a3786c5eac4ee1e003c1f6cca3a9",
+				"post_correction_physical_status": "POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
+				"notes": "2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied. Separate scale and Auto Stack Group acceptance remain UNREVIEWED; scale/group values above are observed saved data only."
+			}
 		},
 		{
 			"dependencies": [
@@ -18100,9 +18132,41 @@
 				"MULTI_MESH",
 				"IRREGULAR_REVIEW"
 			],
-			"review_status": "UNREVIEWED",
+			"review_status": "POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
 			"numerical_status": "Utility None/0 and Bulk 1 are temporary physical-onboarding placeholders; no capacity-derived values.",
-			"submesh_count": 3
+			"submesh_count": 3,
+			"human_review": {
+				"date": "2026-10-24",
+				"checkpoint": "a669c0d5c218696d9f977a505551063e0160b69f",
+				"display_name": "BBQ Charcoal Bag",
+				"storage_rotation_degrees": [
+					0,
+					0,
+					0
+				],
+				"storage_footprint": [
+					3,
+					2,
+					1
+				],
+				"can_be_stacked": true,
+				"can_support_stack": false,
+				"auto_stack_group": "",
+				"visual_scale": 1,
+				"posed_dimensions_m": [
+					0.249774187803268,
+					0.400000005960464,
+					0.192232549190521
+				],
+				"suggested_footprint": [
+					3,
+					2,
+					1
+				],
+				"observed_source_fingerprint": "b76ec27dda948743f02522aaa844cc1e067ae4cfaae994d4d17eb857ab639a53",
+				"post_correction_physical_status": "POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
+				"notes": "2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied. Separate scale and Auto Stack Group acceptance remain UNREVIEWED; scale/group values above are observed saved data only."
+			}
 		},
 		{
 			"dependencies": [
@@ -18219,7 +18283,7 @@
 			"disposition": "topup",
 			"batch": "PRE_M4_TWELVE_ITEM_TOPUP_2026_10_24",
 			"definition_path": "res://data/items/definitions/loot_000165.tres",
-			"display_name": "Lighter Fluid Can (330 ml)",
+			"display_name": "Lighter Fluid Can",
 			"storage_category": "Fuel",
 			"rotation": [
 				0,
@@ -18238,9 +18302,41 @@
 				"VISUAL_REVIEW_RECOMMENDED",
 				"MULTI_MESH"
 			],
-			"review_status": "UNREVIEWED",
+			"review_status": "POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
 			"numerical_status": "Utility None/0 and Bulk 1 are temporary physical-onboarding placeholders; no capacity-derived values.",
-			"submesh_count": 2
+			"submesh_count": 2,
+			"human_review": {
+				"date": "2026-10-24",
+				"checkpoint": "a669c0d5c218696d9f977a505551063e0160b69f",
+				"display_name": "Lighter Fluid Can",
+				"storage_rotation_degrees": [
+					0,
+					0,
+					0
+				],
+				"storage_footprint": [
+					1,
+					1,
+					1
+				],
+				"can_be_stacked": true,
+				"can_support_stack": false,
+				"auto_stack_group": "",
+				"visual_scale": 1,
+				"posed_dimensions_m": [
+					0.0716259852051735,
+					0.180000007152557,
+					0.0356507897377014
+				],
+				"suggested_footprint": [
+					1,
+					1,
+					1
+				],
+				"observed_source_fingerprint": "dca42c74e048a2a8733f30df9da256ce7ed37807867bcc4384a42bfe1d4df3d9",
+				"post_correction_physical_status": "POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
+				"notes": "2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied. Separate scale and Auto Stack Group acceptance remain UNREVIEWED; scale/group values above are observed saved data only."
+			}
 		},
 		{
 			"dependencies": [
@@ -18351,9 +18447,41 @@
 			"flags": [
 				"VISUAL_REVIEW_RECOMMENDED"
 			],
-			"review_status": "UNREVIEWED",
+			"review_status": "POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
 			"numerical_status": "Utility None/0 and Bulk 1 are temporary physical-onboarding placeholders; no capacity-derived values.",
-			"submesh_count": 1
+			"submesh_count": 1,
+			"human_review": {
+				"date": "2026-10-24",
+				"checkpoint": "a669c0d5c218696d9f977a505551063e0160b69f",
+				"display_name": "Water Bottle (6 L)",
+				"storage_rotation_degrees": [
+					0,
+					0,
+					0
+				],
+				"storage_footprint": [
+					3,
+					2,
+					1
+				],
+				"can_be_stacked": true,
+				"can_support_stack": false,
+				"auto_stack_group": "",
+				"visual_scale": 1,
+				"posed_dimensions_m": [
+					0.209035575389862,
+					0.419999986886978,
+					0.205400675535202
+				],
+				"suggested_footprint": [
+					3,
+					3,
+					1
+				],
+				"observed_source_fingerprint": "2b243806adc522bacaaf3c600a0a4969451db924ec592590d348a0b692d4dd6c",
+				"post_correction_physical_status": "POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
+				"notes": "2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied. Separate scale and Auto Stack Group acceptance remain UNREVIEWED; scale/group values above are observed saved data only."
+			}
 		},
 		{
 			"dependencies": [
@@ -18468,7 +18596,7 @@
 			"disposition": "topup",
 			"batch": "PRE_M4_TWELVE_ITEM_TOPUP_2026_10_24",
 			"definition_path": "res://data/items/definitions/loot_000167.tres",
-			"display_name": "Soda Bottle Crate (20 Bottles)",
+			"display_name": "Soda Bottle Crate",
 			"storage_category": "Hydration",
 			"rotation": [
 				0,
@@ -18486,9 +18614,41 @@
 			"flags": [
 				"VISUAL_REVIEW_RECOMMENDED"
 			],
-			"review_status": "UNREVIEWED",
+			"review_status": "POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
 			"numerical_status": "Utility None/0 and Bulk 1 are temporary physical-onboarding placeholders; no capacity-derived values.",
-			"submesh_count": 3
+			"submesh_count": 3,
+			"human_review": {
+				"date": "2026-10-24",
+				"checkpoint": "a669c0d5c218696d9f977a505551063e0160b69f",
+				"display_name": "Soda Bottle Crate",
+				"storage_rotation_degrees": [
+					0,
+					0,
+					0
+				],
+				"storage_footprint": [
+					5,
+					5,
+					1
+				],
+				"can_be_stacked": true,
+				"can_support_stack": false,
+				"auto_stack_group": "",
+				"visual_scale": 1,
+				"posed_dimensions_m": [
+					0.410984814167023,
+					0.240000009536743,
+					0.41089802980423
+				],
+				"suggested_footprint": [
+					5,
+					5,
+					1
+				],
+				"observed_source_fingerprint": "4fcccfe89c7a7ee691c609413e1da3138b69f23ac608497d4fc53915db02b689",
+				"post_correction_physical_status": "POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
+				"notes": "2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied. Separate scale and Auto Stack Group acceptance remain UNREVIEWED; scale/group values above are observed saved data only."
+			}
 		},
 		{
 			"dependencies": [
@@ -18721,7 +18881,7 @@
 			"disposition": "topup",
 			"batch": "PRE_M4_TWELVE_ITEM_TOPUP_2026_10_24",
 			"definition_path": "res://data/items/definitions/loot_000168.tres",
-			"display_name": "Apple Juice Bag-in-Box (7-8 L)",
+			"display_name": "Juice Bag-in-Box",
 			"storage_category": "Hydration",
 			"rotation": [
 				0,
@@ -18740,9 +18900,41 @@
 				"VISUAL_REVIEW_RECOMMENDED",
 				"MULTI_MESH"
 			],
-			"review_status": "UNREVIEWED",
+			"review_status": "POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
 			"numerical_status": "Utility None/0 and Bulk 1 are temporary physical-onboarding placeholders; no capacity-derived values.",
-			"submesh_count": 5
+			"submesh_count": 5,
+			"human_review": {
+				"date": "2026-10-24",
+				"checkpoint": "a669c0d5c218696d9f977a505551063e0160b69f",
+				"display_name": "Juice Bag-in-Box",
+				"storage_rotation_degrees": [
+					0,
+					0,
+					0
+				],
+				"storage_footprint": [
+					3,
+					3,
+					1
+				],
+				"can_be_stacked": true,
+				"can_support_stack": true,
+				"auto_stack_group": "",
+				"visual_scale": 1,
+				"posed_dimensions_m": [
+					0.285533100366592,
+					0.411807686090469,
+					0.30041778087616
+				],
+				"suggested_footprint": [
+					3,
+					4,
+					1
+				],
+				"observed_source_fingerprint": "df04f6622dafdb82ee645a6b6cb552749acd013d1e57fc82205a7c2edb51d7a9",
+				"post_correction_physical_status": "POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
+				"notes": "2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied. Separate scale and Auto Stack Group acceptance remain UNREVIEWED; scale/group values above are observed saved data only."
+			}
 		},
 		{
 			"dependencies": [
@@ -18859,7 +19051,7 @@
 			"disposition": "topup",
 			"batch": "PRE_M4_TWELVE_ITEM_TOPUP_2026_10_24",
 			"definition_path": "res://data/items/definitions/loot_000169.tres",
-			"display_name": "Orange Juice Jug (4-5 L)",
+			"display_name": "Orange Juice Jug",
 			"storage_category": "Hydration",
 			"rotation": [
 				0,
@@ -18878,9 +19070,41 @@
 				"VISUAL_REVIEW_RECOMMENDED",
 				"MULTI_MESH"
 			],
-			"review_status": "UNREVIEWED",
+			"review_status": "POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
 			"numerical_status": "Utility None/0 and Bulk 1 are temporary physical-onboarding placeholders; no capacity-derived values.",
-			"submesh_count": 2
+			"submesh_count": 2,
+			"human_review": {
+				"date": "2026-10-24",
+				"checkpoint": "a669c0d5c218696d9f977a505551063e0160b69f",
+				"display_name": "Orange Juice Jug",
+				"storage_rotation_degrees": [
+					0,
+					180,
+					0
+				],
+				"storage_footprint": [
+					2,
+					2,
+					1
+				],
+				"can_be_stacked": true,
+				"can_support_stack": false,
+				"auto_stack_group": "",
+				"visual_scale": 1,
+				"posed_dimensions_m": [
+					0.172013387084007,
+					0.280000001192093,
+					0.166710183024406
+				],
+				"suggested_footprint": [
+					2,
+					2,
+					1
+				],
+				"observed_source_fingerprint": "7f2508809d1d6f5e90f0d0218db2b4fec6191760499c6c85bc1f62ef08baf86e",
+				"post_correction_physical_status": "POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
+				"notes": "2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied. Separate scale and Auto Stack Group acceptance remain UNREVIEWED; scale/group values above are observed saved data only."
+			}
 		},
 		{
 			"dependencies": [
@@ -18973,7 +19197,7 @@
 			"disposition": "topup",
 			"batch": "PRE_M4_TWELVE_ITEM_TOPUP_2026_10_24",
 			"definition_path": "res://data/items/definitions/loot_000170.tres",
-			"display_name": "Water Bottle Six-Pack (9-12 L)",
+			"display_name": "Water Bottle Six-Pack",
 			"storage_category": "Hydration",
 			"rotation": [
 				0,
@@ -18991,9 +19215,41 @@
 			"flags": [
 				"VISUAL_REVIEW_RECOMMENDED"
 			],
-			"review_status": "UNREVIEWED",
+			"review_status": "POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
 			"numerical_status": "Utility None/0 and Bulk 1 are temporary physical-onboarding placeholders; no capacity-derived values.",
-			"submesh_count": 1
+			"submesh_count": 1,
+			"human_review": {
+				"date": "2026-10-24",
+				"checkpoint": "a669c0d5c218696d9f977a505551063e0160b69f",
+				"display_name": "Water Bottle Six-Pack",
+				"storage_rotation_degrees": [
+					0,
+					0,
+					0
+				],
+				"storage_footprint": [
+					4,
+					3,
+					1
+				],
+				"can_be_stacked": true,
+				"can_support_stack": false,
+				"auto_stack_group": "",
+				"visual_scale": 1,
+				"posed_dimensions_m": [
+					0.32710474729538,
+					0.310000002384186,
+					0.226542323827744
+				],
+				"suggested_footprint": [
+					4,
+					3,
+					1
+				],
+				"observed_source_fingerprint": "41a4d714ed83a2ff0504798971895fba243672b1e81367d20000b3d5a0da925a",
+				"post_correction_physical_status": "POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
+				"notes": "2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied. Separate scale and Auto Stack Group acceptance remain UNREVIEWED; scale/group values above are observed saved data only."
+			}
 		},
 		{
 			"dependencies": [
@@ -19156,9 +19412,41 @@
 				"MULTI_MESH",
 				"IRREGULAR_REVIEW"
 			],
-			"review_status": "UNREVIEWED",
+			"review_status": "POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
 			"numerical_status": "Utility None/0 and Bulk 1 are temporary physical-onboarding placeholders; no capacity-derived values.",
-			"submesh_count": 4
+			"submesh_count": 4,
+			"human_review": {
+				"date": "2026-10-24",
+				"checkpoint": "a669c0d5c218696d9f977a505551063e0160b69f",
+				"display_name": "Cosplay Helmet",
+				"storage_rotation_degrees": [
+					0,
+					0,
+					0
+				],
+				"storage_footprint": [
+					3,
+					3,
+					1
+				],
+				"can_be_stacked": true,
+				"can_support_stack": false,
+				"auto_stack_group": "",
+				"visual_scale": 1,
+				"posed_dimensions_m": [
+					0.276222288608551,
+					0.291126400232315,
+					0.215198323130608
+				],
+				"suggested_footprint": [
+					3,
+					3,
+					1
+				],
+				"observed_source_fingerprint": "fe943460ed4de7b0978afdfd3b7d7c016b2025eb90442de1dbcd9556521d63bd",
+				"post_correction_physical_status": "POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
+				"notes": "2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied. Separate scale and Auto Stack Group acceptance remain UNREVIEWED; scale/group values above are observed saved data only."
+			}
 		},
 		{
 			"dependencies": [
@@ -19279,7 +19567,7 @@
 			"disposition": "topup",
 			"batch": "PRE_M4_TWELVE_ITEM_TOPUP_2026_10_24",
 			"definition_path": "res://data/items/definitions/loot_000172.tres",
-			"display_name": "Fedora",
+			"display_name": "Fedora Hat",
 			"storage_category": "Protection",
 			"rotation": [
 				0,
@@ -19299,9 +19587,41 @@
 				"MULTI_MESH",
 				"IRREGULAR_REVIEW"
 			],
-			"review_status": "UNREVIEWED",
+			"review_status": "POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
 			"numerical_status": "Utility None/0 and Bulk 1 are temporary physical-onboarding placeholders; no capacity-derived values.",
-			"submesh_count": 3
+			"submesh_count": 3,
+			"human_review": {
+				"date": "2026-10-24",
+				"checkpoint": "a669c0d5c218696d9f977a505551063e0160b69f",
+				"display_name": "Fedora Hat",
+				"storage_rotation_degrees": [
+					0,
+					0,
+					0
+				],
+				"storage_footprint": [
+					4,
+					4,
+					1
+				],
+				"can_be_stacked": true,
+				"can_support_stack": false,
+				"auto_stack_group": "",
+				"visual_scale": 1,
+				"posed_dimensions_m": [
+					0.301527440547943,
+					0.146201923489571,
+					0.334180235862732
+				],
+				"suggested_footprint": [
+					4,
+					4,
+					1
+				],
+				"observed_source_fingerprint": "3ce9f949a9f8ea558dcb91b68a69f9984b66228f652dc5459e6f577e3c975b59",
+				"post_correction_physical_status": "POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
+				"notes": "2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied. Separate scale and Auto Stack Group acceptance remain UNREVIEWED; scale/group values above are observed saved data only."
+			}
 		},
 		{
 			"dependencies": [
@@ -19422,7 +19742,7 @@
 			"disposition": "topup",
 			"batch": "PRE_M4_TWELVE_ITEM_TOPUP_2026_10_24",
 			"definition_path": "res://data/items/definitions/loot_000173.tres",
-			"display_name": "Leather Gloves (Pair)",
+			"display_name": "Leather Gloves",
 			"storage_category": "Protection",
 			"rotation": [
 				80.2063,
@@ -19442,9 +19762,41 @@
 				"MULTI_MESH",
 				"IRREGULAR_REVIEW"
 			],
-			"review_status": "UNREVIEWED",
+			"review_status": "POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
 			"numerical_status": "Utility None/0 and Bulk 1 are temporary physical-onboarding placeholders; no capacity-derived values.",
-			"submesh_count": 2
+			"submesh_count": 2,
+			"human_review": {
+				"date": "2026-10-24",
+				"checkpoint": "a669c0d5c218696d9f977a505551063e0160b69f",
+				"display_name": "Leather Gloves",
+				"storage_rotation_degrees": [
+					80.206298828125,
+					-105.013702392578,
+					-104.80460357666
+				],
+				"storage_footprint": [
+					2,
+					3,
+					1
+				],
+				"can_be_stacked": true,
+				"can_support_stack": false,
+				"auto_stack_group": "",
+				"visual_scale": 1,
+				"posed_dimensions_m": [
+					0.174700856208801,
+					0.180892094969749,
+					0.287308603525162
+				],
+				"suggested_footprint": [
+					2,
+					3,
+					1
+				],
+				"observed_source_fingerprint": "aa3f6c6eede41fed5be7720d37c4391fcce88039e8c94d0f467b35c56a4516cb",
+				"post_correction_physical_status": "POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
+				"notes": "2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied. Separate scale and Auto Stack Group acceptance remain UNREVIEWED; scale/group values above are observed saved data only."
+			}
 		},
 		{
 			"dependencies": [
@@ -19522,7 +19874,7 @@
 			"disposition": "topup",
 			"batch": "PRE_M4_TWELVE_ITEM_TOPUP_2026_10_24",
 			"definition_path": "res://data/items/definitions/loot_000174.tres",
-			"display_name": "Rubber Wellies (Pair)",
+			"display_name": "Rubber Wellies",
 			"storage_category": "Protection",
 			"rotation": [
 				0,
@@ -19540,10 +19892,42 @@
 			"flags": [
 				"VISUAL_REVIEW_RECOMMENDED"
 			],
-			"review_status": "UNREVIEWED",
+			"review_status": "POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
 			"numerical_status": "Utility None/0 and Bulk 1 are temporary physical-onboarding placeholders; no capacity-derived values.",
-			"submesh_count": 1
+			"submesh_count": 1,
+			"human_review": {
+				"date": "2026-10-24",
+				"checkpoint": "a669c0d5c218696d9f977a505551063e0160b69f",
+				"display_name": "Rubber Wellies",
+				"storage_rotation_degrees": [
+					0,
+					0,
+					0
+				],
+				"storage_footprint": [
+					4,
+					4,
+					1
+				],
+				"can_be_stacked": true,
+				"can_support_stack": false,
+				"auto_stack_group": "",
+				"visual_scale": 1,
+				"posed_dimensions_m": [
+					0.35945463180542,
+					0.379999995231628,
+					0.373596489429474
+				],
+				"suggested_footprint": [
+					4,
+					4,
+					1
+				],
+				"observed_source_fingerprint": "2d3ecd989bf6af4679d24e9b0f650349ae9e51217971f4ce602f3cea0e90f640",
+				"post_correction_physical_status": "POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
+				"notes": "2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied. Separate scale and Auto Stack Group acceptance remain UNREVIEWED; scale/group values above are observed saved data only."
+			}
 		}
 	],
-	"topup_status": "2026-10-24: twelve machine-proposed additions; original 155 human approvals preserved; all five new review stages UNREVIEWED; NOT PUBLISHED."
+	"topup_status": "2026-10-24: human .tres checkpoint a669c0d5c218696d9f977a505551063e0160b69f; twelve pose/+Z Front, Footprint and stacking reviews reconciled. Current stage counts scale 155, pose 167, Footprint 167, stack role 167, Auto Group 155; twelve separate scale/group decisions remain UNREVIEWED. Original 155 full physical approvals and seven retirements retained; 081/110 naming-only corrections. NOT PUBLISHED."
 }

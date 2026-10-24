@@ -6037,7 +6037,7 @@
 				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Machine proposal: Retain upright/resting source pose. Proposed visible label, opening, controls or face toward +Z; semantic front remains for human inspection.\n2026-10-21: developer comprehensively reviewed all 155 items and saved external .tres authoring; immutable checkpoint 170ea01. Current saved names, pose/+Z Front, Footprint and support-role decisions retained.",
+				"notes": "Machine proposal: Retain upright/resting source pose. Proposed visible label, opening, controls or face toward +Z; semantic front remains for human inspection.\n2026-10-21: developer comprehensively reviewed all 155 items and saved external .tres authoring; immutable checkpoint 170ea01. Current saved names, pose/+Z Front, Footprint and support-role decisions retained.\n2026-10-24: developer display-name-only correction from 'Watercooler bBottle' to 'Watercooler Bottle'; saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f. All prior physical approvals and snapshots retained.",
 				"reviewed_rotation_degrees": [
 					0,
 					0,
@@ -8214,7 +8214,7 @@
 				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Machine proposal: Lay broad side/back down using storage rotation only. Handle/butt or graspable end proposed toward canonical +Z; inspect semantic end and contact stability.\n2026-10-21: developer comprehensively reviewed all 155 items and saved external .tres authoring; immutable checkpoint 170ea01. Current saved names, pose/+Z Front, Footprint and support-role decisions retained.",
+				"notes": "Machine proposal: Lay broad side/back down using storage rotation only. Handle/butt or graspable end proposed toward canonical +Z; inspect semantic end and contact stability.\n2026-10-21: developer comprehensively reviewed all 155 items and saved external .tres authoring; immutable checkpoint 170ea01. Current saved names, pose/+Z Front, Footprint and support-role decisions retained.\n2026-10-24: developer display-name-only correction from 'Revolver 01' to 'Revolver'; saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f. All prior physical approvals and snapshots retained.",
 				"reviewed_rotation_degrees": [
 					-90,
 					0,
@@ -12133,66 +12133,62 @@
 				"flags": [
 					"VISUAL_REVIEW_RECOMMENDED"
 				],
-				"notes": "Machine proposal: Explicit None: no proven existing compatibility class for this geometry; category alone does not imply a group. Gloves are not assigned folded_clothing.",
+				"notes": "Machine proposal: Explicit None: no proven existing compatibility class for this geometry; category alone does not imply a group. Gloves are not assigned folded_clothing.\n2026-10-24: saved Auto Stack Group remains None. Separate human acceptance of None was not reported. UNREVIEWED: explicitly confirm None or name an intended registered group; stacking capability review alone does not grant group approval.",
 				"reviewed_auto_stack_group": "",
 				"reviewed_registry_compatibility_revision": 0,
 				"reviewed_stack_role_snapshot": {},
 				"status": "UNREVIEWED"
 			},
 			"footprint_review": {
-				"notes": "Machine proposal: canonical X/Z bounds, ceil at 0.10 m, minimum one cell; human overrides pending.",
+				"notes": "Machine proposal: canonical X/Z bounds, ceil at 0.10 m, minimum one cell; human overrides pending.\n2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied. Saved reservation [13, 5, 1] retained against measured ceil suggestion [13, 6, 1]; geometric overhang remains visible and is not normalized away.",
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					13,
+					5,
+					1
 				],
 				"reviewed_rotation_degrees": [
+					0.025000000372529,
 					0,
-					0,
-					0
+					90
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "58fab1b615d49ccf649a5d33488373ab02c9a3786c5eac4ee1e003c1f6cca3a9",
+				"status": "OVERRIDE_APPROVED"
 			},
 			"item_id": "loot_000163",
 			"scale_review": {
-				"notes": "Machine proposal: measured imported scale unchanged. Irregular venison-reference carcass, not roast piglet or smaller meat. One 1.23 m entity; preserve source scale.",
+				"notes": "Machine proposal: measured imported scale unchanged. Irregular venison-reference carcass, not roast piglet or smaller meat. One 1.23 m entity; preserve source scale.\n2026-10-24: source fingerprint and visual_scale=1.0 unchanged; separate human scale acceptance was not reported. UNREVIEWED: confirm source/world scale plausibility; do not regenerate accepted pose/Footprint/roles.",
 				"reviewed_source_fingerprint": "",
 				"status": "UNREVIEWED"
 			},
 			"source_fingerprint": "58fab1b615d49ccf649a5d33488373ab02c9a3786c5eac4ee1e003c1f6cca3a9",
 			"source_path": "res://assets/props/Food/SM_MysteryMeat_Carcass_Large_01.glb",
 			"stack_role_review": {
-				"flags": [
-					"IRREGULAR_SHAPE",
-					"RESTING_STABILITY_AMBIGUOUS",
-					"VISUAL_REVIEW_RECOMMENDED"
-				],
-				"notes": "Machine proposal: Irregular carcass may rest on a sufficiently large support; no credible flat supporting top.",
-				"reviewed_can_be_stacked": false,
+				"flags": [],
+				"notes": "Machine proposal: Irregular carcass may rest on a sufficiently large support; no credible flat supporting top.\n2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied.",
+				"reviewed_can_be_stacked": true,
 				"reviewed_can_support_stack": false,
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					13,
+					5,
+					1
 				],
 				"reviewed_rotation_degrees": [
+					0.025000000372529,
 					0,
-					0,
-					0
+					90
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "58fab1b615d49ccf649a5d33488373ab02c9a3786c5eac4ee1e003c1f6cca3a9",
+				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Machine proposal: Rotate the long hanging Y axis onto X; broad side rests horizontally, meat profile faces +Z. Confirm stable contact and semantic Front.",
+				"notes": "Machine proposal: Rotate the long hanging Y axis onto X; broad side rests horizontally, meat profile faces +Z. Confirm stable contact and semantic Front.\n2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied.",
 				"reviewed_rotation_degrees": [
+					0.025000000372529,
 					0,
-					0,
-					0
+					90
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "58fab1b615d49ccf649a5d33488373ab02c9a3786c5eac4ee1e003c1f6cca3a9",
+				"status": "CUSTOM_POSE_APPROVED"
 			}
 		},
 		"loot_000164": {
@@ -12200,66 +12196,62 @@
 				"flags": [
 					"VISUAL_REVIEW_RECOMMENDED"
 				],
-				"notes": "Machine proposal: Explicit None: no proven existing compatibility class for this geometry; category alone does not imply a group. Gloves are not assigned folded_clothing.",
+				"notes": "Machine proposal: Explicit None: no proven existing compatibility class for this geometry; category alone does not imply a group. Gloves are not assigned folded_clothing.\n2026-10-24: saved Auto Stack Group remains None. Separate human acceptance of None was not reported. UNREVIEWED: explicitly confirm None or name an intended registered group; stacking capability review alone does not grant group approval.",
 				"reviewed_auto_stack_group": "",
 				"reviewed_registry_compatibility_revision": 0,
 				"reviewed_stack_role_snapshot": {},
 				"status": "UNREVIEWED"
 			},
 			"footprint_review": {
-				"notes": "Machine proposal: canonical X/Z bounds, ceil at 0.10 m, minimum one cell; human overrides pending.",
+				"notes": "Machine proposal: canonical X/Z bounds, ceil at 0.10 m, minimum one cell; human overrides pending.\n2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied.",
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					3,
+					2,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0,
 					0,
 					0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "b76ec27dda948743f02522aaa844cc1e067ae4cfaae994d4d17eb857ab639a53",
+				"status": "GEOMETRY_APPROVED"
 			},
 			"item_id": "loot_000164",
 			"scale_review": {
-				"notes": "Machine proposal: measured imported scale unchanged. One 0.40 m bag. Two label meshes belong to the bag, not separate loot.",
+				"notes": "Machine proposal: measured imported scale unchanged. One 0.40 m bag. Two label meshes belong to the bag, not separate loot.\n2026-10-24: source fingerprint and visual_scale=1.0 unchanged; separate human scale acceptance was not reported. UNREVIEWED: confirm source/world scale plausibility; do not regenerate accepted pose/Footprint/roles.",
 				"reviewed_source_fingerprint": "",
 				"status": "UNREVIEWED"
 			},
 			"source_fingerprint": "b76ec27dda948743f02522aaa844cc1e067ae4cfaae994d4d17eb857ab639a53",
 			"source_path": "res://assets/props/Fuel/SM_Charcoal_Bag_03.glb",
 			"stack_role_review": {
-				"flags": [
-					"IRREGULAR_SHAPE",
-					"RESTING_STABILITY_AMBIGUOUS",
-					"VISUAL_REVIEW_RECOMMENDED"
-				],
-				"notes": "Machine proposal: Soft bag can rest on support; folded/crimped top cannot support cargo.",
-				"reviewed_can_be_stacked": false,
+				"flags": [],
+				"notes": "Machine proposal: Soft bag can rest on support; folded/crimped top cannot support cargo.\n2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied.",
+				"reviewed_can_be_stacked": true,
 				"reviewed_can_support_stack": false,
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					3,
+					2,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0,
 					0,
 					0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "b76ec27dda948743f02522aaa844cc1e067ae4cfaae994d4d17eb857ab639a53",
+				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Machine proposal: Upright on authored broad base; flame graphic faces +Z. Review soft-base stability.",
+				"notes": "Machine proposal: Upright on authored broad base; flame graphic faces +Z. Review soft-base stability.\n2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied.",
 				"reviewed_rotation_degrees": [
 					0,
 					0,
 					0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "b76ec27dda948743f02522aaa844cc1e067ae4cfaae994d4d17eb857ab639a53",
+				"status": "DEFAULT_POSE_APPROVED"
 			}
 		},
 		"loot_000165": {
@@ -12267,64 +12259,62 @@
 				"flags": [
 					"VISUAL_REVIEW_RECOMMENDED"
 				],
-				"notes": "Machine proposal: Explicit None: no proven existing compatibility class for this geometry; category alone does not imply a group. Gloves are not assigned folded_clothing.",
+				"notes": "Machine proposal: Explicit None: no proven existing compatibility class for this geometry; category alone does not imply a group. Gloves are not assigned folded_clothing.\n2026-10-24: saved Auto Stack Group remains None. Separate human acceptance of None was not reported. UNREVIEWED: explicitly confirm None or name an intended registered group; stacking capability review alone does not grant group approval.",
 				"reviewed_auto_stack_group": "",
 				"reviewed_registry_compatibility_revision": 0,
 				"reviewed_stack_role_snapshot": {},
 				"status": "UNREVIEWED"
 			},
 			"footprint_review": {
-				"notes": "Machine proposal: canonical X/Z bounds, ceil at 0.10 m, minimum one cell; human overrides pending.",
+				"notes": "Machine proposal: canonical X/Z bounds, ceil at 0.10 m, minimum one cell; human overrides pending.\n2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied.",
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					1,
+					1,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0,
 					0,
 					0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "dca42c74e048a2a8733f30df9da256ce7ed37807867bcc4384a42bfe1d4df3d9",
+				"status": "GEOMETRY_APPROVED"
 			},
 			"item_id": "loot_000165",
 			"scale_review": {
-				"notes": "Machine proposal: measured imported scale unchanged. One approximately 330 ml can; 0.18 m source height retained. Label is assembled decoration.",
+				"notes": "Machine proposal: measured imported scale unchanged. One approximately 330 ml can; 0.18 m source height retained. Label is assembled decoration.\n2026-10-24: source fingerprint and visual_scale=1.0 unchanged; separate human scale acceptance was not reported. UNREVIEWED: confirm source/world scale plausibility; do not regenerate accepted pose/Footprint/roles.",
 				"reviewed_source_fingerprint": "",
 				"status": "UNREVIEWED"
 			},
 			"source_fingerprint": "dca42c74e048a2a8733f30df9da256ce7ed37807867bcc4384a42bfe1d4df3d9",
 			"source_path": "res://assets/props/Fuel/SM_Lighter_Fluid_Can_02.glb",
 			"stack_role_review": {
-				"flags": [
-					"VISUAL_REVIEW_RECOMMENDED"
-				],
-				"notes": "Machine proposal: Rigid can may rest on support; protruding nozzle and cap deny supporting top.",
-				"reviewed_can_be_stacked": false,
+				"flags": [],
+				"notes": "Machine proposal: Rigid can may rest on support; protruding nozzle and cap deny supporting top.\n2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied.",
+				"reviewed_can_be_stacked": true,
 				"reviewed_can_support_stack": false,
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					1,
+					1,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0,
 					0,
 					0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "dca42c74e048a2a8733f30df9da256ce7ed37807867bcc4384a42bfe1d4df3d9",
+				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Machine proposal: Upright on can base; separately named front label lies at +Z.",
+				"notes": "Machine proposal: Upright on can base; separately named front label lies at +Z.\n2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied.",
 				"reviewed_rotation_degrees": [
 					0,
 					0,
 					0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "dca42c74e048a2a8733f30df9da256ce7ed37807867bcc4384a42bfe1d4df3d9",
+				"status": "DEFAULT_POSE_APPROVED"
 			}
 		},
 		"loot_000166": {
@@ -12332,64 +12322,62 @@
 				"flags": [
 					"VISUAL_REVIEW_RECOMMENDED"
 				],
-				"notes": "Machine proposal: Explicit None: no proven existing compatibility class for this geometry; category alone does not imply a group. Gloves are not assigned folded_clothing.",
+				"notes": "Machine proposal: Explicit None: no proven existing compatibility class for this geometry; category alone does not imply a group. Gloves are not assigned folded_clothing.\n2026-10-24: saved Auto Stack Group remains None. Separate human acceptance of None was not reported. UNREVIEWED: explicitly confirm None or name an intended registered group; stacking capability review alone does not grant group approval.",
 				"reviewed_auto_stack_group": "",
 				"reviewed_registry_compatibility_revision": 0,
 				"reviewed_stack_role_snapshot": {},
 				"status": "UNREVIEWED"
 			},
 			"footprint_review": {
-				"notes": "Machine proposal: canonical X/Z bounds, ceil at 0.10 m, minimum one cell; human overrides pending.",
+				"notes": "Machine proposal: canonical X/Z bounds, ceil at 0.10 m, minimum one cell; human overrides pending.\n2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied. Saved reservation [3, 2, 1] retained against measured ceil suggestion [3, 3, 1]; geometric overhang remains visible and is not normalized away.",
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					3,
+					2,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0,
 					0,
 					0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "2b243806adc522bacaaf3c600a0a4969451db924ec592590d348a0b692d4dd6c",
+				"status": "OVERRIDE_APPROVED"
 			},
 			"item_id": "loot_000166",
 			"scale_review": {
-				"notes": "Machine proposal: measured imported scale unchanged. One 6 L bottle, 0.42 m tall. Capacity is descriptive only, no Utility/Bulk inference.",
+				"notes": "Machine proposal: measured imported scale unchanged. One 6 L bottle, 0.42 m tall. Capacity is descriptive only, no Utility/Bulk inference.\n2026-10-24: source fingerprint and visual_scale=1.0 unchanged; separate human scale acceptance was not reported. UNREVIEWED: confirm source/world scale plausibility; do not regenerate accepted pose/Footprint/roles.",
 				"reviewed_source_fingerprint": "",
 				"status": "UNREVIEWED"
 			},
 			"source_fingerprint": "2b243806adc522bacaaf3c600a0a4969451db924ec592590d348a0b692d4dd6c",
 			"source_path": "res://assets/props/Hydration/SM_6L_Water_Bottle_02.glb",
 			"stack_role_review": {
-				"flags": [
-					"VISUAL_REVIEW_RECOMMENDED"
-				],
-				"notes": "Machine proposal: Bottle may rest on support; handle and narrow cap cannot support cargo.",
-				"reviewed_can_be_stacked": false,
+				"flags": [],
+				"notes": "Machine proposal: Bottle may rest on support; handle and narrow cap cannot support cargo.\n2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied.",
+				"reviewed_can_be_stacked": true,
 				"reviewed_can_support_stack": false,
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					3,
+					2,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0,
 					0,
 					0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "2b243806adc522bacaaf3c600a0a4969451db924ec592590d348a0b692d4dd6c",
+				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Machine proposal: Upright on molded base; handle/label orientation provisionally source +Z.",
+				"notes": "Machine proposal: Upright on molded base; handle/label orientation provisionally source +Z.\n2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied.",
 				"reviewed_rotation_degrees": [
 					0,
 					0,
 					0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "2b243806adc522bacaaf3c600a0a4969451db924ec592590d348a0b692d4dd6c",
+				"status": "DEFAULT_POSE_APPROVED"
 			}
 		},
 		"loot_000167": {
@@ -12397,64 +12385,62 @@
 				"flags": [
 					"VISUAL_REVIEW_RECOMMENDED"
 				],
-				"notes": "Machine proposal: Explicit None: no proven existing compatibility class for this geometry; category alone does not imply a group. Gloves are not assigned folded_clothing.",
+				"notes": "Machine proposal: Explicit None: no proven existing compatibility class for this geometry; category alone does not imply a group. Gloves are not assigned folded_clothing.\n2026-10-24: saved Auto Stack Group remains None. Separate human acceptance of None was not reported. UNREVIEWED: explicitly confirm None or name an intended registered group; stacking capability review alone does not grant group approval.",
 				"reviewed_auto_stack_group": "",
 				"reviewed_registry_compatibility_revision": 0,
 				"reviewed_stack_role_snapshot": {},
 				"status": "UNREVIEWED"
 			},
 			"footprint_review": {
-				"notes": "Machine proposal: canonical X/Z bounds, ceil at 0.10 m, minimum one cell; human overrides pending.",
+				"notes": "Machine proposal: canonical X/Z bounds, ceil at 0.10 m, minimum one cell; human overrides pending.\n2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied.",
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					5,
+					5,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0,
 					0,
 					0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "4fcccfe89c7a7ee691c609413e1da3138b69f23ac608497d4fc53915db02b689",
+				"status": "GEOMETRY_APPROVED"
 			},
 			"item_id": "loot_000167",
 			"scale_review": {
-				"notes": "Machine proposal: measured imported scale unchanged. One crate with twenty visible soda bottles, 6.6-10 L intended total. Three material surfaces are crate/glass/bottle details. Preserve authored internal 0.8 mesh scale; root is unit.",
+				"notes": "Machine proposal: measured imported scale unchanged. One crate with twenty visible soda bottles, 6.6-10 L intended total. Three material surfaces are crate/glass/bottle details. Preserve authored internal 0.8 mesh scale; root is unit.\n2026-10-24: source fingerprint and visual_scale=1.0 unchanged; separate human scale acceptance was not reported. UNREVIEWED: confirm source/world scale plausibility; do not regenerate accepted pose/Footprint/roles.",
 				"reviewed_source_fingerprint": "",
 				"status": "UNREVIEWED"
 			},
 			"source_fingerprint": "4fcccfe89c7a7ee691c609413e1da3138b69f23ac608497d4fc53915db02b689",
 			"source_path": "res://assets/props/Hydration/SM_Bottles_Crate_01.glb",
 			"stack_role_review": {
-				"flags": [
-					"VISUAL_REVIEW_RECOMMENDED"
-				],
-				"notes": "Machine proposal: Crate can rest on support; protruding bottle tops have no demonstrated compatible supporting rim.",
-				"reviewed_can_be_stacked": false,
+				"flags": [],
+				"notes": "Machine proposal: Crate can rest on support; protruding bottle tops have no demonstrated compatible supporting rim.\n2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied.",
+				"reviewed_can_be_stacked": true,
 				"reviewed_can_support_stack": false,
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					5,
+					5,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0,
 					0,
 					0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "4fcccfe89c7a7ee691c609413e1da3138b69f23ac608497d4fc53915db02b689",
+				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Machine proposal: Crate upright on base, source +Z open side provisionally shelf-front.",
+				"notes": "Machine proposal: Crate upright on base, source +Z open side provisionally shelf-front.\n2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied.",
 				"reviewed_rotation_degrees": [
 					0,
 					0,
 					0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "4fcccfe89c7a7ee691c609413e1da3138b69f23ac608497d4fc53915db02b689",
+				"status": "DEFAULT_POSE_APPROVED"
 			}
 		},
 		"loot_000168": {
@@ -12462,65 +12448,62 @@
 				"flags": [
 					"VISUAL_REVIEW_RECOMMENDED"
 				],
-				"notes": "Machine proposal: Explicit None: no proven existing compatibility class for this geometry; category alone does not imply a group. Gloves are not assigned folded_clothing.",
+				"notes": "Machine proposal: Explicit None: no proven existing compatibility class for this geometry; category alone does not imply a group. Gloves are not assigned folded_clothing.\n2026-10-24: saved Auto Stack Group remains None. Separate human acceptance of None was not reported. UNREVIEWED: explicitly confirm None or name an intended registered group; stacking capability review alone does not grant group approval.",
 				"reviewed_auto_stack_group": "",
 				"reviewed_registry_compatibility_revision": 0,
 				"reviewed_stack_role_snapshot": {},
 				"status": "UNREVIEWED"
 			},
 			"footprint_review": {
-				"notes": "Machine proposal: canonical X/Z bounds, ceil at 0.10 m, minimum one cell; human overrides pending.",
+				"notes": "Machine proposal: canonical X/Z bounds, ceil at 0.10 m, minimum one cell; human overrides pending.\n2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied. Saved reservation [3, 3, 1] retained against measured ceil suggestion [3, 4, 1]; geometric overhang remains visible and is not normalized away.",
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					3,
+					3,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0,
 					0,
 					0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "df04f6622dafdb82ee645a6b6cb552749acd013d1e57fc82205a7c2edb51d7a9",
+				"status": "OVERRIDE_APPROVED"
 			},
 			"item_id": "loot_000168",
 			"scale_review": {
-				"notes": "Machine proposal: measured imported scale unchanged. One 7-8 L carton. Four label planes are attached packaging, not a showcase. Label extents exceed the body: retain conservative whole-source bounds.",
+				"notes": "Machine proposal: measured imported scale unchanged. One 7-8 L carton. Four label planes are attached packaging, not a showcase. Label extents exceed the body: retain conservative whole-source bounds.\n2026-10-24: source fingerprint and visual_scale=1.0 unchanged; separate human scale acceptance was not reported. UNREVIEWED: confirm source/world scale plausibility; do not regenerate accepted pose/Footprint/roles.",
 				"reviewed_source_fingerprint": "",
 				"status": "UNREVIEWED"
 			},
 			"source_fingerprint": "df04f6622dafdb82ee645a6b6cb552749acd013d1e57fc82205a7c2edb51d7a9",
 			"source_path": "res://assets/props/Hydration/SM_Juice_BagBox_01.glb",
 			"stack_role_review": {
-				"flags": [
-					"SUPPORT_SURFACE_AMBIGUOUS",
-					"VISUAL_REVIEW_RECOMMENDED"
-				],
-				"notes": "Machine proposal: Rigid carton may rest on support and provisionally support a smaller object on its broad closed top; verify top rigidity and label overhang.",
-				"reviewed_can_be_stacked": false,
-				"reviewed_can_support_stack": false,
+				"flags": [],
+				"notes": "Machine proposal: Rigid carton may rest on support and provisionally support a smaller object on its broad closed top; verify top rigidity and label overhang.\n2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied.",
+				"reviewed_can_be_stacked": true,
+				"reviewed_can_support_stack": true,
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					3,
+					3,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0,
 					0,
 					0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "df04f6622dafdb82ee645a6b6cb552749acd013d1e57fc82205a7c2edb51d7a9",
+				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Machine proposal: Upright carton, apple illustration/dispenser toward +Z. Review front and top-contact credibility.",
+				"notes": "Machine proposal: Upright carton, apple illustration/dispenser toward +Z. Review front and top-contact credibility.\n2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied.",
 				"reviewed_rotation_degrees": [
 					0,
 					0,
 					0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "df04f6622dafdb82ee645a6b6cb552749acd013d1e57fc82205a7c2edb51d7a9",
+				"status": "DEFAULT_POSE_APPROVED"
 			}
 		},
 		"loot_000169": {
@@ -12528,64 +12511,62 @@
 				"flags": [
 					"VISUAL_REVIEW_RECOMMENDED"
 				],
-				"notes": "Machine proposal: Explicit None: no proven existing compatibility class for this geometry; category alone does not imply a group. Gloves are not assigned folded_clothing.",
+				"notes": "Machine proposal: Explicit None: no proven existing compatibility class for this geometry; category alone does not imply a group. Gloves are not assigned folded_clothing.\n2026-10-24: saved Auto Stack Group remains None. Separate human acceptance of None was not reported. UNREVIEWED: explicitly confirm None or name an intended registered group; stacking capability review alone does not grant group approval.",
 				"reviewed_auto_stack_group": "",
 				"reviewed_registry_compatibility_revision": 0,
 				"reviewed_stack_role_snapshot": {},
 				"status": "UNREVIEWED"
 			},
 			"footprint_review": {
-				"notes": "Machine proposal: canonical X/Z bounds, ceil at 0.10 m, minimum one cell; human overrides pending.",
+				"notes": "Machine proposal: canonical X/Z bounds, ceil at 0.10 m, minimum one cell; human overrides pending.\n2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied.",
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					2,
+					2,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0,
-					0,
+					180,
 					0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "7f2508809d1d6f5e90f0d0218db2b4fec6191760499c6c85bc1f62ef08baf86e",
+				"status": "GEOMETRY_APPROVED"
 			},
 			"item_id": "loot_000169",
 			"scale_review": {
-				"notes": "Machine proposal: measured imported scale unchanged. One 4-5 L jug, 0.28 m tall; capacity plausibility requires human review, with no scale normalization.",
+				"notes": "Machine proposal: measured imported scale unchanged. One 4-5 L jug, 0.28 m tall; capacity plausibility requires human review, with no scale normalization.\n2026-10-24: source fingerprint and visual_scale=1.0 unchanged; separate human scale acceptance was not reported. UNREVIEWED: confirm source/world scale plausibility; do not regenerate accepted pose/Footprint/roles.",
 				"reviewed_source_fingerprint": "",
 				"status": "UNREVIEWED"
 			},
 			"source_fingerprint": "7f2508809d1d6f5e90f0d0218db2b4fec6191760499c6c85bc1f62ef08baf86e",
 			"source_path": "res://assets/props/Hydration/SM_OJ_LargeJug_01.glb",
 			"stack_role_review": {
-				"flags": [
-					"VISUAL_REVIEW_RECOMMENDED"
-				],
-				"notes": "Machine proposal: Jug may rest on support; handle/shoulder and narrow cap deny supporting top.",
-				"reviewed_can_be_stacked": false,
+				"flags": [],
+				"notes": "Machine proposal: Jug may rest on support; handle/shoulder and narrow cap deny supporting top.\n2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied.",
+				"reviewed_can_be_stacked": true,
 				"reviewed_can_support_stack": false,
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					2,
+					2,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0,
-					0,
+					180,
 					0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "7f2508809d1d6f5e90f0d0218db2b4fec6191760499c6c85bc1f62ef08baf86e",
+				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Machine proposal: Yaw 180 degrees puts the named source -Z orange label at canonical +Z; retain upright base.",
+				"notes": "Machine proposal: Yaw 180 degrees puts the named source -Z orange label at canonical +Z; retain upright base.\n2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied.",
 				"reviewed_rotation_degrees": [
 					0,
-					0,
+					180,
 					0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "7f2508809d1d6f5e90f0d0218db2b4fec6191760499c6c85bc1f62ef08baf86e",
+				"status": "CUSTOM_POSE_APPROVED"
 			}
 		},
 		"loot_000170": {
@@ -12593,64 +12574,62 @@
 				"flags": [
 					"VISUAL_REVIEW_RECOMMENDED"
 				],
-				"notes": "Machine proposal: Explicit None: no proven existing compatibility class for this geometry; category alone does not imply a group. Gloves are not assigned folded_clothing.",
+				"notes": "Machine proposal: Explicit None: no proven existing compatibility class for this geometry; category alone does not imply a group. Gloves are not assigned folded_clothing.\n2026-10-24: saved Auto Stack Group remains None. Separate human acceptance of None was not reported. UNREVIEWED: explicitly confirm None or name an intended registered group; stacking capability review alone does not grant group approval.",
 				"reviewed_auto_stack_group": "",
 				"reviewed_registry_compatibility_revision": 0,
 				"reviewed_stack_role_snapshot": {},
 				"status": "UNREVIEWED"
 			},
 			"footprint_review": {
-				"notes": "Machine proposal: canonical X/Z bounds, ceil at 0.10 m, minimum one cell; human overrides pending.",
+				"notes": "Machine proposal: canonical X/Z bounds, ceil at 0.10 m, minimum one cell; human overrides pending.\n2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied.",
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					4,
+					3,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0,
 					0,
 					0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "41a4d714ed83a2ff0504798971895fba243672b1e81367d20000b3d5a0da925a",
+				"status": "GEOMETRY_APPROVED"
 			},
 			"item_id": "loot_000170",
 			"scale_review": {
-				"notes": "Machine proposal: measured imported scale unchanged. One bundled six-pack, 9-12 L intended total, six visible caps; do not decompose.",
+				"notes": "Machine proposal: measured imported scale unchanged. One bundled six-pack, 9-12 L intended total, six visible caps; do not decompose.\n2026-10-24: source fingerprint and visual_scale=1.0 unchanged; separate human scale acceptance was not reported. UNREVIEWED: confirm source/world scale plausibility; do not regenerate accepted pose/Footprint/roles.",
 				"reviewed_source_fingerprint": "",
 				"status": "UNREVIEWED"
 			},
 			"source_fingerprint": "41a4d714ed83a2ff0504798971895fba243672b1e81367d20000b3d5a0da925a",
 			"source_path": "res://assets/props/Hydration/SM_Water_6Pack_03.glb",
 			"stack_role_review": {
-				"flags": [
-					"VISUAL_REVIEW_RECOMMENDED"
-				],
-				"notes": "Machine proposal: Bundle may rest on support; six bottle shoulders/caps are not a flat load-bearing top.",
-				"reviewed_can_be_stacked": false,
+				"flags": [],
+				"notes": "Machine proposal: Bundle may rest on support; six bottle shoulders/caps are not a flat load-bearing top.\n2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied.",
+				"reviewed_can_be_stacked": true,
 				"reviewed_can_support_stack": false,
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					4,
+					3,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0,
 					0,
 					0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "41a4d714ed83a2ff0504798971895fba243672b1e81367d20000b3d5a0da925a",
+				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Machine proposal: Six bottles upright in retained wrap; broad three-bottle row faces +Z.",
+				"notes": "Machine proposal: Six bottles upright in retained wrap; broad three-bottle row faces +Z.\n2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied.",
 				"reviewed_rotation_degrees": [
 					0,
 					0,
 					0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "41a4d714ed83a2ff0504798971895fba243672b1e81367d20000b3d5a0da925a",
+				"status": "DEFAULT_POSE_APPROVED"
 			}
 		},
 		"loot_000171": {
@@ -12658,66 +12637,62 @@
 				"flags": [
 					"VISUAL_REVIEW_RECOMMENDED"
 				],
-				"notes": "Machine proposal: Explicit None: no proven existing compatibility class for this geometry; category alone does not imply a group. Gloves are not assigned folded_clothing.",
+				"notes": "Machine proposal: Explicit None: no proven existing compatibility class for this geometry; category alone does not imply a group. Gloves are not assigned folded_clothing.\n2026-10-24: saved Auto Stack Group remains None. Separate human acceptance of None was not reported. UNREVIEWED: explicitly confirm None or name an intended registered group; stacking capability review alone does not grant group approval.",
 				"reviewed_auto_stack_group": "",
 				"reviewed_registry_compatibility_revision": 0,
 				"reviewed_stack_role_snapshot": {},
 				"status": "UNREVIEWED"
 			},
 			"footprint_review": {
-				"notes": "Machine proposal: canonical X/Z bounds, ceil at 0.10 m, minimum one cell; human overrides pending.",
+				"notes": "Machine proposal: canonical X/Z bounds, ceil at 0.10 m, minimum one cell; human overrides pending.\n2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied.",
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					3,
+					3,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0,
 					0,
 					0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "fe943460ed4de7b0978afdfd3b7d7c016b2025eb90442de1dbcd9556521d63bd",
+				"status": "GEOMETRY_APPROVED"
 			},
 			"item_id": "loot_000171",
 			"scale_review": {
-				"notes": "Machine proposal: measured imported scale unchanged. Four complementary helmet pieces form one wearable, not four alternate examples.",
+				"notes": "Machine proposal: measured imported scale unchanged. Four complementary helmet pieces form one wearable, not four alternate examples.\n2026-10-24: source fingerprint and visual_scale=1.0 unchanged; separate human scale acceptance was not reported. UNREVIEWED: confirm source/world scale plausibility; do not regenerate accepted pose/Footprint/roles.",
 				"reviewed_source_fingerprint": "",
 				"status": "UNREVIEWED"
 			},
 			"source_fingerprint": "fe943460ed4de7b0978afdfd3b7d7c016b2025eb90442de1dbcd9556521d63bd",
 			"source_path": "res://assets/props/protection/SM_Cosplay_helmet_01.glb",
 			"stack_role_review": {
-				"flags": [
-					"IRREGULAR_SHAPE",
-					"RESTING_STABILITY_AMBIGUOUS",
-					"VISUAL_REVIEW_RECOMMENDED"
-				],
-				"notes": "Machine proposal: Helmet may rest on a broad support; curved crown and projections deny supporting top.",
-				"reviewed_can_be_stacked": false,
+				"flags": [],
+				"notes": "Machine proposal: Helmet may rest on a broad support; curved crown and projections deny supporting top.\n2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied.",
+				"reviewed_can_be_stacked": true,
 				"reviewed_can_support_stack": false,
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					3,
+					3,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0,
 					0,
 					0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "fe943460ed4de7b0978afdfd3b7d7c016b2025eb90442de1dbcd9556521d63bd",
+				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Machine proposal: Upright open-bottom rim, source face/eye openings at +Z. Review contact around projecting face and wings.",
+				"notes": "Machine proposal: Upright open-bottom rim, source face/eye openings at +Z. Review contact around projecting face and wings.\n2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied.",
 				"reviewed_rotation_degrees": [
 					0,
 					0,
 					0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "fe943460ed4de7b0978afdfd3b7d7c016b2025eb90442de1dbcd9556521d63bd",
+				"status": "DEFAULT_POSE_APPROVED"
 			}
 		},
 		"loot_000172": {
@@ -12725,66 +12700,62 @@
 				"flags": [
 					"VISUAL_REVIEW_RECOMMENDED"
 				],
-				"notes": "Machine proposal: Explicit None: no proven existing compatibility class for this geometry; category alone does not imply a group. Gloves are not assigned folded_clothing.",
+				"notes": "Machine proposal: Explicit None: no proven existing compatibility class for this geometry; category alone does not imply a group. Gloves are not assigned folded_clothing.\n2026-10-24: saved Auto Stack Group remains None. Separate human acceptance of None was not reported. UNREVIEWED: explicitly confirm None or name an intended registered group; stacking capability review alone does not grant group approval.",
 				"reviewed_auto_stack_group": "",
 				"reviewed_registry_compatibility_revision": 0,
 				"reviewed_stack_role_snapshot": {},
 				"status": "UNREVIEWED"
 			},
 			"footprint_review": {
-				"notes": "Machine proposal: canonical X/Z bounds, ceil at 0.10 m, minimum one cell; human overrides pending.",
+				"notes": "Machine proposal: canonical X/Z bounds, ceil at 0.10 m, minimum one cell; human overrides pending.\n2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied.",
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					4,
+					4,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0,
 					0,
 					0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "3ce9f949a9f8ea558dcb91b68a69f9984b66228f652dc5459e6f577e3c975b59",
+				"status": "GEOMETRY_APPROVED"
 			},
 			"item_id": "loot_000172",
 			"scale_review": {
-				"notes": "Machine proposal: measured imported scale unchanged. Three meshes form brim/crown/trim of one hat. Internal centimeter conversion yields plausible 0.30 x 0.15 x 0.33 m at unit root; do not normalize source.",
+				"notes": "Machine proposal: measured imported scale unchanged. Three meshes form brim/crown/trim of one hat. Internal centimeter conversion yields plausible 0.30 x 0.15 x 0.33 m at unit root; do not normalize source.\n2026-10-24: source fingerprint and visual_scale=1.0 unchanged; separate human scale acceptance was not reported. UNREVIEWED: confirm source/world scale plausibility; do not regenerate accepted pose/Footprint/roles.",
 				"reviewed_source_fingerprint": "",
 				"status": "UNREVIEWED"
 			},
 			"source_fingerprint": "3ce9f949a9f8ea558dcb91b68a69f9984b66228f652dc5459e6f577e3c975b59",
 			"source_path": "res://assets/props/protection/SM_Fedora_Hat_01.glb",
 			"stack_role_review": {
-				"flags": [
-					"IRREGULAR_SHAPE",
-					"RESTING_STABILITY_AMBIGUOUS",
-					"VISUAL_REVIEW_RECOMMENDED"
-				],
-				"notes": "Machine proposal: Hat may rest on support; soft curved crown cannot credibly support cargo.",
-				"reviewed_can_be_stacked": false,
+				"flags": [],
+				"notes": "Machine proposal: Hat may rest on support; soft curved crown cannot credibly support cargo.\n2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied.",
+				"reviewed_can_be_stacked": true,
 				"reviewed_can_support_stack": false,
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					4,
+					4,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0,
 					0,
 					0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "3ce9f949a9f8ea558dcb91b68a69f9984b66228f652dc5459e6f577e3c975b59",
+				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Machine proposal: Upright brim down; asymmetric brim/band detail provisionally source +Z.",
+				"notes": "Machine proposal: Upright brim down; asymmetric brim/band detail provisionally source +Z.\n2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied.",
 				"reviewed_rotation_degrees": [
 					0,
 					0,
 					0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "3ce9f949a9f8ea558dcb91b68a69f9984b66228f652dc5459e6f577e3c975b59",
+				"status": "DEFAULT_POSE_APPROVED"
 			}
 		},
 		"loot_000173": {
@@ -12792,68 +12763,62 @@
 				"flags": [
 					"VISUAL_REVIEW_RECOMMENDED"
 				],
-				"notes": "Machine proposal: Explicit None: no proven existing compatibility class for this geometry; category alone does not imply a group. Gloves are not assigned folded_clothing.",
+				"notes": "Machine proposal: Explicit None: no proven existing compatibility class for this geometry; category alone does not imply a group. Gloves are not assigned folded_clothing.\n2026-10-24: saved Auto Stack Group remains None. Separate human acceptance of None was not reported. UNREVIEWED: explicitly confirm None or name an intended registered group; stacking capability review alone does not grant group approval.",
 				"reviewed_auto_stack_group": "",
 				"reviewed_registry_compatibility_revision": 0,
 				"reviewed_stack_role_snapshot": {},
 				"status": "UNREVIEWED"
 			},
 			"footprint_review": {
-				"notes": "Machine proposal: canonical X/Z bounds, ceil at 0.10 m, minimum one cell; human overrides pending.",
+				"notes": "Machine proposal: canonical X/Z bounds, ceil at 0.10 m, minimum one cell; human overrides pending.\n2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied.",
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					2,
+					3,
+					1
 				],
 				"reviewed_rotation_degrees": [
-					0,
-					0,
-					0
+					80.206298828125,
+					-105.013702392578,
+					-104.80460357666
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "aa3f6c6eede41fed5be7720d37c4391fcce88039e8c94d0f467b35c56a4516cb",
+				"status": "GEOMETRY_APPROVED"
 			},
 			"item_id": "loot_000173",
 			"scale_review": {
-				"notes": "Machine proposal: measured imported scale unchanged. Two separate glove meshes form one leather pair; entirely new identity, unrelated to retired loot_000034.",
+				"notes": "Machine proposal: measured imported scale unchanged. Two separate glove meshes form one leather pair; entirely new identity, unrelated to retired loot_000034.\n2026-10-24: source fingerprint and visual_scale=1.0 unchanged; separate human scale acceptance was not reported. UNREVIEWED: confirm source/world scale plausibility; do not regenerate accepted pose/Footprint/roles.",
 				"reviewed_source_fingerprint": "",
 				"status": "UNREVIEWED"
 			},
 			"source_fingerprint": "aa3f6c6eede41fed5be7720d37c4391fcce88039e8c94d0f467b35c56a4516cb",
 			"source_path": "res://assets/props/protection/SM_LeatherGloves_01.glb",
 			"stack_role_review": {
-				"flags": [
-					"IRREGULAR_SHAPE",
-					"RESTING_STABILITY_AMBIGUOUS",
-					"SOFT_OR_DEFORMABLE_FORM",
-					"POSE_DEPENDENT",
-					"VISUAL_REVIEW_RECOMMENDED"
-				],
-				"notes": "Machine proposal: Offset soft pair may rest on support; uneven fingers/cuffs deny supporting top.",
-				"reviewed_can_be_stacked": false,
+				"flags": [],
+				"notes": "Machine proposal: Offset soft pair may rest on support; uneven fingers/cuffs deny supporting top.\n2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied.",
+				"reviewed_can_be_stacked": true,
 				"reviewed_can_support_stack": false,
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					2,
+					3,
+					1
 				],
 				"reviewed_rotation_degrees": [
-					0,
-					0,
-					0
+					80.206298828125,
+					-105.013702392578,
+					-104.80460357666
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "aa3f6c6eede41fed5be7720d37c4391fcce88039e8c94d0f467b35c56a4516cb",
+				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Machine proposal: Lay the pair on broad sides, fingers toward canonical +Z. Derived by aligning the first glove local broad face to the shelf plane while retaining both source-node transforms. Plain X=90 left a measured 14.456 mm AABB-versus-vertex gap; this pose restores the production 6 mm vertex seating offset. Offset pair stability still needs human review.",
+				"notes": "Machine proposal: Lay the pair on broad sides, fingers toward canonical +Z. Derived by aligning the first glove local broad face to the shelf plane while retaining both source-node transforms. Plain X=90 left a measured 14.456 mm AABB-versus-vertex gap; this pose restores the production 6 mm vertex seating offset. Offset pair stability still needs human review.\n2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied.",
 				"reviewed_rotation_degrees": [
-					0,
-					0,
-					0
+					80.206298828125,
+					-105.013702392578,
+					-104.80460357666
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "aa3f6c6eede41fed5be7720d37c4391fcce88039e8c94d0f467b35c56a4516cb",
+				"status": "CUSTOM_POSE_APPROVED"
 			}
 		},
 		"loot_000174": {
@@ -12861,64 +12826,62 @@
 				"flags": [
 					"VISUAL_REVIEW_RECOMMENDED"
 				],
-				"notes": "Machine proposal: Explicit None: no proven existing compatibility class for this geometry; category alone does not imply a group. Gloves are not assigned folded_clothing.",
+				"notes": "Machine proposal: Explicit None: no proven existing compatibility class for this geometry; category alone does not imply a group. Gloves are not assigned folded_clothing.\n2026-10-24: saved Auto Stack Group remains None. Separate human acceptance of None was not reported. UNREVIEWED: explicitly confirm None or name an intended registered group; stacking capability review alone does not grant group approval.",
 				"reviewed_auto_stack_group": "",
 				"reviewed_registry_compatibility_revision": 0,
 				"reviewed_stack_role_snapshot": {},
 				"status": "UNREVIEWED"
 			},
 			"footprint_review": {
-				"notes": "Machine proposal: canonical X/Z bounds, ceil at 0.10 m, minimum one cell; human overrides pending.",
+				"notes": "Machine proposal: canonical X/Z bounds, ceil at 0.10 m, minimum one cell; human overrides pending.\n2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied.",
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					4,
+					4,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0,
 					0,
 					0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "2d3ecd989bf6af4679d24e9b0f650349ae9e51217971f4ce602f3cea0e90f640",
+				"status": "GEOMETRY_APPROVED"
 			},
 			"item_id": "loot_000174",
 			"scale_review": {
-				"notes": "Machine proposal: measured imported scale unchanged. Both boots remain one 0.38 m-high pair. No mesh edits or decomposition.",
+				"notes": "Machine proposal: measured imported scale unchanged. Both boots remain one 0.38 m-high pair. No mesh edits or decomposition.\n2026-10-24: source fingerprint and visual_scale=1.0 unchanged; separate human scale acceptance was not reported. UNREVIEWED: confirm source/world scale plausibility; do not regenerate accepted pose/Footprint/roles.",
 				"reviewed_source_fingerprint": "",
 				"status": "UNREVIEWED"
 			},
 			"source_fingerprint": "2d3ecd989bf6af4679d24e9b0f650349ae9e51217971f4ce602f3cea0e90f640",
 			"source_path": "res://assets/props/protection/SM_Wellies_01.glb",
 			"stack_role_review": {
-				"flags": [
-					"VISUAL_REVIEW_RECOMMENDED"
-				],
-				"notes": "Machine proposal: Pair may rest on support; two open boot shafts do not form a supporting top.",
-				"reviewed_can_be_stacked": false,
+				"flags": [],
+				"notes": "Machine proposal: Pair may rest on support; two open boot shafts do not form a supporting top.\n2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied.",
+				"reviewed_can_be_stacked": true,
 				"reviewed_can_support_stack": false,
 				"reviewed_footprint": [
-					0,
-					0,
-					0
+					4,
+					4,
+					1
 				],
 				"reviewed_rotation_degrees": [
 					0,
 					0,
 					0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "2d3ecd989bf6af4679d24e9b0f650349ae9e51217971f4ce602f3cea0e90f640",
+				"status": "APPROVED"
 			},
 			"storage_pose_review": {
-				"notes": "Machine proposal: Pair upright on soles; toes provisionally toward +Z, verify source front.",
+				"notes": "Machine proposal: Pair upright on soles; toes provisionally toward +Z, verify source front.\n2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied.",
 				"reviewed_rotation_degrees": [
 					0,
 					0,
 					0
 				],
-				"reviewed_source_fingerprint": "",
-				"status": "UNREVIEWED"
+				"reviewed_source_fingerprint": "2d3ecd989bf6af4679d24e9b0f650349ae9e51217971f4ce602f3cea0e90f640",
+				"status": "DEFAULT_POSE_APPROVED"
 			}
 		}
 	},
