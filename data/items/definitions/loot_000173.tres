@@ -1,12 +1,12 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://bbpd2v3p7fott"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_2snx4"]
-[ext_resource type="PackedScene" path="res://assets/props/protection/SM_LeatherGloves_01.glb" id="2_qfcb6"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_2snx4"]
+[ext_resource type="PackedScene" uid="uid://bkeowgn5nrofa" path="res://assets/props/protection/SM_LeatherGloves_01.glb" id="2_qfcb6"]
 
 [resource]
 script = ExtResource("1_2snx4")
 item_id = &"loot_000173"
-display_name = "Leather Gloves (Pair)"
+display_name = "Leather Gloves"
 storage_category = "Protection"
 storage_footprint = Vector3i(2, 3, 1)
 can_be_stacked = true

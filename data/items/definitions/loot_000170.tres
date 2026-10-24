@@ -1,12 +1,12 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://c6lwrb2yinn2a"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_phh00"]
-[ext_resource type="PackedScene" path="res://assets/props/Hydration/SM_Water_6Pack_03.glb" id="2_j4rbh"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_phh00"]
+[ext_resource type="PackedScene" uid="uid://bfdmrgrpnrtot" path="res://assets/props/Hydration/SM_Water_6Pack_03.glb" id="2_j4rbh"]
 
 [resource]
 script = ExtResource("1_phh00")
 item_id = &"loot_000170"
-display_name = "Water Bottle Six-Pack (9-12 L)"
+display_name = "Water Bottle Six-Pack"
 storage_category = "Hydration"
 storage_footprint = Vector3i(4, 3, 1)
 can_be_stacked = true

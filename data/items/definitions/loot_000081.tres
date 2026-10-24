@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_vclmc")
 item_id = &"loot_000081"
-display_name = "Watercooler bBottle"
+display_name = "Watercooler Bottle"
 storage_category = "Hydration"
 storage_footprint = Vector3i(3, 3, 1)
 can_be_stacked = true

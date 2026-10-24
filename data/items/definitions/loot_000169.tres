@@ -1,12 +1,12 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://bw00d0n4l7bus"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_rix76"]
-[ext_resource type="PackedScene" path="res://assets/props/Hydration/SM_OJ_LargeJug_01.glb" id="2_1rchs"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_rix76"]
+[ext_resource type="PackedScene" uid="uid://du34hj7o2aqin" path="res://assets/props/Hydration/SM_OJ_LargeJug_01.glb" id="2_1rchs"]
 
 [resource]
 script = ExtResource("1_rix76")
 item_id = &"loot_000169"
-display_name = "Orange Juice Jug (4-5 L)"
+display_name = "Orange Juice Jug"
 storage_category = "Hydration"
 storage_footprint = Vector3i(2, 2, 1)
 can_be_stacked = true

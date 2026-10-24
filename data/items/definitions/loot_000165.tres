@@ -1,12 +1,12 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://dc16f218kgfgw"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_bax0w"]
-[ext_resource type="PackedScene" path="res://assets/props/Fuel/SM_Lighter_Fluid_Can_02.glb" id="2_cyabl"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_bax0w"]
+[ext_resource type="PackedScene" uid="uid://dcf2p3k64glbu" path="res://assets/props/Fuel/SM_Lighter_Fluid_Can_02.glb" id="2_cyabl"]
 
 [resource]
 script = ExtResource("1_bax0w")
 item_id = &"loot_000165"
-display_name = "Lighter Fluid Can (330 ml)"
+display_name = "Lighter Fluid Can"
 storage_category = "Fuel"
 can_be_stacked = true
 visual_scene = ExtResource("2_cyabl")

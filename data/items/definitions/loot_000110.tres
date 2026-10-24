@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_vmyhw")
 item_id = &"loot_000110"
-display_name = "Revolver 01"
+display_name = "Revolver"
 storage_category = "Weapons"
 storage_footprint = Vector3i(5, 3, 1)
 can_be_stacked = true

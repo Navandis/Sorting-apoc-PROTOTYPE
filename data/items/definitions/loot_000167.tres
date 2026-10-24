@@ -1,12 +1,12 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://x14ak6ydv75t"]
 
-[ext_resource type="Script" path="res://item_definition.gd" id="1_qnmul"]
-[ext_resource type="PackedScene" path="res://assets/props/Hydration/SM_Bottles_Crate_01.glb" id="2_igse7"]
+[ext_resource type="Script" uid="uid://xsfpquc1fjue" path="res://item_definition.gd" id="1_qnmul"]
+[ext_resource type="PackedScene" uid="uid://172uj67kd548" path="res://assets/props/Hydration/SM_Bottles_Crate_01.glb" id="2_igse7"]
 
 [resource]
 script = ExtResource("1_qnmul")
 item_id = &"loot_000167"
-display_name = "Soda Bottle Crate (20 Bottles)"
+display_name = "Soda Bottle Crate"
 storage_category = "Hydration"
 storage_footprint = Vector3i(5, 5, 1)
 can_be_stacked = true
