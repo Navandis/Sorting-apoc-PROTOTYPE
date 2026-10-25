@@ -43,7 +43,7 @@ func _record_item(items: Dictionary, item: ItemInstance) -> void:
 
 func content_fingerprint() -> String:
 	var physical: Dictionary = {}
-	var catalog := load(Catalog.CATALOGUE_PATH) as ItemCatalog
+	var catalog := Catalog._catalogue() as ItemCatalog
 	for definition: ItemDefinition in catalog.definitions:
 		physical[String(definition.item_id)] = [definition.bulk, definition.storage_footprint,
 			definition.storage_rotation_degrees, definition.can_be_stacked, definition.can_support_stack,
