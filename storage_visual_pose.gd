@@ -7,6 +7,18 @@ class_name StorageVisualPose
 
 const SHELF_CLEARANCE_M: float = 0.006
 
+# Only immutable imported runtime loot participates. Editor authoring and
+# procedural meshes always scan. Keep resources alive to prevent identity reuse;
+# neither an item ID nor a path identifies geometry. The complete local transform
+# includes authored pose/scale and every nested node, before outer packing yaw.
+const MIN_Y_CACHE_LIMIT: int = 512
+static var _mesh_min_y_cache: Dictionary = {}
+static var _measurement_entries: int = 0
+static var _measurement_hits: int = 0
+static var _measurement_misses: int = 0
+static var _measurement_vertex_visits: int = 0
+static var _measurement_bypasses: int = 0
+
 
 static func measure_item(item: ItemInstance, packing_rotated: bool) -> Dictionary:
 	if item == null:
@@ -122,11 +134,9 @@ static func _scan_bounds_recursive(
 	if node is MeshInstance3D:
 		var mesh_instance: MeshInstance3D = node as MeshInstance3D
 		if mesh_instance.mesh != null:
-			for surface: int in mesh_instance.mesh.get_surface_count():
-				var arrays := mesh_instance.mesh.surface_get_arrays(surface)
-				for vertex: Vector3 in arrays[Mesh.ARRAY_VERTEX]:
-					var y := (next_transform * vertex).y
-					state["mesh_min_y"] = minf(float(state.get("mesh_min_y", INF)), y)
+			var minimum_y := _mesh_minimum_y(mesh_instance.mesh, next_transform)
+			if minimum_y != INF:
+				state["mesh_min_y"] = minf(float(state.get("mesh_min_y", INF)), minimum_y)
 			var transformed_bounds: AABB = _transform_bounds(
 				mesh_instance.mesh.get_aabb(),
 				next_transform
@@ -139,6 +149,74 @@ static func _scan_bounds_recursive(
 
 	for child: Node in node.get_children():
 		_scan_bounds_recursive(child, next_transform, state)
+
+
+static func _mesh_minimum_y(mesh: Mesh, transform: Transform3D) -> float:
+	var reusable := (
+		not Engine.is_editor_hint()
+		and mesh is ArrayMesh
+		and mesh.resource_path.get_slice("::", 0).get_extension().to_lower() == "glb"
+		and mesh.resource_path.contains("::")
+	)
+	var mesh_id := mesh.get_instance_id()
+	if reusable and _mesh_min_y_cache.has(mesh_id):
+		var measurements: Dictionary = _mesh_min_y_cache[mesh_id].measurements
+		if measurements.has(transform):
+			_measurement_hits += 1
+			return float(measurements[transform])
+	_measurement_misses += 1
+	if not reusable:
+		_measurement_bypasses += 1
+	var minimum_y := INF
+	for surface: int in mesh.get_surface_count():
+		var arrays := mesh.surface_get_arrays(surface)
+		var vertices: PackedVector3Array = arrays[Mesh.ARRAY_VERTEX]
+		_measurement_vertex_visits += vertices.size()
+		for vertex: Vector3 in vertices:
+			minimum_y = minf(minimum_y, (transform * vertex).y)
+	if reusable:
+		if _measurement_entries >= MIN_Y_CACHE_LIMIT:
+			clear_measurement_cache(false)
+		if not _mesh_min_y_cache.has(mesh_id):
+			_mesh_min_y_cache[mesh_id] = {"mesh": mesh, "measurements": {}}
+			mesh.changed.connect(_invalidate_mesh_measurements.bind(mesh_id))
+		_mesh_min_y_cache[mesh_id].measurements[transform] = minimum_y
+		_measurement_entries += 1
+	return minimum_y
+
+
+static func _invalidate_mesh_measurements(mesh_id: int) -> void:
+	if not _mesh_min_y_cache.has(mesh_id):
+		return
+	var entry: Dictionary = _mesh_min_y_cache[mesh_id]
+	var mesh: Mesh = entry.mesh
+	mesh.changed.disconnect(_invalidate_mesh_measurements.bind(mesh_id))
+	_measurement_entries -= entry.measurements.size()
+	_mesh_min_y_cache.erase(mesh_id)
+
+
+static func clear_measurement_cache(reset_statistics: bool = true) -> void:
+	# Runtime owners changing imported geometry must emit Resource.changed or clear
+	# before reuse. GPU-only deformation without that signal is outside this static
+	# loot contract. Editor/reimport work never uses this cache.
+	for mesh_id: int in _mesh_min_y_cache.keys():
+		_invalidate_mesh_measurements(mesh_id)
+	if reset_statistics:
+		_measurement_hits = 0
+		_measurement_misses = 0
+		_measurement_vertex_visits = 0
+		_measurement_bypasses = 0
+
+
+static func get_measurement_cache_stats() -> Dictionary:
+	return {
+		"entries": _measurement_entries,
+		"meshes": _mesh_min_y_cache.size(),
+		"hits": _measurement_hits,
+		"misses": _measurement_misses,
+		"vertex_visits": _measurement_vertex_visits,
+		"bypasses": _measurement_bypasses,
+	}
 
 
 static func _transform_bounds(bounds: AABB, transform: Transform3D) -> AABB:
