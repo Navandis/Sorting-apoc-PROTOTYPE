@@ -33,6 +33,7 @@ var close_button: Button
 const INK := Color(0.91,0.95,0.98)
 const BLUE_INK := Color(0.06,0.17,0.24)
 const REJECTED := Color(1.0,0.3,0.26)
+const FULL_TRACK := Color(1.0,0.8,0.25)
 const LANES := ["Food","Hydration","Medical","Weapons","Protection"]
 
 func _ready() -> void:
@@ -267,10 +268,10 @@ func _layout() -> void:
 	_stage.scale = Vector2.ONE * factor
 	_stage.position = Vector2((viewport.x-1100.0*factor)/2.0,maxf(14.0/pixels_per_unit,(viewport.y-570.0*factor-150.0/pixels_per_unit)/2.0))
 
-func _skin(control: Control, terminal: bool, rejected: bool = false) -> void:
+func _skin(control: Control, terminal: bool, rejected: bool = false, rejection_colour: Color = REJECTED) -> void:
 	var style := StyleBoxFlat.new()
 	style.bg_color = Color(0.67,0.84,0.95,0.98) if terminal else Color(0.025,0.045,0.065,0.98)
-	style.border_color = Color(0.3,0.57,0.76) if terminal else REJECTED if rejected else Color(0.35,0.62,0.77)
+	style.border_color = Color(0.3,0.57,0.76) if terminal else rejection_colour if rejected else Color(0.35,0.62,0.77)
 	style.set_border_width_all(2)
 	style.set_corner_radius_all(5)
 	if control is Button:
@@ -294,13 +295,19 @@ func refresh() -> void:
 	preview_state = request.preview(item)
 	var terminal: bool = request.closed
 	var invalid: bool = preview_state.status in ["ineligible","capacity"]
-	_skin(_card,terminal,invalid)
+	var feedback_colour: Color = FULL_TRACK if invalid and preview_state.reason == "full" else REJECTED
+	_skin(_card,terminal,invalid,feedback_colour)
 	for label: Label in _card.find_children("*","Label",true,false): label.add_theme_color_override("font_color",BLUE_INK if terminal else INK)
 	for label: RichTextLabel in _card.find_children("*","RichTextLabel",true,false): label.add_theme_color_override("default_color",BLUE_INK if terminal else INK)
 	title_label.text = "TEAM %d  ·  %d MEMBERS" % [request.display_index,request.members]
 	title_label.tooltip_text = ""
 	deadline_label.text = "Day %d" % request.day
-	if request.deadline >= 0.0 and request.time_source.is_valid():
+	if terminal:
+		var config: Dictionary = request.time_source.get_object().config if request.time_source.is_valid() else {"day_start":21600.0,"rate":24.0}
+		var duration: float = (86400.0-float(config.day_start))/float(config.rate)
+		var dispatched_calendar: float = float(config.day_start)+(float(request.dispatch_result.at)-(request.day-1)*duration)*float(config.rate)
+		deadline_label.text += " · Dispatched %s" % load("res://gameplay/run/run_clock.gd").time_text(dispatched_calendar)
+	elif request.deadline >= 0.0 and request.time_source.is_valid():
 		var clock: RefCounted = request.time_source.get_object()
 		var deadline_calendar: float = float(clock.config.day_start)+(request.deadline-(request.day-1)*clock.day_duration())*float(clock.config.rate)
 		deadline_label.text += " · Deadline %s · %s remaining" % [clock.time_text(deadline_calendar),clock.time_text(maxf(0,request.deadline-request.current_time())*float(clock.config.rate))]
@@ -324,7 +331,7 @@ func refresh() -> void:
 			bulk_label.visible = false
 		_: status_label.text = "Carry an eligible item to provision this team"
 	status_label.visible = not status_label.text.is_empty()
-	status_label.add_theme_color_override("font_color",REJECTED if invalid else BLUE_INK if terminal else INK)
+	status_label.add_theme_color_override("font_color",feedback_colour if invalid else BLUE_INK if terminal else INK)
 	hint_label.text = "[i]%s[/i]" % ("Read-only loadout · A/D or arrows change team" if terminal else "[E] Submit selected item · Wheel / 1–0 select · A/D or ←/→ change team")
 	for lane: String in LANES:
 		var row: Dictionary = lane_rows[lane]
@@ -339,7 +346,7 @@ func refresh() -> void:
 			row.label.text = "%s [color=#a6f2c4]%d[/color]/%d ([color=#a6f2c4]+%d[/color] / %s)" % [lane,projected,target,preview_state.applied,waste]
 		var track_style := StyleBoxFlat.new()
 		track_style.bg_color = Color(0.47,0.65,0.77) if terminal else Color(0.07,0.12,0.17)
-		track_style.border_color = REJECTED if row.rejected else Color(0.28,0.45,0.55)
+		track_style.border_color = feedback_colour if row.rejected else Color(0.28,0.45,0.55)
 		track_style.set_border_width_all(1)
 		row.track.add_theme_stylebox_override("panel",track_style)
 		var width: float = row.track.size.x

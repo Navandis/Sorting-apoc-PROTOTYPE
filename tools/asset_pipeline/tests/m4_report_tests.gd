@@ -21,7 +21,8 @@ func run() -> void:
 	view.present(report,"Continuation saved.")
 	await process_frame
 	check(view.body.text.contains("Team 4") and not view.body.text.contains("durable-"),"Report retains teams without exposing opaque identities")
-	check(view.body.text.contains("Manually dispatched under-prepared") and view.body.text.contains("Departed 06:00:00") and view.body.text.contains("Return Capacity 112"),"Human departure reason/time and remaining capacity shown")
+	check(view.body.text.contains("Dispatched 06:00:00") and not view.body.text.contains("Manually") and not view.body.text.contains("Departed") and view.body.text.contains("Return Capacity 112"),"Report shows dispatch timestamp without departure reason")
+	check(view.body.text.contains("Food 0/48 · Hydration 0/48 · Medical 0/24 · Weapons 0/48 · Protection 0/48\n"),"Five lanes form one naturally wrapping text line")
 	check(view.body.text.contains("Food 0/48") and view.body.text.contains("Medical 0/24") and not view.body.text.contains("unmet"),"Five lane values without redundant unmet suffixes")
 	check(view.body.text.contains("Incoming supplies — scripted scenario") and view.save_status.text == "Continuation saved.","Scripted supply summary and save status preserved")
 	var tabs: TabContainer = view.get("tabs")
@@ -41,7 +42,7 @@ func run() -> void:
 		var partial := report.duplicate(true)
 		partial.scenario_complete = true
 		partial.medical = [{"result":{"Medical":{"required":12,"supplied":7,"unmet":5}},"closure_reason":"expired","spent":[{"wasted":2}]},{"result":{"Medical":{"required":3,"supplied":3,"unmet":0}},"closure_reason":"fulfilled","spent":[]}]
-		partial.meals = [{"meal":"Breakfast","credited":{"Food":32,"Hydration":48},"targets":{"Food":48,"Hydration":48},"closure_reason":"expired"},{"meal":"Lunch","credited":{"Food":48,"Hydration":48},"targets":{"Food":48,"Hydration":48},"closure_reason":"fulfilled"}]
+		partial.meals = [{"meal":"Breakfast","credited":{"Food":32,"Hydration":48},"targets":{"Food":48,"Hydration":48},"closure_reason":"expired"},{"meal":"Lunch","credited":{"Food":48,"Hydration":48},"targets":{"Food":48,"Hydration":48},"closure_reason":"fulfilled"},{"meal":"Dinner","credited":{"Food":0,"Hydration":0},"targets":{"Food":60,"Hydration":48},"closure_reason":"expired"}]
 		partial.meal_coverage = 83.333
 		partial.admitted = [{}]
 		partial.forfeits = [{},{}]
@@ -50,11 +51,20 @@ func run() -> void:
 		partial.dispatch[0].dispatch_result.at = 293.0417
 		partial.dispatch[1].dispatch_result.reason = "cutoff"
 		view.present(partial,"")
-		check(view.body.text.contains("Fully provisioned · Departed 07:57:13") and view.body.text.contains("Cutoff-dispatched"),"All departure reasons and stored clock conversion retained")
+		check(view.body.text.contains("Dispatched 07:57:13") and not view.body.text.contains("Fully provisioned") and not view.body.text.contains("Cutoff") and not view.body.text.contains("Manually"),"All dispatch reasons hidden while actual stored timestamp retained")
 		check(view.body.text.contains("Hauls admitted 1") and view.body.text.contains("Midnight forfeits 2") and view.body.text.contains("Deposited backlog carried forward 3"),"Scripted Receiving aggregates retained")
 		check(view.bodies[1].text.contains("Required 15") and view.bodies[1].text.contains("Credited 10") and view.bodies[1].text.contains("Unmet 5") and view.bodies[1].text.contains("Expired 1") and view.bodies[1].text.contains("Fulfilled 1") and view.bodies[1].text.contains("Excess discarded 2"),"Medical aggregate facts retained")
 		check(view.bodies[2].text.contains("83.3%") and view.bodies[2].text.contains("Food 32/48") and view.bodies[2].text.contains("Hydration 48/48") and view.bodies[2].text.contains("Fulfilled") and view.bodies[2].text.contains("Expired"),"Meal coverage read from frozen aggregate and per-meal outcomes retained")
+		check(view.bodies[2].text.contains("Breakfast · Partially fulfilled") and view.bodies[2].text.contains("Lunch · Fulfilled") and view.bodies[2].text.contains("Dinner · Expired"),"Partial, complete and untouched meals have distinct presentation outcomes")
+		check(partial.meals[0].closure_reason == "expired","Partial meal wording preserves stored expiry semantics")
+		for credit: Dictionary in [{"Food":1,"Hydration":0},{"Food":0,"Hydration":1}]:
+			var one_lane := partial.duplicate(true)
+			one_lane.meals[0].credited = credit
+			view.present(one_lane,"")
+			check(view.bodies[2].text.contains("Breakfast · Partially fulfilled"),"Contribution in either meal lane is partial fulfillment")
+		view.present(partial,"")
 		check(view.scenario_notice.visible and not tabs.is_ancestor_of(view.scenario_notice),"Scenario notice is fixed outside scroll")
+		await capture_report(view)
 		for index: int in 3: view.bodies[index].text += "\nLong presentation fixture".repeat(80)
 		for index: int in 3:
 			tabs.current_tab = index
@@ -72,3 +82,18 @@ func run() -> void:
 	await process_frame
 	print("M4_REPORT_COMPLETE failures=",failures)
 	quit(1 if failures else 0)
+
+func capture_report(view: CanvasLayer) -> void:
+	var destination := ""
+	for arg: String in OS.get_cmdline_user_args():
+		if arg.begins_with("--m4-report-evidence-dir="): destination = arg.trim_prefix("--m4-report-evidence-dir=")
+	if DisplayServer.get_name() == "headless" or destination.is_empty(): return
+	DirAccess.make_dir_recursive_absolute(destination)
+	for size: Vector2i in [Vector2i(1920,1080),Vector2i(1280,720)]:
+		DisplayServer.window_set_size(size)
+		for index: int in 3:
+			view.tabs.current_tab = index
+			for frame: int in 6: await process_frame
+			await RenderingServer.frame_post_draw
+			check(root.get_visible_rect().encloses(view.card.get_global_rect()),"Report fits at " + str(size))
+			check(root.get_texture().get_image().save_png(destination.path_join("report-tab-%d-%d.png" % [index,size.x])) == OK,"Revised report captured")

@@ -92,13 +92,12 @@ func _dispatch_text(report: Dictionary) -> String:
 	for team: Dictionary in report.get("dispatch",[]):
 		var result: Dictionary = team.dispatch_result
 		var calendar: float = float(config.day_start)+(float(result.at)-(int(team.day)-1)*duration)*float(config.rate)
-		var reason: String = {"full":"Fully provisioned","manual":"Manually dispatched under-prepared","cutoff":"Cutoff-dispatched"}.get(result.reason,String(result.reason).capitalize())
 		text += "Team %d · %d members\n" % [team.display_index,team.members]
-		text += "%s · Departed %s\nOutgoing %d/%d Bulk · Return Capacity %d\n" % [reason,load("res://gameplay/run/run_clock.gd").time_text(calendar),result.outgoing_bulk,result.capacity,result.return_capacity]
+		text += "Dispatched %s\nOutgoing %d/%d Bulk · Return Capacity %d\n" % [load("res://gameplay/run/run_clock.gd").time_text(calendar),result.outgoing_bulk,result.capacity,result.return_capacity]
 		var lanes: PackedStringArray = []
 		for lane: String in ["Food","Hydration","Medical","Weapons","Protection"]:
 			lanes.append("%s %d/%d" % [lane,team.credited[lane],team.targets[lane]])
-		text += " · ".join(lanes.slice(0,3)) + "\n" + " · ".join(lanes.slice(3)) + "\n\n"
+		text += " · ".join(lanes) + "\n\n"
 	return text + "Incoming supplies — scripted scenario\nHauls admitted %d · Midnight forfeits %d\nDeposited backlog carried forward %d" % [report.admitted.size(),report.forfeits.size(),report.backlog.size()]
 
 func present(report: Dictionary, status: String) -> void:
@@ -126,7 +125,9 @@ func present(report: Dictionary, status: String) -> void:
 	bodies[2].text = "Daily Meal Coverage: %s" % ("N/A" if report.meal_coverage == null else "%.1f%%" % report.meal_coverage)
 	if report.meals.is_empty(): bodies[2].text += "\n\nNo Meal Service scheduled"
 	for meal: Dictionary in report.meals:
-		bodies[2].text += "\n\n%s · %s\nFood %d/%d · Hydration %d/%d" % [meal.meal,meal.closure_reason.capitalize(),meal.credited.Food,meal.targets.Food,meal.credited.Hydration,meal.targets.Hydration]
+		var outcome: String = meal.closure_reason.capitalize()
+		if meal.closure_reason == "expired" and (int(meal.credited.Food) > 0 or int(meal.credited.Hydration) > 0): outcome = "Partially fulfilled"
+		bodies[2].text += "\n\n%s · %s\nFood %d/%d · Hydration %d/%d" % [meal.meal,outcome,meal.credited.Food,meal.targets.Food,meal.credited.Hydration,meal.targets.Hydration]
 	scenario_notice.visible = report.scenario_complete
 	save_status.text = status
 	begin_button.text = "Begin Day %d" % (int(report.day) + 1)

@@ -165,6 +165,8 @@ func compact_checks(panel: CanvasLayer, carry: CarriedItems) -> void:
 	team.credited.Food = 48
 	panel.refresh()
 	check(panel.status_label.text == "Food requirement already fulfilled." and not panel.bulk_label.visible and panel.manual_button.visible and not panel.manual_button.disabled,"Full lane hides summary, retains manual dispatch")
+	var full_colour: Color = panel.status_label.get_theme_color("font_color")
+	check(full_colour.r > 0.9 and full_colour.g > 0.6 and full_colour.b < 0.4 and panel._card.get_theme_stylebox("panel").border_color == full_colour and panel.lane_rows.Food.track.get_theme_stylebox("panel").border_color == full_colour,"Full track text and borders are yellow")
 	if lane is RichTextLabel: check(not lane.text.contains("[color="),"Rejecting a previously projected lane clears rich colours")
 	var before: Dictionary = team.capture_state()
 	panel.handle_e(false,false)
@@ -175,6 +177,7 @@ func compact_checks(panel: CanvasLayer, carry: CarriedItems) -> void:
 	carry.add_item(ItemInstance.new(load("res://data/items/definitions/loot_000165.tres"),"irrelevant"))
 	panel.refresh()
 	check(panel.status_label.text == "Selected item not eligible for Expeditions" and not panel.bulk_label.visible and panel.lane_rows.values().all(func(row): return row.rejected),"Irrelevant item has only centered error below bars")
+	check(panel.status_label.get_theme_color("font_color").g < 0.5 and panel._card.get_theme_stylebox("panel").border_color.g < 0.5,"Changing from full track to unrelated item restores red rejection")
 	await capture_compact(panel,"rejected")
 	carry.remove_selected()
 	team.credited.Food = 12
@@ -193,9 +196,22 @@ func compact_checks(panel: CanvasLayer, carry: CarriedItems) -> void:
 	check(panel.bulk_label.visible and panel.bulk_label.text == "Outgoing 2 / 112 Bulk · Return Capacity 110" and not panel.status_label.text.contains("not eligible"),"Empty hand restores neutral committed summary")
 	await capture_compact(panel,"empty")
 	carry.add_item(ItemInstance.new(load("res://data/items/definitions/loot_000165.tres"),"terminal-held"))
+	var clock = load("res://gameplay/run/run_clock.gd").new()
+	clock.config = {"day_start":28800.0,"rate":12.0,"latest_return":85200.0}
+	clock.day = 2
+	clock.elapsed = clock.day_duration()+300.0
+	team.day = 2
+	team.time_source = clock.current_time
+	team.deadline = clock.timestamp(2,36000.0)
+	panel.refresh()
+	check(panel.deadline_label.text.contains("Deadline 10:00:00") and panel.deadline_label.text.contains("01:00:00 remaining"),"Active team retains real deadline/countdown")
 	panel._dispatch_manual()
 	panel.refresh()
 	check(team.closed and panel.status_label.text == "Team Dispatched" and panel.bulk_label.visible and not panel.hint_label.text.contains("[E]"),"Ineligible item permits manual dispatch; terminal presentation is read-only")
+	check(panel.deadline_label.text == "Day 2 · Dispatched 09:00:00","Terminal card replaces deadline with stored dispatch timestamp using configured day/rate")
+	clock.elapsed += 30.0
+	panel.refresh()
+	check(panel.deadline_label.text == "Day 2 · Dispatched 09:00:00","Dispatch timestamp stays fixed as current time advances")
 	await capture_compact(panel,"terminal")
 	carry.remove_selected()
 
