@@ -33,7 +33,7 @@ Current position: M4 is human-promoted and closed locally after final technical 
 
 ### How to use this master
 
-Read §§1–3 for authority and baseline; §§4–12 for shared contracts; §§13–15 for delivery and acceptance; §§16–17 for obligations and current boundaries. Sections 18–20 retain dated M2/M3 design. Section 21 records M4 closure, performance, UI and strategic findings. Appendices preserve decisions and sources.
+Read §§1–3 for authority and baseline; §§4–12 for shared contracts; §§13–15 for delivery/acceptance; §§16–17 for obligations/boundaries. Sections 18 and 20 retain dated M2/M3 settings; §19 retains the current full-game Ironman principle. Section 21 records M4 closure, performance, UI and strategic findings. Appendices preserve decisions and sources.
 
 | Section | Contents | Ref |
 | --- | --- | --- |
@@ -164,11 +164,11 @@ Either the player retains the item and the request receives nothing, or the exac
 
 The player approaches the relevant collection proxy carrying physical supplies. Eligibility depends on the destination’s active request, not on Storage Category or proximity. Entering a room, targeting a proxy or opening the panel never consumes an item; ineligible, closed and full requests are not extra storage. [GDD §§4.8, 7.1, 8.2]
 
-F opens/closes the non-pausing request panel without consuming. Each distinct E submits only the selected eligible carried item; holding E never repeats or chooses “best” bundle contents. Wheel/number selection changes the preview. First ESC closes the panel, next ESC opens the pause menu. Completion closes the centered panel and suppresses station cues. Existing held-E reversible storage is unchanged. [D16; M1]
+F opens/closes the non-pausing panel without spending. Each distinct E commits the selected whole eligible item; held input never repeats or selects bundle contents. Wheel/numbers change preview. ESC closes the panel first, then opens pause. Single Medical requests and completed Kitchen occurrences close the panel and suppress cues. One dispatched team remains centered, blue/read-only with stored dispatch time; no auto-advance. Dispatch closes/disables and removes cues only when all daily teams dispatch. Held-E reversible storage is unchanged. [D16; M1; M4UI]
 
 ### 5.1.1 Projected contribution and ineligible state
 
-Preview the held item’s impact before spending: Food 5/12 with +3 soup displays projected 8/12, five solid committed pips, three brighter prospective pips and +3. A subtle green highlight or pulse may identify the impacted lane, but preview and committed gain must remain distinguishable. If the item cannot contribute, show no new pips, a red bar border/highlight and “Selected item not eligible” instead of remaining-after-submission. No green gain for ineligible items. [D14–D15]
+Preview selected-item applied Utility, positive waste and full outgoing Bulk before spending; committed and projected gains remain distinct. Unrelated Utility and capacity rejection are red/no gain. Dispatch rejection for an already fulfilled lane is yellow; terminal teams are blue/read-only. A full lane never consumes an item. [D14–D15; M4UI]
 
 Submitting spends the whole item and credits min(Utility, remaining). At 11/12, +8 previews 12/12, +1 applied and 7 wasted; no excess is retained. Show waste before E. Ineligible/full/closed submissions consume nothing. Medical, Kitchen and M4 Loadout use cap-and-waste; Loadout charges full item Bulk. [M4]
 
@@ -499,7 +499,7 @@ Acceptance checks span stages. M1–M4 verification, independent acceptance and 
 | Live Receiving cargo | Save representative incoming/OPEN/closing/departing states and retained FIFO/upstream data. Restore remaining exact cargo, gates, ownership and original logical progress. |
 | New identity after restart | Keep an old haul, save/relaunch, then issue a genuinely new delivery. IDs are disjoint while saved commitments keep their IDs. |
 | Ordinary save/load errors | No false success or silent new run; Save & Exit remains paused on failure. No crash or anti-tamper claim is added. |
-| Two-step contribution preview | F opens/closes without consuming; distinct E commits one item after preview. Held input does not repeat. Invalid selection shows red/no gain; full completion closes and suppresses cues. |
+| Two-step contribution preview | F opens/closes without spending; distinct E commits one selected item and held input never repeats. Unrelated/capacity rejection is red, fulfilled Dispatch lane yellow. Single-request completion closes/suppresses cues; a terminal Dispatch team remains blue/read-only without auto-advance until all teams dispatch (§21.2). |
 | Player/ladder continuation | Preserve accepted exact player position/camera, selected held item and same-ladder attachment/height through close/reopen. Transient UI cannot submit or unpause on load. |
 
 ### Evidence classes remain separate
@@ -556,7 +556,7 @@ Publication 36d527d follows the two accepted commits. Reported M1 checks cover e
 
 ### 15.2 17 October 2026 M2 human promotion and publication
 
-Base 2cad0d7 → implementation 524edf1 → final tests c7bbf44 → documentation promotion 3465098. The independent reviewer returned ACCEPT with no BLOCKER/IMPORTANT defect and reported 19 checks, zero failures and exit 0 on the additional bulk-versus-fractional-step probe. The developer reported all final native-input/audio and regression playtests passing and explicitly HUMAN-PROMOTED M2; normal fast-forward publication to remote main was then verified at 3465098. These are attributed historical results, not rerun tests from this v0.4 update.
+Base 2cad0d7 → implementation 524edf1 → final tests c7bbf44 → documentation promotion 3465098. The independent reviewer returned ACCEPT with no BLOCKER/IMPORTANT defect and reported 19 checks, zero failures and exit 0 on the additional bulk-versus-fractional-step probe. The developer reported all final native-input/audio and regression playtests passing and explicitly HUMAN-PROMOTED M2; normal fast-forward publication to remote main was then verified at 3465098. These are 17 October M2 validation/publication results, carried forward by the v0.4 edition dated 21 October and this v0.5 reconciliation. No fresh gameplay or remote-query evidence is claimed here.
 
 M2 is HUMAN-PROMOTED / PUBLISHED / CLOSED. Its clock, timed Medical, authored deliveries, midnight/Receiving ordering, report and ordinary continuation remain accepted. Evidence: docs/testing/m2-day-clock-midnight-validation-2026-10-17.md. CF-07, certificate diagnostics and unimplemented continuous Ironman durability remain disclosed. M3’s later disposition follows.
 
@@ -601,7 +601,7 @@ All CF-01–CF-24 references are retained. Their current status is reconciled wi
 | CF-03<br>CR15 R-03; D02–D03 | Process-local debug namespace uniqueness does not alone ensure new delivery identity after application restart. | Run-scoped identity and saved allocator accepted in M1. M2 must preserve these across timed occurrences and replay. |
 | CF-04<br>ER-RESULT §4; CR15 | Carrying mutation signals can precede transfer success/rollback and cannot authorize irreversible credit. | M1 receipt-before-notification transaction accepted. Preserve the enclosing success boundary for all later consumers. |
 | CF-05<br>PF §34.5; GDD §11 | Actual return callers must use upstream admission, lifecycle results/signals and the explicit midnight event; deposited capacity stays 1 + 2. | Preserve 1+2 capacity, fairness and authoritative admission. M2 adds the approved strict midnight ordering; real expeditions remain later. |
-| CF-06<br>PF §§19.4, 24.3; VDD §§16, 18–19 | Playable service spaces and routes are approved, not fully furnished request interfaces or final gameplay travel balance. | Minimal Medical proxy and readable contribution panel accepted in M1. Kitchen/Dispatch functions and full furnishing remain later. |
+| CF-06<br>PF §§19.4, 24.3; VDD §§16, 18–19 | Playable service spaces and routes are approved, not fully furnished request interfaces or final gameplay travel balance. | Medical/Kitchen/Dispatch interfaces, real clock/midnight and ordinary schema-4 continuation are accepted through M1–M4. Final furnishing, monitoring, actual expedition/population outcomes, complete economy and continuous Ironman durability remain future. |
 
 A dependency entering scope is not retroactive demotion of the accepted prototype. The next handoff must identify exactly which owning paths it changes and the focused evidence required. [WG; ER14 §11]
 
@@ -688,7 +688,7 @@ No numerical change is authorized here. M4 test values supersede player 10/15, p
 
 Basis: [D02–D15; P01]; [GDD §§6, 8, 10, 19–21]; [ER14; WG].
 
-Sections 18–20 retain M2/M3 design at their original dates. Their old 07:00 starts, Utility/capacity/meal values, report layout and then-future M4 wording are historical. Current M4 contracts and acceptance are in §§15.5, 17 and 21.
+Sections 18 and 20 preserve dated M2/M3 settings, including old 07:00 starts, Utility/capacity/meals, report layout and then-future M4. Section 19 retains the CURRENT FULL-GAME Ironman principle; it is not superseded by M4’s limited save cadence. Current M4 contracts/acceptance are in §§15.5, 17 and 21.
 
 18.1  ACCEPTED M2 DESIGN / PUBLISHED IMPLEMENTATION
 
@@ -804,7 +804,7 @@ The persistent DAY N · HH:MM:SS HUD reads the shared clock in every room. Medic
 | Presentation / input | Visible clock, F/E/ESC, nested pause and cue continuity remain usable; no queued action on resume. |
 | Scenario / preservation | No repeating refill after exhaustion; M1 ladder/storage/lifetime behavior preserved; CF-07 remains explicitly disclosed. |
 
-These were approved M2 acceptance checks. Actual verification, independent ACCEPT and human promotion are recorded in its dated validation and §15.2; no games are rerun by this v0.4 design update. Further source extensions must continue to protect them.
+These were approved M2 acceptance checks. Actual verification, independent ACCEPT and human promotion are recorded in the dated validation and §15.2. The retained v0.4 edition dated 21 October records no gameplay rerun for that documentation update; this v0.5 reconciliation also uses prior evidence.
 
 19.1  FULL-GAME IRONMAN CONTRACT
 
@@ -814,9 +814,9 @@ Assess this principle under the COMPLETE Ironman-style preservation system, not 
 
 ### 19.1 One advancing game-state snapshot
 
-Think of the preserved state as the current recoverable game-state snapshot, not a collection of classical save files the player can choose among. It is updated over and over every few real-time seconds. After a crash or forced termination, Continue restores the latest valid recoverable state, including journaled commitments as applicable.
+The preserved snapshot means one current recoverable state, updated continuously within practical limits. Continue restores the latest valid coherent state including durable commitments. Recovery cadence is distinct from full-snapshot consolidation; an equivalent journal/delta path does not require full scene serialization every few seconds. [D21; SAVE-U1]
 
-The full-game target is ideally no more than about 2–3 REAL SECONDS of lost progress. That is the intended delivery target, not a measured guarantee and not an M2 requirement. It supersedes earlier minute-scale progress-loss illustrations. Snapshot/write cadence and actual durable recovery must be tested; they are not inferred from a timer setting alone.
+The full-game ideal is about 2–3 REAL SECONDS of lost progress, not a measured guarantee and not an accepted M4 capability. It supersedes minute-scale rollback allowances. Measure actual durable recovery, not only timer/snapshot settings. [D21; SAVE-U1]
 
 Journaling, rotating copies and necessary integrity safeguards are internal parts of this same system. They are not player-visible alternate timelines, rollback menus or a reason to let the player preserve an earlier favorable checkpoint. Possible multiple independent runs remain distinct from multiple historical saves inside one run.
 
@@ -971,7 +971,7 @@ Night report has Expeditions / Medical / Meal Service tabs, independent scrollin
 
 Stage A a0d4a8a reuses the facade-retained catalogue reference; each fingerprint still recomputes current content. Attributed native uninstrumented saved-slot fresh-menu sample: 15.968 → 7.970 seconds; warm 0.232 → 0.203. These are measured samples from the Stage A executor, not universal promises or fresh documentation-task measurements. [M4A]
 
-Stage B 7ebc571 reuses transformed mesh minimum-Y measurements by live Mesh/full accumulated transform while retaining exact seating, 0.006 m clearance, live bounds traversal and save compatibility. Attributed native usable-frame samples: New Run 23.631 → 12.173 seconds fresh, 18.970 → 6.444 warm; Continue 13.300 → 10.697 fresh, 8.545 → 5.509 warm. Gameplay-request times must not be combined with menu times or overlapping phase scopes. [M4B]
+Stage B 7ebc571 reuses transformed mesh minimum-Y measurements by live Mesh/full accumulated transform, preserving seating, 0.006 m clearance, live bounds and compatibility. Attributed native usable-frame samples: New Run 23.631 → 12.173 seconds fresh, 18.970 → 6.444 warm; Continue 13.300 → 10.697 fresh, 8.545 → 5.509 warm. Do not mix runs or add overlapping scopes. A measured same-run total can include separate non-overlapping menu/gameplay intervals; no new total is inferred here. [M4B]
 
 The bounded runtime cache holds at most 512 mesh/transform minima, not vertex arrays; editor/procedural paths bypass it and Resource.changed invalidates measurements. Independent review confirmed all 32 reference geometry rows and unchanged content fingerprint. First-use catalogue/wing loading, instantiation and unique scans remain costs. Targeted catalogue/wing resource-loading investigation is deferred, not an M4 blocker. Persistent geometry pre-baking is not required. [M4B; M4IR]
 
@@ -979,9 +979,37 @@ The bounded runtime cache holds at most 512 mesh/transform minima, not vertex ar
 
 Known runtime/content debt: CF-07 material-null diagnostics, Windows certificate-store diagnostics, Pickaxe 108 co-located LOD, twelve unapproved Auto Stack Groups saved None, and full-game Ironman durability. Source sidecars and actual unreviewed local changes need separate inventory. This preflight found no tracked/index changes and 18 pre-existing untracked sidecars; these are preserved, not approved/staged. [HP25; M4IR]
 
-The developer reports realistic workload concern and low stored reserves. Persistent meaningful inventory is essential to the sorting fantasy; near-empty shelves after a successful M4 day do not prove long-run balance. These are strategic findings, not M4 defects or closure blockers. Economy, travel/wing geometry, spatial compression and richer interface need separate decisions. Afternoon/evening lulls can support organization rather than compulsory extra requests. [HP25]
+The developer’s normal-speed M4 observations motivate separate economy, awareness and travel investigation; the detailed findings below preserve their confounders. They are not new M4 defects or closure gates. [PLAY-U1; ACCEPT-U1]
 
-Baseline cross-wing request awareness, timekeeping and central monitoring are required future integrated-system design needs, not optional Workshop upgrades and not shipped by M4. GDD v0.15 records optional socketed information tools and separate team-slot training as TENTATIVE / VALIDATE / NOT IMPLEMENTED. No current monitor data may be removed behind an upgrade paywall. These concepts and M5 are not authorized implementation here. [HP25; GDD §§15, 16, 19, 21]
+Baseline cross-wing awareness, central overview and timekeeping are required future integrated-game needs. Optional Workshop tools extend usable information (§15.10 GDD), Training preserves persistent slots (§15.11) and non-flat accumulation/drawdown/recovery spans the experience (§19.6). All remain unimplemented; the confirmed one-day Training timing is distinct from unresolved mechanisms and recommendations. No accepted CRT queue data is removed, and neither these concepts nor M5 are authorized here. [WS-U1–U3; TR-U1–U2; PACE-U1–U3; FUT-U1]
+
+### 21.4.1 Mechanical acceptance and opening workload
+
+M4’s exit boundary is selected-item five-lane contributions, outgoing/return capacity, authored Bulk/Utility, handling, timing, continuation and the final UI. Original/final independent ACCEPT and developer in-game acceptance establish that bounded closure, not the complete hoarding/survival economy. [ACCEPT-U1; M4IR; HP25]
+
+In the normal-speed playtest the developer almost completed four full teams before cutoff. The early 08:30 scripted supply helped; unfamiliar, unorganized seed stock and text-heavy UI hindered the attempt. This single run does not establish a lenient window or justify retiming it. Intended ordinary expedition returns are distinct from that fixture assistance. Around ten opening scavengers would form 4/4/2, but sixteen Ready remains the locked stress fixture and no final opening count is set. [PLAY-U1; CAL-U2]
+
+Learning values and selecting efficient combinations is desirable mastery. Parsing redundant prose is friction. The developer reported faster understanding after final inline colour/UI changes; no instrumented comprehension metric is claimed. [PLAY-U1; UI-U1]
+
+### 21.4.2 Awareness reserves and travel
+
+Local lights/audio do not reliably announce obligations across the wing: sightlines vary, and globally loud cues can overwhelm players near their source. Baseline discovery and a central overview are both needed; a monitor alone is insufficient if constant watching is required. Optional infrastructure can extend reach/placement/detail after this baseline works. Exact network/alert design remains open. [PLAY-U1; WS-U1; A-DISC]
+
+After heavy provisioning and meals, nearly empty shelves left little stock worth organizing or expanding storage for. The pictured Day 1 report shows all four teams full and meals at 100%, but Medical 0/24/expired. It is not evidence that every consumer was fulfilled; separate tests keep their own scope. Stable organized zones are a reward, while insufficient resident inventory is an economy finding. [PLAY-U1]
+
+Quiet afternoon/evening periods may support sorting and preparation. Long travel through a large nearly empty wing deserves separate study of travel, search, reading and handling, rather than automatic extra requests or global speed/capacity changes. Spatial compression is an investigation, not a committed remodel. The GDD §19.6 records persistent category-specific reserves, scarcity versus workload, preparation, recovery and the broader non-flat pacing proposal. [PLAY-U1; PACE-U1–U3; A-DISC]
+
+### 21.4.3 Item calibration and future concepts
+
+Human visual represented quantity/handling judgment and category usefulness replaced reliance on a single Footprint extrapolation. Bulk remains handling burden; Utility represents useful contribution, with broad nutritional grounding for Food and effectiveness judgments for other categories. The irregular large carcass Footprint alone does not justify much more Food than the piglet. A few Food/Hydration high ends were reduced case by case rather than globally raising requests or carrying capacity to accommodate outliers. No universal waste cap or zero-waste rule was approved. [CAL-U3; PLAY-U1]
+
+P01 remains historical/proposed and does not instruct regeneration of the accepted 167 values. The catalogue intentionally contains a broad useful middle plus weak/exceptional options, rather than forcing every lane or efficiency ratio into one bell curve. Strong combinations are desirable when availability and opportunity cost prevent dependable on-demand repetition. No retuning is performed by this reconciliation. [CAL-U3; A-DISC]
+
+GDD §15.10 preserves Electronics stockpiling versus Ops and route-dependent Workshop priorities, concrete displays/clocks/repeaters, within-run progression and unresolved tutorial/outage details. GDD §15.11 preserves Training’s safe-haven rationale, service frontage, permanent slots versus daily crews, 4/4/2 Team 3 identity, occupancy/focus risks and net missed-expedition cost. One guaranteed training day and following-morning benefit are explicitly confirmed within the tentative feature; fixed slot pricing, empty-slot eligibility, advance funding, Kitchen and selection/cancellation safeguards remain recommendations or unresolved. Scripted M4 supplies cannot prove the economics of forgoing a real expedition. [WS-U1–U3; TR-U1–U2; FUT-U1; A-DISC]
+
+GDD §19.6 retains the developer’s whole-experience non-flat accumulation/drawdown/recovery direction, with special opening curation and separately open later pacing. No literal wave, fixed Day 10 limit, mandatory escalation, forced empty bunker or 90% failure target is agreed. Authored conditions versus inventory floors and a low-scope first evaluation remain discussion recommendations. [PACE-U1–U3; A-DISC]
+
+Stage A/B improvements are technically accepted and human-observed; residual first-use catalogue/wing loading is not an M4 blocker. A targeted investigation before substantial content growth may be useful, but no particular resource-loading architecture is declared defective without diagnosis. Richer monitoring, travel/UI/economy and real outcomes remain separately scoped future work. [M4A; M4B; PLAY-U1; A-DISC]
 
 ### 21.5 Evidence and authority register
 
@@ -992,6 +1020,10 @@ M4 — docs/testing/m4-expedition-loadout-validation-2026-10-24.md; implementati
 M4A — docs/testing/m4-startup-catalogue-reuse-validation-2026-10-25.md; a0d4a8adb56b907587103ec65f5edf917c04ff2a. M4B — docs/testing/m4-geometry-measurement-reuse-validation-2026-10-25.md; 7ebc571d1877dce0462424bdded5978651b6caf9. Measurements retain original attribution.
 
 M4UI — docs/testing/m4-ui-refinements-validation-2026-10-25.md; 80ab28c512beea225232c7f20f2db2d7dd9c6ad4 and final 844d0d4adaa5a2d601f04954bb61ad7a5c316589. M4IR — original independent ACCEPT 24 October; final focused independent ACCEPT 25 October. Exact external references/hashes are linked in the promotion addendum.
+
+### Conversation reconstruction sources
+
+WS-U1–U3, TR-U1–U2, FUT-U1, PLAY-U1, PACE-U1–U3, CAL-U1–U3, SAVE-U1, UI-U1, ACCEPT-U1 and A-DISC refer to the local 25 October reconstruction in docs/design_history/2026-10-25-workshop-training-pacing-discussion.md. Its source-anchor table identifies speakers/passages; it is not a newly verified verbatim transcript and gives no fabricated message timestamps. The GDD source register and §§15.10–15.11/19.6 retain detailed design/status; HP25 remains closure authority. Semantic dispositions and QA: docs/testing/m4-documentation-semantic-reconciliation-2026-10-25.md.
 
 Executor tests, independent checks and human observation remain separate. This edition reuses gameplay evidence and runs document/package/render/parity/preservation checks only. Stop at M4 HUMAN-PROMOTED / CLOSED LOCALLY / READY FOR SEPARATE PUBLICATION AUTHORIZATION.
 
@@ -1042,9 +1074,9 @@ v0.1–v0.4 remain historical editions. This register preserves dated policy dis
 | D20 | M2 draft approved apart from corrected randomness framing. Approved details include the shared timeline/calendar, no overnight mechanical fast-forward, three-day fixture, compact report, M2 schema boundary and no new player time skip. |
 | D21 | Full-game randomness assumes completed continuous Ironman preservation: one advancing snapshot per run, updates every few real seconds, ideal loss 2–3 real seconds, internal journal/rotating recovery only. Continuous updates, Save & Exit and midnight invoke the same system. Natural early compute/commit is separated from visible outcome; no randomized roll delay is required. Incidental uncommitted rerolls are acceptable, reliable target-picking is not. |
 | D22 | M3 Kitchen Meal Service design v0.1 approved: three Food/Hydration meals at 09:00, 14:00, 18:00 with 3h windows and provisional targets 30/24, 36/24, 36/30; midnight reports three meal rows and equally averaged six-lane Daily Meal Coverage without Workshop or treatment effects. Four substantial 16-item controlled hauls/day over three authored days, initial timing/content/values approved as test inputs. |
-| D23 | Developer corrected loot_000019: retain its existing Hydration category; author primary Hydration +3. Misleading “Food Can” display name is deferred item-authoring debt, not M3 rename. Adjust basket B without altering per-manifest Food/Hydration/Bulk (exactly achieved). Start fresh M3 New Run; no M2 save migration/compatibility effort, no proactive deletion; previous accepted M1/M2 and global P01 non-final status preserved. |
+| D23 | Historical D23: retain loot_000019 as Hydration +3, correct basket B without changing manifest totals, begin a fresh M3 run without migration/deletion. Its then-deferred Food Can naming debt was later resolved as Cola Can in the accepted catalogue (§15.4). The original decision did not authorize a category change. |
 
-D21 retains the full-game Ironman obligation without implementing journaling. D22–D23 preserve approved M3 design and loot_000019 Hydration +3/name debt. Subsequent implementation, independent review and human promotion are separately recorded in §15.3; publication remains conditional on live remote confirmation.
+D21 retains the current full-game Ironman principle without implementing journaling. D22–D23 preserve dated M3 design/mapping; the old naming debt and publication-pending state are resolved in §§15.3–15.4. M3 remains HUMAN-PROMOTED / PUBLISHED / CLOSED. M4 alone is closed locally/publication pending.
 
 B.1  DOCUMENT AND EVIDENCE REGISTER
 
@@ -1072,7 +1104,7 @@ B.1 CONTINUED / SOURCE AND EDITION PROVENANCE
 | Label | Source / scope |
 | --- | --- |
 | M1 | Published docs/testing/m1-persistent-medical-validation-2026-10-16.md at 36d527d, read through final acceptance. Original and UI follow-up results are attributed evidence, not new runs. |
-| PUB16 | Published M1 linear history: 4cdbb13 → 6c56edf → a7b764e → 36d527d. Main independently rechecked during this update. |
+| PUB16 | Published M1 linear history: 4cdbb13 → 6c56edf → a7b764e → 36d527d. Main was independently rechecked during the original 17 October v0.3 documentation update; no fresh remote check is claimed here. |
 | M2 | Sorting_Apocalypse_M2_Day_Clock_Scheduling_Midnight_Design_v0.2.md, 17 October. v0.1 approved except randomness premise; v0.2 records that approval and D21’s correction. Standalone slice reference, not another active master. |
 | R17 | Read-only GitHub main and published Systems MVP v0.2 generated companion at 36d527d. Used to reconcile the uploaded editable copy with its published M1 acceptance text; no local Windows verification. |
 | D16–D21 | Explicit later conversation directions and approvals. Terminology, scope, targets and tolerances are recorded here; they are not invented repository evidence. |

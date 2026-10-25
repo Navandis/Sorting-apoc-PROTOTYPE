@@ -16,7 +16,7 @@ Version 0.15 | 25 October 2026 | M4 local closure and tentative future direction
 
 Living design | M1/M2/M3 HUMAN-PROMOTED / PUBLISHED / CLOSED. M4 HUMAN-PROMOTED / CLOSED IN ITS BOUNDED SCOPE / LOCAL CANDIDATE (PUBLISH PENDING).
 
-Accepted M4 covers five-lane Dispatch, Bulk/Utility, timing/ownership, ordinary continuation and improved UI/report. Actual Expedition returns, injuries/recruits/population and complete economy remain future. Information tools, team-slot readiness and early-run pacing below are tentative, not implemented.
+Accepted M4 covers five-lane Dispatch, Bulk/Utility, timing/ownership, ordinary continuation and improved UI/report. Actual Expedition returns, injuries/recruits/population and complete economy remain future. Optional Workshop infrastructure, team-slot Training and whole-experience accumulation/drawdown/recovery are retained as unimplemented design directions with local status distinctions.
 
 Active companions: Systems MVP v0.5 for progress/evidence and VDD v0.11 for visual/spatial authority. Prototype Findings v0.14 is historical. Prior editions remain intact. No publication or M5 is authorized.
 
@@ -153,7 +153,7 @@ The organizing and collecting fantasy is primary. Hoarding preserves useful futu
 | Simulate consequences, not unseen events | The outside world, NPC activity, expeditions, construction, and attacks are represented through outcomes, audio, text, lights, and objects. |
 | Unified rules where they help | Bulk is shared across carrying, outgoing loadouts, and incoming loot. Numeric Utility follows one consistent grammar. |
 | No game-defined junk | The game supplies values and opportunity costs; the player decides what is worth keeping, salvaging, or destroying. |
-| Systemic pressure over scripted escalation | Difficulty primarily emerges from the bunker's condition, population, storage saturation, and prior decisions. |
+| Systemic consequences and changing economic pressure | Player decisions and bunker condition remain consequential within a proposed non-flat abundance/scarcity rhythm across the experience; opening curation and later pacing need separate design (§19.6). [PACE-U1–U3] |
 | Efficiency is an aesthetic | Low-detail art, modular architecture, frozen item states, and scripted theatre are deliberate design choices, not apologies. |
 
 ### 2.2 Non-goals for the initial game
@@ -233,7 +233,7 @@ The strongest late-game moments should visibly consume the player's history. A c
 
 ### 4.1 The playable domain
 
-The Quartermaster occupies an inward-facing logistics wing within an established survivor settlement. Receiving, Backlog, Sorting, five Storage galleries, departmental service spaces and machine spurs have accepted whole-wing geometry. Functional storage, the bounded fixed ladder and Wing ModularRack bridge, and the promoted Receiving Stage B deck and freight fixtures now coexist in the playable development composition. Receiving Stage C is now human-promoted/closed in its agreed prototype scope (§11); actual Systems MVP integration and broader production furnishing remain later work. The accepted builder, saved geometry and overview govern dimensional work. [W17, H17, A17]
+The Quartermaster occupies an inward-facing logistics wing within an established survivor settlement. Receiving, Backlog, Sorting, five Storage galleries, departmental service spaces and machine spurs have accepted whole-wing geometry. Functional storage, the bounded fixed ladder, ModularRack bridge and deterministic Receiving deck/fixtures are promoted foundations. Stage C is human-promoted/closed; M1–M4 add accepted Medical/Kitchen/Dispatch interfaces, real clock/midnight and ordinary continuation. Actual Expedition/population outcomes, awareness network, continuous durability and final furnishing remain future. The accepted builder, saved geometry and overview govern dimensional work. [W17, H17, A17; R25]
 
 Workshop and Kitchen each have a dedicated, enterable service room; Medical has an enterable Supply Anteroom. Bunker Ops uses a more open, dedicated Transfer Landing. These visible support spaces belong to their departments and accommodate handoff, equipment support and limited staging. Their staffed operational cores remain behind opaque inner boundaries and are not modeled. Do not substitute a closed door at the service-space entrance for its playable floor area. [D16S]
 
@@ -243,7 +243,7 @@ Personnel travel to the surface occurs elsewhere in the unseen settlement. It is
 
 Receiving is a shallow freight bay recessed behind a permanent safety barrier and a powered shutter. The player remains on the apron, cannot board the lift or obstruct its machinery, and can only TAKE revealed goods. The deck and walls do not actually travel; sound, warning lamps and shutter movement imply the unseen lift journey.
 
-Loot content and durable item identities are committed upstream. Receiving arranges those exact items deterministically on private presentation surfaces and reveals ordinary WorldItems when the shutter is open. The permanent barrier controls player access; the shutter controls visibility and TAKE availability. Section 11 records the promoted Stage B presentation and accepted Stage C choreography/queue theatre, with later Systems MVP integration kept distinct.
+Loot content and durable item identities are committed upstream. Receiving arranges those exact items deterministically on private presentation surfaces and reveals ordinary WorldItems when the shutter is open. The barrier controls player access; the shutter controls visibility and TAKE. Section 11 records promoted Stage B/C. M4 connects the real clock/midnight and scripted supplies with ordinary continuation; actual expedition returns and continuous durability remain future.
 
 ### 4.3 Story through material evidence
 
@@ -331,16 +331,16 @@ The service-space footprints and inner boundaries are accepted at neutral greybo
 
 CONFIRMED  A run has no formal completion day. It continues while at least one scavenger remains alive, a final recruit-candidate decision is pending, or an accepted recruit is due to join. Exceptional players may reach a stable equilibrium, although complete storage expansion eventually caps physical capacity and requires increasingly selective retention.
 
-Long-run difficulty is expected primarily from bunker condition/player decisions without a mandatory day multiplier. Tentative authored early-run accumulation/drawdown/recovery (§19.6) introduces introductory pacing without silently replacing this long-run principle. [R25]
+Runs remain formally endless without a mandatory day-count multiplier. The developer proposes non-flat accumulation, drawdown and recovery across the experience (§19.6), with particular opening curation and separately open later pacing. Player decisions and bunker condition retain their consequences; a purely emergent long run remains an option rather than a settled restriction on designed later variation. [PACE-U1–U3]
 
-VALIDATE  Playtesting must determine whether purely systemic pressure produces sufficient long-term instability. A restrained hybrid escalation model may be added only if expert players otherwise reach effortless permanent equilibrium.
+VALIDATE  Determine how authored conditions and systemic consequences support meaningful preparation across the opening and later play. No fixed ten-day boundary, mandatory escalation, literal sine wave or effortless-equilibrium prerequisite is approved. Concrete pacing remains undesigned and unimplemented. [PACE-U1–U3; A-DISC]
 
 ### 5.2 Daily clock
 
 | Time | Event or design purpose |
 | --- | --- |
 | 06:00 | Day begins. Stored and carried items persist; completed production and explicit authorized upgrades/repairs have applied. Teams form and morning provisioning opens. |
-| 06:00–10:00 | Lenient expedition preparation window. Early loot returns are rare, leaving time to organize, prioritize teams, or handle a surprise request. |
+| 06:00–10:00 | Expedition preparation and Dispatch window. M4 includes a helpful 08:30 scripted supply, distinct from intended ordinary expedition returns. Overnight deposited cargo remains available; ordinary earliest-return timing is not fixed by this fixture. |
 | 10:00 | All remaining teams auto-dispatch. Kitchen meal request 1 occurs. |
 | 14:00 | Kitchen meal request 2 occurs. |
 | 18:00 | Kitchen meal request 3 occurs. |
@@ -361,7 +361,7 @@ PROVISIONAL  Final real-time day length is open. M4 uses 150 real seconds/game h
 
 - There is no bed or manual sleep action. The day ends at midnight automatically.
 
-- No real-world time passes while the application is closed.
+- Gameplay and simulation time do not advance while the application is closed.
 
 - The scheduler must not create a request whose deadline extends past midnight.
 
@@ -377,7 +377,7 @@ The real daily midnight event forfeits only still-awaiting submitted returns, pr
 
 ### 5.5 Night report
 
-M4 report is paused, with Expeditions / Medical / Meal Service tabs, independent scrolling and fixed status/Begin Day/ESC controls. It reads frozen completed-day facts and separates scripted supplies from teams. Richer full-game cards below remain intended presentation requiring future design. [R25]
+M4 report is paused, with Expeditions / Medical / Meal Service tabs, per-tab scrolling and fixed status/Begin Day/ESC controls. It reads frozen completed-day facts and separates scripted supplies from teams. The information families below identify future causal detail; their final tab arrangement remains design work. [UI-U1; R25]
 
 | Card | Core information |
 | --- | --- |
@@ -388,27 +388,27 @@ M4 report is paused, with Expeditions / Medical / Meal Service tabs, independent
 | Bunker Ops | Fuel, Morale, and Electronics coverage plus the next day's pre-announced penalties. |
 | Workshop | Current project, progress gained, delays, completion, and installed output. |
 
-If an unusually eventful day does not fit cleanly, the first screen remains a card summary and individual cards may open compact detail sub-reports. A long scrolling ledger is the fallback of last resort.
+Retain the accepted tabbed report and independently scrolling content. Future information may extend these tabs or add others; richer causal detail is not a requirement to restore a one-screen card grid. Backend IDs, dispatch/closure reasons and frozen facts remain preserved even when hidden in the frontend. Teams show stored dispatch time only and naturally wrapping lanes; positive-credit expired meals display Partially fulfilled without changing expiry or coverage. [UI-U1]
 
 ### 5.6 Save behavior
 
-CONFIRMED  Multiple consequence-preserving run slots. The game autosaves at day transitions, supports save-and-exit during a day, and does not provide manual rollback saves. Save integrity prioritizes corruption recovery and the preservation of random outcomes and irreversible transactions.
+CONFIRMED FULL-GAME CONTRACT  Each run has one advancing recoverable continuation, continuously maintained through one shared preservation service. Save & Exit and midnight use that same state. Multiple independent runs are distinct from selectable rollback saves within one run. Current M4 ordinary schema-4 continuation does not implement continuous Ironman durability. [SAVE-U1; Systems MVP §19]
 
-The preferred implementation uses three resilience layers. Exact file formats are technical decisions, but the behavioral guarantees are part of the design.
+The ideal full-game loss target is about 2–3 real seconds, not a measured guarantee. Recover coherent gameplay state, committed outcomes and irreversible ownership. Full-snapshot consolidation and durable recovery cadence are different concerns: journal/delta updates may preserve equivalent state without serializing the full scene every few seconds. Exact mechanisms and intervals require later evidence.
 
 | Layer | Required behavior |
 | --- | --- |
-| Rotating snapshots | Keep a current and previous known-good snapshot; write to a temporary file, validate, then promote. Snapshot at day transition, save-and-exit, and periodically during play. |
-| Transaction journal | Immediately record irreversible actions such as submission, salvaging, incineration, recruit decisions, upgrades, dispatches, and committed treatment outcomes. |
-| Deterministic outcome commitment | Persist seeds or generated results before revealing expedition loot, casualties, recruitment, treatment rolls, contamination, or outage schedules. |
+| Rotating snapshots | Use current/previous known-good internal recovery copies, validated temporary writes and consolidation at suitable checkpoints through the same service. Internal copies are not player-selectable rollback timelines; consolidation cannot substitute for maintaining the intended recoverable state. |
+| Transaction journal | Preserve irreversible ownership and actions promptly, including submission, conversion, recruitment, upgrades and dispatch. Recover coherent physical/gameplay state alongside commitments; journal/delta and full-snapshot details remain technical choices. |
+| Deterministic outcome commitment | Compute and preserve outcomes at the natural early backend point after relevant player choices become fixed, generally before visible revelation. Do not freeze inputs still legitimately influenceable or add artificial hidden-roll delays. |
 
-A crash may acceptably roll back roughly one or two real minutes of harmless spatial reorganization, but it should not duplicate consumed items, undo irreversible choices, or reroll a revealed result. If the newest snapshot is corrupt, the game loads the previous valid snapshot and replays valid journal entries.
+After failure, restore the latest valid coherent state using internal recovery copies and valid journal/delta entries as applicable. The obsolete one-to-two-minute spatial-loss allowance is superseded by the ideal 2–3-second full-game target. Incidental precommit rerolls can be tolerated; convenient reliable target-picking and rerolling preserved results cannot. No general anti-cheat framework is required. [SAVE-U1; Systems MVP §19]
 
 A failed run closes as a completed survival record. The exact presentation of failed slots, statistics, archived reports, and run history remains a UI decision rather than a gameplay-system requirement.
 
-Evidence boundary: Stage A has tested batch identity, snapshots and reconstruction contracts, not the full game's durable journal, rotating-save implementation or crash resilience. The guarantees above remain full-system requirements until their dedicated tests pass. [D12A]
+Evidence boundary: Stage A tested batch identity/snapshot/reconstruction contracts and M1–M4 accept ordinary continuation. Continuous preservation, durable journal/recovery and the full-game loss target remain unimplemented and unmeasured. [D12A; R25; SAVE-U1]
 
-Future save/load must persist each committed item's placed orientation state. Loading must restore that state and must not recompute item orientation from the storage unit's current Front. Any later four-way display rotation must also be saved explicitly.
+Save/load must persist and restore every committed item’s placed orientation, rather than recomputing it from the storage unit’s current Front. Ordinary M4 continuation already preserves placement; optional future four-way display rotation would expand that state.
 
 ## 6. Unified Item Grammar
 
@@ -440,7 +440,7 @@ The launch expedition categories are Food, Hydration, Medical, Weapons, and Prot
 
 The preferred launch rule allows destination-specific alternate uses while preventing ambiguity inside one destination. For example, vodka may count as Hydration on an expedition, Medical at the Medical Bay, and Morale at Bunker Ops, but it never asks the player to choose between two meters at the same hatch.
 
-FALLBACK  If destination-specific utility is too costly to author, communicate, or test, all items become globally single-purpose. Automatic submission and readable decisions take priority over item versatility.
+FALLBACK  If destination-specific Utility is too costly to author, communicate or test, use globally single-purpose items. Distinct-E selected-item commitment and automatic routing to the single eligible lane take priority over versatility; automatic routing never selects or spends additional carried items.
 
 ### 6.4 Internal efficiency measures
 
@@ -517,7 +517,7 @@ The player cannot drop items on floors, corridors, in front of hatches or onto a
 
 ### 7.2 Carrying model
 
-The Quartermaster carries a bundle limited by total Bulk. The bundle is not presented as a backpack or inventory screen. A compact HUD strip shows carried items; one item is active for placement; mouse wheel or number keys may cycle the active item. Request zones automatically consume eligible carried items while the interaction control is held.
+The Quartermaster carries a bundle limited by total Bulk, with a compact HUD strip and one active item cycled by wheel/number keys. F opens/closes a request panel without spending; each distinct E commits only the selected whole eligible item. Held input never repeats, cherry-picks or submits other bundle contents. Held-E reversible storage retains its separate accepted behavior. [UI-U1; §16.5]
 
 Basket, carrier, or cart upgrades increase carried Bulk and possibly queue readability. They do not need a physical cart model or pushing animation. The upgrade is a throughput improvement, not a vehicle simulation.
 
@@ -554,7 +554,7 @@ VALIDATE. Mixed/non-auto-coherent stacks currently reject later automatic smart 
 
 Within each zone tier, test normal smart insertion first, automatic base promotion next, and empty placement last. Exhaust the matching specific category tier before General; never globally repack or rotate existing stack members.
 
-Prototype evidence: the controlled registry currently contains boxed_food, flat_media, medical_boxes and round_cans; explicit None is a valid authoring decision. All four passed representative gameplay testing. Future classes require deliberate approval; this current registry is not a permanent four-class limit. [P04 §§13-14]
+Current approved registry: boxed_food, flat_media, medical_boxes, round_cans and folded_clothing. The original four have representative prototype evidence; folded_clothing is approved for exactly 152–155, without bypassing fit/support/clearance. Explicit None remains valid. Items 163–174 remain saved None with twelve separate group-review approvals pending. Future classes need deliberate approval. [P04 §§13–14; R25]
 
 ### 7.5 Furniture and containers
 
@@ -652,7 +652,7 @@ Functional storage authoring may reuse one furniture grammar across installation
 
 - Active request hatches accept items only while their request is open.
 
-- The player can carry several eligible items, interact with a destination, and feed them automatically without manually assigning each item to a meter.
+- Carry several items, open the panel with F, then use one distinct E per selected whole eligible item. Its Utility routes automatically to its single eligible lane; the interface never chooses or consumes the rest of the bundle.
 
 - A destination never asks the player to choose between two valid meters for the same item.
 
@@ -670,7 +670,7 @@ Every request uses the same collection model and outputs normalized coverage per
 | --- | --- |
 | Destination | Physical hatch, terminal, or expedition team receiving the items. |
 | Trigger | Fixed, scheduled, random, or player-initiated activation. |
-| Deadline | Submission window; never extends beyond midnight. |
+| Deadline | Ordinary request window with opening < deadline < midnight. This strict request cutoff does not prohibit causal events or cargo handling at midnight. |
 | Utility lanes | Accepted item categories and one target value per active lane. |
 | Allocation | Automatic item-to-meter routing; no manual lane choice for one item. |
 | Partial fulfillment | Always permitted unless a future feature explicitly states otherwise. |
@@ -709,7 +709,7 @@ The player sees aggregate counts on a bunker monitor rather than individual name
 
 ### 9.3 Morning preparation
 
-Full-game design assigns destinations/varied requests; those outcomes remain future. M4 creates authored five-lane team requests and lets the player select, fully dispatch early or manually dispatch under-prepared. [R25]
+Destinations retain distinct loot-table/risk concepts; destination-varying base demand is not an approved rule. Current base capacity and each lane requirement scale directly with member count, equally for same-size, same-upgrade teams. M4 implements authored five-lane requests, full early dispatch and manual under-prepared dispatch. [CAL-U2; R25]
 
 At 10:00 unsent teams dispatch with submitted items, including nothing. Full/manual/cutoff commits once; full Bulk alone does not complete an under-prepared team. [R25]
 
@@ -759,7 +759,9 @@ Some expedition outcomes may return a recruit candidate. The candidate appears o
 
 - No response by midnight counts as a decline.
 
-- Recruitment chance is modified only by the expedition's Weapons coverage, destination, and the next-day Morale effect produced by Bunker Ops.
+- Recruitment currently has only the expedition Weapons, destination and next-day Bunker Ops Morale modifiers. Tentative Training recruitment improvements (§15.11) would need an explicit later interaction decision; no new modifier is added here.
+
+Tentative Training/Readiness keeps permanent organizational slots distinct from changing daily crews (§15.11). Its proposed recruitment and utilization effects need later validation; current formation and recruitment contracts remain the baseline. [TR-U1; FUT-U1]
 
 ### 9.8 Failure check
 
@@ -772,9 +774,10 @@ This permits the intended recovery fantasy: one lone scavenger can find one surv
 ### 10.1 Team load model
 
 ```text
-TEAM LOAD CAPACITY = f(team size)
-OUTGOING BULK      = sum(Bulk of submitted loadout items)
-RETURN CAPACITY    = Team Load Capacity - Outgoing Bulk
+TEAM BASE CAPACITY = members × per-member capacity
+BASE LANE TARGET   = members × per-member lane requirement
+OUTGOING BULK      = sum(Bulk of submitted whole items)
+RETURN CAPACITY    = Team Load Capacity − Outgoing Bulk
 ```
 
 Everything sent with a team is consumed by the expedition abstraction. Food is not treated as freeing capacity after consumption; weapons and crowbars are not automatically returned. The model favors clarity over literal simulation.
@@ -789,13 +792,13 @@ Everything sent with a team is consumed by the expedition abstraction. Food is n
 | Weapons | Guns, knives, crowbars, improvised objects | Improves Bulk utilization and recruitment chance. |
 | Protection | Socks, gloves, coats, helmets, protective vests | With Medical, reduces injury and death risk. |
 
-M4 requirements/member: Food/Hydration/Medical/Weapons/Protection 12/12/6/12/12, raw capacity 28 Bulk/member, player Bulk 20. These are testing values, not final economy. Destination-dependent demand remains future. Players may leave lanes incomplete; accepted whole-item excess Utility is wasted. [R25]
+The approved baseline is equal base capacity and lane targets for equal member counts, scaling linearly per scavenger. M4 tests Food/Hydration/Medical/Weapons/Protection 12/12/6/12/12, raw capacity 28 Bulk/member and player Bulk 20; these remain tunable test values. Destination loot/risk differences do not approve demand modifiers. Training could later introduce visible purchased modifiers, but is unimplemented. Incomplete lanes and whole-item cap-and-waste remain valid. [CAL-U2; R25]
 
 ### 10.3 Bulk targets for complete loadouts
 
-PROVISIONAL  A complete average-efficiency loadout should consume about 50 percent of team capacity. A highly efficient loadout should leave roughly 70-75 percent available. Even the worst theoretically complete assortment should leave approximately 10-15 percent available for return loot.
+PROVISIONAL CALIBRATION ASPIRATIONS  An ordinary reference loadout may use about 50% of team capacity; efficient combinations may leave roughly 70–75% for returns. These are not guarantees for every complete assortment. [CAL-U1]
 
-These targets prevent the player from accidentally spending every available unit of capacity merely by satisfying a valid request. Extremely inefficient combinations, such as many tennis rackets, remain costly but should not create a zero-loot outcome when they represent a complete generated request.
+There is no protected minimum return reserve. A poor valid complete loadout may leave zero return capacity, while an excessively bulky combination may be impossible to complete. An item exceeding remaining Bulk is rejected intact; accepted items charge full Bulk and waste excess Utility. Meaningful efficiency differences remain intentional. No locked value changes follow. [CAL-U1]
 
 ### 10.4 Overfill
 
@@ -865,7 +868,7 @@ Expedition or another upstream source owns the exact committed loot outcome. Loo
 
 A repeated prototype content seed can reproduce an ordered definition selection without reusing unique batch or item identities. Reconstruction of an existing commitment preserves its identities. Presentation changes do not mint replacement items.
 
-ItemDefinition remains gameplay truth. Fuel is eligible in the current approved prototype pool; Gloves and Pants remain excluded pending separate content work. Prototype generation is evidence, not final expedition loot balance.
+ItemDefinition remains gameplay truth. The current catalogue has 167 active definitions, seven permanently reserved retired IDs (005, 023, 024, 034, 036, 037, 042), and 174 preserved source models. Old Gloves loot_000034 and Pants loot_000036 are retired sources; active Leather Gloves loot_000173 and Rubber Wellies loot_000174 are distinct. Earlier 40-ID/35-item pools are historical test scopes, not normal M4 inflow. Prototype generation is not final loot balance. [R25]
 
 ### 11.3 Deterministic deck and freight-fixture presentation
 
@@ -910,7 +913,7 @@ Explicit supersession of v0.4 §11.3: the limit is three DEPOSITED batches, not 
 
 Before presentation commitment, recovery preserves exact committed content and identities. Once a deterministic presentation is committed, reconstruction must restore its accepted arrangement and remaining-entry ownership. Incompatible profile data fails closed pending an explicit migration or allowed unrevealed re-preparation; a revealed delivery is never rerolled.
 
-TAKE transfers the exact existing ItemInstance into the carried bundle and releases its active-batch entry as one ownership transaction. Failed/full-bundle pickup cannot drain or close; stale transfers cannot duplicate an item. The last successful TAKE begins closing, followed by full departure, retirement and FIFO promotion. Full durable save, journal and crash recovery remain future integration. [R14; R12 §§6, 18, 20]
+TAKE transfers the exact existing ItemInstance and releases its active-batch entry as one ownership transaction. Failed/full-bundle pickup cannot drain or close; stale transfers cannot duplicate. The last TAKE begins closing, then full departure/retirement/FIFO promotion. Ordinary schema-4 continuation, real clock/midnight and M4 scripted admission are accepted; continuous durable journaling/crash recovery and actual expedition-return integration remain future. [R14; R25]
 
 ### 11.7 Future expedition precomputation
 
@@ -932,7 +935,7 @@ The Kitchen performs two separate functions: fixed daily Meal Service and contro
 
 CURRENT M4 TESTING  Kitchen Food/Hydration opens 10:00/14:00/18:00 for three hours. Breakfast follows Dispatch cutoff. Targets 48/40, 60/48, 60/48 are testing content, not final demand balance. [R25]
 
-Each meal has separate numeric Food and Hydration meters and accepts partial fulfillment. Demand equals a fixed background cost for untracked bunker occupants plus a variable cost for the scavengers currently in Medical. Ready and Away scavengers are not charged again through Meal Service because expedition loadouts already contain their Food and Hydration.
+Each meal has Food/Hydration meters and accepts partial fulfillment. Full-game demand is a background cost for untracked occupants plus current Medical patients. Ready and Away scavengers remain excluded because expedition loadouts carry their allowance. Tentative at-home Training needs an explicit Kitchen interaction decision (§15.11); it does not silently add trainee demand. M4 authored meal targets are test content.
 
 DAILY MEAL COVERAGE = average of capped Food and Hydration coverage across breakfast, lunch, and dinner
 
@@ -1119,7 +1122,7 @@ Progress resolves at midnight and is modified by Meal Coverage. A completed upgr
 | Carrying throughput | Basket, carrier, cart abstraction | Raises carried Bulk without a physical vehicle. |
 | Sorting throughput | Larger sorting table or more snap slots | Adds temporary sorting capacity. |
 | Ration production | Additional daily batches or output handling | Raises daily Food-processing throughput. |
-| Information tools | Labels, icon access, scanner or stock overview | Improves retrieval and planning; never moves items automatically. |
+| Information tools | Labels, icons, stock overview and candidate socketed Expedition/request displays, clocks and repeaters (§15.10) | Improve retrieval, planning and route-specific access to baseline information; never move items automatically or gate essential awareness. |
 
 PROVISIONAL  Upgrade order, costs, prerequisites, construction times, and which information tools belong in the initial release must be validated against solo-development scope.
 
@@ -1145,17 +1148,186 @@ The player-accessible Workshop Service Room supports equipment staging and proje
 
 ### 15.10 Workshop and Electronics information infrastructure
 
-TENTATIVE / VALIDATE / NOT IMPLEMENTED. Optional player-initiated Workshop projects may add socketed remote Expedition and request-monitor displays, clock locations, alert repeaters and richer nonessential detail. Baseline request awareness and timekeeping must stay usable. Do not gate core information or reduce currently accepted monitor data behind upgrade paywalls. [R25]
+#### 15.10.1 Purpose and identity
 
-These investments compete for Electronics with Bunker Ops, alongside other project materials. Retain the overnight/project/socket model. Final prices, prerequisites, project tree and exact content remain open. Fuel drives lighting outages; Electronics drives monitoring/communications outages under §14. This concept does not exchange those lane effects.
+Provenance: WS-U1; WS-U3. See the conversation source register.
+
+Developer-proposed, favourably received direction; TENTATIVE / VALIDATE / NOT IMPLEMENTED. The Workshop could use Electronics for optional operational infrastructure, creating a second use for those supplies alongside recurring Bunker Ops requirements. The player chooses between maintaining operations, retaining a flexible Electronics reserve and committing supplies to a lasting improvement.
+
+This is intended to strengthen the Workshop beyond a narrow sequence of storage-capacity unlocks. Shelves substantially alter the storage economy; clocks, displays and repeaters offer a different progression scale, improving access to information and reducing unnecessary travel. They give the bunker visible, tactile evolution without requiring visible workers or construction simulation. Their value is not assumed to be negligible: saving trips or avoiding a missed deadline can materially affect performance.
+
+The intended strategic question is not merely whether the player can afford an upgrade today. It is whether to stockpile Electronics across several days, whether doing so leaves enough for Bunker Ops, and whether a particular convenience suits the player's own working routes and organization. Future destination affinities could add another decision, but selectable destinations are not a prerequisite or approved by this idea. The current launch destination policy remains unchanged unless separately revisited.
+
+#### 15.10.2 Concrete candidate projects
+
+Provenance: WS-U1; PLAY-U1; A-DISC. See the conversation source register.
+
+The developer proposed the following concrete projects:
+
+| Candidate | Intended player-facing benefit | Boundary |
+| --- | --- | --- |
+| Dedicated Expedition display in Dispatch | Check expedition/crew information without repeatedly returning to Sorting. | Uses real available information; not a simulator or a source of invented outcomes. |
+| Additional request monitors | Check active obligations, progress and deadlines from another working area. | Supplements a usable baseline overview rather than creating the first reliable awareness of requests. |
+| Additional clocks at predetermined sockets | Read the shared game time along preferred routes and in other rooms. | No independent device timers; preserve the development HUD until it is deliberately replaced. |
+| Coloured request/lift alert repeaters | Notice activity out of direct sight of its department or too far from a monitor to read text. | Candidate destinations include Lift, Medical, Kitchen and Bunker Ops. Room identity should carry through. |
+| Richer or more integrated display information | Compare relevant facts more quickly or add useful detail to another display. | Does not reveal committed but intentionally hidden random outcomes or remove information already accepted in current equipment. |
+
+The original discussion included unlocking a lift queue count and subsequently adding a clock to that monitor. The historical example is superseded in this respect: the current Receiving CRT already supplies its accepted deposited queue count, so that existing count is not to be removed and resold. A richer or additional display can still be a future project.
+
+Colour should not be the only identifier for alert repeaters. Symbols, location, wording or patterns are discussion recommendations consistent with the existing feedback direction, not a finished alert-language specification.
+
+#### 15.10.3 Baseline awareness versus optional convenience
+
+Provenance: PLAY-U1; A-DISC. See the conversation source register.
+
+Later developer playtest finding / required future design need: local room lights and audio alone are insufficient. Players do not always have line of sight, and making sound carry everywhere could make it over-loud near its source. Central monitoring and dependable request awareness are therefore baseline integrated-game needs, not premium Workshop content.
+
+Distinguish notification from overview. The player needs a reliable way to discover that an obligation exists while working elsewhere, and a predictable place to inspect its details. A central monitor solves only part of that problem if the player must stare at it constantly. Exact implementation remains undecided.
+
+Optional infrastructure should improve the reach, placement or richness of already usable information. It should not repair deliberate informational blindness. This is the important later refinement to the original suggestion of gating all monitors.
+
+#### 15.10.4 Tutorial possibility and its unresolved timing
+
+Provenance: WS-U1; A-DISC. See the conversation source register.
+
+The developer suggested teaching the Workshop on Day 1 by contributing a known quantity of pre-seeded Electronics to enable a clock. This remains a candidate, without a mandatory tutorial design or exact price.
+
+The discussion identified a tension with the established overnight Workshop model and the need for time awareness before timed obligations. A baseline time source plus an additional clock/display repair was suggested as the simpler version. A special immediate tutorial repair was another implementation possibility, not an approved exception. Do not silently decide that the only clock remains unavailable during meaningful timed obligations, or that all Workshop projects become instant.
+
+#### 15.10.5 Within-run progression and player agency
+
+Provenance: WS-U2; A-DISC. See the conversation source register.
+
+The conceptual research/talent lane was explicitly within a run, not progression retained across independent runs. Workshop projects may provide a more physical expression of facility progression than an abstract bonus tree. The player can favour an Expedition display, request overview, clocks or repeaters according to their routes and priorities.
+
+Discussion recommendation (A-DISC): a project menu could show branches/prerequisites without a separate research currency or duplicate unlock charge. This is not a settled progression rule. A character/equipment progression lane for carrying or movement remains undefined, not abolished and not authorized here.
+
+The concern about Workshop longevity is a design motivation, not a requirement for infinite projects, recurring device maintenance or upgrade decay. Finite meaningful progression may be enough; those recommendations remain open for validation.
+
+#### 15.10.6 Existing systems and open questions
+
+Provenance: WS-U1–U3; FUT-U1; A-DISC. See the conversation source register.
+
+Existing Workshop contracts remain: player-initiated commitment, project-specific materials/Salvage, one active project, productive nights influenced by Meal Coverage, fixed installation sockets and no visible construction. The discussion favoured direct Electronics costs for relevant projects so competition with Bunker Ops remains tangible; exact material recipes and progression are undecided.
+
+Construction material does not determine outage ownership. The currently specified Fuel lane governs ordinary lighting/request-alert light outages; Electronics governs monitors/PA/communications. Funding an alert light with Electronics does not itself reassign it to the Electronics outage lane. Clock outage behaviour remains a separate open question.
+
+Still unresolved: project roster, pricing, prerequisites, installation order, exact richer information, tutorial sequence, number/placement of sockets, accessibility treatment, and integration with any later research or character progression. No project values, new rooms, interfaces or unlock code are authorized by this record.
+
+Terminology remains open: Energy was discussed as a possible umbrella, while the current Fuel schema and lane remain unchanged. This note introduces no category migration, generator or battery mechanic. [Conversation reconstruction; semantic audit precision note]
 
 ### 15.11 Expedition Training and Readiness
 
-TENTATIVE / VALIDATE / NOT IMPLEMENTED. A separate unseen-facility or abstract team-slot upgrade idea could commit Weapons and Protection to persistent team-slot improvements. It is distinct from Workshop. No individual scavenger skills, visible trainers, new visible facility or outcome implementation is approved. [R25]
+#### 15.11.1 Motivation and safe-haven boundary
 
-A slot stays unlocked after first formation irrespective of future occupancy. Form all teams first, then mark a team for training rather than redistributing its scavengers. That team does not expedition that day. Each upgrade requires one guaranteed training day; benefit begins the following morning. These are tentative directions, not shipped behavior.
+Provenance: TR-U1; WS-U3; A-DISC. See the conversation source register.
 
-Possible safety, carrying, requirements and recruitment benefits are candidates only. Exact levels, costs, prerequisites, activity selection and benefit rules remain unresolved. Neither M4 nor M5 implementation is authorized by recording this concept.
+Developer-proposed alternative; TENTATIVE / VALIDATE / NOT IMPLEMENTED. Training gives Weapons and Protection competing uses without threatening the bunker or disturbing sorted inventory. It was proposed after the discussion of Security requests and night theft raised concerns about the safe-haven promise and frustration at losing carefully arranged possessions.
+
+Security/theft was a parked alternative. The proposal retains dual-use equipment without combat, stolen inventory or involuntary disruption of organization.
+
+The developer envisaged an additional facility/service frontage like the other departments, with an unseen operational interior: no visible scavengers or trainers, no active training minigame and no new animated activity. Exact room/location is unapproved. The proposed frontage remains distinct from implementation authorization; a purely abstract remote menu has not been selected.
+
+#### 15.11.2 Persistent slots rather than individual skills
+
+Provenance: TR-U1; A-DISC. See the conversation source register.
+
+The player invests in Team 1, Team 2, and so on as persistent organizational slots, not in named scavengers or a particular day's loadout. The next crew assembled into a slot inherits that slot's improvements. This avoids tracking personal experience, skill transfer, heterogeneous strength, biographies or training histories across injuries and recruitment.
+
+A useful proposed fictional rationale is institutional readiness: procedures, preparations and assigned equipment associated with a slot. This rationale explains persistent capability despite changing personnel; it is not authorization for a hidden individual training model. “Training” and “Readiness” remain working names.
+
+Separate permanent slot state (identity, unlocked status, acquired improvements) from daily team state (member count, activity, loadout, departure). Stable slot identity matters when middle slots train or later slots are temporarily empty. Do not renumber an active Team 3 to Team 2 because Team 2 stayed home.
+
+#### 15.11.3 Unlock rule and growth
+
+Provenance: TR-U1; A-DISC. See the conversation source register.
+
+The developer's proposed rule is that a slot becomes available for upgrades once the normal Expedition system has formed it at least once. Three initial teams expose slots 1–3. Reaching a population that forms Team 4 unlocks that slot permanently, even if subsequent injuries or population decline temporarily leave it unoccupied. Further slots follow the same rule; there is no independent team-count cap.
+
+This connects progression opportunities to population growth without requiring a complete design for maximum population or maximum teams. Upgrades survive temporary loss of occupancy within the run. They are not cross-run meta progression.
+
+Open distinction: unlocked-for-investment versus occupied-and-eligible-to-train. The assistant recommended that an empty slot must not complete cost-free training while perhaps allowing advance funding. The developer has not explicitly settled that eligibility/funding distinction. This eligibility/funding distinction remains unresolved.
+
+#### 15.11.4 Form first, reserve the assigned crew, do not redistribute
+
+Provenance: TR-U1. See the conversation source register.
+
+The ordinary formation rule fills four-person teams first and then at most one partial team. Training is selected against that formed roster. The selected team's assigned scavengers remain home; they are not moved into another slot to preserve expedition throughput.
+
+The developer’s worked example preserves slot identity:
+
+| Ten Ready scavengers | Formation | Train Team 2 | Train Team 3 instead |
+| --- | --- | --- | --- |
+| Team 1 | 4 | Four depart | Four depart |
+| Team 2 | 4 | Four train | Four depart |
+| Team 3 | 2 | Two depart as Team 3 | Two train |
+
+Training Team 2 therefore sends Teams 1 and 3, with six scavengers total. It does not repartition six people into Teams 1 and 2 or create another slot to evade the reservation. Training Team 3 leaves eight available for expeditions but invests in a smaller, potentially less reliably occupied slot.
+
+On the next morning, teams form again from that day's Ready population while permanent slot improvements persist. Injury and recovery can change the remainder and which later slots are occupied. That gives Medical and survivability indirect significance for the utilization of training investments.
+
+#### 15.11.5 Timing detail that the developer explicitly confirmed
+
+Provenance: TR-U2; A-DISC. See the conversation source register.
+
+Confirmed within the otherwise tentative feature: each upgrade requires one guaranteed training day; the benefit is available the following morning. The team does not also undertake an expedition that day. This confirmed timing has no training-success roll or default variable multi-day programme.
+
+Still unresolved: selection deadline, whether projects can be pre-funded, the commitment/cancellation boundary, whether a partially provisioned team can switch activities, simultaneous training throughput, exact completion plumbing, and how trained-at-home scavengers are represented in Kitchen demand. The assistant's suggested “fund in advance, schedule before loadout, finish overnight” sequence is a proposal, not an approved complete interaction contract.
+
+#### 15.11.6 Strategic choices and opportunity cost
+
+Provenance: TR-U1; A-DISC. See the conversation source register.
+
+Three costs interact: Weapons/Protection committed, one expedition opportunity forgone, and permanent investment tied to a slot whose utilization may vary.
+
+The player can concentrate upgrades on one slot or spread improvements. Earlier slots are more reliably occupied under full-four-first formation; later slots may be cheap to withhold on a partial-team day but may not fill or even remain occupied soon. This is voluntary investment risk, not random removal of the purchased improvement.
+
+Training a two-person team currently gives only half the aggregate benefit of a four-person team for benefits proportional to member count, such as a hypothetical +2 Bulk per member. It is not a universal rule for per-expedition recruitment or probability effects. No +2-Bulk bonus is approved; it is an explanatory example.
+
+Opportunity cost is net, not simply gross loot forgone. A team staying home also avoids that expedition's loadout expense and exposure to expedition risk. Material cost, saved preparation, lost expected return, population risk and player handling effort must be evaluated together. The system could give the player a deliberate quieter logistics day when reserves are strong or Receiving needs attention; this is a discussion rationale, not a requirement for a separate cooldown mechanic.
+
+Weapons/Protection with poor expedition Utility-to-Bulk efficiency may become useful training contributions while compact equipment is reserved for teams going out. Training still consumes real items and carrying effort. This does not define a new Training capacity statistic.
+
+#### 15.11.7 Candidate improvements and important risks
+
+Provenance: TR-U1; CAL-U2; A-DISC. See the conversation source register.
+
+The developer suggested survivability, lower requirements per expedition, more carrying capacity and higher recruitment opportunity. All four remain candidates, without approved ranks or numeric bonuses.
+
+| Candidate | Intended value | Interaction requiring later validation |
+| --- | --- | --- |
+| Survivability | Improve a regularly used slot's resilience | Daily Medical/Protection preparation must remain meaningful. |
+| Carrying capacity | More useful return space, usually scalable with crew size | Greater returns also add handling/storage pressure. |
+| Reduced requirements | Save supplies and trips; change useful combinations | Whole-item thresholds can remove an entire item, reduce outgoing Bulk and increase return space simultaneously. |
+| Recruitment opportunity | Invest in growth and future slot availability | Interacts with existing Weapons/destination/Morale rules and can create compounding growth. |
+
+The earlier equality rule becomes conceptually “same size and same upgrades imply the same capacity/requirements.” Purchased, visible progression is distinct from arbitrary heterogeneous scavenger stats. The baseline still uses equal per-scavenger values; no modifiers are implemented by documenting this proposal.
+
+The assistant recommended starting with bounded safety and carrying improvements, treating requirement reduction/recruitment more cautiously. That recommendation is not a final feature selection.
+
+#### 15.11.8 Discussion safeguards that remain recommendations
+
+Provenance: TR-U1; FUT-U1; A-DISC. See the conversation source register.
+
+The following concerns and assistant suggestions remain unapproved:
+
+- Team 1 dominance: earliest slots are most reliable. Finite ranks, increasing higher-rank costs, the opportunity cost of withholding an already productive team, and cheap partial-slot training days could support a focus-versus-spread choice. No cost curve is approved.
+
+- Partial-slot purchase discount: price by upgrade/slot rank rather than current crew size was recommended to avoid buying a permanent full-size benefit cheaply with one current member. The cost basis remains open.
+
+- Empty-slot training: avoid an unoccupied slot completing upgrades without sacrificing an expedition opportunity; funding versus actual training eligibility remains to be decided.
+
+- Commitment exploit: switching from a spent loadout into training must not casually refund irreversible submissions or become free storage. Exact scheduling/cancellation rules remain open.
+
+- Preparation obsolescence: permanent progression should not make daily loadouts irrelevant. This is a validation concern, not permission to secretly compensate with arbitrary higher demands.
+
+- Kitchen interaction: at-home trainees do not carry an expedition ration allowance. Whether and how the existing Kitchen demand model accounts for them is unresolved; do not silently add a new training-meal request.
+
+- Finite progression is acceptable: no mandatory decay, maintenance fees or endless ranks were proposed merely to keep Training occupied.
+
+A bunker-wide doctrine project was discussed as a simpler fallback if persistent slots prove awkward. It was not selected and should not replace the slot-based proposal in the documentation.
+
+Training's economic test ultimately needs real or deliberately linked expedition returns. M4's independent scripted deliveries can validate interfaces/accounting but cannot prove the value of forgoing an expedition. This remains a future-system boundary, not a reason to reopen M4.
 
 ## PART III  |  PRESENTATION AND PRODUCTION
 
@@ -1181,11 +1353,11 @@ Signals should become learned reflexes. Red is confirmed for Medical. Every othe
 | --- | --- |
 | Carried-items strip | Current bundle, active item, and carrying Bulk. |
 | Item inspection | Name, +X Utility, pips, Bulk, Footprint/compatibility, stack cues, Salvage Yield, and optional condition/contamination states. |
-| Request panel | Appears when aiming at an active hatch from a useful distance; shows category icon and X/Y progress for each active lane. |
+| Request panel | Aiming can expose a passive prompt. F opens/closes the actionable non-pausing panel; distinct E submits the selected whole item. Display each active lane’s progress and projected credit/waste. |
 | Team provisioning | Destination, member count, five meters, outgoing Bulk, Team Load Capacity, and Return Capacity. |
 | Central monitor | Scavenger states, active requests, expected returns, elevator queue, recruit decision, patients, and major current penalties. |
 | Clock and signals | Current time, fixed anchors, active destinations, anticipation, and deadlines. |
-| Night report | One-screen card grid with causal outcomes, next-day penalties, and optional card-level detail. |
+| Night report | Expeditions / Medical / Meal Service tabs with per-tab scrolling, fixed controls and frozen completed-day facts. Future tabs/causal detail remain open; backend identity and reasons persist. |
 
 Baseline cross-wing request awareness, central monitoring and timekeeping are required future integrated-system design needs. M4 ships bounded Dispatch/request/report UI, not that network. Optional Workshop displays/repeaters extend convenient access and nonessential detail; they cannot sell back baseline information or reduce accepted monitor data. Layout, alert grammar and richer interface need separate design. [R25]
 
@@ -1344,9 +1516,11 @@ Item authoring follows an explicit dependency chain: canonical Scale -> approved
 
 The retained workbench res://gameplay/dev/item_storage_pose/item_storage_pose_authoring.tscn edits actual ItemDefinition pose metadata, shows authored/suggested Footprints and warnings, and writes suggestions only by explicit action preserving Footprint z/pose. Current catalogue: 167 active / 7 retired / 174 source models. Scale, pose/+Z Front, Footprint and roles are accepted for 167; twelve Auto Stack Group reviews remain pending with saved None. Earlier forty-item approval counts are historical. [R25]
 
-Maintain the explicit separation: ItemDefinition is gameplay truth; the review manifest is authoring/evidence truth. Source fingerprints and approved dependency chains are audited through explicit tools, never read by the runtime loot generator to decide eligibility. For the prototype, an authored 40-ID pool resolves through ItemCatalog; future stable loot tables can replace it without changing Receiving.
+ItemDefinition is gameplay truth; the review manifest is authoring/evidence truth. Source fingerprints and approval dependencies are audited explicitly, never consulted by a runtime generator for eligibility. Stage A’s authored 40-ID pool is historical; the current M4 scenario uses locked manifests across the accepted active catalogue without changing Receiving ownership.
 
 Generating a second batch with the same seed reproduces its ordered content, not its unique identities. An instance identity survives representation changes and reconstruction until the item is consumed/converted/destroyed; a static mesh name or newly instantiated host node does not define identity. [R12 §§4-7]
+
+Current calibration uses human visual quantity/handling judgment, broad Food nutritional grounding and category-specific effectiveness. Bulk is handling burden; Utility is useful represented contribution. The catalogue intentionally has a broad useful middle and weak/exceptional options, without one required bell curve. A large irregular carcass Footprint alone does not prove much more Food than the piglet. A few high-end corrections were preferred to globally raising demand/capacity; waste was judged case by case without a universal cap. P01’s Footprint formula remains historical/proposed and does not regenerate accepted values. Strong combinations remain desirable when availability/opportunity cost limit repetition. [CAL-U3; PLAY-U1; A-DISC]
 
 ### 18.4 Request definitions and Outcome Profiles
 
@@ -1368,7 +1542,7 @@ This separation lets the same physical hatch interaction support expeditions, Me
 | Append-only transaction journal | Preserve irreversible actions between snapshots without forcing a full synchronous save after every item. |
 | Deterministic committed outcomes | Prevent rerolling expedition loot, casualties, recruitment, treatment, contamination, or outage windows after a crash. |
 
-Snapshots should occur at day transition, save-and-exit, major safe checkpoints, and approximately every 60-120 real seconds if performance permits. Journal records must be small, checksum-validatable, and replayable. Crash-injection testing should target request submission, expedition arrival, midnight resolution, salvage creation, and snapshot replacement.
+One common service supports continuous recoverable-state maintenance, Save & Exit and midnight. Full-snapshot consolidation is distinct from durable update cadence; the ideal full-game loss target is 2–3 real seconds without requiring a complete scene snapshot every two seconds. Exact consolidation/journal/delta intervals require performance and recovery evidence. Crash-injection work later targets ownership transfers, arrival, midnight, conversion and snapshot replacement. M4 ordinary saves are not that durability implementation. [SAVE-U1; Systems MVP §19]
 
 Placed-item records must preserve the orientation chosen at commit time. Load reconstruction must restore each placed item's saved orientation and never derive it again from the current shelf Front. Optional future 0/90/180/270 display rotation expands the saved placement state rather than the ItemDefinition's canonical pose.
 
@@ -1427,7 +1601,7 @@ No resource can be optimized independently. More scavengers increase loot potent
 
 ### 19.2 Systemic difficulty
 
-LONG-RUN PRINCIPLE / TENTATIVE EARLY-RUN AMENDMENT  Difficulty should respond primarily to bunker condition/player choice. §19.6 considers authored early-run pacing, not implemented, a mandatory day multiplier or automatic request scaling that neutralizes efficient play. [R25]
+DEVELOPER-PROPOSED BROADER DIRECTION  Systemic consequences and player preparation remain meaningful within non-flat accumulation/drawdown/recovery across the experience (§19.6). Opening curation receives special attention; later authored variation and a purely emergent long run remain options to design and compare. No mandatory escalation, day multiplier or forced equal stock floor is approved. [PACE-U1–U3; A-DISC]
 
 A technically sustainable equilibrium may exist, but the player must continue handling random composition, finite final storage, recruit decisions, treatment backlog, Bunker Ops requests, timed obligations, and occasional bad outcomes. What is worth keeping changes across the run.
 
@@ -1463,9 +1637,9 @@ Under-supplied expeditions may return later, fill less available Bulk, deliver l
 
 - Real minutes per day and in-game minutes per request timer.
 
-- Team Load Capacity curve for one to four scavengers.
+- Linear per-member base capacity, equal for same-size/same-upgrade teams; candidate numeric values remain tunable. Training modifiers are tentative.
 
-- Generated meter targets and future destination policies; accepted M4 cap-and-waste remains the current test policy.
+- Linear per-member base lane requirements; destination loot/risk policies are separate. Destination-varying demand is undecided, not an approved default. Preserve selected-item cap-and-waste.
 
 - Lane-specific provisioning effects on safety, duration, Bulk utilization, recruitment, and the aggregate internal Loot Quality bonus. Base Team Load Capacity does not change with Food or Hydration at launch.
 
@@ -1485,13 +1659,107 @@ Under-supplied expeditions may return later, fill less available Bulk, deliver l
 
 - Gallery proportions, local shelf depth/height, reachable bay depth, request travel times and the longer Bunker Ops approach; preserve comfort and avoid route changes becoming repetitive chores.
 
-### 19.6 Accumulation drawdown and recovery in the early run
+### 19.6 Accumulation drawdown and recovery across the experience
 
-TENTATIVE / VALIDATE / NOT IMPLEMENTED. An authored early-run sequence could provide useful surplus and time to organize stored inventory, then foreseeable scarcity tests accumulated reserves, followed by recovery that allows rebuilding. Persistent meaningful inventory is central to the sorting fantasy. [R25]
+#### 19.6.1 The design problem and developer's proposed response
 
-This is not a literal fixed sine wave, mandatory fixed-day difficulty multiplier or guaranteed stock depletion. Do not silently auto-adjust requests to neutralize efficient play. Approximate ten Ready scavengers is an intended opening direction, not an implemented replacement of M4’s sixteen-member stress fixture or an approved numeric default.
+Provenance: PACE-U1; PACE-U2. See the conversation source register.
 
-This introduces deliberate tension with v0.14’s primarily emergent long-run difficulty principle. Separate introductory authored pacing from future systemic long-run behavior; varied late-run pacing remains open. Exact sequence, supply/request amounts and recovery rules require future design/testing.
+Developer-proposed broad design direction; concrete pacing system UNDESIGNED / UNIMPLEMENTED / REQUIRES VALIDATION. The organizing fantasy requires useful possessions that persist long enough for sorting, placement and storage expansion to matter. Meaningful consumption requires scarcity, competition and consequential spending. Trying to satisfy both through a nearly flat day-by-day balance leaves too little margin: either shelves repeatedly empty or supplies make choices trivial.
+
+The developer therefore proposed a changing economic rhythm, roughly wave-like but not a literal sine function: begin with an accumulation phase, follow with periods of significant net consumption, and allow later recovery/accumulation before further pressure. Duration, severity, baseline, amplitude and intervals need not repeat. This is not a locked event director, exact calendar, formula or day-count multiplier.
+
+Initial abundance can come from a larger seed reserve, stronger expedition returns, lower requirements, or a combination. Drawdown can result from higher demand, lower incoming supply, or both. Better organization, judicious item allocation, lower waste, appropriate upgrade choices and deliberate reserves should materially reduce the impact of lean periods.
+
+The broadened world fiction can contextualize these shifts through the existing off-screen apocalypse. No combat, exterior environment, visible suffering, raids or overhaul of the safe-haven presentation follows from this direction.
+
+#### 19.6.2 Early-run curation versus later-run variety
+
+Provenance: PACE-U2. See the conversation source register.
+
+The developer explicitly distinguished the opening (for example, the first ten days) from much later play (for example, days thirty to forty). Early experience deserves greater authoring attention because it establishes the game and is encountered by more players. A later survivor is likely to have different reserves, infrastructure, habits and resilience.
+
+These day counts illustrate different stages, without imposing a ten-day boundary on designed variation. Later pacing may use different event combinations, degrees of curation or systemic inputs. The exact later model is open. The former systemic-only/equilibrium fallback does not constrain consideration of deliberate later supply/demand changes.
+
+Equally, the proposal does not require every later valley to be stronger, a fixed repeating catastrophe or automatic escalation until every expert run fails. Indefinite survival remains the existing formal run structure unless separately changed. The relationship between authored conditions and long-run systemic consequences requires design, not an undocumented decision in either direction.
+
+#### 19.6.3 Failure, learning and preparation
+
+Provenance: PACE-U3; A-DISC. See the conversation source register.
+
+The developer accepts that new or casual players may fail the first or second lean period and survive farther on later runs as they learn to prepare. That is part of the intended learning possibility, not a measured failure rate, a mandatory death target or authorization for unavoidable early failure.
+
+This direction does not change the existing run-failure condition or add direct hunger/thirst mortality. How supply pressure reaches failure continues through the agreed consequence systems unless separately redesigned.
+
+The earlier “90%” observation was a hypothesis about audience distribution and design effort, not measured analytics, a failure quota or a retention objective.
+
+The discussion recommended making the type and approximate horizon of major pressure understandable enough for preparation. Baseline monitoring matters: missing a request because it was invisible is not the same as knowingly underfunding it. Exact communication, certainty and forecast detail are undecided; do not expose hidden future outcomes merely to make every event predictable.
+
+At the current M4 compression, 18 active game hours equal 45 real minutes, so ten days equal 7.5 active real hours before pauses. This is arithmetic context, not a fixed release day length. The opening should be considered in real player-hours and meaningful choices, not only calendar labels.
+
+The developer cited Project Zomboid’s loss of conveniences and 7 Days to Die’s periodic threat as preparation/payoff analogies, without adopting unverified exact game schedules. No spoilage, siege, utility-grid or combat mechanics from those examples are imported into Sorting Apocalypse by analogy.
+
+#### 19.6.4 Authored conditions versus forced inventory outcomes
+
+Provenance: A-DISC; PACE-U1. See the conversation source register.
+
+Discussion recommendation: author the pressure opportunities and conditions, not an exact stockpile trajectory every player must experience.
+
+Efficient players should be allowed to enter a valley with more reserves and leave it in better condition. Poor allocation may turn the same conditions into a crisis. The game should not silently increase needs or reduce rewards merely to force both players down to the same stock floor. This preserves the developer's premise that preparation meaningfully softens the valley.
+
+Similarly, recovery is not an automatic rescue grant whenever stock runs low. It is a change in the conditions under which the player works. No adaptive balancing architecture has been approved; any future use of one would need its own explicit scope and limits.
+
+The proposed pacing complements consequences; it should not sever them. Once actual expeditions are implemented, environmental/supply conditions should influence those real outcomes while preserving the effect of provisioning and the committed-outcome model. M4's independently scripted delivery fixture is not the intended substitute for that relationship.
+
+#### 19.6.5 Persistent reserves and the organizing payoff
+
+Provenance: A-DISC; PLAY-U1. See the conversation source register.
+
+Discussion recommendation: do not aim to empty the entire bunker at the end of every valley. Some resident inventory should remain useful across days so organization has continuity. Uneven category pressures can create serious shortages without reducing every shelf to empty.
+
+A large physical reserve does not mean adequate supply in every lane. A player can hold substantial Food but little compact Hydration, awkward Weapons but scarce efficient equipment, or Medical sufficient for treatment but not generous expedition preparation. These are illustrative conditions, not current manifest changes.
+
+Once a substantial working reserve exists, a modest daily surplus can be acceptable. It is the long wait to build any meaningful reserve from almost nothing that motivated the concern. Conversely, endless high surplus would eventually make finite storage or choices problematic; the goal is not infinite accumulation.
+
+Stable zones are a reward. Reusing a well-organized shelf is not a failure that must be corrected by forcing daily reorganization. The ongoing activity can come from replenishment, retrieval, a changed assortment and occasional expansion. Avoid worthless filler added only to make shelves look full.
+
+#### 19.6.6 Material pressure and handling pressure
+
+Provenance: A-DISC; PLAY-U1. See the conversation source register.
+
+Discussion recommendation: treat resource scarcity and physical workload as separate design dimensions.
+
+Abundant phases can create handling pressure through receiving, placement and space decisions while survival needs remain forgiving. Lean phases can reduce incoming volume yet make allocation more consequential. They need not maximize time pressure and scarcity simultaneously.
+
+This gives quieter afternoon/evening periods a legitimate role in organizing and preparing. Do not automatically fill every quiet interval with more consumption requests, especially when lack of resident stock is the reason there is little to organize.
+
+Travel burden also interacts with reserve size and geography. A large nearly empty bunker creates little reason to use distant rooms. Later spatial review should distinguish travel, searching, reading and handling rather than compensating by repeatedly raising player capacity or movement speed. No geometry changes are authorized here.
+
+#### 19.6.7 Use existing levers before adding major systems
+
+Provenance: PACE-U1; A-DISC. See the conversation source register.
+
+The developer's preference is creative use or modest extension of existing/planned systems. Candidate expressions discussed include:
+
+| Fictional condition (illustrative only) | Existing-system lever to investigate |
+| --- | --- |
+| Access to an unusually productive location | Greater useful expedition supply or a changed assortment for a period |
+| Unreliable access or less productive routes | Lower expected returns or a category-specific supply constraint |
+| Temporary operational requirement | An explicitly designed Bunker Ops need using existing lanes |
+| Difficult expeditions and retained injuries | Consequent Medical pressure through the injury/treatment system, not arbitrary added patients |
+| Conditions improve | Supply/demand changes that permit rebuilding without resetting possessions |
+
+These are possibilities, not a finished event catalogue. Exact events, timing, forecasting, demand curves, generation rules and recovery limits remain open. Preserve the existing strict content ownership: Receiving presents committed cargo; it never rerolls or removes awkward items to manufacture a pressure phase.
+
+#### 19.6.8 First evaluation and open design questions
+
+Provenance: A-DISC; PACE-U1–U3. See the conversation source register.
+
+A proposed low-scope evaluation is one authored accumulation–drawdown–recovery sequence tested with different allocation behaviours and initial reserves, before building a general pacing director. This is a recommendation for later design, not M5 authorization or an extension of M4 acceptance.
+
+Questions worth retaining: how much useful resident stock survives mornings and nights; category coverage rather than only net Bulk; duration items remain stored before use; occupied reachable shelf space; whether costly upgrades are chosen or postponed for meaningful reasons; whether good preparation noticeably changes the valley; whether a failed run leaves understandable lessons; and how to give recovery value without guaranteeing an effortless equilibrium.
+
+None of the exact numerical answers is settled. The important retained decision is that the overall experience should deliberately consider non-flat abundance and scarcity, with a particularly curated opening and a separately designed later experience.
 
 ## 20. Prototype, MVP, and Full-Game Targets
 
@@ -1509,9 +1777,9 @@ The interaction/content prototype is complete in its promoted representative sco
 
 - Intended full-game population/outcomes: full-four-first formation plus at most one remainder, 06:00–10:00 provisioning, same-day returns, casualties/treatment and recruitment. M4 implements fixture formation/loadout/dispatch only, without return/population outcomes.
 
-- Five expedition meters, fixed base Team Load Capacity, outgoing Bulk, Return Capacity, destination tables, and internal Utility-Density-biased haul generation.
+- Five expedition meters with linear per-member base requirements and capacity, outgoing Bulk/Return Capacity, destination loot tables and internal Utility-Density-biased haul generation.
 
-- Integrate the accepted one-active/two-queued Receiving and upstream Awaiting Lift prototype with actual Expedition returns, Dispatch monitoring and a real daily midnight event; deposited hauls remain exempt from Awaiting Lift forfeiture.
+- Retain the accepted clock/midnight connection and ordinary continuation for M4 scripted supplies; later connect actual expedition returns and cross-wing monitoring through upstream Awaiting Lift, preserving fairness and deposited-haul exemption.
 
 - Three fixed Food/Hydration Meal Service requests, one daily Medical treatment obligation, basic Bunker Ops, and physical storage depletion.
 
@@ -1535,9 +1803,9 @@ The Systems MVP should answer whether sorting and survival form one loop, whethe
 
 - Expanded destination tables, item catalogue, audio worldbuilding, and material storytelling.
 
-- Robust multiple run slots, corruption recovery, transaction journal, deterministic outcome commitment, statistics, accessibility settings, and late-run performance optimization.
+- Independent runs with one advancing continuation each, continuous recovery, transaction preservation, early natural outcome commitment, statistics, accessibility and later performance work (§§5.6, 18.5; Systems MVP §19).
 
-- Expanded one-screen night report, diegetic monitor coordination, contextual item/request panels, and distinct Fuel/Electronics outage readability.
+- Extend the accepted tabbed night report with designed causal detail and appropriate future tabs, alongside diegetic coordination, contextual panels and distinct outage readability.
 
 ### 20.4 Optional full-release or later candidates
 
@@ -1558,7 +1826,7 @@ The Systems MVP should answer whether sorting and survival form one loop, whethe
 | Overnight expeditions | Complicates midnight state, Away counts, deliveries, and scheduling. |
 | Free-form furniture placement and base building | Introduces collision, navigation, layout, and save complexity. |
 | Exterior exploration, combat, and visible zombies | Outside the product fantasy and solo-production boundary. |
-| Intrinsically escalating day-count difficulty | Held as a playtest fallback if systemic pressure is insufficient. |
+| Mandatory escalating day-count multiplier | Not required by the proposed whole-experience abundance/scarcity direction (§19.6). Opening and later pacing remain open for authored/systemic combinations, without a fixed escalation mandate. |
 
 ### 20.6 Approved execution roadmap and gated transition
 
@@ -1568,7 +1836,7 @@ Accepted wing geometry, palette and storage/Receiving remain baseline. Active ma
 
 | Stage | Scope | Reported state at this revision |
 | --- | --- | --- |
-| A: data/lifecycle | Durable identities, immutable committed content, prepared transforms/snapshots, 40-ID pool, seeded Bulk source, profile/job/diagnostics contracts, one-active/two-queued manager. | Implemented, technically verified and human-promoted in Stage A scope. Full durable save/journal integration remains future. |
+| A: data/lifecycle | Historical Stage A data/lifecycle proof: durable identities, committed content, prepared transforms/snapshots, then-authored 40-ID pool, seeded Bulk, profile/job/diagnostic contracts and one-active/two-queued manager. | Human-promoted in Stage A scope. Ordinary continuation and real clock/midnight integration are accepted through M4; continuous durable journal/recovery remains future. |
 | B: one physical batch | Deterministic TAKE-only deck, ordinary WorldItems on private surfaces, functional crates/pallets, exact committed content and progressive apron-side drainability. Its later theatre integration is recorded in Stage C. | Implemented, technically verified and human-promoted in tested Stage B scope. Irregular frozen piles were human-rejected for production. Current authored dimensions and reach are prototype values. |
 | C: deposited pressure | Autonomous six-state cycle, fully-OPEN TAKE, full outbound retirement/FIFO handoff, one active plus two queued deposits, upstream Awaiting Lift and explicit simulated-midnight forfeiture. | HUMAN-PROMOTED / CLOSED in Receiving prototype scope. M1–M4 add time/request/ordinary continuation; real returns/population and continuous durability remain future. [R25] |
 
@@ -1596,7 +1864,7 @@ Normal F5/project launch is res://gameplay/run/run_shell.tscn, with New Run/Cont
 | --- | --- |
 | Constrained placement feels tactile | Representative storage/content gate passed. Retain regression coverage as new content and furniture enter; do not reopen by default. |
 | Bulk queue does not feel like hidden inventory | Multi-item carrying remains legible, fast, and spatially grounded. |
-| Automatic submission is trustworthy | Players understand where items went and rarely feel that the wrong item was consumed. |
+| Selected-item submission and automatic lane routing are trustworthy | Players understand preview and one-item commitment; F never spends, held E never repeats, and the single eligible lane is unambiguous. |
 | Loot Quality is legible without a frontend statistic | Balanced loadouts visibly yield more useful future options per returned Bulk. |
 | Three meal anchors remain welcome | They create planning rhythm without becoming repetitive busywork. |
 | Medical cascade remains recoverable | Injuries, treatment demand, Meal failure, and Severe complications create tension without routine hard collapse. |
@@ -1605,7 +1873,7 @@ Normal F5/project launch is res://gameplay/run/run_shell.tscn, with New Run/Cont
 | Ironman saves remain resilient | Crash tests do not corrupt slots, duplicate irreversible items, or reroll committed outcomes. |
 | Receiving C1 production composition | CLOSED / HUMAN-PROMOTED by the developer on 11 October. Preserve the accepted room; later art changes require ordinary focused clearance, sightline and visual review. Dispatch furnishing and the Receiving–Backlog sill material are non-blocking adjacent follow-ups. [R11] |
 | Introduction and layout burden | Machine unlock timing, initial stock, comfortable routes, incidental vs required Sorting use, shelf visibility and machinery discoverability require playtests. |
-| Stage C delivery pressure and theatre | HUMAN-PROMOTED / CLOSED for the agreed Receiving prototype: autonomous theatre, fully-OPEN TAKE, FIFO turnaround and upstream Awaiting Lift. Actual daily time pressure and Systems MVP integration remain to be tested separately. [R14] |
+| Stage C delivery pressure and theatre | HUMAN-PROMOTED / CLOSED Receiving prototype. M1–M4 also accept real clock/midnight, timed Medical/Kitchen/Dispatch and ordinary continuation. Actual returns/population, monitoring network, complete economy and continuous durability remain future. [R14; R25] |
 
 ### 21.2 Provisional design and tuning items
 
@@ -1622,7 +1890,7 @@ Normal F5/project launch is res://gameplay/run/run_shell.tscn, with New Run/Cont
 | Bunker Ops cadence | One request per day; activation, duration, one-to-three-lane distribution, targets, and outage frequency remain tunable. |
 | Outage overlap | Pre-roll at night and allow the scheduler to constrain excessive stacking if testing requires. |
 | Digital clock during Electronics outage | Validate whether it fails with monitoring or remains on emergency power. |
-| Late-game instability | Primarily systemic long-run pressure; tentative authored early-run accumulation/drawdown/recovery is separate (§19.6). Late-run variation/escalation remain open. |
+| Late-game instability | Proposed non-flat abundance/scarcity across the experience, with specially curated opening and separately designed later play (§19.6). No fixed wave, escalation requirement or systemic-only restriction. Mechanisms remain open. [PACE-U1–U3] |
 | Workshop projects | One active project and night-only progress are confirmed; costs, workdays, and Meal modifier remain tunable. |
 | Contamination scope | Candidate for 1.0 or later, not a prototype/MVP requirement. |
 | Contextual PA scope | Full-release or later candidate; writing, recording, localization, repetition controls, and budget remain open. |
@@ -1654,9 +1922,9 @@ Active: GDD v0.15, VDD v0.11, Systems MVP v0.5. M1–M3 published/closed; M4 hum
 
 ### 21.4 Strategic observations after M4
 
-The developer reports realistic workload concern and low stored reserves. Near-empty shelves after a successful M4 day do not establish long-run balance. Preserve meaningful inventory, organization and foreseeable reserve use as open goals. Afternoon/evening lulls can host organization rather than compulsory extra requests. These are strategic findings, not M4 defects or closure blockers. [R25]
+M4 is mechanically accepted; its broader organizing economy is not proven. The developer nearly completed four full teams with help from the 08:30 scripted supply, while unfamiliar unorganized seed stock and text parsing added friction. The pictured Day 1 report shows four full teams and 100% meals but Medical 0/24/expired. Near-empty shelves therefore motivate reserve/pacing work without proving all needs were met or reopening M4. [PLAY-U1; ACCEPT-U1; Systems MVP §21.4]
 
-Future central monitoring, travel/wing geometry, possible spatial compression and richer interface require separate decisions. Broader UI art/icon/colour work remains future. M4 does not accept complete hoarding-organizing economy, indefinite survival, real outcomes, final ten-scavenger opening or monitoring network.
+Around ten opening scavengers (4/4/2) is an intended direction, not locked content replacing sixteen M4 Ready. Baseline awareness/central overview, quiet afternoons, long travel, spatial compression and richer UI need separate study. Stable zones are a reward; lack of inventory to organize is a different issue. See §§15.10–15.11 and 19.6 for detailed proposed infrastructure, Training and pacing; MVP §21.4 retains observations and confounders.
 
 Bunker Security/theft was a brainstorming alternative, not an approved system. No raids, stolen items, combat or disruption to the bunker’s safe-haven principle are introduced. [R25]
 
@@ -1743,7 +2011,7 @@ Nothing in this example required a visible human NPC, exterior level, combat enc
 | Team size | Full fours first, at most one remainder; no team-count cap |
 | Expeditions per team | At most one per day |
 | Expedition meters | Food, Hydration, Medical, Weapons, Protection |
-| Team Load Capacity | Fixed by team size at launch; Food and Hydration do not modify it |
+| Team Load Capacity | Linear members × per-member base capacity; same size/same upgrades means equal values. Food/Hydration do not modify base capacity; Training modifiers remain tentative. |
 | Elevator batch capacity | Three DEPOSITED slots: one active plus two FIFO queued. Prepared undelivered batches consume none. |
 | Medical treatment | 2 Medical Utility per stage; Light requires one stage, Severe requires two |
 | Severe complication | +20 percentage points of night death chance per unsuccessful required treatment day, capped at 100% |
@@ -1753,7 +2021,7 @@ Nothing in this example required a visible human NPC, exterior level, combat enc
 | Morale 0% state | Zero recruitment chance for all expeditions next day |
 | Medical light | Red |
 | Failure | No living scavenger remains after any final recruit-candidate decision, and no accepted recruit is due the next morning |
-| Save model | Multiple ironman-style slots; rotating snapshots, transaction journal, committed random outcomes, save on exit |
+| Save model | One advancing recoverable continuation per independent run, one shared continuous/Save & Exit/midnight service; ideal 2–3-real-second full-game loss, not measured or implemented by M4. Internal recovery copies/journal are not rollback saves. |
 | Furniture | Static or predetermined sockets. Movement remains OPEN; only specified unit/socket pairs and empty eligible containers if retained. |
 | Arbitrary dropping | Not allowed |
 | Game-defined junk | None |
@@ -2016,6 +2284,44 @@ R25 — Human authority: developer’s 25 October “M4 conditional human-promot
 
 R25 — docs/testing/m4-expedition-loadout-validation-2026-10-24.md, dated promotion addendum; Stage A/B and UI validation records dated 25 October. Original ACCEPT covers 71101cf → 3a57177; final focused ACCEPT covers 3a57177 → 844d0d4adaa5a2d601f04954bb61ad7a5c316589. Human observation, executor tests and independent checks stay separate.
 
-R25 — Workshop/Electronics tools, separate team-slot Training/Readiness and early-run accumulation/drawdown/recovery are TENTATIVE / VALIDATE / NOT IMPLEMENTED, without approved project prices, levels, new facilities, outcome code or M4/M5 implementation. Baseline awareness remains a required future design need.
+R25 — M4 closure/housekeeping authority remains distinct from the conversation reconstruction. Detailed Workshop (§15.10), persistent-slot Training (§15.11) and whole-experience pacing (§19.6) cite WS/TR/PACE anchors below. Features remain unimplemented; confirmed details within them and unapproved recommendations retain separate status.
+
+### Conversation provenance for the semantic reconciliation
+
+The labels below locate passages reconstructed from the visible conversation in the supplied 25 October retention specification. They are not a newly verified verbatim transcript, repository commits or fabricated individual message timestamps. The non-authoritative source copy is docs/design_history/2026-10-25-workshop-training-pacing-discussion.md. The GDD owns design rules/concepts; Systems MVP §21.4 owns observations and progress. R25 remains the M4 closure source, not the original authority for every design nuance.
+
+WS-U1 — Developer: “Should the various planned monitors and other useful electrical/electronic devices be enabled via the Workshop consuming Electronics?” Original Electronics-funded infrastructure concept, concrete upgrades, tutorial example, competition with Ops and player-specific priorities.
+
+WS-U2 — Developer: Workshop could overlap the conceptual research/talent tree, which is “run-specific however, not across multiple independent runs!” Within-run progression, tactile facility evolution, possible but undefined character progression.
+
+WS-U3 — Developer: “the Workshop + Electronics feels strong enough” before proposing Training. Positive concept-level assessment; not implementation authorization.
+
+TR-U1 — Developer: Training upgrades “team-slot based,” unlocked once a slot has formed, with the ten-scavenger 4/4/2 example. Persistent slot improvements, focus-versus-spread choice, no personnel redistribution on training days, uncertain occupancy.
+
+TR-U2 — Developer: “one guaranteed training day per upgrade, with the improvement available the following morning.” Explicit timing confirmation within the tentative feature.
+
+FUT-U1 — Developer: “we won't go further into refining these two additions ... Next time we update the GDD we'll track these as tentative, along with the summary of the broad-strokes designs.” Retain the discussion without expanding it into a final system or derailing M4.
+
+PLAY-U1 — Developer's normal-speed M4 playtest: nearly full morning, early elevator assistance, unfamiliar stock, text-heavy UI, missed-request risk, quiet afternoon, travel burden and nearly empty shelves. Human observations and the problem motivating further economy/awareness work; not a statistically representative playtest.
+
+PACE-U1 — Developer: accumulation in the first X days, followed by periods where “consumption significantly outstripping incoming loot,” with variable waves. Broader accumulation/drawdown direction and its supply/demand levers.
+
+PACE-U2 — Developer: “the game cannot have a linear, flat challenge vector”; first ten days and days 30–40 need not follow the same approach. Whole-experience non-flat pacing, special care for the opening, no decision restricting deliberate pacing to the opening.
+
+PACE-U3 — Developer: new/casual players may fail the first or second valley and improve across subsequent runs; examples of Project Zomboid and 7 Days to Die. Intended learning-through-runs and preparation/payoff analogies, not measured audience retention or imported mechanics.
+
+CAL-U1 — Developer: worst loadouts may be invalid through excessive Bulk; small consequences would make good decisions insufficiently meaningful. No guaranteed minimum return reserve for every complete loadout.
+
+CAL-U2 — Developer: same-size teams have equal base capacity; capacity and five requirements scale directly per scavenger. Current baseline proportionality rather than arbitrary per-team/destination demand variation.
+
+CAL-U3 — Developer: prefer adjusting a few overvalued items over increasing global requests/player capacity to accommodate them; case-by-case waste judgment. Calibration rationale and no universal maximum-waste percentage.
+
+SAVE-U1 — Developer's full-game Ironman clarification: continuously maintained snapshot, ideally 2–3 seconds loss, same system for internal saving/Save & Exit/midnight. Supersedes the old minute-scale rollback premise; multiple independent runs are not rollback histories.
+
+UI-U1 — Developer's successive M4 UI requests, followed by acceptance of the final in-game UI and report. Current compact previews, tabs, yellow fulfilled-lane feedback, dispatch timestamps and partially fulfilled meal label.
+
+ACCEPT-U1 — Developer: M4's goal was five-lane requests and outgoing capacity; item-specific values, handling and timing, not demonstrating the entire organizing economy. Bounded M4 success criteria; future design questions do not reopen M4.
+
+A-DISC — Assistant discussion of these proposals before documentation close-out. Analysis, examples and recommendations only where not explicitly adopted by the developer.
 
 R25 — Local/queried remote main remain 3bb69a906e921f06dd12c61bd4d8f33db35d6fce at preflight, before top-up/M4. Separate authorized normal fast-forward publication plus independent final remote SHA query are required for PUBLISHED. QA: docs/testing/m4-human-promotion-documentation-2026-10-25.md.
