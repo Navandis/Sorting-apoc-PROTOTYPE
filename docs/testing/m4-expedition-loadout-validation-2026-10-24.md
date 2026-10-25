@@ -1,5 +1,9 @@
 # M4 Expedition Loadout — local candidate validation
 
+**Current disposition, 25 October 2026: M4 HUMAN-PROMOTED / CLOSED IN ITS BOUNDED SCOPE / LOCAL CANDIDATE (PUBLISH PENDING).** The dated [promotion addendum](#25-october-2026--human-promotion-and-bounded-local-closure) supersedes the original pending gates below. Original tests and their limits remain unchanged.
+
+## Historical 24 October executor record
+
 24 October 2026. **M4 TECHNICALLY VERIFIED / INDEPENDENT CONTEXTUAL REVIEW AND HUMAN PLAYTEST PENDING.** No unresolved required technical check or implementation blocker. This is a local candidate, without human promotion or publication. No merge, push, PR, M5 or Expedition outcomes were performed.
 
 Executor: Codex / GPT-6 family; the runtime did not expose a more specific model variant. One implementer executed inline. A fresh independent contextual review remains the next gate.
@@ -127,3 +131,37 @@ Request one fresh contextual review of the combined base-to-candidate diff and r
 5. Play the three authored days at normal speed, including real Receiving cycles/audio, exact deliveries, breakfast at the simultaneous 10:00 boundary, Medical/meals and reports. Assess readability, travel/carry workload, input/audio comfort and scarcity before proposing further numerical changes. Confirm authored exhaustion after Day 3.
 
 No independent review, human hardware/input/audio acceptance, normal-speed three-day workload acceptance, publication or M5 completion is claimed here.
+
+
+## 25 October 2026 — human promotion and bounded local closure
+
+**M4 HUMAN-PROMOTED / CLOSED IN ITS BOUNDED SCOPE / LOCAL CANDIDATE (PUBLISH PENDING).** The developer's 25 October request expressly reports human in-game acceptance of final five-lane Dispatch, Bulk/Utility accounting, timing and improved UI/report, and authorizes bounded milestone closure after final technical ACCEPT. This records that human observation; it is not a new executor playthrough or a claim of complete-economy validation.
+
+| Accepted revision | Exact commit |
+|---|---|
+| Verified top-up base | `71101cf6bd6302842e7c7090a0849b25ef9b75a5` |
+| Locked M4 data/loadout/timing | `d81d48a236e78fd40f44b27d562bcdae32d219ae` |
+| Carousel/continuation/report | `f5eae9b89f208033c34013a15b178ce9745c7c8a` |
+| Original technical record / independent ACCEPT target | `3a57177c14f60aa3bd29508dff60bb64ab3ed3a9` |
+| Stage A retained catalogue | `a0d4a8adb56b907587103ec65f5edf917c04ff2a` |
+| Stage B geometry reuse | `7ebc571d1877dce0462424bdded5978651b6caf9` |
+| Initial UI refinement | `80ab28c512beea225232c7f20f2db2d7dd9c6ad4` |
+| Final UI / accepted implementation candidate | `844d0d4adaa5a2d601f04954bb61ad7a5c316589` |
+
+**Independent evidence:** the 24 October original review returned ACCEPT for `71101cf` → `3a57177` for developer acceptance testing. The 25 October fresh focused independent review returned **ACCEPT**, satisfying the remaining technical integration gate for `3a57177` → final `844d0d4`, with no unresolved BLOCKER/IMPORTANT findings (and no actionable MINOR regression established). It independently ran fifteen isolated invocations covering catalogue/geometry, baseline/accounting, native carousel/report/input/first-frame at both resolutions, save compatibility/continuation, seed/access and all twelve cargo manifests. Only the four known CF-07 material diagnostics occurred in the integrated native run. These are the independent reviewer's attributed results, not new document-executor checks. Timings remain attributed Stage A/B measurements, not independent re-benchmarks.
+
+Local original report: [24 October original independent ACCEPT](<C:/Users/Boschetar/.codex/attachments/m4-independent-review-2026-10-24/M4-independent-contextual-review-2026-10-24.md>). SHA-256 `cfbc378a1f9b20f0bc6b9fecc7e25feebde25b32d4022123aaf5b070e2ab64ad`.
+
+Local final report: [25 October final independent ACCEPT](<C:/Users/Boschetar/.codex/attachments/m4-final-independent-review-20261025-01/M4-final-independent-review-25Oct2026.txt>). SHA-256 `49c8e764c5e9a469906c3e53d57440ea7860622d878ab70abf8304f1cfeba7aa`. These retained external references establish local provenance; the reports were not rewritten or moved.
+
+Detailed executor evidence remains in the original record above, [Stage A](m4-startup-catalogue-reuse-validation-2026-10-25.md), [Stage B](m4-geometry-measurement-reuse-validation-2026-10-25.md) and [UI/final UI addendum](m4-ui-refinements-validation-2026-10-25.md). Their earlier pending language records their dated scope; the later independent ACCEPT and human authorization here govern the current gate.
+
+**Scope and limits:** acceptance covers five-lane contributions, full item Bulk/capped Utility/waste, dispatch timing/ownership/persistence and implemented UI. The sixteen Ready/four-team roster and locked numbers are M4-approved testing content. The three-day scripted deliveries are not linked to individual teams. Complete hoarding-organizing economy, indefinite survival, actual returns/injuries/recruits/population, final ten-scavenger opening, spatial compression and monitoring network are not accepted or implemented by this milestone. Workload concern and low reserves remain strategic findings, not closure blockers. Baseline cross-wing awareness/timekeeping/central monitoring is a required future integrated-system need, not an optional Workshop upgrade. Broader UI art/icon/colour and targeted catalogue/wing loading investigation remain future. No persistent geometry pre-baking is required.
+
+The 167-active/7-retired/174-source catalogue and accepted scale/manual pose/Footprints are retained. Twelve Auto Stack Groups remain saved None with twelve separate approvals pending. CF-07, Windows certificate-store diagnostics, Pickaxe 108 LOD and full-game Ironman durability remain disclosed. Source sidecars and any actual unreviewed local changes remain separate; this preflight has clean tracked files/index and eighteen preserved untracked sidecars.
+
+**Document executor:** created Systems MVP v0.5 and GDD v0.15 DOCX first, regenerated companions and updated indexes; package/render/parity/preservation QA is in the [documentation close-out](m4-human-promotion-documentation-2026-10-25.md). No Godot/gameplay test, developer-save access, calibration edit or M5 work was needed or performed.
+
+**Publication boundary:** local main and fresh read-only remote query both show `3bb69a906e921f06dd12c61bd4d8f33db35d6fce`, before top-up/M4. No merge, push, PR or publication occurred here. A later separate authorized normal fast-forward push plus independent final remote SHA verification is required before PUBLISHED. M1/M2/M3 remain PUBLISHED/CLOSED.
+
+**Stop: M4 HUMAN-PROMOTED / CLOSED LOCALLY / READY FOR SEPARATE PUBLICATION AUTHORIZATION.**

@@ -1,5 +1,21 @@
 # Sorting Apocalypse documentation index
 
+**25 October 2026 M4 human promotion and local closure:** **M4 HUMAN-PROMOTED / CLOSED IN ITS BOUNDED SCOPE / LOCAL CANDIDATE (PUBLISH PENDING)**. The developer reports human in-game acceptance of final five-lane Dispatch, Bulk/Utility, timing and the improved UI/report and expressly authorizes closure after final independent **ACCEPT**, with no unresolved BLOCKER/IMPORTANT findings. Accepted code is `844d0d4adaa5a2d601f04954bb61ad7a5c316589` on `codex/m4-expedition-loadout`. See the [dated M4 promotion addendum](testing/m4-expedition-loadout-validation-2026-10-24.md#25-october-2026--human-promotion-and-bounded-local-closure) and [document QA/provenance record](testing/m4-human-promotion-documentation-2026-10-25.md). Human observations, executor tests and independent checks remain distinct. **M1/M2/M3 remain HUMAN-PROMOTED / PUBLISHED / CLOSED.**
+
+Local `main` and a read-only live remote query on 25 October both show `3bb69a906e921f06dd12c61bd4d8f33db35d6fce`, before the twelve-item top-up/M4. This is local closure, not publication. No merge, push, PR, force push, locked-calibration edit or M5 is authorized here. A separate authorized normal fast-forward push and independent final remote SHA query are required before M4 becomes PUBLISHED.
+
+Active authorities: [GDD v0.15](Sorting_Apocalypse_Preliminary_GDD_v0.15.docx) / [generated readable](readable/Sorting_Apocalypse_Preliminary_GDD_v0.15.md), [VDD v0.11](Sorting_Apocalypse_Visual_Design_Direction_v0.11.docx), and [Systems MVP v0.5](Sorting_Apocalypse_Systems_MVP_Foundation_Design_and_Progress_v0.5.docx) / [same-stem companion](Sorting_Apocalypse_Systems_MVP_Foundation_Design_and_Progress_v0.5.md). Edit DOCX first. VDD v0.11, historical Findings v0.14 and older editions remain unchanged; CF-01–CF-24 obligations remain.
+
+Current catalogue: **167 active / 7 retired / 174 source models**, including the earlier twelve-item top-up `163`–`174`. Scale, manual pose/+Z Front, Footprint and support-role approvals are current for 167. **12 Auto Stack Groups remain saved None; 12 separate review approvals are pending.** Preserve saved names, authored fields, source confirmations, accepted scale factors and intentional Footprint exceptions; this is not a fully closed physical-metadata gate. See the [top-up record](testing/pre-m4-catalogue-topup-validation-2026-10-24.md) and Systems MVP §15.4.
+
+M4 implements the locked 167-row values, 06:00–10:00 Dispatch, 06:00–00:00 day, 20 player Bulk, 28 Bulk/member, 12/12/6/12/12 lanes and sixteen-Ready stress fixture. The three-day scenario seeds 85 items and has twelve 16-item deliveries; supplies are not linked to individual teams, and real return/population outcomes remain unimplemented. Settings are testing content, not final economy. See [CURRENT_STATE](CURRENT_STATE.md) and Systems MVP §21 for UI, measured performance, remaining debt and strategic workload/low-reserve findings.
+
+Baseline cross-wing awareness/timekeeping/central monitoring remains a required future design need, not an optional Workshop upgrade or M4 delivery. GDD v0.15 marks optional information tools, separate team-slot training and early-run pacing **TENTATIVE / VALIDATE / NOT IMPLEMENTED**. Full economy, real outcomes, indefinite survival, final ten-scavenger opening and spatial compression remain outside M4 acceptance.
+
+**Stopping point: M4 HUMAN-PROMOTED / CLOSED LOCALLY / READY FOR SEPARATE PUBLICATION AUTHORIZATION.**
+
+## Historical 21 October pre-M4 checkpoint
+
 **21 October 2026 pre-M4 physical catalogue close-out:** **HUMAN-ACCEPTED / CLOSED IN PHYSICAL SCOPE**: **155 active** (35 retained + 120 additions), **seven permanently retired**, **155 current physical reviews / zero pending**. See the [catalogue acceptance and publication record](testing/pre-m4-catalogue-expansion-validation-2026-10-20.md#21-october-2026--publication-authorization-and-documentation-close-out). Accepted code ends at `6040edeec9884b5a31ef88e368be124b85388deb`; one documentation-only commit follows. Fast-forward integration and normal push are authorized; **PUBLISHED applies only after independently queried remote `main` matches the final local commit**, recorded in the executor's report. Earlier dated pending stages remain historical.
 
 Active authorities remain GDD v0.14, VDD v0.11 and [Systems MVP v0.4](Sorting_Apocalypse_Systems_MVP_Foundation_Design_and_Progress_v0.4.docx) with its [generated Markdown companion](Sorting_Apocalypse_Systems_MVP_Foundation_Design_and_Progress_v0.4.md); DOCX is authoritative. Prototype Findings v0.14 and prior editions remain historical; all CF-01–CF-24 obligations remain. **M1/M2/M3 stay HUMAN-PROMOTED / PUBLISHED / CLOSED in their accepted scopes.**
@@ -24,16 +40,16 @@ The **active master trio** is GDD v0.14, VDD v0.11 and Systems MVP v0.2. Prototy
 
 | Current authority | Editable document | Derived readable text |
 | --- | --- | --- |
-| Overall game design | [GDD v0.14](Sorting_Apocalypse_Preliminary_GDD_v0.14.docx) | [Text and tables](readable/Sorting_Apocalypse_Preliminary_GDD_v0.14.md) |
+| Overall game design | [GDD v0.15](Sorting_Apocalypse_Preliminary_GDD_v0.15.docx) | [Text and tables](readable/Sorting_Apocalypse_Preliminary_GDD_v0.15.md) |
 | Visual, world and spatial direction | [VDD v0.11](Sorting_Apocalypse_Visual_Design_Direction_v0.11.docx) | [Text, tables and images](readable/Sorting_Apocalypse_Visual_Design_Direction_v0.11.md) |
-| MVP contracts, progress and evidence | [Systems MVP v0.4](Sorting_Apocalypse_Systems_MVP_Foundation_Design_and_Progress_v0.4.docx) | [Text and tables](Sorting_Apocalypse_Systems_MVP_Foundation_Design_and_Progress_v0.4.md) |
+| MVP contracts, progress and evidence | [Systems MVP v0.5](Sorting_Apocalypse_Systems_MVP_Foundation_Design_and_Progress_v0.5.docx) | [Text and tables](Sorting_Apocalypse_Systems_MVP_Foundation_Design_and_Progress_v0.5.md) |
 | Historical prototype evidence | [Findings v0.14](Sorting_Apocalypse_Prototype_Findings_v0.14.docx) | [Text and tables](readable/Sorting_Apocalypse_Prototype_Findings_v0.14.md) |
 
 The Markdown editions are generated extracts of the listed DOCX masters. Edit the master and regenerate its extract; do not maintain an independent Markdown authority. Older DOCX editions remain historical records.
 
 ## Current playable and spatial baseline
 
-The normal development entry is `res://gameplay/logistics_wing/wing_gameplay.tscn` through UID `uid://bljf1nlhijej`. It reuses the accepted whole-wing geometry and contains the normal player and HUD, sixteen ordinary functional storage surfaces, the saved editor-authored palette, and the private deterministic seeded TAKE-only Receiving deck presenter. Normal launch does not synthesize a Receiving batch. `main.tscn` remains the legacy mechanics fixture. `res://greybox/logistics_wing/wing_review.tscn` remains the neutral spatial review entry.
+Normal F5/project entry is `res://gameplay/run/run_shell.tscn`; its New Run/Continue uses M4. Standalone F6 `res://gameplay/logistics_wing/wing_gameplay.tscn` preserves the development palette and UID `uid://bljf1nlhijej`. It reuses the accepted whole-wing geometry and contains the normal player and HUD, sixteen ordinary functional storage surfaces, the saved editor-authored palette, and the private deterministic seeded TAKE-only Receiving deck presenter. Normal launch does not synthesize a Receiving batch. `main.tscn` remains the legacy mechanics fixture. `res://greybox/logistics_wing/wing_review.tscn` remains the neutral spatial review entry.
 
 The accepted in-engine builder, saved scene and [overview](testing/evidence/greybox-accepted-2026-09-17/overview_debug_topdown.png) govern working dimensions. The retained Topology V3 and Structural Schematic V2 images explain design history and relationships but do not override the accepted geometry.
 
