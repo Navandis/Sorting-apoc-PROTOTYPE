@@ -12,13 +12,13 @@ The player never fights or sees a zombie. They run the storeroom that keeps ever
 
 CORE PROMISE  The apocalypse ends at the elevator door.
 
-Version 0.15 | 25 October 2026 | M4 local closure and tentative future directions
+Version 0.15 | 25 October 2026 | M4 publication candidate and tentative future directions
 
-Living design | M1/M2/M3 HUMAN-PROMOTED / PUBLISHED / CLOSED. M4 HUMAN-PROMOTED / CLOSED IN ITS BOUNDED SCOPE / LOCAL CANDIDATE (PUBLISH PENDING).
+Living design | M1/M2/M3 HUMAN-PROMOTED / PUBLISHED / CLOSED. M4 HUMAN-PROMOTED / CLOSED IN ITS BOUNDED SCOPE / PUBLICATION CANDIDATE [PUB25].
 
 Accepted M4 covers five-lane Dispatch, Bulk/Utility, timing/ownership, ordinary continuation and improved UI/report. Actual Expedition returns, injuries/recruits/population and complete economy remain future. Optional Workshop infrastructure, team-slot Training and whole-experience accumulation/drawdown/recovery are retained as unimplemented design directions with local status distinctions.
 
-Active companions: Systems MVP v0.5 for progress/evidence and VDD v0.11 for visual/spatial authority. Prototype Findings v0.14 is historical. Prior editions remain intact. No publication or M5 is authorized.
+Active companions: Systems MVP v0.5 for progress/evidence and VDD v0.11 for visual/spatial authority. Prototype Findings v0.14 is historical. Prior editions remain intact. Normal publication follows PUB25; M5 is not authorized.
 
 ## Document purpose and status
 
@@ -347,7 +347,7 @@ VALIDATE  Determine how authored conditions and systemic consequences support me
 | By about 23:40 | All expeditions are forced to return if their calculated duration would otherwise cross the day boundary. |
 | 00:00 | Day resolves; report pauses. Next day starts at 06:00. Full-game night outcomes remain intended; M4 has bounded request/report resolution. |
 
-Implementation boundary, 25 October: M1–M3 published/closed; M4 human-promoted/closed locally. Day 06:00–00:00, Dispatch 06:00–10:00, player Bulk 20, 28 Bulk/member and lanes 12/12/6/12/12 are approved M4 testing content. Actual returns/population and continuous Ironman remain future. [R25]
+Implementation boundary, 25 October: M1–M3 published/closed; M4 human-promoted/closed; publication follows PUB25. Day 06:00–00:00, Dispatch 06:00–10:00, player Bulk 20, 28 Bulk/member and lanes 12/12/6/12/12 are approved M4 testing content. Actual returns/population and continuous Ironman remain future. [R25]
 
 ### 5.3 Real-time pacing and pause rules
 
@@ -921,7 +921,7 @@ Once an expedition outcome is committed and no longer player-influenceable, cont
 
 ### 11.8 Stage C delivery, queue and theatre boundary
 
-Stage C stays HUMAN-PROMOTED / CLOSED in agreed prototype scope. M1–M3 published/closed; M4 adds clock-driven fixture formation/Dispatch, accounting, ordinary continuation and UI and is closed locally, publish pending. Actual returns/population, awareness network and continuous Ironman remain future. [R25]
+Stage C stays HUMAN-PROMOTED / CLOSED in agreed prototype scope. M1–M3 published/closed; M4 adds clock-driven fixture formation/Dispatch, accounting, ordinary continuation and UI and is closed; publication follows PUB25. Actual returns/population, awareness network and continuous Ironman remain future. [R25]
 
 The accepted stationary-bay theatre uses arrival/opening/closing/departure audio and localized W1 amber through ARRIVAL/SEALED_READY/REVEALING, green in OPEN and off in CLOSING/SEALED_EMPTY. The curved read-only CRT now shows live STATUS/DECK/QUEUE. QUEUE 00–02 counts only deposited waiting batches, excluding active cargo and Awaiting Lift teams; their future monitoring belongs to Dispatch/Expedition. The EMERGENCY STOP plaque/button remains decorative. Ordinary lighting/wear/furnishing tuning is tracked scene authoring and does not automatically reopen C1 or Stage C. [R14]
 
@@ -1830,7 +1830,7 @@ The Systems MVP should answer whether sorting and survival form one loop, whethe
 
 ### 20.6 Approved execution roadmap and gated transition
 
-C1/Stage C stay closed; M1–M3 stay HUMAN-PROMOTED / PUBLISHED / CLOSED. M4 HUMAN-PROMOTED / CLOSED IN ITS BOUNDED SCOPE / LOCAL CANDIDATE (PUBLISH PENDING). Wider Systems MVP/economy validation remain future; no M5 or publication authorized. [R25]
+C1/Stage C stay closed; M1–M3 stay HUMAN-PROMOTED / PUBLISHED / CLOSED. M4 HUMAN-PROMOTED / CLOSED IN ITS BOUNDED SCOPE / PUBLICATION CANDIDATE [PUB25]. Wider Systems MVP/economy validation remain future; no M5; normal publication follows PUB25. [R25]
 
 Accepted wing geometry, palette and storage/Receiving remain baseline. Active masters: GDD v0.15, VDD v0.11, Systems MVP v0.5. Findings v0.14/older masters remain history. Preserve licensed assets/sidecars.
 
@@ -1908,7 +1908,7 @@ Normal F5/project launch is res://gameplay/run/run_shell.tscn, with New Run/Cont
 
 ### 21.3 Current next artifacts and bounded follow-ups
 
-Active: GDD v0.15, VDD v0.11, Systems MVP v0.5. M1–M3 published/closed; M4 human-promoted/closed locally, publish pending. C1/Stage C stay closed. No next gameplay milestone selected. [R25]
+Active: GDD v0.15, VDD v0.11, Systems MVP v0.5. M1–M3 published/closed; M4 human-promoted/closed; publication follows PUB25. C1/Stage C stay closed. No next gameplay milestone selected. [R25]
 
 - Preserve the promoted Storage Authoring Foundation, canonical item pose and bounded fixed ladder, including the real-wing rack/ladder bridge.
 
@@ -1922,7 +1922,7 @@ Active: GDD v0.15, VDD v0.11, Systems MVP v0.5. M1–M3 published/closed; M4 hum
 
 ### 21.4 Strategic observations after M4
 
-M4 is mechanically accepted; its broader organizing economy is not proven. The developer nearly completed four full teams with help from the 08:30 scripted supply, while unfamiliar unorganized seed stock and text parsing added friction. The pictured Day 1 report shows four full teams and 100% meals but Medical 0/24/expired. Near-empty shelves therefore motivate reserve/pacing work without proving all needs were met or reopening M4. [PLAY-U1; ACCEPT-U1; Systems MVP §21.4]
+M4 is mechanically accepted; its broader organizing economy is not proven. The developer fully provisioned and dispatched all four teams before the 10:00 cutoff, but only narrowly. The 08:30 scripted supply helped, while unfamiliar, unorganized seed stock and text parsing added friction. The pictured Day 1 report shows four full teams and 100% meals but Medical 0/24/expired. Near-empty shelves therefore motivate reserve/pacing work without proving all needs were met or reopening M4. [PLAY-U1; ACCEPT-U1; Systems MVP §21.4]
 
 Around ten opening scavengers (4/4/2) is an intended direction, not locked content replacing sixteen M4 Ready. Baseline awareness/central overview, quiet afternoons, long travel, spatial compression and richer UI need separate study. Stable zones are a reward; lack of inventory to organize is a different issue. See §§15.10–15.11 and 19.6 for detailed proposed infrastructure, Training and pacing; MVP §21.4 retains observations and confounders.
 
@@ -2324,4 +2324,4 @@ ACCEPT-U1 — Developer: M4's goal was five-lane requests and outgoing capacity;
 
 A-DISC — Assistant discussion of these proposals before documentation close-out. Analysis, examples and recommendations only where not explicitly adopted by the developer.
 
-R25 — Local/queried remote main remain 3bb69a906e921f06dd12c61bd4d8f33db35d6fce at preflight, before top-up/M4. Separate authorized normal fast-forward publication plus independent final remote SHA query are required for PUBLISHED. QA: docs/testing/m4-human-promotion-documentation-2026-10-25.md.
+PUB25 — 25 October 2026: the developer publication request and documentation re-review ACCEPT supersede the earlier no-publication boundary for normal fast-forward publication only. Accepted code 844d0d4; reviewed documents 180dcf5; preflight main 3bb69a9. PUBLISHED is conditional on successful normal push and independent remote/local SHA equality recorded in external completion evidence; otherwise this remains a local publication candidate. Record: docs/testing/m4-publication-2026-10-25.md. No M5.

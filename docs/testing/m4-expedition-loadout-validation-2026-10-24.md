@@ -165,3 +165,10 @@ The 167-active/7-retired/174-source catalogue and accepted scale/manual pose/Foo
 **Publication boundary:** local main and fresh read-only remote query both show `3bb69a906e921f06dd12c61bd4d8f33db35d6fce`, before top-up/M4. No merge, push, PR or publication occurred here. A later separate authorized normal fast-forward push plus independent final remote SHA verification is required before PUBLISHED. M1/M2/M3 remain PUBLISHED/CLOSED.
 
 **Stop: M4 HUMAN-PROMOTED / CLOSED LOCALLY / READY FOR SEPARATE PUBLICATION AUTHORIZATION.**
+
+
+## 25 October 2026 — publication housekeeping and conditional completion
+
+The later developer request accepts the documentation re-review for publication and authorizes one bounded documentation-only commit, fast-forward integration and normal main push. Reviewed candidate is `180dcf597ff699149d6335df57e31c313d3b19af`; accepted gameplay remains `844d0d4adaa5a2d601f04954bb61ad7a5c316589`. The GDD §21.4 and Systems MVP §21.4.1 now correctly say all four teams were fully provisioned and dispatched before cutoff, but only narrowly. Masters were corrected DOCX-first and companions regenerated; expanded Workshop, Training and pacing content is retained.
+
+**M4 HUMAN-PROMOTED / PUBLISHED / CLOSED applies only after successful normal push and independent live remote/main SHA equality recorded in the external completion evidence and delivery report. Until then this is a local publication candidate.** See the [bounded publication record](m4-publication-2026-10-25.md) for preflight, document checks and preservation. Earlier pending/no-publication statements above describe their original dated tasks. Existing technical, independent and human evidence is reused with attribution; this task runs no Godot, balance, gameplay or performance test. No M5 is implemented or started.

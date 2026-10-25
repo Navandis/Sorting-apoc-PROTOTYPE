@@ -8,7 +8,7 @@ SORTING APOCALYPSE
 
 Persistent supplies. Competing obligations.<br>One continuing storeroom.
 
-Version 0.5  |  25 October 2026  |  M4 human-promoted and closed locally
+Version 0.5  |  25 October 2026  |  M4 publication candidate
 
 FIRST INTEGRATED TARGET<br>Medical → Kitchen → Expedition Loadout, sharing physical supplies, request accounting and one persistent run. Meaningful allocation testing begins with the combined three-consumer loop.
 
@@ -18,18 +18,18 @@ This is the MVP-phase counterpart to Prototype Findings: a living foundation-des
 | --- | --- |
 | GDD v0.15 | Overall game design, intended rules and full-game scope. |
 | VDD v0.11 | World, visual, spatial, material and environment-authoring direction. |
-| This master v0.5 | Active MVP contracts, M1–M3 published/closed, M4 closed locally and future integrated-system boundaries. |
+| This master v0.5 | Active MVP contracts and future integrated-system boundaries; M1–M3 published/closed; M4 closed, publication under PUB25. |
 | Prototype Findings v0.14 | Preserved historical prototype record; unresolved obligations remain live here. |
 
 DESIGN CONFIRMED IN CONVERSATION ≠ IMPLEMENTED ≠ HUMAN-PROMOTED
 
-M1–M3 remain HUMAN-PROMOTED / PUBLISHED / CLOSED. M4 HUMAN-PROMOTED / CLOSED IN ITS BOUNDED SCOPE / LOCAL CANDIDATE (PUBLISH PENDING). Original and final independent ACCEPT and developer in-game acceptance are recorded in §15.5. Catalogue: 167 active / 7 retired / 174 source models; twelve Auto Stack Group approvals remain pending. No publication or M5 implementation is authorized.
+M1–M3 remain HUMAN-PROMOTED / PUBLISHED / CLOSED. M4 HUMAN-PROMOTED / CLOSED IN ITS BOUNDED SCOPE / PUBLICATION CANDIDATE [PUB25]. Original and final independent ACCEPT and developer in-game acceptance are recorded in §15.5. Catalogue: 167 active / 7 retired / 174 source models; twelve Auto Stack Group approvals remain pending. Normal publication follows PUB25; M5 is not authorized.
 
 ORIENTATION
 
 ## Reader’s guide & current position
 
-Current position: M4 is human-promoted and closed locally after final technical ACCEPT. Five-lane Dispatch, Bulk/Utility, timing, ownership, continuation and UI are accepted in their bounded scope (§21). Workload, low reserves and the complete survival economy remain strategic questions. Publication requires separate authorization.
+Current position: M4 is human-promoted and closed in its bounded scope after final technical ACCEPT. Five-lane Dispatch, Bulk/Utility, timing, ownership, continuation and UI are accepted in their bounded scope (§21). Workload, low reserves and the complete survival economy remain strategic questions. Normal publication is authorized under PUB25, subject to remote verification.
 
 ### How to use this master
 
@@ -74,7 +74,7 @@ A historical statement that Stage C, the fixed ladder, Fuel reconciliation or EA
 
 The DOCX is the editable master; a same-stem readable Markdown extract is derived from it, not maintained independently. Detailed tests and human reviews remain in their dated records; this master summarizes their meaning and links to them. Source code establishes implementation, but an unintended behavior is not automatically a design decision.
 
-v0.1–v0.4 remain preserved editions. Edition v0.5 records the twelve-item top-up and M4 human promotion/local closure, retaining all CF-01–CF-24 obligations. GDD v0.15 records tentative future directions; VDD v0.11 and Findings v0.14 remain unchanged. This documentation task authorizes no publication.
+v0.1–v0.4 remain preserved editions. Edition v0.5 records the twelve-item top-up and M4 human promotion/local closure, retaining all CF-01–CF-24 obligations. GDD v0.15 records tentative future directions; VDD v0.11 and Findings v0.14 remain unchanged. The later PUB25 request authorizes normal publication; no M5.
 
 Basis: [D10] developer document-role decision; [H14 §§1, 3–4, 15]; [ER14 §§3, 12]; [WG].
 
@@ -84,9 +84,9 @@ CURRENT CHECKPOINT
 
 ### 2.1 Published reference
 
-25 October preflight verified accepted 844d0d4adaa5a2d601f04954bb61ad7a5c316589 on codex/m4-expedition-loadout. Local main and read-only live remote query both show 3bb69a906e921f06dd12c61bd4d8f33db35d6fce, before the top-up/M4. M1–M3 remain PUBLISHED/CLOSED. These are evidence anchors, never reset targets; M4 is publish pending. [HP25]
+Initial 25 October local-closure preflight verified accepted 844d0d4adaa5a2d601f04954bb61ad7a5c316589 on codex/m4-expedition-loadout. Local main and read-only live remote query both show 3bb69a906e921f06dd12c61bd4d8f33db35d6fce, before the top-up/M4. M1–M3 remain PUBLISHED/CLOSED. These are evidence anchors, never reset targets; M4 was publish pending at that checkpoint; later publication follows PUB25. [HP25]
 
-The authoritative asset-equipped checkout remains D:\Godot Projects\Sorting-apoc-PROTOTYPE, repository Navandis/Sorting-apoc-PROTOTYPE. This close-out checks local Git state and documents, using the retained Godot 4.7 Compatibility evidence. No game run, import scan or access to the developer’s user://saves is performed.
+The authoritative asset-equipped checkout remains D:\Godot Projects\Sorting-apoc-PROTOTYPE, repository Navandis/Sorting-apoc-PROTOTYPE. This close-out checks local Git state and documents, using the retained Godot 4.7 Compatibility evidence. No game run, import scan or save operation is performed; existing saves are hashed only for preservation.
 
 | Foundation | Disposition carried into MVP |
 | --- | --- |
@@ -470,7 +470,7 @@ Stage labels M1–M5 are document tracking identifiers. They do not rename accep
 | M1<br>Persistent Medical | Accepted: MedicalInterface, F panel toggle/E one-item contribution, cap-and-waste, single-slot continuation and full pause; exact player/storage/Receiving recovery. | HUMAN-PROMOTED / PUBLISHED / CLOSED. Independent ACCEPT and successful final human checks; see §15. |
 | M2<br>Clock & midnight | PUBLISHED: clock, scheduled Medical, authored cargo and midnight/continuation, preserved under M2 contract. | HUMAN-PROMOTED / PUBLISHED / CLOSED; independent ACCEPT and final developer playtest PASS. |
 | M3<br>Kitchen | Accepted: Kitchen Food/Hydration at three meals, four 16-item daily hauls and six-lane Meal Coverage through existing owners. | HUMAN-PROMOTED / PUBLISHED / CLOSED; both independent ACCEPT decisions and all four final human retests passed (§15.3). |
-| M4<br>Loadout | IMPLEMENTED / HUMAN-PROMOTED / CLOSED LOCALLY: five-lane Dispatch, item Bulk/Utility, timing, ownership, persistence and UI; locked M4 testing content (§21). | Original/final independent ACCEPT plus developer in-game acceptance. LOCAL CANDIDATE (PUBLISH PENDING); no M5 or complete-economy acceptance. |
+| M4<br>Loadout | IMPLEMENTED / HUMAN-PROMOTED / CLOSED: five-lane Dispatch, item Bulk/Utility, timing, ownership, persistence and UI; locked M4 testing content (§21). | Original/final independent ACCEPT plus developer in-game acceptance. PUBLICATION CANDIDATE [PUB25]; no M5 or complete-economy acceptance. |
 | M5<br>Combined scenarios | Authored multi-day test sequence using all three consumers, continuing stock and organization. | Developer and later unfamiliar-player observations of reserves, tradeoffs, retrieval and causal understanding. |
 
 ### 13.1 Dependencies, not unrelated cleanup
@@ -541,11 +541,11 @@ This section replaces Prototype Findings as the active phase tracker. Dated evid
 | --- | --- | --- |
 | Prototype foundations | HUMAN-PROMOTED in recorded scopes | PF retained as historical evidence; no new acceptance task. |
 | Pre-MVP review + repairs | HUMAN-PROMOTED / PUBLISHED | R-01–R-03 accepted; bounded R-04 subsequently repaired within M1. |
-| MVP foundation contracts | CONFIRMED; v0.5 active master | M1–M3 published/closed; M4 accepted/closed locally. Full-game continuity remains future. |
+| MVP foundation contracts | CONFIRMED; v0.5 active master | M1–M3 published/closed; M4 accepted/closed; publication follows PUB25. Full-game continuity remains future. |
 | M1 persistent Medical | HUMAN-PROMOTED / PUBLISHED / CLOSED | 6c56edf → a7b764e → 36d527d; independent ACCEPT and successful human play. |
 | M2 clock / midnight / HUD | HUMAN-PROMOTED / PUBLISHED / CLOSED | 524edf1 → c7bbf44 → 3465098; independent ACCEPT and final human PASS (§15.2). |
 | M3 Kitchen | HUMAN-PROMOTED / PUBLISHED / CLOSED | 7d3d6c7 → a0f066a; independent ACCEPT decisions, native retests and subsequent publication retained (§15.3). |
-| M4 Expedition Loadout | HUMAN-PROMOTED / CLOSED LOCALLY | Accepted code 844d0d4; final independent ACCEPT, human in-game acceptance; publish pending (§15.5). |
+| M4 Expedition Loadout | HUMAN-PROMOTED / CLOSED | Accepted code 844d0d4; final independent ACCEPT, human in-game acceptance; publication follows PUB25 (§15.5). |
 | M5 combined allocation | NOT RUN / NOT AUTHORIZED HERE | M4 has a three-day mechanical fixture; broader economy/unfamiliar-player validation remains future. |
 
 ### 15.1 Accepted M1 implementation and publication
@@ -582,7 +582,7 @@ Historical 21 October publication lineage: 53805a9 → 5faa40b → 170ea01 → f
 
 ### 15.5 M4 human promotion and local closure
 
-25 October 2026: M4 HUMAN-PROMOTED / CLOSED IN ITS BOUNDED SCOPE / LOCAL CANDIDATE (PUBLISH PENDING). The developer reports in-game acceptance of final five-lane Dispatch, Bulk/Utility, timing and the improved UI/report and expressly authorizes bounded closure after final technical ACCEPT. Human observation is separate from executor and independent checks. [HP25]
+25 October 2026: M4 HUMAN-PROMOTED / CLOSED IN ITS BOUNDED SCOPE / PUBLICATION CANDIDATE [PUB25]. The developer reports in-game acceptance of final five-lane Dispatch, Bulk/Utility, timing and the improved UI/report and expressly authorizes bounded closure after final technical ACCEPT. Human observation is separate from executor and independent checks. [HP25]
 
 Original independent ACCEPT covers 71101cf → 3a57177 on 24 October. Final focused ACCEPT covers 3a57177 → 844d0d4 on 25 October, including Stage A/B and both UI commits, with no unresolved BLOCKER/IMPORTANT findings. Exact commits and evidence links: docs/testing/m4-expedition-loadout-validation-2026-10-24.md, dated promotion addendum. [M4IR]
 
@@ -666,7 +666,7 @@ APPROVED DESIGN / REMAINING DELIVERY CHOICES
 
 ## 17. Current decisions & implementation boundaries
 
-M1–M3 remain HUMAN-PROMOTED / PUBLISHED / CLOSED. M4 HUMAN-PROMOTED / CLOSED IN ITS BOUNDED SCOPE / LOCAL CANDIDATE (PUBLISH PENDING). Top-up/167 locked rows are included. General P01, final economy and future systems remain open; M4 overfill is settled as cap-and-waste. [§21; HP25]
+M1–M3 remain HUMAN-PROMOTED / PUBLISHED / CLOSED. M4 HUMAN-PROMOTED / CLOSED IN ITS BOUNDED SCOPE / PUBLICATION CANDIDATE [PUB25]. Top-up/167 locked rows are included. General P01, final economy and future systems remain open; M4 overfill is settled as cap-and-waste. [§21; HP25]
 
 | Decision | Current disposition / remaining boundary |
 | --- | --- |
@@ -951,7 +951,7 @@ Historical M3 close-out: that v0.4 task changed no source/save or M4 implementat
 
 ### 21.1 Accepted scope and testing content
 
-M4 HUMAN-PROMOTED / CLOSED IN ITS BOUNDED SCOPE / LOCAL CANDIDATE (PUBLISH PENDING). Acceptance covers five-lane contributions, item Bulk/Utility, dispatch timing/ownership/persistence and UI. It does not accept the complete hoarding-organizing economy, indefinite survival, real Expedition outcomes, final ten-scavenger opening, spatial compression or future monitoring network. [HP25]
+M4 HUMAN-PROMOTED / CLOSED IN ITS BOUNDED SCOPE / PUBLICATION CANDIDATE [PUB25]. Acceptance covers five-lane contributions, item Bulk/Utility, dispatch timing/ownership/persistence and UI. It does not accept the complete hoarding-organizing economy, indefinite survival, real Expedition outcomes, final ten-scavenger opening, spatial compression or future monitoring network. [HP25]
 
 Sixteen authored Ready scavengers form four teams of four as a stress fixture. Full fours form first, then at most one remainder, without a team-count cap. Day is 06:00–00:00; Dispatch 06:00–10:00; 150 real seconds/game hour. Player has 20 Bulk; each scavenger provides 28 raw Bulk and Food/Hydration/Medical/Weapons/Protection requirements 12/12/6/12/12. These are M4-approved testing values, not final game economy. [M4]
 
@@ -987,7 +987,7 @@ Baseline cross-wing awareness, central overview and timekeeping are required fut
 
 M4’s exit boundary is selected-item five-lane contributions, outgoing/return capacity, authored Bulk/Utility, handling, timing, continuation and the final UI. Original/final independent ACCEPT and developer in-game acceptance establish that bounded closure, not the complete hoarding/survival economy. [ACCEPT-U1; M4IR; HP25]
 
-In the normal-speed playtest the developer almost completed four full teams before cutoff. The early 08:30 scripted supply helped; unfamiliar, unorganized seed stock and text-heavy UI hindered the attempt. This single run does not establish a lenient window or justify retiming it. Intended ordinary expedition returns are distinct from that fixture assistance. Around ten opening scavengers would form 4/4/2, but sixteen Ready remains the locked stress fixture and no final opening count is set. [PLAY-U1; CAL-U2]
+In the normal-speed playtest the developer fully provisioned and dispatched all four teams before cutoff, but only narrowly. The early 08:30 scripted supply helped; unfamiliar, unorganized seed stock and text-heavy UI hindered the attempt. This single run does not establish a lenient window or justify retiming it. Intended ordinary expedition returns are distinct from that fixture assistance. Around ten opening scavengers would form 4/4/2, but sixteen Ready remains the locked stress fixture and no final opening count is set. [PLAY-U1; CAL-U2]
 
 Learning values and selecting efficient combinations is desirable mastery. Parsing redundant prose is friction. The developer reported faster understanding after final inline colour/UI changes; no instrumented comprehension metric is claimed. [PLAY-U1; UI-U1]
 
@@ -1025,7 +1025,7 @@ M4UI — docs/testing/m4-ui-refinements-validation-2026-10-25.md; 80ab28c512beea
 
 WS-U1–U3, TR-U1–U2, FUT-U1, PLAY-U1, PACE-U1–U3, CAL-U1–U3, SAVE-U1, UI-U1, ACCEPT-U1 and A-DISC refer to the local 25 October reconstruction in docs/design_history/2026-10-25-workshop-training-pacing-discussion.md. Its source-anchor table identifies speakers/passages; it is not a newly verified verbatim transcript and gives no fabricated message timestamps. The GDD source register and §§15.10–15.11/19.6 retain detailed design/status; HP25 remains closure authority. Semantic dispositions and QA: docs/testing/m4-documentation-semantic-reconciliation-2026-10-25.md.
 
-Executor tests, independent checks and human observation remain separate. This edition reuses gameplay evidence and runs document/package/render/parity/preservation checks only. Stop at M4 HUMAN-PROMOTED / CLOSED LOCALLY / READY FOR SEPARATE PUBLICATION AUTHORIZATION.
+Executor tests, independent checks and human observation remain separate. This edition reuses gameplay evidence and runs document/package/render/parity/preservation checks only. Normal publication follows PUB25; M5 remains unauthorized.
 
 15–17 OCTOBER 2026 / DATED DESIGN DECISIONS
 
@@ -1076,7 +1076,7 @@ v0.1–v0.4 remain historical editions. This register preserves dated policy dis
 | D22 | M3 Kitchen Meal Service design v0.1 approved: three Food/Hydration meals at 09:00, 14:00, 18:00 with 3h windows and provisional targets 30/24, 36/24, 36/30; midnight reports three meal rows and equally averaged six-lane Daily Meal Coverage without Workshop or treatment effects. Four substantial 16-item controlled hauls/day over three authored days, initial timing/content/values approved as test inputs. |
 | D23 | Historical D23: retain loot_000019 as Hydration +3, correct basket B without changing manifest totals, begin a fresh M3 run without migration/deletion. Its then-deferred Food Can naming debt was later resolved as Cola Can in the accepted catalogue (§15.4). The original decision did not authorize a category change. |
 
-D21 retains the current full-game Ironman principle without implementing journaling. D22–D23 preserve dated M3 design/mapping; the old naming debt and publication-pending state are resolved in §§15.3–15.4. M3 remains HUMAN-PROMOTED / PUBLISHED / CLOSED. M4 alone is closed locally/publication pending.
+D21 retains the current full-game Ironman principle without implementing journaling. D22–D23 preserve dated M3 design/mapping; the old naming debt and publication-pending state are resolved in §§15.3–15.4. M3 remains HUMAN-PROMOTED / PUBLISHED / CLOSED. M4 is accepted/closed; normal publication follows PUB25.
 
 B.1  DOCUMENT AND EVIDENCE REGISTER
 
@@ -1170,7 +1170,7 @@ bb6683d28539ff743bc480a9d5d68c4ef3d0ce87
 
 ### Relevant dated records retained through PF
 
-Accepted code: 844d0d4adaa5a2d601f04954bb61ad7a5c316589. Local/queried remote main: 3bb69a906e921f06dd12c61bd4d8f33db35d6fce. M4 closed locally, publish pending. Separate authorized normal fast-forward publication and independent final remote SHA check are required for PUBLISHED.
+PUB25 — 25 October 2026: the developer publication request and documentation re-review ACCEPT supersede the earlier no-publication boundary for normal fast-forward publication only. Accepted code 844d0d4; reviewed documents 180dcf5; preflight main 3bb69a9. PUBLISHED is conditional on successful normal push and independent remote/local SHA equality recorded in external completion evidence; otherwise this remains a local publication candidate. Record: docs/testing/m4-publication-2026-10-25.md. No M5.
 
 The established storage, ladder, Receiving and EAF validation records remain referenced by PF’s source registers. Key retained Receiving records include single-cycle validation (12 October), intentional lighting (13 October), queued deliveries (14 October) and Awaiting Lift validation (14 October), all under docs/testing and read through their final human dispositions. Their test runs, screenshots and costs were not reproduced to draft this master. [PF §§31–34]
 
@@ -1178,7 +1178,7 @@ The established storage, ladder, Receiving and EAF validation records remain ref
 
 Future MVP progress updates modify this master and regenerate its readable extract. Do not append MVP milestones to Prototype Findings. Keep the old master and its mirrors unchanged unless a separately authorized historical correction is needed; any such correction must not rewrite the original evidence state. [D10]
 
-v0.2–v0.4 retain historical M1–M3/catalogue checkpoints. v0.5 records M4 human promotion/local closure after final independent ACCEPT. Previous masters/evidence remain intact. No merge, push, PR or M5 is authorized.
+v0.2–v0.4 retain historical M1–M3/catalogue checkpoints. v0.5 records M4 human promotion/local closure after final independent ACCEPT. Previous masters/evidence remain intact. Normal publication follows PUB25; no PR or M5 is authorized.
 
 ### Edition 0.5 acceptance boundary
 
