@@ -81,7 +81,7 @@ func run() -> void:
 	rejected_definition.bulk = 9
 	carry.add_item(ItemInstance.new(rejected_definition,"capacity-9"))
 	panel.refresh()
-	check(panel.preview_state.status == "capacity" and panel.status_label.text.contains("Capacity rejected") and panel.lane_rows.values().all(func(row): return row.rejected and row.projected.size.x == 0),"Capacity rejection is explicit and invents no green projected contribution")
+	check(panel.preview_state.status == "capacity" and panel.status_label.text == "Insufficient load capacity." and panel.lane_rows.values().all(func(row): return row.rejected and row.projected.size.x == 0),"Capacity rejection is explicit and invents no green projected contribution")
 	carry.remove_selected()
 	panel.set_teams(teams)
 	panel.open_panel()
@@ -102,6 +102,7 @@ func run() -> void:
 		if not team.closed: team.dispatch_underprepared()
 	await frames(3)
 	check(not panel.is_open(), "All-done closes interface without auto-advancing recipient")
+	await compact_checks(panel,carry)
 	panel.free()
 	for i: int in 15: carry.add_item(ItemInstance.new(load("res://data/items/definitions/loot_000001.tres"),"strip-%d" % i))
 	carry.select_index(14)
@@ -113,6 +114,90 @@ func run() -> void:
 	hud.free()
 	carry.free()
 	finish()
+
+func capture_compact(panel: CanvasLayer, label: String) -> void:
+	if DisplayServer.get_name() == "headless": return
+	if evidence_dir.is_empty(): return
+	for size: Vector2i in [Vector2i(1920,1080),Vector2i(1280,720)]:
+		DisplayServer.window_set_size(size)
+		await frames(6)
+		var card: Rect2 = panel._card.get_global_rect()
+		check(root.get_visible_rect().encloses(card),"Compact card contained at " + str(size))
+		for control: Control in panel._card.find_children("*","Control",true,false):
+			if control.is_visible_in_tree(): check(card.grow(1).encloses(control.get_global_rect()),"Compact control contained: " + control.name)
+		await capture("%s-%d" % [label,size.x])
+
+func compact_checks(panel: CanvasLayer, carry: CarriedItems) -> void:
+	for arg: String in OS.get_cmdline_user_args():
+		if arg.begins_with("--m4-ui-evidence-dir="): evidence_dir = arg.trim_prefix("--m4-ui-evidence-dir=")
+	if not evidence_dir.is_empty(): DirAccess.make_dir_recursive_absolute(evidence_dir)
+	var team = load("res://gameplay/requests/dispatch_loadout.gd").new("opaque:dispatch:86",4,1)
+	team.day = 1
+	team.credited.Food = 12
+	team.outgoing_bulk = 2
+	panel.set_teams([team,load("res://gameplay/requests/dispatch_loadout.gd").new("other",4,2)])
+	panel.open_panel()
+	var definition := ItemDefinition.new()
+	definition.display_name = "Food [color=red]literal[/color]"
+	definition.utility_id = &"Food"
+	definition.utility_value = 12
+	definition.bulk = 6
+	var item := ItemInstance.new(definition,"preview-12")
+	carry.add_item(item)
+	panel.refresh()
+	var lane: Control = panel.lane_rows.Food.label
+	check(lane is RichTextLabel,"Lane preview supports semantic substring styling")
+	if lane is RichTextLabel:
+		check(lane.get_parsed_text() == "Food 24/48 (+12 / 0 wasted)","Exact zero-waste projection")
+		check(lane.text == "Food [color=#a6f2c4]24[/color]/48 ([color=#a6f2c4]+12[/color] / 0 wasted)","Only projected numerator and applied contribution green; zero waste normal")
+		check(panel.lane_rows.Hydration.label.get_parsed_text() == "Hydration 0/48","Unaffected lane remains committed only")
+	check(panel.bulk_label.text == "Outgoing 2 (+6) / 112 Bulk · Return Capacity 110 (-6)","Whole-item Bulk signed deltas retain committed totals")
+	check(panel.title_label.tooltip_text.is_empty() and panel.deadline_label.text == "Day 1","Opaque request identities hidden")
+	check(panel.status_label.text.is_empty() and panel.item_label.text == definition.display_name,"Eligible explanation removed; authored name remains literal")
+	check(panel.hint_label.get_index() > panel.close_button.get_parent().get_index(),"Italic controls hint is last, after buttons")
+	await capture_compact(panel,"eligible")
+	team.credited.Food = 43
+	panel.refresh()
+	if lane is RichTextLabel:
+		check(lane.get_parsed_text() == "Food 48/48 (+5 / 7 wasted)","Exact cap-and-waste projection")
+		check(lane.text.contains("[color=#a6f2c4]+5[/color]") and lane.text.contains("[color=#ff4d42]7 wasted[/color]"),"Applied capped; positive waste value and word both red")
+	await capture_compact(panel,"wasted")
+	team.credited.Food = 48
+	panel.refresh()
+	check(panel.status_label.text == "Food requirement already fulfilled." and not panel.bulk_label.visible and panel.manual_button.visible and not panel.manual_button.disabled,"Full lane hides summary, retains manual dispatch")
+	if lane is RichTextLabel: check(not lane.text.contains("[color="),"Rejecting a previously projected lane clears rich colours")
+	var before: Dictionary = team.capture_state()
+	panel.handle_e(false,false)
+	panel.handle_e(true,false)
+	check(team.capture_state() == before and carry.get_selected_item() == item,"E rejection preserves inventory/accounting")
+	await capture_compact(panel,"full-lane")
+	carry.remove_selected()
+	carry.add_item(ItemInstance.new(load("res://data/items/definitions/loot_000165.tres"),"irrelevant"))
+	panel.refresh()
+	check(panel.status_label.text == "Selected item not eligible for Expeditions" and not panel.bulk_label.visible and panel.lane_rows.values().all(func(row): return row.rejected),"Irrelevant item has only centered error below bars")
+	await capture_compact(panel,"rejected")
+	carry.remove_selected()
+	team.credited.Food = 12
+	team.outgoing_bulk = 111
+	carry.add_item(item)
+	panel.refresh()
+	check(panel.status_label.text == "Insufficient load capacity." and not panel.bulk_label.visible,"Capacity error hides totals")
+	await capture_compact(panel,"capacity")
+	team.outgoing_bulk = 2
+	team.item_already_spent = func(_id): return true
+	panel.refresh()
+	check(panel.status_label.text == "Selected item already spent." and not panel.bulk_label.visible,"Defensive spent rejection stays truthful")
+	team.item_already_spent = Callable()
+	carry.remove_selected()
+	panel.refresh()
+	check(panel.bulk_label.visible and panel.bulk_label.text == "Outgoing 2 / 112 Bulk · Return Capacity 110" and not panel.status_label.text.contains("not eligible"),"Empty hand restores neutral committed summary")
+	await capture_compact(panel,"empty")
+	carry.add_item(ItemInstance.new(load("res://data/items/definitions/loot_000165.tres"),"terminal-held"))
+	panel._dispatch_manual()
+	panel.refresh()
+	check(team.closed and panel.status_label.text == "Team Dispatched" and panel.bulk_label.visible and not panel.hint_label.text.contains("[E]"),"Ineligible item permits manual dispatch; terminal presentation is read-only")
+	await capture_compact(panel,"terminal")
+	carry.remove_selected()
 
 func finish() -> void:
 	print("M4_CAROUSEL_COMPLETE checks=",checks," failures=",failures)

@@ -24,11 +24,9 @@ var position_label: Label
 var title_label: Label
 var deadline_label: Label
 var item_label: Label
-var gain_label: Label
 var bulk_label: Label
-var cost_label: Label
 var status_label: Label
-var hint_label: Label
+var hint_label: RichTextLabel
 var manual_button: Button
 var close_button: Button
 
@@ -90,7 +88,7 @@ func _ready() -> void:
 		var row := VBoxContainer.new()
 		row.add_theme_constant_override("separation",2)
 		rows.add_child(row)
-		var label := _label(row,17)
+		var label := _rich_label(row,17)
 		var track := Panel.new()
 		track.custom_minimum_size.y = 8
 		row.add_child(track)
@@ -101,13 +99,15 @@ func _ready() -> void:
 		projected.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		track.add_child(projected)
 		lane_rows[lane] = {"label":label,"track":track,"committed":committed,"projected":projected,"rejected":false}
-	gain_label = _label(column,15)
-	bulk_label = _label(column,15)
-	cost_label = _label(column,15)
-	status_label = _label(column,15)
+	bulk_label = _label(column,17)
+	bulk_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	status_label = _label(column,23)
 	status_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	status_label.custom_minimum_size.y = 36
-	hint_label = _label(column,13)
+	status_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	var spacer := Control.new()
+	spacer.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	column.add_child(spacer)
 	var buttons := HBoxContainer.new()
 	buttons.add_theme_constant_override("separation",12)
 	column.add_child(buttons)
@@ -116,11 +116,24 @@ func _ready() -> void:
 	manual_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	close_button = _button(buttons,"[F] Close",close_panel)
 	close_button.custom_minimum_size = Vector2(125,34)
+	hint_label = _rich_label(column,13)
 	_layout()
 
 func _label(parent: Node, font_size: int) -> Label:
 	var label := Label.new()
+	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	label.add_theme_font_size_override("font_size",font_size)
+	parent.add_child(label)
+	return label
+
+func _rich_label(parent: Node, font_size: int) -> RichTextLabel:
+	var label := RichTextLabel.new()
+	label.bbcode_enabled = true
+	label.fit_content = true
+	label.scroll_active = false
+	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	label.add_theme_font_size_override("normal_font_size",font_size)
+	label.add_theme_font_size_override("italics_font_size",font_size)
 	parent.add_child(label)
 	return label
 
@@ -283,36 +296,47 @@ func refresh() -> void:
 	var invalid: bool = preview_state.status in ["ineligible","capacity"]
 	_skin(_card,terminal,invalid)
 	for label: Label in _card.find_children("*","Label",true,false): label.add_theme_color_override("font_color",BLUE_INK if terminal else INK)
+	for label: RichTextLabel in _card.find_children("*","RichTextLabel",true,false): label.add_theme_color_override("default_color",BLUE_INK if terminal else INK)
 	title_label.text = "TEAM %d  ·  %d MEMBERS" % [request.display_index,request.members]
-	title_label.tooltip_text = request.request_id
-	var identity: String = "Day %d · %s" % [request.day,request.request_id.get_slice(":",1)+":"+request.request_id.get_slice(":",2)]
-	deadline_label.text = identity
+	title_label.tooltip_text = ""
+	deadline_label.text = "Day %d" % request.day
 	if request.deadline >= 0.0 and request.time_source.is_valid():
 		var clock: RefCounted = request.time_source.get_object()
-		deadline_label.text += "  ·  Deadline 10:00  ·  %s remaining" % clock.time_text(maxf(0,request.deadline-request.current_time())*float(clock.config.rate))
+		var deadline_calendar: float = float(clock.config.day_start)+(request.deadline-(request.day-1)*clock.day_duration())*float(clock.config.rate)
+		deadline_label.text += " · Deadline %s · %s remaining" % [clock.time_text(deadline_calendar),clock.time_text(maxf(0,request.deadline-request.current_time())*float(clock.config.rate))]
 	item_label.text = "Committed loadout" if terminal else item.get_display_name() if item != null else "No carried item selected"
-	item_label.tooltip_text = item.get_display_name() if item != null else ""
-	gain_label.text = "+%d applied  /  %d wasted" % [preview_state.applied,preview_state.wasted] if preview_state.status == "eligible" else "No projected contribution"
-	bulk_label.text = "Outgoing %d / %d Bulk  ·  Return Capacity %d" % [request.outgoing_bulk,request.raw_capacity(),request.return_capacity()]
-	cost_label.text = ""
-	if not terminal and item != null:
-		cost_label.text = "Selected item: %d Bulk" % item.get_bulk()
-		if preview_state.status == "eligible": cost_label.text += "  →  Outgoing %d / %d · Return %d" % [request.outgoing_bulk+item.get_bulk(),request.raw_capacity(),request.return_capacity()-item.get_bulk()]
+	item_label.tooltip_text = item.get_display_name() if not terminal and item != null else ""
+	bulk_label.visible = not invalid
+	bulk_label.text = "Outgoing %d / %d Bulk · Return Capacity %d" % [request.outgoing_bulk,request.raw_capacity(),request.return_capacity()]
+	if preview_state.status == "eligible":
+		bulk_label.text = "Outgoing %d (+%d) / %d Bulk · Return Capacity %d (-%d)" % [request.outgoing_bulk,preview_state.bulk,request.raw_capacity(),request.return_capacity(),preview_state.bulk]
 	match preview_state.status:
 		"dispatched": status_label.text = "Team Dispatched"
-		"capacity": status_label.text = "Capacity rejected: item costs %d Bulk; %d remaining" % [item.get_bulk(),request.return_capacity()]
-		"ineligible": status_label.text = "%s requirement already met" % preview_state.lane if preview_state.reason == "full" else "Selected item not eligible for Dispatch"
-		"eligible": status_label.text = "E submits this whole item to the centered team"
+		"capacity": status_label.text = "Insufficient load capacity."
+		"ineligible":
+			match preview_state.reason:
+				"full": status_label.text = "%s requirement already fulfilled." % preview_state.lane
+				"spent": status_label.text = "Selected item already spent."
+				_: status_label.text = "Selected item not eligible for Expeditions"
+		"eligible": status_label.text = ""
+		"closed":
+			status_label.text = "Team no longer accepting supplies."
+			bulk_label.visible = false
 		_: status_label.text = "Carry an eligible item to provision this team"
-	hint_label.text = "Read-only loadout · A/D or arrows change team" if terminal else "[E] Submit selected item · Wheel / 1–0 select · A/D or ←/→ change team"
+	status_label.visible = not status_label.text.is_empty()
+	status_label.add_theme_color_override("font_color",REJECTED if invalid else BLUE_INK if terminal else INK)
+	hint_label.text = "[i]%s[/i]" % ("Read-only loadout · A/D or arrows change team" if terminal else "[E] Submit selected item · Wheel / 1–0 select · A/D or ←/→ change team")
 	for lane: String in LANES:
 		var row: Dictionary = lane_rows[lane]
 		var committed: int = request.credited[lane]
 		var target: int = request.targets[lane]
 		var projected: int = preview_state.projected if preview_state.status == "eligible" and preview_state.lane == lane else committed
 		row.rejected = invalid and (preview_state.reason in ["utility","spent","capacity"] or preview_state.lane == lane)
-		row.label.text = "%s   %d / %d" % [lane,committed,target]
-		if projected > committed: row.label.text += "  →  %d / %d" % [projected,target]
+		row.label.text = "%s %d/%d" % [lane,committed,target]
+		if preview_state.status == "eligible" and preview_state.lane == lane:
+			var waste: String = "%d wasted" % preview_state.wasted
+			if preview_state.wasted > 0: waste = "[color=#ff4d42]%s[/color]" % waste
+			row.label.text = "%s [color=#a6f2c4]%d[/color]/%d ([color=#a6f2c4]+%d[/color] / %s)" % [lane,projected,target,preview_state.applied,waste]
 		var track_style := StyleBoxFlat.new()
 		track_style.bg_color = Color(0.47,0.65,0.77) if terminal else Color(0.07,0.12,0.17)
 		track_style.border_color = REJECTED if row.rejected else Color(0.28,0.45,0.55)

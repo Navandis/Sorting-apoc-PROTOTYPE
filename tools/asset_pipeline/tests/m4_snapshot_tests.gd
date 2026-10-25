@@ -2,7 +2,7 @@ extends SceneTree
 
 var checks := 0
 var failures := 0
-const OUTPUT := "C:/Users/Boschetar/.codex/attachments/m4-2026-10-24/continuation"
+var output := ""
 
 func _init() -> void:
 	create_timer(240).timeout.connect(func():
@@ -42,14 +42,19 @@ func save_phase(wing: Node, name: String) -> void:
 	var snapshot = load("res://gameplay/run/run_snapshot.gd").new()
 	var state: Dictionary = snapshot.capture(wing)
 	check(snapshot.validate(state).is_empty(),name+" snapshot validates: "+snapshot.validate(state))
-	var service = load("res://gameplay/run/run_save_service.gd").new(OUTPUT.path_join(name))
+	var service = load("res://gameplay/run/run_save_service.gd").new(output.path_join(name))
 	check(service.save_snapshot(state).ok, "Production single-slot service saves isolated " + name)
 
 func run() -> void:
+	for arg: String in OS.get_cmdline_user_args():
+		if arg.begins_with("--m4-save-dir="): output = arg.trim_prefix("--m4-save-dir=")
+	if not check(output.is_absolute_path() and not output.begins_with(ProjectSettings.globalize_path("res://")),"Explicit external continuation directory required"):
+		finish()
+		return
 	var snapshot = load("res://gameplay/run/run_snapshot.gd").new()
 	if OS.get_cmdline_user_args().has("--read"):
 		for name: String in ["partial","mixed","cutoff","report"]:
-			var service = load("res://gameplay/run/run_save_service.gd").new(OUTPUT.path_join(name))
+			var service = load("res://gameplay/run/run_save_service.gd").new(output.path_join(name))
 			var loaded: Dictionary = service.load_snapshot()
 			if not check(loaded.ok,"Separate process reads " + name): continue
 			var wing := create_wing(loaded.snapshot)

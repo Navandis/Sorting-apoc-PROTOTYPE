@@ -8,6 +8,9 @@ var save_status: Label
 var begin_button: Button
 var card: PanelContainer
 var scroll: ScrollContainer
+var tabs: TabContainer
+var bodies: Array[Label] = []
+var scenario_notice: Label
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -25,11 +28,7 @@ func _ready() -> void:
 	center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	root.add_child(center)
 	card = PanelContainer.new()
-	card.custom_minimum_size = Vector2(940, 600)
 	center.add_child(card)
-	# Initial wrapped-text layout can temporarily grow the card before its
-	# minimum shrinks. Reapply the bounded size after that layout settles.
-	card.minimum_size_changed.connect(func(): _layout.call_deferred())
 	var margin := MarginContainer.new()
 	for side: String in ["left", "right", "top", "bottom"]: margin.add_theme_constant_override("margin_" + side, 24)
 	card.add_child(margin)
@@ -39,16 +38,27 @@ func _ready() -> void:
 	title = Label.new()
 	title.add_theme_font_size_override("font_size", 30)
 	column.add_child(title)
-	scroll = ScrollContainer.new()
-	scroll.custom_minimum_size.y = 300
-	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	column.add_child(scroll)
-	body = Label.new()
-	body.add_theme_font_size_override("font_size", 18)
-	body.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	body.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	scroll.add_child(body)
+	tabs = TabContainer.new()
+	tabs.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	tabs.add_theme_font_size_override("font_size", 20)
+	column.add_child(tabs)
+	for section: String in ["Expeditions", "Medical", "Meal Service"]:
+		var region := ScrollContainer.new()
+		region.name = section
+		region.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+		tabs.add_child(region)
+		var content := Label.new()
+		content.add_theme_font_size_override("font_size", 18)
+		content.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		content.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		region.add_child(content)
+		bodies.append(content)
+	# Retain the existing Expeditions body/scroll references used by callers.
+	scroll = tabs.get_child(0)
+	body = bodies[0]
+	scenario_notice = Label.new()
+	scenario_notice.text = "Authored scenario complete."
+	column.add_child(scenario_notice)
 	save_status = Label.new()
 	save_status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	column.add_child(save_status)
@@ -68,29 +78,34 @@ func _layout() -> void:
 	var window := Vector2(get_window().size)
 	if window.x < 320.0 or window.y < 240.0: window = viewport
 	var pixels_per_unit := maxf(0.01,minf(window.x/viewport.x,window.y/viewport.y))
-	card.custom_minimum_size = Vector2(minf(940,window.x-48),minf(900,window.y-60))
-	card.size = card.custom_minimum_size
+	# Scroll bodies do not contribute a content-height minimum. Size immediately
+	# from the window so fresh Continue has a bounded footer on its first draw.
+	card.size = Vector2(minf(940,window.x-48),minf(900,window.y-60))
 	card.scale = Vector2.ONE/pixels_per_unit
 	card.position = (viewport-card.size/pixels_per_unit)/2.0
 
 func _dispatch_text(report: Dictionary) -> String:
-	if not report.has("dispatch"): return ""
-	var text := "DISPATCH\n"
-	if report.dispatch.is_empty(): return text + "No teams scheduled\n\n"
+	var text := ""
 	var config: Dictionary = report.get("clock_config",{"day_start":21600.0,"rate":24.0})
 	var duration: float = (86400.0-float(config.day_start))/float(config.rate)
-	for team: Dictionary in report.dispatch:
+	if report.get("dispatch",[]).is_empty(): text = "No teams scheduled\n\n"
+	for team: Dictionary in report.get("dispatch",[]):
 		var result: Dictionary = team.dispatch_result
 		var calendar: float = float(config.day_start)+(float(result.at)-(int(team.day)-1)*duration)*float(config.rate)
-		text += "Team %d · %d members · %s\n" % [team.display_index,team.members,team.id]
-		text += "%s · %s · Outgoing %d/%d Bulk · Return Capacity %d\n" % [String(result.reason).capitalize(),load("res://gameplay/run/run_clock.gd").time_text(calendar),result.outgoing_bulk,result.capacity,result.return_capacity]
+		var reason: String = {"full":"Fully provisioned","manual":"Manually dispatched under-prepared","cutoff":"Cutoff-dispatched"}.get(result.reason,String(result.reason).capitalize())
+		text += "Team %d · %d members\n" % [team.display_index,team.members]
+		text += "%s · Departed %s\nOutgoing %d/%d Bulk · Return Capacity %d\n" % [reason,load("res://gameplay/run/run_clock.gd").time_text(calendar),result.outgoing_bulk,result.capacity,result.return_capacity]
 		var lanes: PackedStringArray = []
-		for lane: String in team.targets:
-			lanes.append("%s %d/%d (%d unmet)" % [lane,team.credited[lane],team.targets[lane],team.result[lane].unmet])
-		text += " · ".join(lanes) + "\n\n"
-	return text
+		for lane: String in ["Food","Hydration","Medical","Weapons","Protection"]:
+			lanes.append("%s %d/%d" % [lane,team.credited[lane],team.targets[lane]])
+		text += " · ".join(lanes.slice(0,3)) + "\n" + " · ".join(lanes.slice(3)) + "\n\n"
+	return text + "Incoming supplies — scripted scenario\nHauls admitted %d · Midnight forfeits %d\nDeposited backlog carried forward %d" % [report.admitted.size(),report.forfeits.size(),report.backlog.size()]
 
 func present(report: Dictionary, status: String) -> void:
+	_layout()
+	# A fresh hidden label otherwise measures wrapped text at width zero and
+	# temporarily raises the container minimum before its first layout/draw.
+	save_status.size.x = maxf(1.0,card.size.x-48.0)
 	title.text = "End of Day %d" % report.day
 	var required := 0
 	var supplied := 0
@@ -105,15 +120,18 @@ func present(report: Dictionary, status: String) -> void:
 		fulfilled += int(request.closure_reason == "fulfilled")
 		expired += int(request.closure_reason == "expired")
 		for receipt: Dictionary in request.spent: waste += int(receipt.wasted)
-	body.text = _dispatch_text(report) + "MEDICAL\nRequired %d  ·  Credited %d  ·  Unmet %d\nFulfilled %d  ·  Expired %d  ·  Excess discarded %d\n\nMEAL SERVICE\nDaily Meal Coverage: %s" % [required, supplied, unmet, fulfilled, expired, waste, "N/A" if report.meal_coverage == null else "%.1f%%" % report.meal_coverage]
-	if report.meals.is_empty(): body.text += "\nNo Meal Service scheduled"
+	body.text = _dispatch_text(report)
+	bodies[1].text = "Required %d · Credited %d · Unmet %d\nFulfilled %d · Expired %d\nExcess discarded %d" % [required,supplied,unmet,fulfilled,expired,waste]
+	if report.medical.is_empty(): bodies[1].text += "\n\nNo Medical activity"
+	bodies[2].text = "Daily Meal Coverage: %s" % ("N/A" if report.meal_coverage == null else "%.1f%%" % report.meal_coverage)
+	if report.meals.is_empty(): bodies[2].text += "\n\nNo Meal Service scheduled"
 	for meal: Dictionary in report.meals:
-		body.text += "\n%s  ·  Food %d/%d  ·  Hydration %d/%d  ·  %s" % [meal.meal,meal.credited.Food,meal.targets.Food,meal.credited.Hydration,meal.targets.Hydration,meal.closure_reason.capitalize()]
-	body.text += "\n\nRECEIVING\nHauls admitted %d  ·  Midnight forfeits %d\nDeposited backlog carried forward %d" % [report.admitted.size(), report.forfeits.size(), report.backlog.size()]
-	if report.scenario_complete: body.text += "\n\nAuthored scenario complete."
+		bodies[2].text += "\n\n%s · %s\nFood %d/%d · Hydration %d/%d" % [meal.meal,meal.closure_reason.capitalize(),meal.credited.Food,meal.targets.Food,meal.credited.Hydration,meal.targets.Hydration]
+	scenario_notice.visible = report.scenario_complete
 	save_status.text = status
 	begin_button.text = "Begin Day %d" % (int(report.day) + 1)
-	scroll.scroll_vertical = 0
+	tabs.current_tab = 0
+	for region: ScrollContainer in tabs.get_children(): region.scroll_vertical = 0
 	_layout()
 	visible = true
 	if DisplayServer.get_name() != "headless" and not RenderingServer.frame_post_draw.is_connected(_first_draw):

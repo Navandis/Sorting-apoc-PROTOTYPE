@@ -1,7 +1,5 @@
 extends "res://tools/asset_pipeline/tests/m1_rendered_tests.gd"
 
-const OUTPUT := "C:/Users/Boschetar/.codex/attachments/m4-2026-10-24/rendered"
-
 func send_key(code: Key, pressed: bool, echo: bool = false) -> void:
 	var event := InputEventKey.new()
 	event.keycode = code
@@ -11,6 +9,7 @@ func send_key(code: Key, pressed: bool, echo: bool = false) -> void:
 	Input.parse_input_event(event)
 
 func click(button: Button) -> void:
+	await frames(3)
 	var point := button.get_global_rect().get_center()
 	print("M4_CLICK text=",button.text," point=",point," visible=",button.is_visible_in_tree()," disabled=",button.disabled)
 	var motion := InputEventMouseMotion.new()
@@ -89,9 +88,11 @@ func run() -> void:
 	create_timer(600).timeout.connect(func():
 		push_error("M4 integrated input/render helper incomplete")
 		quit(3))
-	evidence_dir = OUTPUT
 	for arg: String in OS.get_cmdline_user_args():
 		if arg.begins_with("--m4-evidence-dir="): evidence_dir = arg.trim_prefix("--m4-evidence-dir=")
+	if not check(evidence_dir.is_absolute_path() and not evidence_dir.begins_with(ProjectSettings.globalize_path("res://")),"New external evidence/save directory required"):
+		finish()
+		return
 	DirAccess.make_dir_recursive_absolute(evidence_dir)
 	var shell = load("res://gameplay/run/run_shell.tscn").instantiate()
 	shell.save_service = load("res://gameplay/run/run_save_service.gd").new(evidence_dir.path_join("slot"))
@@ -215,17 +216,41 @@ func run() -> void:
 	if DisplayServer.get_name() != "headless":
 		for size: Vector2i in [Vector2i(1920,1080),Vector2i(1280,720)]:
 			DisplayServer.window_set_size(size)
-			shell.report_view.scroll.scroll_vertical = 0
 			await frames(6)
 			check(root.get_visible_rect().encloses(shell.report_view.card.get_global_rect()) and shell.report_view.begin_button.is_visible_in_tree(),"Report and controls reachable at " + str(size))
-			await capture("report-%d" % size.x)
-			shell.report_view.scroll.scroll_vertical = 10000
-			await capture("report-existing-sections-%d" % size.x)
+			var frozen: Dictionary = load("res://gameplay/run/run_snapshot.gd").new().capture(wing)
+			for index: int in 3:
+				var tab_bar: TabBar = shell.report_view.tabs.get_tab_bar()
+				var point: Vector2 = tab_bar.get_global_transform() * tab_bar.get_tab_rect(index).get_center()
+				for pressed: bool in [true,false]:
+					var event := InputEventMouseButton.new()
+					event.button_index = MOUSE_BUTTON_LEFT
+					event.position = point
+					event.pressed = pressed
+					root.push_input(event,true)
+				await frames(3)
+				check(shell.report_view.tabs.current_tab == index,"Rendered tab hit area selects " + str(index))
+				await capture("report-tab-%d-%d" % [index,size.x])
+				if index == 0:
+					shell.report_view.scroll.scroll_vertical = 10000
+					await capture("report-scripted-supplies-%d" % size.x)
+					shell.report_view.scroll.scroll_vertical = 0
+			check(load("res://gameplay/run/run_snapshot.gd").new().capture(wing) == frozen and paused and shell.pause_owners.has("night_report"),"Rendered tab navigation preserves gameplay snapshot and report hold")
+	await key(KEY_ESCAPE,true)
+	await key(KEY_ESCAPE,false)
+	check(shell.menu_open and shell.pause_owners.has("night_report") and shell.pause_owners.has("menu"),"ESC opens existing menu over report retaining both holds")
+	await key(KEY_ESCAPE,true)
+	await key(KEY_ESCAPE,false)
+	check(not shell.menu_open and paused and shell.pause_owners.has("night_report"),"Closing report menu retains report pause")
 	var report: Dictionary = wing.run_schedule.report.duplicate(true)
 	var request_count: int = wing.run_schedule.requests.size()
 	check(shell.save_and_exit() and shell.continue_run(),"Report-pending production Save & Exit / Continue")
 	check(paused and shell.wing.run_schedule.phase == "REPORT_PENDING" and shell.wing.run_schedule.report == report,"Report continuation neither resolves nor changes results")
+	# Pointer coordinates must be read from the first completed layout, rather
+	# than the stale pre-Continue container positions within this same callback.
+	await RenderingServer.frame_post_draw
 	await click(shell.report_view.begin_button)
+	print("M4_BEGIN_STATE paused=",paused," phase=",shell.wing.run_schedule.phase," day=",shell.wing.run_schedule.clock.day," requests=",shell.wing.run_schedule.requests.size()," expected=",request_count)
 	check(not paused and shell.wing.run_schedule.clock.day == 2 and shell.wing.run_schedule.requests.size() == request_count,"Begin Day releases only report hold; daily teams already activated once")
 	shell.wing.set_process(false)
 	shell.free()
