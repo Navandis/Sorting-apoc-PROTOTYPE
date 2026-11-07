@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://8shcexvt1xr5"
+
+[deps]
+
+files=["res://data/scenarios/m4/Sorting_Apocalypse_M4_Locked_Baseline_24Oct2026.display.translation", "res://data/scenarios/m4/Sorting_Apocalypse_M4_Locked_Baseline_24Oct2026.storage.translation", "res://data/scenarios/m4/Sorting_Apocalypse_M4_Locked_Baseline_24Oct2026.utility.translation", "res://data/scenarios/m4/Sorting_Apocalypse_M4_Locked_Baseline_24Oct2026.bulk.translation", "res://data/scenarios/m4/Sorting_Apocalypse_M4_Locked_Baseline_24Oct2026.utility.translation", "res://data/scenarios/m4/Sorting_Apocalypse_M4_Locked_Baseline_24Oct2026.destinations.translation", "res://data/scenarios/m4/Sorting_Apocalypse_M4_Locked_Baseline_24Oct2026.authoring.translation"]
+
+source_file="res://data/scenarios/m4/Sorting_Apocalypse_M4_Locked_Baseline_24Oct2026.csv"
+dest_files=["res://data/scenarios/m4/Sorting_Apocalypse_M4_Locked_Baseline_24Oct2026.display.translation", "res://data/scenarios/m4/Sorting_Apocalypse_M4_Locked_Baseline_24Oct2026.storage.translation", "res://data/scenarios/m4/Sorting_Apocalypse_M4_Locked_Baseline_24Oct2026.utility.translation", "res://data/scenarios/m4/Sorting_Apocalypse_M4_Locked_Baseline_24Oct2026.bulk.translation", "res://data/scenarios/m4/Sorting_Apocalypse_M4_Locked_Baseline_24Oct2026.utility.translation", "res://data/scenarios/m4/Sorting_Apocalypse_M4_Locked_Baseline_24Oct2026.destinations.translation", "res://data/scenarios/m4/Sorting_Apocalypse_M4_Locked_Baseline_24Oct2026.authoring.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true
