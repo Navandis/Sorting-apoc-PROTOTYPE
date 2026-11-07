@@ -87,6 +87,7 @@ func awaiting_cycles() -> void:
 		commitments[fifth.batch_id] = var_to_bytes(fifth.to_snapshot())
 		check(owner.submit_return("prototype_team_E", fifth) == 2, "E waits after D")
 	var transferred := {}
+	var committed_count := 0
 	for index in ids.size():
 		var batch: LootBatch = manager.get_active_batch()
 		check(batch != null and batch.batch_id == ids[index], "active progression uses exact FIFO batch")
@@ -96,6 +97,7 @@ func awaiting_cycles() -> void:
 		if cycle.get_cycle_state() != 4:
 			wing.free()
 			return
+		committed_count += batch.entries.size()
 		var queue := "%02d" % manager.get_queued_batch_ids().size()
 		await unload(batch, presenter, cycle, ui, player.get_node("CarriedItems"), queue, transferred)
 		if index == 0:
@@ -118,7 +120,7 @@ func awaiting_cycles() -> void:
 		check(manager.get_active_batch() == null and manager.get_queued_batch_ids().is_empty() and owner.get_awaiting_returns().is_empty(), "five ordinary cycles finish empty")
 		check(events.states == [1,2,3,4,5,0, 1,2,3,4,5,0, 1,2,3,4,5,0, 1,2,3,4,5,0, 1,2,3,4,5,0], "five exact six-state cycles, no extra arrival")
 		check(events.admissions == [["prototype_team_D", ids[3]], ["prototype_team_E", ids[4]]], "exactly two oldest-first unblock events")
-		check(transferred.size() == bulk * 5, "every exact committed ItemInstance transferred once")
+		check(transferred.size() == committed_count, "every exact committed ItemInstance transferred once")
 		check(events.activations == ids + [""], "each batch activates once; final empty notification")
 		readout(ui, "IDLE", "CLEAR", "00")
 	demo_completed = true

@@ -1,6 +1,6 @@
 extends SceneTree
 
-# Catches enlarged occupancy, unfair arrivals, invalid retries and midnight resurrection.
+# Catches enlarged occupancy, unfair arrivals and invalid retries.
 const Source = preload("res://receiving/prototype_loot_source.gd")
 const Planner = preload("res://receiving/receiving_deck_layout_planner.gd")
 const Manager = preload("res://receiving/receiving_manager.gd")
@@ -29,11 +29,9 @@ func run() -> void:
 	if owner_script != null:
 		await capacity_and_fairness()
 		await invalid_returns()
-		await midnight_orders(false)
-		await midnight_orders(true)
 		await invalid_pending()
 		await synchronous_callbacks()
-		check(completed == 6, "every test completes without runtime abort")
+		check(completed == 4, "every test completes without runtime abort")
 	print("receiving_awaiting_lift_tests: %s (%d failures)" % ["PASS" if failures == 0 else "FAIL", failures])
 	quit(0 if failures == 0 else 1)
 
@@ -50,7 +48,7 @@ func setup() -> Dictionary:
 	check(owner.configure(manager, Catalog, Profile), "configure return owner once")
 	check(not owner.configure(manager, Catalog, Profile), "reconfigure cannot discard commitments")
 	var events: Array = []
-	for signal_name: String in ["return_admitted", "return_awaiting_lift", "return_admitted_after_waiting", "return_forfeited_at_midnight"]:
+	for signal_name: String in ["return_admitted", "return_awaiting_lift", "return_admitted_after_waiting"]:
 		owner.connect(signal_name, func(team: String, batch: String): events.append([signal_name, team, batch]))
 	return {"manager": manager, "owner": owner, "events": events}
 
@@ -159,48 +157,6 @@ func invalid_returns() -> void:
 	f.manager.free()
 	completed += 1
 
-func midnight_orders(vacancy_first: bool) -> void:
-	var f := setup()
-	var batches := fill(f)
-	if vacancy_first:
-		drain(f.manager)
-		f.manager.retire_drained_active_after_close()
-		await settle()
-	var before := occupancy(f.manager)
-	var forfeited_refs := {"D": weakref(batches[3]), "E": weakref(batches[4])}
-	var deposited_before := []
-	var deposited_ids: Array = [f.manager.get_active_batch_id()] + Array(f.manager.get_queued_batch_ids())
-	for id: String in deposited_ids:
-		deposited_before.append(var_to_bytes(f.manager.get_deposited_batch(id).to_snapshot()))
-	var forfeits: Array = f.owner.resolve_awaiting_lift_at_midnight()
-	var expected: Array = ["E"] if vacancy_first else ["D", "E"]
-	check(forfeits.size() == expected.size(), "midnight returns exact number forfeited")
-	for index in expected.size():
-		var id: String = expected[index]
-		check(forfeits[index] == {"team_id": "team_" + id, "batch_id": id, "status": &"FORFEITED_RETURNED"}, "identity-bearing forfeit result")
-		check(f.owner.get_return_status("team_" + id) == &"FORFEITED_RETURNED", "team returned without loot")
-		check(f.owner.submit_return("resurrect_" + id, batches[3 if id == "D" else 4]) == INVALID, "forfeited identity cannot be resubmitted")
-		batches[3 if id == "D" else 4] = null
-	await settle()
-	for id: String in expected:
-		check(forfeited_refs[id].get_ref() == null, "forfeit keeps identity evidence without retaining gameplay batch")
-	check(occupancy(f.manager) == before, "midnight preserves deposited occupancy")
-	for index in deposited_ids.size():
-		check(var_to_bytes(f.manager.get_deposited_batch(deposited_ids[index]).to_snapshot()) == deposited_before[index], "midnight preserves deposited content")
-	check(f.owner.resolve_awaiting_lift_at_midnight().is_empty() and f.owner.get_awaiting_returns().is_empty(), "repeated midnight is inert")
-	while f.manager.get_active_batch() != null:
-		drain(f.manager)
-		f.manager.retire_drained_active_after_close()
-		await settle()
-	for id: String in expected:
-		check(f.manager.get_deposited_batch(id) == null, "later slots do not resurrect " + id)
-	var events: Array = f.events.filter(func(e: Array): return e[0] == "return_forfeited_at_midnight")
-	check(events.size() == expected.size(), "no repeated forfeit event")
-	print("AWAITING_UNIT MIDNIGHT vacancy_first=", vacancy_first, " forfeits=", forfeits)
-	f.owner.free()
-	f.manager.free()
-	completed += 1
-
 func invalid_pending() -> void:
 	var f := setup()
 	var batches := fill(f)
@@ -216,7 +172,7 @@ func invalid_pending() -> void:
 	check(f.manager.get_queued_batch_ids() == PackedStringArray(["C", "E"]), "invalid D cannot spin or wrong-team admit; valid E proceeds")
 	f.manager.contents_changed.emit()
 	await settle()
-	check(diagnostics.size() == 1 and f.owner.resolve_awaiting_lift_at_midnight().is_empty(), "invalid is distinct from midnight and never retried")
+	check(diagnostics.size() == 1 and f.owner.get_awaiting_returns().is_empty(), "invalid commitment is never retried")
 	f.owner.free()
 	f.manager.free()
 	completed += 1
@@ -241,9 +197,8 @@ func synchronous_callbacks() -> void:
 	check(awaiting_ids(f.owner) == [["team_F", "F", &"AWAITING_LIFT"]] and callback_count[0] == 1, "synchronous arrival retains FIFO")
 	drain(f.manager)
 	f.manager.retire_drained_active_after_close()
-	check(f.owner.resolve_awaiting_lift_at_midnight().size() == 1, "midnight before deferred pass forfeits F")
 	await settle()
-	check(f.manager.get_queued_batch_ids() == PackedStringArray(["E"]) and f.manager.get_deposited_batch("F") == null, "stale scheduled pass cannot resurrect F")
+	check(f.manager.get_queued_batch_ids() == PackedStringArray(["E", "F"]) and f.manager.get_deposited_batch("F") == sixth, "later vacancy admits the exact reentrant F behind E")
 	f.owner.free()
 	f.manager.free()
 	completed += 1

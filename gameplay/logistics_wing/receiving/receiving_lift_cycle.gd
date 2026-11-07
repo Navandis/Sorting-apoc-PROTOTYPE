@@ -147,7 +147,7 @@ func seconds_to_boundary() -> float:
 			if _departing: return maxf(0.0, _phase_duration - _elapsed)
 	return INF
 
-func advance_time(delta: float, settle_endpoint: bool = true) -> void:
+func advance_time(delta: float) -> void:
 	if not _configured:
 		return
 	_elapsed += delta
@@ -156,15 +156,9 @@ func advance_time(delta: float, settle_endpoint: bool = true) -> void:
 	if not is_instance_valid(_shutter):
 		_presenter.suspend_pickup()
 		return
-	if not settle_endpoint:
-		if _state == State.REVEALING:
-			_move_shutter(_closed_y, _open_y, opening_motion_delay_s, opening_motion_duration_s)
-		elif _state == State.CLOSING:
-			_move_shutter(_open_y, _closed_y, closing_motion_delay_s, closing_motion_duration_s)
-		return
-	settle_boundary()
+	_settle_boundary()
 
-func settle_boundary() -> void:
+func _settle_boundary() -> void:
 	match _state:
 		State.ARRIVAL:
 			if _elapsed >= _phase_duration and _presenter.is_active_batch_staged():
@@ -319,6 +313,7 @@ func restore_state(state: Dictionary) -> bool:
 		State.CLOSING: _recover_cue($Closing, _elapsed)
 		State.SEALED_EMPTY:
 			if _departing: _recover_cue($Departure, _elapsed)
+	set_menu_audio_paused(get_tree().paused)
 	_update_warning()
 	readout_changed.emit()
 	_request_refresh()

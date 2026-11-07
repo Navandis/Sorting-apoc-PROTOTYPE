@@ -1,0 +1,69 @@
+Godot Engine v4.7.stable.official.5b4e0cb0f - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+ERROR: Wing seed validation failed: CerealBox_A has unknown item ID loot_999999
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _report_failures (res://gameplay/logistics_wing/development/seed_registrar.gd:173)
+       [1] register_existing_hosts (res://gameplay/logistics_wing/development/seed_registrar.gd:74)
+       [2] initialize_if_enabled (res://gameplay/logistics_wing/development/seeded_storage_setup.gd:20)
+       [3] _ready (res://gameplay/logistics_wing/development/seeded_storage_setup.gd:8)
+       [4] _test_invalid_declaration (res://tools/asset_pipeline/tests/wing_seed_fixture_tests.gd:295)
+       [5] _run (res://tools/asset_pipeline/tests/wing_seed_fixture_tests.gd:40)
+       [6] _test_editor_style_duplicate (res://tools/asset_pipeline/tests/wing_seed_fixture_tests.gd:231)
+ERROR: Wing seed validation failed: CerealBox_A uses blocked item ID loot_000034
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _report_failures (res://gameplay/logistics_wing/development/seed_registrar.gd:173)
+       [1] register_existing_hosts (res://gameplay/logistics_wing/development/seed_registrar.gd:74)
+       [2] initialize_if_enabled (res://gameplay/logistics_wing/development/seeded_storage_setup.gd:20)
+       [3] _ready (res://gameplay/logistics_wing/development/seeded_storage_setup.gd:8)
+       [4] _test_invalid_declaration (res://tools/asset_pipeline/tests/wing_seed_fixture_tests.gd:295)
+       [5] _run (res://tools/asset_pipeline/tests/wing_seed_fixture_tests.gd:42)
+       [6] _test_fuel_registration (res://tools/asset_pipeline/tests/wing_seed_fixture_tests.gd:269)
+ERROR: Wing seed validation failed: CerealBox_A uses blocked item ID loot_000036
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _report_failures (res://gameplay/logistics_wing/development/seed_registrar.gd:173)
+       [1] register_existing_hosts (res://gameplay/logistics_wing/development/seed_registrar.gd:74)
+       [2] initialize_if_enabled (res://gameplay/logistics_wing/development/seeded_storage_setup.gd:20)
+       [3] _ready (res://gameplay/logistics_wing/development/seeded_storage_setup.gd:8)
+       [4] _test_invalid_declaration (res://tools/asset_pipeline/tests/wing_seed_fixture_tests.gd:295)
+       [5] _run (res://tools/asset_pipeline/tests/wing_seed_fixture_tests.gd:43)
+       [6] _test_invalid_declaration (res://tools/asset_pipeline/tests/wing_seed_fixture_tests.gd:312)
+ERROR: Wing seed validation failed: CerealBox_A has missing authored visual (found 0)
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _report_failures (res://gameplay/logistics_wing/development/seed_registrar.gd:173)
+       [1] register_existing_hosts (res://gameplay/logistics_wing/development/seed_registrar.gd:74)
+       [2] initialize_if_enabled (res://gameplay/logistics_wing/development/seeded_storage_setup.gd:20)
+       [3] _ready (res://gameplay/logistics_wing/development/seeded_storage_setup.gd:8)
+       [4] _test_invalid_declaration (res://tools/asset_pipeline/tests/wing_seed_fixture_tests.gd:295)
+       [5] _run (res://tools/asset_pipeline/tests/wing_seed_fixture_tests.gd:44)
+       [6] _test_invalid_declaration (res://tools/asset_pipeline/tests/wing_seed_fixture_tests.gd:312)
+ERROR: Wing seed validation failed: CerealBox_A visual mismatch: expected res://assets/props/Food/SM_CerealBox_2.glb, found res://assets/props/Hydration/SM_SodaCan.glb
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _report_failures (res://gameplay/logistics_wing/development/seed_registrar.gd:173)
+       [1] register_existing_hosts (res://gameplay/logistics_wing/development/seed_registrar.gd:74)
+       [2] initialize_if_enabled (res://gameplay/logistics_wing/development/seeded_storage_setup.gd:20)
+       [3] _ready (res://gameplay/logistics_wing/development/seeded_storage_setup.gd:8)
+       [4] _test_invalid_declaration (res://tools/asset_pipeline/tests/wing_seed_fixture_tests.gd:295)
+       [5] _run (res://tools/asset_pipeline/tests/wing_seed_fixture_tests.gd:45)
+       [6] _test_invalid_declaration (res://tools/asset_pipeline/tests/wing_seed_fixture_tests.gd:312)
+ERROR: Wing seed validation failed: duplicate seed identity namespace wing_seed_v1 already active at /root/PrimarySeedFixture/SeedRegistrar
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _report_failures (res://gameplay/logistics_wing/development/seed_registrar.gd:173)
+       [1] register_existing_hosts (res://gameplay/logistics_wing/development/seed_registrar.gd:60)
+       [2] _test_duplicate_derived_identity (res://tools/asset_pipeline/tests/wing_seed_fixture_tests.gd:325)
+ERROR: Wing seed validation failed: duplicate seed identity namespace wing_seed_v1 already active at SeedRegistrar
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _report_failures (res://gameplay/logistics_wing/development/seed_registrar.gd:173)
+       [1] register_existing_hosts (res://gameplay/logistics_wing/development/seed_registrar.gd:60)
+       [2] initialize_if_enabled (res://gameplay/logistics_wing/development/seeded_storage_setup.gd:20)
+       [3] _ready (res://gameplay/logistics_wing/development/seeded_storage_setup.gd:8)
+       [4] _test_namespace_reservation_survives_detach (res://tools/asset_pipeline/tests/wing_seed_fixture_tests.gd:359)
+PASS: wing seed fixture tests

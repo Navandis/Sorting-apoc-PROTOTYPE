@@ -9,13 +9,6 @@ var spent: Array[Dictionary] = []
 var closed := false
 var result: Dictionary = {}
 var transaction_active := false
-var occurrence_id := ""
-var day := 0
-var opened_at := 0.0
-var deadline := -1.0 # Untimed standalone prototype/test consumers retain M1 behavior.
-var closed_at := -1.0
-var closure_reason := ""
-var time_source: Callable
 var item_already_spent: Callable
 
 func _init(id: String = "", context: String = "medical_bay", lanes: Dictionary = {"Medical": 12}) -> void:
@@ -90,13 +83,12 @@ func _record_contribution(item: ItemInstance, proposed: Dictionary) -> void:
 	var fulfilled := true
 	for lane: String in targets:
 		if int(credited[lane]) < int(targets[lane]): fulfilled = false
-	if fulfilled: _close("fulfilled", current_time())
+	if fulfilled: _close()
 
 func capture_state() -> Dictionary:
 	return {"id": request_id, "destination": destination, "targets": targets.duplicate(true),
 		"credited": credited.duplicate(true), "spent": spent.duplicate(true), "closed": closed,
-		"result": result.duplicate(true), "occurrence_id": occurrence_id, "day": day,
-		"opened_at": opened_at, "deadline": deadline, "closed_at": closed_at, "closure_reason": closure_reason}
+		"result": result.duplicate(true)}
 
 func restore_state(state: Dictionary) -> void:
 	request_id = state.id
@@ -106,29 +98,12 @@ func restore_state(state: Dictionary) -> void:
 	spent.assign(state.spent)
 	closed = state.closed
 	result = state.result.duplicate(true)
-	occurrence_id = state.occurrence_id
-	day = state.day
-	opened_at = state.opened_at
-	deadline = state.deadline
-	closed_at = state.closed_at
-	closure_reason = state.closure_reason
-
-func current_time() -> float:
-	return float(time_source.call()) if time_source.is_valid() else 0.0
 
 func is_accepting() -> bool:
-	var now := current_time()
-	return not closed and (deadline < 0.0 or (opened_at <= now and now < deadline))
+	return not closed
 
-func expire(now: float) -> void:
-	if not closed and deadline >= 0.0 and now >= deadline:
-		_close("expired", deadline)
-
-func _close(reason: String, at: float) -> void:
-	if closed: return
+func _close() -> void:
 	closed = true
-	closed_at = at
-	closure_reason = reason
 	for lane: String in targets:
 		result[lane] = {"required": targets[lane], "supplied": credited[lane],
 			"unmet": int(targets[lane]) - int(credited[lane])}

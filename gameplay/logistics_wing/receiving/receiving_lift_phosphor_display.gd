@@ -2,8 +2,8 @@ extends Node
 # Runtime texture binding keeps editor resources free of pathless live textures.
 const STATUS := ["IDLE", "INCOMING", "INCOMING", "OPENING", "OPEN", "CLOSING"]
 const FOOTER := [
-	"AWAITING EXPEDITION LOOT", "DELIVERING EXPEDITION LOOT",
-	"DELIVERING EXPEDITION LOOT", "LIFT SHUTTER OPENING",
+	"AWAITING CARGO", "DELIVERING CARGO",
+	"DELIVERING CARGO", "LIFT SHUTTER OPENING",
 	"LOOT READY FOR PICK-UP", "LIFT SHUTTER CLOSING",
 ]
 var _cycle: Node

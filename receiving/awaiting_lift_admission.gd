@@ -7,13 +7,11 @@ const DeckProfileScript = preload("res://receiving/receiving_deck_profile.gd")
 enum ReturnResult { INVALID, ADMITTED, AWAITING }
 const AWAITING_LIFT: StringName = &"AWAITING_LIFT"
 const ADMITTED_RETURNED: StringName = &"ADMITTED_RETURNED"
-const FORFEITED_RETURNED: StringName = &"FORFEITED_RETURNED"
 const INVALID_RETURN: StringName = &"INVALID_RETURN"
 
 signal return_admitted(team_id: String, batch_id: String)
 signal return_awaiting_lift(team_id: String, batch_id: String)
 signal return_admitted_after_waiting(team_id: String, batch_id: String)
-signal return_forfeited_at_midnight(team_id: String, batch_id: String)
 signal return_invalidated(team_id: String, batch_id: String, reason: String)
 
 var _manager: ReceivingManager
@@ -25,7 +23,6 @@ var _batch_teams: Dictionary = {}
 var _awaiting: Array[Dictionary] = []
 var _pass_scheduled := false
 var _admitting := false
-var admission_open := true
 
 
 func capture_state() -> Dictionary:
@@ -61,7 +58,7 @@ func configure(manager: ReceivingManager, catalog: ItemCatalog, profile: Resourc
 
 
 func submit_return(team_id: String, batch: LootBatch) -> ReturnResult:
-	if not admission_open or not is_instance_valid(_manager) or team_id.is_empty() or _returns.has(team_id):
+	if not is_instance_valid(_manager) or team_id.is_empty() or _returns.has(team_id):
 		return ReturnResult.INVALID
 	if not _is_compatible_prepared(batch) or _batch_teams.has(batch.batch_id):
 		return ReturnResult.INVALID
@@ -99,30 +96,9 @@ func get_return_status(team_id: String) -> StringName:
 	return StringName((_returns.get(team_id, {}) as Dictionary).get("status", &"UNKNOWN"))
 
 
-## Explicit event ordering: never flush a deferred admission here. A completed
-## admission wins; midnight before the pass wins for every still-pending record.
-func resolve_awaiting_lift_at_midnight() -> Array[Dictionary]:
-	var forfeits: Array[Dictionary] = []
-	var pending_at_midnight := _awaiting
-	_awaiting = []
-	# Resolve all identities before emitting callbacks; reentrant midnight is inert.
-	for pending: Dictionary in pending_at_midnight:
-		_returns[pending.team_id].status = FORFEITED_RETURNED
-		forfeits.append(get_return_snapshot(pending.team_id))
-	pending_at_midnight.clear() # Drop the only upstream batch/layout references.
-	for record: Dictionary in forfeits:
-		return_forfeited_at_midnight.emit(record.team_id, record.batch_id)
-	return forfeits
-
-
-func resume_after_pause() -> void:
-	_schedule_admission()
-
-## Clock coordinator calls this at a known pre-midnight logical boundary.
-## Midnight itself intentionally keeps the existing no-flush forfeiture method.
-func settle_before_boundary() -> void:
-	if admission_open:
-		_admit_awaiting()
+## Complete FIFO admission synchronously after a lift boundary.
+func settle_admission() -> void:
+	_admit_awaiting()
 
 
 func _notification(what: int) -> void:
@@ -131,8 +107,6 @@ func _notification(what: int) -> void:
 
 
 func _schedule_admission() -> void:
-	if not admission_open:
-		return
 	if is_inside_tree() and get_tree().paused:
 		return
 	if _pass_scheduled or _admitting or _awaiting.is_empty() or not is_instance_valid(_manager) or not _manager.has_deposit_capacity():
@@ -143,8 +117,6 @@ func _schedule_admission() -> void:
 
 func _admit_awaiting() -> void:
 	_pass_scheduled = false
-	if not admission_open:
-		return
 	if is_inside_tree() and get_tree().paused:
 		return
 	if _admitting or not is_instance_valid(_manager):

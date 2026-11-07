@@ -10,37 +10,10 @@ This is a collaboration handoff, not a Codex implementation brief or permission 
 
 ## At a glance
 
-```text
-CURRENT DESIGN
-GDD v0.16: developer reviewed and approved the draft documents in their entirety.
-DOCX is the approved editable master; Markdown is generated.
-Internal confirmed / retained / provisional / open / historical labels stay meaningful.
-
-IMPLEMENTATION CHECKPOINT INSPECTED DURING THIS UPDATE
-c9f9417a97cf65ef416c58189ca1f741b6a90406
-Read-only GitHub comparison: main identical at preparation.
-M1 / M2 / M3 / M4: HUMAN-PROMOTED / PUBLISHED / CLOSED in bounded scopes.
-M4 final gameplay/UI: 844d0d4adaa5a2d601f04954bb61ad7a5c316589.
-The pivot is not implemented by the documentation update.
-
-PUBLISHED BASELINE IS STILL A DAILY TEST FIXTURE
-167 active items / 7 retired / 174 source models.
-16 authored Ready -> four full prebuilt teams.
-Player 20 Bulk; 28 Bulk/member; five per-member lanes 12/12/6/12/12.
-06:00–00:00 day; 06:00–10:00 Dispatch; 150 real seconds/game hour.
-85 starting items / 240 Bulk; twelve 16-item scripted deliveries over three days.
-Supplies independent of teams; actual return/population consequences not implemented.
-Schema-4 ordinary continuation accepted; continuous durability remains future.
-
-IMMEDIATE BOUNDARY
-The GDD has been approved: do not ask for another substantive review of the same edition.
-Documentation approval/current-facing reconciliation is complete in the supplied package.
-Developer will provision the files manually; no remote write was performed here.
-M5 is not started or automatically next. ADR is parked, not the next design task.
-The next bounded design/implementation task has not been selected by this handoff.
-```
-
-Manual repository provision may occur after this handoff was prepared. Verify current files/ref where accessible and inspect relevant newer changes; do not reset to the checkpoint. A time-local statement that publication was not verified is not a new task to produce a recursive housekeeping commit. Attached approved documents govern intended design even if upload has not occurred yet. State the actual access/publication limit honestly.
+- **Design authority** — approved GDD v0.16, with [Appendix A](superpowers/plans/2026-11-07-continuous-run-collection-goal-foundation.md#appendix-a--confirmed-expedition-lifecycle-decisions-for-the-next-milestone) superseding the specified earlier open statements about preparation, destination occupancy and handover.
+- **Local implementation** — the Continuous Run and Collection Goal Foundation is HUMAN-ACCEPTED / CLOSED IN ITS BOUNDED SCOPE. Use the [result](testing/2026-11-07-continuous-run-collection-goal-result.md) and the commit introducing the [closure record](testing/2026-11-07-continuous-run-collection-goal-closure.md). Normal F5 uses schema 5 and the isolated collection save namespace.
+- **Publication** — the collection checkpoint is local and publication is pending. The historical M1–M4 scopes are published and closed at `c9f9417a97cf65ef416c58189ca1f741b6a90406`. Frozen inputs and provenance are in the [survival-era index](design_history/survival-era/README.md).
+- **Next planned gameplay slice** — expedition-to-storage, under its own brief. The old combined daily M5 proposal and ADR remain historical.
 
 ## 1. Roles and working method
 
@@ -113,17 +86,17 @@ This is the latest approved clarification and supersedes the pivot record’s pe
 
 No automatic full-four-first roster; no morning allocation; no per-team preparation tabs; no parallel unfinished loadouts. Four Ready could be sent as 3+1, 4, or other permitted groupings. Multiple dispatched expeditions may operate concurrently and can have a separate status overview. All useful current loadout data must survive the broader interface: member count, five lanes, selected item, projected/applied credit, waste, full Bulk, raw/outgoing/return capacity and eligibility.
 
-Full provisioning does not auto-dispatch. Preparation remains editable only within a lifecycle still to define: personnel reservation, closing/reopening, member-count changes after commitment, cancellation and the source record’s “consumed on dispatch” wording versus the accepted irreversible-submission model. Do not invent refunds or multiple prepared-team storage to settle it.
+Appendix A fixes the preparation lifecycle. An editable draft becomes a committed crew at first accepted supply or successful explicit zero-loadout Dispatch. Accepted contributions are irreversible. Size is fixed after formation, affinity choices remain editable until departure, and closing/reopening retains the draft or commitment.
 
 The working destination model is two distinct unordered affinities, giving 28 archetypes. Equal mathematical bonuses do not guarantee equal returns. All categories may occur; affinities neither guarantee particular cargo nor expand capacity. Use qualitative emphasis and retain actual item values. No bespoke ordinary location dangers, travel profiles, exterior map, depletion or lifetime caps are required.
 
-Selectors remain the alphabetical eight icons in two rows of four. A pair identifies one archetype. One concurrent team per destination is the favored restriction; exact reservation/release and incomplete-selection behavior remain open. The earlier destination-availability event system and generic fallback are disfavored/no longer needed. Do not reinstate daily caps, cutoff-random dispatch or the rejected unassigned departure-opportunity reservation layer.
+Selectors remain the alphabetical eight icons in two rows of four. A pair identifies one archetype. One concurrent expedition occupies a destination only from successful Dispatch to return. Incomplete-affinity Dispatch behavior remains open for the expedition brief.
 
 Requirements/capacity scale with assigned members. Outgoing Bulk remains a real cost. Expedition durations and per-member capacity can be retuned for the collection experience. A larger-team speed bonus was a possible lever, not an agreed rule. Opening population/growth and old day-60 targets must not be silently carried over.
 
 ## 7. Receiving, Medical, progression and information
 
-Waiting returns retain their exact cargo in an uncapped pending queue. Crews remain occupied until delivery; loss of productive time is the intended pressure. Cargo does not expire or forfeit because a queue is full. The exact handover that releases crew/destination, Medical admission and zero-loot return behavior are still open. Do not assume one of admission, full unloading or full lift turnaround is already selected.
+Pending returns keep exact cargo and unavailable crew until successful admission into an active or deposited lift slot. At that handover, healthy crew become Ready and injured crew go to Medical. Destination release happens at return. Zero-item returns remain open for the expedition brief.
 
 The finite physical deck, exact content/identity, fully-OPEN TAKE, safe permanent barrier, stationary-bay theatre and FIFO ownership remain useful. Uncapped waiting does not authorize infinite rendered cargo. Preserve existing machinery until an explicit affected implementation task changes policy.
 
@@ -135,7 +108,7 @@ Goal-progress visibility is always baseline and cannot be disabled or upgrade-ga
 
 ## 8. What already exists and must not be reopened by default
 
-M1–M4 accepted selected-item contributions, physical depletion, ordinary saves, a daily scheduler, Kitchen/Medical fixtures, five-lane Dispatch and improved UI/report. Those operations still exist in code. Actual causal team returns, injuries/recruits/population and full economy were not implemented by M4. The new collection goal is not implemented merely because this GDD is approved.
+The current local build has continuous active time, eight live stored Utility totals, controlled deliveries and schema-5 continuation. M1–M4 daily scheduling, report and prebuilt Dispatch describe historical evidence. Actual expedition returns, injuries, recruitment and the supporting economy are later work.
 
 The inspected baseline has 167 active/7 retired/174 sources. Preserve authored scale, pose/+Z Front, Footprint and support roles; twelve separate Auto Stack Group approvals remain pending with saved None. Never recycle retired IDs or replace authored values automatically. The current values are frozen testing content, not immutable release balance.
 
@@ -163,7 +136,7 @@ Keep source inspection, automated assertions, rendered proof, native input/audio
 
 ## 10. Next design slices remain bounded
 
-The old immediate priority “design ADR before M5” is superseded. The GDD is approved and the current documentation is reconciled in this package. Do not repeatedly ask for approval of the pivot, reopen M4, resume the completed engineering audit or begin implementation without a specific request.
+The next planned gameplay slice is the expedition-to-storage loop. Begin from the human-accepted checkpoint and the separate brief. The GDD and confirmed Appendix A decisions carry forward.
 
 GDD §21.2 retains O-01–O-12. The main remaining groups are goal/capacity calibration; one-team preparation lifecycle; destination/crew handover; acquisition; bounded requests/Ops; Medical; population/progression; conversions/disposal; storage/layout; interface/time edges; and successor testing/save compatibility. Preserve the questions and choose a manageable slice with the developer rather than expanding all of them at once.
 
@@ -173,7 +146,7 @@ A next task can reuse accepted physical/transactional systems where relevant. No
 
 Verify accessible current repository state against the inspected checkpoint without resetting it. Read the current entry points and targeted approved GDD sections. If manual provision has not occurred, use the supplied approved v0.16 and disclose the discrepancy; do not mistake absence on the remote for lack of developer approval.
 
-Give a compact orientation that distinguishes approved target design from implemented M4 and confirms that M1–M4 are closed. State the actual publication/access evidence, the single-current-team addendum and parked ADR status. Then address the developer’s new request or identify one genuinely open next slice. Do not output this whole handoff, re-ask answered questions, restart a document review or produce an unsolicited implementation prompt.
+Orient to the approved design, human-accepted local collection checkpoint and publication boundary. Apply Appendix A when the new request reaches expeditions. Keep the historical M1–M4 results and the current scope distinct.
 
 ## 12. Provenance and maintenance
 

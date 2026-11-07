@@ -1,0 +1,11 @@
+Godot Engine v4.7.stable.official.5b4e0cb0f - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+AWAITING_UNIT FIFO A|B,C + D,E -> B|C,D + E,F -> C|D,E + F -> D|E,F
+ERROR: Awaiting Lift invalid return team=team_D batch=D: awaiting commitment changed or became incompatible
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _invalidate (res://receiving/awaiting_lift_admission.gd:156)
+       [1] _admit_awaiting (res://receiving/awaiting_lift_admission.gd:133)
+receiving_awaiting_lift_tests: PASS (0 failures)

@@ -60,19 +60,6 @@ var _store_repeat_elapsed: float = 0.0
 var _store_was_held: bool = false
 var world_input_blocked := false
 var _require_e_release := false
-var _require_f_release := false
-var medical_interface: Node
-var contribution_interfaces: Array[Node] = []
-var active_contribution_interface: Node
-
-func targeted_contribution_interface() -> Node:
-	for station: Node in contribution_interfaces:
-		if station.is_targeted(): return station
-	return null
-
-func active_contribution_panel() -> CanvasLayer:
-	return active_contribution_interface.panel if active_contribution_interface != null else null
-
 var _interaction_hud: CanvasLayer
 var _aim_dot: Panel
 var _aim_dot_style: StyleBoxFlat
@@ -107,8 +94,6 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if not Input.is_key_pressed(KEY_E):
 		_require_e_release = false
-	if not Input.is_key_pressed(KEY_F):
-		_require_f_release = false
 	if _zone_editor_open or world_input_blocked:
 		_reset_store_hold_state()
 		return
@@ -134,11 +119,6 @@ func _unhandled_input(event: InputEvent) -> void:
 				_storage_placement.call("toggle_manual_mode")
 				_update_interaction_target()
 			get_viewport().set_input_as_handled()
-		elif event.keycode == KEY_F and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-			var station := targeted_contribution_interface()
-			if not _require_f_release and station != null:
-				station.open_panel()
-				get_viewport().set_input_as_handled()
 		elif event.keycode == KEY_E and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 			_attempt_store()
 			get_viewport().set_input_as_handled()
@@ -558,14 +538,6 @@ func _attempt_pickup(target: WorldItem) -> void:
 func _update_interaction_target() -> void:
 	if world_input_blocked:
 		return
-	var station := targeted_contribution_interface()
-	if station != null:
-		if _storage_placement != null:
-			_storage_placement.set_suppressed(true)
-		_set_aim_dot_color(DOT_PLACE)
-		_interaction_prompt.text = station.station_title + "  •  [F] Request / Contribute"
-		_interaction_prompt.visible = true
-		return
 	_current_world_item = _get_looked_at_world_item()
 
 	if _storage_placement != null:
@@ -813,7 +785,6 @@ func _on_carried_selection_changed(_selected_index: int) -> void:
 func reset_pending_commands() -> void:
 	_reset_store_hold_state()
 	_require_e_release = true
-	_require_f_release = true
 	_current_world_item = null
 	if _storage_placement != null:
 		_storage_placement.set_suppressed(true)

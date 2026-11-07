@@ -176,8 +176,10 @@ func utility_text() -> String:
 func can_pickup_into(carried_items: Node) -> bool:
 	# Receiving must enforce the gate in the transfer path as well as collision.
 	# Loose items and ordinary storage retain their established behavior.
+	if not is_instance_valid(_host) or _host.is_queued_for_deletion():
+		return false
 	if _pickup_reach_kind == PickupReachKind.RECEIVING:
-		if not _pickup_interaction_enabled or not is_instance_valid(_host) or _host.is_queued_for_deletion():
+		if not _pickup_interaction_enabled:
 			return false
 		if not _receiving_pickup_guard.is_null():
 			if not _receiving_pickup_guard.is_valid() or not bool(_receiving_pickup_guard.call()):
@@ -199,6 +201,7 @@ func pickup_into(carried_items: Node) -> bool:
 	if not added:
 		return false
 
+	var source := _storage_surface as StorageSurface
 	if is_stored_item():
 		var removed_from_storage: bool = false
 		if _storage_surface.has_method("remove_stack_entry"):
@@ -232,6 +235,8 @@ func pickup_into(carried_items: Node) -> bool:
 	if _host != null and is_instance_valid(_host):
 		_host.queue_free()
 	picked_up.emit(_item_instance)
+	if is_instance_valid(source):
+		source.player_transfer_committed.emit()
 	return true
 
 

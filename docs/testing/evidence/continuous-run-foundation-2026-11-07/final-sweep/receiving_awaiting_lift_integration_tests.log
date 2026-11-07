@@ -1,0 +1,52 @@
+Godot Engine v4.7.stable.official.5b4e0cb0f - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+Wing functional storage: installed 16 empty deterministic surface(s); F6 developer grids default OFF, F7 demo disabled.
+AWAITING_MANIFEST team=prototype_team_A batch=receiving_debug_1842_9001_4_delivery_1 definitions=["loot_000001", "loot_000004"]
+AWAITING_SCENE active=receiving_debug_1842_9001_4_delivery_1 state=1 queue=[] awaiting=[] elapsed_s=0.005
+AWAITING_RETURN event=return_admitted team=prototype_team_A batch=receiving_debug_1842_9001_4_delivery_1 status=ADMITTED_RETURNED active=receiving_debug_1842_9001_4_delivery_1 queue=[] awaiting=[]
+AWAITING_MANIFEST team=prototype_team_B batch=receiving_debug_1843_9002_4_delivery_2 definitions=["loot_000011"]
+AWAITING_RETURN event=return_admitted team=prototype_team_B batch=receiving_debug_1843_9002_4_delivery_2 status=ADMITTED_RETURNED active=receiving_debug_1842_9001_4_delivery_1 queue=["receiving_debug_1843_9002_4_delivery_2"] awaiting=[]
+AWAITING_MANIFEST team=prototype_team_C batch=receiving_debug_1844_9003_4_delivery_3 definitions=["loot_000002"]
+AWAITING_RETURN event=return_admitted team=prototype_team_C batch=receiving_debug_1844_9003_4_delivery_3 status=ADMITTED_RETURNED active=receiving_debug_1842_9001_4_delivery_1 queue=["receiving_debug_1843_9002_4_delivery_2", "receiving_debug_1844_9003_4_delivery_3"] awaiting=[]
+AWAITING_MANIFEST team=prototype_team_D batch=receiving_debug_1845_9004_4_delivery_4 definitions=["loot_000032"]
+AWAITING_RETURN event=return_awaiting_lift team=prototype_team_D batch=receiving_debug_1845_9004_4_delivery_4 status=AWAITING_LIFT active=receiving_debug_1842_9001_4_delivery_1 queue=["receiving_debug_1843_9002_4_delivery_2", "receiving_debug_1844_9003_4_delivery_3"] awaiting=[{ "team_id": "prototype_team_D", "batch_id": "receiving_debug_1845_9004_4_delivery_4", "status": &"AWAITING_LIFT" }]
+AWAITING_RETURN event=return_awaiting_lift team=prototype_team_E batch=receiving_debug_1846_9005_4_delivery_9 status=AWAITING_LIFT active=receiving_debug_1842_9001_4_delivery_1 queue=["receiving_debug_1843_9002_4_delivery_2", "receiving_debug_1844_9003_4_delivery_3"] awaiting=[{ "team_id": "prototype_team_D", "batch_id": "receiving_debug_1845_9004_4_delivery_4", "status": &"AWAITING_LIFT" }, { "team_id": "prototype_team_E", "batch_id": "receiving_debug_1846_9005_4_delivery_9", "status": &"AWAITING_LIFT" }]
+AWAITING_SCENE active=receiving_debug_1842_9001_4_delivery_1 state=2 queue=["receiving_debug_1843_9002_4_delivery_2", "receiving_debug_1844_9003_4_delivery_3"] awaiting=[{ "team_id": "prototype_team_D", "batch_id": "receiving_debug_1845_9004_4_delivery_4", "status": &"AWAITING_LIFT" }, { "team_id": "prototype_team_E", "batch_id": "receiving_debug_1846_9005_4_delivery_9", "status": &"AWAITING_LIFT" }] elapsed_s=0.012
+AWAITING_SCENE active=receiving_debug_1842_9001_4_delivery_1 state=3 queue=["receiving_debug_1843_9002_4_delivery_2", "receiving_debug_1844_9003_4_delivery_3"] awaiting=[{ "team_id": "prototype_team_D", "batch_id": "receiving_debug_1845_9004_4_delivery_4", "status": &"AWAITING_LIFT" }, { "team_id": "prototype_team_E", "batch_id": "receiving_debug_1846_9005_4_delivery_9", "status": &"AWAITING_LIFT" }] elapsed_s=0.012
+AWAITING_SCENE active=receiving_debug_1842_9001_4_delivery_1 state=4 queue=["receiving_debug_1843_9002_4_delivery_2", "receiving_debug_1844_9003_4_delivery_3"] awaiting=[{ "team_id": "prototype_team_D", "batch_id": "receiving_debug_1845_9004_4_delivery_4", "status": &"AWAITING_LIFT" }, { "team_id": "prototype_team_E", "batch_id": "receiving_debug_1846_9005_4_delivery_9", "status": &"AWAITING_LIFT" }] elapsed_s=0.013
+AWAITING_SCENE active=receiving_debug_1842_9001_4_delivery_1 state=5 queue=["receiving_debug_1843_9002_4_delivery_2", "receiving_debug_1844_9003_4_delivery_3"] awaiting=[{ "team_id": "prototype_team_D", "batch_id": "receiving_debug_1845_9004_4_delivery_4", "status": &"AWAITING_LIFT" }, { "team_id": "prototype_team_E", "batch_id": "receiving_debug_1846_9005_4_delivery_9", "status": &"AWAITING_LIFT" }] elapsed_s=0.016
+AWAITING_SCENE active=receiving_debug_1842_9001_4_delivery_1 state=0 queue=["receiving_debug_1843_9002_4_delivery_2", "receiving_debug_1844_9003_4_delivery_3"] awaiting=[{ "team_id": "prototype_team_D", "batch_id": "receiving_debug_1845_9004_4_delivery_4", "status": &"AWAITING_LIFT" }, { "team_id": "prototype_team_E", "batch_id": "receiving_debug_1846_9005_4_delivery_9", "status": &"AWAITING_LIFT" }] elapsed_s=0.017
+AWAITING_SCENE active=receiving_debug_1843_9002_4_delivery_2 state=1 queue=["receiving_debug_1844_9003_4_delivery_3"] awaiting=[{ "team_id": "prototype_team_D", "batch_id": "receiving_debug_1845_9004_4_delivery_4", "status": &"AWAITING_LIFT" }, { "team_id": "prototype_team_E", "batch_id": "receiving_debug_1846_9005_4_delivery_9", "status": &"AWAITING_LIFT" }] elapsed_s=0.018
+AWAITING_RETURN event=return_admitted_after_waiting team=prototype_team_D batch=receiving_debug_1845_9004_4_delivery_4 status=ADMITTED_RETURNED active=receiving_debug_1843_9002_4_delivery_2 queue=["receiving_debug_1844_9003_4_delivery_3", "receiving_debug_1845_9004_4_delivery_4"] awaiting=[{ "team_id": "prototype_team_E", "batch_id": "receiving_debug_1846_9005_4_delivery_9", "status": &"AWAITING_LIFT" }]
+AWAITING_SCENE active=receiving_debug_1843_9002_4_delivery_2 state=2 queue=["receiving_debug_1844_9003_4_delivery_3", "receiving_debug_1845_9004_4_delivery_4"] awaiting=[{ "team_id": "prototype_team_E", "batch_id": "receiving_debug_1846_9005_4_delivery_9", "status": &"AWAITING_LIFT" }] elapsed_s=0.029
+AWAITING_SCENE active=receiving_debug_1843_9002_4_delivery_2 state=3 queue=["receiving_debug_1844_9003_4_delivery_3", "receiving_debug_1845_9004_4_delivery_4"] awaiting=[{ "team_id": "prototype_team_E", "batch_id": "receiving_debug_1846_9005_4_delivery_9", "status": &"AWAITING_LIFT" }] elapsed_s=0.029
+AWAITING_SCENE active=receiving_debug_1843_9002_4_delivery_2 state=4 queue=["receiving_debug_1844_9003_4_delivery_3", "receiving_debug_1845_9004_4_delivery_4"] awaiting=[{ "team_id": "prototype_team_E", "batch_id": "receiving_debug_1846_9005_4_delivery_9", "status": &"AWAITING_LIFT" }] elapsed_s=0.029
+AWAITING_SCENE active=receiving_debug_1843_9002_4_delivery_2 state=5 queue=["receiving_debug_1844_9003_4_delivery_3", "receiving_debug_1845_9004_4_delivery_4"] awaiting=[{ "team_id": "prototype_team_E", "batch_id": "receiving_debug_1846_9005_4_delivery_9", "status": &"AWAITING_LIFT" }] elapsed_s=0.03
+AWAITING_SCENE active=receiving_debug_1843_9002_4_delivery_2 state=0 queue=["receiving_debug_1844_9003_4_delivery_3", "receiving_debug_1845_9004_4_delivery_4"] awaiting=[{ "team_id": "prototype_team_E", "batch_id": "receiving_debug_1846_9005_4_delivery_9", "status": &"AWAITING_LIFT" }] elapsed_s=0.031
+AWAITING_SCENE active=receiving_debug_1844_9003_4_delivery_3 state=1 queue=["receiving_debug_1845_9004_4_delivery_4"] awaiting=[{ "team_id": "prototype_team_E", "batch_id": "receiving_debug_1846_9005_4_delivery_9", "status": &"AWAITING_LIFT" }] elapsed_s=0.032
+AWAITING_RETURN event=return_admitted_after_waiting team=prototype_team_E batch=receiving_debug_1846_9005_4_delivery_9 status=ADMITTED_RETURNED active=receiving_debug_1844_9003_4_delivery_3 queue=["receiving_debug_1845_9004_4_delivery_4", "receiving_debug_1846_9005_4_delivery_9"] awaiting=[]
+AWAITING_SCENE active=receiving_debug_1844_9003_4_delivery_3 state=2 queue=["receiving_debug_1845_9004_4_delivery_4", "receiving_debug_1846_9005_4_delivery_9"] awaiting=[] elapsed_s=0.034
+AWAITING_SCENE active=receiving_debug_1844_9003_4_delivery_3 state=3 queue=["receiving_debug_1845_9004_4_delivery_4", "receiving_debug_1846_9005_4_delivery_9"] awaiting=[] elapsed_s=0.034
+AWAITING_SCENE active=receiving_debug_1844_9003_4_delivery_3 state=4 queue=["receiving_debug_1845_9004_4_delivery_4", "receiving_debug_1846_9005_4_delivery_9"] awaiting=[] elapsed_s=0.034
+AWAITING_SCENE active=receiving_debug_1844_9003_4_delivery_3 state=5 queue=["receiving_debug_1845_9004_4_delivery_4", "receiving_debug_1846_9005_4_delivery_9"] awaiting=[] elapsed_s=0.035
+AWAITING_SCENE active=receiving_debug_1844_9003_4_delivery_3 state=0 queue=["receiving_debug_1845_9004_4_delivery_4", "receiving_debug_1846_9005_4_delivery_9"] awaiting=[] elapsed_s=0.035
+AWAITING_SCENE active=receiving_debug_1845_9004_4_delivery_4 state=1 queue=["receiving_debug_1846_9005_4_delivery_9"] awaiting=[] elapsed_s=0.036
+AWAITING_SCENE active=receiving_debug_1845_9004_4_delivery_4 state=2 queue=["receiving_debug_1846_9005_4_delivery_9"] awaiting=[] elapsed_s=0.048
+AWAITING_SCENE active=receiving_debug_1845_9004_4_delivery_4 state=3 queue=["receiving_debug_1846_9005_4_delivery_9"] awaiting=[] elapsed_s=0.048
+AWAITING_SCENE active=receiving_debug_1845_9004_4_delivery_4 state=4 queue=["receiving_debug_1846_9005_4_delivery_9"] awaiting=[] elapsed_s=0.048
+AWAITING_SCENE active=receiving_debug_1845_9004_4_delivery_4 state=5 queue=["receiving_debug_1846_9005_4_delivery_9"] awaiting=[] elapsed_s=0.049
+AWAITING_SCENE active=receiving_debug_1845_9004_4_delivery_4 state=0 queue=["receiving_debug_1846_9005_4_delivery_9"] awaiting=[] elapsed_s=0.049
+AWAITING_SCENE active=receiving_debug_1846_9005_4_delivery_9 state=1 queue=[] awaiting=[] elapsed_s=0.051
+AWAITING_SCENE active=receiving_debug_1846_9005_4_delivery_9 state=2 queue=[] awaiting=[] elapsed_s=0.061
+AWAITING_SCENE active=receiving_debug_1846_9005_4_delivery_9 state=3 queue=[] awaiting=[] elapsed_s=0.062
+AWAITING_SCENE active=receiving_debug_1846_9005_4_delivery_9 state=4 queue=[] awaiting=[] elapsed_s=0.062
+AWAITING_SCENE active=receiving_debug_1846_9005_4_delivery_9 state=5 queue=[] awaiting=[] elapsed_s=0.066
+AWAITING_SCENE active=receiving_debug_1846_9005_4_delivery_9 state=0 queue=[] awaiting=[] elapsed_s=0.066
+ERROR: ASSERTION FAILED: every exact committed ItemInstance transferred once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tools/asset_pipeline/tests/receiving_queued_delivery_tests.gd:19)
+       [1] awaiting_cycles (res://tools/asset_pipeline/tests/receiving_awaiting_lift_integration_tests.gd:121)
+receiving_awaiting_lift_integration_tests: FAIL (1 failures)

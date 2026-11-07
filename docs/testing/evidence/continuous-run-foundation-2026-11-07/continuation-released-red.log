@@ -1,0 +1,25 @@
+Godot Engine v4.7.stable.official.5b4e0cb0f - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+Wing functional storage: installed 16 empty deterministic surface(s); F6 developer grids default OFF, F7 demo disabled.
+Wing functional storage: installed 16 empty deterministic surface(s); F6 developer grids default OFF, F7 demo disabled.
+Wing functional storage: installed 16 empty deterministic surface(s); F6 developer grids default OFF, F7 demo disabled.
+Wing functional storage: installed 16 empty deterministic surface(s); F6 developer grids default OFF, F7 demo disabled.
+FAIL: released active cargo must still have its exact physical owner
+COLLECTION_AUTOSAVE elapsed=60.0 victory=false ok=true capture_ms=7.378 save_ms=51.283 validation_ms=26.144 disk_write_ms=8.274
+Wing functional storage: installed 16 empty deterministic surface(s); F6 developer grids default OFF, F7 demo disabled.
+Wing functional storage: installed 16 empty deterministic surface(s); F6 developer grids default OFF, F7 demo disabled.
+COLLECTION_AUTOSAVE elapsed=136.484523809524 victory=true ok=true capture_ms=7.345 save_ms=55.042 validation_ms=27.083 disk_write_ms=9.409
+COLLECTION_AUTOSAVE elapsed=316.484523809524 victory=false ok=false capture_ms=7.222 save_ms=21.291 validation_ms=8.013 disk_write_ms=0.0
+WARNING: Collection automatic save failed. Unexpected save working file; left untouched: C:/Users/BOSCHE~1/AppData/Local/Temp/collection-proof-bb0cd5f48002b7b4/collection/.m1-snapshot.tmp
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _process (res://gameplay/run/run_shell.gd:194)
+       [1] run (res://tools/asset_pipeline/tests/collection_continuation_tests.gd:220)
+COLLECTION_AUTOSAVE elapsed=376.484523809524 victory=false ok=true capture_ms=7.125 save_ms=52.873 validation_ms=26.011 disk_write_ms=8.892
+Wing functional storage: installed 16 empty deterministic surface(s); F6 developer grids default OFF, F7 demo disabled.
+Wing functional storage: installed 16 empty deterministic surface(s); F6 developer grids default OFF, F7 demo disabled.
+COLLECTION_AUTOSAVE elapsed=136.359523809524 victory=true ok=true capture_ms=7.473 save_ms=57.114 validation_ms=28.342 disk_write_ms=9.474
+COLLECTION_SAVE_WITNESS run=0006d0d1512cda419eae083d won_at=136.484523809524
+collection_continuation_tests: FAIL checks=76 failures=1

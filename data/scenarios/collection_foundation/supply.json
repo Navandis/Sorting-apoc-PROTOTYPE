@@ -1,0 +1,19 @@
+{
+	"id": "collection_foundation",
+	"revision": 1,
+	"target": 6,
+	"arrivals": [
+		{
+			"id": "collection_supply_01",
+			"at": 3.0,
+			"seed": 5101,
+			"manifest": ["loot_000116", "loot_000008", "loot_000008", "loot_000019", "loot_000019", "loot_000025"]
+		},
+		{
+			"id": "collection_supply_02",
+			"at": 45.0,
+			"seed": 5102,
+			"manifest": ["loot_000165", "loot_000165", "loot_000030", "loot_000033", "loot_000083", "loot_000001"]
+		}
+	]
+}

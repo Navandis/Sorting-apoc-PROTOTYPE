@@ -2,7 +2,7 @@
 
 **7 November 2026 authority update: GDD v0.16 APPROVED; M1–M4 HUMAN-PROMOTED / PUBLISHED / CLOSED.**
 
-The current intended game is collection, hoarding and spatial organization, not endless day-count survival. The implemented prototype remains the published M4 fixture. This bootstrap is routing and preservation guidance, **not an implementation brief or blanket repository-write authorization**.
+The current intended game is collection, hoarding and spatial organization, not endless day-count survival. The local build implements the [Continuous Run and Collection Goal Foundation](superpowers/plans/2026-11-07-continuous-run-collection-goal-foundation.md). The developer accepted and closed it in its bounded scope. See the [result](testing/2026-11-07-continuous-run-collection-goal-result.md) for technical and human evidence and the [closure record](testing/2026-11-07-continuous-run-collection-goal-closure.md) for the local checkpoint. Publication is pending. This bootstrap is routing and preservation guidance, **not an implementation brief or blanket repository-write authorization**.
 
 ## Read first
 
@@ -32,9 +32,9 @@ Active real-world completion time replaces days survived. No day cycle, morning 
 
 **Prepare one current team, not multiple cards:** choose 1–4 Ready scavengers, equip and choose destination, click Dispatch, then optionally prepare the next crew consecutively in the same panel. No prebuilt morning roster, per-team loadout tabs, parallel unfinished teams or automatic dispatch at 100%. Concurrent dispatched expeditions may be monitored separately. Preserve every useful M4 loadout datum in the wider panel.
 
-Two distinct unordered affinities across eight categories give 28 archetypes in the working model. They bias useful returns without guaranteeing particular items, increasing carrying capacity or changing item definitions. One concurrent team per destination; no depletion. Destination-availability events and the generic fallback are disfavored/no longer needed. Do not independently finalize reservation/release or incomplete-choice rules.
+Two distinct unordered affinities across eight categories give 28 archetypes in the working model. They bias useful returns without guaranteeing particular items, increasing carrying capacity or changing item definitions. One concurrent team per destination; no depletion. Destination-availability events and the generic fallback are disfavored/no longer needed. Appendix A of the foundation brief confirms the later draft and destination lifecycle. Incomplete affinity and zero-item returns still need a decision in their owning slice.
 
-Pending return cargo remains intact; waiting teams remain occupied until the defined handover. No queue-overflow destruction. An uncapped pending queue does not mean an infinite physical presentation deck. Receiving ownership/fairness survives while obsolete midnight policy changes only under a scoped implementation brief.
+Pending return cargo remains intact; waiting teams remain occupied until the defined handover. No queue-overflow destruction. An uncapped pending queue does not mean an infinite physical presentation deck. The local foundation preserves Receiving ownership and fairness in continuous play.
 
 Requests have bounded unresolved work/escalation, legitimate short deferral and meaningful neglect costs. Exact recurring/penalty behavior remains open. Medical favors slower natural recovery and faster treatment; do not add injured expedition participation or a full replacement treatment model by assumption. Fixed full storage is a favored direction, not a finalized shelf roster. Workshop, Training, population growth and route compression require further design.
 
@@ -42,8 +42,7 @@ Requests have bounded unresolved work/escalation, legitimate short deferral and 
 
 Use GDD §21.2 rather than asking for reapproval of the whole pivot. In particular:
 
-- O-02: readiness reservation, closing/reopening one unfinished preparation, resizing/cancellation after irreversible contributions, and consume-on-dispatch phrasing versus accepted submission ownership.
-- O-03/O-04: destination occupancy/release, incomplete affinity selection, all-busy feedback, cargo handover, zero-loot returns and Medical admission.
+- O-02–O-04: apply the [confirmed Appendix A decisions](superpowers/plans/2026-11-07-continuous-run-collection-goal-foundation.md#appendix-a--confirmed-expedition-lifecycle-decisions-for-the-next-milestone) before any later expedition work. Incomplete affinity, all-busy feedback, zero-item returns and treatment rules still need their own scope.
 - O-05/O-06/O-07: acquisition, persistent requests, bounded penalties and Medical recovery.
 - O-08–O-12: population/progression, conversions, storage/layout, UI/time edges, compatibility and successor test scope.
 
@@ -62,13 +61,11 @@ Legacy fixture: res://main.tscn
 Neutral review: res://greybox/logistics_wing/wing_review.tscn
 ```
 
-M4 still runs the 06:00–00:00 day, 06:00–10:00 preparation, full/manual/cutoff dispatch, four prebuilt stress-fixture teams and paused three-tab night report. Testing values are 20 player Bulk, 28/member and lanes 12/12/6/12/12; 85 seeded items and twelve 16-item deliveries over three days. **The scripted supplies are not real team returns.** Ordinary schema-4 continuation is accepted; real expedition/personnel outcomes, the new victory condition and continuous durability are not implemented here. Frozen `data/scenarios/m4/` remains reproducible.
-
-F5 New Run seeds the fixture once; Continue does not reseed/reissue/redispatch. Standalone F6 keeps the human-authored `DevelopmentSetup/SeedItems` palette and does not inject unsolicited debug cargo. Preserve review fixtures and their distinct roles. Do not replace source art with an asset-blind worktree or silently convert old saves.
+F5 New Run starts the continuous collection fixture. Continue restores schema 5 from `user://saves/collection/`. Standalone F6 keeps the human-authored `DevelopmentSetup/SeedItems` palette. The [historical M4 input and plans](design_history/survival-era/README.md) are preserved separately.
 
 ## Retained high-risk invariants
 
-Exact ItemInstance ownership and one-item irreversible contribution remain central. F opens without spending; distinct E commits the selected eligible whole item. Rejection preserves it; accepted credit is capped, excess wasted and full loadout Bulk charged. Do not use pre-commit collection signals as proof of success. Held-E storage remains its separate reversible interaction.
+Exact ItemInstance ownership and one-item irreversible contribution remain central. The retained request transaction commits a selected eligible whole item and its receipt together. Rejection preserves it, accepted credit is capped and excess is wasted. Do not use pre-commit collection signals as proof of success. Held-E storage remains its separate reversible interaction.
 
 Preserve zoning policy, deterministic support/clearance/pose rules, selected fixed-ladder scope, exact continuation, authored transforms and current catalogue identities. Catalogue: 167 active / 7 retired / 174 source models; twelve Auto Stack Group approvals still pending with saved None. Approved physical scale/pose/Footprint/roles are not permission to rewrite source fields or reincorporate retired items.
 
@@ -86,4 +83,4 @@ Godot can scan Git-ignored scenes/scripts. Keep checkpoint copies with productio
 
 Use one implementer by default, affected checks and proportionate contextual/human review. Documentation alone does not justify unchanged-game sweeps. Preserve evidence attribution and CF-01–CF-24; new technical findings may need focused repair, not milestone reacceptance. Do not silently suppress existing/new diagnostics together.
 
-**Stopping point:** the GDD is approved and the entry points are reconciled documentation. The developer provisions them. No M5, new implementation milestone, catalogue rebalance, geometry change, review restart or repository publication is authorized to the assistant by this bootstrap. Wait for the actual next bounded request, without re-litigating approved decisions.
+**Next planned gameplay slice.** The expedition-to-storage loop starts from the accepted local checkpoint under its own brief. Use Appendix A for the lifecycle decisions and preserve the documented save and fixture boundaries.

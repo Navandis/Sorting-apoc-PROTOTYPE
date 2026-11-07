@@ -25,7 +25,7 @@ The four pre-M4 revisions form the required ancestry in the order above. The sta
 
 The final documentation commit, full candidate SHA, patch checksums and final clean-tree observation are in external `final-delivery.json`. The review patch is `m4-base-to-candidate.patch` from `71101cf` through that final candidate, excluding licensed assets. `m4-published-base-context.patch` additionally includes the unpublished top-up ancestry from `3bb69a9`; use it as context, without treating the top-up as published.
 
-Implementation input is frozen verbatim under [data/scenarios/m4](../../data/scenarios/m4/README.md). Packet hashes, verified against both working files and final committed blobs:
+Implementation input is frozen verbatim under [historical M4 inputs](../design_history/survival-era/m4/README.md). Packet hashes, verified against both working files and final committed blobs:
 
 | Packet file | SHA-256 |
 |---|---|

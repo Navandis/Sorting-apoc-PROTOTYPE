@@ -24,11 +24,10 @@ const SECOND_PRESENTATION_SEED: int = 9002
 # calls this allocator. Durable/save identities remain outside this prototype.
 static var _debug_delivery_serial: int = 0
 
-var return_admission: Node
+var return_admission: AwaitingLiftAdmission
 var _awaiting_debug_started := false
 var _waiting_debug_batch: LootBatch
 var _debug_first_batch_id := ""
-var restore_pending := false
 var run_identity: RefCounted
 
 
@@ -52,13 +51,11 @@ func _ready() -> void:
 	if not return_admission.configure(receiving_manager, item_catalog, deck_profile):
 		push_error("Receiving runtime could not configure upstream return admission.")
 		return
-	if not restore_pending:
+	if run_identity == null:
 		_run_cli_debug_delivery.call_deferred()
 
 
 func _run_cli_debug_delivery() -> void:
-	if restore_pending:
-		return
 	var arguments := OS.get_cmdline_user_args()
 	if not arguments.has("--receiving-deck-debug"):
 		return
@@ -151,7 +148,7 @@ func run_awaiting_lift_debug_delivery(
 			return false
 		batches.append(batch)
 	_awaiting_debug_started = true
-	for signal_name: String in ["return_admitted", "return_awaiting_lift", "return_admitted_after_waiting", "return_forfeited_at_midnight"]:
+	for signal_name: String in ["return_admitted", "return_awaiting_lift", "return_admitted_after_waiting"]:
 		return_admission.connect(signal_name, _log_debug_return_event.bind(signal_name))
 	for index in batches.size():
 		var team_id := "prototype_team_%s" % ["A", "B", "C", "D"][index]
@@ -206,19 +203,12 @@ func _prepare_debug_batch(content_seed: int, presentation_seed: int, target_bulk
 
 func capture_state() -> Dictionary:
 	return {"manager": receiving_manager.capture_state(), "admission": return_admission.capture_state(),
-		"cycle": lift_cycle.capture_state(), "debug_started": _awaiting_debug_started,
-		"pending_debug": _waiting_debug_batch.to_snapshot() if _waiting_debug_batch != null else {},
-		"debug_first": _debug_first_batch_id}
+		"cycle": lift_cycle.capture_state()}
 
 
 func restore_state(state: Dictionary, batches: Dictionary, items: Dictionary) -> bool:
 	receiving_manager.restore_state(state.manager, batches)
 	return_admission.restore_state(state.admission, batches)
-	_awaiting_debug_started = state.debug_started
-	_debug_first_batch_id = state.debug_first
-	_waiting_debug_batch = batches[state.pending_debug.batch_id] if not state.pending_debug.is_empty() else null
-	if _waiting_debug_batch != null:
-		lift_cycle.state_changed.connect(_on_debug_first_batch_open)
 	deck_presenter.restored_items = items
 	if not state.manager.active.is_empty() and not deck_presenter.present_active_batch():
 		return false

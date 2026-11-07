@@ -1,47 +1,47 @@
 extends Node3D
 
+const Timeline = preload("res://gameplay/run/collection_timeline.gd")
+const Identity = preload("res://gameplay/run/run_identity.gd")
+const Goal = preload("res://gameplay/run/collection_goal.gd")
+const GoalHUD = preload("res://gameplay/run/collection_goal_hud.gd")
+
 @export var development_setup_enabled: bool = true
 var run_identity: RefCounted
-var medical_request: RefCounted
+var run_timeline: RefCounted
 var restoring := false
-var _continue_state: Dictionary = {}
-var run_schedule: RefCounted
-var _initial_stock_error := ""
+var collection_goal: RefCounted
+var _collection_hud: CanvasLayer
+var _collection_error := ""
 
 
 func configure_new_run(definition: Dictionary = {}) -> void:
-	run_identity = load("res://gameplay/run/run_identity.gd").new()
-	run_schedule = load("res://gameplay/run/run_schedule.gd").new()
-	run_schedule.initialize(definition)
-	run_identity.clock = run_schedule.clock
-	run_identity.scenario = String(run_schedule.definition.get("id", ""))
+	run_identity = Identity.new()
+	run_timeline = Timeline.new()
+	var fixture := Timeline.default_fixture() if definition.is_empty() else definition.duplicate(true)
+	var target: Variant = fixture.get("target")
+	var target_is_integer := typeof(target) in [TYPE_INT, TYPE_FLOAT] and is_finite(float(target)) and float(target) == int(target)
+	collection_goal = Goal.new(int(target) if target_is_integer else 0)
+	fixture.erase("target")
+	run_timeline.initialize(fixture)
 
 
 func configure_continue(state: Dictionary) -> void:
 	restoring = true
-	_continue_state = state
-	run_identity = load("res://gameplay/run/run_identity.gd").new()
+	run_identity = Identity.new()
 	run_identity.restore_state(state.run)
-	run_schedule = load("res://gameplay/run/run_schedule.gd").new()
-	run_schedule.clock.restore_state(state.clock)
-	run_schedule.restore_state(state.schedule)
-	run_identity.clock = run_schedule.clock
-	medical_request = run_schedule.latest_request()
+	run_timeline = Timeline.new()
+	run_timeline.restore_state(state.timeline)
+	collection_goal = Goal.new(state.goal.target)
+	collection_goal.restore_state(state.goal)
 
 
 func _enter_tree() -> void:
 	if run_identity != null:
 		var setup := get_node_or_null("DevelopmentSetup")
 		if setup != null:
-			var m4: bool = run_schedule != null and run_schedule.definition.get("revision") == 4
-			setup.restore_pending = restoring or m4
+			setup.restore_pending = restoring
 			setup.get_node("SeedRegistrar").fixture_namespace = run_identity.run_id + ":wing_seed_v1"
-			# Keep the saved authoring palette intact in the scene/standalone review.
-			# M4 owns a complete replacement stock manifest, including on Continue.
-			if m4:
-				for host: Node in setup.get_node("SeedItems").get_children(): host.free()
 		var runtime := get_node("ReceivingRuntime")
-		runtime.restore_pending = restoring
 		runtime.run_identity = run_identity
 	var hud := get_node_or_null("HUD/CarriedItemsHUD")
 	if hud != null:
@@ -52,33 +52,84 @@ func _enter_tree() -> void:
 
 
 func _ready() -> void:
-	if run_schedule != null and run_schedule.definition.get("revision") == 4 and not restoring:
-		_initial_stock_error = get_node("DevelopmentSetup").initialize_manifest(self, run_schedule.definition.initial_seed)
-	if run_schedule == null:
-		medical_request = load("res://gameplay/requests/contribution_request.gd").new("medical-prototype")
-	var interface: Node = load("res://gameplay/requests/medical_interface.gd").new()
-	interface.name = "MedicalContribution"
-	add_child(interface)
-	interface.configure(self, medical_request)
-	if run_schedule != null:
-		var kitchen: Node = load("res://gameplay/requests/medical_interface.gd").new()
-		kitchen.name = "KitchenContribution"
-		add_child(kitchen)
-		kitchen.configure(self, null, "kitchen", "KitchenInterface", "KITCHEN")
-		if run_schedule.definition.get("revision") == 4:
-			var dispatch: Node = load("res://gameplay/requests/dispatch_interface.gd").new()
-			dispatch.name = "DispatchContribution"
-			add_child(dispatch)
-			dispatch.configure(self,null)
-		run_schedule.bind(self)
-		var clock_hud = load("res://gameplay/run/clock_hud.gd").new()
-		clock_hud.schedule = run_schedule
-		add_child(clock_hud)
+	if run_timeline != null:
+		run_timeline.bind($ReceivingRuntime, restoring)
+		if run_timeline.error.is_empty():
+			_bind_collection()
+	for station: Array in [["MedicalInterface", "Medical"], ["KitchenInterface", "Kitchen"], ["DispatchWorkSurface", "Dispatch"]]:
+		var proxy := get_node_or_null("Environment/Greybox/Proxies/" + station[0])
+		if proxy != null:
+			var label := Label3D.new()
+			label.text = station[1] + "\nService inactive"
+			label.font_size = 36
+			label.pixel_size = 0.003
+			label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+			label.position.y = 0.75
+			proxy.add_child(label)
 
 
-func _process(delta: float) -> void:
-	if run_schedule != null and not restoring:
-		run_schedule.advance(delta)
+func _bind_collection() -> void:
+	var fixtures := get_node_or_null("FunctionalFixtures")
+	if fixtures == null or not fixtures.collection_registration_error.is_empty() or fixtures.get_collection_surfaces().is_empty():
+		_collection_error = "Qualifying collection storage failed to initialize"
+		return
+	for definition: ItemDefinition in $ReceivingRuntime.item_catalog.definitions:
+		_collection_error = Goal.definition_error(definition)
+		if not _collection_error.is_empty():
+			return
+	var surfaces: Array[StorageSurface] = fixtures.get_collection_surfaces()
+	collection_goal.bind(surfaces)
+	for surface: StorageSurface in surfaces:
+		surface.player_transfer_committed.connect(_refresh_collection)
+	if not restoring:
+		_refresh_collection()
+		if _collection_error.is_empty():
+			_attach_collection_hud()
+
+
+func _refresh_collection() -> void:
+	if restoring:
+		return
+	_collection_error = collection_goal.refresh(run_timeline.clock.elapsed)
+	if not _collection_error.is_empty():
+		push_error(_collection_error)
+
+
+func finish_restoring() -> String:
+	var error: String = collection_goal.refresh(run_timeline.clock.elapsed, false)
+	if not error.is_empty():
+		return error
+	if collection_goal.is_satisfied() and not collection_goal.completed:
+		return "Stored collection meets its target without a completion record"
+	restoring = false
+	_attach_collection_hud()
+	return ""
+
+
+func _attach_collection_hud() -> void:
+	_collection_hud = GoalHUD.new()
+	_collection_hud.name = "CollectionGoalHUD"
+	_collection_hud.goal = collection_goal
+	_collection_hud.clock = run_timeline.clock
+	add_child(_collection_hud)
+
+
+func show_run_notice(message: String) -> void:
+	_collection_hud.show_notice(message)
+
+
+func _process(_delta: float) -> void:
+	if run_timeline == null or restoring:
+		return
+	run_timeline.advance(run_timeline.clock.sample_delta(Time.get_ticks_usec()))
+
+
+func _notification(what: int) -> void:
+	if run_timeline != null and what in [
+		NOTIFICATION_PAUSED, NOTIFICATION_UNPAUSED,
+		NOTIFICATION_APPLICATION_PAUSED, NOTIFICATION_APPLICATION_RESUMED,
+	]:
+		run_timeline.clock.reset_sample()
 
 
 func is_development_setup_active() -> bool:
@@ -89,7 +140,7 @@ func get_functional_surfaces() -> Array[Node]:
 	var fixtures := get_node_or_null("FunctionalFixtures")
 	if fixtures == null or not fixtures.has_method("get_installed_surfaces"):
 		return []
-	return fixtures.call("get_installed_surfaces") as Array[Node]
+	return fixtures.get_installed_surfaces()
 
 
 func _remove_development_setup() -> void:
@@ -98,22 +149,27 @@ func _remove_development_setup() -> void:
 		remove_child(setup)
 		setup.queue_free()
 
+
+func get_run_error() -> String:
+	if run_timeline != null and not run_timeline.error.is_empty():
+		return run_timeline.error
+	return _collection_error
+
+
 func get_initialization_error() -> String:
-	if not _initial_stock_error.is_empty(): return _initial_stock_error
-	if run_schedule != null and not run_schedule.error.is_empty(): return run_schedule.error
-	var setup := get_node_or_null("DevelopmentSetup")
-	if setup == null:
-		return "Persistent run requires the authored DevelopmentSetup"
-	var registrar := setup.get_node_or_null("SeedRegistrar")
+	var error := get_run_error()
+	if not error.is_empty():
+		return error
+	if collection_goal != null and collection_goal.target <= 0:
+		return "Collection target must be a positive integer"
+	var registrar := get_node_or_null("DevelopmentSetup/SeedRegistrar")
 	if registrar == null or (not restoring and not bool(registrar.get("_registration_completed"))):
-		return "Starting supplies failed to initialize; previous continuation retained"
+		return "Starting supplies failed to initialize"
 	if not (registrar.get_validation_failures() as Array).is_empty():
 		return "Starting supplies are incompatible: " + "; ".join(registrar.get_validation_failures())
-	var runtime := get_node_or_null("ReceivingRuntime")
+	var runtime := get_node_or_null("ReceivingRuntime") as ReceivingRuntime
 	if runtime == null or runtime.return_admission == null or not runtime.lift_cycle.is_configured():
-		return "Receiving failed to initialize; previous continuation retained"
-	if get_functional_surfaces().size() != 16 or get_node_or_null("MedicalContribution") == null:
-		return "Canonical gameplay owners failed to initialize"
-	if run_schedule != null and get_node_or_null("KitchenContribution") == null:
-		return "Kitchen station failed to initialize"
+		return "Receiving failed to initialize"
+	if get_functional_surfaces().is_empty():
+		return "Player storage failed to initialize"
 	return ""

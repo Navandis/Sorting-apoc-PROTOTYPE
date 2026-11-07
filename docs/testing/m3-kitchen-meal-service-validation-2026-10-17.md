@@ -6,7 +6,7 @@ Base: `3465098d1910be0bb697416cb4e8bf6d1058cfb8`. Branch: `codex/m3-kitchen-meal
 
 Engine: `D:/AI Tools/Godot-4.7-Codex/Godot_v4.7-stable_win64_console.exe`, `4.7.stable.official.5b4e0cb0f`, Compatibility. SHA-256: `D8055FB8C7E7F5010D7439EC69BE051554055DAE55A265F8647BD7301C34161C`. Rendered tests used Windows/OpenGL 3.3, NVIDIA RTX 5060 Ti, driver 617.14. Headless owner tests used the same executable with `--headless --rendering-method gl_compatibility`. The original wing scene's Git blob remains `512aa41af3b0f5e312d9365d7670f29258b1abfc`.
 
-Authority: the externally approved M3 v0.2 and Systems MVP v0.4 companions under `C:/Users/Boschetar/Dropbox/Sorting Apocalypse/`, the pasted implementation assignment, and `docs/AI_WORKING_GUIDELINES.md`. One implementer; no reviewer dispatch. Source-led plan: `docs/superpowers/plans/2026-10-17-m3-kitchen-meal-service.md`.
+Authority: the externally approved M3 v0.2 and Systems MVP v0.4 companions under `C:/Users/Boschetar/Dropbox/Sorting Apocalypse/`, the pasted implementation assignment, and `docs/AI_WORKING_GUIDELINES.md`. One implementer; no reviewer dispatch. Source-led plan: [archived M3 implementation plan](../design_history/survival-era/plans/2026-10-17-m3-kitchen-meal-service.md).
 
 ## Delivered behavior
 

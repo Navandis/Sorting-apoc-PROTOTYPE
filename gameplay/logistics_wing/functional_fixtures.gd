@@ -4,7 +4,11 @@ const FunctionalStorageManagerScript = preload(
 	"res://gameplay/logistics_wing/functional_storage_manager.gd"
 )
 
+## Every installed level of these explicitly designated storage units scores.
+@export var collection_storage_units: Array[NodePath] = []
 var _storage_manager: StoragePrototypeManager = null
+var _collection_surfaces: Array[StorageSurface] = []
+var collection_registration_error := ""
 
 
 func _ready() -> void:
@@ -18,12 +22,28 @@ func _ready() -> void:
 	_storage_manager.name = "StoragePrototypeManager"
 	add_child(_storage_manager)
 	_storage_manager.install(self)
-	if _storage_manager == null:
-		push_error("FunctionalFixtures could not initialize StoragePrototypeManager")
-		return
+	_register_collection_surfaces()
 	# This local manager accepts only F6. Its override deliberately never
 	# forwards F7 to the historical occupancy demonstration.
 	_storage_manager.set_process_unhandled_input(true)
+
+
+func _register_collection_surfaces() -> void:
+	for path: NodePath in collection_storage_units:
+		var unit := get_node_or_null(path)
+		var found := false
+		for surface: StorageSurface in _storage_manager.get_surfaces():
+			if unit != null and unit.is_ancestor_of(surface):
+				found = true
+				if not _collection_surfaces.has(surface):
+					_collection_surfaces.append(surface)
+		if not found:
+			collection_registration_error = "No installed collection storage for " + String(path)
+			return
+
+
+func get_collection_surfaces() -> Array[StorageSurface]:
+	return _collection_surfaces.duplicate()
 
 
 func get_installed_surfaces() -> Array[Node]:

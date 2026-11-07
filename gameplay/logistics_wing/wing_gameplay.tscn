@@ -534,6 +534,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 2.7, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56, 2.7, -5)
 
 [node name="FunctionalFixtures" parent="." unique_id=1215529146 instance=ExtResource("5_fixtures")]
+collection_storage_units = [NodePath("SM_MetalShelves_GalleryA_West"), NodePath("SM_MetalShelves_GalleryB_North"), NodePath("SM_ventilated_locker_GalleryC_West"), NodePath("ModularRack_GalleryB_Initial")]
 
 [node name="SM_MetalShelves_GalleryA_West" parent="FunctionalFixtures" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.28, 0, -3.816217)

@@ -331,6 +331,8 @@ func place_selected() -> bool:
 		update_target()
 		return false
 	reset_rotation()
+	if surface is StorageSurface:
+		surface.player_transfer_committed.emit()
 	call_deferred("update_target")
 	return true
 

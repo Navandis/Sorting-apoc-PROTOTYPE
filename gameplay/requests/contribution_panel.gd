@@ -11,7 +11,6 @@ var total_label: Label
 var gain_label: Label
 var status_label: Label
 var item_label: Label
-var deadline_label: Label
 var _card: PanelContainer
 var _pips: HBoxContainer
 var _open := false
@@ -41,8 +40,6 @@ func _ready() -> void:
 	_title = Label.new()
 	_title.add_theme_font_size_override("font_size", 28)
 	column.add_child(_title)
-	deadline_label = Label.new()
-	column.add_child(deadline_label)
 	item_label = Label.new()
 	item_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	column.add_child(item_label)
@@ -108,26 +105,16 @@ func handle_e(pressed: bool, echo: bool) -> void:
 		close_panel()
 
 func _process(_delta: float) -> void:
-	if _open:
-		if request == null or not request.is_accepting() or not destination_valid.is_valid() or not destination_valid.call():
-			close_panel()
-		else:
-			_refresh_deadline()
-
-func _refresh_deadline() -> void:
-	if request == null or request.deadline < 0.0:
-		deadline_label.text = ""
-		return
-	var clock: RefCounted = request.time_source.get_object()
-	var remaining: float = maxf(0.0, request.deadline - request.current_time()) * float(clock.config.rate)
-	deadline_label.text = "Deadline %s  ·  %s remaining" % [clock.time_text(float(clock.config.day_start) + (request.deadline - (request.day - 1) * clock.day_duration()) * float(clock.config.rate)), clock.time_text(remaining)]
+	if _open and (request == null or not request.is_accepting() or not destination_valid.is_valid() or not destination_valid.call()):
+		close_panel()
 
 func _input(event: InputEvent) -> void:
 	if not _open:
 		return
-	if event is InputEventKey and event.keycode == KEY_ESCAPE:
-		return # Run shell explicitly closes this panel before toggling its menu.
-	if event is InputEventKey and event.keycode == KEY_E:
+	if event is InputEventKey and event.keycode == KEY_ESCAPE and event.pressed and not event.echo:
+		close_panel()
+		get_viewport().set_input_as_handled()
+	elif event is InputEventKey and event.keycode == KEY_E:
 		handle_e(event.pressed, event.echo)
 		get_viewport().set_input_as_handled()
 	elif event is InputEventKey and event.keycode == KEY_F:
@@ -147,15 +134,14 @@ func refresh() -> void:
 	if request == null or carry == null:
 		return
 	var item: ItemInstance = carry.get_selected_item()
-	_refresh_deadline()
 	preview_state = request.preview(item)
 	invalid_highlight = preview_state.status == "ineligible"
-	_title.text = "KITCHEN  /  MEAL SERVICE" if request.destination == "kitchen" else "MEDICAL  /  CONTRIBUTION"
+	_title.text = request.destination.replace("_", " ").to_upper() + "  /  CONTRIBUTION"
 	item_label.text = item.get_display_name() if item != null else "No carried item selected"
 	gain_label.text = "+%d applied  /  %d wasted" % [preview_state.applied, preview_state.wasted] if preview_state.status == "eligible" else ""
 	match preview_state.status:
 		"eligible": status_label.text = "After submission: %d remaining" % preview_state.remainder
-		"ineligible": status_label.text = preview_state.lane + " requirement already met" if preview_state.reason == "full" else "Selected item not eligible for Kitchen" if request.destination == "kitchen" else "Selected item not eligible"
+		"ineligible": status_label.text = preview_state.lane + " requirement already met" if preview_state.reason == "full" else "Selected item not eligible"
 		"closed": status_label.text = "Request complete — supplies received"
 		_: status_label.text = "Carry an eligible item to contribute"
 	var style := StyleBoxFlat.new()

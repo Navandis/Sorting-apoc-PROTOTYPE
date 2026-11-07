@@ -1,0 +1,59 @@
+Godot Engine v4.7.stable.official.5b4e0cb0f - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+[   0% ] first_scan_filesystem | Started Project initialization (5 steps)
+[   0% ] first_scan_filesystem | Scanning file structure...
+[  16% ] first_scan_filesystem | Loading global class names...
+[  33% ] first_scan_filesystem | Verifying GDExtensions...
+[  50% ] first_scan_filesystem | Creating autoload scripts...
+[  66% ] first_scan_filesystem | Initializing plugins...
+[  83% ] first_scan_filesystem | Starting file scan...
+[ DONE ] first_scan_filesystem
+
+[   0% ] update_scripts_classes | Started Registering global classes... (26 steps)
+[   0% ] update_scripts_classes | 
+[   3% ] update_scripts_classes | ReceivingLiftCycle
+[   7% ] update_scripts_classes | ReceivingRuntime
+[  11% ] update_scripts_classes | 
+[  14% ] update_scripts_classes | 
+[  18% ] update_scripts_classes | 
+[  22% ] update_scripts_classes | 
+[  25% ] update_scripts_classes | 
+[  29% ] update_scripts_classes | 
+[  33% ] update_scripts_classes | 
+[  37% ] update_scripts_classes | 
+[  40% ] update_scripts_classes | 
+[  44% ] update_scripts_classes | 
+[  48% ] update_scripts_classes | 
+[  51% ] update_scripts_classes | 
+[  55% ] update_scripts_classes | AwaitingLiftAdmission
+[  59% ] update_scripts_classes | 
+[  62% ] update_scripts_classes | 
+[  66% ] update_scripts_classes | 
+[  70% ] update_scripts_classes | 
+[  74% ] update_scripts_classes | 
+[  77% ] update_scripts_classes | 
+[  81% ] update_scripts_classes | 
+[  85% ] update_scripts_classes | StoragePlacementController
+[  88% ] update_scripts_classes | StorageSurface
+[  92% ] update_scripts_classes | WorldItem
+[ DONE ] update_scripts_classes
+
+[   0% ] _update_scan_actions | Started Scanning actions... (5 steps)
+[   0% ] _update_scan_actions | Sorting_Apocalypse_Visual_Design_Direction_v0.7_image_01.png
+[  16% ] _update_scan_actions | Sorting_Apocalypse_Visual_Design_Direction_v0.7_image_02.png
+[  33% ] _update_scan_actions | Sorting_Apocalypse_Visual_Design_Direction_v0.7_image_03.png
+[  50% ] _update_scan_actions | Sorting_Apocalypse_Visual_Design_Direction_v0.7_image_04.png
+[  66% ] _update_scan_actions | Sorting_Apocalypse_Visual_Design_Direction_v0.7_image_05.png
+[ DONE ] _update_scan_actions
+
+[   0% ] loading_editor_layout | Started Loading editor (5 steps)
+[   0% ] loading_editor_layout | Loading editor layout...
+[  16% ] loading_editor_layout | Loading docks...
+[  33% ] loading_editor_layout | Reopening scenes...
+[  50% ] loading_editor_layout | Loading central editor layout...
+[  66% ] loading_editor_layout | Loading plugin window layout...
+[  83% ] loading_editor_layout | Editor layout ready.
+[ DONE ] loading_editor_layout
+

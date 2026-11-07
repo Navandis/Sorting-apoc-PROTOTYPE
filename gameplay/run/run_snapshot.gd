@@ -2,44 +2,60 @@ extends RefCounted
 
 const Codec = preload("res://gameplay/run/state_codec.gd")
 const Catalog = preload("res://prototype_item_catalog.gd")
-const WING := "res://gameplay/logistics_wing/wing_gameplay.tscn"
-const SCHEMA := 4
+const Timeline = preload("res://gameplay/run/collection_timeline.gd")
+const Goal = preload("res://gameplay/run/collection_goal.gd")
+const SCHEMA := 5
 var _error := ""
 
 func capture(wing: Node) -> Dictionary:
-	if wing.run_identity == null or wing.run_schedule == null or wing.restoring or not wing.get_initialization_error().is_empty():
+	if wing.run_identity == null or wing.restoring or not wing.get_initialization_error().is_empty():
 		return {}
-	for request: RefCounted in wing.run_schedule.requests:
-		if request.transaction_active: return {}
 	var items: Dictionary = {}
 	var player := wing.get_node("Player")
 	for item: ItemInstance in player.carried_items.get_items():
-		_record_item(items, item)
+		if not _record_item(items, item):
+			return {}
 	var registrar := wing.get_node("DevelopmentSetup/SeedRegistrar")
 	var hosts: Array = registrar.capture_state()
 	for host: Dictionary in hosts:
-		_record_item(items, registrar.get_node("../SeedItems").get_node(host.host).get_node("WorldItem").get_item_instance())
+		if not _record_item(items, registrar.get_node("../SeedItems").get_node(host.host).get_node("WorldItem").get_item_instance()):
+			return {}
 	var surfaces: Dictionary = {}
 	for surface: Node in wing.get_functional_surfaces():
 		surfaces[String(wing.get_path_to(surface))] = surface.capture_state()
-		for stack: StorageStack in surface._stacks.values():
-			for entry: StorageStack.Entry in stack.entries:
-				_record_item(items, entry.item)
+		for item: ItemInstance in surface.get_stored_items():
+			if not _record_item(items, item):
+				return {}
 	var runtime := wing.get_node("ReceivingRuntime")
 	var receiving: Dictionary = runtime.capture_state()
+	var presented: Dictionary = {}
 	for world: WorldItem in runtime.deck_presenter.get_materialized_world_items():
-		_record_item(items, world.get_item_instance())
+		if not _record_item(presented, world.get_item_instance()):
+			return {}
 	for batch_state: Dictionary in _batch_states(receiving):
 		for entry: Dictionary in batch_state.entries:
-			if entry.remaining_in_batch and not items.has(entry.item_instance_id):
-				items[entry.item_instance_id] = {"definition": String(entry.definition_id), "contaminated": false}
+			if not entry.remaining_in_batch:
+				continue
+			var id: String = entry.item_instance_id
+			if items.has(id):
+				push_error("Multiply owned cargo item: " + id)
+				return {}
+			items[id] = presented.get(id, {"definition": String(entry.definition_id), "contaminated": false})
+			presented.erase(id)
+	if not presented.is_empty():
+		push_error("Presented items have no remaining cargo owner")
+		return {}
 	return {"schema": SCHEMA, "content": content_fingerprint(), "run": wing.run_identity.capture_state(),
-		"clock": wing.run_schedule.clock.capture_state(), "schedule": wing.run_schedule.capture_state(),
+		"timeline": wing.run_timeline.capture_state(), "goal": wing.collection_goal.capture_state(),
 		"items": items, "carry": player.carried_items.capture_state(),
 		"hosts": hosts, "surfaces": surfaces, "player": player.capture_state(wing), "receiving": receiving}
 
-func _record_item(items: Dictionary, item: ItemInstance) -> void:
+func _record_item(items: Dictionary, item: ItemInstance) -> bool:
+	if items.has(item.instance_id):
+		push_error("Multiply owned physical item: " + item.instance_id)
+		return false
 	items[item.instance_id] = {"definition": String(item.definition.item_id), "contaminated": item.contaminated}
+	return true
 
 func content_fingerprint() -> String:
 	var physical: Dictionary = {}
@@ -48,8 +64,8 @@ func content_fingerprint() -> String:
 		physical[String(definition.item_id)] = [definition.bulk, definition.storage_footprint,
 			definition.storage_rotation_degrees, definition.can_be_stacked, definition.can_support_stack,
 			definition.auto_stack_group, definition.visual_scene.resource_path if definition.visual_scene != null else "", definition.visual_scale,
-			definition.utility_id, definition.utility_value, definition.context_utility_overrides]
-	physical["pose_contract"] = "m4_vertex_vertical_seating"
+			definition.storage_category, definition.utility_id, definition.utility_value, definition.context_utility_overrides]
+	physical["pose_contract"] = "vertex_vertical_seating"
 	return Codec.new().stringify(physical).sha256_text()
 
 func _fields(value: Variant, fields: Dictionary, label: String) -> bool:
@@ -64,21 +80,16 @@ func _fields(value: Variant, fields: Dictionary, label: String) -> bool:
 
 func validate(state: Dictionary) -> String:
 	_error = ""
-	if state.get("schema") in [1,2,3]: return "Prior continuation is incompatible with the M4 catalogue/scenario; save left untouched. Confirm New Run to replace it."
-	if not _fields(state, {"schema":TYPE_INT,"content":TYPE_STRING,"run":TYPE_DICTIONARY,"clock":TYPE_DICTIONARY,"schedule":TYPE_DICTIONARY,
+	if state.get("schema") in [1, 2, 3, 4]:
+		return "Legacy M4 or earlier continuation uses an incompatible schema. Start a new collection run. The legacy save is preserved."
+	if not _fields(state, {"schema":TYPE_INT,"content":TYPE_STRING,"run":TYPE_DICTIONARY,"timeline":TYPE_DICTIONARY,"goal":TYPE_DICTIONARY,
 		"items":TYPE_DICTIONARY,"carry":TYPE_DICTIONARY,"hosts":TYPE_ARRAY,"surfaces":TYPE_DICTIONARY,
 		"player":TYPE_DICTIONARY,"receiving":TYPE_DICTIONARY}, "Snapshot"): return _error
-	if state.schema != SCHEMA: return "Unsupported save schema %s (supported: 4)" % state.schema
+	if state.schema != SCHEMA: return "Unsupported save schema %s (collection schema %s required)" % [state.schema, SCHEMA]
 	if state.content != content_fingerprint(): return "Save's physical item data is incompatible with this build"
-	if not _fields(state.run, {"id":TYPE_STRING,"scenario":TYPE_STRING,"next_sequence":TYPE_INT,"gameplay_seconds":TYPE_FLOAT}, "Run"): return _error
-	if state.run.id.length() != 24 or not state.run.id.is_valid_hex_number(false) or state.run.next_sequence < 1 or not is_finite(state.run.gameplay_seconds) or state.run.gameplay_seconds < 0.0:
-		return "Unsupported run identity, scenario or logical time"
-	var timed = load("res://gameplay/run/timed_state_validation.gd").new()
-	var timed_error: String = timed.validate(state)
-	if not timed_error.is_empty(): return timed_error
-	var spent_ids: Dictionary = {}
-	for request: Dictionary in state.schedule.requests:
-		for receipt: Dictionary in request.spent: spent_ids[receipt.item_id] = true
+	if not _fields(state.run, {"id":TYPE_STRING,"next_sequence":TYPE_INT}, "Run"): return _error
+	if state.run.id.length() != 24 or not state.run.id.is_valid_hex_number(false) or state.run.next_sequence < 1:
+		return "Unsupported run identity or allocator"
 	for id: String in state.items:
 		if not _fields(state.items[id], {"definition":TYPE_STRING,"contaminated":TYPE_BOOL}, "Item"): return _error
 		if id.is_empty() or Catalog.get_definition_by_id(StringName(state.items[id].definition)) == null or state.items[id].definition in ["loot_000034", "loot_000036"]: return "Unsupported item identity/definition"
@@ -103,8 +114,10 @@ func validate(state: Dictionary) -> String:
 		if path.contains("..") or path.begins_with("/"): return "Invalid storage owner path"
 		var storage_error := _validate_surface(state.surfaces[path], state.items, owners)
 		if not storage_error.is_empty(): return path + ": " + storage_error
-	var receiving_error := _validate_receiving(state.receiving, state.items, owners, spent_ids)
+	var receiving_error := _validate_receiving(state.receiving, state.items, owners)
 	if not receiving_error.is_empty(): return receiving_error
+	var collection_error := _validate_collection_state(state)
+	if not collection_error.is_empty(): return collection_error
 	if owners.size() != state.items.size(): return "Unowned physical item in save"
 	if not _fields(state.player, {"transform":TYPE_TRANSFORM3D,"camera":TYPE_TRANSFORM3D,"pitch":TYPE_FLOAT,
 		"velocity":TYPE_VECTOR3,"ladder":TYPE_STRING,"ladder_yaw":TYPE_FLOAT,"ladder_anchor":TYPE_VECTOR2,"suppressed_ladders":TYPE_ARRAY}, "Player"): return _error
@@ -113,17 +126,59 @@ func validate(state: Dictionary) -> String:
 		if not path is String or path.contains("..") or path.begins_with("/") or path.is_empty(): return "Invalid ladder suppression reference"
 	return _validate_allocator(state)
 
+func _validate_collection_state(state: Dictionary) -> String:
+	var timeline: Dictionary = state.timeline
+	if not _fields(timeline, {"elapsed":TYPE_FLOAT,"fixture":TYPE_DICTIONARY,
+		"next_arrival":TYPE_INT,"last_auto_attempt_at":TYPE_FLOAT}, "Collection timeline"):
+		return _error
+	if not is_finite(timeline.elapsed) or timeline.elapsed < 0.0 or not is_finite(timeline.last_auto_attempt_at) or timeline.last_auto_attempt_at < 0.0 or timeline.last_auto_attempt_at > timeline.elapsed:
+		return "Inconsistent active time or automatic save timing"
+	var invalid := Timeline.validate_fixture(timeline.fixture)
+	if not invalid.is_empty():
+		return invalid
+	var arrivals: Array = timeline.fixture.arrivals
+	if timeline.next_arrival < 0 or timeline.next_arrival > arrivals.size():
+		return "Invalid controlled arrival progress"
+	var returns: Dictionary = state.receiving.admission.returns
+	var batches: Dictionary = {}
+	for batch: Dictionary in _batch_states(state.receiving):
+		batches[batch.batch_id] = batch
+	for index in arrivals.size():
+		var arrival: Dictionary = arrivals[index]
+		var issued: bool = index < timeline.next_arrival
+		if issued != (arrival.at <= timeline.elapsed) or issued != returns.has(arrival.id):
+			return "Inconsistent controlled arrival progress: " + arrival.id
+		if issued:
+			var record: Dictionary = returns[arrival.id]
+			if not record.batch_id.begins_with(state.run.id + ":cargo:"):
+				return "Invalid controlled cargo identity: " + arrival.id
+			if batches.has(record.batch_id):
+				var batch: Dictionary = batches[record.batch_id]
+				var manifest: Array = []
+				for entry: Dictionary in batch.entries:
+					manifest.append(String(entry.definition_id))
+				if manifest != arrival.manifest or batch.presentation_seed != int(arrival.seed):
+					return "Controlled cargo differs from its exact manifest: " + arrival.id
+	var goal: Dictionary = state.goal
+	if not _fields(goal, {"target":TYPE_INT,"rule_revision":TYPE_INT,"completed":TYPE_BOOL,"first_completion_at":TYPE_FLOAT}, "Collection goal"):
+		return _error
+	if goal.target <= 0 or goal.rule_revision != Goal.RULE_REVISION:
+		return "Unsupported collection target or rule revision"
+	if goal.completed:
+		if not is_finite(goal.first_completion_at) or goal.first_completion_at < 0.0 or goal.first_completion_at > timeline.elapsed:
+			return "Invalid first collection completion time"
+	elif goal.first_completion_at != -1.0:
+		return "An incomplete collection has a completion time"
+	return ""
+
 func _validate_allocator(state: Dictionary) -> String:
 	var ids: Array = state.items.keys()
-	for request: Dictionary in state.schedule.requests:
-		ids.append(request.id)
-		for receipt: Dictionary in request.spent: ids.append(receipt.item_id)
 	for batch: Dictionary in _batch_states(state.receiving): ids.append(batch.batch_id)
 	ids.append_array(state.receiving.admission.batch_teams.keys())
 	var highest := 0
 	for id: String in ids:
 		var parts := id.split(":")
-		if parts.size() >= 3 and parts[0] == state.run.id and parts[1] in ["cargo", "medical", "kitchen", "dispatch", "seed"]:
+		if parts.size() >= 3 and parts[0] == state.run.id and parts[1] == "cargo":
 			if not parts[2].is_valid_int() or int(parts[2]) < 1: return "Invalid allocated run identity"
 			highest = maxi(highest, int(parts[2]))
 	if state.run.next_sequence <= highest: return "Saved allocation sequence would reuse an existing identity"
@@ -179,11 +234,10 @@ func _batch_states(receiving: Dictionary) -> Array:
 	var all: Array = receiving.manager.batches.duplicate()
 	for pending: Dictionary in receiving.admission.pending:
 		all.append(pending.batch)
-	if not receiving.pending_debug.is_empty(): all.append(receiving.pending_debug)
 	return all
 
-func _validate_receiving(receiving: Variant, items: Dictionary, owners: Dictionary, spent: Dictionary) -> String:
-	if not _fields(receiving, {"manager":TYPE_DICTIONARY,"admission":TYPE_DICTIONARY,"cycle":TYPE_DICTIONARY,"debug_started":TYPE_BOOL,"pending_debug":TYPE_DICTIONARY,"debug_first":TYPE_STRING}, "Receiving"): return _error
+func _validate_receiving(receiving: Variant, items: Dictionary, owners: Dictionary) -> String:
+	if not _fields(receiving, {"manager":TYPE_DICTIONARY,"admission":TYPE_DICTIONARY,"cycle":TYPE_DICTIONARY}, "Receiving"): return _error
 	if not _fields(receiving.manager, {"active":TYPE_STRING,"queue":TYPE_ARRAY,"batches":TYPE_ARRAY}, "Deposits"): return _error
 	if not _fields(receiving.admission, {"returns":TYPE_DICTIONARY,"batch_teams":TYPE_DICTIONARY,"pending":TYPE_ARRAY}, "Return admission"): return _error
 	for pending: Variant in receiving.admission.pending:
@@ -202,13 +256,17 @@ func _validate_receiving(receiving: Variant, items: Dictionary, owners: Dictiona
 			historical_ids[entry.item_instance_id] = true
 			if Catalog.get_definition_by_id(entry.definition_id) == null: return "Unknown cargo definition"
 			if entry.remaining_in_batch:
-				if spent.has(entry.item_instance_id) or not _claim(entry.item_instance_id, "cargo", items, owners): return "Inconsistent remaining cargo ownership"
-				if items[entry.item_instance_id].definition != String(entry.definition_id): return "Cargo definition mismatch"
+				if not _claim(entry.item_instance_id, "cargo", items, owners): return _error
+			elif not owners.has(entry.item_instance_id):
+				return "Released active cargo has no physical owner: " + entry.item_instance_id
+			if items[entry.item_instance_id].definition != String(entry.definition_id):
+				return "Cargo definition mismatch"
 	var manager: Dictionary = receiving.manager
 	var deposited: Dictionary = {}
 	for batch_state: Dictionary in manager.batches:
 		deposited[batch_state.batch_id] = true
-	if manager.queue.size() > 2 or deposited.size() != manager.queue.size() + (0 if manager.active.is_empty() else 1): return "Invalid deposited capacity"
+	if manager.queue.size() > 2 or (manager.active.is_empty() and not manager.queue.is_empty()) or deposited.size() != manager.queue.size() + (0 if manager.active.is_empty() else 1):
+		return "Invalid deposited capacity"
 	var queue_ids: Dictionary = {}
 	if not manager.active.is_empty() and not deposited.has(manager.active): return "Missing active batch"
 	for id: Variant in manager.queue:
@@ -221,13 +279,20 @@ func _validate_receiving(receiving: Variant, items: Dictionary, owners: Dictiona
 		if not receiving.admission.returns.has(pending.team) or pending_teams.has(pending.team) or deposited.has(pending.batch.batch_id): return "Invalid awaiting return owner"
 		pending_teams[pending.team] = true
 		if pending.batch != pending.commitment: return "Awaiting return commitment changed"
-		if receiving.admission.returns[pending.team].get("status") != &"AWAITING_LIFT": return "Pending return has terminal status"
+		var record: Dictionary = receiving.admission.returns[pending.team]
+		if record.status != &"AWAITING_LIFT" or record.batch_id != pending.batch.batch_id or batches[record.batch_id].is_drained():
+			return "Inconsistent waiting cargo identity/status"
 	for team: String in receiving.admission.returns:
 		var record: Variant = receiving.admission.returns[team]
-		if not _fields(record, {"team_id":TYPE_STRING,"batch_id":TYPE_STRING,"status":TYPE_STRING_NAME}, "Return status"): return _error
-		if record.team_id != team or receiving.admission.batch_teams.get(record.batch_id) != team or record.status not in [&"AWAITING_LIFT", &"ADMITTED_RETURNED", &"FORFEITED_RETURNED", &"INVALID_RETURN"] or (record.status == &"AWAITING_LIFT" and not pending_teams.has(team)): return "Inconsistent return identity/status"
+		if record.team_id != team or receiving.admission.batch_teams.get(record.batch_id) != team:
+			return "Inconsistent return identity"
+		var expected: StringName = &"AWAITING_LIFT" if pending_teams.has(team) else &"ADMITTED_RETURNED"
+		if record.status != expected:
+			return "Inconsistent return status"
 	if receiving.admission.batch_teams.size() != receiving.admission.returns.size(): return "Orphan return identity"
-	if not receiving.pending_debug.is_empty() and (receiving.debug_first != manager.active or deposited.has(receiving.pending_debug.batch_id)): return "Invalid pending debug delivery"
+	for batch_id: String in batches:
+		if not receiving.admission.batch_teams.has(batch_id):
+			return "Cargo has no admission commitment"
 	if not _fields(receiving.cycle, {"state":TYPE_INT,"elapsed":TYPE_FLOAT,"duration":TYPE_FLOAT,"warning_elapsed":TYPE_FLOAT,
 		"busy":TYPE_BOOL,"departing":TYPE_BOOL,"batch":TYPE_STRING,"shutter_y":TYPE_FLOAT}, "Lift"): return _error
 	var cycle: Dictionary = receiving.cycle
@@ -266,5 +331,4 @@ func restore(wing: Node, state: Dictionary) -> String:
 		batches[batch_state.batch_id] = LootBatch.from_snapshot(batch_state)
 	if not wing.get_node("ReceivingRuntime").restore_state(state.receiving, batches, items): return "Could not reconstruct saved Receiving presentation"
 	player.restore_state(state.player, wing)
-	wing.restoring = false
-	return ""
+	return wing.finish_restoring()

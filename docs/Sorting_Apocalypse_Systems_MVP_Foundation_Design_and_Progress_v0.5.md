@@ -12,7 +12,7 @@ Persistent supplies. Competing obligations.<br>One continuing storeroom.
 
 Version 0.5  \|  7 November 2026  \|  GDD v0.16 compatibility update
 
-ACCEPTED FOUNDATION / CURRENT TARGET<br>Medical → Kitchen → Expedition Loadout share physical supplies and one continuing run. M1–M4 establish that foundation; the intended game now accumulates a live stored collection. [G16]
+ACCEPTED FOUNDATION / CURRENT TARGET<br>The local collection foundation uses continuous active time, live stored Utility and ordinary continuation. The M1–M4 records describe the published predecessor. [G16]
 
 This is the MVP-phase counterpart to Prototype Findings: a living foundation-design, implementation-progress and evidence record. It belongs alongside the GDD and Visual Design Direction as an active project master. Prototype Findings v0.14 is retired from active progress tracking, not discarded as evidence.
 
@@ -20,18 +20,18 @@ This is the MVP-phase counterpart to Prototype Findings: a living foundation-des
 | --- | --- |
 | GDD v0.16 | Approved intended collection game, retained rules and explicit open mechanics. [G16] |
 | VDD v0.11 | World/material/art and current spatial evidence; dated compatibility update preserves unresolved layout choices. [VDD-C07] |
-| This master v0.5 | Accepted M1–M4 implementation, evidence and reconciled future boundaries. Documentation approval is not implementation. |
+| This master v0.5 | Current local collection implementation, published M1–M4 evidence and future boundaries. |
 | Prototype Findings v0.14 | Preserved historical prototype record; unresolved obligations remain live here. |
 
 DESIGN CONFIRMED IN CONVERSATION ≠ IMPLEMENTED ≠ HUMAN-PROMOTED
 
-M1–M4 are HUMAN-PROMOTED / PUBLISHED / CLOSED in their bounded scopes at c9f9417. This dated compatibility update changes documentation, not the build. Catalogue: 167 active / 7 retired / 174 source models; twelve Auto Stack Group approvals remain pending. GDD v0.16 is approved intended-gameplay authority. M5 remains unstarted. [PUB-M4; G16]
+The Continuous Run and Collection Goal Foundation is HUMAN-ACCEPTED / CLOSED IN ITS BOUNDED SCOPE. Publication is pending. M1–M4 remain published and closed at c9f9417. Catalogue: 167 active / 7 retired / 174 source models. Twelve Auto Stack Group approvals are pending. [PUB-M4; G16; §15.6]
 
 ORIENTATION
 
 ## Reader’s guide & current position
 
-Current position: GDD v0.16 defines the continuous collection-and-organization game. M1–M4 remain published and closed; their daily clock, timed requests, prebuilt Dispatch and midnight rules still describe the unchanged prototype, not future release requirements. No pivot implementation or M5 execution is claimed.
+The current local build is the human-accepted collection foundation. The daily clock, timed requests, prebuilt Dispatch and midnight rules belong to the published M1–M4 evidence. The next planned gameplay slice is the expedition-to-storage loop under a separate brief. [G16; §15.6]
 
 ### How to use this master
 
@@ -62,7 +62,7 @@ DOCUMENT GOVERNANCE
 
 ### 1.1 Active document set
 
-This remains the active MVP-phase implementation/progress/evidence master. GDD v0.16 is the approved intended-gameplay authority; VDD v0.11 provides compatible visual/spatial direction. Historical [GDD] references mean v0.15, not v0.16. The present update implements no new rule. [D10; G16; VDD-C07]
+This master records implementation, progress and evidence. GDD v0.16 governs intended gameplay and VDD v0.11 carries visual and spatial direction. Historical [GDD] references mean v0.15. Section 15.6 records the local collection foundation acceptance. [D10; G16; VDD-C07]
 
 Prototype Findings v0.14, prior editions and dated records retain the provenance of promoted foundations, rejected experiments and known debt. An omission does not silently resolve work, but an explicit GDD v0.16 supersession can change a future gameplay obligation. Section 16 retains all CF identifiers and distinguishes those cases.
 
@@ -209,7 +209,7 @@ Basis: [GDD §§3.1, 4.8, 6.3, 7.1–7.2, 8.2–8.4]; [D01–D03]; [ER-RESULT §
 
 ### 6.1.1 Deliberately excluded resilience work
 
-Release-grade durability, journaling and rotating recovery remain outside accepted M1–M4. The intended system keeps one advancing recoverable state, with an ideal—not achieved—2–3-real-second loss window. Continuous preservation and Save & Exit share one system. Midnight is an existing-build trigger only; no replacement schedule is selected here. [D21; G16 §§5.5,18.5]
+The local collection build uses the same save service with schema 5 under user://saves/collection/. It attempts a save after 60 active seconds and at first victory, coalescing coincident triggers. Save & Exit preserves interval position. Continue restores before activation. Release durability remains CF-13. [D21; G16 §§5.5,18.5]
 
 At the accepted M1/initial M2 delivery level, unsaved actions may be lost after unexpected termination. Ordinary continuation must still preserve exact ownership, credit and gameplay time. Do not use this intentionally limited implementation to assess the full-game randomness principle. Exact audiovisual-frame recovery remains unnecessary. [D03, D05, D21]
 
@@ -328,9 +328,9 @@ The previous accepted cue lengths and shutter contact timing remain the ordinary
 
 ### 7.2.2 No hidden capacity or return simulator
 
-IMPLEMENTED BASELINE: one active plus two deposited queued batches remains the capacity. Uncollected deposited cargo persists across midnight. The existing explicit midnight hook affects only still-awaiting returns; the first clock integration supplies that event where applicable. Scenario-controlled arrival wiring does not implement Expedition travel, injuries or a real roster. [PF §§34.5–34.6; GDD §11; D01, D04]
+HISTORICAL M2–M4: one active plus two deposited queued batches. Deposited cargo survived midnight while the cutoff applied to still-awaiting returns. These were scenario-controlled inputs. [PF §§34.5–34.6; GDD §11; D01, D04]
 
-TARGET: preserve cargo in uncapped waiting returns; waiting teams remain occupied until delivery. This does not make the physical deck or deposited slots infinite. Personnel handover, Medical admission and destination release remain open; neither midnight forfeiture nor the old admission point settles them. [G16 §§9.6,11]
+LOCAL COLLECTION: exact waiting cargo persists upstream of one active plus two deposited slots. Appendix A of the foundation brief fixes the later personnel handover at admission and destination release at return. [G16 §§9.6,11]
 
 Basis: [PF §§27, 34.2, 34.5–34.7]; [GDD §11]; [D04–D05].
 
@@ -338,11 +338,11 @@ SCHEDULING CONTRACT
 
 ## 8. Day clock & midnight auto-save
 
-IMPLEMENTED DAILY FIXTURE ONLY. This section and its strict midnight/report ordering remain valid evidence for M2–M4. GDD v0.16 removes the day cycle, dispatch cutoff and cargo abandonment from the target game. No scheduler or save file is changed here. [G16 §§5,11]
+HISTORICAL DAILY FIXTURE. This section preserves the M2–M4 midnight and report contracts. The local collection foundation uses continuous active time and preserves waiting cargo. [G16 §§5,11]
 
 ### 8.1 Basic automatic day structure
 
-Current M4 day is 06:00–00:00 at 150 real seconds/game hour; Dispatch is 06:00–10:00 and breakfast opens at 10:00 after cutoff. These are approved testing settings, not final economy. The 07:00 M2 clock remains dated design in §18. [M4]
+Historical M4 settings were 06:00–00:00 at 150 real seconds per game hour. Dispatch ran 06:00–10:00 and breakfast opened at 10:00 after cutoff. The 07:00 M2 clock remains dated design in §18. [M4]
 
 Ordinary timed requests provisionally last three game hours (7.5 real minutes). Require opening < deadline < midnight; 20:59 is the latest whole-minute three-hour opening. The old 25–30-real-minute day is superseded for this trial. Pause and closure add no time. [D17; M2 §§2–3]
 
@@ -388,7 +388,7 @@ Pause the authoritative clock, scheduled events/deadlines, player movement and i
 
 IMPLEMENTED M2–M4: the compact digital day/time HUD reads the authoritative clock in every room. Seconds support development checks; the original placement/mock design was not final art. This is fixture feedback, not a requirement for a release day clock or acceleration control. [D06]
 
-TARGET: active real-world time and the eight live stored totals need dependable baseline visibility, never upgrade-gated or disabled by penalties. ESC, launch/inactive run, game closure and zoning pause time; preparation is tentatively live. Loading/focus/modal edges remain open. No physical clock asset is a prerequisite. [G16 §§5.3,16]
+LOCAL COLLECTION: active time and eight live stored totals appear in the baseline HUD. The first completion stays recorded while the clock and totals remain live. ESC, launch, offline, zoning and loading contexts pause the run. Ordinary focus loss stays active. [G16 §§5.3,16; §15.6]
 
 Basis: [D06, D08–D09]; [GDD §§5.3, 16.2]; [VDD §§7, 14].
 
@@ -396,7 +396,7 @@ CONTROLLED INPUTS, PERSISTENT RUN
 
 ## 10. Authored multi-day scenarios
 
-The scenario describes what should happen. The saved run records what has happened. Continue never regenerates starting supplies, clears request progress or replays already-triggered events. [D02, D07]
+HISTORICAL M2–M4 SCENARIOS. The scenario describes what should happen and the save records what has happened. The current collection fixture uses two authored deliveries with active-time offsets. [D02, D07; §15.6]
 
 | Authored input | Boundary |
 | --- | --- |
@@ -453,7 +453,7 @@ THE THIRD COMPETING DEMAND
 
 ### 12.1 Included behavior
 
-M4 uses sixteen authored Ready scavengers as a stress fixture: four teams of four. Formation fills full fours first, then at most one remainder, without a team-count cap. Five lanes use shared request/transfer/persistence owners. This is not final opening population. [M4]
+HISTORICAL M4 FIXTURE. Sixteen authored Ready scavengers formed four teams of four. Formation filled full fours first, then at most one remainder, without a team-count cap. Five lanes used shared request, transfer and persistence owners. [M4]
 
 Retain the GDD relationship: Return Capacity = Team Load Capacity − Outgoing Bulk. Accounting for this cost makes bulky and compact items meaningfully different at submission. It does not require generating return loot or applying a capacity-to-haul model now. All submitted loadout items are spent; weapons and tools do not automatically reappear after a fictitious journey. [GDD §10.1]
 
@@ -495,7 +495,7 @@ M1 reached and resolved the bounded CF-01/R-04 scene-lifetime issue and the rele
 
 ### 13.2 Technical checkpoints versus gameplay claims
 
-M1–M4 establish correct operation in their accepted scopes, not a validated complete economy. The former broader allocation claim was reserved for M5. GDD v0.16 now owns the successor validation priorities; real outcomes, the storage objective and stronger saves remain distinct future scopes. [D01–D02; G16 §§20–21]
+M1–M4 and the local collection foundation establish correct operation in their accepted scopes. The small controlled fixture verifies the live collection loop. Production collection balance, real expedition outcomes and release durability remain separate scopes. [G16 §§20–21; §15.6]
 
 Basis: [D01–D09]; [CR15]; [GDD §20.2]; [WG; ER14 §§11–12].
 
@@ -553,11 +553,11 @@ LIVING EVIDENCE HOME
 
 This section replaces Prototype Findings as the active phase tracker. Dated evidence remains external to the master when detailed, and current status is updated here. The table is populated only with established evidence; it contains no projected test result. [D10]
 
-| Workstream | Status after 7 November compatibility update | Evidence / next boundary |
+| Workstream | Status at foundation close-out | Evidence / next boundary |
 | --- | --- | --- |
 | Prototype foundations | HUMAN-PROMOTED in recorded scopes | PF retained as historical evidence; no new acceptance task. |
 | Pre-MVP review + repairs | HUMAN-PROMOTED / PUBLISHED | R-01–R-03 accepted; bounded R-04 subsequently repaired within M1. |
-| MVP foundation contracts | Accepted implementation; target reconciled to GDD v0.16 | M1–M4 published/closed. New collection rules and continuous durability are not implemented by this update. |
+| MVP foundation contracts | Accepted foundations and scoped collection successor | Published M1–M4 evidence and the local human-accepted collection foundation are recorded below. |
 | M1 persistent Medical | HUMAN-PROMOTED / PUBLISHED / CLOSED | 6c56edf → a7b764e → 36d527d; independent ACCEPT and successful human play. |
 | M2 clock / midnight / HUD | HUMAN-PROMOTED / PUBLISHED / CLOSED | 524edf1 → c7bbf44 → 3465098; independent ACCEPT and final human PASS (§15.2). |
 | M3 Kitchen | HUMAN-PROMOTED / PUBLISHED / CLOSED | 7d3d6c7 → a0f066a; independent ACCEPT decisions, native retests and subsequent publication retained (§15.3). |
@@ -604,6 +604,10 @@ Original independent ACCEPT covers 71101cf → 3a57177 on 24 October. Final focu
 
 LATER PUBLICATION DISPOSITION: M4 is HUMAN-PROMOTED / PUBLISHED / CLOSED at c9f9417a97cf65ef416c58189ca1f741b6a90406. The preceding 25 October candidate/permission wording is dated history, not an outstanding publication gate. Approval of the collection design does not reopen M4. [PUB-M4; G16 §20]
 
+### 15.6 Continuous Run and Collection Goal Foundation
+
+7 November 2026. HUMAN-ACCEPTED / CLOSED IN ITS BOUNDED SCOPE. Local checkpoint, publication pending. The developer accepted collection, storage, Receiving and ordinary continuation. Technical and human evidence: [docs/testing/2026-11-07-continuous-run-collection-goal-result.md](testing/2026-11-07-continuous-run-collection-goal-result.md).
+
 Basis: [D10]; [PF §1]; [CR15; R15]; [ER14 §§8, 10–12].
 
 16.1  DEPENDENCIES REACHED BY THIS FOUNDATION
@@ -615,10 +619,10 @@ All CF-01–CF-24 identifiers and sources are retained. Ordinary restoration, ru
 | ID / source | Carried-forward obligation | Current disposition |
 | --- | --- | --- |
 | CF-01<br>CR15; ER-RESULT R-04 | Reflection frame-wait work can resume after its owner is freed. Timer-cooldown deletion was quiet; no item loss or persistent GPU failure was established. | Resolved in bounded M1 lifetime scope; accepted and published. Preserve frame-settling/coalescing behavior; no rendering redesign. [M1] |
-| CF-02<br>PF §§16.5, 25.4; GDD §18.5 | Full-game persistence was not established by batch snapshots. Stored placement orientation must survive instead of being recomputed from current Front. | Ordinary exact continuation accepted in M1. M2 adds calendar/request/report state; full-game continuous durability remains CF-13. |
+| CF-02<br>PF §§16.5, 25.4; GDD §18.5 | Full-game persistence was not established by batch snapshots. Stored placement orientation must survive instead of being recomputed from current Front. | Exact continuation accepted through the local schema-5 collection foundation. Full-game durability remains CF-13. |
 | CF-03<br>CR15 R-03; D02–D03 | Process-local debug namespace uniqueness does not alone ensure new delivery identity after application restart. | Run-scoped identity and saved allocator accepted in M1 and preserved through M2–M4. Future occurrences must retain uniqueness and no replay. |
 | CF-04<br>ER-RESULT §4; CR15 | Carrying mutation signals can precede transfer success/rollback and cannot authorize irreversible credit. | M1 receipt-before-notification transaction accepted. Preserve the enclosing success boundary for all later consumers. |
-| CF-05<br>PF §34.5; GDD §11 | Retain upstream exact-content/admission fairness. The 1+2 deposited limit and midnight event describe the accepted build, not target abandonment policy. | M2–M4 strict-midnight handling remains evidence. Target: uncapped waiting returns, no cargo loss, occupied crew; finite presentation and handover/release remain distinct. [G16 §11] |
+| CF-05<br>PF §34.5; GDD §11 | Retain upstream exact-content/admission fairness. The 1+2 deposited limit and midnight event describe the accepted build, not target abandonment policy. | Collection preserves exact upstream waiting cargo and oldest-first admission into one active plus two deposited slots. The later personnel handover is fixed by Appendix A of the foundation brief. The M2–M4 cutoff is historical. |
 | CF-06<br>PF §§19.4, 24.3; VDD §§16, 18–19 | Playable service spaces and routes are approved, not fully furnished request interfaces or final gameplay travel balance. | M1–M4 interfaces, clock and schema-4 continuation are accepted. Target outcomes/monitoring remain future; route compression is OPEN, not scene authorization. [G16 §§4.3,20] |
 
 A dependency entering scope is not retroactive demotion of the accepted prototype. The next handoff must identify exactly which owning paths it changes and the focused evidence required. [WG; ER14 §11]
@@ -648,8 +652,8 @@ Basis: [PF §§3–4, 7, 12–14, 24–26, 33–34]; [ER-RESULT §§2–5].
 
 | ID / source | Work retained or explicitly superseded | Relationship to this foundation |
 | --- | --- | --- |
-| CF-13<br>GDD §§5.6, 18.5; PF §§16.5, 34.7 | Full-game continuous game-state preservation, one advancing continuation per run, journal/rotating recovery and an ideal 2–3-real-second loss target. [D21] | Extend the SAME preservation owners with active time, collection/completion and future commitments. No midnight target trigger; migration/cadence remain open. [G16 §§5.5,18.5] |
-| CF-14<br>GDD §§9–10; PF §34.7 | Actual asynchronous expeditions, one player-assembled 1–4-person crew at a time, affinities, return outcomes and workforce availability. [G16 §§9–11] | M4 is consumer/dispatch-fixture evidence only. Morning roster, same-day clamp and survival death rules are superseded. Population growth and lifecycle remain open. |
+| CF-13<br>GDD §§5.6, 18.5; PF §§16.5, 34.7 | Full-game continuous game-state preservation, one advancing continuation per run, journal/rotating recovery and an ideal 2–3-real-second loss target. [D21] | Collection uses the same service and an isolated schema-5 namespace. The 60-active-second cadence and first-victory attempts provide prototype continuation. Release durability and recovery remain open. |
+| CF-14<br>GDD §§9–10; PF §34.7 | Actual asynchronous expeditions, one player-assembled 1–4-person crew at a time, affinities, return outcomes and workforce availability. [G16 §§9–11] | Expedition-to-storage is the next planned slice. Apply the confirmed preparation, occupancy and handover decisions in Appendix A of the foundation brief. Incomplete affinity and zero-item returns remain open. |
 | CF-15<br>GDD §§12–13; PF §34.7 | Medical now supports availability. Slower natural recovery with substantially faster treated recovery is favored; detailed states/costs/timing remain open. [G16 §13] | Former daily triage, Meal Coverage rolls and fatal complications are historical—not pending obligations. No injured-away exception or hidden catch-up is introduced. |
 | CF-16<br>GDD §§12, 14–15, 20; PF §§19.4, 20.4 | Bounded Kitchen/Ops pressure; optional physical Rations; salvage/incineration and Workshop redesign. [G16 §§8,12,14–15] | No inherited daily cap, overnight output, night-only project work, outage timetable or storage-upgrade tree. Costs/effects/output classification require design. |
 | CF-17<br>PF §§19.4–19.5, 20.4; GDD §§7.5–7.6 | Labels, specialist storage, conditional furniture movement, starting stock and production capacity remain open. All storage initially available is favored. [G16 §§7,15] | Preserve supported surface names and authored installs. No chosen shelf roster, automatic unlocking or scene changes; qualifying storage must be defined explicitly. |
@@ -684,25 +688,25 @@ APPROVED DESIGN / REMAINING DELIVERY CHOICES
 
 ## 17. Current decisions & implementation boundaries
 
-M1–M4 remain HUMAN-PROMOTED / PUBLISHED / CLOSED at c9f9417. The table separates implemented behavior from the approved but unimplemented successor. Locked M4 content and cap-and-waste remain evidence; no catalogue retuning, save migration or new milestone occurs here. [PUB-M4; G16; §21]
+M1–M4 remain published and closed at c9f9417. The table records the current local collection foundation alongside retained M4 evidence and future scope. [PUB-M4; G16; §15.6]
 
 | Decision | Implemented baseline / distinct target boundary |
 | --- | --- |
-| Save foundation | M1–M4: same codec/snapshot/service, schema 4. Target: one advancing continuation; active-time/objective state and continuous durability remain future. [G16 §§5.5,18.5] |
+| Save foundation | Collection uses schema 5 and the existing codec, snapshot and service under user://saves/collection/. Full-game durability remains CF-13. |
 | Player / storage recovery | M1 accepted: exact pose, ladder height, held selection and committed storage. No base fallback required. |
-| Restore / lifecycle | Accepted through M4: no reseeding/reissuance/redispatch on Continue; exact identity and bounded R-04 repair retained. |
-| Menu / controls | M4: F/E/ESC, Save & Exit, no save history. Target: ESC/main-menu/off/zoning pause; preparation tentatively live. Other time edges remain open. [G16 §5.3] |
+| Restore / lifecycle | Continue restores exact identities, stock, pending cargo, active time and the first completion record before activation. |
+| Menu / controls | The run pauses in ESC, launch, offline, zoning and loading contexts. Ordinary focus loss stays active. Short silent Windows suspension remains a timing limit. |
 | Timed Medical | M4 timed Medical accepted. Target recovery/Medical requests follow GDD v0.16 §13; old deadlines and nightly mortality are not defaults. |
 | Cap / Utility policy | Retain selected-item cap-and-waste and full loadout Bulk. Target unified category differs from existing contextual fields; no data migration here. [G16 §§6,8] |
-| Clock / ordering | M4: 06:00–00:00, 150 s/game hour; 10:00 cutoff before breakfast. Target: active real time, no day/cutoff or acceleration. Exact chronology stays coherent. |
-| Lift / midnight | M4: strict-before-midnight admission, deposited cargo retained. Target: no abandonment; uncapped waiting returns/occupied teams; handover remains OPEN. [G16 §11] |
-| Report / auto-save | M4: report/autosave and three frozen-fact tabs accepted. Target: baseline goal/status visibility and possible Journal; no midnight report or inferred save trigger. [G16 §§5,16] |
-| Scenario / compatibility | Schema 4; schemas 1–3 reject explainably without migration/modification. Continue restores before activation and replays no spends/setup. |
+| Clock / ordering | Collection uses one continuous active clock for elapsed time, controlled arrivals and lift boundaries. Calendar ordering is M4 evidence. |
+| Lift / midnight | Waiting cargo persists through continuous play. Full outbound retirement precedes FIFO promotion and oldest-first admission. Appendix A fixes future personnel handover. |
+| Report / auto-save | The HUD shows eight live totals and first completion. Auto-save attempts follow 60 active seconds or first victory. The night report belongs to M4. |
+| Scenario / compatibility | The two controlled hauls and 6 Utility per category are fixture choices. Schema 5 preserves its own continuation alongside the legacy M4 root slot. |
 | Full-game randomness | Settled principle (§19): continuous Ironman state, early natural commitment, narrow residual loss; incidental uncommitted rerolls tolerated. |
 | M3 Kitchen / meals | M4: meals 10/14/18, 3h windows, 48/40, 60/48, 60/48; no outcome effects. Target Kitchen cadence and bounded consequences remain open. [G16 §12] |
 | M3 cargo / Utility | M3 fixture is dated history. M4: 167 locked rows; 85-item start; four 16-item deliveries/day for three days. No final-economy claim. |
 
-No numerical change is authorized. M4 test values remain player 20, per-member 28 and lanes 12/12/6/12/12. The successor requires one current 1–4-person preparation and explicit departure, not the fixture’s roster/auto-send. Ordinary continuation is not full durability; new outcomes, target and scope remain future. [G16 §§9–10,20]
+Historical M4 test values remain player 20, per-member 28 and lanes 12/12/6/12/12. The local collection fixture retains 20 player Bulk and uses 6 Utility per category. Appendix A of the foundation brief governs the planned expedition-to-storage loop. [G16 §§9–10,20; §15.6]
 
 Basis: [D02–D15; P01]; [GDD §§6, 8, 10, 19–21]; [ER14; WG].
 
@@ -1039,7 +1043,7 @@ Stage A/B improvements are technically accepted and human-observed; residual fir
 
 HP25 — Developer request dated 25 October 2026, “Sorting Apocalypse — M4 conditional human-promotion and documentation refresh”, expressly authorizes bounded human promotion/local closure after final ACCEPT and prohibits Git publication/M5. Retained request and QA/preservation: docs/testing/m4-human-promotion-documentation-2026-10-25.md.
 
-M4 — docs/testing/m4-expedition-loadout-validation-2026-10-24.md; implementation d81d48a236e78fd40f44b27d562bcdae32d219ae; completion f5eae9b89f208033c34013a15b178ce9745c7c8a; technical record 3a57177c14f60aa3bd29508dff60bb64ab3ed3a9; frozen data/scenarios/m4/. Read through the dated human-promotion addendum.
+M4 — docs/testing/m4-expedition-loadout-validation-2026-10-24.md; implementation d81d48a236e78fd40f44b27d562bcdae32d219ae; completion f5eae9b89f208033c34013a15b178ce9745c7c8a; technical record 3a57177c14f60aa3bd29508dff60bb64ab3ed3a9; frozen [docs/design_history/survival-era/m4/](design_history/survival-era/m4/README.md). Read through the dated human-promotion addendum.
 
 M4A — docs/testing/m4-startup-catalogue-reuse-validation-2026-10-25.md; a0d4a8adb56b907587103ec65f5edf917c04ff2a. M4B — docs/testing/m4-geometry-measurement-reuse-validation-2026-10-25.md; 7ebc571d1877dce0462424bdded5978651b6caf9. Measurements retain original attribution.
 

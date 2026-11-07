@@ -1,0 +1,19 @@
+Godot Engine v4.7.stable.official.5b4e0cb0f - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+Storage Step 4: installed 12 deterministic surface(s).
+  F6 toggles storage debug grids. F7 cycles occupancy/release demos.
+  SM_MetalShelves_OrientationA_level_1: 10x29 cells, 0.10m cell, 0 reservation(s), 0% occupied
+  SM_MetalShelves_OrientationA_level_2: 10x29 cells, 0.10m cell, 0 reservation(s), 0% occupied
+  SM_MetalShelves_OrientationA_level_3: 10x29 cells, 0.10m cell, 0 reservation(s), 0% occupied
+  SM_MetalShelves_OrientationA_level_4: 10x29 cells, 0.10m cell, 0 reservation(s), 0% occupied
+  SM_MetalShelves_OrientationB_level_1: 10x29 cells, 0.10m cell, 0 reservation(s), 0% occupied
+  SM_MetalShelves_OrientationB_level_2: 10x29 cells, 0.10m cell, 0 reservation(s), 0% occupied
+  SM_MetalShelves_OrientationB_level_3: 10x29 cells, 0.10m cell, 0 reservation(s), 0% occupied
+  SM_MetalShelves_OrientationB_level_4: 10x29 cells, 0.10m cell, 0 reservation(s), 0% occupied
+  SM_ventilated_locker_Orientation_level_1: 8x13 cells, 0.10m cell, 0 reservation(s), 0% occupied
+  SM_ventilated_locker_Orientation_level_2: 7x13 cells, 0.10m cell, 0 reservation(s), 0% occupied
+  SM_ventilated_locker_Orientation_level_3: 8x13 cells, 0.10m cell, 0 reservation(s), 0% occupied
+  SM_ventilated_locker_Orientation_level_4: 8x13 cells, 0.10m cell, 0 reservation(s), 0% occupied
+PASS: storage semantic zoning tests

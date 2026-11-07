@@ -45,7 +45,7 @@ func _init() -> void:
 				var confirmed: bool=record.disposition!="topup" or field in ["scale_review_current","storage_pose_review_current","footprint_review_current","stack_role_review_current"]
 				check(evidence[field]==confirmed,"Exact confirmed human review scope: "+record.item_id+" "+field)
 		if record.disposition in ["new", "topup"]:
-			var baseline: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/scenarios/m4/Sorting_Apocalypse_M4_Locked_Baseline_24Oct2026.json"))
+			var baseline: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://docs/design_history/survival-era/m4/Sorting_Apocalypse_M4_Locked_Baseline_24Oct2026.json"))
 			var row: Dictionary = baseline.approved_items.filter(func(r): return r.item_id == record.item_id)[0]
 			check(String(definition.utility_id) == row.utility_lane and definition.utility_value == int(row.utility) and definition.bulk == int(row.bulk),"Approved M4 numbers replace onboarding placeholders")
 			for field: String in ["scale_review","storage_pose_review","footprint_review","stack_role_review","auto_group_review"]:

@@ -68,7 +68,7 @@ func run_suite() -> void:
 	check(cycle.get_cycle_state() == 0 and is_equal_approx(door.position.y, .086), "SEALED_EMPTY closes runtime shutter")
 	check_fitting(door, authored)
 	check(ui.get_node("Identity").text == "FREIGHT LIFT" and ui.get_node("Online").text == "ONLINE", "only L-01 removed")
-	check_display(ui, "IDLE", "CLEAR", "00", "AWAITING EXPEDITION LOOT")
+	check_display(ui, "IDLE", "CLEAR", "00", "AWAITING CARGO")
 	check(not warning.emission_enabled and not Lens.emission_enabled, "warning off; shared resource unchanged")
 	for name in ["Arrival", "Opening", "Closing", "Departure"]:
 		var audio: AudioStreamPlayer3D = cycle.get_node(name)
@@ -79,15 +79,17 @@ func run_suite() -> void:
 		states.append(state)
 		if state == 2:
 			check_blocked(presenter, wing, "SEALED_READY")
-			check_display(ui, "INCOMING", "24", "00", "DELIVERING EXPEDITION LOOT")
+			check_display(ui, "INCOMING", "%02d" % manager.get_active_batch().entries.size(), "00", "DELIVERING CARGO")
 	)
 	manager.active_batch_drained.connect(func(_id: String): drains += 1)
 	wing.get_node("Environment/ReceivingReflections").refresh_started.connect(func(): refreshes += 1)
 	check(runtime.run_debug_delivery(1842, 9001, 24, 3), "explicit mixed delivery deposits")
 	var batch: LootBatch = manager.get_active_batch()
 	var commitment := batch.to_snapshot()
+	var committed_count := batch.entries.size() # Target Bulk does not specify an item count.
+	var deck_text := "%02d" % committed_count
 	check(cycle.get_cycle_state() == 1 and cycle.is_busy(), "deposit automatically enters ARRIVAL")
-	check_display(ui, "INCOMING", "CLEAR", "00", "DELIVERING EXPEDITION LOOT")
+	check_display(ui, "INCOMING", "CLEAR", "00", "DELIVERING CARGO")
 	check(cycle.get_node("Arrival").playing, "arrival cue starts")
 	check_blocked(presenter, wing, "ARRIVAL")
 	check(not presenter.reveal_active_batch(), "direct reveal cannot bypass cycle")
@@ -103,13 +105,13 @@ func run_suite() -> void:
 		check(warning_light.visible and warning_light.light_color.is_equal_approx(Color(1.0, .48, .08)) and not is_equal_approx(amber_light_low, warning_light.light_energy), "real local amber light follows the same slow pulse")
 	cycle._process(1.0)
 	check(cycle.get_cycle_state() == 3 and cycle.get_node("Opening").playing, "staged cargo automatically reveals")
-	check_display(ui, "OPENING", "24", "00", "LIFT SHUTTER OPENING")
+	check_display(ui, "OPENING", deck_text, "00", "LIFT SHUTTER OPENING")
 	cycle._process(2.5)
 	check(door.position.y > .086 and door.position.y < 3.1416707, "real shutter moves")
 	check_blocked(presenter, wing, "REVEALING")
 	cycle._process(4.0)
 	check(cycle.get_cycle_state() == 4 and is_equal_approx(door.position.y, 3.1416707), "fully-open-only OPEN")
-	check_display(ui, "OPEN", "24", "00", "LOOT READY FOR PICK-UP")
+	check_display(ui, "OPEN", deck_text, "00", "LOOT READY FOR PICK-UP")
 	check(warning.emission.g > warning.emission.r and is_equal_approx(warning.emission_energy_multiplier, .35), "subdued steady green")
 	if warning_light != null:
 		check(warning_light.visible and warning_light.light_color.is_equal_approx(Color(.22, .65, .32)) and warning_light.light_energy > 0 and warning_light.light_energy < .25, "OPEN casts subdued steady green light")
@@ -126,7 +128,7 @@ func run_suite() -> void:
 	var items: Array = presenter.get_materialized_world_items()
 	var identities := {}
 	var fixtures: Array = presenter.get_materialized_fixture_nodes()
-	check(items.size() == 24 and fixtures.size() == 3, "every individual item and freight fixture staged")
+	check(items.size() == committed_count and fixtures.size() == batch.presentation_fixtures.size(), "every committed item and freight fixture staged")
 	carried.max_bulk = 0
 	check(not items[0].pickup_into(carried) and drains == 0 and cycle.get_cycle_state() == 4, "full carried bundle never closes")
 	carried.max_bulk = 99999
@@ -136,9 +138,10 @@ func run_suite() -> void:
 		identities[item.instance_id] = true
 		check(items[index].pickup_into(carried) and carried.get_selected_item() == item, "TAKE transfers exact ItemInstance")
 		check(not items[index].pickup_into(carried), "stale direct TAKE cannot duplicate in deletion frame")
-		check(cycle.get_deck_item_count() == 23 - index, "live individual remaining count")
-		if index < 23:
-			check(ui.get_node("Deck").text == "DECK   : %02d" % (23 - index), "CRT counts all remaining items")
+		var remaining := committed_count - index - 1
+		check(cycle.get_deck_item_count() == remaining, "live individual remaining count")
+		if remaining > 0:
+			check(ui.get_node("Deck").text == "DECK   : %02d" % remaining, "CRT counts all remaining items")
 		carried.remove_item(item)
 	check(drains == 1 and batch.is_drained() and cycle.get_cycle_state() == 5, "final successful TAKE drains once and closes")
 	check_display(ui, "CLOSING", "CLEAR", "00", "LIFT SHUTTER CLOSING")
@@ -160,7 +163,7 @@ func run_suite() -> void:
 		check(door.transform.is_equal_approx(closed_pose) and cycle.get_cycle_state() == 5 and not cycle.can_take_receiving(), "shutter stays stationary and TAKE disabled throughout latch until 7.23 s")
 	cycle._process(.05)
 	check(cycle.get_cycle_state() == 0 and cycle.is_busy() and cycle.get_node("Departure").playing, "IDLE retains busy departure")
-	check_display(ui, "IDLE", "CLEAR", "00", "AWAITING EXPEDITION LOOT")
+	check_display(ui, "IDLE", "CLEAR", "00", "AWAITING CARGO")
 	check(manager.get_active_batch() == batch, "departure retains drained active")
 	cycle.get_node("Departure").stop()
 	cycle._process(18.0)

@@ -1,0 +1,9 @@
+Godot Engine v4.7.stable.official.5b4e0cb0f - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+Wing functional storage: installed 16 empty deterministic surface(s); F6 developer grids default OFF, F7 demo disabled.
+FAIL: no daily service producers are installed
+FAIL: repeated former midnight boundaries neither clamp nor block play
+FAIL: oldest waiting cargo survives former midnight boundaries
+continuous_run_foundation_tests: FAIL failures=3

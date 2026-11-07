@@ -21,6 +21,7 @@ const StorageItemOrientationScript = preload("res://storage_item_orientation.gd"
 ## visually stretched/squashed without stretching stored item models.
 
 signal occupancy_changed
+signal player_transfer_committed
 signal zones_changed
 
 # Godot layer 9 / bit 8. Kept separate from:
@@ -280,6 +281,14 @@ func set_player_storage_interaction_enabled(enabled: bool) -> void:
 
 func is_player_storage_interaction_enabled() -> bool:
 	return _player_storage_interaction_enabled
+
+
+func get_stored_items() -> Array[ItemInstance]:
+	var items: Array[ItemInstance] = []
+	for stack: StorageStack in _stacks.values():
+		for entry: StorageStack.Entry in stack.entries:
+			items.append(entry.item)
+	return items
 
 
 func get_reservation_count() -> int:

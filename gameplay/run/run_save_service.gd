@@ -3,11 +3,13 @@ extends RefCounted
 const Codec = preload("res://gameplay/run/state_codec.gd")
 const Snapshot = preload("res://gameplay/run/run_snapshot.gd")
 const POINTER := "active-slot.json"
+const COLLECTION_DIRECTORY := "user://saves/collection"
 const MAX_SAVE_BYTES := 16 * 1024 * 1024
 var directory: String
 var last_disk_write_ms := 0.0
+var last_validation_ms := 0.0
 
-func _init(destination: String = "user://saves") -> void:
+func _init(destination: String = COLLECTION_DIRECTORY) -> void:
 	directory = ProjectSettings.globalize_path(destination)
 
 func _failure(message: String) -> Dictionary:
@@ -25,10 +27,13 @@ func _active_filename() -> String:
 func inspect_slot() -> Dictionary:
 	return load_snapshot()
 
+func has_legacy_slot() -> bool:
+	return directory.get_file() == "collection" and FileAccess.file_exists(directory.get_base_dir().path_join(POINTER))
+
 func load_snapshot() -> Dictionary:
 	var name := _active_filename()
 	if name.is_empty():
-		return _failure("No compatible continuation is available" if not FileAccess.file_exists(directory.path_join(POINTER)) else "The active save pointer is invalid; save left untouched")
+		return _failure("No collection continuation is available" if not FileAccess.file_exists(directory.path_join(POINTER)) else "The active save pointer is invalid; save left untouched")
 	var path := directory.path_join(name)
 	var read := _read_snapshot(path)
 	if not read.ok: return read
@@ -48,7 +53,9 @@ func _read_snapshot(path: String) -> Dictionary:
 
 func save_snapshot(state: Dictionary, local_time: Dictionary = {}) -> Dictionary:
 	last_disk_write_ms = 0.0
+	var validation_started := Time.get_ticks_usec()
 	var validation := Snapshot.new().validate(state)
+	last_validation_ms = (Time.get_ticks_usec() - validation_started) / 1000.0
 	if not validation.is_empty(): return _failure(validation)
 	var codec := Codec.new()
 	var serialized := codec.stringify(state)
@@ -77,7 +84,9 @@ func save_snapshot(state: Dictionary, local_time: Dictionary = {}) -> Dictionary
 	if FileAccess.file_exists(final_path) and filename != previous: return _failure("Unexpected existing snapshot; left untouched: " + final_path)
 	var write_error := _write_file(stage_path, serialized)
 	if not write_error.is_empty(): return _failure(write_error)
+	validation_started = Time.get_ticks_usec()
 	var staged := _read_snapshot(stage_path)
+	last_validation_ms += (Time.get_ticks_usec() - validation_started) / 1000.0
 	if not staged.ok:
 		DirAccess.remove_absolute(stage_path)
 		return staged

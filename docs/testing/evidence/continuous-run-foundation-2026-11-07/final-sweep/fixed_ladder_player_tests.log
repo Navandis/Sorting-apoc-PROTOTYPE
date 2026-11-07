@@ -1,0 +1,7 @@
+Godot Engine v4.7.stable.official.5b4e0cb0f - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+ATTACH_CORRECTION_METRIC accepted=0.1077m bound=0.1200m standoff_clearance=0.0500m
+YAW_SYMMETRY_METRIC centre=0.000 left=-70.000 right=70.000
+PASS: fixed ladder player tests
