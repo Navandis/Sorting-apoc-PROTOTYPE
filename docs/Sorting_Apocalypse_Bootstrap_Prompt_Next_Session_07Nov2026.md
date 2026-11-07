@@ -69,7 +69,7 @@ I do not have native DOCX editing capability. Edit DOCX programmatically and reg
 
 Start with [guidelines](AI_WORKING_GUIDELINES.md), [CURRENT_STATE](CURRENT_STATE.md), [README](README.md) and [CODEX_BOOTSTRAP](CODEX_BOOTSTRAP.md). Then read GDD §§1–5 for vision/objective; §§8–11 for requests, current-team preparation and Receiving; §§12–16 as relevant; §§20–21 for actual implementation and open boundaries. Appendix C maps retained/replaced topics, Appendix D gives sources.
 
-The source MVP and VDD masters remain unchanged by this package. Their conflicting forward instructions are explicitly superseded in current routing; targeted master reconciliation remains separately scoped. This does not prevent use of the approved GDD or require returning to old rules while waiting.
+The targeted MVP v0.5 and VDD v0.11 master reconciliations are complete as dated 7 November compatibility updates. Their generated companions preserve implementation/evidence while bringing future-work and presentation assumptions into line with GDD v0.16. The [two-master consistency record](testing/2026-11-07-mvp-vdd-compatibility-consistency.md) records the checks and unresolved boundaries. Do not repeat the completed reconciliation or import old rules into an undefined replacement.
 
 **An undefined replacement mechanic stays undefined. Do not import mortality, midnight, next-day effects, prebuilt teams, permanent training slots or daily request defaults to fill it.** Code establishes actual behavior, not automatic design approval.
 

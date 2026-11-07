@@ -22,7 +22,7 @@ DOCX masters govern. Edit the relevant DOCX first and regenerate its Markdown; d
 
 **An unresolved post-pivot rule stays unresolved. Do not fill it with a survival-era rule merely because an older document specifies that rule in detail.** Existing source establishes what the prototype does, not the intended release design or automatic permission to modify it.
 
-The MVP and VDD masters are not rewritten by this package. Their evidence remains intact; affected forward-looking passages require a separately scoped reconciliation. [GDD Appendix C](readable/Sorting_Apocalypse_Preliminary_GDD_v0.16.md#s_Appendix_C_Supersession_and_retentio) and [CURRENT_STATE](CURRENT_STATE.md) identify the boundary now, so those pending master edits do not leave competing current gameplay authorities.
+The targeted Systems MVP v0.5 and VDD v0.11 master reconciliations are now complete as dated 7 November compatibility updates. Their generated companions and the [two-master consistency record](testing/2026-11-07-mvp-vdd-compatibility-consistency.md) distinguish unchanged implementation/evidence from GDD v0.16 target design. [GDD Appendix C](readable/Sorting_Apocalypse_Preliminary_GDD_v0.16.md#s_Appendix_C_Supersession_and_retentio) remains the original approval-time retention map. This documentation completion does not implement the pivot or authorize scene changes.
 
 ## The approved direction
 

@@ -1,6 +1,6 @@
 # Sorting Apocalypse Visual Design & World-Building Direction v0.11
 
-> Generated text/table/image extract of the same-named DOCX master. Content order, headings, tables and original image references are retained; Word pagination, headers and text styling are not reproduced. Edit the master and regenerate; this mirror is not an independent authority.
+> Generated text/table/image companion from the DOCX master after its 7 November 2026 GDD v0.16 compatibility update. Edit the DOCX first; do not maintain this companion independently. Original image bytes, content order, tables and local status are retained. Pagination, running headers/footers and visual styling are omitted.
 
 SORTING APOCALYPSE
 
@@ -13,24 +13,24 @@ Unfinished / decommissioned underground service-level bunker
 
 Receiving mood references - useful for layering, warmth, material contrast and functional composition. Wear/grime is an upper bound, not the production target.
 
-Version 0.11 | 14 October 2026 | Approved current master
+Version 0.11 | 7 November 2026 | GDD v0.16 compatibility update
 
-Design basis: GDD v0.14; Findings v0.14; accepted compact wing; promoted storage/ladder, Receiving Stage A/B/C and EAF1–EAF5; C1 closed; intentional Receiving lighting integrated, with later saved human authoring.
+Design basis: approved GDD v0.16; Systems MVP v0.5 implementation/evidence; retained 14 October visual approval and accepted scenes. This text-only compatibility update does not implement the pivot or authorize spatial changes.
 
 | CORE VISUAL PROMISE  The bunker should look like a real underground municipal/service structure that has been occupied, adapted, repaired, and organized for years - not like a purpose-built survival base. The player should be able to read what the structure used to be, what later builders changed, what survivors adapted, and what the Quartermaster has made orderly. |
 | --- |
 
 ## 1. Purpose, authority, and status
 
-Version 0.11 reconciles the accepted Receiving room through Stage C closure on 14 October. C1 environment/art, intentional lighting and Stage C in its agreed prototype scope are HUMAN-PROMOTED / CLOSED. GDD v0.14 owns gameplay/scope; Findings v0.14 §34 records implementation/evidence. These are approved current masters, promoted on 14 October without version increments; accepted milestones remain closed.
+GDD v0.16 governs the collection-and-organization game. This 7 November compatibility update aligns affected VDD passages while retaining the visual direction approved on 14 October. Systems MVP v0.5 records M1–M4 implementation and evidence; Findings v0.14 is historical. C1, intentional lighting, Stage C and M1–M4 remain closed in their accepted scopes. [38]
 
-This document governs world-building, environment architecture, composition, material/surface grammar, lighting direction and production protocol. Gameplay, storage, progression and interaction remain with the GDD and accepted records. Technical validity, approved source/use and specific human art acceptance are distinct; this revision does not promote new mechanics.
+This document governs world-building, environment architecture, composition, materials, lighting and production protocol. GDD v0.16 owns gameplay, storage goals, progression and interaction. The pivot may motivate later spatial changes, but no corridor shortening, room resizing, shelf installation, scene edit or new visual acceptance is authorized by this compatibility pass. [38]
 
-Sections 29 and 31 retain the original schematics and accepted September overview unchanged as design-history/relationship references. Current accepted builder and saved geometry, including the compact October retrofit, govern working dimensions over older pixels. EAF5 remains historical proof evidence, superseded for the Receiving production wall role by P05_C02.
+Sections 29 and 31 retain the original schematics and September overview unchanged as historical references. Accepted builder/saved geometry, including the compact October retrofit, establishes the existing scene baseline over older pixels; later explicitly agreed spatial design may supersede it. EAF5 remains historical proof evidence, superseded for the Receiving wall role by P05_C02.
 
 | Status | Meaning | Use in this document |
 | --- | --- | --- |
-| CONFIRMED | Design baseline | Locked world-building/art-direction rules and production constraints. |
+| CONFIRMED | Design baseline | Accepted world/art direction at its stated scope; later explicit decisions and GDD v0.16 govern supersession. |
 | DIRECTION | Preferred solution | Current spatial or visual recommendation to validate in-game. |
 | OPEN / TBD | Unresolved | Exact interaction object, progression timing, balance, labels, dimensions, or topology still requires design/playtesting. |
 
@@ -196,6 +196,8 @@ Receiving now uses deliberate warm apron practicals, balanced cage task lights a
 
 Purposeful room lighting is the current direction, with no automatic broad ambient/KeyLight floor. It does not permanently prohibit every future intentional ambient contribution. A global policy change, new fixture system or rendering system still needs deliberate design discussion; unfinished neighboring rooms need their own lighting decisions. [37]
 
+Retained lighting direction is distinct from gameplay penalties. The old Fuel/Electronics outage rules are not silently carried forward. Essential collection-goal information must remain available even if a future approved consequence affects other equipment. No light rig or monitor is changed by this pass. [38]
+
 ## 8. Signage, labels, humor, and human traces
 
 | Generation | Character |
@@ -219,7 +221,7 @@ Physical changes occur only through explicit player-legal actions or designed sy
 
 The bunker leader is referred to as the Administrator. The Administrator and other residents remain physically off-screen. One-way operational messages may carry tutorials, upgrade confirmations, exposition, warnings, and personality; the Quartermaster does not need branching dialogue or visible NPC conversations.
 
-Physical storage installation is also authored world state. The developer selects furniture, placement, dimensions, level distribution, per-instance Front and ladder availability/placement. The player changes zones, labels and daily organization within those installations; no free-build mode is implied.
+Physical storage installation is authored world state. The developer selects furniture, placement, dimensions, levels, per-instance Front and ladder availability. The player changes zones, labels and organization within those installations; no free-build mode follows. The favored all-storage-available-from-start direction is addressed in §15.1, not by automatic scene changes. [38]
 
 ## 10. Universal environment-production protocol: the Foundation Gate
 
@@ -284,7 +286,7 @@ EAF5 confirms that the gate separates structural shape, structural surface mater
 
 ## 12. Core logistics relationship: Receiving → Sorting → Storage
 
-The accepted working spine is Receiving -> Backlog Passage -> Sorting / Quartermaster Central -> Main Storage Network -> Deeper-Bunker Approach. Its thresholds, proportions and offsets have passed human greybox review. Preserve this in-engine layout unless a specific later interaction or furnished-clearance test justifies a change; the sequence is not a mandate for a straight corridor. [A17]
+The accepted scene spine is Receiving -> Backlog Passage -> Sorting / Quartermaster Central -> Main Storage Network -> Deeper-Bunker Approach. Its thresholds and proportions passed human greybox review. This remains the existing baseline, not a mandate to preserve every travel distance after the pivot. Shorter routes remain an open design/playtest question; no remodel is selected here. Sorting is optional staging, not mandatory routing or qualifying victory storage. [A17; 38]
 
 ### 12.1 Backlog transition
 
@@ -299,7 +301,7 @@ Receiving is a former freight/service loading point adapted into a goods-transfe
 
 - Architecture first: adapt freight equipment to the existing accepted aperture and surrounding wall, not the room to a prefab doorway. Dispatch is the accepted shallow external annex beside Receiving with its own doorless opening; keep its usable volume distinct from the apron. It is not a new destination corridor.
 
-Current compact Receiving nominal dimensions are 8.00 × 7.50 m / 60 m²; Dispatch is 6.50 × 3.50 m with a 2.40 m doorway. The centred Backlog opening is 2.84 × 3.40 m. Current saved geometry governs these proportions and working lanes (§34.7).
+Existing compact scene dimensions: Receiving 8.00 × 7.50 m / 60 m²; Dispatch 6.50 × 3.50 m with a 2.40 m doorway; centred Backlog opening 2.84 × 3.40 m. Saved geometry governs the current installation (§34.7). The continuous-game pivot does not itself resize these spaces. [38]
 
 - Wide and shallow: Construct a distinct rectangular freight enclosure behind an aperture in the Receiving west wall. Solid room-wall sections flank the opening; the cage has its own inset rear wall, side walls, floor and ceiling. The rear of the cage is not the apron's surrounding wall. A permanent barrier keeps the shallow bay inaccessible; no route around the cage is implied. [H16]
 
@@ -319,7 +321,9 @@ The promoted Stage B TAKE-only presenter arranges front crates, rear pallets and
 
 Receiving production uses P05_C02: the approved constructed/panel wall, Worn Concrete Floor and shuttered/formwork ceiling. Base applied finish, structural secondary and fixed base wear preset remain NONE; these base choices do not exclude independently authored wear layers. The EAF5 P01_C02 primary/P05_C03 alternate remain historical proof selections (§34).
 
-Receiving C1 and Stage C are CLOSED / HUMAN-PROMOTED in their agreed scopes. The shutter is now a functional fully-OPEN-only TAKE gate; the curved CRT is live and read-only. Arrival/opening/closing/departure cues imply travel while the bay/deck/barrier stay stationary. Dispatch furnishing/lighting and the adjacent sill material remain separate work. [37]
+Receiving C1 and Stage C remain CLOSED / HUMAN-PROMOTED. Fully-OPEN TAKE, live read-only CRT and the stationary bay/deck/barrier with shutter/audio theatre are accepted. The target now preserves pending cargo without forfeiture and keeps waiting teams occupied until delivery; the personnel-release boundary remains open. Existing deposited slots/CRT counts are implementation facts, not a cap on target waiting returns. Dispatch furnishing/lighting and sill material remain separate. [37; 38]
+
+Dispatch preparation is one current crew at a time: choose 1–4 available Ready scavengers, equip and select two affinities, then explicitly send it. Another crew can follow consecutively in the same interface session. Do not furnish or specify parallel preparation tabs or a morning roster; an overview of already dispatched teams is separate. The preparation panel is tentatively live, not paused. [38]
 
 ### 13.1 Sorting sightline
 
@@ -332,7 +336,9 @@ The accepted desk/aperture relationship provides a partial lift view with interr
 
 - Sorting table: Wall-fitted, wide and fairly shallow, clear flat gameplay surface. Accessible from its west, south, and east edges; approximately 0.5 m clearance is a useful schematic minimum, but exact clearance is a greybox variable. No chair and no decorative loot-like clutter on the usable surface.
 
-- Monitor/clock: Wall-mounted or ceiling-hung rather than consuming the sorting surface. Ordinary commercial/office equipment, not command-center hardware.
+The sorting table and carried bundle remain legal temporary staging but do not count toward the stored-Utility objective. Qualifying storage and its totals are defined by GDD v0.16, not by a furniture model’s appearance. [38]
+
+- Information equipment: wall-mounted or ceiling-hung ordinary monitors beside/above the sorting surface, not on its usable area. Essential eight-category goal progress is baseline and never lost to upgrades, penalties or events. Active elapsed run time replaces a required simulated-day clock. Journal/ledger versus monitor presentation remains open. [38]
 
 - Spatial relationship: retain the accepted desk stance and turns toward Receiving and Storage. Stage B proves item identification and fixture-integrated unloading in the accepted Receiving presentation; later furniture and lighting must preserve that useful view or trigger focused review.
 
@@ -347,7 +353,7 @@ The accepted desk/aperture relationship provides a partial lift view with interr
 | Storage is an adapted architectural condition, not a purpose-built stockroom. The Quartermaster fits capacity into inherited underground geometry and works around pillars, beams, wall jogs, ceiling constraints, and circulation compromises. |
 | --- |
 
-The main Storage network should contain roughly 85-90% of total storage capacity across five partially enclosed but visually connected galleries/alcoves, A-E. The remaining 10-15% can appear as opportunistic satellite storage elsewhere in the bunker: a small former technical room converted to secure lockers, a squat shelf under a beam, a clothes rail along a useful wall, or other architecturally constrained units.
+The existing layout direction places roughly 85–90% of capacity across five connected galleries A–E and 10–15% in opportunistic satellite storage. This is a spatial-distribution reference, not a new installation quota or the winning-stock occupancy target. GDD v0.16’s rough 80% occupancy aspiration is separately provisional; the stored-Utility objective, catalogue and usable space need joint testing. [38]
 
 - Circulation: One bent/variable-width primary storage spine plus one deliberate short secondary connection between Gallery C and Gallery D. This creates one useful loop without becoming a ring, grid, or maze. Gallery E remains primarily single-entry and is not a shortcut into the Deeper-Bunker Approach.
 
@@ -371,15 +377,19 @@ The main Storage network should contain roughly 85-90% of total storage capacity
 
 - Player agency: Main galleries have soft spatial affordances but no predetermined category identity. Gallery A is convenient/near Sorting; B is farther along the inhabited side; C is relatively long or mildly dog-legged; D is the central irregular gallery with the C connection; E is the constrained far-side pocket near the deeper-bunker transition. These shapes aid spatial memory without prescribing taxonomy; the player supplies the categories.
 
-### 15.1 Storage upgrades and sockets
+Player-authored organization remains free: galleries have no prescribed category quotas or neatness score. A crowded winning collection should still allow retrieval, replacement and reorganization. Reaching all eight live category targets is sufficient; empty intake or perfectly cleared staging is not an additional goal. [38]
 
-Storage capacity is spatially authored. Every shelf, locker, rack, cabinet, or other storage unit occupies a predetermined socket. Progression can install/activate units at those sockets; there is no free-form shelf placement. If movement is later allowed, it should be constrained to specific unit/socket relationships rather than arbitrary building.
+<a id="151-storage-upgrades-and-sockets"></a>
 
-Each installed unit also carries an authored semantic Front. Progression may install another instance of the same furniture family with a different Front state when the architecture requires it; the state belongs to the installation, not the mesh family.
+### 15.1 Authored storage installation and progression status
 
-Future sockets are mostly implicit. Some are empty; others may contain authored placeholder clutter such as obsolete equipment, broken furniture, tarped material, or construction leftovers. Upgrades occur during the nightly transition, allowing the placeholder clutter to be removed and the new unit installed without visible pop-in or animation. The player should not see glowing upgrade pads or painted “future shelf” markers.
+Storage remains spatially authored, with no free-form shelf placement. The favored collection-game direction makes the storage installation available from the start rather than unlocking shelves through upgrades. Exact capacity and furnishing remain to be tested; this is not permission to add units to the existing scenes. Any retained furniture movement still needs explicit unit/socket rules. [38]
 
-The starting amount of installed physical capacity is moderate. The quantity of pre-seeded loot at new game remains an economy/balance TBD and is intentionally not specified by this visual document.
+Each installed unit retains its authored semantic Front, level distribution, dimensions and usable-area insets. Different instances of one furniture family may face differently; this belongs to the installation, not the mesh family. Those physical contracts remain applicable without a storage-upgrade tree.
+
+The former rule that placeholder clutter is removed at night to install a new shelf is not a current requirement. No glowing upgrade pads or future-shelf markers are needed. Existing environmental clutter remains authored non-loot; it is not automatically removed or converted into capacity by this documentation change. [38]
+
+Production starting stock, final usable capacity and the winning assortment remain balance questions. A substantial hoard should leave practical maneuvering space rather than require geometric precision. The illustrative 2,000 Utility per category and roughly 80% occupancy do not specify shelf counts, dimensions or another completion condition. [38]
 
 ## 16. Dedicated service spaces and inner facility boundaries
 
@@ -402,13 +412,15 @@ The staffed fabrication floor, treatment ward, cooking/mess interior and adminis
 
 Workshop remains a broad room-like support space; Kitchen an elongated catering-service room; Medical an anteroom widening west of its aligned corridor wall; Bunker Ops an open dedicated transfer landing. Their accepted footprints and approaches distinguish the destinations. Use the saved geometry as the working dimensional baseline, not the original schematic pixels. [A17]
 
-The neutral geometry provides enclosing floors/ceilings, wall thickness, open territorial entrances, inner boundaries and essential proxy masses. The completed continuing-gameplay integration uses only the functional fixtures needed to test handling. Departmental furnishing, hatch mechanics, delivery choreography and final audio/lighting remain later work; no speculative asset acquisition or four bespoke interaction systems are required. [D16S, D17B]
+The accepted wing supports existing M1–M4 handling/request tests; the real clock, Dispatch fixture and ordinary continuation are already implemented. Final departmental furnishing, handoff choreography and the post-pivot consequences remain separate work. Their redesign does not authorize new room art, assets or bespoke interaction systems. [D16S, D17B; 38]
 
-Department ownership is not a new inventory rule. These spaces add no implicit free Quartermaster capacity, retrievable departmental reserve, automatic submission or autonomous prop handling. Existing utility lanes, request consequences, Workshop projects and output rules are retained.
+Department ownership adds no implicit free Quartermaster capacity, retrievable reserve, automatic submission or autonomous prop handling. The retained physical handoff is irreversible. Request cadence, bounded escalation, treatment, Workshop progress and output timing follow GDD v0.16’s owning sections and open questions, not the former daily equations. [38]
 
 ## 17. Workshop Service Room / service leg + Salvager
 
 Workshop occupies an infrastructure-heavy service branch from Sorting/early Storage, not through Gallery C. The accepted room is a broad playable equipment/project-material support space with a distinct opaque inner boundary to the unseen staffed Workshop. Retain the separate Salvager path and ordinary continuous southern wall; no abandoned continuation or reserved opening remains. Furniture and final staff-door/interface placement are later decisions. [A17, D16-R02]
+
+Workshop functionality is under redesign. Carrying, expedition and optional information improvements remain candidates; no storage tree, productive-night requirement or construction timing is supplied by the room design. The project roster and any presentation transition require their own decisions. [38]
 
 - Footprint and arrival: Preserve the branch's restrained bend and a clear open entrance into the wider service room. One purposeful orthogonal offset may shape equipment support and circulation; do not invert intended solid wall mass into an accidental nook. Reserve usable standing/turning floor at the future intake.
 
@@ -433,6 +445,8 @@ Retain the accepted bent/oblique Salvager spur, front-operated machine envelope 
 
 Medical is reached without crossing a gallery: the full A/B connector belongs to Main Storage, followed by a 10 m Medical-exclusive protected corridor. The anteroom keeps its 7.8 x 7.0 m nominal size, lies north of that corridor and widens westward; its eastern wall continues the corridor wall and entry is at the south-east. This accepted arrangement keeps the shared circulation, departmental buffer and opaque staffed-core boundary distinct. No direct Medical-Kitchen route is introduced. [A17]
 
+Those dimensions describe the accepted installation, not an immutable travel-time requirement. Medical now supports workforce availability; natural recovery substantially accelerated by treatment is the preferred direction. Injury/treatment timings remain open, with no dead-end state or requirement for visible patients. No geometry is altered here. [38]
+
 - Protected territory: The approach and anteroom are not Quartermaster storage-expansion or backlog sockets. Preserve clear floor as intentional departmental support space, even before later equipment is selected. Crossing the outer room threshold does not submit supplies.
 
 - Finish: Better maintained, not newer: painted concrete, limited old tile, repaired chips, restrained stains, comparatively clean floor/wall bases.
@@ -447,7 +461,7 @@ Medical is reached without crossing a gallery: the full A/B connector belongs to
 
 ## 19. Kitchen Service Room / unseen Kitchen and Mess
 
-The player enters a dedicated catering-support service room, not cooking stations or a mess hall with its occupants removed. The unseen operation remains led by a competent chef and supported by staff; its social and working life is implied beyond the inner wall. The accessible room supports meal supplies and the existing ration-related functions without adding a new cooking or service chore. [D16S]
+The Kitchen remains a catering-support room, not a visible kitchen or mess hall. Competent staff and community life are implied beyond its inner wall. Food/Hydration service and the tentative ration-conversion role remain, but fixed meal anchors and overnight output are not target requirements. Cadence, consequences and conversion timing remain to be defined without adding cooking chores. [D16S; 38]
 
 - Spatial position: The approach leaves Gallery B through its eastern doorway under the developer's round-one correction. This explicitly replaces the former no-gallery-mediated Kitchen route. Preserve the modest separation from Medical and dirty machinery; no direct Medical↔Kitchen connection is added. [H16]
 
@@ -470,7 +484,7 @@ The player enters a dedicated catering-support service room, not cooking station
 | Bunker Ops sits at a believable terminus of the playable logistics wing, where the architecture strongly implies that the settlement continues beyond the player’s accessible space. |
 | --- |
 
-The Deeper-Bunker Approach is the longest comparatively sparse active circulation leg in the playable wing. It begins somewhat wider as Storage/Quartermaster occupation fades, then narrows cleanly through a restrained orthogonal dog-leg and remains narrower on the final approach. The bend breaks the long warehouse-like vista, distributes points of interest over the route, and keeps Bunker Ops from sitting permanently in view from the Storage network.
+The existing Deeper-Bunker Approach is the longest sparse circulation leg: wider near Storage, then narrower through a restrained dog-leg to Ops. Its bend interrupts the long vista and supports machinery reveals. The pivot raises travel burden as an open question; shortening this route is neither selected nor authorized. Any later change needs explicit layout decisions while preserving readable boundaries and authored content. [38]
 
 - Transfer Landing: Use a more open, clearly bounded widening at the shared approach terminus. Reserve a modest material-handoff position along one side, with clear arrival and turning space. It is not a fourth enclosed storeroom or a furnished empty office. Supplies move onward to the wider unseen settlement. [D16S]
 
@@ -492,7 +506,7 @@ Retain the accepted narrowed Incinerator pocket, front-operated machine envelope
 
 - Safety: Restrained but credible keep-clear, hot-surface, extinguisher, emergency cutoff and electrical markings.
 
-- Progression: Not intended as a Day-1 system. Preferred fiction is that the machine physically exists but is offline/broken until Workshop repairs it during a later night transition. Exact unlock day remains balance/playtest TBD.
+- Progression: an already installed but offline machine remains possible fiction. Its unlock or repair timing is OPEN under continuous play; the former Day-1 exclusion and later-night repair schedule no longer define it. Do not remove, activate or remodel the machine by inference. [38]
 
 - Design meaning: No loot item is game-defined “junk.” Incineration asks the player to sacrifice real Utility for space/operational efficiency.
 
@@ -522,13 +536,13 @@ No abandoned stub is part of the current accepted functional wing. The former Wo
 
 ## 23. Progression-state implications for environment art
 
-The visual world can change at explicit progression moments, particularly during the nightly transition, without violating the authored-world rule. Such changes are system-driven and persistent rather than ambient simulation.
+The visual world may change at explicitly authorized progression moments without becoming ambient simulation. GDD v0.16 removes the night transition; timing and concealment of any physical installation/repair remain open. Do not replace midnight with an invented automatic pop-in, construction animation or whole-room transition. [38]
 
-A storage upgrade must preserve the authored installation contract for its new unit, including dimensions, level distribution, usable-area insets and semantic Front. These are deliberate persistent states, not ambient prop behavior.
+Explicit changes must preserve applicable installation contracts: dimensions, level distribution, usable-area insets, semantic Front and occupied-item ownership. A future upgrade may change only its authorized state. Neither a project completion nor a zoning edit silently moves or clears player stock.
 
-- Storage sockets: Placeholder clutter may be removed overnight and a new shelf/locker installed at a predetermined socket. The transition does not need visible animations or live collision handoff.
+- Storage: all installed capacity from the start is the favored direction (§15.1). Historical shelf sockets and placeholder clutter remain evidence of earlier authoring, not a mandatory upgrade tree or a removal instruction. [38]
 
-- Large machinery: Incinerator and potentially Salvager can physically exist as offline/broken landmarks before their gameplay function unlocks. Later night transitions can activate/reconfigure them.
+- Large machinery: Incinerator and Salvager may remain installed landmarks whose usability changes through an explicitly designed repair/unlock. The continuous timing and presentation of that change remain unresolved; no nightly mechanism is carried forward. [38]
 
 - Narrative confirmation: Administrator one-way messages can explain upgrades, repairs, tutorial milestones, and operational changes in a practical, familiar tone.
 
@@ -622,9 +636,9 @@ HISTORICAL CHECKPOINT. This numbered sequence records the v0.5 path. The storage
 
 ## 28. Current direction summary
 
-Sorting Apocalypse should present the Quartermaster’s world as a small, legible, heavily reused fragment of an unfinished underground civil/service project. The structure itself is concrete, masonry, old finish, interrupted construction, and rational municipal engineering. Survivors have occupied it for years and made it functional through competent but resource-constrained adaptations. The Quartermaster then imposes the cleanest layer of order on top of that inherited complexity.
+Sorting Apocalypse presents a small, legible fragment of old underground civil/service infrastructure, occupied and adapted over years. GDD v0.16 makes the physically stored collection the achievement: sorting and hoarding are primary, while requests and expeditions support them. Concrete, masonry, layered repair and competent survivor adaptation remain the visual language. [38]
 
-Receiving remains the sole goods interface; Dispatch remains an alcove and Sorting a widened passage. The five-gallery Storage network has one C↔D secondary link. A-east/B-west open to shared circulation; the protected Medical spur enters its Supply Anteroom, and Gallery B east feeds the separate Kitchen Service Room approach. Workshop has its own service room and accepted bent Salvager spur. The dog-legged eastern approach reaches an Incinerator spur, then an open Bunker Ops Transfer Landing with a separate settlement door. [H16, D16S]
+The existing scene retains Receiving, its Dispatch annex, passage-like Sorting, five galleries with a C↔D link, the Medical and Kitchen branches, Workshop/Salvager and the dog-legged Incinerator/Ops approach. These accepted relationships and saved dimensions are the current authoring baseline. Future compression is an open design decision, not a prescribed new layout. [H16, D16S; 38]
 
 The bunker becomes richer through player organization and restrained authored history while the shell and working lanes remain legible. Receiving C1, intentional lighting and Stage C in agreed prototype scope are human-promoted/closed. Warm practicals, useful natural shadows, a darker upper envelope, live CRT and localized amber/green W1 support the accepted room. Minor art changes remain ordinary authoring. [37]
 
@@ -691,7 +705,7 @@ Actual Godot output from the accepted Medical-tuned wing. Spatial source/evidenc
 
 Figure 3 - Accepted whole-wing greybox, revision_04. Roof hidden for plan review; coloured floors, labels and equipment blocks are diagnostic proxies. This image records actual accepted geometry, not final materials, furnishing, capacity or live gameplay. Normal player views retain ceilings.
 
-The builder and saved geometry remain editable dimensional authority, now including the accepted compact retrofit. C1 has installed the EAF2 production envelope while keeping accepted gameplay/spatial ownership. The retained September overview illustrates the earlier whole-wing baseline and does not override later Receiving/Dispatch dimensions.
+Saved geometry, including October’s compact retrofit, remains the existing dimensional baseline over this September overview. GDD v0.16 permits explicitly agreed spatial redesign; no corridor or room change is selected here. [38]
 
 ## 32 v0.6 Storage installation and ergonomics direction
 
@@ -743,6 +757,8 @@ At the v0.6 checkpoint this sequence superseded §27. It did not itself authoriz
 
 ## 33. v0.7 Storage authoring and facing closure
 
+Historical closure note: §33 retains the 21 September storage-authoring evidence. Its forty-item count is time-local, not the current catalogue total; Systems MVP v0.5 and GDD v0.16 §20 record later implementation. [38]
+
 ### 33.1 Reusable ModularRack as an authoring grammar, not a universal furniture design
 
 The promoted ModularRack is a shelf-empty reusable scaffold whose editable Levels container accepts ordinary local shelf wrappers. One root controller derives dimensions, collision, preview, calibrated deck placement and runtime surfaces. It enables consistent production authoring without turning the current three-level starter into a universal rack silhouette, proportion or level standard.
@@ -789,7 +805,7 @@ Review-scene supply reuse, reusable ModularRack authoring, Storage Unit Orientat
 
 ## 34. Environment Authoring Foundation and current Receiving direction
 
-Current production direction reconciled through 14 October: EAF1–EAF5 remain promoted; Receiving C1 and agreed Stage C prototype scope are HUMAN-PROMOTED / CLOSED. Intentional Receiving lighting supersedes A30WS practical/global values. Findings v0.14 §34 records evidence/debt; GDD v0.14 owns game rules and later integration. [37]
+Existing production direction includes the human-promoted EAF1–EAF5, Receiving C1, Stage C and intentional lighting. M1–M4 are also published/closed; Systems MVP v0.5 owns their implementation/evidence. GDD v0.16 owns the continuous collection target. §34.7 retains actual scene facts, while §34.8 and §38 describe documentation compatibility and remaining design boundaries. [37; 38]
 
 ### 34.1 EAF authoring model
 
@@ -859,21 +875,25 @@ Hand-authored ReceivingSetDressing and the separate curved monitor remain accept
 
 The original curved CRT retains Surface 1 art, runtime texture binding, 704 × 400 green SubViewport, fonts/layout, mounting, subdued bezel and no added screen spill. It is now live, read-only FREIGHT LIFT / ONLINE, without L-01. STATUS maps SEALED_EMPTY→IDLE, ARRIVAL/SEALED_READY→INCOMING, REVEALING→OPENING, OPEN→OPEN and CLOSING→CLOSING. DECK counts individual remaining active items including fixture/stack entries, with CLEAR where appropriate. QUEUE 00–02 excludes active cargo and Awaiting Lift teams. Decorative EMERGENCY STOP signage/button remains noninteractive. [37]
 
+This deposited QUEUE 00–02 readout is retained implementation evidence. The target’s uncapped waiting-expedition queue, occupied personnel and eventual cargo handover need a separate truthful overview; they are not implemented by changing these labels. The exact personnel and destination-release boundaries remain open. [38]
+
 The four-cue theatre preserves the stationary bay illusion. OPEN waits for actual last TAKE; shutter contact around 3.40 s holds through reverberation/latch and the full closing cue. IDLE is displayed during departure while the lift remains internally busy; FIFO promotion/new admission follows full outbound turnaround, without opposing travel overlap. [37]
 
 Verified CRT footers, in cycle order: SEALED_EMPTY — AWAITING EXPEDITION LOOT; ARRIVAL and SEALED_READY — DELIVERING EXPEDITION LOOT; REVEALING — LIFT SHUTTER OPENING; OPEN — LOOT READY FOR PICK-UP; CLOSING — LIFT SHUTTER CLOSING. Awaiting Lift team feedback belongs to future Dispatch/Expedition. [37]
 
 The accepted initial 10 October wear composition had 18 layers (17 scalar plus one conventional). Later human authoring at 9ede796 removed alternatives and refined wear/light instances; current saved scene has eleven scalar instances plus one conventional OilStain, including retained visibility overrides. Preserve actual saved identities and placement; old counts are not quotas or instructions to resurrect removed art. Seven original Codex Road Dust placements and ReceivingFinishPass remain retired. Ordinary appropriate refinements do not automatically reopen EAF4, C1 or Stage C. [37]
 
-### 34.8 Current validation order
+<a id="348-current-validation-order"></a>
 
-1. GDD v0.14, Findings v0.14 and VDD v0.11 are the approved current masters; preserve earlier masters and dated evidence.
+### 34.8 Current scope and validation boundaries
 
-2. Preserve human-promoted/closed C1 environment/art, intentional lighting and Stage C agreed prototype scope. Ordinary energy/color/range/cone/attenuation/shadow and appropriate wear/furnishing tuning uses version control and proportionate visual review; it is not automatically a new milestone or reopening.
+1. Use approved GDD v0.16 for intended gameplay, Systems MVP v0.5 for accepted implementation/evidence, and this VDD for retained visual direction and spatial context. Findings v0.14 and previous editions are historical; preserve their records. [38]
 
-3. Actual Expedition teams/generation, real daily clock, Dispatch/Awaiting Lift monitoring, population consequences, durable persistence and time-pressure play remain later Systems MVP integration. Receiving screenshots do not close neighboring-room work.
+2. C1, intentional lighting, Stage C and M1–M4 stay human-promoted/published/closed in their recorded scopes. Ordinary scoped wear, furnishing or light tuning does not automatically reopen a milestone. This pass changes documentation only, not scenes or settings. [38]
 
-4. Follow the existing GDD roadmap when future work is authorized; this documentation reconciliation selects no next milestone.
+3. M4 already supplies a real daily clock, timed Medical/Kitchen/Dispatch and ordinary continuation. Its daily behavior remains implemented evidence, not the collection target. Actual asynchronous expeditions, the new victory/active-time loop, continuous Medical/request consequences and full durability remain future scopes. [38]
+
+4. Next implementation must be separately scoped against GDD v0.16. Do not start M5, revive ADR, add storage progression, change corridors, resolve open handover/treatment rules or run unchanged gameplay suites to complete these documentation updates. [38]
 
 Technical assertions/captures, supplied-source review, human gameplay, visual promotion and publication checks remain distinct. The unexplained pixel-identical .30/.40 probe trial did not diagnose a technical cause; later human review nevertheless accepted the actual metallic appearance. That uncertainty is not an open visual blocker. Accepted probe/held-view debt, excluded brace-junction artifacts, unfinished Backlog/Dispatch and sill material retain their recorded scope. [37]
 
@@ -914,7 +934,9 @@ HISTORICAL 11 OCTOBER CHECKPOINT. This register records C1 closure and then-curr
 
 Companions at the 11 October checkpoint were GDD v0.13 and Findings v0.13. Section 35 retains the 10 October register and §34.9 the September register. Section 37 supersedes then-future Stage C and A30WS practical/global values while retaining historical acceptance and costs.
 
-## 37. v0.11 revision and source register
+<a id="37-v011-revision-and-source-register"></a>
+
+## 37. Historical v0.11 approval and source register
 
 14 October 2026. Approved current master; same-edition document promotion authorized. Active lighting/color, Receiving presentation, current authoring, summaries and validation order now reflect human-promoted Stage C and intentional lighting. World/spatial grammar, Foundation Gate principles, figures and historical records remain. No room relighting, geometry/material/UI change or new visual acceptance is performed.
 
@@ -923,3 +945,25 @@ Companions at the 11 October checkpoint were GDD v0.13 and Findings v0.13. Secti
 Published chronology: single-cycle acceptance eee1be5; lighting integration fe5372b; later human scene authoring 9ede796; two-batch implementation/publication 83cbed1/3be0c1c; Awaiting Lift implementation/closure 907c665/bb6683d. Ancestry verified against bb6683d28539ff743bc480a9d5d68c4ef3d0ce87. Current source owners: wing_environment.tscn, receiving_lighting.tscn, inherited wing_gameplay.tscn and receiving_lift_cycle.gd; exact paths/QA in docs/testing/post-stage-c-three-master-reconciliation-2026-10-14.md.
 
 Current companions: GDD v0.14 and Findings v0.14 (§34). Historical A30WS promotion/debt remains in §36 and Findings §33; dated schematics and all five embedded images retain their bytes, order and historical/design context.
+
+## 38. Collection-pivot compatibility — 7 November 2026
+
+This is a same-edition text reconciliation of VDD v0.11 against the approved GDD v0.16, not a new scene or visual approval. The 14 October source remains preserved in repository history. The new gameplay direction was approved by the developer; this pass supplies compatible wording, retains source-specific open choices and does not implement mechanics.
+
+### 38.1 Basis and evidence boundary
+
+The published repository was read at c2540b73ffa75e0114bfe221477f666c32b99a04. The source VDD DOCX has Git blob d6eaa21e051a234621bdd5acc51cecb9c24ffd3d; the approved GDD v0.16 DOCX has Git blob 668c368ed6efd263c70666a2d8f70874ae31c73b. M4 remains the accepted implemented fixture from c9f9417. Repository reads establish tracked publications, not the current Windows checkout, unsaved scenes, imports or saves.
+
+[38] Sources: docs/Sorting_Apocalypse_Preliminary_GDD_v0.16.docx and its generated readable companion, especially §§4–5, 7–9, 11–17, 19–21; docs/CURRENT_STATE.md; docs/README.md; docs/AI_WORKING_GUIDELINES.md; and the developer’s request for targeted MVP/VDD compatibility updates. The current GDD already supersedes the approved pivot record’s parallel-team preparation proposal. No new gameplay decisions are made here.
+
+### 38.2 Retained content and current compatibility
+
+Retained: mineral municipal/service identity; safe haven and offscreen community; material, wear, lighting and authoring grammar; departmental boundaries; authored installation semantics; accepted Receiving presentation; exact numeric scene/light evidence; all five embedded images; and dated approval/source histories. Historical documents and rejected experiments retain their original dispositions.
+
+Reconciled owning sections: §1 authority; §§7, 13–14 information and single-current-team preparation; §12 optional staging and open travel changes; §15 fixed-capacity direction and goal-space distinction; §§16–21 departmental redesign and machinery introduction; §23 non-night progression; §28 summary; §31 image authority; §34.8 implemented-versus-target scope. The unchanged 14 October record in §37 is now explicitly historical.
+
+### 38.3 Deliberately unresolved
+
+No new dimensions, corridor shortening, storage counts, target Utility or occupancy quota are selected. Journal versus monitor, detailed UI layout, unfinished team commitments, concurrent-destination reservation/release, personnel release on cargo delivery, request cadence/escalation, Medical recovery timing, Workshop projects, ration production and continuous repair/unlock presentation retain their GDD statuses. The favored removal of destination-availability events does not imply a ban on every narrative message or future separately approved boon.
+
+The earlier missing-MVP-source limitation is resolved by the developer’s attachment and accompanying Systems MVP v0.5 compatibility update. Both masters’ checks are recorded in docs/testing/2026-11-07-mvp-vdd-compatibility-consistency.md. M1–M4 evidence remains valid; obsolete survival/day assumptions do not override GDD v0.16. No game tests, new promotion, Git write, scene edit or save operation accompanies this completion.
