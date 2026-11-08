@@ -162,7 +162,8 @@ func _validate_loadout(loadout: Dictionary, id: String, members: int, until: flo
 			result[lane] = {"required": targets[lane], "supplied": credited[lane], "unmet": 0}
 	return bulk if loadout.credited == credited and loadout.closed == full and loadout.result == result else -1
 
-func validate_cargo(receiving: Dictionary, batches: Dictionary, items: Dictionary, owners: Dictionary, profile: ReceivingDeckProfile) -> String:
+func validate_cargo(receiving: Dictionary, batches: Dictionary, items: Dictionary, owners: Dictionary,
+		profile: ReceivingDeckProfile, terminal: Dictionary) -> String:
 	var admission: Dictionary = receiving.admission
 	var spec := profile.get_surface(&"MainDeck") as ReceivingDeckSurfaceSpec
 	if spec == null or not spec.enabled:
@@ -218,9 +219,10 @@ func validate_cargo(receiving: Dictionary, batches: Dictionary, items: Dictionar
 				var group := entry.presentation_stack_group_id
 				var reserved: Rect2i = groups.get(group, bounds)
 				groups[group] = reserved.merge(bounds)
-			if spent.has(item_id):
-				var receipt: Dictionary = spent[item_id]
-				if trip.status != Ops.COMPLETE or receipt.definition_id != definition or receipt.at < trip.handover_at:
+			if terminal.has(item_id):
+				var receipt: Dictionary = terminal[item_id]
+				if trip.status != Ops.COMPLETE or (batch != null and entries[index].remaining_in_batch) \
+						or receipt.definition_id != definition or receipt.at < trip.handover_at:
 					return "Consumed cargo has no matching prior handover"
 			elif not owners.has(item_id) or items[item_id].definition != definition:
 				return "Expedition cargo has no exact owner"
@@ -237,7 +239,7 @@ func validate_cargo(receiving: Dictionary, batches: Dictionary, items: Dictionar
 	for batch_id: String in batches:
 		if not _cargo_teams.has(batch_id):
 			return "Unknown expedition cargo batch"
-	for item_id: String in spent:
+	for item_id: String in terminal:
 		if not expedition_items.has(item_id) and not _seed_identity(item_id):
 			return "Receipt has no expedition or original palette identity"
 	for item_id: String in items:

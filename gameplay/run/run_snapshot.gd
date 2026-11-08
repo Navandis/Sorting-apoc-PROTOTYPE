@@ -4,7 +4,9 @@ const Codec = preload("res://gameplay/run/state_codec.gd")
 const Catalog = preload("res://prototype_item_catalog.gd")
 const Goal = preload("res://gameplay/run/collection_goal.gd")
 const ExpeditionSnapshot = preload("res://gameplay/expeditions/expedition_snapshot.gd")
-const SCHEMA := 6
+const WING_PATH := "res://gameplay/logistics_wing/wing_gameplay.tscn"
+const SCHEMA := 7
+static var _seed_definitions: Dictionary = {}
 var _error := ""
 
 func capture(wing: Node) -> Dictionary:
@@ -50,7 +52,8 @@ func capture(wing: Node) -> Dictionary:
 		return {}
 	return {"schema": SCHEMA, "content": content_fingerprint(), "run": wing.run_identity.capture_state(),
 		"timeline": wing.run_timeline.capture_state(), "goal": wing.collection_goal.capture_state(),
-		"expeditions": expeditions, "items": items, "carry": player.carried_items.capture_state(),
+		"expeditions": expeditions, "incinerator": wing.incinerator.capture_state(),
+		"items": items, "carry": player.carried_items.capture_state(),
 		"hosts": hosts, "surfaces": surfaces, "player": player.capture_state(wing), "receiving": receiving}
 
 func _record_item(items: Dictionary, item: ItemInstance) -> bool:
@@ -87,11 +90,14 @@ func validate(state: Dictionary) -> String:
 		return "Legacy M4 or earlier continuation uses an incompatible schema. Start a new collection run. The legacy save is preserved."
 	if state.get("schema") == 5:
 		return "This continuation is from the collection foundation (schema 5). Expeditions require a New Run. The previous snapshot is preserved."
+	if state.get("schema") == 6:
+		return "This continuation is from the expedition build (schema 6). Incinerator continuation requires a New Run. The previous snapshot is preserved."
 	if state.get("schema") != SCHEMA:
 		return "Unsupported save schema %s (collection schema %s required)" % [state.get("schema"), SCHEMA]
 	if not _fields(state, {"schema":TYPE_INT,"content":TYPE_STRING,"run":TYPE_DICTIONARY,"timeline":TYPE_DICTIONARY,"goal":TYPE_DICTIONARY,
 		"items":TYPE_DICTIONARY,"carry":TYPE_DICTIONARY,"hosts":TYPE_ARRAY,"surfaces":TYPE_DICTIONARY,
-		"player":TYPE_DICTIONARY,"receiving":TYPE_DICTIONARY,"expeditions":TYPE_DICTIONARY}, "Snapshot"): return _error
+		"player":TYPE_DICTIONARY,"receiving":TYPE_DICTIONARY,"expeditions":TYPE_DICTIONARY,
+		"incinerator":TYPE_DICTIONARY}, "Snapshot"): return _error
 	if state.content != content_fingerprint(): return "Save's physical item data is incompatible with this build"
 	if not _fields(state.run, {"id":TYPE_STRING,"next_sequence":TYPE_INT}, "Run"): return _error
 	if state.run.id.length() != 24 or not state.run.id.is_valid_hex_number(false) or state.run.next_sequence < 1:
@@ -125,7 +131,11 @@ func validate(state: Dictionary) -> String:
 	var expedition := ExpeditionSnapshot.new()
 	var expedition_error := expedition.validate(state.expeditions, state.run, state.timeline.elapsed, state.items)
 	if not expedition_error.is_empty(): return expedition_error
-	var receiving_error := _validate_receiving(state.receiving, state.expeditions.away_cargo, state.items, owners, expedition)
+	var terminal := expedition.spent.duplicate()
+	var disposal_error := _validate_disposals(state, terminal)
+	if not disposal_error.is_empty(): return disposal_error
+	terminal.make_read_only()
+	var receiving_error := _validate_receiving(state.receiving, state.expeditions.away_cargo, state.items, owners, expedition, terminal)
 	if not receiving_error.is_empty(): return receiving_error
 	if owners.size() != state.items.size(): return "Unowned physical item in save"
 	if not _fields(state.player, {"transform":TYPE_TRANSFORM3D,"camera":TYPE_TRANSFORM3D,"pitch":TYPE_FLOAT,
@@ -152,6 +162,53 @@ func _validate_collection_state(state: Dictionary) -> String:
 	elif goal.first_completion_at != -1.0:
 		return "An incomplete collection has a completion time"
 	return ""
+
+func _validate_disposals(state: Dictionary, terminal: Dictionary) -> String:
+	var disposal: Dictionary = state.incinerator
+	if not _fields(disposal, {"warning_shown": TYPE_BOOL, "receipts": TYPE_ARRAY}, "Incinerator"):
+		return _error
+	if not disposal.warning_shown and not disposal.receipts.is_empty():
+		return "Disposal receipts require a displayed warning"
+	var seed_prefix: String = state.run.id + ":wing_seed_v1:"
+	var previous := 0.0
+	for receipt: Variant in disposal.receipts:
+		if not _fields(receipt, {"item_id": TYPE_STRING, "definition_id": TYPE_STRING, "at": TYPE_FLOAT}, "Disposal receipt"):
+			return _error
+		var id: String = receipt.item_id
+		if id.is_empty() or state.items.has(id) or terminal.has(id):
+			return "Missing or multiply owned disposal identity: " + id
+		if not is_finite(receipt.at) or receipt.at < previous or receipt.at > state.timeline.elapsed:
+			return "Invalid disposal time: " + id
+		if Catalog.get_definition_by_id(StringName(receipt.definition_id)) == null:
+			return "Unknown disposal definition: " + id
+		if id.begins_with(seed_prefix) and receipt.definition_id != _seed_definition(id.trim_prefix(seed_prefix)):
+			return "Disposal receipt differs from its authored seed: " + id
+		terminal[id] = receipt
+		previous = receipt.at
+	return ""
+
+func _seed_definition(host: String) -> String:
+	if _seed_definitions.is_empty():
+		# Read the palette and wing overrides without instantiating any world items.
+		var wing_scene := load(WING_PATH) as PackedScene
+		var authored := wing_scene.get_state()
+		for index in authored.get_node_count():
+			if String(authored.get_node_path(index)).trim_prefix("./") == "DevelopmentSetup":
+				var setup := authored.get_node_instance(index)
+				if setup != null:
+					_read_seed_definitions(setup.get_state(), "SeedItems")
+				break
+		_read_seed_definitions(authored, "DevelopmentSetup/SeedItems")
+	return _seed_definitions.get(host, "")
+
+func _read_seed_definitions(scene: SceneState, parent: String) -> void:
+	for index in scene.get_node_count():
+		if String(scene.get_node_path(index, true)).trim_prefix("./") != parent:
+			continue
+		for property in scene.get_node_property_count(index):
+			if scene.get_node_property_name(index, property) == &"item_id":
+				_seed_definitions[String(scene.get_node_name(index))] = String(scene.get_node_property_value(index, property))
+				break
 
 func _claim(id: String, owner: String, items: Dictionary, owners: Dictionary) -> bool:
 	if not items.has(id) or owners.has(id):
@@ -205,7 +262,8 @@ func _batch_states(receiving: Dictionary) -> Array:
 		all.append(pending.batch)
 	return all
 
-func _validate_receiving(receiving: Variant, away: Dictionary, items: Dictionary, owners: Dictionary, expedition: RefCounted) -> String:
+func _validate_receiving(receiving: Variant, away: Dictionary, items: Dictionary, owners: Dictionary,
+		expedition: RefCounted, terminal: Dictionary) -> String:
 	if not _fields(receiving, {"manager":TYPE_DICTIONARY,"admission":TYPE_DICTIONARY,"cycle":TYPE_DICTIONARY}, "Receiving"): return _error
 	if not _fields(receiving.manager, {"active":TYPE_STRING,"queue":TYPE_ARRAY,"batches":TYPE_ARRAY}, "Deposits"): return _error
 	if not _fields(receiving.admission, {"returns":TYPE_DICTIONARY,"batch_teams":TYPE_DICTIONARY,"pending":TYPE_ARRAY}, "Return admission"): return _error
@@ -230,8 +288,8 @@ func _validate_receiving(receiving: Variant, away: Dictionary, items: Dictionary
 				if not _claim(entry.item_instance_id, "away cargo" if away.has(batch.batch_id) else "cargo", items, owners): return _error
 			elif batch.batch_id != receiving.manager.active:
 				return "Cargo released before becoming active"
-			elif expedition.spent.has(entry.item_instance_id):
-				if expedition.spent[entry.item_instance_id].definition_id != String(entry.definition_id):
+			elif terminal.has(entry.item_instance_id):
+				if terminal[entry.item_instance_id].definition_id != String(entry.definition_id):
 					return "Released active cargo has a mismatched consumption receipt"
 				continue
 			elif not owners.has(entry.item_instance_id):
@@ -277,7 +335,7 @@ func _validate_receiving(receiving: Variant, away: Dictionary, items: Dictionary
 	var cycle: Dictionary = receiving.cycle
 	if cycle.state not in [0,1,2,3,4,5] or cycle.elapsed < 0.0 or cycle.duration < 0.0 or cycle.departing != (cycle.state == 0 and cycle.busy) or cycle.busy != (not manager.active.is_empty()) or cycle.batch != manager.active: return "Inconsistent lift continuation"
 	if not manager.active.is_empty() and batches[manager.active].is_drained() != (cycle.state == 5 or cycle.departing): return "Lift phase/drained cargo mismatch"
-	return expedition.validate_cargo(receiving, batches, items, owners, current_profile)
+	return expedition.validate_cargo(receiving, batches, items, owners, current_profile, terminal)
 
 func restore(wing: Node, state: Dictionary) -> String:
 	var validation := validate(state)
@@ -301,6 +359,7 @@ func restore(wing: Node, state: Dictionary) -> String:
 		item.contaminated = state.items[id].contaminated
 		items[id] = item
 	var player := wing.get_node("Player")
+	wing.incinerator.restore_state(state.incinerator)
 	wing.get_node("DevelopmentSetup/SeedRegistrar").restore_state(state.hosts, items)
 	player.carried_items.restore_state(state.carry, items)
 	for path: String in state.surfaces:

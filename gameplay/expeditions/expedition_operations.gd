@@ -28,6 +28,9 @@ var _active: Dictionary = {}
 var _away_cargo: Dictionary = {}
 var _spent_ids: Dictionary = {}
 
+func has_spent_item(item_id: String) -> bool:
+	return _spent_ids.has(item_id)
+
 func _init(identity: RefCounted, clock: RefCounted) -> void:
 	_identity = identity
 	_clock = clock

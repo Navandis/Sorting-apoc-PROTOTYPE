@@ -2,7 +2,6 @@ extends Node
 
 const SaveService = preload("res://gameplay/run/run_save_service.gd")
 const Snapshot = preload("res://gameplay/run/run_snapshot.gd")
-const WING_PATH := "res://gameplay/logistics_wing/wing_gameplay.tscn"
 const AUTO_SAVE_INTERVAL := 60.0
 
 var save_service: RefCounted
@@ -37,7 +36,7 @@ func _input(event: InputEvent) -> void:
 				var editor: CanvasLayer = wing.get_node("Player")._zone_editor
 				if editor.visible and not menu_open:
 					editor.close_top_modal()
-				elif menu_open or not wing.close_dispatch_layer():
+				elif menu_open or not wing.close_service_layer():
 					set_menu_open(not menu_open)
 		get_viewport().set_input_as_handled()
 	elif menu_open and event is InputEventKey:
@@ -86,7 +85,7 @@ func confirm_new_run() -> void:
 	start_new_run()
 
 func _candidate() -> Node3D:
-	var candidate: Node3D = load(WING_PATH).instantiate()
+	var candidate: Node3D = load(Snapshot.WING_PATH).instantiate()
 	candidate.process_mode = Node.PROCESS_MODE_PAUSABLE
 	candidate.hide()
 	return candidate

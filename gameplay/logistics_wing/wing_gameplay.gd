@@ -7,6 +7,8 @@ const GoalHUD = preload("res://gameplay/run/collection_goal_hud.gd")
 const ExpeditionConfig = preload("res://gameplay/expeditions/expedition_test_config.gd")
 const ExpeditionOperations = preload("res://gameplay/expeditions/expedition_operations.gd")
 const DispatchPanel = preload("res://gameplay/expeditions/dispatch_panel.gd")
+const IncineratorOperations = preload("res://gameplay/disposal/incinerator_operations.gd")
+const IncineratorPanel = preload("res://gameplay/disposal/incinerator_panel.gd")
 
 @export var development_setup_enabled: bool = true
 var run_identity: RefCounted
@@ -16,6 +18,8 @@ var collection_goal: RefCounted
 var expeditions: RefCounted
 var _collection_hud: CanvasLayer
 var dispatch_panel: CanvasLayer
+var incinerator: RefCounted
+var incinerator_panel: CanvasLayer
 var _collection_error := ""
 
 
@@ -24,6 +28,7 @@ func configure_new_run() -> void:
 	run_timeline = Timeline.new()
 	collection_goal = Goal.new(ExpeditionConfig.COLLECTION_TARGET)
 	expeditions = ExpeditionOperations.new(run_identity, run_timeline.clock)
+	incinerator = IncineratorOperations.new(run_timeline.clock, expeditions.has_spent_item)
 
 
 func configure_continue(state: Dictionary) -> void:
@@ -33,6 +38,7 @@ func configure_continue(state: Dictionary) -> void:
 	run_timeline = Timeline.new()
 	run_timeline.restore_state(state.timeline)
 	expeditions = ExpeditionOperations.new(run_identity, run_timeline.clock)
+	incinerator = IncineratorOperations.new(run_timeline.clock, expeditions.has_spent_item)
 	collection_goal = Goal.new(state.goal.target)
 	collection_goal.restore_state(state.goal)
 
@@ -87,7 +93,7 @@ func _bind_collection() -> void:
 		_refresh_collection()
 		if _collection_error.is_empty():
 			_attach_collection_hud()
-			_attach_dispatch_panel()
+			_attach_service_panels()
 
 
 func _refresh_collection() -> void:
@@ -106,7 +112,7 @@ func finish_restoring() -> String:
 		return "Stored collection meets its target without a completion record"
 	restoring = false
 	_attach_collection_hud()
-	_attach_dispatch_panel()
+	_attach_service_panels()
 	return ""
 
 
@@ -117,7 +123,7 @@ func _attach_collection_hud() -> void:
 	_collection_hud.clock = run_timeline.clock
 	add_child(_collection_hud)
 
-func _attach_dispatch_panel() -> void:
+func _attach_service_panels() -> void:
 	var player := $Player
 	player.dispatch_station = get_node("Environment/Greybox/Proxies/DispatchWorkSurface/StaticBody3D")
 	dispatch_panel = DispatchPanel.new()
@@ -126,20 +132,45 @@ func _attach_dispatch_panel() -> void:
 	dispatch_panel.carry = player.carried_items
 	dispatch_panel.clock = run_timeline.clock
 	add_child(dispatch_panel)
-	player.dispatch_requested.connect(dispatch_panel.open_panel)
-	dispatch_panel.panel_toggled.connect(_on_dispatch_toggled)
+	player.dispatch_requested.connect(func():
+		if _can_open_service_panel():
+			dispatch_panel.open_panel())
+	dispatch_panel.panel_toggled.connect(_on_service_panel_toggled)
 
-func _on_dispatch_toggled() -> void:
-	if dispatch_panel.is_open():
+	player.incinerator_station = get_node("Environment/Greybox/Proxies/IncineratorMachine/StaticBody3D")
+	incinerator_panel = IncineratorPanel.new()
+	incinerator_panel.name = "IncineratorPanel"
+	incinerator_panel.operations = incinerator
+	incinerator_panel.carry = player.carried_items
+	incinerator_panel.station_reachable = player.can_reach_incinerator
+	add_child(incinerator_panel)
+	player.incinerator_requested.connect(func():
+		if _can_open_service_panel() and player.can_reach_incinerator():
+			incinerator_panel.open_panel())
+	incinerator_panel.panel_toggled.connect(_on_service_panel_toggled)
+
+func _can_open_service_panel() -> bool:
+	return not get_tree().paused and not $Player.world_input_blocked and not $Player._zone_editor_open
+
+func _service_panel_open() -> bool:
+	return (dispatch_panel != null and dispatch_panel.is_open()) \
+		or (incinerator_panel != null and incinerator_panel.is_open())
+
+func _on_service_panel_toggled() -> void:
+	if _service_panel_open():
 		$Player.velocity = Vector3.ZERO
 	sync_player_input(get_tree().paused)
 
 func sync_player_input(paused: bool) -> void:
-	var blocked: bool = paused or (dispatch_panel != null and dispatch_panel.is_open())
+	var blocked := paused or _service_panel_open()
+	if incinerator_panel != null and incinerator_panel.is_open():
+		incinerator_panel.refresh_key_guards()
 	$Player.set_world_input_blocked(blocked)
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if blocked else Input.MOUSE_MODE_CAPTURED
 
-func close_dispatch_layer() -> bool:
+func close_service_layer() -> bool:
+	if incinerator_panel != null and incinerator_panel.close_top():
+		return true
 	return dispatch_panel != null and dispatch_panel.close_top()
 
 
