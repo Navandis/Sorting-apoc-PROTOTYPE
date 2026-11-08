@@ -496,7 +496,7 @@ The existing Deeper-Bunker Approach is the longest sparse circulation leg: wider
 
 ## 21. Incinerator utility spur
 
-Retain the accepted narrowed Incinerator pocket, front-operated machine envelope and southward spur near the end of the wider pre-bend Deeper approach. The balanced dog-leg and ordinary corridor buffer to Ops remain unchanged. Future machinery details must fit this working geometry or motivate a focused new review; no active Incinerator gameplay is implied. [A17]
+Retain the accepted narrowed Incinerator pocket, front-operated machine envelope and southward spur near the end of the wider pre-bend Deeper approach. The balanced dog-leg and ordinary corridor buffer to Ops remain unchanged. The interaction uses the existing machine and approach. Future machinery details must fit this working geometry or motivate a focused new review. [A17]
 
 - Scale: Massive, approximately 80%+ of local ceiling height, most of the back-wall width, minimal side clearance, front-operated.
 
@@ -506,11 +506,11 @@ Retain the accepted narrowed Incinerator pocket, front-operated machine envelope
 
 - Safety: Restrained but credible keep-clear, hot-surface, extinguisher, emergency cutoff and electrical markings.
 
-- Progression: an already installed but offline machine remains possible fiction. Its unlock or repair timing is OPEN under continuous play; the former Day-1 exclusion and later-night repair schedule no longer define it. Do not remove, activate or remodel the machine by inference. [38]
+- Availability from the start of the run is confirmed in GDD §15.3. The machine works through Fuel and energy outages. [38]
 
-- Design meaning: No loot item is game-defined “junk.” Incineration asks the player to sacrifice real Utility for space/operational efficiency.
+- The player chooses which carried item to sacrifice for working space. The interaction shows its facts and makes the permanent loss explicit.
 
-Administrator one-way messages can introduce the repair/unlock and reinforce the game’s hoarding tension with dry humor rather than presenting the machine as an obvious tutorial mechanic.
+Administrator one-way messages can introduce the machine and reinforce the game's hoarding tension with dry humor.
 
 ## 22. Blocked, abandoned, and dead-space continuations
 
@@ -542,7 +542,7 @@ Explicit changes must preserve applicable installation contracts: dimensions, le
 
 - Storage: all installed capacity from the start is the favored direction (§15.1). Historical shelf sockets and placeholder clutter remain evidence of earlier authoring, not a mandatory upgrade tree or a removal instruction. [38]
 
-- Large machinery: Incinerator and Salvager may remain installed landmarks whose usability changes through an explicitly designed repair/unlock. The continuous timing and presentation of that change remain unresolved; no nightly mechanism is carried forward. [38]
+- The Incinerator operates from the beginning. Salvager repair or unlock timing and presentation remain open. [38]
 
 - Narrative confirmation: Administrator one-way messages can explain upgrades, repairs, tutorial milestones, and operational changes in a practical, familiar tone.
 

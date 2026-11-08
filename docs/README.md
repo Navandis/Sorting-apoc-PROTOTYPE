@@ -49,12 +49,14 @@ The two 5 November records are included unchanged from the editions the develope
 
 ## What is playable now
 
-F5 launches `res://gameplay/run/run_shell.tscn`. New Run and Continue use the collection foundation with live Utility targets, a continuous clock, and two controlled development hauls. Standalone F6 `res://gameplay/logistics_wing/wing_gameplay.tscn` keeps the authored palette for scene review. The [survival-era archive](design_history/survival-era/README.md) preserves the earlier plans and frozen M4 input.
+F5 launches `res://gameplay/run/run_shell.tscn` with live Utility targets, a continuous clock and player-dispatched expeditions. The local Incinerator build adds single-item disposal and uses schema 7. Confirmed New Run retains the incompatible schema-6 snapshot file. Standalone F6 `res://gameplay/logistics_wing/wing_gameplay.tscn` keeps the authored palette for scene review. The [survival-era archive](design_history/survival-era/README.md) preserves the earlier plans and frozen M4 input.
 
 See [CURRENT_STATE](CURRENT_STATE.md) for the current content, scene, preservation and debt details. The [M4 validation record](testing/m4-expedition-loadout-validation-2026-10-24.md), [publication record](testing/m4-publication-2026-10-25.md), and [semantic reconciliation record](testing/m4-documentation-semantic-reconciliation-2026-10-25.md) preserve prior acceptance. They are not new tests of v0.16.
 
 ## Next-work boundary
 
 The expedition loop and the separate [furniture movement collision repair](testing/2026-11-08-furniture-collision-repair-result.md) are human-accepted, published and closed in their bounded scopes.
+
+The Incinerator is ready for developer playtest in the local build. [Technical result and playtest](testing/2026-11-08-incinerator-deliberate-disposal-result.md).
 
 The complete pre-adoption operational index remains available in [the pinned c9f9417 snapshot](https://github.com/Navandis/Sorting-apoc-PROTOTYPE/blob/c9f9417a97cf65ef416c58189ca1f741b6a90406/docs/README.md). Current-facing consolidation changes routing, not the historical evidence.

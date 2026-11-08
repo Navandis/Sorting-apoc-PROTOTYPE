@@ -1,0 +1,143 @@
+Godot Engine v4.7.stable.official.5b4e0cb0f - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+Wing functional storage: installed 16 empty deterministic surface(s); F6 developer grids default OFF, F7 demo disabled.
+BODY New Run SM_Table_SeedWest direction=(0.0, 0.0, -1.0) travel=0.17820656299591 requested=1.25850701332092 blocks=true
+BODY New Run SM_Table_SeedWest direction=(1.0, 0.0, 0.0) travel=0.17965565621853 requested=1.81248664855957 blocks=true
+BODY New Run SM_Table_SeedWest direction=(1.0, 0.0, -1.0) travel=0.25034484267235 requested=1.99496579170227 blocks=true
+FIXTURE New Run DevelopmentSetup/Tables/SM_Table_SeedWest bounds=[P: (-14.71094, -0.005716, 3.086047), S: (2.584972, 0.885119, 1.477014)] blocking_shapes=1 approaches=3 stopped=3 player_mask=1
+BODY New Run SM_Table_SeedEast direction=(0.0, 0.0, 1.0) travel=0.17965561151505 requested=1.81248617172241 blocks=true
+BODY New Run SM_Table_SeedEast direction=(-1.0, 0.0, 0.0) travel=0.17820659279823 requested=1.2585072517395 blocks=true
+BODY New Run SM_Table_SeedEast direction=(-1.0, 0.0, -1.0) travel=0.2503447830677 requested=1.9949654340744 blocks=true
+BODY New Run SM_Table_SeedEast direction=(-1.0, 0.0, 1.0) travel=0.25034481287003 requested=1.99496555328369 blocks=true
+FIXTURE New Run DevelopmentSetup/Tables/SM_Table_SeedEast bounds=[P: (-6.808355, -0.005716, -4.678391), S: (1.477014, 0.885119, 2.584972)] blocking_shapes=1 approaches=4 stopped=4 player_mask=1
+BODY New Run SM_Table_Palette_Food direction=(0.0, 0.0, -1.0) travel=0.17820656299591 requested=1.25850701332092 blocks=true
+BODY New Run SM_Table_Palette_Food direction=(-1.0, 0.0, 0.0) travel=0.17965561151505 requested=1.81248617172241 blocks=true
+BODY New Run SM_Table_Palette_Food direction=(-1.0, 0.0, -1.0) travel=0.2503447830677 requested=1.9949654340744 blocks=true
+BODY New Run SM_Table_Palette_Food direction=(1.0, 0.0, -1.0) travel=0.2503447830677 requested=1.9949654340744 blocks=true
+FIXTURE New Run DevelopmentSetup/Tables/SM_Table_Palette_Food bounds=[P: (-7.925129, -0.005716, 3.218106), S: (2.584972, 0.885119, 1.477014)] blocking_shapes=1 approaches=4 stopped=4 player_mask=1
+BODY New Run SM_Table_Palette_Hydration direction=(0.0, 0.0, -1.0) travel=0.17820656299591 requested=1.25850701332092 blocks=true
+BODY New Run SM_Table_Palette_Hydration direction=(0.0, 0.0, 1.0) travel=0.17820656299591 requested=1.25850701332092 blocks=true
+BODY New Run SM_Table_Palette_Hydration direction=(1.0, 0.0, 0.0) travel=0.17965565621853 requested=1.81248664855957 blocks=true
+BODY New Run SM_Table_Palette_Hydration direction=(-1.0, 0.0, 1.0) travel=0.25034484267235 requested=1.99496579170227 blocks=true
+BODY New Run SM_Table_Palette_Hydration direction=(1.0, 0.0, 1.0) travel=0.25034484267235 requested=1.99496579170227 blocks=true
+FIXTURE New Run DevelopmentSetup/Tables/SM_Table_Palette_Hydration bounds=[P: (-14.75983, -0.005716, -4.688527), S: (2.584972, 0.885119, 1.477014)] blocking_shapes=1 approaches=5 stopped=5 player_mask=1
+BODY New Run SM_ventilated_locker_GalleryC_West direction=(0.0, 0.0, -1.0) travel=0.17904824018478 requested=1.25150442123413 blocks=true
+BODY New Run SM_ventilated_locker_GalleryC_West direction=(0.0, 0.0, 1.0) travel=0.17904831469059 requested=1.25150489807129 blocks=true
+BODY New Run SM_ventilated_locker_GalleryC_West direction=(1.0, 0.0, 0.0) travel=0.1788087785244 requested=0.94870567321777 blocks=true
+BODY New Run SM_ventilated_locker_GalleryC_West direction=(1.0, 0.0, -1.0) travel=0.19021952152252 requested=1.3573853969574 blocks=true
+BODY New Run SM_ventilated_locker_GalleryC_West direction=(1.0, 0.0, 1.0) travel=0.19817301630974 requested=1.35738575458527 blocks=true
+FIXTURE New Run FunctionalFixtures/SM_ventilated_locker_GalleryC_West bounds=[P: (-1.772524, -0.000346, 8.268509), S: (0.857411, 2.758472, 1.463009)] blocking_shapes=1 approaches=5 stopped=5 player_mask=1
+BODY New Run SM_MetalShelves_GalleryA_West direction=(0.0, 0.0, -1.0) travel=0.18335674703121 requested=2.13360571861267 blocks=true
+BODY New Run SM_MetalShelves_GalleryA_West direction=(1.0, 0.0, 0.0) travel=0.18264304101467 requested=1.06872272491455 blocks=true
+BODY New Run SM_MetalShelves_GalleryA_West direction=(1.0, 0.0, -1.0) travel=0.24675710499287 requested=2.18297433853149 blocks=true
+FIXTURE New Run FunctionalFixtures/SM_MetalShelves_GalleryA_West bounds=[P: (-2.840304, -0.0, -5.43396), S: (1.097445, 2.935879, 3.227211)] blocking_shapes=1 approaches=3 stopped=3 player_mask=1
+BODY New Run SM_MetalShelves_GalleryB_North direction=(0.0, 0.0, 1.0) travel=0.17951217293739 requested=1.06872367858887 blocks=true
+BODY New Run SM_MetalShelves_GalleryB_North direction=(1.0, 0.0, 1.0) travel=0.26274573802948 requested=2.18297481536865 blocks=true
+FIXTURE New Run FunctionalFixtures/SM_MetalShelves_GalleryB_North bounds=[P: (12.38226, -0.0, -14.31714), S: (3.227212, 2.935879, 1.097445)] blocking_shapes=1 approaches=2 stopped=2 player_mask=1
+BODY New Run ModularRack_GalleryB_Initial direction=(0.0, 0.0, -1.0) travel=0.17921379208565 requested=2.53999900817871 blocks=true
+BODY New Run ModularRack_GalleryB_Initial direction=(0.0, 0.0, 1.0) travel=0.17921383678913 requested=2.53999948501587 blocks=true
+BODY New Run ModularRack_GalleryB_Initial direction=(-1.0, 0.0, 0.0) travel=0.17800782620907 requested=0.9300000667572 blocks=true
+OBSTRUCTED New Run ModularRack_GalleryB_Initial direction=(1.0, 0.0, 0.0) by=/root/RunShell/WingGameplay/FunctionalFixtures/FixedLadder_GalleryB_Initial/MovementCollision
+BODY New Run ModularRack_GalleryB_Initial direction=(-1.0, 0.0, -1.0) travel=0.23419463634491 requested=2.511155128479 blocks=true
+BODY New Run ModularRack_GalleryB_Initial direction=(1.0, 0.0, -1.0) travel=0.23419463634491 requested=2.511155128479 blocks=true
+BODY New Run ModularRack_GalleryB_Initial direction=(-1.0, 0.0, 1.0) travel=0.23419459164143 requested=2.51115465164185 blocks=true
+BODY New Run ModularRack_GalleryB_Initial direction=(1.0, 0.0, 1.0) travel=0.23419459164143 requested=2.51115465164185 blocks=true
+FIXTURE New Run FunctionalFixtures/ModularRack_GalleryB_Initial bounds=[P: (0.190746, 0.0, -10.54006), S: (0.82, 3.0, 4.039999)] blocking_shapes=1 approaches=7 stopped=7 player_mask=1
+TAKE Cereal Box from (-13.41845, 0.436843, 3.824554)
+TAKE Med Kit from (-6.069848, 0.436843, -3.385905)
+TAKE Bread Loaf from (-6.632643, 0.436843, 3.956613)
+TAKE AR-15 Rifle from (-13.46735, 0.436843, -3.95002)
+STORE FunctionalFixtures/SM_ventilated_locker_GalleryC_West surface=SM_ventilated_locker_GalleryC_West_level_1 grid=(8, 13)
+STORE FunctionalFixtures/SM_MetalShelves_GalleryA_West surface=SM_MetalShelves_GalleryA_West_level_1 grid=(10, 29)
+STORE FunctionalFixtures/SM_MetalShelves_GalleryB_North surface=SM_MetalShelves_GalleryB_North_level_2 grid=(10, 29)
+Wing functional storage: installed 16 empty deterministic surface(s); F6 developer grids default OFF, F7 demo disabled.
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/dummy/storage/material_storage.cpp:264)
+BODY Continue SM_Table_SeedWest direction=(0.0, 0.0, -1.0) travel=0.17820656299591 requested=1.25850701332092 blocks=true
+BODY Continue SM_Table_SeedWest direction=(1.0, 0.0, 0.0) travel=0.17965565621853 requested=1.81248664855957 blocks=true
+BODY Continue SM_Table_SeedWest direction=(1.0, 0.0, -1.0) travel=0.25034484267235 requested=1.99496579170227 blocks=true
+FIXTURE Continue DevelopmentSetup/Tables/SM_Table_SeedWest bounds=[P: (-14.71094, -0.005716, 3.086047), S: (2.584972, 0.885119, 1.477014)] blocking_shapes=1 approaches=3 stopped=3 player_mask=1
+BODY Continue SM_Table_SeedEast direction=(0.0, 0.0, 1.0) travel=0.17965561151505 requested=1.81248617172241 blocks=true
+BODY Continue SM_Table_SeedEast direction=(-1.0, 0.0, 0.0) travel=0.17820659279823 requested=1.2585072517395 blocks=true
+BODY Continue SM_Table_SeedEast direction=(-1.0, 0.0, -1.0) travel=0.2503447830677 requested=1.9949654340744 blocks=true
+BODY Continue SM_Table_SeedEast direction=(-1.0, 0.0, 1.0) travel=0.25034481287003 requested=1.99496555328369 blocks=true
+FIXTURE Continue DevelopmentSetup/Tables/SM_Table_SeedEast bounds=[P: (-6.808355, -0.005716, -4.678391), S: (1.477014, 0.885119, 2.584972)] blocking_shapes=1 approaches=4 stopped=4 player_mask=1
+BODY Continue SM_Table_Palette_Food direction=(0.0, 0.0, -1.0) travel=0.17820656299591 requested=1.25850701332092 blocks=true
+BODY Continue SM_Table_Palette_Food direction=(-1.0, 0.0, 0.0) travel=0.17965561151505 requested=1.81248617172241 blocks=true
+BODY Continue SM_Table_Palette_Food direction=(-1.0, 0.0, -1.0) travel=0.2503447830677 requested=1.9949654340744 blocks=true
+BODY Continue SM_Table_Palette_Food direction=(1.0, 0.0, -1.0) travel=0.2503447830677 requested=1.9949654340744 blocks=true
+FIXTURE Continue DevelopmentSetup/Tables/SM_Table_Palette_Food bounds=[P: (-7.925129, -0.005716, 3.218106), S: (2.584972, 0.885119, 1.477014)] blocking_shapes=1 approaches=4 stopped=4 player_mask=1
+BODY Continue SM_Table_Palette_Hydration direction=(0.0, 0.0, -1.0) travel=0.17820656299591 requested=1.25850701332092 blocks=true
+BODY Continue SM_Table_Palette_Hydration direction=(0.0, 0.0, 1.0) travel=0.17820656299591 requested=1.25850701332092 blocks=true
+BODY Continue SM_Table_Palette_Hydration direction=(1.0, 0.0, 0.0) travel=0.17965565621853 requested=1.81248664855957 blocks=true
+BODY Continue SM_Table_Palette_Hydration direction=(-1.0, 0.0, 1.0) travel=0.25034484267235 requested=1.99496579170227 blocks=true
+BODY Continue SM_Table_Palette_Hydration direction=(1.0, 0.0, 1.0) travel=0.25034484267235 requested=1.99496579170227 blocks=true
+FIXTURE Continue DevelopmentSetup/Tables/SM_Table_Palette_Hydration bounds=[P: (-14.75983, -0.005716, -4.688527), S: (2.584972, 0.885119, 1.477014)] blocking_shapes=1 approaches=5 stopped=5 player_mask=1
+BODY Continue SM_ventilated_locker_GalleryC_West direction=(0.0, 0.0, -1.0) travel=0.17904824018478 requested=1.25150442123413 blocks=true
+BODY Continue SM_ventilated_locker_GalleryC_West direction=(0.0, 0.0, 1.0) travel=0.17904831469059 requested=1.25150489807129 blocks=true
+BODY Continue SM_ventilated_locker_GalleryC_West direction=(1.0, 0.0, 0.0) travel=0.1788087785244 requested=0.94870567321777 blocks=true
+BODY Continue SM_ventilated_locker_GalleryC_West direction=(1.0, 0.0, -1.0) travel=0.19021952152252 requested=1.3573853969574 blocks=true
+BODY Continue SM_ventilated_locker_GalleryC_West direction=(1.0, 0.0, 1.0) travel=0.19817301630974 requested=1.35738575458527 blocks=true
+FIXTURE Continue FunctionalFixtures/SM_ventilated_locker_GalleryC_West bounds=[P: (-1.772524, -0.000346, 8.268509), S: (0.857411, 2.758472, 1.463009)] blocking_shapes=1 approaches=5 stopped=5 player_mask=1
+BODY Continue SM_MetalShelves_GalleryA_West direction=(0.0, 0.0, -1.0) travel=0.18335674703121 requested=2.13360571861267 blocks=true
+BODY Continue SM_MetalShelves_GalleryA_West direction=(1.0, 0.0, 0.0) travel=0.18264304101467 requested=1.06872272491455 blocks=true
+BODY Continue SM_MetalShelves_GalleryA_West direction=(1.0, 0.0, -1.0) travel=0.24675710499287 requested=2.18297433853149 blocks=true
+FIXTURE Continue FunctionalFixtures/SM_MetalShelves_GalleryA_West bounds=[P: (-2.840304, -0.0, -5.43396), S: (1.097445, 2.935879, 3.227211)] blocking_shapes=1 approaches=3 stopped=3 player_mask=1
+BODY Continue SM_MetalShelves_GalleryB_North direction=(0.0, 0.0, 1.0) travel=0.17951217293739 requested=1.06872367858887 blocks=true
+BODY Continue SM_MetalShelves_GalleryB_North direction=(1.0, 0.0, 1.0) travel=0.26274573802948 requested=2.18297481536865 blocks=true
+FIXTURE Continue FunctionalFixtures/SM_MetalShelves_GalleryB_North bounds=[P: (12.38226, -0.0, -14.31714), S: (3.227212, 2.935879, 1.097445)] blocking_shapes=1 approaches=2 stopped=2 player_mask=1
+BODY Continue ModularRack_GalleryB_Initial direction=(0.0, 0.0, -1.0) travel=0.17921379208565 requested=2.53999900817871 blocks=true
+BODY Continue ModularRack_GalleryB_Initial direction=(0.0, 0.0, 1.0) travel=0.17921383678913 requested=2.53999948501587 blocks=true
+BODY Continue ModularRack_GalleryB_Initial direction=(-1.0, 0.0, 0.0) travel=0.17800782620907 requested=0.9300000667572 blocks=true
+OBSTRUCTED Continue ModularRack_GalleryB_Initial direction=(1.0, 0.0, 0.0) by=/root/RunShell/WingGameplay/FunctionalFixtures/FixedLadder_GalleryB_Initial/MovementCollision
+BODY Continue ModularRack_GalleryB_Initial direction=(-1.0, 0.0, -1.0) travel=0.23419463634491 requested=2.511155128479 blocks=true
+BODY Continue ModularRack_GalleryB_Initial direction=(1.0, 0.0, -1.0) travel=0.23419463634491 requested=2.511155128479 blocks=true
+BODY Continue ModularRack_GalleryB_Initial direction=(-1.0, 0.0, 1.0) travel=0.23419459164143 requested=2.51115465164185 blocks=true
+BODY Continue ModularRack_GalleryB_Initial direction=(1.0, 0.0, 1.0) travel=0.23419459164143 requested=2.51115465164185 blocks=true
+FIXTURE Continue FunctionalFixtures/ModularRack_GalleryB_Initial bounds=[P: (0.190746, 0.0, -10.54006), S: (0.82, 3.0, 4.039999)] blocking_shapes=1 approaches=7 stopped=7 player_mask=1
+Wing functional storage: installed 16 empty deterministic surface(s); F6 developer grids default OFF, F7 demo disabled.
+BODY Visible F6 SM_Table_SeedWest direction=(0.0, 0.0, -1.0) travel=0.17820656299591 requested=1.25850701332092 blocks=true
+BODY Visible F6 SM_Table_SeedWest direction=(1.0, 0.0, 0.0) travel=0.17965565621853 requested=1.81248664855957 blocks=true
+BODY Visible F6 SM_Table_SeedWest direction=(1.0, 0.0, -1.0) travel=0.25034484267235 requested=1.99496579170227 blocks=true
+FIXTURE Visible F6 DevelopmentSetup/Tables/SM_Table_SeedWest bounds=[P: (-14.71094, -0.005716, 3.086047), S: (2.584972, 0.885119, 1.477014)] blocking_shapes=1 approaches=3 stopped=3 player_mask=1
+BODY Visible F6 SM_Table_SeedEast direction=(0.0, 0.0, 1.0) travel=0.17965561151505 requested=1.81248617172241 blocks=true
+BODY Visible F6 SM_Table_SeedEast direction=(-1.0, 0.0, 0.0) travel=0.17820659279823 requested=1.2585072517395 blocks=true
+BODY Visible F6 SM_Table_SeedEast direction=(-1.0, 0.0, -1.0) travel=0.2503447830677 requested=1.9949654340744 blocks=true
+BODY Visible F6 SM_Table_SeedEast direction=(-1.0, 0.0, 1.0) travel=0.25034481287003 requested=1.99496555328369 blocks=true
+FIXTURE Visible F6 DevelopmentSetup/Tables/SM_Table_SeedEast bounds=[P: (-6.808355, -0.005716, -4.678391), S: (1.477014, 0.885119, 2.584972)] blocking_shapes=1 approaches=4 stopped=4 player_mask=1
+BODY Visible F6 SM_Table_Palette_Food direction=(0.0, 0.0, -1.0) travel=0.17820656299591 requested=1.25850701332092 blocks=true
+BODY Visible F6 SM_Table_Palette_Food direction=(-1.0, 0.0, 0.0) travel=0.17965561151505 requested=1.81248617172241 blocks=true
+BODY Visible F6 SM_Table_Palette_Food direction=(-1.0, 0.0, -1.0) travel=0.2503447830677 requested=1.9949654340744 blocks=true
+BODY Visible F6 SM_Table_Palette_Food direction=(1.0, 0.0, -1.0) travel=0.2503447830677 requested=1.9949654340744 blocks=true
+FIXTURE Visible F6 DevelopmentSetup/Tables/SM_Table_Palette_Food bounds=[P: (-7.925129, -0.005716, 3.218106), S: (2.584972, 0.885119, 1.477014)] blocking_shapes=1 approaches=4 stopped=4 player_mask=1
+BODY Visible F6 SM_Table_Palette_Hydration direction=(0.0, 0.0, -1.0) travel=0.17820656299591 requested=1.25850701332092 blocks=true
+BODY Visible F6 SM_Table_Palette_Hydration direction=(0.0, 0.0, 1.0) travel=0.17820656299591 requested=1.25850701332092 blocks=true
+BODY Visible F6 SM_Table_Palette_Hydration direction=(1.0, 0.0, 0.0) travel=0.17965565621853 requested=1.81248664855957 blocks=true
+BODY Visible F6 SM_Table_Palette_Hydration direction=(-1.0, 0.0, 1.0) travel=0.25034484267235 requested=1.99496579170227 blocks=true
+BODY Visible F6 SM_Table_Palette_Hydration direction=(1.0, 0.0, 1.0) travel=0.25034484267235 requested=1.99496579170227 blocks=true
+FIXTURE Visible F6 DevelopmentSetup/Tables/SM_Table_Palette_Hydration bounds=[P: (-14.75983, -0.005716, -4.688527), S: (2.584972, 0.885119, 1.477014)] blocking_shapes=1 approaches=5 stopped=5 player_mask=1
+BODY Visible F6 SM_ventilated_locker_GalleryC_West direction=(0.0, 0.0, -1.0) travel=0.17904824018478 requested=1.25150442123413 blocks=true
+BODY Visible F6 SM_ventilated_locker_GalleryC_West direction=(0.0, 0.0, 1.0) travel=0.17904831469059 requested=1.25150489807129 blocks=true
+BODY Visible F6 SM_ventilated_locker_GalleryC_West direction=(1.0, 0.0, 0.0) travel=0.1788087785244 requested=0.94870567321777 blocks=true
+BODY Visible F6 SM_ventilated_locker_GalleryC_West direction=(1.0, 0.0, -1.0) travel=0.19021952152252 requested=1.3573853969574 blocks=true
+BODY Visible F6 SM_ventilated_locker_GalleryC_West direction=(1.0, 0.0, 1.0) travel=0.19817301630974 requested=1.35738575458527 blocks=true
+FIXTURE Visible F6 FunctionalFixtures/SM_ventilated_locker_GalleryC_West bounds=[P: (-1.772524, -0.000346, 8.268509), S: (0.857411, 2.758472, 1.463009)] blocking_shapes=1 approaches=5 stopped=5 player_mask=1
+BODY Visible F6 SM_MetalShelves_GalleryA_West direction=(0.0, 0.0, -1.0) travel=0.18335674703121 requested=2.13360571861267 blocks=true
+BODY Visible F6 SM_MetalShelves_GalleryA_West direction=(1.0, 0.0, 0.0) travel=0.18264304101467 requested=1.06872272491455 blocks=true
+BODY Visible F6 SM_MetalShelves_GalleryA_West direction=(1.0, 0.0, -1.0) travel=0.24675710499287 requested=2.18297433853149 blocks=true
+FIXTURE Visible F6 FunctionalFixtures/SM_MetalShelves_GalleryA_West bounds=[P: (-2.840304, -0.0, -5.43396), S: (1.097445, 2.935879, 3.227211)] blocking_shapes=1 approaches=3 stopped=3 player_mask=1
+BODY Visible F6 SM_MetalShelves_GalleryB_North direction=(0.0, 0.0, 1.0) travel=0.17951217293739 requested=1.06872367858887 blocks=true
+BODY Visible F6 SM_MetalShelves_GalleryB_North direction=(1.0, 0.0, 1.0) travel=0.26274573802948 requested=2.18297481536865 blocks=true
+FIXTURE Visible F6 FunctionalFixtures/SM_MetalShelves_GalleryB_North bounds=[P: (12.38226, -0.0, -14.31714), S: (3.227212, 2.935879, 1.097445)] blocking_shapes=1 approaches=2 stopped=2 player_mask=1
+BODY Visible F6 ModularRack_GalleryB_Initial direction=(0.0, 0.0, -1.0) travel=0.17921379208565 requested=2.53999900817871 blocks=true
+BODY Visible F6 ModularRack_GalleryB_Initial direction=(0.0, 0.0, 1.0) travel=0.17921383678913 requested=2.53999948501587 blocks=true
+BODY Visible F6 ModularRack_GalleryB_Initial direction=(-1.0, 0.0, 0.0) travel=0.17800782620907 requested=0.9300000667572 blocks=true
+OBSTRUCTED Visible F6 ModularRack_GalleryB_Initial direction=(1.0, 0.0, 0.0) by=/root/WingGameplay/FunctionalFixtures/FixedLadder_GalleryB_Initial/MovementCollision
+BODY Visible F6 ModularRack_GalleryB_Initial direction=(-1.0, 0.0, -1.0) travel=0.23419463634491 requested=2.511155128479 blocks=true
+BODY Visible F6 ModularRack_GalleryB_Initial direction=(1.0, 0.0, -1.0) travel=0.23419463634491 requested=2.511155128479 blocks=true
+BODY Visible F6 ModularRack_GalleryB_Initial direction=(-1.0, 0.0, 1.0) travel=0.23419459164143 requested=2.51115465164185 blocks=true
+BODY Visible F6 ModularRack_GalleryB_Initial direction=(1.0, 0.0, 1.0) travel=0.23419459164143 requested=2.51115465164185 blocks=true
+FIXTURE Visible F6 FunctionalFixtures/ModularRack_GalleryB_Initial bounds=[P: (0.190746, 0.0, -10.54006), S: (0.82, 3.0, 4.039999)] blocking_shapes=1 approaches=7 stopped=7 player_mask=1
+furniture_movement_collision_tests: PASS failures=0

@@ -366,6 +366,7 @@ At the first successful simultaneous condition, record completion and the active
 | Game closed / not running | No accumulation of completion time; no offline gameplay advance. |
 | Zoning editor | Paused; retained intentional planning exception. |
 | Expedition preparation panel | Tentatively unpaused. Reconsider only if playtesting shows preparation interaction is excessively time-consuming. |
+| Incinerator panel and first-use warning | Runs at real-world speed while expeditions, autosave and the lift continue. |
 | Loading, focus loss, exceptional stalls, other future modals | Detailed handling remains OPEN. No undocumented selective progress while score time is stopped. |
 
 There is no time limit. The clock is a performance measure, not a countdown to loss. Calendar days, midnight and simulated hours are removed from the main-game structure. Time acceleration is set aside; no 2×/3× feature is required by this edition.
@@ -584,6 +585,8 @@ Retain whole-item cap-and-waste: credited Utility is the smaller of the item’s
 For example, at 11/12 supplied, an eligible +8 item credits 1, completes 12/12 and wastes 7. The player may accept that waste to save handling time; the game does not require exact arithmetic matches. The preview must describe the actual commitment before it occurs.
 
 A successful submission transfers the exact item once and records one contribution. Rejection preserves its prior owner and state. Notifications emitted during a tentative mutation are not proof of successful spending. Saving must not capture a half-completed transfer. Irreversible inputs are not temporary shelves and are not automatically returned on closing a panel.
+
+Incineration follows the same exact-item transaction boundary. Its receipt records destruction without a Utility lane or credit. See §15.3 for access, input and confirmation.
 
 <a id="s_8_3_Continuous_requests_with_bounded"></a>
 
@@ -979,7 +982,7 @@ Ops should matter through useful operation and accumulation efficiency. Its requ
 
 | **Category** | **Historical function—not current replacement** | **Current constraint** |
 | --- | --- | --- |
-| Fuel | Incinerator/Salvager and ordinary lighting/request-light outage windows. | Choose a meaningful operational effect without making core handling persistently unreadable or eliminating the only release/recovery route. |
+| Fuel | Incinerator/Salvager and ordinary lighting/request-light outage windows. | Incinerator access survives Fuel and energy outages. Any future Fuel effect must preserve legible core handling and a route to recovery. |
 | Electronics | Monitor, PA and music outages. | Essential live goal progress cannot be disabled or sold back. Any reduced convenience needs its own legible boundary. |
 | Morale | Recruitment chance reduction, including zero recruitment at zero daily coverage. | Recruitment itself is under redesign. Uneven Morale consumption is allowed; no unchosen efficiency or casualty modifier is implied. |
 
@@ -1036,9 +1039,15 @@ The relationship of Salvage to the unified category grammar and eight goal total
 
 ### 15.3 Incinerator and working-space release
 
-The retained concept is instantaneous destruction without output, unlimited while operational. It solves an immediate space problem at the cost of useful possessions. Access/unlock, any operational restrictions and physical submission safety remain to be revalidated under the collection objective.
+**CONFIRMED.** The Incinerator is available from the beginning of every run. It has no unlock, repair, Fuel cost, cooldown or throughput limit. Energy blackouts leave it usable. It accepts any valid portable item the player is carrying, including items with zero Utility and future carried Rations or Salvage when those objects exist. The player picks up and carries the item to the machine under the ordinary carrying limits.
 
-The prior “not Day 1” and overnight-repair timing are not meaningful release rules without days. A visibly installed but initially offline machine remains an optional presentation direction, not a required delay. Starting capacity, initial loot and machine availability must together avoid an unrecoverable storage/handling deadlock.
+Aim at the machine and press F to inspect the selected item's name, category, Utility and Bulk. A distinct E press attempts to destroy one selected whole item. The red action label states that destruction is permanent and yields no output. A successful action frees the item's Bulk immediately and leaves the panel open.
+
+On the first valid E attempt in a run, show this warning. “Incinerated items are permanently destroyed! This is a one-time warning.” Mark the warning shown when it appears. Back or Escape clears the command and retains the item. Continue is a separate action that revalidates the original item, its selection and ownership, and station access before destruction. Later distinct E presses destroy one item each. Held input cannot replay a command. Separate Escape presses close the warning, close the panel and then open pause.
+
+The panel and warning own movement and handling input while the simulation stays live. The clock, expeditions, autosave and lift keep operating. Retrieval from qualifying storage already subtracts the item's live Utility. Incineration leaves the live totals and first victory record intact. Continuation preserves the shown flag even after Back and keeps a receipt for each destruction. Pending confirmation is transient. A new independent run resets the flag and receipts.
+
+Single-item disposal is the approved scope. If mass disposal is adopted later, it will take the entire carried bundle with a fresh confirmation each time.
 
 <a id="s_15_4_Workshop_purpose_and_project_me"></a>
 
@@ -1263,7 +1272,7 @@ Ordinary schema-4 continuation is accepted at M4, but is not continuous crash-du
 
 Outcome commitment should occur at a natural backend point after legitimate player choices are fixed, before presentation where possible. Preserve committed results through continuation. Incidental uncommitted rerolls within the tolerated loss interval are not a reason to build a general anti-cheat framework; reliable selection among already preserved outcomes remains disallowed by the inherited policy.
 
-The expedition playtest uses schema 6 in the existing collection slot. It preserves the editable preparation, crew ledger, receipts, Away cargo and handover facts with the physical run. Schema 5 foundation and earlier saves are preserved. Starting a replacement run requires explicit New Run confirmation. Release migration and crash durability remain open.
+The Incinerator playtest uses schema 7 in the existing collection slot. It adds the warning flag and destruction receipts to the physical run, editable preparation and exact expedition state. Continue restores these facts with the panels closed. Confirmed New Run can repoint the slot and retains incompatible schema 6 and schema 5 snapshots. The M4 slot remains separate. Release migration and crash durability remain open.
 
 <a id="s_18_6_Environment_and_authored_produc"></a>
 
@@ -1460,10 +1469,10 @@ These are design-validation aims, not claimed test results or a new automated ac
 | O-06 · Requests and Ops | Recurrence, grace, bounded outstanding work/escalation, partial fulfillment, departmental penalty effects and restoration. |
 | O-07 · Medical | Injury states and risk; natural/treatment recovery rates and costs; treatment allocation and timing; no terminal blockage. |
 | O-08 · Population and upgrades | Initial Ready count, recruitment/growth, progression ownership for assembled crews, Workshop project roster and Training disposition. |
-| O-09 · Conversion and release | Rations/Salvage category and target rules; yields, capacity/output blocking; Incinerator/Salvager access and any restrictions. |
+| O-09 · Conversion and release | Rations and Salvage category and target rules, yields, capacity and output blocking remain open, along with Salvager access and restrictions. Incinerator rules are confirmed in §15.3. |
 | O-10 · Space and handling | Production shelf capacity/roster, all-storage-from-start decision, route compression and final ergonomics. |
-| O-11 · Interface and time edges | The playtest uses live preparation and warning panels with Escape priority, plus a minimal operation view. Journal scope, final interface and platform time edges remain open. |
-| O-12 · Delivery/continuation | The accepted expedition build uses schema 6 and preserves incompatible prior snapshots. Release migration and durability remain open. |
+| O-11 · Interface and time edges | The playtest uses live preparation and Incinerator panels with Escape priority. See §15.3 for the Incinerator warning. Journal scope, final interface and platform time edges remain open. |
+| O-12 · Delivery/continuation | The Incinerator playtest uses schema 7 and preserves incompatible prior snapshots. Release migration and durability remain open. |
 
 The register deliberately leaves unanswered mechanics open. The project already has enough direction to produce this successor; these are boundaries for later design/implementation, not reasons to recreate the old behavior or repeatedly ask the developer to approve the pivot.
 

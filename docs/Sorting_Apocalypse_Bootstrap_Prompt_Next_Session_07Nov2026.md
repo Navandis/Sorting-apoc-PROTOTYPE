@@ -11,7 +11,8 @@ This is a collaboration handoff, not a Codex implementation brief or permission 
 ## At a glance
 
 - **Design authority** — approved GDD v0.16, with [Appendix A](superpowers/plans/2026-11-07-continuous-run-collection-goal-foundation.md#appendix-a--confirmed-expedition-lifecycle-decisions-for-the-next-milestone) superseding the specified earlier open statements about preparation, destination occupancy and handover.
-- **Current implementation** · The Expedition-to-Storage Loop is **HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE**. Normal F5 uses schema 6 in the collection save namespace. The [expedition result](testing/2026-11-08-expedition-to-storage-loop-result.md) follows the separately accepted [collection foundation](testing/2026-11-07-continuous-run-collection-goal-closure.md).
+- **Current implementation** · The Expedition-to-Storage Loop is **HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE**. The [expedition result](testing/2026-11-08-expedition-to-storage-loop-result.md) follows the separately accepted [collection foundation](testing/2026-11-07-continuous-run-collection-goal-closure.md).
+- **Local Incinerator build** · F5 uses schema 7 in the collection save namespace. Single-item Incinerator disposal is implemented and developer playtest is pending. GDD §15.3 records the standing rules. [Technical result and playtest](testing/2026-11-08-incinerator-deliberate-disposal-result.md).
 - **Publication** · The collection foundation, expedition loop and furniture collision repair are published on `main`. The historical M1–M4 scopes are published and closed at `c9f9417a97cf65ef416c58189ca1f741b6a90406`. Frozen inputs and provenance are in the [survival-era index](design_history/survival-era/README.md).
 - **Furniture collision** · The developer accepted the [furniture movement collision repair](testing/2026-11-08-furniture-collision-repair-result.md) on 8 November 2026, closing its separate scope. The old combined daily M5 proposal and ADR remain historical.
 
@@ -102,13 +103,13 @@ The finite physical deck, exact content/identity, fully-OPEN TAKE, safe permanen
 
 Medical favors natural recovery with substantially faster treatment. Injured scavengers should not be sent out by assumption; the developer rejected adding injury-on-injury/capacity/provisioning complexities merely to enable that option. Fatality/daily complication rules are no longer current requirements. The full replacement model remains open under the no-dead-end condition.
 
-Kitchen Food/Hydration, Ops Fuel/Morale/Electronics, Workshop, Salvager, Incinerator and optional Rations retain useful roles, but their daily formulas/timing and penalties need redesign. Keep irreversible physical spending and disposal choices. No infinite request debt, silent stat mutation or adaptive catch-up follows. Training’s persistent prebuilt slots/one-day program do not automatically survive player-assembled crews; the concept requires reassessment.
+Kitchen Food/Hydration, Ops Fuel/Morale/Electronics, Workshop, Salvager and optional Rations retain useful roles, but their daily formulas/timing and penalties need redesign. Single-item Incinerator disposal is confirmed and available from the start, including during Fuel or energy outages. Keep irreversible physical spending and disposal choices. No infinite request debt, silent stat mutation or adaptive catch-up follows. Training’s persistent prebuilt slots/one-day program do not automatically survive player-assembled crews; the concept requires reassessment.
 
 Goal-progress visibility is always baseline and cannot be disabled or upgrade-gated. Notification, central overview and a diegetic Journal have distinct roles. Optional information tools may improve access or analysis of existing facts, not hide indispensable data. Narrative remains short, qualitative and inferred; gameplay choices lead and fiction supports them. No visible outside world or human simulation is introduced.
 
 ## 8. What already exists and must not be reopened by default
 
-The current build has continuous active time, player-dispatched expeditions, eight live stored Utility totals and schema-6 continuation. M1–M4 daily scheduling, reports and prebuilt Dispatch describe historical evidence. Injuries, recruitment and the supporting economy remain open.
+The local playtest build has continuous active time, player-dispatched expeditions, eight live stored Utility totals, single-item disposal and schema-7 continuation. Confirmed New Run can repoint the slot while retaining its incompatible schema-6 snapshot. M1–M4 daily scheduling, reports and prebuilt Dispatch describe historical evidence. Injuries, recruitment and the supporting economy remain open.
 
 The inspected baseline has 167 active/7 retired/174 sources. Preserve authored scale, pose/+Z Front, Footprint and support roles; twelve separate Auto Stack Group approvals remain pending with saved None. Never recycle retired IDs or replace authored values automatically. The current values are frozen testing content, not immutable release balance.
 

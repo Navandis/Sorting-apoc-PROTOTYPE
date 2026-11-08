@@ -1,0 +1,6 @@
+Godot Engine v4.7.stable.official.5b4e0cb0f - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+FAIL: Incinerator has a dedicated transaction owner
+incinerator_operations_tests: FAIL checks=1 failures=1
