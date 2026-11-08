@@ -48,17 +48,22 @@ func has_deposit_capacity() -> bool:
 	return _active_batch_id.is_empty() or _queued_batch_ids.size() < MAX_QUEUED_BATCHES
 
 
-func deposit_batch(batch: LootBatch) -> bool:
+func deposit_batch(batch: LootBatch, commit_handover: Callable = Callable()) -> bool:
 	if get_deposit_eligibility(batch) != DepositEligibility.AVAILABLE:
 		deposit_rejected.emit("" if batch == null else batch.batch_id)
 		return false
 
 	_deposited_batches[batch.batch_id] = batch
-	if _active_batch_id.is_empty():
+	var activates := _active_batch_id.is_empty()
+	if activates:
 		_active_batch_id = batch.batch_id
-		active_batch_changed.emit(_active_batch_id)
 	else:
 		_queued_batch_ids.append(batch.batch_id)
+	# The upstream owner settles the transfer before any observers see the deposit.
+	if commit_handover.is_valid():
+		commit_handover.call()
+	if activates:
+		active_batch_changed.emit(_active_batch_id)
 	contents_changed.emit()
 	return true
 

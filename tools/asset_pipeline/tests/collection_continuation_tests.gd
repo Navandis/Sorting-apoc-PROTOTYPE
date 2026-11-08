@@ -1,11 +1,10 @@
 extends SceneTree
 
 const ShellScene = preload("res://gameplay/run/run_shell.tscn")
-# Keep the production scene cached across the in-process relaunch.
-const WingScene = preload("res://gameplay/logistics_wing/wing_gameplay.tscn")
 const SaveService = preload("res://gameplay/run/run_save_service.gd")
 const Snapshot = preload("res://gameplay/run/run_snapshot.gd")
 const Codec = preload("res://gameplay/run/state_codec.gd")
+const Ops = preload("res://gameplay/expeditions/expedition_operations.gd")
 
 class MeasuredSaveService extends "res://gameplay/run/run_save_service.gd":
 	var attempts := 0
@@ -20,6 +19,7 @@ var wing: Node3D
 var runtime: ReceivingRuntime
 var cycle: ReceivingLiftCycle
 var timeline: RefCounted
+var ops: RefCounted
 var player: CharacterBody3D
 var carry: CarriedItems
 var stock: StorageSurface
@@ -29,94 +29,204 @@ func _initialize() -> void:
 	create_timer(180).timeout.connect(func(): quit(3))
 	run.call_deferred()
 
-func check(ok: bool, message: String) -> bool:
-	checks += 1
-	if not ok:
-		failures += 1
-		printerr("FAIL: " + message)
-	return ok
-
 func run() -> void:
-	var path := OS.get_temp_dir().path_join("collection-proof-" + Crypto.new().generate_random_bytes(8).hex_encode())
-	DirAccess.make_dir_recursive_absolute(path)
-	var pointer := path.path_join(SaveService.POINTER)
-	var snapshot := path.path_join("Save_legacy_fixture.json")
-	write(pointer, JSON.stringify({"snapshot": snapshot.get_file()}))
-	write(snapshot, Codec.new().stringify({"schema": 4}))
+	var path := OS.get_temp_dir().path_join("expedition-continuation-" + Crypto.new().generate_random_bytes(8).hex_encode())
+	var older := path.path_join("Save_m4.json")
+	var directory := path.path_join("collection")
+	var foundation := directory.path_join("Save_foundation.json")
+	var pointer := directory.path_join(SaveService.POINTER)
+	DirAccess.make_dir_recursive_absolute(directory)
+	write(path.path_join(SaveService.POINTER), JSON.stringify({"snapshot": older.get_file()}))
+	write(older, Codec.new().stringify({"schema": 4}))
+	write(pointer, JSON.stringify({"snapshot": foundation.get_file()}))
+	write(foundation, Codec.new().stringify({"schema": 5}))
+	var foundation_hash := FileAccess.get_sha256(foundation)
 	var pointer_hash := FileAccess.get_sha256(pointer)
-	var snapshot_hash := FileAccess.get_sha256(snapshot)
-	var rejected: Dictionary = SaveService.new(path).load_snapshot()
-	check(not rejected.ok and rejected.error.contains("Legacy M4"), "schema 4 rejects with a clear M4 explanation")
-	check(SaveService.new().directory.replace("\\", "/").ends_with("/saves/collection"), "default saves use collection namespace")
-	service = MeasuredSaveService.new(path.path_join("collection"))
+	var legacy_hash := FileAccess.get_sha256(older)
+	service = MeasuredSaveService.new(directory)
 	open_shell()
-	check(shell.continue_button.disabled and shell.status_label.text.contains("Legacy M4"), "launch explains preserved legacy continuation")
-	var destination := service.directory
-	service.directory = path
-	check(not shell.continue_run() and shell.wing == null and shell.launch.visible, "failed Continue leaves launch usable without publishing a replacement")
-	service.directory = snapshot.path_join("blocked")
-	check(not shell.start_new_run() and shell.wing == null, "failed initial save never publishes candidate")
-	service.directory = destination
-	if not check(shell.start_new_run(), "normal New Run saves then publishes the wing"):
-		print(shell.status_label.text)
+	check(shell.continue_button.disabled and shell.status_label.text.contains("schema 5") and shell.status_label.text.contains("Legacy M4"),
+		"launch explains both incompatible continuations")
+	check(not shell.continue_run() and shell.wing == null and shell.launch.visible and FileAccess.get_sha256(pointer) == pointer_hash
+		and FileAccess.get_sha256(foundation) == foundation_hash, "failed Continue preserves the older slot exactly")
+	check(SaveService.new().directory.replace("\\", "/").ends_with("/saves/collection"), "normal namespace is unchanged")
+	var blocked := foundation.path_join("blocked")
+	service.directory = blocked
+	check(not shell.start_new_run() and shell.wing == null, "failed initial save never publishes a candidate")
+	service.directory = directory
+	shell.request_new_run()
+	check(shell.confirmation.visible and shell.wing == null, "an existing slot requires New Run confirmation")
+	shell.cancel_new_run()
+	check(FileAccess.get_sha256(pointer) == pointer_hash, "cancelling New Run leaves the original pointer")
+	shell.request_new_run()
+	shell.confirm_new_run()
+	if not check(shell.wing != null and FileAccess.get_sha256(foundation) == foundation_hash, "confirmed New Run preserves the incompatible snapshot file"):
 		finish()
 		return
 	bind_run()
-	check(timeline.clock.elapsed == 0.0 and timeline.next_arrival == 0 and cycle.get_cycle_state() == 0, "loading and first save leave a coherent t=0")
 	var run_id: String = wing.run_identity.run_id
-	shell.request_new_run()
-	check(shell.confirmation.visible and shell.wing == wing, "replacement explicitly asks for confirmation")
-	shell.cancel_new_run()
+	check(timeline.clock.elapsed == 0.0 and ops.ready_count == 8 and cycle.get_cycle_state() == 0, "normal New Run starts with an unreserved roster and sealed lift")
+	ops.set_members(3)
+	ops.toggle_affinity("Morale")
+	timeline.advance(59.75)
+	if not roundtrip("uncommitted single-affinity draft"):
+		finish()
+		return
+	check(ops.members == 3 and ops.affinities == ["Morale"] and not ops.is_formed() and ops.ready_count == 8,
+		"Continue restores draft exactly without forming it")
+	var attempts := service.attempts
+	shell._process(0.0)
+	check(service.attempts == attempts, "manual save preserves the automatic interval")
+	timeline.advance(0.25)
+	shell._process(0.0)
+	check(service.attempts == attempts + 1 and service.load_snapshot().snapshot.timeline.last_auto_attempt_at == 60.0,
+		"one automatic attempt at 60 active seconds")
+	check(runtime.receiving_manager.get_active_batch() == null, "no automatic foundation hauls in normal play")
 
-	timeline.advance(3.125)
-	check(cycle.get_cycle_state() == ReceivingLiftCycle.State.ARRIVAL and cycle.capture_state().elapsed == 0.125, "exact mid-arrival checkpoint")
+	ops.set_members(1)
+	check(supply("loot_000008"), "a real palette item forms the first crew")
+	if not roundtrip("locked partial preparation"):
+		finish()
+		return
+	check(ops.ready_count == 7 and ops.is_formed() and ops.loadout.spent.size() == 1 and ops.return_capacity() == 7,
+		"formation, whole receipt and partial capacity survive Continue")
+	var first := depart("Food", "Fuel", 8901)
+	var second := depart("Hydration", "Medical", 8901)
+	var third := depart("Morale", "Weapons", 8901)
+	var fourth := depart("Protection", "Electronics", 8901)
+	if [first, second, third, fourth].has(""):
+		finish()
+		return
+	var away := Snapshot.new().capture(wing)
+	check(away.expeditions.away_cargo.size() == 4 and away.receiving.admission.returns.is_empty() and ops.ready_count == 4,
+		"four exact Away commitments are owned by Expedition before return")
+	var malformed := away.duplicate(true)
+	malformed.expeditions.ready += 1
+	check(not Snapshot.new().validate(malformed).is_empty(), "malformed personnel ledger is rejected")
+	malformed = away.duplicate(true)
+	malformed.expeditions.journeys[second].destination = away.expeditions.journeys[first].destination
+	check(not Snapshot.new().validate(malformed).is_empty(), "overlapping destination occupancies are rejected")
+	malformed = away.duplicate(true)
+	malformed.expeditions.config.bulk_per_member += 1
+	check(not Snapshot.new().validate(malformed).is_empty(), "old commitments cannot adopt changed test parameters")
+	malformed = away.duplicate(true)
+	malformed.receiving.manager.batches.append(away.expeditions.away_cargo[ops.journeys[first].batch_id])
+	check(not Snapshot.new().validate(malformed).is_empty(), "Away cargo cannot also appear as a deposit")
+	if not roundtrip("four Away journeys"):
+		finish()
+		return
+	check(ops.destination_busy(ops.journeys[fourth].destination), "restored Away journey still occupies its destination")
+	var return_at: float = ops.journeys[first].return_at
+	var arrival_at := return_at + 0.125
+	while timeline.clock.elapsed < arrival_at:
+		timeline.advance(minf(0.25, arrival_at - timeline.clock.elapsed))
+	var ordinary: Dictionary = ops.capture_state()
+	var queue: PackedStringArray = runtime.receiving_manager.get_queued_batch_ids()
+	var active: String = runtime.receiving_manager.get_active_batch_id()
+	check(shell.save_and_exit() and service.save_snapshot(away).ok and shell.continue_run(), "isolated rewind repeats the same committed timing test")
+	bind_run()
+	var observed_errors: Array[String] = []
+	runtime.receiving_manager.contents_changed.connect(func():
+		observed_errors.append(Snapshot.new().validate(Snapshot.new().capture(wing))))
+	timeline.advance(arrival_at - timeline.clock.elapsed)
+	check(observed_errors == ["", "", ""], "active and queued deposit observers see valid snapshots during tied returns")
+	check(ops.capture_state() == ordinary and runtime.receiving_manager.get_active_batch_id() == active
+		and runtime.receiving_manager.get_queued_batch_ids() == queue, "large step and ordinary frames agree on the tied return order")
+	check(active == ops.journeys[first].batch_id and queue == PackedStringArray([ops.journeys[second].batch_id, ops.journeys[third].batch_id])
+		and ops.journeys[fourth].status == Ops.WAITING, "ties admit by dispatch identity, with the fourth crew Awaiting Lift")
+	check(ops.ready_count == 7 and ops.journeys[first].handover_at == return_at and ops.journeys[third].handover_at == return_at,
+		"active and queued deposits release personnel at the committed timestamp")
+	var held := cycle.capture_state()
+	check(cycle.get_cycle_state() == ReceivingLiftCycle.State.ARRIVAL and absf(held.elapsed - 0.125) < 0.00001,
+		"split time preserves fractional mid-arrival")
 	await physics_frame
 	await process_frame
 	shell.set_menu_open(true)
-	var held := cycle.capture_state()
 	player._open_zone_editor_for_surface(stock)
 	shell.set_menu_open(false)
 	timeline.advance(5.0)
-	check(paused and player.world_input_blocked and cycle.capture_state() == held and timeline.clock.elapsed == 3.125, "zoning holds world and time after ESC releases")
-	check(cycle.get_node("Arrival").stream_paused, "zoning holds the arrival audio stream")
+	check(paused and player.world_input_blocked and cycle.capture_state() == held and timeline.clock.elapsed == arrival_at,
+		"zoning holds lift and expedition time after menu pause releases")
+	check(cycle.get_node("Arrival").stream_paused, "nested pause holds arrival audio")
 	shell.set_menu_open(true)
 	player._zone_editor.close_editor()
-	check(paused and shell.pause_owners.has("menu"), "closing zoning retains ESC pause")
+	check(paused and shell.pause_owners.has("menu"), "closing zoning retains the other pause owner")
 	shell.set_menu_open(false)
-	check(not paused and not cycle.get_node("Arrival").stream_paused and player._require_e_release, "last owner resumes same phase and re-arms input")
-
-	# Start a fresh shell from the explicit save and preserve a deliberately
-	# different, valid saved target to catch re-reading the default on Continue.
-	if not check(shell.save_and_exit(), "Save & Exit writes ARRIVAL"):
-		print(shell.pause_status.text)
+	check(not paused and not cycle.get_node("Arrival").stream_paused, "last pause owner resumes audio and time")
+	if not roundtrip("mid-ARRIVAL with a waiter"):
 		finish()
 		return
-	var mid: Dictionary = service.load_snapshot().snapshot
-	check(mid.schema == 5 and mid.timeline.next_arrival == 1, "schema 5 stores active fixture progress")
-	mid.goal.target = 5
-	check(service.save_snapshot(mid).ok, "saved run can have a distinct common target")
-	shell.free()
-	await process_frame
-	open_shell()
-	if not check(shell.continue_run(), "relaunched shell continues the same ARRIVAL"):
-		print(shell.status_label.text)
+	check(cycle.capture_state() == held, "mid-arrival lift deadline restores exactly")
+
+	var same_pair: String = ops.journeys[fourth].destination
+	check(not ops.destination_busy(same_pair), "return releases destination while the crew waits")
+	var repeated := depart("Electronics", "Protection", 8902)
+	if repeated.is_empty():
 		finish()
 		return
-	bind_run()
-	check(Snapshot.new().capture(wing) == mid and cycle.capture_state() == held and wing.collection_goal.target == 5, "exact arrival, run ID, target and revisions restore before activation")
-	var arrival_remaining := cycle.seconds_to_boundary()
-	timeline.advance(arrival_remaining - 0.125)
-	check(cycle.get_cycle_state() == ReceivingLiftCycle.State.ARRIVAL, "arrival deadline has not restarted or fired early")
-	timeline.advance(0.125 + 6.0)
-	check(cycle.can_take_receiving(), "arrival completes at original deadline")
+	timeline.advance(ops.journeys[repeated].return_at - timeline.clock.elapsed)
+	check(ops.journeys[repeated].status == Ops.WAITING and ops.journeys[fourth].status == Ops.WAITING
+		and ops.journeys[repeated].destination == same_pair and ops.ready_count == 6, "two distinct crews can await handover from the same destination")
+	if not roundtrip("two same-destination waiters and two deposited crews"):
+		finish()
+		return
+	check(cycle.can_take_receiving() and runtime.return_admission.get_awaiting_returns().size() == 2, "deposited and upstream owners restore separately")
 
-	await capture_rendered("receiving-open", true)
-	var first: WorldItem = runtime.deck_presenter.get_materialized_world_items()[0]
-	var first_id := first.get_item_instance().instance_id
-	check(take_and_store(first), "controlled cargo TAKE followed by ordinary shelf placement")
+	var lift_before := runtime.capture_state()
+	for definition in ["loot_000007", "loot_000019", "loot_000025", "loot_000039", "loot_000033"]:
+		check(supply(definition), "zero-capacity recipe uses authored item " + definition)
+	check(ops.return_capacity() == 0, "exact zero-capacity recipe")
+	select_pair("Food", "Weapons")
+	var panel: CanvasLayer = wing.dispatch_panel
+	panel.open_panel()
+	panel._send.pressed.emit()
+	check(panel._warning.visible and not paused and ops.is_formed(), "zero-capacity warning holds only input")
+	var before: Dictionary = ops.capture_state()
+	shell._input(escape_event(true))
+	shell._input(escape_event(false))
+	check(panel.is_open() and not panel._warning.visible and not paused and ops.capture_state() == before,
+		"Escape backs out of the warning and preserves the committed preparation")
+	panel._confirm()
+	check(ops.capture_state() == before, "stale modal action cannot depart")
+	panel._send.pressed.emit()
+	panel._confirm()
+	var zero: String = ops.journeys.keys().back()
+	check(ops.journeys[zero].status == Ops.AWAY and ops.journeys[zero].batch_id.is_empty(), "zero-capacity crew travels without a batch")
+	panel.close_top()
+	for definition in ["loot_000006", "loot_000020", "loot_000026", "loot_000035"]:
+		check(supply(definition), "one-Bulk residual recipe uses authored item " + definition)
+	check(ops.return_capacity() == 1, "positive residual is smaller than every pool item")
+	var unfillable := depart("Hydration", "Protection", 8903)
+	if unfillable.is_empty() or not roundtrip("both legitimate empty outcomes Away"):
+		finish()
+		return
+	timeline.advance(maxf(ops.journeys[zero].return_at, ops.journeys[unfillable].return_at) - timeline.clock.elapsed)
+	check(ops.journeys[zero].status == Ops.COMPLETE and ops.journeys[unfillable].status == Ops.COMPLETE and ops.ready_count == 6
+		and ops.journeys[unfillable].handover_at == ops.journeys[unfillable].return_at, "both empty outcomes release crew at return")
+	var lift_after := runtime.capture_state()
+	check(lift_after.manager == lift_before.manager and lift_after.admission == lift_before.admission and cycle.can_take_receiving(),
+		"empty returns leave the full lift and upstream FIFO untouched")
+	check(wing.dispatch_panel._summary.text.contains("without loot"), "empty return has a brief visible status")
+	if not roundtrip("completed zero-item returns with full queues"):
+		finish()
+		return
+	check(ops.ready_count == 6 and not ops.destination_busy(ops.journeys[zero].destination), "restoration does not repeat empty handover")
+
+	var first_world: WorldItem = runtime.deck_presenter.get_materialized_world_items()[0]
+	var released_id := first_world.get_item_instance().instance_id
+	check(take_and_store(first_world), "an actual expedition item transfers into qualifying stock")
+	var consumed := ""
+	for world: WorldItem in runtime.deck_presenter.get_materialized_world_items():
+		var item := world.get_item_instance()
+		if ops.preview(item).status == "eligible" and world.pickup_into(carry):
+			carry.select_index(carry.get_slots().find(item))
+			if ops.contribute(carry).ok:
+				consumed = item.instance_id
+			break
+	check(not consumed.is_empty(), "a released expedition item is spent while its batch is still present")
 	stock.set_custom_display_name("Committed stock")
 	stock.clear_all_zones()
-	check(take_selected_seed("Book") and take_selected_seed("Book2"), "original seed hosts transfer to carrying")
+	check(take_seed("Book") and take_seed("Book2"), "loose starting palette still supplies carried items")
 	carry.select_index(1)
 	var ladder: Node3D = get_nodes_in_group("fixed_ladders").filter(wing.is_ancestor_of)[0]
 	var anchor: Vector3 = ladder.get_climb_anchor_world_position()
@@ -128,129 +238,159 @@ func run() -> void:
 	player._ladder_yaw_center = ladder.get_ladder_yaw_world()
 	player._pitch = -0.22
 	player.camera.rotation.x = -0.22
-
-	timeline.advance(59.75 - timeline.clock.elapsed)
-	for index in 2:
-		var id := "continuation_pressure_%d" % index
-		var batch := runtime.prepare_manifest(["loot_000019"], id, 5300 + index)
-		check(runtime.return_admission.submit_return(id, batch) == (1 if index == 0 else 2), "one extra deposit, one waiter")
-	if not roundtrip("partially unloaded OPEN with two deposits and a waiter"):
+	if not roundtrip("released cargo, receipt, zoning and ladder pose"):
 		finish()
 		return
-	check(carry.get_selected_index() == 1 and player.is_ladder_attached(), "selected carry and exact ladder attachment restore")
-	check(wing.get_node_or_null("DevelopmentSetup/SeedItems/Book") == null and stock.get_stored_items()[0].instance_id == first_id, "no reseed, exact stored identity")
-	check(runtime.deck_presenter.get_materialized_world_items().size() == 5 and cycle.can_take_receiving() and cycle.get_queued_batch_count() == 2, "OPEN gate and remaining cargo restored")
-	check(runtime.return_admission.get_awaiting_returns().size() == 1 and stock.get_zone_cells_copy().count("") == stock.get_grid_size().x * stock.get_grid_size().y, "waiter and erased stock zoning persist")
-	var lost := Snapshot.new().capture(wing)
-	var lost_shelf: Dictionary = lost.surfaces[String(wing.get_path_to(stock))]
-	lost_shelf.stacks.clear()
-	lost_shelf.reservations.clear()
-	lost_shelf.cells.fill("")
-	lost.items.erase(first_id)
-	check(not Snapshot.new().validate(lost).is_empty(), "released active cargo must still have its exact physical owner")
-	var attempts := service.attempts
-	shell._process(0.0)
-	check(service.attempts == attempts, "Save & Exit preserves elapsed progress toward next attempt")
-	timeline.advance(0.25)
-	shell._process(0.0)
-	check(service.attempts == attempts + 1 and service.load_snapshot().snapshot.timeline.last_auto_attempt_at == 60.0, "one automatic attempt at 60 active seconds across Continue")
-
+	check(carry.get_selected_index() == 1 and player.is_ladder_attached(), "selected carry and ladder pose restore")
+	check(wing.get_node_or_null("DevelopmentSetup/SeedItems/Book") == null and stock.get_stored_items()[0].instance_id == released_id,
+		"Continue keeps stored identity and does not reseed carried hosts")
+	var saved := Snapshot.new().capture(wing)
+	var malformed_owner := saved.duplicate(true)
+	var shelf: Dictionary = malformed_owner.surfaces[String(wing.get_path_to(stock))]
+	shelf.stacks.clear()
+	shelf.reservations.clear()
+	shelf.cells.fill("")
+	malformed_owner.items.erase(released_id)
+	check(not Snapshot.new().validate(malformed_owner).is_empty(), "a released item with neither a live owner nor a receipt is rejected")
+	if not consumed.is_empty():
+		var duplicate := saved.duplicate(true)
+		duplicate.expeditions.draft.loadout.spent.append(duplicate.expeditions.draft.loadout.spent[0])
+		check(not Snapshot.new().validate(duplicate).is_empty(), "duplicate consumption receipt is rejected")
+		var resurrected := saved.duplicate(true)
+		resurrected.items[consumed] = {"definition": ops.loadout.spent[0].definition_id, "contaminated": false}
+		resurrected.carry.slots.append(consumed)
+		check(not Snapshot.new().validate(resurrected).is_empty(), "spent cargo cannot reappear in carrying")
 	stock.set_zone_rect(StorageCategories.GENERAL, Vector2i.ZERO, stock.get_grid_size() - Vector2i.ONE)
 	for world: WorldItem in runtime.deck_presenter.get_materialized_world_items():
-		check(take_and_store(world), "store another exact A member")
-	timeline.advance(0.75)
+		check(take_and_store(world), "take remaining active cargo into normal storage")
 	if not check(cycle.get_cycle_state() == ReceivingLiftCycle.State.CLOSING, "last TAKE starts closing") or not roundtrip("closing"):
 		finish()
 		return
 	var closing_remaining := cycle.seconds_to_boundary()
-	var first_batch := runtime.receiving_manager.get_active_batch_id()
 	timeline.advance(closing_remaining - 0.125)
-	check(cycle.get_cycle_state() == ReceivingLiftCycle.State.CLOSING, "closing retains original remaining duration")
+	check(cycle.get_cycle_state() == ReceivingLiftCycle.State.CLOSING, "closing keeps its original deadline")
 	timeline.advance(0.375)
-	if not check(cycle.get_cycle_state() == ReceivingLiftCycle.State.SEALED_EMPTY and cycle.is_busy(), "outbound still owns A") or not roundtrip("outbound"):
+	if not check(cycle.get_cycle_state() == ReceivingLiftCycle.State.SEALED_EMPTY and cycle.is_busy(), "outbound retains active ownership") or not roundtrip("outbound"):
 		finish()
 		return
-	var outbound_remaining := cycle.seconds_to_boundary()
-	timeline.advance(outbound_remaining - 0.125)
-	check(runtime.receiving_manager.get_active_batch_id() == first_batch, "no early FIFO promotion")
+	timeline.advance(cycle.seconds_to_boundary() - 0.125)
+	check(runtime.receiving_manager.get_active_batch_id() == active, "no promotion before full outbound")
+	var ready: int = ops.ready_count
+	var observed_delayed: Array[String] = []
+	runtime.receiving_manager.contents_changed.connect(func():
+		if runtime.return_admission.get_return_status(fourth) == AwaitingLiftAdmission.ADMITTED_RETURNED:
+			observed_delayed.append(Snapshot.new().validate(Snapshot.new().capture(wing))))
 	timeline.advance(50.125)
-	check(runtime.receiving_manager.get_active_batch_id() != first_batch and cycle.can_take_receiving(), "B opens after full outbound")
-	check(runtime.return_admission.get_awaiting_returns().is_empty() and cycle.get_queued_batch_count() == 2, "D admits behind C after A retires")
-	var second_items: Array = runtime.deck_presenter.get_materialized_world_items()
-	var last: WorldItem
-	for world: WorldItem in second_items:
-		if world.get_definition().item_id == &"loot_000083":
-			last = world
-		else:
-			check(take_and_store(world), "store exact B member before Weapons")
-	if not check(last != null and not wing.collection_goal.completed, "only final category remains"):
+	check(observed_delayed == [""], "delayed deposit notification sees settled cargo and personnel")
+	check(runtime.receiving_manager.get_active_batch_id() == ops.journeys[second].batch_id and cycle.can_take_receiving()
+		and runtime.receiving_manager.get_queued_batch_ids() == PackedStringArray([ops.journeys[third].batch_id, ops.journeys[fourth].batch_id]),
+		"oldest waiter admits behind existing deposits after the full outbound")
+	check(ops.ready_count == ready + 1 and ops.journeys[fourth].status == Ops.COMPLETE and ops.journeys[repeated].status == Ops.WAITING,
+		"delayed deposited admission releases only the oldest crew")
+	runtime.return_admission.return_admitted_after_waiting.emit(fourth, ops.journeys[fourth].batch_id)
+	check(ops.ready_count == ready + 1, "duplicate handover callback is inert")
+	if not roundtrip("completed nonempty handover after waiting"):
 		finish()
 		return
-	var before_victory := Snapshot.new().capture(wing)
-	# Keep an independent temp slot for the first-victory-only proof below.
-	var victory_only := SaveService.new(path.path_join("victory-only"))
-	var solo := before_victory.duplicate(true)
-	solo.timeline.last_auto_attempt_at = solo.timeline.elapsed
-	check(victory_only.save_snapshot(solo).ok, "pre-victory checkpoint has a fresh interval")
 
-	timeline.advance(maxf(0.0, 120.0 - timeline.clock.elapsed) + 0.125)
-	check(take_and_store(last) and wing.collection_goal.completed, "exact two-haul collection wins through the normal wing")
+	if not prove_victory_and_failed_save(path):
+		finish()
+		return
+	check(wing.run_identity.run_id == run_id and FileAccess.get_sha256(foundation) == foundation_hash
+		and FileAccess.get_sha256(older) == legacy_hash, "successor identity stable and incompatible save files byte-identical")
+	finish()
+
+func prove_victory_and_failed_save(path: String) -> bool:
+	for item: ItemInstance in carry.get_items():
+		check(put_carried(item), "carry proof items move to qualifying stock")
+	var goal: RefCounted = wing.collection_goal
+	var categories: Array = goal.CATEGORIES
+	var last: WorldItem
+	for category: String in categories:
+		if goal.totals[category] >= goal.target:
+			continue
+		var choices: Array[WorldItem] = []
+		for world: Node in wing.get_node("DevelopmentSetup/SeedItems").find_children("WorldItem", "", true, false):
+			var candidate := world as WorldItem
+			if candidate != null and candidate.get_item_instance().get_storage_category() == category:
+				choices.append(candidate)
+		choices.sort_custom(func(a: WorldItem, b: WorldItem): return a.get_bulk() < b.get_bulk())
+		for candidate: WorldItem in choices:
+			if last == null and candidate.get_item_instance().get_utility_value() + goal.totals[category] >= goal.target:
+				last = candidate
+				break
+			if take_and_store(candidate) and goal.totals[category] >= goal.target:
+				break
+	if not check(last != null and not goal.completed, "ordinary storage leaves a final qualifying contribution"):
+		return false
+	var final_item := last.get_item_instance()
+	var final_id := final_item.instance_id
+	var final_category := final_item.get_storage_category()
+	var final_host := String(last.get_parent().name)
+	var solo := Snapshot.new().capture(wing)
+	solo.timeline.last_auto_attempt_at = solo.timeline.elapsed
+	var victory_only := SaveService.new(path.path_join("victory-only"))
+	check(victory_only.save_snapshot(solo).ok, "pre-victory isolated save starts a new interval")
+	timeline.advance(61.0)
 	var won_at: float = timeline.clock.elapsed
-	await capture_rendered("collection-complete")
-	attempts = service.attempts
+	if not check(take_and_store(last) and goal.completed, "storing the last category wins with live stock"):
+		return false
+	var attempts := service.attempts
 	shell._process(0.0)
 	var won: Dictionary = service.load_snapshot().snapshot
-	check(service.attempts == attempts + 1 and won.goal.first_completion_at == won_at and won.timeline.last_auto_attempt_at == won_at, "interval plus first victory coalesce into one coherent save")
+	check(service.attempts == attempts + 1 and won.goal.first_completion_at == won_at and won.timeline.last_auto_attempt_at == won_at,
+		"first victory and overdue interval coalesce")
 	shell._process(0.0)
 	check(service.attempts == attempts + 1, "victory is attempted once")
-
-	var bad := won.duplicate(true)
-	bad.carry.slots.append(first_id)
-	check(not service.save_snapshot(bad).ok and service.load_snapshot().snapshot == won, "duplicate physical ownership cannot replace a valid save")
-	bad = won.duplicate(true)
-	bad.timeline.next_arrival = 0
-	check(not service.save_snapshot(bad).ok and service.load_snapshot().snapshot == won, "issued cargo cannot be replayed by invalid progress")
-
 	var active_path: String = service.load_snapshot().path
 	var valid_hash := FileAccess.get_sha256(active_path)
 	var blocker := service.directory.path_join(".m1-snapshot.tmp")
 	write(blocker, "intentional isolated write blocker")
-	timeline.advance(180.0)
+	timeline.advance(61.0)
 	attempts = service.attempts
 	shell._process(0.0)
-	check(service.attempts == attempts + 1 and FileAccess.get_sha256(active_path) == valid_hash and wing._collection_hud._notice.visible, "one overdue failed attempt preserves last valid bytes and warns nonmodally")
+	check(service.attempts == attempts + 1 and FileAccess.get_sha256(active_path) == valid_hash and wing._collection_hud._notice.visible,
+		"failed automatic save preserves the last valid continuation")
 	timeline.advance(1.0)
 	shell._process(0.0)
-	check(service.attempts == attempts + 1, "failure does not retry next frame")
-	check(not shell.save_and_exit() and shell.wing == wing and paused and player.world_input_blocked, "failed Save & Exit leaves the run paused")
+	check(service.attempts == attempts + 1 and not shell.save_and_exit() and shell.wing == wing and paused,
+		"failure waits for the normal interval and failed Save & Exit keeps the run paused")
 	DirAccess.remove_absolute(blocker)
 	shell.set_menu_open(false)
 	timeline.advance(59.0)
 	shell._process(0.0)
-	check(not wing._collection_hud._notice.visible and service.load_snapshot().ok, "next normal attempt clears warning")
-
-	var weapons := stored_by_definition(&"loot_000083")
-	check(weapons != null and weapons.pickup_into(carry) and wing.collection_goal.totals.Weapons == 0, "removal after victory updates live storage")
-	if not roundtrip("completed run with a category below target"):
-		finish()
-		return
+	check(not wing._collection_hud._notice.visible and service.load_snapshot().ok, "next normal attempt clears the save warning")
+	check(retrieve_stored(final_id) and goal.totals[final_category] < goal.target and goal.first_completion_at == won_at,
+		"stock removal lowers a live category while keeping the first completion")
+	if not roundtrip("completed run below a live target"):
+		return false
 	attempts = service.attempts
 	shell._process(0.0)
-	check(wing.collection_goal.completed and wing.collection_goal.first_completion_at == won_at and wing.collection_goal.totals.Weapons == 0 and service.attempts == attempts, "completed-run restore derives live totals and never replays the first victory save")
-	check(wing.run_identity.run_id == run_id and FileAccess.get_sha256(pointer) == pointer_hash and FileAccess.get_sha256(snapshot) == snapshot_hash, "same successor identity and byte-identical original pointer and snapshot")
-
-	shell.free()
+	check(wing.collection_goal.completed and wing.collection_goal.first_completion_at == won_at and service.attempts == attempts,
+		"completed run does not replay first-victory saving")
+	if not check(shell.save_and_exit(), "save completed run before the isolated first-victory check"):
+		return false
 	service.directory = victory_only.directory
-	open_shell()
-	if check(shell.continue_run(), "reload pre-victory checkpoint"):
-		bind_run()
-		for world: WorldItem in runtime.deck_presenter.get_materialized_world_items():
-			check(take_and_store(world), "final Weapons commit in a fresh interval")
-		attempts = service.attempts
-		shell._process(0.0)
-		check(service.attempts == attempts + 1 and service.load_snapshot().snapshot.goal.completed, "first victory saves before the 60-second interval")
-	print("COLLECTION_SAVE_WITNESS run=", run_id, " won_at=", won_at)
-	finish()
+	if not check(shell.continue_run(), "restore isolated pre-victory checkpoint"):
+		return false
+	bind_run()
+	var final_world := wing.get_node("DevelopmentSetup/SeedItems/" + final_host + "/WorldItem") as WorldItem
+	check(final_world.get_item_instance().instance_id == final_id and take_and_store(final_world), "same final item completes the isolated run")
+	attempts = service.attempts
+	shell._process(0.0)
+	check(service.attempts == attempts + 1 and service.load_snapshot().snapshot.goal.completed, "first victory saves inside the 60-second interval")
+	print("EXPEDITION_SAVE_WITNESS won_at=", won_at, " validation_ms=", service.last_validation_ms)
+	return true
+
+func retrieve_stored(id: String) -> bool:
+	for surface: StorageSurface in wing.get_functional_surfaces():
+		var stack := surface.get_storage_stack(surface.get_stack_id_for_item(id))
+		if stack == null:
+			continue
+		for entry: StorageStack.Entry in stack.entries:
+			if entry.item.instance_id == id:
+				return entry.world_item.pickup_into(carry)
+	return false
 
 func open_shell() -> void:
 	shell = ShellScene.instantiate()
@@ -264,6 +404,7 @@ func bind_run() -> void:
 	runtime = wing.get_node("ReceivingRuntime")
 	cycle = runtime.lift_cycle
 	timeline = wing.run_timeline
+	ops = wing.expeditions
 	player = wing.get_node("Player")
 	player.set_process(false)
 	player.set_physics_process(false)
@@ -272,11 +413,9 @@ func bind_run() -> void:
 
 func roundtrip(phase: String) -> bool:
 	var original := Snapshot.new().capture(wing)
-	if not check(shell.save_and_exit() and shell.launch.visible and not shell.continue_button.disabled, "ordinary Save & Exit " + phase):
-		print(shell.pause_status.text)
+	if not check(shell.save_and_exit() and not shell.continue_button.disabled, "Save & Exit " + phase + " " + shell.pause_status.text):
 		return false
-	if not check(shell.continue_run(), "ordinary Continue " + phase):
-		print(shell.status_label.text)
+	if not check(shell.continue_run(), "Continue " + phase + " " + shell.status_label.text):
 		return false
 	bind_run()
 	var restored := Snapshot.new().capture(wing)
@@ -284,50 +423,66 @@ func roundtrip(phase: String) -> bool:
 		for key: String in original:
 			if original[key] != restored.get(key):
 				print("ROUNDTRIP_DIFFERENCE ", phase, " key=", key)
-	return check(original == restored, "exact owner, pose, time and continuation state " + phase)
+	return check(original == restored, "exact ownership and continuation " + phase)
+
+func select_pair(first: String, second: String) -> void:
+	for category: String in ops.affinities.duplicate():
+		ops.toggle_affinity(category)
+	check(ops.toggle_affinity(first) and ops.toggle_affinity(second), "select available pair " + first + " + " + second)
+
+func depart(first: String, second: String, seed: int) -> String:
+	select_pair(first, second)
+	ops.rng.seed = seed
+	var result: Dictionary = ops.dispatch(ops.revision)
+	check(result.ok, "departure commits: " + str(result.get("error", "")))
+	return result.get("id", "")
+
+func supply(definition: String) -> bool:
+	for world: Node in wing.get_node("DevelopmentSetup/SeedItems").find_children("WorldItem", "", true, false):
+		var item := (world as WorldItem).get_item_instance()
+		if String(item.definition.item_id) != definition:
+			continue
+		if (world as WorldItem).pickup_into(carry):
+			carry.select_index(carry.get_slots().find(item))
+			return ops.contribute(carry).ok
+	return false
+
+func take_seed(host: String) -> bool:
+	var world := wing.get_node_or_null("DevelopmentSetup/SeedItems/" + host + "/WorldItem") as WorldItem
+	return world != null and world.pickup_into(carry)
 
 func take_and_store(world: WorldItem) -> bool:
 	var item := world.get_item_instance()
-	if not world.pickup_into(carry):
-		return false
+	return world.pickup_into(carry) and put_carried(item)
+
+func put_carried(item: ItemInstance) -> bool:
 	carry.select_index(carry.get_slots().find(item))
 	var placement: StoragePlacementController = player._storage_placement
-	stock.initialize_zones_if_needed(StorageCategories.GENERAL)
-	placement._current_surface = stock
 	placement.set_suppressed(false)
-	return placement.place_selected()
+	for surface: StorageSurface in [stock, wing.get_functional_surfaces()[2], wing.get_functional_surfaces()[3]]:
+		surface.initialize_zones_if_needed(StorageCategories.GENERAL)
+		placement._current_surface = surface
+		if placement.place_selected():
+			return true
+	return false
 
-func stored_by_definition(id: StringName) -> WorldItem:
-	for stack: StorageStack in stock._stacks.values():
-		for entry: StorageStack.Entry in stack.entries:
-			if entry.item.definition.item_id == id:
-				return entry.world_item
-	return null
-
-func take_selected_seed(host: String) -> bool:
-	var world: WorldItem = wing.get_node("DevelopmentSetup/SeedItems/" + host + "/WorldItem")
-	return world.pickup_into(carry)
-
-func capture_rendered(label: String, view_receiving: bool = false) -> void:
-	var evidence := OS.get_environment("SORTING_COLLECTION_RENDER_DIR")
-	if DisplayServer.get_name() == "headless" or evidence.is_empty():
-		return
-	var previous: Transform3D = player.camera.global_transform
-	if view_receiving:
-		player.camera.global_position = Vector3(-32.6, 1.75, 2.85)
-		player.camera.look_at(Vector3(-36.5, 1.65, -0.5))
-		var crt := wing.get_node("ReceivingLiftMonitor/PhosphorDisplay/ScreenViewport/Interface")
-		check(crt.get_node("Status").text.contains("OPEN"), "rendered Receiving readout is OPEN")
-	await process_frame
-	await RenderingServer.frame_post_draw
-	var pixels := root.get_texture().get_image()
-	check(pixels != null and not pixels.is_empty() and pixels.save_png(evidence.path_join(label + ".png")) == OK, "rendered proof " + label)
-	player.camera.global_transform = previous
+func escape_event(pressed: bool) -> InputEventKey:
+	var event := InputEventKey.new()
+	event.keycode = KEY_ESCAPE
+	event.pressed = pressed
+	return event
 
 func write(path: String, data: String) -> void:
 	var file := FileAccess.open(path, FileAccess.WRITE)
 	file.store_string(data)
 	file.close()
+
+func check(ok: bool, message: String) -> bool:
+	checks += 1
+	if not ok:
+		failures += 1
+		printerr("FAIL: " + message)
+	return ok
 
 func finish() -> void:
 	if is_instance_valid(shell):

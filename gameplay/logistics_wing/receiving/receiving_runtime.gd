@@ -225,7 +225,10 @@ func can_prepare_manifest(manifest: Array, event_id: String, presentation_seed: 
 	# Feasibility check only: no run allocation, slot, submission or physical owner.
 	return _prepare_exact_manifest(manifest, event_id, presentation_seed, "scenario_preflight:" + event_id, false) != null
 
-func _prepare_exact_manifest(manifest: Array, event_id: String, presentation_seed: int, batch_id: String, log_failure: bool) -> LootBatch:
+func prepare_expedition_manifest(manifest: Array, expedition: String, presentation_seed: int, batch_id: String) -> LootBatch:
+	return _prepare_exact_manifest(manifest, expedition, presentation_seed, batch_id, true, &"expedition")
+
+func _prepare_exact_manifest(manifest: Array, event_id: String, presentation_seed: int, batch_id: String, log_failure: bool, source: StringName = &"scenario") -> LootBatch:
 	if manifest.is_empty(): return null
 	var definitions: Array[ItemDefinition] = []
 	var bulk := 0
@@ -237,7 +240,7 @@ func _prepare_exact_manifest(manifest: Array, event_id: String, presentation_see
 	var entries: Array[LootBatchEntry] = []
 	for index in definitions.size():
 		entries.append(LootBatchEntry.new("entry_%04d" % index, "%s:item_%04d" % [batch_id, index], definitions[index].item_id))
-	var batch := LootBatch.create_committed(batch_id, &"scenario", event_id, bulk, bulk, 0, presentation_seed, entries)
+	var batch := LootBatch.create_committed(batch_id, source, event_id, bulk, bulk, 0, presentation_seed, entries)
 	if batch == null: return null
 	var diagnostics = DeckPlannerScript.new().prepare(batch, item_catalog, deck_profile, DeckPlannerScript.FixtureMode.BARE)
 	if not diagnostics.succeeded:

@@ -25,11 +25,9 @@ func preview(item: ItemInstance) -> Dictionary:
 		"applied": 0, "wasted": 0, "reason":"", "remainder": maxi(0, int(targets[lane]) - int(credited[lane]))}
 	if not is_accepting() or item == null or item.definition == null:
 		return state
-	var utility: Dictionary = item.definition.get_utility_for_context(StringName(destination))
+	var utility := _utility_for_item(item)
 	lane = String(utility.get("utility_id", "None"))
 	var value := int(utility.get("value", 0))
-	if item.contaminated:
-		value = 0 if value <= 1 else int(ceil(value / 2.0))
 	if not targets.has(lane) or value <= 0:
 		state.status = "ineligible"
 		state.reason = "utility"
@@ -54,7 +52,14 @@ func preview(item: ItemInstance) -> Dictionary:
 	state.status = "eligible"
 	return state
 
-func submit(carry: Node, recipient_valid: Callable = Callable()) -> Dictionary:
+func _utility_for_item(item: ItemInstance) -> Dictionary:
+	var utility := item.definition.get_utility_for_context(StringName(destination))
+	var value := int(utility.get("value", 0))
+	if item.contaminated:
+		value = 0 if value <= 1 else int(ceil(value / 2.0))
+	return {"utility_id": utility.get("utility_id", "None"), "value": value}
+
+func submit(carry: Node, recipient_valid: Callable = Callable(), on_accepted: Callable = Callable()) -> Dictionary:
 	if transaction_active or carry == null:
 		return {"ok": false}
 	var item: ItemInstance = carry.get_selected_item()
@@ -64,7 +69,10 @@ func submit(carry: Node, recipient_valid: Callable = Callable()) -> Dictionary:
 	transaction_active = true
 	# No callbacks occur between revalidation, removal and receipt publication.
 	var accepted := bool(carry.commit_selected_consumption(item,
-		func(): _record_contribution(item, proposed),
+		func():
+			_record_contribution(item, proposed)
+			if on_accepted.is_valid():
+				on_accepted.call(),
 		func():
 			if recipient_valid.is_valid() and not bool(recipient_valid.call()): return false
 			var fresh := preview(item)

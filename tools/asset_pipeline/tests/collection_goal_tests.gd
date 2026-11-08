@@ -35,7 +35,11 @@ func _run() -> void:
 
 	var goal: RefCounted = wing.collection_goal
 	check(goal.totals.values().count(0) == 8, "authored loose seed stock starts at zero")
-	timeline.advance(44.0)
+	# The accepted foundation witness is a test fixture, independent of New Run cargo.
+	var fixture: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/scenarios/collection_foundation/supply.json"))
+	timeline.advance(3.0)
+	_submit_fixture(runtime, fixture.arrivals[0])
+	timeline.advance(41.0)
 	var first_items: Array = runtime.deck_presenter.get_materialized_world_items()
 	if not check(runtime.lift_cycle.can_take_receiving() and first_items.size() == 6, "first controlled haul is fully OPEN"):
 		finish()
@@ -80,7 +84,9 @@ func _run() -> void:
 		return
 	check(stored_world(stock, food).pickup_into(carry) and goal.totals.Food == 3, "taking one member leaves the other counted")
 
-	timeline.advance(100.25)
+	timeline.advance(1.0)
+	_submit_fixture(runtime, fixture.arrivals[1])
+	timeline.advance(99.25)
 	for index in 3:
 		var id := "goal_pressure_%d" % index
 		var batch := runtime.prepare_manifest(["loot_000019"], id, 5200 + index)
@@ -112,6 +118,11 @@ func _run() -> void:
 	check(goal.completed and goal.first_completion_at == before and timeline.clock.elapsed == before + 2.75, "completion stays frozen while play advances")
 	print("COLLECTION_WITNESS shelf=", stock.surface_id, " target=", goal.target, " completion=", before, " max_take_reach_m=", max_take_reach)
 	finish()
+
+func _submit_fixture(runtime: ReceivingRuntime, arrival: Dictionary) -> void:
+	var batch := runtime.prepare_manifest(arrival.manifest, arrival.id, int(arrival.seed))
+	check(batch != null and runtime.return_admission.submit_return(arrival.id, batch) != AwaitingLiftAdmission.ReturnResult.INVALID,
+		"exact foundation goal fixture submits through admission")
 
 func take_exposed(runtime: ReceivingRuntime) -> ItemInstance:
 	await physics_frame

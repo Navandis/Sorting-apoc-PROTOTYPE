@@ -1,5 +1,7 @@
 extends CharacterBody3D
 
+signal dispatch_requested
+
 @export var move_speed: float = 4.0
 @export var sprint_multiplier: float = 2.0
 @export var acceleration: float = 18.0
@@ -59,6 +61,7 @@ var _store_hold_elapsed: float = 0.0
 var _store_repeat_elapsed: float = 0.0
 var _store_was_held: bool = false
 var world_input_blocked := false
+var dispatch_station: StaticBody3D
 var _require_e_release := false
 var _interaction_hud: CanvasLayer
 var _aim_dot: Panel
@@ -121,6 +124,9 @@ func _unhandled_input(event: InputEvent) -> void:
 			get_viewport().set_input_as_handled()
 		elif event.keycode == KEY_E and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 			_attempt_store()
+			get_viewport().set_input_as_handled()
+		elif event.keycode == KEY_F and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED and _looks_at_dispatch():
+			dispatch_requested.emit()
 			get_viewport().set_input_as_handled()
 		elif event.keycode == KEY_R and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 			if _storage_placement != null:
@@ -551,6 +557,11 @@ func _update_interaction_target() -> void:
 		_storage_placement != null
 		and bool(_storage_placement.call("is_targeting_surface"))
 	)
+	if not has_loot_target and _looks_at_dispatch():
+		_set_aim_dot_color(DOT_PLACE)
+		_interaction_prompt.text = "[F] PREPARE EXPEDITION"
+		_interaction_prompt.visible = true
+		return
 
 	if not has_loot_target and not has_storage_target:
 		_set_aim_dot_color(DOT_IDLE)
@@ -594,6 +605,14 @@ func _update_interaction_target() -> void:
 
 	_interaction_prompt.visible = true
 	_interaction_prompt.text = "\n".join(prompt_lines)
+
+func _looks_at_dispatch() -> bool:
+	if not is_instance_valid(dispatch_station):
+		return false
+	var from := camera.global_position
+	var to := from - camera.global_basis.z.normalized() * storage_interaction_distance
+	var query := PhysicsRayQueryParameters3D.create(from, to, dispatch_station.collision_layer, [get_rid()])
+	return get_world_3d().direct_space_state.intersect_ray(query).get("collider") == dispatch_station
 
 
 func _get_looked_at_world_item() -> WorldItem:
@@ -793,6 +812,8 @@ func reset_pending_commands() -> void:
 
 func set_world_input_blocked(blocked: bool) -> void:
 	world_input_blocked = blocked
+	if _interaction_hud != null:
+		_interaction_hud.visible = not blocked and not _zone_editor_open
 	reset_pending_commands()
 
 

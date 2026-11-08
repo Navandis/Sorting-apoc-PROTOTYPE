@@ -4,25 +4,26 @@ const Timeline = preload("res://gameplay/run/collection_timeline.gd")
 const Identity = preload("res://gameplay/run/run_identity.gd")
 const Goal = preload("res://gameplay/run/collection_goal.gd")
 const GoalHUD = preload("res://gameplay/run/collection_goal_hud.gd")
+const ExpeditionConfig = preload("res://gameplay/expeditions/expedition_test_config.gd")
+const ExpeditionOperations = preload("res://gameplay/expeditions/expedition_operations.gd")
+const DispatchPanel = preload("res://gameplay/expeditions/dispatch_panel.gd")
 
 @export var development_setup_enabled: bool = true
 var run_identity: RefCounted
 var run_timeline: RefCounted
 var restoring := false
 var collection_goal: RefCounted
+var expeditions: RefCounted
 var _collection_hud: CanvasLayer
+var dispatch_panel: CanvasLayer
 var _collection_error := ""
 
 
-func configure_new_run(definition: Dictionary = {}) -> void:
+func configure_new_run() -> void:
 	run_identity = Identity.new()
 	run_timeline = Timeline.new()
-	var fixture := Timeline.default_fixture() if definition.is_empty() else definition.duplicate(true)
-	var target: Variant = fixture.get("target")
-	var target_is_integer := typeof(target) in [TYPE_INT, TYPE_FLOAT] and is_finite(float(target)) and float(target) == int(target)
-	collection_goal = Goal.new(int(target) if target_is_integer else 0)
-	fixture.erase("target")
-	run_timeline.initialize(fixture)
+	collection_goal = Goal.new(ExpeditionConfig.COLLECTION_TARGET)
+	expeditions = ExpeditionOperations.new(run_identity, run_timeline.clock)
 
 
 func configure_continue(state: Dictionary) -> void:
@@ -31,6 +32,7 @@ func configure_continue(state: Dictionary) -> void:
 	run_identity.restore_state(state.run)
 	run_timeline = Timeline.new()
 	run_timeline.restore_state(state.timeline)
+	expeditions = ExpeditionOperations.new(run_identity, run_timeline.clock)
 	collection_goal = Goal.new(state.goal.target)
 	collection_goal.restore_state(state.goal)
 
@@ -53,14 +55,14 @@ func _enter_tree() -> void:
 
 func _ready() -> void:
 	if run_timeline != null:
-		run_timeline.bind($ReceivingRuntime, restoring)
+		run_timeline.bind($ReceivingRuntime, expeditions)
 		if run_timeline.error.is_empty():
 			_bind_collection()
 	for station: Array in [["MedicalInterface", "Medical"], ["KitchenInterface", "Kitchen"], ["DispatchWorkSurface", "Dispatch"]]:
 		var proxy := get_node_or_null("Environment/Greybox/Proxies/" + station[0])
 		if proxy != null:
 			var label := Label3D.new()
-			label.text = station[1] + "\nService inactive"
+			label.text = station[1] + ("\n[F] Prepare expedition" if station[1] == "Dispatch" and expeditions != null else "\nService inactive")
 			label.font_size = 36
 			label.pixel_size = 0.003
 			label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
@@ -85,6 +87,7 @@ func _bind_collection() -> void:
 		_refresh_collection()
 		if _collection_error.is_empty():
 			_attach_collection_hud()
+			_attach_dispatch_panel()
 
 
 func _refresh_collection() -> void:
@@ -103,6 +106,7 @@ func finish_restoring() -> String:
 		return "Stored collection meets its target without a completion record"
 	restoring = false
 	_attach_collection_hud()
+	_attach_dispatch_panel()
 	return ""
 
 
@@ -112,6 +116,31 @@ func _attach_collection_hud() -> void:
 	_collection_hud.goal = collection_goal
 	_collection_hud.clock = run_timeline.clock
 	add_child(_collection_hud)
+
+func _attach_dispatch_panel() -> void:
+	var player := $Player
+	player.dispatch_station = get_node("Environment/Greybox/Proxies/DispatchWorkSurface/StaticBody3D")
+	dispatch_panel = DispatchPanel.new()
+	dispatch_panel.name = "DispatchPanel"
+	dispatch_panel.operations = expeditions
+	dispatch_panel.carry = player.carried_items
+	dispatch_panel.clock = run_timeline.clock
+	add_child(dispatch_panel)
+	player.dispatch_requested.connect(dispatch_panel.open_panel)
+	dispatch_panel.panel_toggled.connect(_on_dispatch_toggled)
+
+func _on_dispatch_toggled() -> void:
+	if dispatch_panel.is_open():
+		$Player.velocity = Vector3.ZERO
+	sync_player_input(get_tree().paused)
+
+func sync_player_input(paused: bool) -> void:
+	var blocked: bool = paused or (dispatch_panel != null and dispatch_panel.is_open())
+	$Player.set_world_input_blocked(blocked)
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if blocked else Input.MOUSE_MODE_CAPTURED
+
+func close_dispatch_layer() -> bool:
+	return dispatch_panel != null and dispatch_panel.close_top()
 
 
 func show_run_notice(message: String) -> void:
@@ -153,6 +182,8 @@ func _remove_development_setup() -> void:
 func get_run_error() -> String:
 	if run_timeline != null and not run_timeline.error.is_empty():
 		return run_timeline.error
+	if expeditions != null and not expeditions.error.is_empty():
+		return expeditions.error
 	return _collection_error
 
 

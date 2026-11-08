@@ -7,9 +7,12 @@ func _init() -> void:
 	run_id = Crypto.new().generate_random_bytes(12).hex_encode()
 
 func allocate(kind: String) -> String:
-	var identity := "%s:%s:%d" % [run_id, kind, next_sequence]
+	var identity := next_id(kind)
 	next_sequence += 1
 	return identity
+
+func next_id(kind: String) -> String:
+	return "%s:%s:%d" % [run_id, kind, next_sequence]
 
 func capture_state() -> Dictionary:
 	return {"id": run_id, "next_sequence": next_sequence}

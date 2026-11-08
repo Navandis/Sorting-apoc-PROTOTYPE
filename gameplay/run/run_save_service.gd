@@ -117,7 +117,11 @@ func save_snapshot(state: Dictionary, local_time: Dictionary = {}) -> Dictionary
 	# reported write failure; no unrelated file can be selected for retirement.
 	if had_pointer: DirAccess.remove_absolute(pointer_backup)
 	if same_name: DirAccess.remove_absolute(backup_path)
-	elif not previous.is_empty(): DirAccess.remove_absolute(directory.path_join(previous))
+	elif not previous.is_empty():
+		var previous_path := directory.path_join(previous)
+		# New Run can repoint the slot after confirmation. Keep incompatible snapshots intact.
+		if previous.begins_with("Save_" + state.run.id + "_") or _read_snapshot(previous_path).ok:
+			DirAccess.remove_absolute(previous_path)
 	return {"ok": true, "path": final_path}
 
 func _rollback_snapshot(final_path: String, backup_path: String, pointer_stage: String, same_name: bool) -> void:

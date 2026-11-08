@@ -21,8 +21,10 @@ var _profile: Resource
 var _returns: Dictionary = {}
 var _batch_teams: Dictionary = {}
 var _awaiting: Array[Dictionary] = []
+var _failed_commitments: Dictionary = {}
 var _pass_scheduled := false
 var _admitting := false
+var commit_handover: Callable
 
 
 func capture_state() -> Dictionary:
@@ -36,6 +38,7 @@ func restore_state(state: Dictionary, batches: Dictionary) -> void:
 	_returns = state.returns.duplicate(true)
 	_batch_teams = state.batch_teams.duplicate()
 	_awaiting.clear()
+	_failed_commitments.clear()
 	for entry: Dictionary in state.pending:
 		_awaiting.append({"team_id": entry.team, "batch_id": entry.batch.batch_id,
 			"batch": batches[entry.batch.batch_id], "commitment": var_to_bytes(batches[entry.batch.batch_id].to_snapshot())})
@@ -130,17 +133,21 @@ func _admit_awaiting() -> void:
 		var pending: Dictionary = _awaiting.pop_front()
 		var batch: LootBatch = pending.batch
 		if not _is_compatible_prepared(batch) or var_to_bytes(batch.to_snapshot()) != pending.commitment:
+			_failed_commitments[pending.team_id] = pending.commitment
 			_invalidate(pending.team_id, pending.batch_id, "awaiting commitment changed or became incompatible")
 			continue
-		_deposit(pending.team_id, batch, true)
+		if not _deposit(pending.team_id, batch, true):
+			_failed_commitments[pending.team_id] = pending.commitment
 	_admitting = false
 	_schedule_admission()
 
 
 func _deposit(team_id: String, batch: LootBatch, waited: bool) -> bool:
-	# State is visible before the manager's synchronous contents callbacks.
-	_returns[team_id].status = ADMITTED_RETURNED
-	if not _manager.deposit_batch(batch):
+	var committed := func():
+		_returns[team_id].status = ADMITTED_RETURNED
+		if commit_handover.is_valid():
+			commit_handover.call(team_id, batch.batch_id)
+	if not _manager.deposit_batch(batch, committed):
 		_invalidate(team_id, batch.batch_id, "eligible deposit unexpectedly rejected")
 		return false
 	if waited:

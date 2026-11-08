@@ -37,7 +37,7 @@ func _input(event: InputEvent) -> void:
 				var editor: CanvasLayer = wing.get_node("Player")._zone_editor
 				if editor.visible and not menu_open:
 					editor.close_top_modal()
-				else:
+				elif menu_open or not wing.close_dispatch_layer():
 					set_menu_open(not menu_open)
 		get_viewport().set_input_as_handled()
 	elif menu_open and event is InputEventKey:
@@ -55,8 +55,7 @@ func _sync_pause() -> void:
 	get_tree().paused = paused
 	if wing != null:
 		wing.get_node("ReceivingRuntime/ReceivingLiftCycle").set_menu_audio_paused(paused)
-		wing.get_node("Player").set_world_input_blocked(paused)
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if paused else Input.MOUSE_MODE_CAPTURED
+		wing.sync_player_input(paused)
 
 func set_menu_open(opened: bool) -> void:
 	if wing == null:

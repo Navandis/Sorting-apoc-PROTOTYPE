@@ -35,7 +35,7 @@ func _ready() -> void:
 		grid.add_child(row)
 		_rows[category] = row
 	var supply := Label.new()
-	supply.text = "Development supply at Receiving"
+	supply.text = "Prepare crews at Dispatch"
 	supply.modulate = Color(0.72, 0.81, 0.79)
 	column.add_child(supply)
 	_result = Label.new()
