@@ -1,10 +1,10 @@
 # Expedition-to-Storage Loop Result
 
-**8 November 2026 · Technically verified · Developer acceptance pending**
+**8 November 2026 · HUMAN-ACCEPTED / CLOSED IN ITS BOUNDED SCOPE · Local checkpoint / publication pending**
 
 F5 New Run now starts with the authored loose palette and eight Ready scavengers. A single persistent preparation supports one to four members, five supply lanes and two affinities. Explicit Dispatch commits the trip and its cargo. The expedition releases its destination at return, and healthy crew members become Ready when Receiving admits their cargo or when an empty trip returns. The original two scripted hauls are retained in the isolated collection-goal test.
 
-- Accepted base `a1d1db4494347e0dfb4dfb653ed71b2abaf76ce5` was clean in the asset-equipped checkout. The runtime and test diff is local commit `66a7f863e5cf6f2f2c9e8f7f34de99885fa76612` on `codex/expedition-to-storage-loop`. [Approved brief](../superpowers/plans/2026-11-07-expedition-to-storage-loop.md) · [Foundation closure](2026-11-07-continuous-run-collection-goal-closure.md).
+- Accepted base `a1d1db4494347e0dfb4dfb653ed71b2abaf76ce5` was clean in the asset-equipped checkout. The runtime and test diff is local commit `66a7f863e5cf6f2f2c9e8f7f34de99885fa76612` on `codex/expedition-to-storage-loop`. Technical verification and its documentation were recorded at `11f95354119058fe2ec90796d09e2c28c046a885`. [Approved brief](../superpowers/plans/2026-11-07-expedition-to-storage-loop.md) · [Foundation closure](2026-11-07-continuous-run-collection-goal-closure.md).
 - `gameplay/expeditions/` owns draft, personnel, sampling, committed trips, Dispatch UI and expedition validation. The contribution request and carry transfer still commit whole items. The wing and run shell route input, pause, time and saves. Receiving owns the admitted cargo and existing lift presentation.
 - Schema 6 extends the existing codec and service at `user://saves/collection/`. The launch screen explains incompatible schema 5. Confirmed New Run can replace the active pointer while retaining its incompatible snapshot file. M4 remains in its separate slot.
 
@@ -46,7 +46,7 @@ Successful synchronous autosave samples took 51.1–84.0 ms including capture. S
 
 ## Protected saves
 
-SHA-256 values below matched before and after execution in the developer's roaming Godot profile. The temp-slot tests also verified that confirmation repoints the slot and preserves the incompatible snapshot.
+The SHA-256 values below matched before and after implementation testing for the M4 and schema-5 files in the developer's roaming Godot profile. The temp-slot tests verified that confirmation repoints the slot and preserves the incompatible snapshot. Current schema-6 progress may have advanced during developer play.
 
 | Path relative to the real saves directory | SHA-256 |
 | --- | --- |
@@ -55,12 +55,41 @@ SHA-256 values below matched before and after execution in the developer's roami
 | `collection/active-slot.json` | `8370F655632271A94E9568C5FE6FD15E03F45FC8072763455FD811679A509A73` |
 | `collection/Save_a0dc0071dd2ff3fbf82d0dd1_071126-22-07.json` | `C2C4E88CB3BC8A9BF3F44A1DC8473294524C2C5C6F902E6704B8ADE724257944` |
 
-## Developer playtest
+## Developer acceptance
+
+On 8 November 2026 the developer accepted the Expedition-to-Storage Loop in its agreed scope after in-game play. The following are the developer's observations.
+
+- Crew count, affinity selection, Dispatch eligibility, and draft choices through panel close and reopen worked as expected.
+- Accepted contributions locked the crew count and allowed affinity changes before dispatch.
+- Departures with zero, partial and full provisioning worked, with correct remaining capacity. A zero-return-capacity departure attempt displayed the warning.
+- Lift delivery and queuing worked, including Awaiting Lift. Personnel became available at the expected triggers.
+- Zero-loot returns bypassed the lift queue, used zero deposited slots and caused no empty lift journeys.
+- Save/Continue worked during preparation, Away travel, active delivery and Awaiting Lift.
+- The developer noticed no pause, stutter or lag from autosaves in the tested sessions. The synchronous timings above remain the measured evidence. Large-stock performance remains unverified.
+- Live collection progress and victory remained correct.
+
+Production balance, economic benefits of provisioning, full-catalogue cargo generation, injuries and treatment, recruitment, recurring services, progression, a full Journal and release durability remain outside this acceptance.
+
+## Open furniture movement collision follow-up
+
+The developer reported ineffective player movement collision at these seven wing-relative paths during the playtest. The cause, introduction date and presence or absence of collision nodes are unverified. Other walls, proxies, Receiving decoration and elevator components, and the ladder-served modular rack were outside the reported affected set. The issue is open in a separate repair scope. Its focused repair record is pending.
+
+```text
+DevelopmentSetup/Tables/SM_Table_SeedWest
+DevelopmentSetup/Tables/SM_Table_SeedEast
+DevelopmentSetup/Tables/SM_Table_Palette_Food
+DevelopmentSetup/Tables/SM_Table_Palette_Hydration
+FunctionalFixtures/SM_ventilated_locker_GalleryC_West
+FunctionalFixtures/SM_MetalShelves_GalleryA_West
+FunctionalFixtures/SM_MetalShelves_GalleryB_North
+```
+
+## Checklist supplied for developer playtest
+
+This is the original handoff checklist. The observations above record what the developer reported.
 
 1. Use F5 and choose **New Run** if you want to replace the active continuation. Aim at the Dispatch counter in the Receiving annex and press **F**. Select a crew count and one affinity, close and reopen, and check both values persist and Dispatch stays disabled.
 2. Carry an eligible item and press **E** once in Dispatch. Check the full Bulk charge, applied credit and waste. Change the affinities after the count locks. Use **ESC** to close the panel, then **ESC** again for **Save & Exit**. Continue and check the partial preparation.
 3. Select two affinities and dispatch. Prepare another crew immediately and send it with zero loadout. Save and continue while a crew is away. For the zero-capacity warning, use the one-member recipe above in a fresh preparation. Back out once, then confirm departure and watch for the empty-return notice.
 4. To observe a waiter, leave the first haul OPEN and return four one-person crews before unloading. Check the CRT counts two deposits and Dispatch shows a crew Awaiting Lift. Its destination can be used again. Save and continue with a waiter if convenient. Unload the active deck and let the lift finish the outbound leg. Confirm the oldest waiting crew becomes Ready on admission and can be reused.
 5. Take expedition goods and place them in qualifying storage. Check the live totals and the first completion time. Move a qualifying item back to carry after completion and check that its Utility drops from the live total while the completion time stays fixed.
-
-This slice uses healthy returns and provisional acquisition. Injuries and treatment, recruitment, recurring services, production tuning, progression, a full Journal and release durability remain separate work. Human playtest evidence is pending.

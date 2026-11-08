@@ -9,14 +9,14 @@
 | GDD v0.16 | **APPROVED IN ITS ENTIRETY** by the developer. Single current authority for intended gameplay, with its provisional and open classifications retained. |
 | Collection foundation | **HUMAN-ACCEPTED / CLOSED IN ITS BOUNDED SCOPE.** [Result and developer acceptance](testing/2026-11-07-continuous-run-collection-goal-result.md). |
 | M1 / M2 / M3 / M4 | **HUMAN-PROMOTED / PUBLISHED / CLOSED**, each in its accepted bounded scope. No acceptance, publication or re-review backlog is reopened. |
-| Expedition-to-Storage Loop | **TECHNICALLY VERIFIED / DEVELOPER ACCEPTANCE PENDING.** [Result and playtest](testing/2026-11-08-expedition-to-storage-loop-result.md). M5’s former combined daily scenario is historical. |
+| Expedition-to-Storage Loop | **HUMAN-ACCEPTED / CLOSED IN ITS BOUNDED SCOPE.** [Technical result and developer acceptance](testing/2026-11-08-expedition-to-storage-loop-result.md). M5’s former combined daily scenario is historical. |
 | ADR cycle | Parked historical design, preserved for deliberate reuse or a possible survival mode. Not the current economy or immediate design priority. |
-| Local checkpoint | See the commit introducing the [closure record](testing/2026-11-07-continuous-run-collection-goal-closure.md). Pre-edit `main` was `d802de64bf7a28bdf9d410be2c87d9dcf306b3d2`. |
-| Earlier publication | M4 acceptance is pinned at `c9f9417a97cf65ef416c58189ca1f741b6a90406`. Publication of the local collection checkpoint is pending. |
+| Local checkpoints | Foundation `a1d1db4494347e0dfb4dfb653ed71b2abaf76ce5`, expedition implementation `66a7f863e5cf6f2f2c9e8f7f34de99885fa76612` and technical verification `11f95354119058fe2ec90796d09e2c28c046a885`. [Foundation closure](testing/2026-11-07-continuous-run-collection-goal-closure.md). |
+| Publication | M4 acceptance is pinned at `c9f9417a97cf65ef416c58189ca1f741b6a90406`. The collection and expedition checkpoints are local. Publication is pending. |
 
 This file replaces current-facing routing, not historical evidence. The later [MVP/VDD compatibility completion](testing/2026-11-07-mvp-vdd-compatibility-consistency.md) records both targeted master edits and their checks; it does not change the implemented checkpoint. The [approval record](design_history/2026-11-07-gdd-v0.16-approval-and-authority-transition.md) records this task. The complete [pre-adoption CURRENT_STATE snapshot](https://github.com/Navandis/Sorting-apoc-PROTOTYPE/blob/c9f9417a97cf65ef416c58189ca1f741b6a90406/docs/CURRENT_STATE.md), dated validation reports and prior masters remain available. Their then-pending statements do not undo later promotions.
 
-The repository may advance after manual provision. Verify its actual ref and relevant changes before execution; the SHA above is an evidence anchor, never a reset target. Do not create a housekeeping commit merely to remove a time-local pre-publication qualification.
+The repository may advance after manual provision. Verify its actual ref and relevant changes before execution; the SHAs above are evidence anchors, never reset targets. Do not create a housekeeping commit merely to remove a time-local pre-publication qualification.
 
 ## 2. Authorities and source roles
 
@@ -61,7 +61,7 @@ Normal F5 entry is `res://gameplay/run/run_shell.tscn`. New Run starts with the 
 
 Schema 6 uses the existing service under `user://saves/collection/`. It preserves preparation, exact away outcomes, handover, and the physical run. Save & Exit, 60-active-second automatic attempts and first victory use the same continuation. The schema-5 foundation snapshot and separate M4 save remain preserved.
 
-Standalone F6 retains the authoring palette and canonical UID `uid://bljf1nlhijej`. The [expedition result](testing/2026-11-08-expedition-to-storage-loop-result.md) records the provisional pool and the checks for developer playtest. The [accepted foundation result](testing/2026-11-07-continuous-run-collection-goal-result.md) preserves the exact two-haul fixture evidence.
+Standalone F6 retains the authoring palette and canonical UID `uid://bljf1nlhijej`. The [expedition result](testing/2026-11-08-expedition-to-storage-loop-result.md) records the provisional pool and the technical checks and developer acceptance. The [accepted foundation result](testing/2026-11-07-continuous-run-collection-goal-result.md) preserves the exact two-haul fixture evidence.
 
 Stage A catalogue reuse and Stage B geometry-measurement reuse remain part of the accepted historical evidence.
 
@@ -69,11 +69,11 @@ Stage A catalogue reuse and Stage B geometry-measurement reuse remain part of th
 
 Physical items retain one durable `ItemInstance` identity and one authoritative owner. Definitions supply authored data; WorldItem/held/HUD representations do not create extra ownership. Accepted submission, TAKE, storage placement and conversion boundaries must be atomic, including rejected and stale interactions. Carrying mutation notifications alone are not a successful consumption receipt.
 
-Collection Continue restores exact stock, player/camera/ladder pose, selected carried item, zones and disabled cells, stacks, reserved cells, orientations, Receiving state, fixture progress, active time and completion. It restores committed ownership and placement before play resumes. Stored orientation is restored rather than recomputed from changed unit Front. A failed load does not create a new run; failed Save & Exit does not abandon the active state.
+Collection Continue restores exact stock, player/camera/ladder pose, selected carried item, zones and disabled cells, stacks, reserved cells, orientations, Receiving state, expedition commitments, active time and completion. It restores committed ownership and placement before play resumes. Stored orientation is restored rather than recomputed from changed unit Front. A failed load does not create a new run; failed Save & Exit does not abandon the active state.
 
 One coherent logical time source remains useful even though calendar days are removed from target gameplay. Presentation may reconstruct approximately without changing logical deadlines or accumulating load drift. Nested pause ownership must not release another active pause. M4’s midnight/report semantics remain evidence of its fixture, not successor requirements.
 
-The inherited 2–3 second durability aspiration remains future work. The collection foundation uses ordinary schema-5 continuation with one 60-active-second attempt cadence and a first-victory attempt. M4 saves stay in their existing namespace for historical preservation.
+The inherited 2–3 second durability aspiration remains future work. The collection foundation used ordinary schema-5 continuation. The current expedition build retains the 60-active-second cadence and first-victory attempt. M4 saves stay in their existing namespace for historical preservation.
 
 ## 6. Storage, catalogue and developer authoring
 
@@ -142,7 +142,7 @@ Systems MVP §16 remains the full CF-01–CF-24 register. This entry-point updat
 | CF-05 | Admission/fairness/ownership survive. The archived M4 evidence includes the old midnight rule. |
 | CF-06–CF-12 | Retain current interfaces/art evidence and renderer/content/ergonomics debt. No fresh fixes or approvals are claimed. |
 | CF-13 | Continuous durability remains future and must use coherent existing ownership. |
-| CF-14–CF-15 | The bounded healthy expedition loop is ready for developer playtest. Population growth and Medical remain open. |
+| CF-14–CF-15 | The bounded healthy expedition loop is human-accepted and closed. Production tuning, population growth and Medical remain open. |
 | CF-16–CF-17 | Conversions, Workshop, labels/containers/progression require v0.16 scope. Night progression and storage expansion are not default requirements. |
 | CF-18–CF-19 | Preserve explicit interaction deferrals; economy, loot bounds and routes now serve the collection objective. |
 | CF-20–CF-24 | Retain adjacent art work, measured limitations, saved/runtime distinctions, authoring and source/license safeguards. |
@@ -157,7 +157,7 @@ The authoritative asset-equipped checkout is `D:\Godot Projects\Sorting-apoc-PRO
 
 No reset, stash, clean, force-push, rebase/squash, branch/worktree deletion, untracked staging sweep or ignored-asset cleanup is authorized. Preserve local evidence and human `.tres`/scene edits. A remote clone is not a runnable licensed-art backup. Git ignore is not Godot scan exclusion: keep checkpoint scenes with production UIDs and duplicate global classes outside scanned paths. Preserve startup parity checks and avoid concurrent Godot/import writers on one mutable checkout.
 
-The [expedition playtest](testing/2026-11-08-expedition-to-storage-loop-result.md) is the next acceptance step. O-06 and O-07 replacement service rules remain open. The foundation closure remains the prior accepted local checkpoint.
+The developer accepted the [expedition loop](testing/2026-11-08-expedition-to-storage-loop-result.md) in its bounded scope. The [furniture movement collision report](testing/2026-11-08-expedition-to-storage-loop-result.md#open-furniture-movement-collision-follow-up) is open separately. O-06 and O-07 replacement service rules remain open.
 
 ## 11. Focused evidence navigation
 

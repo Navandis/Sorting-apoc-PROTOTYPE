@@ -2,7 +2,7 @@
 
 **7 November 2026 authority update: GDD v0.16 APPROVED; M1–M4 HUMAN-PROMOTED / PUBLISHED / CLOSED.**
 
-The current intended game is collection, hoarding and spatial organization. The local build implements the [Expedition-to-Storage Loop](superpowers/plans/2026-11-07-expedition-to-storage-loop.md) and awaits developer acceptance. See its [result and playtest](testing/2026-11-08-expedition-to-storage-loop-result.md) and the [accepted foundation checkpoint](testing/2026-11-07-continuous-run-collection-goal-closure.md). This bootstrap provides routing and preservation guidance.
+The current intended game is collection, hoarding and spatial organization. The local [Expedition-to-Storage Loop](superpowers/plans/2026-11-07-expedition-to-storage-loop.md) is **HUMAN-ACCEPTED / CLOSED IN ITS BOUNDED SCOPE**. See its [technical result and developer acceptance](testing/2026-11-08-expedition-to-storage-loop-result.md) and the [accepted foundation checkpoint](testing/2026-11-07-continuous-run-collection-goal-closure.md).
 
 ## Read first
 
@@ -18,7 +18,7 @@ The [current conversation bootstrap](Sorting_Apocalypse_Bootstrap_Prompt_Next_Se
 
 The developer approved the complete v0.16 draft and authorized approval-state and entry-point updates for manual provision. Every internal PROVISIONAL, DIRECTION, OPEN and HISTORICAL label remains meaningful. [The approval record](design_history/2026-11-07-gdd-v0.16-approval-and-authority-transition.md) separates this approval from implementation/publication.
 
-At preparation, read-only GitHub comparison showed `main == c9f9417a97cf65ef416c58189ca1f741b6a90406`. No assistant push, commit, merge or PR is part of this task. After manual upload, verify the actual ref and relevant files; the baseline SHA is not a reset target and the dated upload boundary is not a reason for recursive housekeeping commits.
+At preparation, read-only GitHub comparison showed `main == c9f9417a97cf65ef416c58189ca1f741b6a90406`. The approval package was prepared for manual publication. After manual upload, verify the actual ref and relevant files; the baseline SHA is not a reset target and the dated upload boundary is not a reason for recursive housekeeping commits.
 
 GDD v0.16 governs intended gameplay. Systems MVP v0.5 remains the implementation/evidence home, and VDD v0.11 retains visual/material/current spatial context. Their dated 7 November compatibility updates are complete; consult the [two-master consistency record](testing/2026-11-07-mvp-vdd-compatibility-consistency.md). Do not repeat that documentation reconciliation as pending work. Conflicting survival-era future requirements are superseded by v0.16; unresolved replacements are **not** filled by old midnight, mortality, training or daily-request rules. Source code establishes what exists, not approval of the next mechanic.
 
@@ -69,7 +69,7 @@ Exact ItemInstance ownership and one-item irreversible contribution remain centr
 
 Preserve zoning policy, deterministic support/clearance/pose rules, selected fixed-ladder scope, exact continuation, authored transforms and current catalogue identities. Catalogue: 167 active / 7 retired / 174 source models; twelve Auto Stack Group approvals still pending with saved None. Approved physical scale/pose/Footprint/roles are not permission to rewrite source fields or reincorporate retired items.
 
-Receiving keeps exact committed content, private TAKE-only surfaces, fully-OPEN targeting/transfer guards and complete outbound turnaround before FIFO retirement. Retain upstream admission ownership and oldest-waiting fairness. Its existing 1+2 deposited slots and CRT 00–02 describe the current build; successor personnel/queue semantics remain separate. No hidden refill, omission or reroll of awkward cargo.
+Receiving keeps exact committed content, private TAKE-only surfaces, fully-OPEN targeting/transfer guards and complete outbound turnaround before FIFO retirement. Retain upstream admission ownership and oldest-waiting fairness. The CRT shows the existing two deposited queue slots, and the expedition panel reports crews Awaiting Lift separately. No hidden refill, omission or reroll of awkward cargo.
 
 Current scene art—not old count tables—governs saved placements and light/wear overrides. Preserve the compact Receiving/Dispatch geometry, protected nonuniform lift roots, P05_C02, reinforced-concrete shaft, accepted audio and mapped movement proxies unless the actual task explicitly changes them. Use CURRENT_STATE §§6–8 and VDD §34.7 for details. Ordinary tuning does not automatically reopen C1/Stage C/EAF.
 
@@ -83,4 +83,4 @@ Godot can scan Git-ignored scenes/scripts. Keep checkpoint copies with productio
 
 Use one implementer by default, affected checks and proportionate contextual/human review. Documentation alone does not justify unchanged-game sweeps. Preserve evidence attribution and CF-01–CF-24; new technical findings may need focused repair, not milestone reacceptance. Do not silently suppress existing/new diagnostics together.
 
-**Developer acceptance pending.** Use the [focused playtest](testing/2026-11-08-expedition-to-storage-loop-result.md) for the expedition-to-storage loop.
+The expedition close-out is local. The [furniture movement collision report](testing/2026-11-08-expedition-to-storage-loop-result.md#open-furniture-movement-collision-follow-up) remains open under a separate scope.

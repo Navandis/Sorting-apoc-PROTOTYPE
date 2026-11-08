@@ -1,6 +1,6 @@
 # Sorting Apocalypse — current ChatGPT conversation bootstrap
 
-**Prepared 7 November 2026. Approved GDD v0.16 is the current intended-gameplay authority. M1–M4 remain HUMAN-PROMOTED / PUBLISHED / CLOSED.**
+**Prepared 7 November 2026 and updated 8 November 2026 for expedition close-out. Approved GDD v0.16 is the current intended-gameplay authority. M1–M4 remain HUMAN-PROMOTED / PUBLISHED / CLOSED.**
 
 I am continuing Sorting Apocalypse, a solo-developed first-person collecting, hoarding and spatial-organizing game. The game is being redirected away from an endless survival/day-count objective. You are taking over after the collection pivot, approval of its design records, the single-current-team panel clarification, approval of the complete successor GDD v0.16, and preparation of the current-facing documentation update.
 
@@ -11,9 +11,9 @@ This is a collaboration handoff, not a Codex implementation brief or permission 
 ## At a glance
 
 - **Design authority** — approved GDD v0.16, with [Appendix A](superpowers/plans/2026-11-07-continuous-run-collection-goal-foundation.md#appendix-a--confirmed-expedition-lifecycle-decisions-for-the-next-milestone) superseding the specified earlier open statements about preparation, destination occupancy and handover.
-- **Local implementation** — the Continuous Run and Collection Goal Foundation is HUMAN-ACCEPTED / CLOSED IN ITS BOUNDED SCOPE. Use the [result](testing/2026-11-07-continuous-run-collection-goal-result.md) and the commit introducing the [closure record](testing/2026-11-07-continuous-run-collection-goal-closure.md). Normal F5 uses schema 5 and the isolated collection save namespace.
-- **Publication** — the collection checkpoint is local and publication is pending. The historical M1–M4 scopes are published and closed at `c9f9417a97cf65ef416c58189ca1f741b6a90406`. Frozen inputs and provenance are in the [survival-era index](design_history/survival-era/README.md).
-- **Next planned gameplay slice** — expedition-to-storage, under its own brief. The old combined daily M5 proposal and ADR remain historical.
+- **Local implementation** · The Expedition-to-Storage Loop is **HUMAN-ACCEPTED / CLOSED IN ITS BOUNDED SCOPE**. Normal F5 uses schema 6 in the collection save namespace. The [expedition result](testing/2026-11-08-expedition-to-storage-loop-result.md) follows the separately accepted [collection foundation](testing/2026-11-07-continuous-run-collection-goal-closure.md).
+- **Publication** · The collection and expedition checkpoints are local. Publication is pending. The historical M1–M4 scopes are published and closed at `c9f9417a97cf65ef416c58189ca1f741b6a90406`. Frozen inputs and provenance are in the [survival-era index](design_history/survival-era/README.md).
+- **Open follow-up** · The [furniture movement collision report](testing/2026-11-08-expedition-to-storage-loop-result.md#open-furniture-movement-collision-follow-up) has its own repair scope. The old combined daily M5 proposal and ADR remain historical.
 
 ## 1. Roles and working method
 
@@ -70,7 +70,7 @@ All storage installations available from the start is the favored direction rath
 
 Active real-world completion time replaces days survived. The main game has no daily cycle, fixed dispatch window, forced return clamp, midnight resolution or terminal failure state. No overall time limit exists. The player may work slowly or never complete the objective.
 
-ESC menu, main menu before a run, game-off and zoning pause the timer. Ordinary handling and travel use active time. The Expedition panel is tentatively unpaused; reconsider only on evidence that it consumes too much planning time. Time acceleration is set aside. Focus/loading and exact modal edges remain open rather than assumed.
+ESC menu, main menu before a run, game-off and zoning pause the timer. Ordinary handling and travel use active time. The accepted Expedition panel stays live during preparation. Time acceleration is set aside. Focus/loading and exact modal edges remain open rather than assumed.
 
 Aim for alert, often busy play with time to organize. The player controls whether/when to send available crews, and can deliberately create a workload they struggle to handle. Do not guarantee perfect workload smoothing or fill quiet moments with more mandatory consumption.
 
@@ -90,13 +90,13 @@ Appendix A fixes the preparation lifecycle. An editable draft becomes a committe
 
 The working destination model is two distinct unordered affinities, giving 28 archetypes. Equal mathematical bonuses do not guarantee equal returns. All categories may occur; affinities neither guarantee particular cargo nor expand capacity. Use qualitative emphasis and retain actual item values. No bespoke ordinary location dangers, travel profiles, exterior map, depletion or lifetime caps are required.
 
-Selectors remain the alphabetical eight icons in two rows of four. A pair identifies one archetype. One concurrent expedition occupies a destination only from successful Dispatch to return. Incomplete-affinity Dispatch behavior remains open for the expedition brief.
+Selectors remain the alphabetical eight icons in two rows of four. A pair identifies one archetype. One concurrent expedition occupies a destination only from successful Dispatch to return. Dispatch is disabled until two distinct affinities identify an available destination.
 
 Requirements/capacity scale with assigned members. Outgoing Bulk remains a real cost. Expedition durations and per-member capacity can be retuned for the collection experience. A larger-team speed bonus was a possible lever, not an agreed rule. Opening population/growth and old day-60 targets must not be silently carried over.
 
 ## 7. Receiving, Medical, progression and information
 
-Pending returns keep exact cargo and unavailable crew until successful admission into an active or deposited lift slot. At that handover, healthy crew become Ready and injured crew go to Medical. Destination release happens at return. Zero-item returns remain open for the expedition brief.
+Pending returns keep exact cargo and unavailable crew until admission into an active or deposited lift slot. Healthy crew become Ready at admission. The destination becomes available at return. Empty returns release the crew at return without using a lift slot. Injury classification and Medical treatment remain future work.
 
 The finite physical deck, exact content/identity, fully-OPEN TAKE, safe permanent barrier, stationary-bay theatre and FIFO ownership remain useful. Uncapped waiting does not authorize infinite rendered cargo. Preserve existing machinery until an explicit affected implementation task changes policy.
 
@@ -108,7 +108,7 @@ Goal-progress visibility is always baseline and cannot be disabled or upgrade-ga
 
 ## 8. What already exists and must not be reopened by default
 
-The current local build has continuous active time, eight live stored Utility totals, controlled deliveries and schema-5 continuation. M1–M4 daily scheduling, report and prebuilt Dispatch describe historical evidence. Actual expedition returns, injuries, recruitment and the supporting economy are later work.
+The current local build has continuous active time, player-dispatched expeditions, eight live stored Utility totals and schema-6 continuation. M1–M4 daily scheduling, reports and prebuilt Dispatch describe historical evidence. Injuries, recruitment and the supporting economy remain open.
 
 The inspected baseline has 167 active/7 retired/174 sources. Preserve authored scale, pose/+Z Front, Footprint and support roles; twelve separate Auto Stack Group approvals remain pending with saved None. Never recycle retired IDs or replace authored values automatically. The current values are frozen testing content, not immutable release balance.
 
@@ -136,9 +136,9 @@ Keep source inspection, automated assertions, rendered proof, native input/audio
 
 ## 10. Next design slices remain bounded
 
-The next planned gameplay slice is the expedition-to-storage loop. Begin from the human-accepted checkpoint and the separate brief. The GDD and confirmed Appendix A decisions carry forward.
+The [expedition loop](testing/2026-11-08-expedition-to-storage-loop-result.md) is closed in its bounded scope. Any further work requires its own agreed scope.
 
-GDD §21.2 retains O-01–O-12. The main remaining groups are goal/capacity calibration; one-team preparation lifecycle; destination/crew handover; acquisition; bounded requests/Ops; Medical; population/progression; conversions/disposal; storage/layout; interface/time edges; and successor testing/save compatibility. Preserve the questions and choose a manageable slice with the developer rather than expanding all of them at once.
+GDD §21.2 records the completed expedition decisions and open boundaries, including production tuning, bounded requests and Ops, Medical, population and progression, conversions, storage, interface, timing and release durability.
 
 A next task can reuse accepted physical/transactional systems where relevant. No Workshop, Training, entire event framework, whole-wing remodel or new asset pass becomes a prerequisite by default. M5’s historical combined multi-day allocation scope is not automatically the next collection prototype or a name for actual expedition implementation.
 
@@ -146,7 +146,7 @@ A next task can reuse accepted physical/transactional systems where relevant. No
 
 Verify accessible current repository state against the inspected checkpoint without resetting it. Read the current entry points and targeted approved GDD sections. If manual provision has not occurred, use the supplied approved v0.16 and disclose the discrepancy; do not mistake absence on the remote for lack of developer approval.
 
-Orient to the approved design, human-accepted local collection checkpoint and publication boundary. Apply Appendix A when the new request reaches expeditions. Keep the historical M1–M4 results and the current scope distinct.
+Orient to the approved design, the human-accepted local collection and expedition checkpoints, and the publication boundary. Keep the historical M1–M4 results and the current scope distinct.
 
 ## 12. Provenance and maintenance
 

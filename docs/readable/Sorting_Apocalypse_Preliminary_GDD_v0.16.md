@@ -1371,7 +1371,7 @@ M1–M4 are human-promoted, published and closed in their bounded scopes at c9f9
 | M3 | Kitchen Food/Hydration consumers and Meal Coverage reporting through the shared foundation. |
 | M4 | Five-lane loadout, member-scaled fixture teams, outgoing Bulk/capped Utility, dispatch ownership/timing, improved UI and schema-4 continuation. |
 
-The local Continuous Run and Collection Goal Foundation is human-accepted in its bounded scope. It establishes continuous active time, simultaneous live stored totals and schema-5 continuation with controlled cargo. The record is [docs/testing/2026-11-07-continuous-run-collection-goal-result.md](../testing/2026-11-07-continuous-run-collection-goal-result.md). Actual expedition loot and personnel outcomes, production collection balance and full-game durability remain future work.
+The local Continuous Run and Collection Goal Foundation is human-accepted in its bounded scope. It establishes continuous active time, simultaneous live stored totals and schema-5 continuation with controlled cargo. The record is [docs/testing/2026-11-07-continuous-run-collection-goal-result.md](../testing/2026-11-07-continuous-run-collection-goal-result.md). The local Expedition-to-Storage Loop is also accepted in its bounded scope. Production collection balance and full-game durability remain open.
 
 <a id="s_20_2_Frozen_M4_testing_values"></a>
 
@@ -1393,7 +1393,7 @@ These are historical M4 test values. Frozen inputs are preserved at [docs/design
 
 ### 20.3 Playable entry and human authoring
 
-Normal F5 launch uses res://gameplay/run/run_shell.tscn for the accepted local collection foundation. Standalone F6 uses res://gameplay/logistics_wing/wing_gameplay.tscn with the authored palette. Legacy main.tscn and the spatial review scenes retain their distinct authoring roles.
+Normal F5 launch uses res://gameplay/run/run_shell.tscn for the accepted local expedition loop. Standalone F6 uses res://gameplay/logistics_wing/wing_gameplay.tscn with the authored palette. Legacy main.tscn and the spatial review scenes retain their distinct authoring roles.
 
 Current saved human content governs actual installations, poses, lighting, wear and source references. Future work must inspect actual dependencies before changes; remote documentation alone does not certify ignored commercial assets or runtime rendering. No game files are changed by this edition.
 
@@ -1403,7 +1403,7 @@ Current saved human content governs actual installations, poses, lighting, wear 
 
 The previously planned M5 meant combined authored scenarios using Medical, Kitchen and Dispatch—not automatic real-expedition implementation. It must not proceed unchanged against obsolete survival assumptions. No new M5 scope or implementation sequence is authorized here.
 
-The next planned gameplay slice is the expedition-to-storage loop. Appendix A of [docs/superpowers/plans/2026-11-07-continuous-run-collection-goal-foundation.md](../superpowers/plans/2026-11-07-continuous-run-collection-goal-foundation.md#appendix-a--confirmed-expedition-lifecycle-decisions-for-the-next-milestone) records the confirmed lifecycle decisions and their precise supersessions of the earlier open statements. The planned slice has its own implementation scope.
+The local expedition-to-storage loop is HUMAN-ACCEPTED / CLOSED IN ITS BOUNDED SCOPE. Appendix A of [docs/superpowers/plans/2026-11-07-continuous-run-collection-goal-foundation.md](../superpowers/plans/2026-11-07-continuous-run-collection-goal-foundation.md#appendix-a--confirmed-expedition-lifecycle-decisions-for-the-next-milestone) records the confirmed lifecycle decisions and their precise supersessions of the earlier open statements. The accepted slice uses the provisional settings in the expedition brief.
 
 Keep the distinct scopes visible: retained mechanics; new score/continuous-time requirements; actual expeditions and personnel; revised requests/treatment; production storage/layout; optional progression/information. Their eventual delivery order requires a separate agreed brief. No new room-art pass, catalogue expansion, review framework or completed-milestone audit is a prerequisite by default.
 
@@ -1463,7 +1463,7 @@ These are design-validation aims, not claimed test results or a new automated ac
 | O-09 · Conversion and release | Rations/Salvage category and target rules; yields, capacity/output blocking; Incinerator/Salvager access and any restrictions. |
 | O-10 · Space and handling | Production shelf capacity/roster, all-storage-from-start decision, route compression and final ergonomics. |
 | O-11 · Interface and time edges | The playtest uses live preparation and warning panels with Escape priority, plus a minimal operation view. Journal scope, final interface and platform time edges remain open. |
-| O-12 · Delivery/continuation | Expedition playtest uses schema 6 and preserves incompatible prior snapshots. Developer acceptance, release migration and durability remain open. |
+| O-12 · Delivery/continuation | The accepted expedition build uses schema 6 and preserves incompatible prior snapshots. Release migration and durability remain open. |
 
 The register deliberately leaves unanswered mechanics open. The project already has enough direction to produce this successor; these are boundaries for later design/implementation, not reasons to recreate the old behavior or repeatedly ask the developer to approve the pivot.
 
