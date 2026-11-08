@@ -8,6 +8,9 @@ extends Node3D
 @export var generate_test_collisions: bool = true
 @export var print_collision_summary: bool = true
 @export var generate_storage_prototype: bool = true
+## The wing loads inside a hidden run candidate. Keep this branch's own
+## hidden meshes excluded while ignoring that temporary ancestor visibility.
+@export var use_local_visibility_for_collision: bool = false
 
 const StoragePrototypeManagerScript = preload("res://storage_prototype_manager.gd")
 
@@ -35,21 +38,24 @@ const CONVEX_ROOT_PREFIXES = [
 
 var _trimesh_count := 0
 var _convex_count := 0
+var _initialized := false
 
 
 func _ready() -> void:
-	if not generate_test_collisions:
+	if not generate_test_collisions or _initialized:
 		return
+	_initialized = true
 
-	for child in get_children():
-		if child is CharacterBody3D:
-			continue
+	if not use_local_visibility_for_collision or visible:
+		for child in get_children():
+			if child is CharacterBody3D:
+				continue
 
-		var root_name := String(child.name)
-		if _starts_with_any(root_name, TRIMESH_ROOT_PREFIXES):
-			_generate_for_branch(child, true)
-		elif _starts_with_any(root_name, CONVEX_ROOT_PREFIXES):
-			_generate_for_branch(child, false)
+			var root_name := String(child.name)
+			if _starts_with_any(root_name, TRIMESH_ROOT_PREFIXES):
+				_generate_for_branch(child, true)
+			elif _starts_with_any(root_name, CONVEX_ROOT_PREFIXES):
+				_generate_for_branch(child, false)
 
 	if print_collision_summary:
 		print(
@@ -70,8 +76,10 @@ func _ready() -> void:
 func _generate_for_branch(node: Node, use_trimesh: bool) -> void:
 	# Skip invisible imported branches; several catalogue/reference pieces in the
 	# test scene are deliberately hidden.
-	if node is Node3D and not node.is_visible_in_tree():
-		return
+	if node is Node3D:
+		var branch_visible: bool = node.visible if use_local_visibility_for_collision else node.is_visible_in_tree()
+		if not branch_visible:
+			return
 
 	if node is MeshInstance3D and node.mesh != null:
 		if use_trimesh:

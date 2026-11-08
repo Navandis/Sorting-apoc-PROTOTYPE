@@ -9,6 +9,7 @@
 [node name="FunctionalFixtures" type="Node3D"]
 script = ExtResource("1_fixtures")
 print_collision_summary = false
+use_local_visibility_for_collision = true
 
 [node name="SM_MetalShelves_GalleryA_West" parent="." instance=ExtResource("2_metal")]
 position = Vector3(-2.28, 0, -7.2)

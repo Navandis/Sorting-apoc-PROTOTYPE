@@ -1,0 +1,117 @@
+Godot Engine v4.7.stable.official.5b4e0cb0f - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+Wing functional storage: installed 16 empty deterministic surface(s); F6 developer grids default OFF, F7 demo disabled.
+BODY New Run SM_Table_SeedWest direction=(0.0, 0.0, -1.0) travel=1.25850701332092 requested=1.25850701332092 blocks=false
+BODY New Run SM_Table_SeedWest direction=(1.0, 0.0, 0.0) travel=1.81248664855957 requested=1.81248664855957 blocks=false
+FIXTURE New Run DevelopmentSetup/Tables/SM_Table_SeedWest bounds=[P: (-14.71094, -0.005716, 3.086047), S: (2.584972, 0.885119, 1.477014)] blocking_shapes=0 approaches=2 stopped=0 player_mask=1
+FAIL: New Run player capsule stops at DevelopmentSetup/Tables/SM_Table_SeedWest
+FAIL: New Run has enabled movement shapes for DevelopmentSetup/Tables/SM_Table_SeedWest
+BODY New Run SM_Table_SeedEast direction=(0.0, 0.0, 1.0) travel=1.81248617172241 requested=1.81248617172241 blocks=false
+BODY New Run SM_Table_SeedEast direction=(-1.0, 0.0, 0.0) travel=1.2585072517395 requested=1.2585072517395 blocks=false
+FIXTURE New Run DevelopmentSetup/Tables/SM_Table_SeedEast bounds=[P: (-6.808355, -0.005716, -4.678391), S: (1.477014, 0.885119, 2.584972)] blocking_shapes=0 approaches=2 stopped=0 player_mask=1
+FAIL: New Run player capsule stops at DevelopmentSetup/Tables/SM_Table_SeedEast
+FAIL: New Run has enabled movement shapes for DevelopmentSetup/Tables/SM_Table_SeedEast
+BODY New Run SM_Table_Palette_Food direction=(0.0, 0.0, -1.0) travel=1.25850701332092 requested=1.25850701332092 blocks=false
+BODY New Run SM_Table_Palette_Food direction=(-1.0, 0.0, 0.0) travel=1.81248617172241 requested=1.81248617172241 blocks=false
+FIXTURE New Run DevelopmentSetup/Tables/SM_Table_Palette_Food bounds=[P: (-7.925129, -0.005716, 3.218106), S: (2.584972, 0.885119, 1.477014)] blocking_shapes=0 approaches=2 stopped=0 player_mask=1
+FAIL: New Run player capsule stops at DevelopmentSetup/Tables/SM_Table_Palette_Food
+FAIL: New Run has enabled movement shapes for DevelopmentSetup/Tables/SM_Table_Palette_Food
+BODY New Run SM_Table_Palette_Hydration direction=(0.0, 0.0, -1.0) travel=1.25850701332092 requested=1.25850701332092 blocks=false
+BODY New Run SM_Table_Palette_Hydration direction=(0.0, 0.0, 1.0) travel=1.25850701332092 requested=1.25850701332092 blocks=false
+BODY New Run SM_Table_Palette_Hydration direction=(1.0, 0.0, 0.0) travel=1.81248664855957 requested=1.81248664855957 blocks=false
+FIXTURE New Run DevelopmentSetup/Tables/SM_Table_Palette_Hydration bounds=[P: (-14.75983, -0.005716, -4.688527), S: (2.584972, 0.885119, 1.477014)] blocking_shapes=0 approaches=3 stopped=0 player_mask=1
+FAIL: New Run player capsule stops at DevelopmentSetup/Tables/SM_Table_Palette_Hydration
+FAIL: New Run has enabled movement shapes for DevelopmentSetup/Tables/SM_Table_Palette_Hydration
+BODY New Run SM_ventilated_locker_GalleryC_West direction=(0.0, 0.0, -1.0) travel=1.25150442123413 requested=1.25150442123413 blocks=false
+BODY New Run SM_ventilated_locker_GalleryC_West direction=(0.0, 0.0, 1.0) travel=1.25150489807129 requested=1.25150489807129 blocks=false
+BODY New Run SM_ventilated_locker_GalleryC_West direction=(1.0, 0.0, 0.0) travel=0.94870567321777 requested=0.94870567321777 blocks=false
+FIXTURE New Run FunctionalFixtures/SM_ventilated_locker_GalleryC_West bounds=[P: (-1.772524, -0.000346, 8.268509), S: (0.857411, 2.758472, 1.463009)] blocking_shapes=0 approaches=3 stopped=0 player_mask=1
+FAIL: New Run player capsule stops at FunctionalFixtures/SM_ventilated_locker_GalleryC_West
+FAIL: New Run has enabled movement shapes for FunctionalFixtures/SM_ventilated_locker_GalleryC_West
+BODY New Run SM_MetalShelves_GalleryA_West direction=(0.0, 0.0, -1.0) travel=2.13360571861267 requested=2.13360571861267 blocks=false
+BODY New Run SM_MetalShelves_GalleryA_West direction=(1.0, 0.0, 0.0) travel=1.06872272491455 requested=1.06872272491455 blocks=false
+FIXTURE New Run FunctionalFixtures/SM_MetalShelves_GalleryA_West bounds=[P: (-2.840304, -0.0, -5.43396), S: (1.097445, 2.935879, 3.227211)] blocking_shapes=0 approaches=2 stopped=0 player_mask=1
+FAIL: New Run player capsule stops at FunctionalFixtures/SM_MetalShelves_GalleryA_West
+FAIL: New Run has enabled movement shapes for FunctionalFixtures/SM_MetalShelves_GalleryA_West
+BODY New Run SM_MetalShelves_GalleryB_North direction=(0.0, 0.0, 1.0) travel=1.06872367858887 requested=1.06872367858887 blocks=false
+FIXTURE New Run FunctionalFixtures/SM_MetalShelves_GalleryB_North bounds=[P: (12.38226, -0.0, -14.31714), S: (3.227212, 2.935879, 1.097445)] blocking_shapes=0 approaches=1 stopped=0 player_mask=1
+FAIL: New Run player capsule stops at FunctionalFixtures/SM_MetalShelves_GalleryB_North
+FAIL: New Run has enabled movement shapes for FunctionalFixtures/SM_MetalShelves_GalleryB_North
+BODY New Run ModularRack_GalleryB_Initial direction=(0.0, 0.0, -1.0) travel=0.17921379208565 requested=2.53999900817871 blocks=true
+BODY New Run ModularRack_GalleryB_Initial direction=(0.0, 0.0, 1.0) travel=0.17921383678913 requested=2.53999948501587 blocks=true
+BODY New Run ModularRack_GalleryB_Initial direction=(-1.0, 0.0, 0.0) travel=0.17800782620907 requested=0.9300000667572 blocks=true
+OBSTRUCTED New Run ModularRack_GalleryB_Initial direction=(1.0, 0.0, 0.0) by=/root/RunShell/WingGameplay/FunctionalFixtures/FixedLadder_GalleryB_Initial/MovementCollision
+FIXTURE New Run FunctionalFixtures/ModularRack_GalleryB_Initial bounds=[P: (0.190746, 0.0, -10.54006), S: (0.82, 3.0, 4.039999)] blocking_shapes=1 approaches=3 stopped=3 player_mask=1
+Wing functional storage: installed 16 empty deterministic surface(s); F6 developer grids default OFF, F7 demo disabled.
+BODY Continue SM_Table_SeedWest direction=(0.0, 0.0, -1.0) travel=1.25850701332092 requested=1.25850701332092 blocks=false
+BODY Continue SM_Table_SeedWest direction=(1.0, 0.0, 0.0) travel=1.81248664855957 requested=1.81248664855957 blocks=false
+FIXTURE Continue DevelopmentSetup/Tables/SM_Table_SeedWest bounds=[P: (-14.71094, -0.005716, 3.086047), S: (2.584972, 0.885119, 1.477014)] blocking_shapes=0 approaches=2 stopped=0 player_mask=1
+FAIL: Continue player capsule stops at DevelopmentSetup/Tables/SM_Table_SeedWest
+FAIL: Continue has enabled movement shapes for DevelopmentSetup/Tables/SM_Table_SeedWest
+BODY Continue SM_Table_SeedEast direction=(0.0, 0.0, 1.0) travel=1.81248617172241 requested=1.81248617172241 blocks=false
+BODY Continue SM_Table_SeedEast direction=(-1.0, 0.0, 0.0) travel=1.2585072517395 requested=1.2585072517395 blocks=false
+FIXTURE Continue DevelopmentSetup/Tables/SM_Table_SeedEast bounds=[P: (-6.808355, -0.005716, -4.678391), S: (1.477014, 0.885119, 2.584972)] blocking_shapes=0 approaches=2 stopped=0 player_mask=1
+FAIL: Continue player capsule stops at DevelopmentSetup/Tables/SM_Table_SeedEast
+FAIL: Continue has enabled movement shapes for DevelopmentSetup/Tables/SM_Table_SeedEast
+BODY Continue SM_Table_Palette_Food direction=(0.0, 0.0, -1.0) travel=1.25850701332092 requested=1.25850701332092 blocks=false
+BODY Continue SM_Table_Palette_Food direction=(-1.0, 0.0, 0.0) travel=1.81248617172241 requested=1.81248617172241 blocks=false
+FIXTURE Continue DevelopmentSetup/Tables/SM_Table_Palette_Food bounds=[P: (-7.925129, -0.005716, 3.218106), S: (2.584972, 0.885119, 1.477014)] blocking_shapes=0 approaches=2 stopped=0 player_mask=1
+FAIL: Continue player capsule stops at DevelopmentSetup/Tables/SM_Table_Palette_Food
+FAIL: Continue has enabled movement shapes for DevelopmentSetup/Tables/SM_Table_Palette_Food
+BODY Continue SM_Table_Palette_Hydration direction=(0.0, 0.0, -1.0) travel=1.25850701332092 requested=1.25850701332092 blocks=false
+BODY Continue SM_Table_Palette_Hydration direction=(0.0, 0.0, 1.0) travel=1.25850701332092 requested=1.25850701332092 blocks=false
+BODY Continue SM_Table_Palette_Hydration direction=(1.0, 0.0, 0.0) travel=1.81248664855957 requested=1.81248664855957 blocks=false
+FIXTURE Continue DevelopmentSetup/Tables/SM_Table_Palette_Hydration bounds=[P: (-14.75983, -0.005716, -4.688527), S: (2.584972, 0.885119, 1.477014)] blocking_shapes=0 approaches=3 stopped=0 player_mask=1
+FAIL: Continue player capsule stops at DevelopmentSetup/Tables/SM_Table_Palette_Hydration
+FAIL: Continue has enabled movement shapes for DevelopmentSetup/Tables/SM_Table_Palette_Hydration
+BODY Continue SM_ventilated_locker_GalleryC_West direction=(0.0, 0.0, -1.0) travel=1.25150442123413 requested=1.25150442123413 blocks=false
+BODY Continue SM_ventilated_locker_GalleryC_West direction=(0.0, 0.0, 1.0) travel=1.25150489807129 requested=1.25150489807129 blocks=false
+BODY Continue SM_ventilated_locker_GalleryC_West direction=(1.0, 0.0, 0.0) travel=0.94870567321777 requested=0.94870567321777 blocks=false
+FIXTURE Continue FunctionalFixtures/SM_ventilated_locker_GalleryC_West bounds=[P: (-1.772524, -0.000346, 8.268509), S: (0.857411, 2.758472, 1.463009)] blocking_shapes=0 approaches=3 stopped=0 player_mask=1
+FAIL: Continue player capsule stops at FunctionalFixtures/SM_ventilated_locker_GalleryC_West
+FAIL: Continue has enabled movement shapes for FunctionalFixtures/SM_ventilated_locker_GalleryC_West
+BODY Continue SM_MetalShelves_GalleryA_West direction=(0.0, 0.0, -1.0) travel=2.13360571861267 requested=2.13360571861267 blocks=false
+BODY Continue SM_MetalShelves_GalleryA_West direction=(1.0, 0.0, 0.0) travel=1.06872272491455 requested=1.06872272491455 blocks=false
+FIXTURE Continue FunctionalFixtures/SM_MetalShelves_GalleryA_West bounds=[P: (-2.840304, -0.0, -5.43396), S: (1.097445, 2.935879, 3.227211)] blocking_shapes=0 approaches=2 stopped=0 player_mask=1
+FAIL: Continue player capsule stops at FunctionalFixtures/SM_MetalShelves_GalleryA_West
+FAIL: Continue has enabled movement shapes for FunctionalFixtures/SM_MetalShelves_GalleryA_West
+BODY Continue SM_MetalShelves_GalleryB_North direction=(0.0, 0.0, 1.0) travel=1.06872367858887 requested=1.06872367858887 blocks=false
+FIXTURE Continue FunctionalFixtures/SM_MetalShelves_GalleryB_North bounds=[P: (12.38226, -0.0, -14.31714), S: (3.227212, 2.935879, 1.097445)] blocking_shapes=0 approaches=1 stopped=0 player_mask=1
+FAIL: Continue player capsule stops at FunctionalFixtures/SM_MetalShelves_GalleryB_North
+FAIL: Continue has enabled movement shapes for FunctionalFixtures/SM_MetalShelves_GalleryB_North
+BODY Continue ModularRack_GalleryB_Initial direction=(0.0, 0.0, -1.0) travel=0.17921379208565 requested=2.53999900817871 blocks=true
+BODY Continue ModularRack_GalleryB_Initial direction=(0.0, 0.0, 1.0) travel=0.17921383678913 requested=2.53999948501587 blocks=true
+BODY Continue ModularRack_GalleryB_Initial direction=(-1.0, 0.0, 0.0) travel=0.17800782620907 requested=0.9300000667572 blocks=true
+OBSTRUCTED Continue ModularRack_GalleryB_Initial direction=(1.0, 0.0, 0.0) by=/root/RunShell/WingGameplay/FunctionalFixtures/FixedLadder_GalleryB_Initial/MovementCollision
+FIXTURE Continue FunctionalFixtures/ModularRack_GalleryB_Initial bounds=[P: (0.190746, 0.0, -10.54006), S: (0.82, 3.0, 4.039999)] blocking_shapes=1 approaches=3 stopped=3 player_mask=1
+Wing functional storage: installed 16 empty deterministic surface(s); F6 developer grids default OFF, F7 demo disabled.
+BODY Visible F6 SM_Table_SeedWest direction=(0.0, 0.0, -1.0) travel=0.17820656299591 requested=1.25850701332092 blocks=true
+BODY Visible F6 SM_Table_SeedWest direction=(1.0, 0.0, 0.0) travel=0.17965565621853 requested=1.81248664855957 blocks=true
+FIXTURE Visible F6 DevelopmentSetup/Tables/SM_Table_SeedWest bounds=[P: (-14.71094, -0.005716, 3.086047), S: (2.584972, 0.885119, 1.477014)] blocking_shapes=1 approaches=2 stopped=2 player_mask=1
+BODY Visible F6 SM_Table_SeedEast direction=(0.0, 0.0, 1.0) travel=0.17965561151505 requested=1.81248617172241 blocks=true
+BODY Visible F6 SM_Table_SeedEast direction=(-1.0, 0.0, 0.0) travel=0.17820659279823 requested=1.2585072517395 blocks=true
+FIXTURE Visible F6 DevelopmentSetup/Tables/SM_Table_SeedEast bounds=[P: (-6.808355, -0.005716, -4.678391), S: (1.477014, 0.885119, 2.584972)] blocking_shapes=1 approaches=2 stopped=2 player_mask=1
+BODY Visible F6 SM_Table_Palette_Food direction=(0.0, 0.0, -1.0) travel=0.17820656299591 requested=1.25850701332092 blocks=true
+BODY Visible F6 SM_Table_Palette_Food direction=(-1.0, 0.0, 0.0) travel=0.17965561151505 requested=1.81248617172241 blocks=true
+FIXTURE Visible F6 DevelopmentSetup/Tables/SM_Table_Palette_Food bounds=[P: (-7.925129, -0.005716, 3.218106), S: (2.584972, 0.885119, 1.477014)] blocking_shapes=1 approaches=2 stopped=2 player_mask=1
+BODY Visible F6 SM_Table_Palette_Hydration direction=(0.0, 0.0, -1.0) travel=0.17820656299591 requested=1.25850701332092 blocks=true
+BODY Visible F6 SM_Table_Palette_Hydration direction=(0.0, 0.0, 1.0) travel=0.17820656299591 requested=1.25850701332092 blocks=true
+BODY Visible F6 SM_Table_Palette_Hydration direction=(1.0, 0.0, 0.0) travel=0.17965565621853 requested=1.81248664855957 blocks=true
+FIXTURE Visible F6 DevelopmentSetup/Tables/SM_Table_Palette_Hydration bounds=[P: (-14.75983, -0.005716, -4.688527), S: (2.584972, 0.885119, 1.477014)] blocking_shapes=1 approaches=3 stopped=3 player_mask=1
+BODY Visible F6 SM_ventilated_locker_GalleryC_West direction=(0.0, 0.0, -1.0) travel=0.17904824018478 requested=1.25150442123413 blocks=true
+BODY Visible F6 SM_ventilated_locker_GalleryC_West direction=(0.0, 0.0, 1.0) travel=0.17904831469059 requested=1.25150489807129 blocks=true
+BODY Visible F6 SM_ventilated_locker_GalleryC_West direction=(1.0, 0.0, 0.0) travel=0.1788087785244 requested=0.94870567321777 blocks=true
+FIXTURE Visible F6 FunctionalFixtures/SM_ventilated_locker_GalleryC_West bounds=[P: (-1.772524, -0.000346, 8.268509), S: (0.857411, 2.758472, 1.463009)] blocking_shapes=1 approaches=3 stopped=3 player_mask=1
+BODY Visible F6 SM_MetalShelves_GalleryA_West direction=(0.0, 0.0, -1.0) travel=0.18335674703121 requested=2.13360571861267 blocks=true
+BODY Visible F6 SM_MetalShelves_GalleryA_West direction=(1.0, 0.0, 0.0) travel=0.18264304101467 requested=1.06872272491455 blocks=true
+FIXTURE Visible F6 FunctionalFixtures/SM_MetalShelves_GalleryA_West bounds=[P: (-2.840304, -0.0, -5.43396), S: (1.097445, 2.935879, 3.227211)] blocking_shapes=1 approaches=2 stopped=2 player_mask=1
+BODY Visible F6 SM_MetalShelves_GalleryB_North direction=(0.0, 0.0, 1.0) travel=0.17951217293739 requested=1.06872367858887 blocks=true
+FIXTURE Visible F6 FunctionalFixtures/SM_MetalShelves_GalleryB_North bounds=[P: (12.38226, -0.0, -14.31714), S: (3.227212, 2.935879, 1.097445)] blocking_shapes=1 approaches=1 stopped=1 player_mask=1
+BODY Visible F6 ModularRack_GalleryB_Initial direction=(0.0, 0.0, -1.0) travel=0.17921379208565 requested=2.53999900817871 blocks=true
+BODY Visible F6 ModularRack_GalleryB_Initial direction=(0.0, 0.0, 1.0) travel=0.17921383678913 requested=2.53999948501587 blocks=true
+BODY Visible F6 ModularRack_GalleryB_Initial direction=(-1.0, 0.0, 0.0) travel=0.17800782620907 requested=0.9300000667572 blocks=true
+OBSTRUCTED Visible F6 ModularRack_GalleryB_Initial direction=(1.0, 0.0, 0.0) by=/root/WingGameplay/FunctionalFixtures/FixedLadder_GalleryB_Initial/MovementCollision
+FIXTURE Visible F6 FunctionalFixtures/ModularRack_GalleryB_Initial bounds=[P: (0.190746, 0.0, -10.54006), S: (0.82, 3.0, 4.039999)] blocking_shapes=1 approaches=3 stopped=3 player_mask=1
+furniture_movement_collision_tests: FAIL failures=28

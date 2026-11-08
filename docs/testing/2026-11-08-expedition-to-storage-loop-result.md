@@ -72,7 +72,7 @@ Production balance, economic benefits of provisioning, full-catalogue cargo gene
 
 ## Open furniture movement collision follow-up
 
-The developer reported ineffective player movement collision at these seven wing-relative paths during the playtest. The cause, introduction date and presence or absence of collision nodes are unverified. Other walls, proxies, Receiving decoration and elevator components, and the ladder-served modular rack were outside the reported affected set. The issue is open in a separate repair scope. Its focused repair record is pending.
+The developer reported ineffective player movement collision at these seven wing-relative paths during the playtest. At the time of the report, the cause, introduction date and presence or absence of collision nodes were unverified. Other walls, proxies, Receiving decoration and elevator components, and the ladder-served modular rack were outside the reported affected set. The separate repair is technically verified and awaits developer retest. [Furniture collision repair result](2026-11-08-furniture-collision-repair-result.md).
 
 ```text
 DevelopmentSetup/Tables/SM_Table_SeedWest

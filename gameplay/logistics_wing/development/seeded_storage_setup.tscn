@@ -21,6 +21,7 @@ script = ExtResource("1_setup")
 script = ExtResource("2_collision")
 print_collision_summary = false
 generate_storage_prototype = false
+use_local_visibility_for_collision = true
 
 [node name="SM_Table_SeedWest" parent="Tables" instance=ExtResource("3_table")]
 position = Vector3(-11.4, 0, 2.65)
