@@ -1,6 +1,6 @@
 # Furniture Movement Collision Repair
 
-**8 November 2026 · HUMAN-ACCEPTED / CLOSED IN ITS BOUNDED SCOPE · Publication pending**
+**8 November 2026 · HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE**
 
 Repair branch `codex/furniture-movement-collision` starts at the accepted expedition close-out `82207db3258a22b2b81acaf3badf05bdff74a065`. The developer's report lists the four tables and three storage units in the expedition result. Onset remains unknown. [Original report](2026-11-08-expedition-to-storage-loop-result.md#open-furniture-movement-collision-follow-up).
 
@@ -39,4 +39,4 @@ The developer confirmed in-game that all seven affected fixtures now block playe
 
 Codex’s earlier verification covered the hidden-wing initialization cause and the scoped fix that avoids duplicate blockers. It recorded 26 accessible capsule-sweep approaches in each of New Run and Continue, native Compatibility movement checks, table pickup, shelf placement and retrieval, and six passing regressions. The Food palette table overlap and backward `S` escape were observed by Codex on an isolated save copy. The original save was preserved. The date the defect was introduced remains unknown.
 
-The developer closed the repair in its bounded scope on 8 November 2026. Remote publication is pending. The earlier expedition and collection foundation acceptances remain closed.
+The developer closed the repair in its bounded scope on 8 November 2026. The accepted chain was published to `origin/main` on 8 November 2026. An independent remote check matched the acceptance commit `de6b9bd7102e555b46a45f6733d9e7669db5d3b5`. The earlier expedition and collection foundation acceptances remain closed.

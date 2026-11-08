@@ -1,6 +1,6 @@
 # Expedition-to-Storage Loop Result
 
-**8 November 2026 · HUMAN-ACCEPTED / CLOSED IN ITS BOUNDED SCOPE · Local checkpoint / publication pending**
+**8 November 2026 · HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE**
 
 F5 New Run now starts with the authored loose palette and eight Ready scavengers. A single persistent preparation supports one to four members, five supply lanes and two affinities. Explicit Dispatch commits the trip and its cargo. The expedition releases its destination at return, and healthy crew members become Ready when Receiving admits their cargo or when an empty trip returns. The original two scripted hauls are retained in the isolated collection-goal test.
 

@@ -1,18 +1,18 @@
 # Sorting Apocalypse — current development state
 
-**Document update: 8 November 2026. Intended game: developer-approved GDD v0.16. Local build: Expedition-to-Storage Loop.**
+**Document update: 8 November 2026. Intended game: developer-approved GDD v0.16. Published build: Expedition-to-Storage Loop.**
 
 ## 1. At a glance: approval is not implementation
 
 | Area | Current disposition |
 | --- | --- |
 | GDD v0.16 | **APPROVED IN ITS ENTIRETY** by the developer. Single current authority for intended gameplay, with its provisional and open classifications retained. |
-| Collection foundation | **HUMAN-ACCEPTED / CLOSED IN ITS BOUNDED SCOPE.** [Result and developer acceptance](testing/2026-11-07-continuous-run-collection-goal-result.md). |
+| Collection foundation | **HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** [Result and developer acceptance](testing/2026-11-07-continuous-run-collection-goal-result.md). |
 | M1 / M2 / M3 / M4 | **HUMAN-PROMOTED / PUBLISHED / CLOSED**, each in its accepted bounded scope. No acceptance, publication or re-review backlog is reopened. |
-| Expedition-to-Storage Loop | **HUMAN-ACCEPTED / CLOSED IN ITS BOUNDED SCOPE.** [Technical result and developer acceptance](testing/2026-11-08-expedition-to-storage-loop-result.md). M5’s former combined daily scenario is historical. |
+| Expedition-to-Storage Loop | **HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** [Technical result and developer acceptance](testing/2026-11-08-expedition-to-storage-loop-result.md). M5’s former combined daily scenario is historical. |
 | ADR cycle | Parked historical design, preserved for deliberate reuse or a possible survival mode. Not the current economy or immediate design priority. |
-| Local checkpoints | Foundation `a1d1db4494347e0dfb4dfb653ed71b2abaf76ce5`, expedition implementation `66a7f863e5cf6f2f2c9e8f7f34de99885fa76612` and technical verification `11f95354119058fe2ec90796d09e2c28c046a885`. [Foundation closure](testing/2026-11-07-continuous-run-collection-goal-closure.md). |
-| Publication | M4 acceptance is pinned at `c9f9417a97cf65ef416c58189ca1f741b6a90406`. The collection foundation, expedition loop and furniture collision repair are accepted locally. Publication is pending. |
+| Implementation checkpoints | Foundation `a1d1db4494347e0dfb4dfb653ed71b2abaf76ce5`, expedition implementation `66a7f863e5cf6f2f2c9e8f7f34de99885fa76612` and technical verification `11f95354119058fe2ec90796d09e2c28c046a885`. [Foundation closure](testing/2026-11-07-continuous-run-collection-goal-closure.md). |
+| Publication | M4 acceptance is pinned at `c9f9417a97cf65ef416c58189ca1f741b6a90406`. The collection foundation, expedition loop and furniture collision repair are published. On 8 November 2026, `git ls-remote` verified `origin/main` at the repair acceptance commit `de6b9bd7102e555b46a45f6733d9e7669db5d3b5`. |
 
 This file replaces current-facing routing, not historical evidence. The later [MVP/VDD compatibility completion](testing/2026-11-07-mvp-vdd-compatibility-consistency.md) records both targeted master edits and their checks; it does not change the implemented checkpoint. The [approval record](design_history/2026-11-07-gdd-v0.16-approval-and-authority-transition.md) records this task. The complete [pre-adoption CURRENT_STATE snapshot](https://github.com/Navandis/Sorting-apoc-PROTOTYPE/blob/c9f9417a97cf65ef416c58189ca1f741b6a90406/docs/CURRENT_STATE.md), dated validation reports and prior masters remain available. Their then-pending statements do not undo later promotions.
 
@@ -55,7 +55,7 @@ The purpose is to restore collecting, hoarding and organizing as the main experi
 
 Read the GDD for the actual detail and source distinctions. This table is routing, not a substitute specification. No code change follows from it without an agreed task.
 
-## 4. Local playable expedition loop
+## 4. Playable expedition loop
 
 Normal F5 entry is `res://gameplay/run/run_shell.tscn`. New Run starts with the authored loose stock and eight Ready scavengers. Aim at the Dispatch counter and press F to prepare a crew. Player-dispatched expeditions supply Receiving. The HUD still tracks six authored primary Utility per category and records the first simultaneous completion.
 

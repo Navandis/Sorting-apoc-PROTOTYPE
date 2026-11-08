@@ -1,7 +1,7 @@
 # Sorting Apocalypse — documentation index
 
 **Current intended game: GDD v0.16, approved by the developer in its entirety.**
-**Continuous Run and Collection Goal Foundation: HUMAN-ACCEPTED / CLOSED IN ITS BOUNDED SCOPE. Local checkpoint, publication pending.**
+**Continuous Run and Collection Goal Foundation: HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.**
 **Expedition-to-Storage Loop · HUMAN-ACCEPTED / CLOSED IN ITS BOUNDED SCOPE.** [Technical result and developer acceptance](testing/2026-11-08-expedition-to-storage-loop-result.md).
 
 See the [approved foundation brief](superpowers/plans/2026-11-07-continuous-run-collection-goal-foundation.md) the [accepted result](testing/2026-11-07-continuous-run-collection-goal-result.md) and the [closure record](testing/2026-11-07-continuous-run-collection-goal-closure.md).
@@ -55,6 +55,6 @@ See [CURRENT_STATE](CURRENT_STATE.md) for the current content, scene, preservati
 
 ## Next-work boundary
 
-The expedition loop and the separate [furniture movement collision repair](testing/2026-11-08-furniture-collision-repair-result.md) are human-accepted and closed in their bounded scopes. Publication is pending.
+The expedition loop and the separate [furniture movement collision repair](testing/2026-11-08-furniture-collision-repair-result.md) are human-accepted, published and closed in their bounded scopes.
 
 The complete pre-adoption operational index remains available in [the pinned c9f9417 snapshot](https://github.com/Navandis/Sorting-apoc-PROTOTYPE/blob/c9f9417a97cf65ef416c58189ca1f741b6a90406/docs/README.md). Current-facing consolidation changes routing, not the historical evidence.

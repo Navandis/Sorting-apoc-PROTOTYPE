@@ -12,7 +12,7 @@ Persistent supplies. Competing obligations.<br>One continuing storeroom.
 
 Version 0.5  \|  7 November 2026  \|  GDD v0.16 compatibility update
 
-ACCEPTED FOUNDATION / CURRENT TARGET<br>The local collection foundation uses continuous active time, live stored Utility and ordinary continuation. The M1–M4 records describe the published predecessor. [G16]
+ACCEPTED FOUNDATION / CURRENT TARGET<br>The collection foundation uses continuous active time, live stored Utility and ordinary continuation. The M1–M4 records describe the published predecessor. [G16]
 
 This is the MVP-phase counterpart to Prototype Findings: a living foundation-design, implementation-progress and evidence record. It belongs alongside the GDD and Visual Design Direction as an active project master. Prototype Findings v0.14 is retired from active progress tracking, not discarded as evidence.
 
@@ -20,18 +20,18 @@ This is the MVP-phase counterpart to Prototype Findings: a living foundation-des
 | --- | --- |
 | GDD v0.16 | Approved intended collection game, retained rules and explicit open mechanics. [G16] |
 | VDD v0.11 | World/material/art and current spatial evidence; dated compatibility update preserves unresolved layout choices. [VDD-C07] |
-| This master v0.5 | Current local collection implementation, published M1–M4 evidence and future boundaries. |
+| This master v0.5 | Current collection implementation, published M1–M4 evidence and future boundaries. |
 | Prototype Findings v0.14 | Preserved historical prototype record; unresolved obligations remain live here. |
 
 DESIGN CONFIRMED IN CONVERSATION ≠ IMPLEMENTED ≠ HUMAN-PROMOTED
 
-The Continuous Run and Collection Goal Foundation is HUMAN-ACCEPTED / CLOSED IN ITS BOUNDED SCOPE. Publication is pending. M1–M4 remain published and closed at c9f9417. Catalogue: 167 active / 7 retired / 174 source models. Twelve Auto Stack Group approvals are pending. [PUB-M4; G16; §15.6]
+The Continuous Run and Collection Goal Foundation is HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE. M1–M4 remain published and closed at c9f9417. Catalogue: 167 active / 7 retired / 174 source models. Twelve Auto Stack Group approvals are pending. [PUB-M4; G16; §15.6]
 
 ORIENTATION
 
 ## Reader’s guide & current position
 
-The local Expedition-to-Storage Loop is HUMAN-ACCEPTED / CLOSED IN ITS BOUNDED SCOPE. The daily clock, timed requests, prebuilt Dispatch and midnight rules belong to the published M1–M4 evidence. [G16, §§12.3, 15]
+The Expedition-to-Storage Loop is HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE. The daily clock, timed requests, prebuilt Dispatch and midnight rules belong to the published M1–M4 evidence. [G16, §§12.3, 15]
 
 ### How to use this master
 
@@ -467,7 +467,7 @@ Actual Expedition journeys/returns, destination-generated loot, duration, injuri
 
 Do not display an invented improvement to injuries, loot or survival merely because a lane is full. The initial evidence is what was spent, what requirements were met, and what remains for other demands. Future OutcomeProfiles consume that result when their systems are implemented.
 
-EXPEDITION-TO-STORAGE TEST. Choose 1–4 Ready scavengers in one persistent preparation. The first accepted supply locks the crew and spends the whole item. Select two distinct affinities to explicitly dispatch to one of 28 destinations. Healthy crew members become Ready at nonempty cargo admission or at an empty return. The test duration and category-first acquisition rules are in GDD §§9–11. Technical verification completed on 8 November 2026. The developer accepted the bounded loop on 8 November 2026. Publication is pending.
+EXPEDITION-TO-STORAGE TEST. Choose 1–4 Ready scavengers in one persistent preparation. The first accepted supply locks the crew and spends the whole item. Select two distinct affinities to explicitly dispatch to one of 28 destinations. Healthy crew members become Ready at nonempty cargo admission or at an empty return. The test duration and category-first acquisition rules are in GDD §§9–11. Technical verification completed on 8 November 2026. The developer accepted the bounded loop on 8 November 2026. It is published on main.
 
 ### 12.4 Validation threshold
 
@@ -495,7 +495,7 @@ M1 reached and resolved the bounded CF-01/R-04 scene-lifetime issue and the rele
 
 ### 13.2 Technical checkpoints versus gameplay claims
 
-M1–M4 and the local collection foundation establish correct operation in their accepted scopes. The small controlled fixture verifies the live collection loop. Production collection balance, real expedition outcomes and release durability remain separate scopes. [G16 §§20–21; §15.6]
+M1–M4 and the collection foundation establish correct operation in their accepted scopes. The small controlled fixture verifies the live collection loop. Production collection balance, real expedition outcomes and release durability remain separate scopes. [G16 §§20–21; §15.6]
 
 Basis: [D01–D09]; [CR15]; [GDD §20.2]; [WG; ER14 §§11–12].
 
@@ -557,7 +557,7 @@ This section replaces Prototype Findings as the active phase tracker. Dated evid
 | --- | --- | --- |
 | Prototype foundations | HUMAN-PROMOTED in recorded scopes | PF retained as historical evidence; no new acceptance task. |
 | Pre-MVP review + repairs | HUMAN-PROMOTED / PUBLISHED | R-01–R-03 accepted; bounded R-04 subsequently repaired within M1. |
-| MVP foundation contracts | Accepted foundations and scoped collection successor | Published M1–M4, the local collection foundation and the expedition loop are human-accepted. See §12.3 and §15.6. |
+| MVP foundation contracts | Accepted foundations and scoped collection successor | M1–M4, the collection foundation and the expedition loop are human-accepted and published. See §12.3 and §15.6. |
 | M1 persistent Medical | HUMAN-PROMOTED / PUBLISHED / CLOSED | 6c56edf → a7b764e → 36d527d; independent ACCEPT and successful human play. |
 | M2 clock / midnight / HUD | HUMAN-PROMOTED / PUBLISHED / CLOSED | 524edf1 → c7bbf44 → 3465098; independent ACCEPT and final human PASS (§15.2). |
 | M3 Kitchen | HUMAN-PROMOTED / PUBLISHED / CLOSED | 7d3d6c7 → a0f066a; independent ACCEPT decisions, native retests and subsequent publication retained (§15.3). |
@@ -688,7 +688,7 @@ APPROVED DESIGN / REMAINING DELIVERY CHOICES
 
 ## 17. Current decisions & implementation boundaries
 
-M1–M4 remain published and closed at c9f9417. The table records the local expedition build alongside retained M4 evidence and future scope. [PUB-M4, G16, §§12.3, 15.6]
+M1–M4 remain published and closed at c9f9417. The table records the expedition build alongside retained M4 evidence and future scope. [PUB-M4, G16, §§12.3, 15.6]
 
 | Decision | Implemented baseline / distinct target boundary |
 | --- | --- |
@@ -874,7 +874,7 @@ Once an outcome is preserved, loading, opening a report or rebuilding cargo must
 
 ### 19.5 Implementation staging is not the design premise
 
-Accepted M2–M4 retain authored scenarios, midnight saving and ordinary continuation. The local expedition loop commits outcomes at Dispatch. Continuous release durability remains open. [G16 §§5.5, 18.5]
+Accepted M2–M4 retain authored scenarios, midnight saving and ordinary continuation. The expedition loop commits outcomes at Dispatch. Continuous release durability remains open. [G16 §§5.5, 18.5]
 
 M2 may replay an isolated pre-midnight test snapshot to verify deterministic schedule/accounting results. That is not a player checkpoint feature. The earlier M2 draft §9’s midnight-only counterexample and additional selective RNG recommendations are superseded by this clarification; they are not approved implementation requirements. [D21; M2 §9]
 
