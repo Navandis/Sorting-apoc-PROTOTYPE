@@ -209,7 +209,7 @@ Basis: [GDD §§3.1, 4.8, 6.3, 7.1–7.2, 8.2–8.4]; [D01–D03]; [ER-RESULT §
 
 ### 6.1.1 Deliberately excluded resilience work
 
-The Incinerator playtest uses schema 7 in the existing collection save service under user://saves/collection/. It preserves the warning flag and exact disposal receipts separately from loadout credit. Save & Exit and the 60-active-second and first-victory attempts use the same service. Continue restores state before interaction with service panels closed. Schema 6 requires confirmed New Run to repoint the slot and its snapshot file is retained. Schema 5 and the separate M4 slot are preserved. Release durability remains CF-13. [D21; G16 §§5.5,15.3,18.5]
+The locally accepted Incinerator build uses schema 7 in the existing collection save service under user://saves/collection/. It preserves the warning flag and exact disposal receipts separately from loadout credit. Save & Exit and the 60-active-second and first-victory attempts use the same service. Continue restores state before interaction with service panels closed. Schema 6 requires confirmed New Run to repoint the slot and its snapshot file is retained. Schema 5 and the separate M4 slot are preserved. Release durability remains CF-13. [D21; G16 §§5.5,15.3,18.5]
 
 At the accepted M1/initial M2 delivery level, unsaved actions may be lost after unexpected termination. Ordinary continuation must still preserve exact ownership, credit and gameplay time. Do not use this intentionally limited implementation to assess the full-game randomness principle. Exact audiovisual-frame recovery remains unnecessary. [D03, D05, D21]
 
@@ -562,7 +562,7 @@ This section replaces Prototype Findings as the active phase tracker. Dated evid
 | M2 clock / midnight / HUD | HUMAN-PROMOTED / PUBLISHED / CLOSED | 524edf1 → c7bbf44 → 3465098; independent ACCEPT and final human PASS (§15.2). |
 | M3 Kitchen | HUMAN-PROMOTED / PUBLISHED / CLOSED | 7d3d6c7 → a0f066a; independent ACCEPT decisions, native retests and subsequent publication retained (§15.3). |
 | M4 Expedition Loadout | HUMAN-PROMOTED / PUBLISHED / CLOSED | Accepted code 844d0d4; final independent ACCEPT and human acceptance; published M4 anchor c9f9417. [PUB-M4; §15.5] |
-| Incinerator and Deliberate Disposal | IMPLEMENTED / DEVELOPER PLAYTEST PENDING | One-item destruction, live warning and schema 7 continuation. Technical evidence and focused playtest in [docs/testing/2026-11-08-incinerator-deliberate-disposal-result.md](testing/2026-11-08-incinerator-deliberate-disposal-result.md). |
+| Incinerator and Deliberate Disposal | HUMAN-PROMOTED / CLOSED IN ITS BOUNDED SCOPE — LOCAL; PUBLICATION PENDING. | 8 November 2026. The developer accepted single-item disposal. Technical result and developer acceptance in [docs/testing/2026-11-08-incinerator-deliberate-disposal-result.md](testing/2026-11-08-incinerator-deliberate-disposal-result.md). |
 | M5 combined allocation | NOT RUN / NOT AUTHORIZED HERE | Historical combined-scenario proposal; future scope must be reconsidered for the collection objective. No run or new milestone. |
 
 ### 15.1 Accepted M1 implementation and publication
@@ -689,7 +689,7 @@ APPROVED DESIGN / REMAINING DELIVERY CHOICES
 
 ## 17. Current decisions & implementation boundaries
 
-M1–M4 remain published and closed at c9f9417. The table records the Incinerator playtest build alongside accepted expedition and retained M4 evidence. [PUB-M4, G16, §§12.3, 15.6]
+M1–M4 remain published and closed at c9f9417. The table records the locally accepted Incinerator build alongside accepted expedition and retained M4 evidence. [PUB-M4, G16, §§12.3, 15.6]
 
 | Decision | Implemented baseline / distinct target boundary |
 | --- | --- |
@@ -702,7 +702,7 @@ M1–M4 remain published and closed at c9f9417. The table records the Incinerato
 | Clock / ordering | The current build uses one continuous active clock for elapsed time, expedition returns and lift boundaries. Calendar ordering is M4 evidence. |
 | Lift / midnight | Full outbound retirement precedes FIFO promotion and oldest-first admission. Nonempty returns release personnel on admission. Empty returns release them at return. |
 | Report / auto-save | The HUD shows eight live totals and first completion. Auto-save attempts follow 60 active seconds or first victory. The night report belongs to M4. |
-| Scenario / compatibility | The playtest uses player-dispatched cargo and a test target of 6 Utility per category. Incompatible schema 6 and schema 5 snapshots and the separate M4 slot are preserved. |
+| Scenario / compatibility | The local build uses player-dispatched cargo and a test target of 6 Utility per category. Incompatible schema 6 and schema 5 snapshots and the separate M4 slot are preserved. |
 | Full-game randomness | Settled principle (§19): continuous Ironman state, early natural commitment, narrow residual loss; incidental uncommitted rerolls tolerated. |
 | M3 Kitchen / meals | M4: meals 10/14/18, 3h windows, 48/40, 60/48, 60/48; no outcome effects. Target Kitchen cadence and bounded consequences remain open. [G16 §12] |
 | M3 cargo / Utility | M3 fixture is dated history. M4: 167 locked rows; 85-item start; four 16-item deliveries/day for three days. No final-economy claim. |

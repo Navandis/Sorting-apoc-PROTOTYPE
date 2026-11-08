@@ -63,7 +63,7 @@ Neutral review: res://greybox/logistics_wing/wing_review.tscn
 
 The local Incinerator build adds single-item disposal to the F5 expedition-to-storage loop. Continue restores schema 7 from `user://saves/collection/`. Confirmed New Run can repoint the slot while retaining the incompatible schema-6 snapshot. Schema-5 and M4 snapshots are preserved. Standalone F6 keeps the human-authored `DevelopmentSetup/SeedItems` palette. The [historical M4 input and plans](design_history/survival-era/README.md) remain separate.
 
-GDD §15.3 records the confirmed Incinerator design. Developer playtest remains pending. [Technical result and playtest](testing/2026-11-08-incinerator-deliberate-disposal-result.md).
+GDD §15.3 records the confirmed Incinerator design. The developer promoted and closed the bounded single-item slice locally on 8 November 2026. Publication is pending. [Technical result and developer acceptance](testing/2026-11-08-incinerator-deliberate-disposal-result.md).
 
 ## Retained high-risk invariants
 

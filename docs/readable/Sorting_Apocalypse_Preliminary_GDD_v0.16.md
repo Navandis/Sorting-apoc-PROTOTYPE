@@ -1272,7 +1272,7 @@ Ordinary schema-4 continuation is accepted at M4, but is not continuous crash-du
 
 Outcome commitment should occur at a natural backend point after legitimate player choices are fixed, before presentation where possible. Preserve committed results through continuation. Incidental uncommitted rerolls within the tolerated loss interval are not a reason to build a general anti-cheat framework; reliable selection among already preserved outcomes remains disallowed by the inherited policy.
 
-The Incinerator playtest uses schema 7 in the existing collection slot. It adds the warning flag and destruction receipts to the physical run, editable preparation and exact expedition state. Continue restores these facts with the panels closed. Confirmed New Run can repoint the slot and retains incompatible schema 6 and schema 5 snapshots. The M4 slot remains separate. Release migration and crash durability remain open.
+The locally accepted Incinerator build uses schema 7 in the existing collection slot. It adds the warning flag and destruction receipts to the physical run, editable preparation and exact expedition state. Continue restores these facts with the panels closed. Confirmed New Run can repoint the slot and retains incompatible schema 6 and schema 5 snapshots. The M4 slot remains separate. Release migration and crash durability remain open.
 
 <a id="s_18_6_Environment_and_authored_produc"></a>
 
@@ -1471,8 +1471,8 @@ These are design-validation aims, not claimed test results or a new automated ac
 | O-08 · Population and upgrades | Initial Ready count, recruitment/growth, progression ownership for assembled crews, Workshop project roster and Training disposition. |
 | O-09 · Conversion and release | Rations and Salvage category and target rules, yields, capacity and output blocking remain open, along with Salvager access and restrictions. Incinerator rules are confirmed in §15.3. |
 | O-10 · Space and handling | Production shelf capacity/roster, all-storage-from-start decision, route compression and final ergonomics. |
-| O-11 · Interface and time edges | The playtest uses live preparation and Incinerator panels with Escape priority. See §15.3 for the Incinerator warning. Journal scope, final interface and platform time edges remain open. |
-| O-12 · Delivery/continuation | The Incinerator playtest uses schema 7 and preserves incompatible prior snapshots. Release migration and durability remain open. |
+| O-11 · Interface and time edges | The local build uses live preparation and Incinerator panels with Escape priority. See §15.3 for the Incinerator warning. Journal scope, final interface and platform time edges remain open. |
+| O-12 · Delivery/continuation | The locally accepted Incinerator build uses schema 7 and preserves incompatible prior snapshots. Release migration and durability remain open. |
 
 The register deliberately leaves unanswered mechanics open. The project already has enough direction to produce this successor; these are boundaries for later design/implementation, not reasons to recreate the old behavior or repeatedly ask the developer to approve the pivot.
 

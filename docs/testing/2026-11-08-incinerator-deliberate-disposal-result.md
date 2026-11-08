@@ -1,13 +1,23 @@
 # Incinerator and Deliberate Disposal
 
-**8 November 2026 · Technically ready for developer playtest**
+**8 November 2026 · HUMAN-PROMOTED / CLOSED IN ITS BOUNDED SCOPE — LOCAL; PUBLICATION PENDING.**
 
 The local F5 build now supports one-item disposal at the existing Incinerator. The confirmed standing rules are in GDD §15.3. The implementation and evidence below are separate from developer acceptance.
+
+## Developer acceptance — 8 November 2026
+
+The developer reported a successful in-game playtest and explicitly promoted the single-item Incinerator slice and authorized its local close-out.
+
+- The developer encountered no functional or UX issues. The tested variety of item types, Bulk and Utility values incinerated correctly.
+- Each action destroyed only the currently selected carried item and created no output. The warning appeared exactly once per run.
+- The developer observed no independent change to victory-objective progress or state from incineration and no change in the behavior of other systems during the playtest. Retrieval from qualifying storage subtracts its live Utility. Destroying the retrieved item adds no second deduction.
+
+The close-out verified the local ancestry through the technical evidence checkpoint `3eaac137e67debd70523884833b29764c94b2e9f` and reused its technical checks. The original checklist below records the proposed test steps. [Approved implementation brief](../superpowers/plans/2026-11-08-incinerator-deliberate-disposal.md).
 
 ## Checkout and implementation
 
 - Branch **codex/incinerator-deliberate-disposal** in the asset-equipped `D:\Godot Projects\Sorting-apoc-PROTOTYPE` checkout. Local HEAD and GitHub `main` matched `90c5fc6beabaa5403629f4a45c97a380f36d39ec` at preflight. That revision includes the accepted foundation, expedition loop and furniture collision repair. A final read of GitHub `main` returned the same revision.
-- Gameplay checkpoints `50fcd4c0223da88686eb3a8d958114a6ae6ae2ba` for atomic ownership and `873f515d77602841c5c4266710e7e5cc1f81fafb` for input, snapshot integration and focused tests. The developer's untracked brief stays in the checkout as supplied.
+- Gameplay checkpoints `50fcd4c0223da88686eb3a8d958114a6ae6ae2ba` for atomic ownership and `873f515d77602841c5c4266710e7e5cc1f81fafb` for input, snapshot integration and focused tests. The supplied implementation brief was untracked during implementation and is recorded as supplied at local close-out.
 - Tested with `D:\AI Tools\Godot-4.7-Codex\Godot_v4.7-stable_win64_console.exe`, version `4.7.stable.official.5b4e0cb0f`. Native renderer was OpenGL 3.3 Compatibility on an RTX 5060 Ti. Codex ran as the sole implementer. Exact implementer model variant and reasoning effort were unavailable. One read-only reviewer used GPT-6 Astra at High effort.
 - `gameplay/disposal/incinerator_operations.gd` owns the warning flag and destruction receipts. `gameplay/disposal/incinerator_panel.gd`, `player_controller.gd`, `gameplay/logistics_wing/wing_gameplay.gd` and `gameplay/run/run_shell.gd` use the existing machine ray, carrying selection and pause ownership. `CarriedItems.commit_selected_consumption` removes one item and records its receipt before notifying observers.
 - `gameplay/run/run_snapshot.gd` and `gameplay/expeditions/expedition_snapshot.gd` validate the terminal disposition of each released cargo identity. A disposal receipt records item ID, definition and active elapsed time. Seed receipts match the authored palette. Expedition receipts match the original manifest and prior handover. Save validation keeps disposal disjoint from live ownership and loadout credit. `gameplay/expeditions/expedition_operations.gd` exposes the existing loadout receipt index for the runtime guard.
@@ -19,9 +29,9 @@ Schema **7** uses the existing `user://saves/collection/` service. Schema 6 is i
 
 Save & Exit and ordinary automatic attempts preserve the warning flag, disposal receipts and exact physical and expedition state. Continue starts with the panels closed and clears transient confirmation. The warning is consumed when displayed, including after Back. Destruction and warning display are recoverable after the next successful save.
 
-The current real collection pointer, M4 pointer, both referenced snapshots and the retained schema-5 snapshot matched their preflight SHA-256 values. Tests used redirected application data and isolated save directories. [Read-only before and after hashes](evidence/incinerator-2026-11-08/save-preservation.json).
+During implementation verification, the real collection pointer, M4 pointer, both referenced snapshots and the retained schema-5 snapshot matched their preflight SHA-256 values. Tests used redirected application data and isolated save directories. [Read-only before and after hashes](evidence/incinerator-2026-11-08/save-preservation.json).
 
-## Fresh verification
+## Implementation verification — 8 November 2026
 
 | Proof | Observed result |
 | --- | --- |
@@ -36,7 +46,7 @@ The current real collection pointer, M4 pointer, both referenced snapshots and t
 
 The three expected failures were the missing transaction owner, the missing New Run station binding, and the old validation error for a genuinely destroyed released item. The native shelf proof initially missed the placed item. The final probe waits for physics and verifies the exact reticle target from a reachable stance before clicking.
 
-The native tests inject keyboard input and dispatch mouse events through Godot's real window and GUI paths. Fixture setup positions the player near the authored approaches and supplies test stock through normal transfers. The headless interaction tests use a station request signal and button signals because the dummy display cannot capture the mouse. The congestion fixture repositions the player between the real station and Receiving. The developer playtest covers the full routes.
+The native tests inject keyboard input and dispatch mouse events through Godot's real window and GUI paths. Fixture setup positions the player near the authored approaches and supplies test stock through normal transfers. The headless interaction tests use a station request signal and button signals because the dummy display cannot capture the mouse. The congestion fixture repositions the player between the real station and Receiving.
 
 ## Limits and prior evidence
 
@@ -44,7 +54,7 @@ The native tests inject keyboard input and dispatch mouse events through Godot's
 - Final logs retain the known Windows certificate-store and held-view material-null diagnostics. The selected regressions also exercise a deliberate cargo preparation failure and an isolated write blocker. The earlier native furniture acceptance is reused. This milestone ran the focused furniture regression again. [Accepted collision result](2026-11-08-furniture-collision-repair-result.md).
 - The Incinerator has no Fuel or energy dependency in its entry and commitment paths. An active blackout scenario awaits a future outage system. The provisional collection and expedition settings served as the test fixture.
 
-## Developer playtest
+## Original developer playtest checklist
 
 To use a fresh test slot, launch from a separate PowerShell window with redirected application data. Use Save & Exit and Continue in that launched game.
 

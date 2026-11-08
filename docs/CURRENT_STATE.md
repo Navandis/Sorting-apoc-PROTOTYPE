@@ -10,7 +10,7 @@
 | Collection foundation | **HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** [Result and developer acceptance](testing/2026-11-07-continuous-run-collection-goal-result.md). |
 | M1 / M2 / M3 / M4 | **HUMAN-PROMOTED / PUBLISHED / CLOSED**, each in its accepted bounded scope. No acceptance, publication or re-review backlog is reopened. |
 | Expedition-to-Storage Loop | **HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** [Technical result and developer acceptance](testing/2026-11-08-expedition-to-storage-loop-result.md). M5’s former combined daily scenario is historical. |
-| Incinerator and Deliberate Disposal | **LOCAL IMPLEMENTATION / DEVELOPER PLAYTEST PENDING.** [Technical result and playtest](testing/2026-11-08-incinerator-deliberate-disposal-result.md). GDD §15.3 records the approved standing design. |
+| Incinerator and Deliberate Disposal | **HUMAN-PROMOTED / CLOSED IN ITS BOUNDED SCOPE — LOCAL; PUBLICATION PENDING.** [Technical result and developer acceptance](testing/2026-11-08-incinerator-deliberate-disposal-result.md). GDD §15.3 records the approved standing design. |
 | ADR cycle | Parked historical design, preserved for deliberate reuse or a possible survival mode. Not the current economy or immediate design priority. |
 | Implementation checkpoints | Foundation `a1d1db4494347e0dfb4dfb653ed71b2abaf76ce5`, expedition implementation `66a7f863e5cf6f2f2c9e8f7f34de99885fa76612` and technical verification `11f95354119058fe2ec90796d09e2c28c046a885`. [Foundation closure](testing/2026-11-07-continuous-run-collection-goal-closure.md). |
 | Publication | M4 acceptance is pinned at `c9f9417a97cf65ef416c58189ca1f741b6a90406`. The collection foundation, expedition loop and furniture collision repair are published. On 8 November 2026, `git ls-remote` verified `origin/main` at the repair acceptance commit `de6b9bd7102e555b46a45f6733d9e7669db5d3b5`. |
@@ -61,7 +61,7 @@ Read the GDD for the actual detail and source distinctions. This table is routin
 
 Normal F5 entry is `res://gameplay/run/run_shell.tscn`. New Run starts with the authored loose stock and eight Ready scavengers. Aim at the Dispatch counter and press F to prepare a crew. Player-dispatched expeditions supply Receiving. The HUD still tracks six authored primary Utility per category and records the first simultaneous completion.
 
-In the local playtest build, aim at the Incinerator at the end of the utility spur and press F to inspect the selected carried item. Press E to attempt destruction. On first valid use, choose Back or Continue in the live warning.
+In the local build, aim at the Incinerator at the end of the utility spur and press F to inspect the selected carried item. Press E to attempt destruction. On first valid use, choose Back or Continue in the live warning.
 
 Schema 7 uses the existing service under `user://saves/collection/`. It adds the warning flag and distinct destruction receipts to the physical run, preparation and exact expedition outcomes. Continue starts with service panels closed. Schema 6 is incompatible. Confirmed New Run repoints the collection slot and retains its incompatible snapshot file. The schema-5 foundation snapshot and separate M4 save remain preserved. Save & Exit, 60-active-second automatic attempts and first victory use the same continuation.
 
@@ -147,7 +147,7 @@ Systems MVP §16 remains the full CF-01–CF-24 register. This entry-point updat
 | CF-06–CF-12 | Retain current interfaces/art evidence and renderer/content/ergonomics debt. No fresh fixes or approvals are claimed. |
 | CF-13 | Continuous durability remains future and must use coherent existing ownership. |
 | CF-14–CF-15 | The bounded healthy expedition loop is human-accepted and closed. Production tuning, population growth and Medical remain open. |
-| CF-16–CF-17 | Single-item Incinerator disposal is implemented for developer playtest. Other conversions, Workshop, labels/containers/progression require v0.16 scope. Night progression and storage expansion are not default requirements. |
+| CF-16–CF-17 | The developer accepted the bounded single-item Incinerator slice locally. Other conversions, Workshop, labels/containers/progression require v0.16 scope. Night progression and storage expansion are not default requirements. |
 | CF-18–CF-19 | Preserve explicit interaction deferrals; economy, loot bounds and routes now serve the collection objective. |
 | CF-20–CF-24 | Retain adjacent art work, measured limitations, saved/runtime distinctions, authoring and source/license safeguards. |
 
@@ -174,7 +174,7 @@ The developer accepted the [expedition loop](testing/2026-11-08-expedition-to-st
 | Storage / ladder | [Orientation](testing/storage-unit-orientation-zoning-validation.md), [canonical pose](testing/canonical-item-storage-pose-validation.md), [fixed ladder](testing/fixed-ladder-proof-validation.md), [wing integration](testing/wing-modular-rack-ladder-integration-validation.md), [ergonomics](testing/shelf-ceiling-ergonomics-comparison.md). |
 | Receiving | [Deterministic presenter](testing/receiving-deterministic-deck-presenter-validation.md), [freight fixtures](testing/receiving-functional-freight-fixtures-validation.md), [single-cycle](testing/receiving-stage-c-single-cycle-validation-2026-10-12.md), [two-batch](testing/receiving-stage-c-queued-deliveries-validation-2026-10-14.md), [Awaiting Lift closure](testing/receiving-stage-c-awaiting-lift-validation-2026-10-14.md). |
 | Current physical envelope / art | [Lift/deck](testing/receiving-c1-lift-enclosure-deck-closeout-2026-10-01.md), [compact retrofit](testing/receiving-c1-compact-retrofit-closeout-2026-10-03.md), [dressing/proxies](testing/receiving-c1-set-dressing-collision-closeout-2026-10-09.md), [C1 closure](testing/receiving-c1-human-promotion-documentation-closeout-2026-10-11.md), [intentional lighting](testing/receiving-intentional-lighting-candidate-2026-10-13.md). |
-| Deliberate disposal | [Incinerator technical result and pending developer playtest](testing/2026-11-08-incinerator-deliberate-disposal-result.md). |
+| Deliberate disposal | [Incinerator technical result and developer acceptance](testing/2026-11-08-incinerator-deliberate-disposal-result.md). |
 | EAF authoring | [Wear guide](environment-authoring/eaf4-wear-authoring-guide.md), [imperfection guide](environment-authoring/eaf4-imperfection-audition-guide.md), [EAF4 closure](testing/environment-authoring-eaf4-imperfection-authoring-milestone-closeout-2026-10-10.md). |
 
 Read relevant dated records through their later human dispositions. The complete older evidence index remains in the pinned pre-adoption snapshot and the historical masters. These links reuse prior evidence; no linked gameplay test was rerun for this update.

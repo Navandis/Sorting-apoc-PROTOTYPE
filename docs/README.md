@@ -57,6 +57,6 @@ See [CURRENT_STATE](CURRENT_STATE.md) for the current content, scene, preservati
 
 The expedition loop and the separate [furniture movement collision repair](testing/2026-11-08-furniture-collision-repair-result.md) are human-accepted, published and closed in their bounded scopes.
 
-The Incinerator is ready for developer playtest in the local build. [Technical result and playtest](testing/2026-11-08-incinerator-deliberate-disposal-result.md).
+The developer promoted and closed the single-item Incinerator slice locally on 8 November 2026. Publication is pending. [Technical result and developer acceptance](testing/2026-11-08-incinerator-deliberate-disposal-result.md).
 
 The complete pre-adoption operational index remains available in [the pinned c9f9417 snapshot](https://github.com/Navandis/Sorting-apoc-PROTOTYPE/blob/c9f9417a97cf65ef416c58189ca1f741b6a90406/docs/README.md). Current-facing consolidation changes routing, not the historical evidence.
