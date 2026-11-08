@@ -12,8 +12,8 @@ This is a collaboration handoff, not a Codex implementation brief or permission 
 
 - **Design authority** — approved GDD v0.16, with [Appendix A](superpowers/plans/2026-11-07-continuous-run-collection-goal-foundation.md#appendix-a--confirmed-expedition-lifecycle-decisions-for-the-next-milestone) superseding the specified earlier open statements about preparation, destination occupancy and handover.
 - **Local implementation** · The Expedition-to-Storage Loop is **HUMAN-ACCEPTED / CLOSED IN ITS BOUNDED SCOPE**. Normal F5 uses schema 6 in the collection save namespace. The [expedition result](testing/2026-11-08-expedition-to-storage-loop-result.md) follows the separately accepted [collection foundation](testing/2026-11-07-continuous-run-collection-goal-closure.md).
-- **Publication** · The collection and expedition checkpoints are local. Publication is pending. The historical M1–M4 scopes are published and closed at `c9f9417a97cf65ef416c58189ca1f741b6a90406`. Frozen inputs and provenance are in the [survival-era index](design_history/survival-era/README.md).
-- **Open follow-up** · The [furniture movement collision report](testing/2026-11-08-expedition-to-storage-loop-result.md#open-furniture-movement-collision-follow-up) has its own repair scope. The old combined daily M5 proposal and ADR remain historical.
+- **Publication** · The collection foundation, expedition loop and furniture collision repair are accepted locally. Publication is pending. The historical M1–M4 scopes are published and closed at `c9f9417a97cf65ef416c58189ca1f741b6a90406`. Frozen inputs and provenance are in the [survival-era index](design_history/survival-era/README.md).
+- **Furniture collision** · The developer accepted the [furniture movement collision repair](testing/2026-11-08-furniture-collision-repair-result.md) on 8 November 2026, closing its separate scope. The old combined daily M5 proposal and ADR remain historical.
 
 ## 1. Roles and working method
 

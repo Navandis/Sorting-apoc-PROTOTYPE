@@ -12,7 +12,7 @@
 | Expedition-to-Storage Loop | **HUMAN-ACCEPTED / CLOSED IN ITS BOUNDED SCOPE.** [Technical result and developer acceptance](testing/2026-11-08-expedition-to-storage-loop-result.md). M5’s former combined daily scenario is historical. |
 | ADR cycle | Parked historical design, preserved for deliberate reuse or a possible survival mode. Not the current economy or immediate design priority. |
 | Local checkpoints | Foundation `a1d1db4494347e0dfb4dfb653ed71b2abaf76ce5`, expedition implementation `66a7f863e5cf6f2f2c9e8f7f34de99885fa76612` and technical verification `11f95354119058fe2ec90796d09e2c28c046a885`. [Foundation closure](testing/2026-11-07-continuous-run-collection-goal-closure.md). |
-| Publication | M4 acceptance is pinned at `c9f9417a97cf65ef416c58189ca1f741b6a90406`. The collection and expedition checkpoints are local. Publication is pending. |
+| Publication | M4 acceptance is pinned at `c9f9417a97cf65ef416c58189ca1f741b6a90406`. The collection foundation, expedition loop and furniture collision repair are accepted locally. Publication is pending. |
 
 This file replaces current-facing routing, not historical evidence. The later [MVP/VDD compatibility completion](testing/2026-11-07-mvp-vdd-compatibility-consistency.md) records both targeted master edits and their checks; it does not change the implemented checkpoint. The [approval record](design_history/2026-11-07-gdd-v0.16-approval-and-authority-transition.md) records this task. The complete [pre-adoption CURRENT_STATE snapshot](https://github.com/Navandis/Sorting-apoc-PROTOTYPE/blob/c9f9417a97cf65ef416c58189ca1f741b6a90406/docs/CURRENT_STATE.md), dated validation reports and prior masters remain available. Their then-pending statements do not undo later promotions.
 
@@ -157,7 +157,7 @@ The authoritative asset-equipped checkout is `D:\Godot Projects\Sorting-apoc-PRO
 
 No reset, stash, clean, force-push, rebase/squash, branch/worktree deletion, untracked staging sweep or ignored-asset cleanup is authorized. Preserve local evidence and human `.tres`/scene edits. A remote clone is not a runnable licensed-art backup. Git ignore is not Godot scan exclusion: keep checkpoint scenes with production UIDs and duplicate global classes outside scanned paths. Preserve startup parity checks and avoid concurrent Godot/import writers on one mutable checkout.
 
-The developer accepted the [expedition loop](testing/2026-11-08-expedition-to-storage-loop-result.md) in its bounded scope. The [furniture movement collision repair](testing/2026-11-08-furniture-collision-repair-result.md) is technically verified and awaits developer retest. O-06 and O-07 replacement service rules remain open.
+The developer accepted the [expedition loop](testing/2026-11-08-expedition-to-storage-loop-result.md) in its bounded scope. The [furniture movement collision repair](testing/2026-11-08-furniture-collision-repair-result.md) was accepted by the developer after an in-game retest on 8 November 2026 and is closed in its bounded scope. O-06 and O-07 replacement service rules remain open.
 
 ## 11. Focused evidence navigation
 

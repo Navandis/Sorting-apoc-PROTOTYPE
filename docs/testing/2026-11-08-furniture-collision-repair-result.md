@@ -1,6 +1,6 @@
 # Furniture Movement Collision Repair
 
-**8 November 2026 · Technically verified · Developer retest pending**
+**8 November 2026 · HUMAN-ACCEPTED / CLOSED IN ITS BOUNDED SCOPE · Publication pending**
 
 Repair branch `codex/furniture-movement-collision` starts at the accepted expedition close-out `82207db3258a22b2b81acaf3badf05bdff74a065`. The developer's report lists the four tables and three storage units in the expedition result. Onset remains unknown. [Original report](2026-11-08-expedition-to-storage-loop-result.md#open-furniture-movement-collision-follow-up).
 
@@ -29,6 +29,14 @@ The original M4 and current collection pointers and pointed snapshots matched th
 
 The repair uses the existing movement layer and preserves the separate item and storage targeting layers. The authored meshes, transforms, grids, storage rules, lift, expedition mechanics and save schema are unchanged.
 
-## Developer retest
+## Retest instructions from the repair handoff
 
 Use F5 Continue. If it starts inside the Food palette table in the reported saved view, hold S until you are back on the floor. Approach the four tables, Gallery C locker and both metal shelves from an accessible side. The player should stop at the furniture and still be able to walk alongside it. Pick up table stock and place and retrieve an item on the shelves. The expedition acceptance remains closed.
+
+## Developer acceptance · 8 November 2026
+
+The developer confirmed in-game that all seven affected fixtures now block player movement as intended, the shelves still work for normal storage, and no additional issue surfaced during the retest.
+
+Codex’s earlier verification covered the hidden-wing initialization cause and the scoped fix that avoids duplicate blockers. It recorded 26 accessible capsule-sweep approaches in each of New Run and Continue, native Compatibility movement checks, table pickup, shelf placement and retrieval, and six passing regressions. The Food palette table overlap and backward `S` escape were observed by Codex on an isolated save copy. The original save was preserved. The date the defect was introduced remains unknown.
+
+The developer closed the repair in its bounded scope on 8 November 2026. Remote publication is pending. The earlier expedition and collection foundation acceptances remain closed.

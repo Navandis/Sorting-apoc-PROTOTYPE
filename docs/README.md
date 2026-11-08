@@ -55,6 +55,6 @@ See [CURRENT_STATE](CURRENT_STATE.md) for the current content, scene, preservati
 
 ## Next-work boundary
 
-The local expedition build is accepted. Publication is pending. The [furniture movement collision report](testing/2026-11-08-expedition-to-storage-loop-result.md#open-furniture-movement-collision-follow-up) remains a separate open follow-up.
+The expedition loop and the separate [furniture movement collision repair](testing/2026-11-08-furniture-collision-repair-result.md) are human-accepted and closed in their bounded scopes. Publication is pending.
 
 The complete pre-adoption operational index remains available in [the pinned c9f9417 snapshot](https://github.com/Navandis/Sorting-apoc-PROTOTYPE/blob/c9f9417a97cf65ef416c58189ca1f741b6a90406/docs/README.md). Current-facing consolidation changes routing, not the historical evidence.

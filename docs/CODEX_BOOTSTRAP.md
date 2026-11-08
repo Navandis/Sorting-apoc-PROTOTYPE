@@ -83,4 +83,4 @@ Godot can scan Git-ignored scenes/scripts. Keep checkpoint copies with productio
 
 Use one implementer by default, affected checks and proportionate contextual/human review. Documentation alone does not justify unchanged-game sweeps. Preserve evidence attribution and CF-01–CF-24; new technical findings may need focused repair, not milestone reacceptance. Do not silently suppress existing/new diagnostics together.
 
-The expedition close-out is local. The [furniture movement collision report](testing/2026-11-08-expedition-to-storage-loop-result.md#open-furniture-movement-collision-follow-up) remains open under a separate scope.
+The developer accepted the [furniture movement collision repair](testing/2026-11-08-furniture-collision-repair-result.md) on 8 November 2026, closing its separate scope. The expedition close-out and repair acceptance are local. Publication is pending.
