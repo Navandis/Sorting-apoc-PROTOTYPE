@@ -2,6 +2,7 @@
 
 **Current intended game: GDD v0.16, approved by the developer in its entirety.**
 **Continuous Run and Collection Goal Foundation: HUMAN-ACCEPTED / CLOSED IN ITS BOUNDED SCOPE. Local checkpoint, publication pending.**
+**Expedition-to-Storage Loop: TECHNICALLY VERIFIED / DEVELOPER ACCEPTANCE PENDING.** [Result and playtest](testing/2026-11-08-expedition-to-storage-loop-result.md).
 
 See the [approved foundation brief](superpowers/plans/2026-11-07-continuous-run-collection-goal-foundation.md) the [accepted result](testing/2026-11-07-continuous-run-collection-goal-result.md) and the [closure record](testing/2026-11-07-continuous-run-collection-goal-closure.md).
 
@@ -30,9 +31,9 @@ The player builds a substantial physical hoard and wins immediately when all eig
 
 Active real-world completion time replaces days survived. There is no day cycle, imposed completion deadline or designed terminal failure state. Poor decisions may create a lengthy recovery; ordinary rules must prevent a true dead end without hidden catch-up. ESC, main menu, game-off and zoning pause the timer. Preparation is tentatively unpaused; time acceleration is set aside. Goal visibility is baseline and cannot be gated or disabled by upgrades or penalties.
 
-Expedition preparation is **one current crew at a time**: select 1–4 available Ready scavengers, equip them and select a destination, explicitly dispatch, then optionally prepare another crew in the same session. There are no prebuilt morning teams or per-team preparation tabs. Concurrent away expeditions remain possible. The preferred destination system uses two distinct unordered affinities, with a favored one-concurrent-team-per-destination restriction and no depletion. The subsequent decisions on draft commitment and away-only destination occupancy are in the [foundation brief’s Appendix A](superpowers/plans/2026-11-07-continuous-run-collection-goal-foundation.md#appendix-a--confirmed-expedition-lifecycle-decisions-for-the-next-milestone).
+Expedition preparation is **one current crew at a time**. Choose 1–4 Ready scavengers, contribute selected whole items, select two distinct affinities and explicitly Dispatch. Occupancy lasts until return. The [expedition brief](superpowers/plans/2026-11-07-expedition-to-storage-loop.md) records the committed lifecycle and provisional acquisition rules.
 
-Requests use bounded pressure rather than unlimited accumulating debt. Pending cargo is preserved. The future personnel release point is successful admission into an active or deposited lift slot, with injury classification before Ready availability. The ADR cycle is parked, not the target economy. See GDD §§5–16 for the full rules and status distinctions.
+Requests are intended to use bounded pressure. Nonempty expedition returns release healthy personnel on admission to an active or deposited lift slot. Empty outcomes complete at return. See GDD §§5–16 for the full rules and status distinctions.
 
 ## Approved records and superseded history
 
@@ -54,6 +55,6 @@ See [CURRENT_STATE](CURRENT_STATE.md) for the current content, scene, preservati
 
 ## Next-work boundary
 
-The next planned gameplay slice is the expedition-to-storage loop. It has a separate implementation boundary under GDD §21 and [the confirmed lifecycle decisions](superpowers/plans/2026-11-07-continuous-run-collection-goal-foundation.md#appendix-a--confirmed-expedition-lifecycle-decisions-for-the-next-milestone).
+The current local build is ready for the [focused expedition playtest](testing/2026-11-08-expedition-to-storage-loop-result.md).
 
 The complete pre-adoption operational index remains available in [the pinned c9f9417 snapshot](https://github.com/Navandis/Sorting-apoc-PROTOTYPE/blob/c9f9417a97cf65ef416c58189ca1f741b6a90406/docs/README.md). Current-facing consolidation changes routing, not the historical evidence.

@@ -2,7 +2,7 @@
 
 **7 November 2026 authority update: GDD v0.16 APPROVED; M1–M4 HUMAN-PROMOTED / PUBLISHED / CLOSED.**
 
-The current intended game is collection, hoarding and spatial organization, not endless day-count survival. The local build implements the [Continuous Run and Collection Goal Foundation](superpowers/plans/2026-11-07-continuous-run-collection-goal-foundation.md). The developer accepted and closed it in its bounded scope. See the [result](testing/2026-11-07-continuous-run-collection-goal-result.md) for technical and human evidence and the [closure record](testing/2026-11-07-continuous-run-collection-goal-closure.md) for the local checkpoint. Publication is pending. This bootstrap is routing and preservation guidance, **not an implementation brief or blanket repository-write authorization**.
+The current intended game is collection, hoarding and spatial organization. The local build implements the [Expedition-to-Storage Loop](superpowers/plans/2026-11-07-expedition-to-storage-loop.md) and awaits developer acceptance. See its [result and playtest](testing/2026-11-08-expedition-to-storage-loop-result.md) and the [accepted foundation checkpoint](testing/2026-11-07-continuous-run-collection-goal-closure.md). This bootstrap provides routing and preservation guidance.
 
 ## Read first
 
@@ -32,9 +32,9 @@ Active real-world completion time replaces days survived. No day cycle, morning 
 
 **Prepare one current team, not multiple cards:** choose 1–4 Ready scavengers, equip and choose destination, click Dispatch, then optionally prepare the next crew consecutively in the same panel. No prebuilt morning roster, per-team loadout tabs, parallel unfinished teams or automatic dispatch at 100%. Concurrent dispatched expeditions may be monitored separately. Preserve every useful M4 loadout datum in the wider panel.
 
-Two distinct unordered affinities across eight categories give 28 archetypes in the working model. They bias useful returns without guaranteeing particular items, increasing carrying capacity or changing item definitions. One concurrent team per destination; no depletion. Destination-availability events and the generic fallback are disfavored/no longer needed. Appendix A of the foundation brief confirms the later draft and destination lifecycle. Incomplete affinity and zero-item returns still need a decision in their owning slice.
+Two distinct unordered affinities identify one of 28 destinations. Dispatch requires an available pair. The destination is occupied only while its crew is away. The development sampler favors both affinities equally before whole-item fit filtering. See GDD §§9–10 and the expedition brief.
 
-Pending return cargo remains intact; waiting teams remain occupied until the defined handover. No queue-overflow destruction. An uncapped pending queue does not mean an infinite physical presentation deck. The local foundation preserves Receiving ownership and fairness in continuous play.
+Pending return cargo remains intact. Waiting crews stay unavailable until admission to the active lift or deposited queue. Healthy members become Ready at admission. Empty returns release the crew at their committed return time, outside Receiving.
 
 Requests have bounded unresolved work/escalation, legitimate short deferral and meaningful neglect costs. Exact recurring/penalty behavior remains open. Medical favors slower natural recovery and faster treatment; do not add injured expedition participation or a full replacement treatment model by assumption. Fixed full storage is a favored direction, not a finalized shelf roster. Workshop, Training, population growth and route compression require further design.
 
@@ -42,7 +42,7 @@ Requests have bounded unresolved work/escalation, legitimate short deferral and 
 
 Use GDD §21.2 rather than asking for reapproval of the whole pivot. In particular:
 
-- O-02–O-04: apply the [confirmed Appendix A decisions](superpowers/plans/2026-11-07-continuous-run-collection-goal-foundation.md#appendix-a--confirmed-expedition-lifecycle-decisions-for-the-next-milestone) before any later expedition work. Incomplete affinity, all-busy feedback, zero-item returns and treatment rules still need their own scope.
+- O-02–O-04 cover the confirmed preparation, destination and healthy handover rules in the expedition brief. Injury classification and Medical treatment remain open.
 - O-05/O-06/O-07: acquisition, persistent requests, bounded penalties and Medical recovery.
 - O-08–O-12: population/progression, conversions, storage/layout, UI/time edges, compatibility and successor test scope.
 
@@ -61,7 +61,7 @@ Legacy fixture: res://main.tscn
 Neutral review: res://greybox/logistics_wing/wing_review.tscn
 ```
 
-F5 New Run starts the continuous collection fixture. Continue restores schema 5 from `user://saves/collection/`. Standalone F6 keeps the human-authored `DevelopmentSetup/SeedItems` palette. The [historical M4 input and plans](design_history/survival-era/README.md) are preserved separately.
+F5 New Run starts the playable expedition-to-storage loop. Continue restores schema 6 from `user://saves/collection/`. Schema-5 and M4 snapshots are preserved. Standalone F6 keeps the human-authored `DevelopmentSetup/SeedItems` palette. The [historical M4 input and plans](design_history/survival-era/README.md) remain separate.
 
 ## Retained high-risk invariants
 
@@ -83,4 +83,4 @@ Godot can scan Git-ignored scenes/scripts. Keep checkpoint copies with productio
 
 Use one implementer by default, affected checks and proportionate contextual/human review. Documentation alone does not justify unchanged-game sweeps. Preserve evidence attribution and CF-01–CF-24; new technical findings may need focused repair, not milestone reacceptance. Do not silently suppress existing/new diagnostics together.
 
-**Next planned gameplay slice.** The expedition-to-storage loop starts from the accepted local checkpoint under its own brief. Use Appendix A for the lifecycle decisions and preserve the documented save and fixture boundaries.
+**Developer acceptance pending.** Use the [focused playtest](testing/2026-11-08-expedition-to-storage-loop-result.md) for the expedition-to-storage loop.

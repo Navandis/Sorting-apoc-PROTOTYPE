@@ -1,6 +1,6 @@
 # Sorting Apocalypse — current development state
 
-**Document update: 7 November 2026. Intended game: developer-approved GDD v0.16. Local build: Continuous Run and Collection Goal Foundation.**
+**Document update: 8 November 2026. Intended game: developer-approved GDD v0.16. Local build: Expedition-to-Storage Loop.**
 
 ## 1. At a glance: approval is not implementation
 
@@ -9,7 +9,7 @@
 | GDD v0.16 | **APPROVED IN ITS ENTIRETY** by the developer. Single current authority for intended gameplay, with its provisional and open classifications retained. |
 | Collection foundation | **HUMAN-ACCEPTED / CLOSED IN ITS BOUNDED SCOPE.** [Result and developer acceptance](testing/2026-11-07-continuous-run-collection-goal-result.md). |
 | M1 / M2 / M3 / M4 | **HUMAN-PROMOTED / PUBLISHED / CLOSED**, each in its accepted bounded scope. No acceptance, publication or re-review backlog is reopened. |
-| Next planned gameplay slice | Expedition-to-storage under a separate brief. M5’s former combined daily scenario is historical. |
+| Expedition-to-Storage Loop | **TECHNICALLY VERIFIED / DEVELOPER ACCEPTANCE PENDING.** [Result and playtest](testing/2026-11-08-expedition-to-storage-loop-result.md). M5’s former combined daily scenario is historical. |
 | ADR cycle | Parked historical design, preserved for deliberate reuse or a possible survival mode. Not the current economy or immediate design priority. |
 | Local checkpoint | See the commit introducing the [closure record](testing/2026-11-07-continuous-run-collection-goal-closure.md). Pre-edit `main` was `d802de64bf7a28bdf9d410be2c87d9dcf306b3d2`. |
 | Earlier publication | M4 acceptance is pinned at `c9f9417a97cf65ef416c58189ca1f741b6a90406`. Publication of the local collection checkpoint is pending. |
@@ -46,8 +46,8 @@ The purpose is to restore collecting, hoarding and organizing as the main experi
 | Pause | ESC, main menu, application off and zoning pause. Preparation tentatively remains live. Time acceleration set aside. Focus/loading/modal edges remain open. |
 | Items | Eight shared categories, no first-release dual/multi-use category profiles. Definitions stay stable; buffs affect composition or systems, not silent item Utility/Bulk rewrites. |
 | Preparation | One current team: choose 1–4 Ready scavengers, equip/select destination, explicitly dispatch; optionally repeat consecutively. No prebuilt roster, preparation tabs, parallel prepared loadouts or full-loadout auto-send. |
-| Destinations | Preferred two-distinct-unordered-affinity model, 28 combinations; favored one-concurrent-team-per-destination restriction, no depletion. Appendix A fixes away-only occupancy, from successful Dispatch to return. Availability-event system and generic fallback are disfavored/no longer needed, not hidden release obligations. |
-| Receiving | Preserve exact cargo; uncapped pending returns occupy personnel until delivery. No midnight/overflow forfeiture in target design. Appendix A fixes future personnel release at successful cargo admission into a deposited or active slot. The physical deck remains finite. |
+| Destinations | Twenty-eight unordered pairs. Dispatch requires two affinities and an available pair. A destination is occupied only while its expedition is away. |
+| Receiving | Exact cargo moves through oldest-first admission to one active and two deposited slots. Healthy crew members become Ready on admission. Empty returns complete outside the lift. |
 | Requests | Bounded outstanding work and escalation. Brief deferral legitimate, routine indefinite neglect generally costly. Exact cadence, partial effects, penalty ceilings and restoration are open. No request-completion victory gate. |
 | Medical | Preferred slower natural recovery and much faster treated recovery. No injured-away mechanic adopted. No-dead-end requirement is not guaranteed quick recovery or adaptive catch-up. Full injury/treatment rules remain open. |
 | Progression/layout | All storage from start is favored, not a finalized production roster. Carrying/expedition/information improvements remain candidates. Workshop/Training and spatial compression require further design. |
@@ -55,13 +55,13 @@ The purpose is to restore collecting, hoarding and organizing as the main experi
 
 Read the GDD for the actual detail and source distinctions. This table is routing, not a substitute specification. No code change follows from it without an agreed task.
 
-## 4. Local playable collection foundation
+## 4. Local playable expedition loop
 
-Normal F5 entry is `res://gameplay/run/run_shell.tscn`. New Run starts with authored loose stock and two exact development hauls at 3 and 45 active seconds. The HUD tracks six authored primary Utility per category across eight simultaneous targets. The first completion time remains recorded as the player keeps organizing. Medical, Kitchen and Dispatch display inactive service labels.
+Normal F5 entry is `res://gameplay/run/run_shell.tscn`. New Run starts with the authored loose stock and eight Ready scavengers. Aim at the Dispatch counter and press F to prepare a crew. Player-dispatched expeditions supply Receiving. The HUD still tracks six authored primary Utility per category and records the first simultaneous completion.
 
-Schema 5 uses the existing save service under `user://saves/collection/`. Ordinary Save & Exit, 60-active-second automatic attempts and the first victory use that one continuation. The M4 slot under `user://saves/` is historical and remains separate.
+Schema 6 uses the existing service under `user://saves/collection/`. It preserves preparation, exact away outcomes, handover, and the physical run. Save & Exit, 60-active-second automatic attempts and first victory use the same continuation. The schema-5 foundation snapshot and separate M4 save remain preserved.
 
-Standalone F6 retains the authoring palette and canonical UID `uid://bljf1nlhijej`. The [survival-era archive](design_history/survival-era/README.md) holds the frozen M4 inputs and earlier plans. Read the [local result](testing/2026-11-07-continuous-run-collection-goal-result.md) for the exact fixture, eligibility, proof and limits.
+Standalone F6 retains the authoring palette and canonical UID `uid://bljf1nlhijej`. The [expedition result](testing/2026-11-08-expedition-to-storage-loop-result.md) records the provisional pool and the checks for developer playtest. The [accepted foundation result](testing/2026-11-07-continuous-run-collection-goal-result.md) preserves the exact two-haul fixture evidence.
 
 Stage A catalogue reuse and Stage B geometry-measurement reuse remain part of the accepted historical evidence.
 
@@ -105,9 +105,9 @@ Exact outcome content belongs upstream. Receiving may arrange/present but may no
 
 **Local collection foundation:** one active plus two deposited FIFO batches and oldest-first upstream admission through `AwaitingLiftAdmission`. Waiting commitments persist across play and continuation.
 
-**Later expeditions:** destination occupancy ends on return. Healthy personnel become Ready and injured personnel enter Medical after cargo admission. The [approved brief’s Appendix A](superpowers/plans/2026-11-07-continuous-run-collection-goal-foundation.md#appendix-a--confirmed-expedition-lifecycle-decisions-for-the-next-milestone) records these decisions and the remaining zero-item and incomplete-affinity questions.
+**Expedition handover.** Destination occupancy ends on return. Healthy crew members become Ready on admission or on empty return. The future Medical route begins at handover. The [expedition brief](superpowers/plans/2026-11-07-expedition-to-storage-loop.md) records the slice decisions.
 
-The curved CRT is live/read-only `FREIGHT LIFT / ONLINE`, with STATUS/DECK/QUEUE. At the inspected baseline QUEUE 00–02 counts deposited waiting batches only, not active cargo or upstream crews. The 704×400 green viewport, Surface 1 binding, fonts, mounting and subdued bezel are accepted. W1 is amber during arrival/staging/reveal, green when OPEN, off during closing/idle. Emergency-stop control remains decorative. New crew/backlog monitoring is future design, not evidence that current CRT data should be removed or resold.
+The curved CRT is live and read-only with STATUS, DECK and QUEUE. QUEUE 00–02 counts deposited waiting batches. The separate expedition display lists Away and Awaiting Lift crews. The 704×400 green viewport, Surface 1 binding, fonts, mounting and subdued bezel are accepted. W1 is amber during arrival, staging and reveal, green when OPEN, and off during closing and idle. The emergency-stop control remains decorative.
 
 ## 8. Spatial, art and source safeguards
 
@@ -142,7 +142,7 @@ Systems MVP §16 remains the full CF-01–CF-24 register. This entry-point updat
 | CF-05 | Admission/fairness/ownership survive. The archived M4 evidence includes the old midnight rule. |
 | CF-06–CF-12 | Retain current interfaces/art evidence and renderer/content/ergonomics debt. No fresh fixes or approvals are claimed. |
 | CF-13 | Continuous durability remains future and must use coherent existing ownership. |
-| CF-14–CF-15 | Actual expeditions/population/Medical remain future; daily formation, mortality and next-day treatment must not be inherited as target rules. |
+| CF-14–CF-15 | The bounded healthy expedition loop is ready for developer playtest. Population growth and Medical remain open. |
 | CF-16–CF-17 | Conversions, Workshop, labels/containers/progression require v0.16 scope. Night progression and storage expansion are not default requirements. |
 | CF-18–CF-19 | Preserve explicit interaction deferrals; economy, loot bounds and routes now serve the collection objective. |
 | CF-20–CF-24 | Retain adjacent art work, measured limitations, saved/runtime distinctions, authoring and source/license safeguards. |
@@ -157,7 +157,7 @@ The authoritative asset-equipped checkout is `D:\Godot Projects\Sorting-apoc-PRO
 
 No reset, stash, clean, force-push, rebase/squash, branch/worktree deletion, untracked staging sweep or ignored-asset cleanup is authorized. Preserve local evidence and human `.tres`/scene edits. A remote clone is not a runnable licensed-art backup. Git ignore is not Godot scan exclusion: keep checkpoint scenes with production UIDs and duplicate global classes outside scanned paths. Preserve startup parity checks and avoid concurrent Godot/import writers on one mutable checkout.
 
-The next planned gameplay slice is expedition-to-storage. Begin from the local checkpoint and the separate expedition brief under GDD §21. Appendix A resolves the stated portions of O-02–O-04 for later expedition work. O-06/O-07 replacement service rules remain open. Follow proportionate evidence: documentation QA is not a gameplay test; code assertions are not human acceptance; publishing requires the actual authorized action and verification.
+The [expedition playtest](testing/2026-11-08-expedition-to-storage-loop-result.md) is the next acceptance step. O-06 and O-07 replacement service rules remain open. The foundation closure remains the prior accepted local checkpoint.
 
 ## 11. Focused evidence navigation
 

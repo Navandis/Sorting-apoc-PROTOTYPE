@@ -613,9 +613,9 @@ The predecessor’s shared RequestDefinition / OutcomeProfile separation remains
 
 ### 8.5 In-progress expedition commitments
 
-The new single-team panel must preserve committed items and accounted contributions without creating parallel prepared-team storage. Closing/reopening, changing member count after spending, cancellation and abandonment need an explicit lifecycle. The approved pivot record uses “consumed on dispatch” in §5.1 while retaining irreversible submission in §7; the published foundation removes the physical source at successful contribution. This edition preserves the irreversible-commitment invariant but leaves the precise new preparation/consumption boundary explicit as an implementation-blocking detail, rather than silently choosing one interpretation.
+The player edits one logical draft. The first accepted whole item forms the selected crew and spends the item in the same transaction. A successful zero-loadout Dispatch forms the crew at departure. Both boundaries recheck Ready availability.
 
-No automatic refunds, pushed-back items, discarded loadouts or shrinking-team credits are authorized to resolve that gap. It is possible to draft the successor while leaving this narrow interaction open; it must be settled before implementing editable prepared teams.
+Closing the panel and continuing a saved run preserve count, affinity selection and accepted contributions. Count stays locked after formation. Affinities stay editable until departure. The next draft becomes available after dispatch.
 
 <a id="s_8_6_No_dead_end_through_stacked_syst"></a>
 
@@ -660,13 +660,13 @@ Four available scavengers may be sent as one team of four, as three plus one, or
 
 <a id="s_9_3_Preparation_UI_and_open_edit_bou"></a>
 
-### 9.3 Preparation UI and open edit boundaries
+### 9.3 Preparation UI and formation
 
 The full loadout and affinity selector belong in the same broader panel. Current and projected lane credit, waste, full item Bulk, used/raw capacity, remaining return capacity, selected item and eligibility feedback must survive the redesign. A high-level sketch is not permission to remove information that already proved useful.
 
-The panel is tentatively unpaused. Its previous pause proposal served a fixed morning window and many prebuilt teams; those conditions no longer apply. Physical fetching and carrying remain ordinary work. No specific expedition duration or new interaction shortcut is selected merely to make the interface feel faster.
+The preparation panel and its zero-capacity warning stay live in the expedition playtest. ESC closes the warning or preparation before opening the pause menu. Physical fetching and carrying use the ordinary controls.
 
-The member-selection commitment point, readiness reservation while the player fetches goods, closing/reopening the unfinished panel, cancellation and resizing after contributions remain OPEN. The edition does not create saved parallel loadouts or use irreversibility as a reason to invent a refund. See §8.5 and the open-question register.
+Draft edits reserve neither personnel nor a destination. First accepted supply locks the crew count and removes those members from Ready. Contributions remain spent. Cancellation, disbanding and resizing are outside this slice.
 
 <a id="s_9_4_Twenty_eight_repeatable_archetyp"></a>
 
@@ -678,7 +678,7 @@ A destination name is a thin fictional wrapper around desired supplies, not a lo
 
 Both chosen affinities receive the same mathematical bonus, communicated qualitatively—for example, “Potentially more Medical and Weapons loot.” Percentages and ranking are not shown. Incidental items from every other category remain possible; the team could encounter them en route or near its destination. Fiction supports the assortment without requiring a literal outside simulation.
 
-The bonus does not expand capacity, alter an object’s authored values, reserve guaranteed compartments for the two categories or ensure equal amounts in one haul. It should be noticeable in useful category returns over comparable expeditions. Exact implementation and the final archetype names remain to be designed.
+The bonus changes the chance of selecting each category before fit filtering. Return capacity and authored item values stay fixed. The expedition playtest uses development pair labels and the category-first sampler in §10.5. Final names and production calibration remain open.
 
 <a id="s_9_5_Alphabetical_resource_selector"></a>
 
@@ -696,27 +696,27 @@ Selected icons must remain intelligibly deselectable. Names/tooltips and explana
 
 ### 9.6 Concurrent exclusivity and reservations
 
-The favored replacement is one concurrent team per destination, not one team per day. The approved record retains specific-destination reservation on a completed affinity pair, editable until the selection changes or dispatch commits it. Under the single-preparation addendum, only that one local preparation can make such a pre-dispatch reservation.
+One crew may be away at a destination. Selection and provisioning leave the pair available. Successful Dispatch occupies it until the crew returns.
 
-The exact active-destination release point remains OPEN: departure, outside return, cargo admission and personnel availability are separate facts. Define which of those ends concurrency before implementation. Do not assume that a crew held at the lift also keeps an outside destination occupied unless that rule is explicitly chosen.
+A returned crew releases its destination immediately, even while it waits for cargo admission. Several waiting crews can share a destination and retain separate expedition identities.
 
-Availability events designed to close destinations for scarcity valleys are no longer favored, and no generic non-affinity fallback is currently required. The larger intended catalogue is expected to suffice at ordinary population scales, but an all-destinations-busy state still needs legible behavior. It is not permission to recreate the daily departure-budget system, silently violate exclusivity or discard committed goods.
+Available partners follow the currently occupied pairs. The selector explains unavailable partners and keeps selected affinities deselectable. Dispatch rechecks availability and preserves the selected pair on rejection. Availability events and destination depletion are deferred.
 
 <a id="s_9_7_Dispatch_incomplete_choices_and_"></a>
 
 ### 9.7 Dispatch, incomplete choices and expedition timing
 
-Departures occur when the player chooses, not at a cutoff. A deliberately underprepared loadout remains an inherited possibility to assess within the no-dead-end economy; the exact effectiveness of weak/empty provisioning remains OPEN. There is no automatic departure merely because the panel closes, time elapses or another team departs.
+Dispatch requires an explicit action with a valid crew and two distinct affinities identifying an available destination. Incomplete affinity selection disables Dispatch and explains the requirement. Zero provisioning is permitted.
 
-The earlier random assignment and popup rules for zero/one affinity were designed around cutoff dispatch. Their continuous-flow relevance has not been settled. Do not silently keep them or silently require two affinities as a new confirmation gate; record that interaction before building it.
+Zero return capacity opens a confirmation before departure. Back preserves the preparation and receipts. Confirming revalidates the crew and destination, then commits an empty journey if still valid.
 
-Expeditions should be substantially shorter than in the survival design and proceed independently. Duration remains a tuning lever. A larger-team speed benefit is a possibility, not a rule. Exact durations, controlled variation, ETA presentation and lane effects need testing; there is no same-day clamp, forced 23:40 return or night boundary.
+The expedition playtest draws one uniform 90–180 active-second journey at departure for every crew size and loadout. The exact return timestamp persists through Continue. Production duration and any provisioning or crew-size effects remain open.
 
 <a id="s_9_8_Return_personnel_and_growth"></a>
 
 ### 9.8 Return, personnel and growth
 
-The favored chain is prepare → dispatch → away → return/wait for cargo delivery → personnel become eligible for their next appropriate state. Waiting cargo keeps its crew occupied. Injury admission/treatment and the precise handover/release point are unresolved; do not equate outside arrival automatically with Ready.
+Nonempty returns complete personnel handover when Receiving admits the cargo to either the active lift or the deposited queue. Crews awaiting a slot remain unavailable. Empty returns complete at the return timestamp. Every member in this slice returns healthy and becomes Ready at the applicable handover boundary.
 
 Recruitment and permanent progression must be reconsidered without death-driven survival pressure. A larger workforce may be a useful investment, but no recruit frequency, acceptance timer, next-morning join or compulsory growth path is inherited. Persistent team-slot Training is specifically incompatible as written with disposable player-assembled crews; see §15.6.
 
@@ -739,7 +739,7 @@ RETURN CAPACITY = Team Load Capacity − Outgoing Bulk
 
 Equal-sized teams with equal applicable upgrades have equal base requirements and capacity. The new 1–4-person choice scales those values proportionally; no arbitrary heterogeneous scavenger stats or destination-specific equipment requirements are implied. Upgrades can deliberately introduce defined modifiers after their design is agreed.
 
-All outgoing goods are spent by the expedition abstraction. Food consumption does not later refund Bulk, and weapons or tools do not automatically reappear on return. The current loading transaction and the open in-progress-team lifecycle must be reconciled as described in §8.5 before implementation; equipment is never an invisible retrievable store.
+A successful contribution spends the whole outgoing item immediately and charges its full Bulk against return capacity. Departure uses the accepted receipts and leaves the remaining capacity available for cargo.
 
 <a id="s_10_2_Five_lanes_and_outcome_boundari"></a>
 
@@ -761,7 +761,7 @@ The general principle that intentional provisioning can materially improve acqui
 
 The current accepted foundation charges the full Bulk of each submitted item, caps Utility at the remaining lane target, previews waste and rejects objects that exceed remaining capacity. Filling a lane stops further submissions to that lane. No surplus bonus or capacity discount is added.
 
-Efficient provisioning can reduce outgoing Bulk and preserve room for incoming loot. The existing rule permits a valid inefficient loadout to leave zero return capacity; no protected minimum reserve was previously accepted. That remains a disclosed baseline behavior, not proof that the whole new economy avoids dead ends. A future continuous economy must demonstrate another legitimate path forward when players make such decisions; do not quietly add bonus capacity to hide the issue.
+Efficient provisioning preserves Bulk for incoming cargo. A crew can depart with zero return capacity after confirmation and can return empty when the remaining Bulk cannot fit a whole eligible item. Provisioning effects and economy balance remain open.
 
 The old aspirations of roughly 50% capacity used by an ordinary loadout and 70–75% left by efficient loading are historical calibration examples, not targets this edition reaffirms. The M4 28 Bulk per scavenger and lane values 12/12/6/12/12 remain testing evidence only. New per-member capacities may be deliberately increased if useful for a substantial collection and manageable run length.
 
@@ -783,7 +783,7 @@ An upstream expedition outcome owns the selected items. It must respect the agre
 
 Precomputation is allowed only after the inputs the player may legitimately influence are fixed. It does not reveal hidden results, start a return early, occupy deposited lift slots or become an independent timer. Preserved outcomes survive save/load rather than being redrawn near arrival.
 
-Exact sampler, affinity strength, quantity/quality limits, zero-loot handling and maximum presentable haul size remain open. Any increased acquisition capacity must also be compatible with the physical deck and progressive TAKE. A presentation-capacity problem is an authoring/integration constraint, not permission for silent cargo loss.
+For this playtest the sampler draws a category first with weight 9 for each of the two affinities and 7 for each other category. With all categories eligible this is 15% for each affinity and 7/60 for each other category. Categories without a fitting item are removed, then one fitting definition in the selected category is drawn uniformly. Whole items fill the remaining Bulk until none fits. Duration, the exact manifest and a validated deck arrangement commit at Dispatch. These settings and the declared pool apply to the test configuration.
 
 <a id="s_10_6_What_should_be_legible_to_the_p"></a>
 
@@ -817,7 +817,7 @@ Receiving is TAKE-only. Its private presentation surfaces expose no PUT, zoning,
 | Returned teams waiting to hand over | Effectively uncapped pending queue under the new direction. Each keeps its exact haul and unavailable personnel; backlog costs throughput and time. |
 | Deposited physical queue | Existing owner supports one active plus two deposited FIFO loads. This is separate from pending team records; the pivot does not by itself enlarge physical capacity. |
 | Active revealed load | Materialized objects are progressively taken from the apron. The lift waits for successful removal of all items. |
-| After cargo handover | Precise personnel release, Medical admission and destination release points remain OPEN and must be aligned deliberately. |
+| After cargo handover | Admission completes crew handover. Healthy personnel become Ready, and injured personnel will go directly to Medical once that system is defined. Destination occupancy ended at return. |
 
 A player can leave returning teams queued as long as desired. The cost is tied-up productive capacity and a longer completion time, not missing goods. The waiting cargo itself cannot complete the goal. Clearing the lift and keeping storage workable makes the workforce useful again.
 
@@ -862,11 +862,11 @@ Localized W1 warns amber during arrival/staging/opening, shows green while OPEN 
 
 <a id="s_11_6_Open_handover_boundary"></a>
 
-### 11.6 Open handover boundary
+### 11.6 Handover and empty returns
 
-The approved queue principle does not yet determine whether a crew is released at upstream admission to deposited FIFO, at a distinct handover, or after another observable delivery step. The predecessor’s admission-completes-return rule is existing design/implementation context, not an automatic answer. The destination’s concurrent-use release can also be distinct from personnel availability.
+Successful admission to the active lift or the deposited queue completes nonempty handover. The healthy crew becomes Ready once, while Receiving owns the cargo. An awaiting crew remains unavailable and its destination is free for another departure.
 
-Resolve those transitions together with injury admission, zero-item returns, loading/continuation and UI messages. Preserve exact commitments, FIFO fairness and single ownership throughout. Do not create an infinite in-world pile merely because pending records are uncapped, and do not use a finite display limit to erase waiting cargo.
+Empty outcomes complete in Expedition at their return timestamp without creating a batch or occupying a lift slot. Future triage uses the handover boundary. Healthy members go Ready and injured members go directly to Medical. Injury and treatment rules remain open.
 
 Basis: [PIV §6]; [ADD] for sequential preparation context; retained [G15 §11], [MVP §§6–8,16] and [VDD §§13,34.7] except explicitly removed midnight loss.
 
@@ -1242,7 +1242,7 @@ The existing item pose workbench is res://gameplay/dev/item_storage_pose/item_st
 
 Removing calendar days does not remove chronology. Expedition progress, recovery, requests, project work, receiving theatre and the completion record must share coherent active elapsed time and pause semantics. No subsystem should gain time because the application was closed, restart a duration on load, or extend deadlines through repeated reconstruction.
 
-Retain causality at the owning systems: last TAKE → closing → full outbound turnaround → retirement → FIFO promotion/admission. Do not give presentation a competing clock that changes outcomes. Independent ties need a stable, documented order; the old midnight-specific priority no longer applies. Exact scheduler adaptation remains implementation work, not a new generic event framework requested by this edition.
+Retain the lift sequence from last TAKE through closing, full outbound, retirement and FIFO promotion. At the same active timestamp the lift settles older waiters first. Expedition returns sharing a timestamp are processed in dispatch identity order.
 
 <a id="s_18_5_Continuation_and_durable_commit"></a>
 
@@ -1256,14 +1256,14 @@ Ordinary schema-4 continuation is accepted at M4, but is not continuous crash-du
 | --- | --- |
 | Physical ownership | Items in storage/carrying, exact spent receipts, pending and deposited cargo; no duplication or lost transfer halves. |
 | Organization | Zones, disabled cells, names, stacks, reserved cells, transforms and placed orientation—not fresh automatic packing. |
-| Current operations | Single unfinished preparation once its rules are defined; away/waiting crews; destination occupancy; recovery and request/project progress. |
+| Current operations | Single editable preparation, exact away and waiting crews, and destination occupancy. Recovery and request/project progress are future scope. |
 | Time and completion | Active elapsed time, pause-independent logical progress, recorded first victory and exact pending transitions. |
 | Committed outcomes | Previously selected cargo and any already-resolved random facts; reopening a report or continuing cannot reroll them. |
 | Identity allocation | Run-scoped allocator state so new items/requests/expeditions remain unique after restart. |
 
 Outcome commitment should occur at a natural backend point after legitimate player choices are fixed, before presentation where possible. Preserve committed results through continuation. Incidental uncommitted rerolls within the tolerated loss interval are not a reason to build a general anti-cheat framework; reliable selection among already preserved outcomes remains disallowed by the inherited policy.
 
-M4-to-successor save compatibility is OPEN. This edition authorizes no migration, conversion, schema change or deletion. Existing player saves and human work remain intact. Future compatibility decisions must distinguish safe preservation from pretending an old day-based run already satisfies the new rules.
+The expedition playtest uses schema 6 in the existing collection slot. It preserves the editable preparation, crew ledger, receipts, Away cargo and handover facts with the physical run. Schema 5 foundation and earlier saves are preserved. Starting a replacement run requires explicit New Run confirmation. Release migration and crash durability remain open.
 
 <a id="s_18_6_Environment_and_authored_produc"></a>
 
@@ -1448,22 +1448,22 @@ These are design-validation aims, not claimed test results or a new automated ac
 
 <a id="s_21_2_Priority_open_decisions"></a>
 
-### 21.2 Priority open decisions
+### 21.2 Priority decision register
 
 | **ID / subject** | **Boundary to resolve** |
 | --- | --- |
 | O-01 · Goal/capacity calibration | Actual shared Utility target, starting stock, qualifying storage/output classification and a useful occupancy measure. 2,000/80% remain placeholders. |
-| O-02 · Single preparation lifecycle | When Ready members are reserved; close/reopen behavior; changing 1–4 count after commitment; cancellation; no parallel loadouts; consume-on-dispatch wording versus irreversible-submission baseline. |
-| O-03 · Destination lifecycle | When a selected pair becomes reserved, when it releases, how waiting cargo affects concurrency, all-busy feedback and incomplete-affinity Dispatch behavior. |
-| O-04 · Return and personnel handover | Exact release point for crew and destination; Medical admission; zero-loot returns; relationship to finite deposited capacity. |
-| O-05 · Acquisition model | Base capacity, lane targets, expedition duration, provision effects, affinity weights, loot fitting, and the poorest allowed outcome’s path back to acquisition. |
+| O-02 · Single preparation lifecycle | Resolved for this slice. Formation at first accepted supply or zero-loadout Dispatch, with persistent draft edits, locked count after formation and whole-item receipts. See §§8.5 and 9.3. |
+| O-03 · Destination lifecycle | Resolved for this slice. Exactly two distinct affinities, away-only exclusivity and explicit availability feedback. See §§9.5–9.7. |
+| O-04 · Return and personnel handover | Healthy release at admission or empty return is confirmed. Injury classification, Medical admission mechanics and treatment remain open. See §11.6 and O-07. |
+| O-05 · Acquisition model | The bounded test pool, capacity, lane targets, 90–180 active seconds and category weights are specified for this playtest. Production tuning and provisioning effects remain open. See §§9.7 and 10.5. |
 | O-06 · Requests and Ops | Recurrence, grace, bounded outstanding work/escalation, partial fulfillment, departmental penalty effects and restoration. |
 | O-07 · Medical | Injury states and risk; natural/treatment recovery rates and costs; treatment allocation and timing; no terminal blockage. |
 | O-08 · Population and upgrades | Initial Ready count, recruitment/growth, progression ownership for assembled crews, Workshop project roster and Training disposition. |
 | O-09 · Conversion and release | Rations/Salvage category and target rules; yields, capacity/output blocking; Incinerator/Salvager access and any restrictions. |
 | O-10 · Space and handling | Production shelf capacity/roster, all-storage-from-start decision, route compression and final ergonomics. |
-| O-11 · Interface and time edges | Goal display placement, active-team overview, Journal scope, focus/loading/modal policies and whether the unpaused preparation panel needs revision. |
-| O-12 · Delivery/continuation | Successor test scope, save compatibility and technical migration. Document approval is complete; repository provision is manual and is not claimed here. |
+| O-11 · Interface and time edges | The playtest uses live preparation and warning panels with Escape priority, plus a minimal operation view. Journal scope, final interface and platform time edges remain open. |
+| O-12 · Delivery/continuation | Expedition playtest uses schema 6 and preserves incompatible prior snapshots. Developer acceptance, release migration and durability remain open. |
 
 The register deliberately leaves unanswered mechanics open. The project already has enough direction to produce this successor; these are boundaries for later design/implementation, not reasons to recreate the old behavior or repeatedly ask the developer to approve the pivot.
 
@@ -1644,7 +1644,7 @@ Historical Prototype Findings v0.14 and VDD v0.11 are also available as project 
 
 ### D.3 Source-sensitive unresolved wording
 
-The approved pivot record describes loadout goods as consumed on dispatch while elsewhere preserving irreversible physical submission. The predecessor/MVP credits and removes the source at submission. Section 8.5 explicitly preserves the commitment invariant and leaves the exact new preparation lifecycle to resolve. This is an identified source-boundary question, not an unannounced change to refunds or consumption timing.
+The approved pivot record describes loadout goods as consumed on dispatch and also retains irreversible physical submission. The expedition brief fixes the boundary for this slice. The first accepted whole-item contribution spends the item and forms the crew. Dispatch uses the recorded receipt. See §8.5.
 
 Similarly, an uncapped waiting queue is not an uncapped visible deck, one concurrent expedition is not a daily limit, and a simple natural-recovery preference is not a complete Medical specification. These distinctions must survive future condensed handoffs.
 

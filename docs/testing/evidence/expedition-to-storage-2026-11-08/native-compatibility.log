@@ -1,0 +1,20 @@
+Godot Engine v4.7.stable.official.5b4e0cb0f - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 621.01 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 5060 Ti
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+Wing functional storage: installed 16 empty deterministic surface(s); F6 developer grids default OFF, F7 demo disabled.
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (drivers/gles3/storage/material_storage.cpp:2592)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (drivers/gles3/storage/material_storage.cpp:2579)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (drivers/gles3/storage/material_storage.cpp:2618)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (drivers/gles3/storage/material_storage.cpp:2630)
+DISPATCH_LIVE_CLOCK active_delta=1.205032 hud=Collection  •  Active 00:00:01
+EXPEDITION_TAKE crew=4 items=13 bulk=31 manifest=["loot_000020", "loot_000084", "loot_000039", "loot_000039", "loot_000084", "loot_000164", "loot_000004", "loot_000020", "loot_000045", "loot_000004", "loot_000028", "loot_000035", "loot_000013"]
+EXPEDITION_TAKE crew=1 items=3 bulk=7 manifest=["loot_000122", "loot_000129", "loot_000084"]
+EXPEDITION_LAYOUT prepared_extremes_and_mixed=32 progressive_extremes=3
+EXPEDITION_REACH max_take_m=1.73088407516479
+expedition_physical_tests: PASS failures=0

@@ -209,7 +209,7 @@ Basis: [GDD §§3.1, 4.8, 6.3, 7.1–7.2, 8.2–8.4]; [D01–D03]; [ER-RESULT §
 
 ### 6.1.1 Deliberately excluded resilience work
 
-The local collection build uses the same save service with schema 5 under user://saves/collection/. It attempts a save after 60 active seconds and at first victory, coalescing coincident triggers. Save & Exit preserves interval position. Continue restores before activation. Release durability remains CF-13. [D21; G16 §§5.5,18.5]
+The expedition-to-storage build uses schema 6 in the existing collection save service under user://saves/collection/. A save is attempted after 60 active seconds and at first victory, with one write when both coincide. Save & Exit preserves interval position and Continue restores before activation. Older schemas remain preserved. Release durability remains CF-13. [D21; G16 §§5.5,18.5]
 
 At the accepted M1/initial M2 delivery level, unsaved actions may be lost after unexpected termination. Ordinary continuation must still preserve exact ownership, credit and gameplay time. Do not use this intentionally limited implementation to assess the full-game randomness principle. Exact audiovisual-frame recovery remains unnecessary. [D03, D05, D21]
 
@@ -229,7 +229,7 @@ Basis: [D03–D05, D08–D09]; [GDD §§5.3–5.6, 18.5].
 
 The inventory below records the implemented preservation contract. M1 implements its then-present player, item, storage, request and Receiving owners. M2 extends it with actual calendar, timed occurrences and report state; no patient, roster or full-outcome simulation is implied. [M1; M2 §§6–8]
 
-Future state must also preserve active completion time, qualifying-stock truth, the once-recorded victory, current preparation, actual crews and defined request/recovery state. Exact schemas and migration remain open. Calendar/report fields below remain necessary for the unchanged fixture, not release requirements. [G16 §§5,18.5]
+Schema 6 preserves active completion time, qualifying stock, the first victory, editable preparation, spent receipts, committed Away cargo, waiting crews and completed handovers. Recovery, requests and release migration remain future work. The calendar/report fields below document the historical fixture. [G16 §§5,18.5]
 
 | State group | Preserve / restore |
 | --- | --- |
@@ -467,7 +467,7 @@ Actual Expedition journeys/returns, destination-generated loot, duration, injuri
 
 Do not display an invented improvement to injuries, loot or survival merely because a lane is full. The initial evidence is what was spent, what requirements were met, and what remains for other demands. Future OutcomeProfiles consume that result when their systems are implemented.
 
-TARGET: choose 1–4 available Ready scavengers, equip the current crew, choose its destination and explicitly dispatch. Prepare another consecutively; no morning partition, tabs, cutoff or 100%-auto-send. The preferred two-distinct-unordered-affinity catalogue has 28 repeatable archetypes. Favored concurrent exclusivity leaves reservation/release, incomplete selection and handover open. [G16 §§9–11]
+EXPEDITION-TO-STORAGE TEST. Choose 1–4 Ready scavengers in one persistent preparation. The first accepted supply locks the crew and spends the whole item. Select two distinct affinities to explicitly dispatch to one of 28 destinations. Healthy crew members become Ready at nonempty cargo admission or at an empty return. The test duration and category-first acquisition rules are in GDD §§9–11. Technical verification completed on 8 November 2026. Developer acceptance remains pending.
 
 ### 12.4 Validation threshold
 
@@ -622,7 +622,7 @@ All CF-01–CF-24 identifiers and sources are retained. Ordinary restoration, ru
 | CF-02<br>PF §§16.5, 25.4; GDD §18.5 | Full-game persistence was not established by batch snapshots. Stored placement orientation must survive instead of being recomputed from current Front. | Exact continuation accepted through the local schema-5 collection foundation. Full-game durability remains CF-13. |
 | CF-03<br>CR15 R-03; D02–D03 | Process-local debug namespace uniqueness does not alone ensure new delivery identity after application restart. | Run-scoped identity and saved allocator accepted in M1 and preserved through M2–M4. Future occurrences must retain uniqueness and no replay. |
 | CF-04<br>ER-RESULT §4; CR15 | Carrying mutation signals can precede transfer success/rollback and cannot authorize irreversible credit. | M1 receipt-before-notification transaction accepted. Preserve the enclosing success boundary for all later consumers. |
-| CF-05<br>PF §34.5; GDD §11 | Retain upstream exact-content/admission fairness. The 1+2 deposited limit and midnight event describe the accepted build, not target abandonment policy. | Collection preserves exact upstream waiting cargo and oldest-first admission into one active plus two deposited slots. The later personnel handover is fixed by Appendix A of the foundation brief. The M2–M4 cutoff is historical. |
+| CF-05<br>PF §34.5; GDD §11 | Retain upstream exact-content/admission fairness. The 1+2 deposited limit and midnight event describe the accepted build, not target abandonment policy. | The continuous foundation preserves exact upstream waiting cargo and oldest-first admission. The expedition test adds healthy crew release at active or deposited admission and releases the destination at return. The M2–M4 cutoff remains historical. |
 | CF-06<br>PF §§19.4, 24.3; VDD §§16, 18–19 | Playable service spaces and routes are approved, not fully furnished request interfaces or final gameplay travel balance. | M1–M4 interfaces, clock and schema-4 continuation are accepted. Target outcomes/monitoring remain future; route compression is OPEN, not scene authorization. [G16 §§4.3,20] |
 
 A dependency entering scope is not retroactive demotion of the accepted prototype. The next handoff must identify exactly which owning paths it changes and the focused evidence required. [WG; ER14 §11]
@@ -653,7 +653,7 @@ Basis: [PF §§3–4, 7, 12–14, 24–26, 33–34]; [ER-RESULT §§2–5].
 | ID / source | Work retained or explicitly superseded | Relationship to this foundation |
 | --- | --- | --- |
 | CF-13<br>GDD §§5.6, 18.5; PF §§16.5, 34.7 | Full-game continuous game-state preservation, one advancing continuation per run, journal/rotating recovery and an ideal 2–3-real-second loss target. [D21] | Collection uses the same service and an isolated schema-5 namespace. The 60-active-second cadence and first-victory attempts provide prototype continuation. Release durability and recovery remain open. |
-| CF-14<br>GDD §§9–10; PF §34.7 | Actual asynchronous expeditions, one player-assembled 1–4-person crew at a time, affinities, return outcomes and workforce availability. [G16 §§9–11] | Expedition-to-storage is the next planned slice. Apply the confirmed preparation, occupancy and handover decisions in Appendix A of the foundation brief. Incomplete affinity and zero-item returns remain open. |
+| CF-14<br>GDD §§9–10; PF §34.7 | Actual asynchronous expeditions, one player-assembled 1–4-person crew at a time, affinities, return outcomes and workforce availability. [G16 §§9–11] | The expedition-to-storage test implements the bounded healthy loop. It includes persistent preparation, explicit Dispatch, committed travel and loot, and nonempty or empty handover. Developer acceptance and production tuning remain pending. |
 | CF-15<br>GDD §§12–13; PF §34.7 | Medical now supports availability. Slower natural recovery with substantially faster treated recovery is favored; detailed states/costs/timing remain open. [G16 §13] | Former daily triage, Meal Coverage rolls and fatal complications are historical—not pending obligations. No injured-away exception or hidden catch-up is introduced. |
 | CF-16<br>GDD §§12, 14–15, 20; PF §§19.4, 20.4 | Bounded Kitchen/Ops pressure; optional physical Rations; salvage/incineration and Workshop redesign. [G16 §§8,12,14–15] | No inherited daily cap, overnight output, night-only project work, outage timetable or storage-upgrade tree. Costs/effects/output classification require design. |
 | CF-17<br>PF §§19.4–19.5, 20.4; GDD §§7.5–7.6 | Labels, specialist storage, conditional furniture movement, starting stock and production capacity remain open. All storage initially available is favored. [G16 §§7,15] | Preserve supported surface names and authored installs. No chosen shelf roster, automatic unlocking or scene changes; qualifying storage must be defined explicitly. |
