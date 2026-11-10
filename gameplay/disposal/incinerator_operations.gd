@@ -4,13 +4,16 @@ extends RefCounted
 var warning_shown := false
 
 var _clock: RefCounted
-var _loadout_has_spent: Callable
+var _other_consumer_has_spent: Callable
 var _receipts: Dictionary = {}
 var _transaction_active := false
 
-func _init(clock: RefCounted, loadout_has_spent: Callable = Callable()) -> void:
+func _init(clock: RefCounted, other_consumer_has_spent: Callable = Callable()) -> void:
 	_clock = clock
-	_loadout_has_spent = loadout_has_spent
+	_other_consumer_has_spent = other_consumer_has_spent
+
+func has_spent_item(id: String) -> bool:
+	return _receipts.has(id)
 
 func can_attempt(carry: CarriedItems, expected: ItemInstance, has_access: Callable) -> bool:
 	return not _transaction_active and _valid_selection(carry, expected, has_access)
@@ -39,7 +42,7 @@ func _valid_selection(carry: CarriedItems, expected: ItemInstance, has_access: C
 	if expected.definition == null or expected.definition.item_id.is_empty() or expected.instance_id.is_empty() \
 			or expected.get_bulk() <= 0 or _receipts.has(expected.instance_id):
 		return false
-	if _loadout_has_spent.is_valid() and _loadout_has_spent.call(expected.instance_id):
+	if _other_consumer_has_spent.is_valid() and _other_consumer_has_spent.call(expected.instance_id):
 		return false
 	var matches := 0
 	for item: RefCounted in carry.get_items():

@@ -37,6 +37,7 @@ func _ready() -> void:
 		return
 
 	_carried_items.contents_changed.connect(_refresh)
+	_carried_items.capacity_changed.connect(_refresh)
 	_carried_items.selection_changed.connect(_on_selection_changed)
 	_refresh()
 
@@ -99,7 +100,7 @@ func _refresh() -> void:
 
 	_bulk_label.text = "CARRIED   BULK %d / %d   •   Mouse wheel / 1–0 to select" % [
 		_carried_items.get_current_bulk(),
-		_carried_items.max_bulk
+		_carried_items.get_effective_bulk_limit()
 	]
 	if slots.size() > visible_count:
 		_bulk_label.text += "   •   Showing %d–%d / %d" % [first+1,first+visible_count,slots.size()]

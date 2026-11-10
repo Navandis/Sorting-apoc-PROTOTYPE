@@ -2,6 +2,7 @@ extends CharacterBody3D
 
 signal dispatch_requested
 signal incinerator_requested
+signal kitchen_requested
 
 @export var move_speed: float = 4.0
 @export var sprint_multiplier: float = 2.0
@@ -64,6 +65,8 @@ var _store_was_held: bool = false
 var world_input_blocked := false
 var dispatch_station: StaticBody3D
 var incinerator_station: StaticBody3D
+var kitchen_station: StaticBody3D
+var sprint_allowed: Callable
 var _require_e_release := false
 var _require_f_release := false
 var _interaction_hud: CanvasLayer
@@ -140,6 +143,9 @@ func _unhandled_input(event: InputEvent) -> void:
 			if can_reach_incinerator():
 				incinerator_requested.emit()
 				get_viewport().set_input_as_handled()
+			elif can_reach_kitchen():
+				kitchen_requested.emit()
+				get_viewport().set_input_as_handled()
 			elif _looks_at_dispatch():
 				dispatch_requested.emit()
 				get_viewport().set_input_as_handled()
@@ -203,7 +209,7 @@ func _step_normal_movement(
 		velocity.y = -0.1
 
 	var speed: float = move_speed
-	if sprint_pressed:
+	if sprint_pressed and (not sprint_allowed.is_valid() or sprint_allowed.call()):
 		speed *= sprint_multiplier
 
 	var local_direction: Vector3 = Vector3(input_vector.x, 0.0, input_vector.y)
@@ -577,6 +583,11 @@ func _update_interaction_target() -> void:
 		_interaction_prompt.text = "[F] OPEN INCINERATOR"
 		_interaction_prompt.visible = true
 		return
+	if can_reach_kitchen():
+		_set_aim_dot_color(DOT_PLACE)
+		_interaction_prompt.text = "[F] OPEN KITCHEN"
+		_interaction_prompt.visible = true
+		return
 	if not has_loot_target and _looks_at_dispatch():
 		_set_aim_dot_color(DOT_PLACE)
 		_interaction_prompt.text = "[F] PREPARE EXPEDITION"
@@ -634,12 +645,16 @@ func can_reach_incinerator() -> bool:
 	return _looks_at_station(incinerator_station)
 
 
-func _looks_at_station(station: StaticBody3D) -> bool:
+func can_reach_kitchen() -> bool:
+	return _looks_at_station(kitchen_station, collision_mask)
+
+
+func _looks_at_station(station: StaticBody3D, occlusion_mask: int = 0) -> bool:
 	if not is_instance_valid(station):
 		return false
 	var from := camera.global_position
 	var to := from - camera.global_basis.z.normalized() * storage_interaction_distance
-	var query := PhysicsRayQueryParameters3D.create(from, to, station.collision_layer, [get_rid()])
+	var query := PhysicsRayQueryParameters3D.create(from, to, station.collision_layer | occlusion_mask, [get_rid()])
 	return get_world_3d().direct_space_state.intersect_ray(query).get("collider") == station
 
 

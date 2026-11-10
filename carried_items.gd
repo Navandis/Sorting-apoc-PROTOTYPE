@@ -6,6 +6,7 @@ class_name CarriedItems
 ## strip to the right.
 
 signal contents_changed
+signal capacity_changed
 signal selection_changed(selected_index: int)
 signal item_added(item)
 signal item_removed(item)
@@ -18,6 +19,8 @@ signal item_removed(item)
 
 var _slots: Array[RefCounted] = []
 var _selected_index: int = -1
+var capacity_for_normal: Callable
+var _transfer_active := false
 
 
 func _ready() -> void:
@@ -100,18 +103,22 @@ func get_current_bulk() -> int:
 	return total
 
 
+func get_effective_bulk_limit() -> int:
+	return int(capacity_for_normal.call(max_bulk)) if capacity_for_normal.is_valid() else max_bulk
+
+
 func get_remaining_bulk() -> int:
-	return maxi(0, max_bulk - get_current_bulk())
+	return maxi(0, get_effective_bulk_limit() - get_current_bulk())
 
 
 func can_add(item) -> bool:
 	if item == null or not item.has_method("get_bulk"):
 		return false
-	return get_current_bulk() + int(item.get_bulk()) <= max_bulk
+	return get_current_bulk() + int(item.get_bulk()) <= get_effective_bulk_limit()
 
 
 func add_item(item) -> bool:
-	if not can_add(item):
+	if _transfer_active or not can_add(item):
 		return false
 
 	var target_slot: int = _first_empty_slot()
@@ -143,37 +150,32 @@ func remove_selected():
 	return remove_at(_selected_index)
 
 
-func restore_removed_item(item, slot_index: int, selected_index: int) -> bool:
-	## Narrow transaction rollback used when storage placement fails after a
-	## selected item was removed. Restore the exact slot and selection rather
-	## than letting normal first-empty insertion reorder the carried strip.
-	if (
-		item == null
-		or slot_index < 0
-		or _slots.has(item)
-		or not can_add(item)
-	):
+func transfer_selected_to(commit: Callable) -> bool:
+	if _transfer_active or get_selected_item() == null or not commit.is_valid():
 		return false
-	while _slots.size() <= slot_index:
-		_slots.append(null)
-	if _slots[slot_index] != null:
-		return false
-	_slots[slot_index] = item
-	if (
-		selected_index >= 0
-		and selected_index < _slots.size()
-		and _slots[selected_index] != null
-	):
-		_selected_index = selected_index
-	else:
-		_selected_index = slot_index
-	item_added.emit(item)
-	contents_changed.emit()
-	selection_changed.emit(_selected_index)
-	return true
+	var slot := _selected_index
+	var prior_size := _slots.size()
+	_transfer_active = true
+	var item: RefCounted = _remove_at(slot)
+	var accepted := bool(commit.call(item))
+	if not accepted:
+		# This exact item already belonged to the bundle. It can be restored
+		# even if the prior bundle exceeded today's effective pickup limit.
+		_slots.resize(prior_size)
+		_slots[slot] = item
+		_selected_index = slot
+		item_added.emit(item)
+		contents_changed.emit()
+		selection_changed.emit(slot)
+	_transfer_active = false
+	return accepted
 
 
 func remove_at(index: int):
+	return null if _transfer_active else _remove_at(index)
+
+
+func _remove_at(index: int):
 	if index < 0 or index >= _slots.size():
 		return null
 
@@ -196,7 +198,7 @@ func remove_at(index: int):
 
 
 func commit_selected_consumption(expected: ItemInstance, commit_receipt: Callable, validate: Callable = Callable()) -> bool:
-	if expected == null or get_selected_item() != expected or not commit_receipt.is_valid():
+	if _transfer_active or expected == null or get_selected_item() != expected or not commit_receipt.is_valid():
 		return false
 	if validate.is_valid() and not bool(validate.call()): return false
 	if get_selected_item() != expected: return false

@@ -4,8 +4,10 @@ const Codec = preload("res://gameplay/run/state_codec.gd")
 const Catalog = preload("res://prototype_item_catalog.gd")
 const Goal = preload("res://gameplay/run/collection_goal.gd")
 const ExpeditionSnapshot = preload("res://gameplay/expeditions/expedition_snapshot.gd")
+const KitchenSnapshot = preload("res://gameplay/kitchen/kitchen_snapshot.gd")
 const WING_PATH := "res://gameplay/logistics_wing/wing_gameplay.tscn"
-const SCHEMA := 7
+const SCHEMA := 8
+const NORMAL_CARRY_BULK := 20
 static var _seed_definitions: Dictionary = {}
 var _error := ""
 
@@ -53,6 +55,7 @@ func capture(wing: Node) -> Dictionary:
 	return {"schema": SCHEMA, "content": content_fingerprint(), "run": wing.run_identity.capture_state(),
 		"timeline": wing.run_timeline.capture_state(), "goal": wing.collection_goal.capture_state(),
 		"expeditions": expeditions, "incinerator": wing.incinerator.capture_state(),
+		"kitchen": wing.kitchen.capture_state(),
 		"items": items, "carry": player.carried_items.capture_state(),
 		"hosts": hosts, "surfaces": surfaces, "player": player.capture_state(wing), "receiving": receiving}
 
@@ -92,12 +95,14 @@ func validate(state: Dictionary) -> String:
 		return "This continuation is from the collection foundation (schema 5). Expeditions require a New Run. The previous snapshot is preserved."
 	if state.get("schema") == 6:
 		return "This continuation is from the expedition build (schema 6). Incinerator continuation requires a New Run. The previous snapshot is preserved."
+	if state.get("schema") == 7:
+		return "This continuation is from the Incinerator build (schema 7). Continuous Kitchen requires a New Run. The previous snapshot is preserved."
 	if state.get("schema") != SCHEMA:
 		return "Unsupported save schema %s (collection schema %s required)" % [state.get("schema"), SCHEMA]
 	if not _fields(state, {"schema":TYPE_INT,"content":TYPE_STRING,"run":TYPE_DICTIONARY,"timeline":TYPE_DICTIONARY,"goal":TYPE_DICTIONARY,
 		"items":TYPE_DICTIONARY,"carry":TYPE_DICTIONARY,"hosts":TYPE_ARRAY,"surfaces":TYPE_DICTIONARY,
 		"player":TYPE_DICTIONARY,"receiving":TYPE_DICTIONARY,"expeditions":TYPE_DICTIONARY,
-		"incinerator":TYPE_DICTIONARY}, "Snapshot"): return _error
+		"incinerator":TYPE_DICTIONARY,"kitchen":TYPE_DICTIONARY}, "Snapshot"): return _error
 	if state.content != content_fingerprint(): return "Save's physical item data is incompatible with this build"
 	if not _fields(state.run, {"id":TYPE_STRING,"next_sequence":TYPE_INT}, "Run"): return _error
 	if state.run.id.length() != 24 or not state.run.id.is_valid_hex_number(false) or state.run.next_sequence < 1:
@@ -114,7 +119,11 @@ func validate(state: Dictionary) -> String:
 			if not _claim(id, "carrying", state.items, owners): return _error
 			bulk += Catalog.get_definition_by_id(StringName(state.items[id].definition)).bulk
 	var selected: int = state.carry.selected
-	if state.carry.max_bulk < bulk or state.carry.max_bulk != 20 or (selected == -1 and not owners.is_empty()) or (selected != -1 and (selected < 0 or selected >= state.carry.slots.size() or state.carry.slots[selected].is_empty())):
+	# The slot records normal capacity. Kitchen can lower the pickup limit
+	# without invalidating items that already belong to the carried bundle.
+	if bulk > NORMAL_CARRY_BULK or state.carry.max_bulk != NORMAL_CARRY_BULK \
+			or (selected == -1 and not owners.is_empty()) \
+			or (selected != -1 and (selected < 0 or selected >= state.carry.slots.size() or state.carry.slots[selected].is_empty())):
 		return "Invalid carrying selection/capacity"
 	var host_names: Dictionary = {}
 	for host: Variant in state.hosts:
@@ -134,6 +143,9 @@ func validate(state: Dictionary) -> String:
 	var terminal := expedition.spent.duplicate()
 	var disposal_error := _validate_disposals(state, terminal)
 	if not disposal_error.is_empty(): return disposal_error
+	var kitchen_error := KitchenSnapshot.new().validate(state.kitchen, state.timeline.elapsed, state.items,
+		terminal, state.run.id + ":wing_seed_v1:", _seed_definition)
+	if not kitchen_error.is_empty(): return kitchen_error
 	terminal.make_read_only()
 	var receiving_error := _validate_receiving(state.receiving, state.expeditions.away_cargo, state.items, owners, expedition, terminal)
 	if not receiving_error.is_empty(): return receiving_error
@@ -360,6 +372,7 @@ func restore(wing: Node, state: Dictionary) -> String:
 		items[id] = item
 	var player := wing.get_node("Player")
 	wing.incinerator.restore_state(state.incinerator)
+	wing.kitchen.restore_state(state.kitchen)
 	wing.get_node("DevelopmentSetup/SeedRegistrar").restore_state(state.hosts, items)
 	player.carried_items.restore_state(state.carry, items)
 	for path: String in state.surfaces:

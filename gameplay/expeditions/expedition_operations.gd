@@ -18,6 +18,7 @@ var revision := 0
 var rng := RandomNumberGenerator.new()
 var error := ""
 var last_empty_return_at := -INF
+var other_consumer_has_spent: Callable
 
 var _identity: RefCounted
 var _clock: RefCounted
@@ -30,6 +31,9 @@ var _spent_ids: Dictionary = {}
 
 func has_spent_item(item_id: String) -> bool:
 	return _spent_ids.has(item_id)
+
+func _item_is_spent(item_id: String) -> bool:
+	return has_spent_item(item_id) or (other_consumer_has_spent.is_valid() and other_consumer_has_spent.call(item_id))
 
 func _init(identity: RefCounted, clock: RefCounted) -> void:
 	_identity = identity
@@ -97,7 +101,7 @@ func toggle_affinity(category: String) -> bool:
 func preview(item: ItemInstance) -> Dictionary:
 	var proposed := loadout.preview(item)
 	if proposed.status == "eligible":
-		if _spent_ids.has(item.instance_id):
+		if _item_is_spent(item.instance_id):
 			proposed.status = "ineligible"
 			proposed.reason = "spent"
 		elif not _crew_available():
@@ -111,7 +115,7 @@ func contribute(carry: Node) -> Dictionary:
 	if proposed.status != "eligible":
 		return {"ok": false, "reason": proposed.reason}
 	var submitted := loadout.submit(carry,
-		func(): return _crew_available() and not _spent_ids.has(item.instance_id),
+		func(): return _crew_available() and not _item_is_spent(item.instance_id),
 		_record_supply)
 	if submitted.ok:
 		changed.emit()

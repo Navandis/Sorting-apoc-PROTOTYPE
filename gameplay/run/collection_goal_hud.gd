@@ -1,10 +1,15 @@
 extends CanvasLayer
 
+const KitchenPanel = preload("res://gameplay/kitchen/kitchen_panel.gd")
+
 var goal: RefCounted
 var clock: RefCounted
+var kitchen: RefCounted
 var _time: Label
 var _result: Label
 var _notice: Label
+var _kitchen_status: Label
+var _kitchen_notice: Label
 var _rows: Dictionary = {}
 var _displayed_second := -1
 
@@ -45,6 +50,17 @@ func _ready() -> void:
 	_notice.modulate = Color(1.0, 0.8, 0.45)
 	_notice.hide()
 	column.add_child(_notice)
+	if kitchen != null:
+		_kitchen_status = Label.new()
+		_kitchen_status.modulate = supply.modulate
+		column.add_child(_kitchen_status)
+		_kitchen_notice = Label.new()
+		_kitchen_notice.modulate = _notice.modulate
+		_kitchen_notice.hide()
+		column.add_child(_kitchen_notice)
+		kitchen.changed.connect(_refresh_kitchen)
+		kitchen.notice.connect(_show_kitchen_notice)
+		_refresh_kitchen()
 	goal.changed.connect(_refresh_totals)
 	_refresh_totals()
 	_process(0.0)
@@ -55,6 +71,8 @@ func _process(_delta: float) -> void:
 	if whole != _displayed_second:
 		_displayed_second = whole
 		_time.text = "Collection  •  Active " + clock.time_text(elapsed)
+		if kitchen != null and kitchen.deadline_at() != 0 and kitchen.sprint_allowed():
+			_refresh_kitchen()
 
 func _refresh_totals() -> void:
 	for category: String in goal.CATEGORIES:
@@ -70,3 +88,16 @@ func _refresh_totals() -> void:
 func show_notice(message: String) -> void:
 	_notice.text = message
 	_notice.visible = not message.is_empty()
+
+func _refresh_kitchen() -> void:
+	var total: int = kitchen.total_outstanding()
+	if total == 0:
+		_kitchen_status.text = "Kitchen  •  No demand"
+	elif kitchen.sprint_allowed():
+		_kitchen_status.text = "Kitchen  •  Grace %ds" % maxi(0, ceili(kitchen.deadline_at() - clock.elapsed))
+	else:
+		_kitchen_status.text = "Kitchen  •  %s capacity loss  •  No sprint" % KitchenPanel.percent_text(total)
+
+func _show_kitchen_notice(message: String) -> void:
+	_kitchen_notice.text = message
+	_kitchen_notice.show()

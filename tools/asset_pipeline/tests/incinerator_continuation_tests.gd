@@ -19,6 +19,7 @@ func _run() -> void:
 	var schema_six := Snapshot.new().capture(wing)
 	schema_six.schema = 6
 	schema_six.erase("incinerator")
+	schema_six.erase("kitchen")
 	var supply: WorldItem = wing.get_node("DevelopmentSetup/SeedItems/Food_DryGoodsA/WorldItem")
 	check(supply.pickup_into(carry) and wing.expeditions.contribute(carry).ok, "a real contribution exists independently of disposal")
 	var first := depart("Food", "Fuel")
@@ -297,8 +298,8 @@ func prove_compatibility(path: String, old: Dictionary) -> void:
 	check(FileAccess.get_sha256(pointer) == original_pointer, "canceling New Run preserves the incompatible pointer")
 	shell.request_new_run()
 	shell.confirm_new_run()
-	check(shell.wing != null and FileAccess.get_sha256(pointer) != original_pointer and service.load_snapshot().snapshot.schema == 7,
-		"confirmed New Run repoints to schema 7")
+	check(shell.wing != null and FileAccess.get_sha256(pointer) != original_pointer and service.load_snapshot().snapshot.schema == Snapshot.SCHEMA,
+		"confirmed New Run repoints to the current schema")
 	for file: String in files:
 		check(FileAccess.get_file_as_string(file) == files[file], "older snapshot remains byte-for-byte intact")
 

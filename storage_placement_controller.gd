@@ -307,27 +307,14 @@ func place_selected() -> bool:
 		return false
 	fit = fit.duplicate(true)
 	fit["unit_orientation_quarter_turns"] = unit_state
-	var carried: Node = _carried_items
-	var original_selected_index := int(carried.get_selected_index())
 	var origin: Vector2i = fit.get("origin", Vector2i.ZERO) as Vector2i
 	var footprint: Vector2i = fit.get("footprint", Vector2i.ONE) as Vector2i
 	var placement_rotated := bool(fit.get("rotated", false))
 	# Removal emits synchronous presentation/selection callbacks. Everything
 	# needed by this command is local before those callbacks can refresh fields.
-	var removed_item: Variant = carried.remove_selected()
-	if removed_item == null:
-		update_target()
-		return false
-	var spawned: bool = _spawn_stored_world_item(
-		removed_item, surface, _item_key(removed_item), origin, footprint,
-		placement_rotated, fit
-	)
-	if not spawned:
-		var restored := bool(carried.restore_removed_item(
-			removed_item, original_selected_index, original_selected_index
-		))
-		if not restored:
-			carried.add_item(removed_item)
+	var committed: bool = _carried_items.transfer_selected_to(func(item: ItemInstance):
+		return _spawn_stored_world_item(item, surface, _item_key(item), origin, footprint, placement_rotated, fit))
+	if not committed:
 		update_target()
 		return false
 	reset_rotation()

@@ -9,6 +9,10 @@ const ExpeditionOperations = preload("res://gameplay/expeditions/expedition_oper
 const DispatchPanel = preload("res://gameplay/expeditions/dispatch_panel.gd")
 const IncineratorOperations = preload("res://gameplay/disposal/incinerator_operations.gd")
 const IncineratorPanel = preload("res://gameplay/disposal/incinerator_panel.gd")
+const KitchenOperations = preload("res://gameplay/kitchen/kitchen_operations.gd")
+const KitchenPanel = preload("res://gameplay/kitchen/kitchen_panel.gd")
+const KITCHEN_MESH := "Environment/Greybox/Proxies/KitchenInterface/Mesh"
+const KITCHEN_INTERACTION_LAYER := 1 << 10
 
 @export var development_setup_enabled: bool = true
 var run_identity: RefCounted
@@ -20,6 +24,8 @@ var _collection_hud: CanvasLayer
 var dispatch_panel: CanvasLayer
 var incinerator: RefCounted
 var incinerator_panel: CanvasLayer
+var kitchen: RefCounted
+var kitchen_panel: CanvasLayer
 var _collection_error := ""
 
 
@@ -27,8 +33,9 @@ func configure_new_run() -> void:
 	run_identity = Identity.new()
 	run_timeline = Timeline.new()
 	collection_goal = Goal.new(ExpeditionConfig.COLLECTION_TARGET)
-	expeditions = ExpeditionOperations.new(run_identity, run_timeline.clock)
-	incinerator = IncineratorOperations.new(run_timeline.clock, expeditions.has_spent_item)
+	_configure_services()
+	var seeds := Crypto.new().generate_random_bytes(16)
+	kitchen.initialize(seeds.decode_s64(0), seeds.decode_s64(8))
 
 
 func configure_continue(state: Dictionary) -> void:
@@ -37,11 +44,18 @@ func configure_continue(state: Dictionary) -> void:
 	run_identity.restore_state(state.run)
 	run_timeline = Timeline.new()
 	run_timeline.restore_state(state.timeline)
-	expeditions = ExpeditionOperations.new(run_identity, run_timeline.clock)
-	incinerator = IncineratorOperations.new(run_timeline.clock, expeditions.has_spent_item)
+	_configure_services()
 	collection_goal = Goal.new(state.goal.target)
 	collection_goal.restore_state(state.goal)
 
+func _configure_services() -> void:
+	expeditions = ExpeditionOperations.new(run_identity, run_timeline.clock)
+	incinerator = IncineratorOperations.new(run_timeline.clock,
+		func(id: String): return expeditions.has_spent_item(id) or kitchen.has_spent_item(id))
+	kitchen = KitchenOperations.new(run_timeline.clock,
+		func(id: String): return expeditions.has_spent_item(id) or incinerator.has_spent_item(id))
+	expeditions.other_consumer_has_spent = func(id: String):
+		return incinerator.has_spent_item(id) or kitchen.has_spent_item(id)
 
 func _enter_tree() -> void:
 	if run_identity != null:
@@ -61,14 +75,18 @@ func _enter_tree() -> void:
 
 func _ready() -> void:
 	if run_timeline != null:
-		run_timeline.bind($ReceivingRuntime, expeditions)
+		run_timeline.bind($ReceivingRuntime, expeditions, kitchen)
 		if run_timeline.error.is_empty():
 			_bind_collection()
 	for station: Array in [["MedicalInterface", "Medical"], ["KitchenInterface", "Kitchen"], ["DispatchWorkSurface", "Dispatch"]]:
 		var proxy := get_node_or_null("Environment/Greybox/Proxies/" + station[0])
 		if proxy != null:
 			var label := Label3D.new()
-			label.text = station[1] + ("\n[F] Prepare expedition" if station[1] == "Dispatch" and expeditions != null else "\nService inactive")
+			label.text = station[1] + "\nService inactive"
+			if station[1] == "Dispatch" and expeditions != null:
+				label.text = "Dispatch\n[F] Prepare expedition"
+			elif station[1] == "Kitchen" and $Player.kitchen_station != null:
+				label.text = "Kitchen\n[F] Open service"
 			label.font_size = 36
 			label.pixel_size = 0.003
 			label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
@@ -85,6 +103,9 @@ func _bind_collection() -> void:
 		_collection_error = Goal.definition_error(definition)
 		if not _collection_error.is_empty():
 			return
+	if not _bind_kitchen_frontage():
+		_collection_error = "Kitchen frontage could not initialize"
+		return
 	var surfaces: Array[StorageSurface] = fixtures.get_collection_surfaces()
 	collection_goal.bind(surfaces)
 	for surface: StorageSurface in surfaces:
@@ -95,6 +116,27 @@ func _bind_collection() -> void:
 			_attach_collection_hud()
 			_attach_service_panels()
 
+func _bind_kitchen_frontage() -> bool:
+	var mesh := get_node_or_null(KITCHEN_MESH) as MeshInstance3D
+	if mesh == null or not mesh.mesh is BoxMesh:
+		return false
+	# The authored proxy is decorative. Match its mesh for station rays only.
+	var station := StaticBody3D.new()
+	station.name = "KitchenInteraction"
+	station.collision_layer = KITCHEN_INTERACTION_LAYER
+	station.collision_mask = 0
+	var bounds := BoxShape3D.new()
+	bounds.size = mesh.mesh.size
+	var shape := CollisionShape3D.new()
+	shape.shape = bounds
+	station.add_child(shape)
+	mesh.add_child(station)
+	var player := $Player
+	player.kitchen_station = station
+	player.sprint_allowed = kitchen.sprint_allowed
+	player.carried_items.capacity_for_normal = kitchen.effective_capacity
+	kitchen.changed.connect(player.carried_items.capacity_changed.emit)
+	return true
 
 func _refresh_collection() -> void:
 	if restoring:
@@ -121,6 +163,7 @@ func _attach_collection_hud() -> void:
 	_collection_hud.name = "CollectionGoalHUD"
 	_collection_hud.goal = collection_goal
 	_collection_hud.clock = run_timeline.clock
+	_collection_hud.kitchen = kitchen
 	add_child(_collection_hud)
 
 func _attach_service_panels() -> void:
@@ -149,12 +192,25 @@ func _attach_service_panels() -> void:
 			incinerator_panel.open_panel())
 	incinerator_panel.panel_toggled.connect(_on_service_panel_toggled)
 
+	kitchen_panel = KitchenPanel.new()
+	kitchen_panel.name = "KitchenPanel"
+	kitchen_panel.operations = kitchen
+	kitchen_panel.clock = run_timeline.clock
+	kitchen_panel.carry = player.carried_items
+	kitchen_panel.station_reachable = player.can_reach_kitchen
+	add_child(kitchen_panel)
+	player.kitchen_requested.connect(func():
+		if _can_open_service_panel() and player.can_reach_kitchen():
+			kitchen_panel.open_panel())
+	kitchen_panel.panel_toggled.connect(_on_service_panel_toggled)
+
 func _can_open_service_panel() -> bool:
 	return not get_tree().paused and not $Player.world_input_blocked and not $Player._zone_editor_open
 
 func _service_panel_open() -> bool:
 	return (dispatch_panel != null and dispatch_panel.is_open()) \
-		or (incinerator_panel != null and incinerator_panel.is_open())
+		or (incinerator_panel != null and incinerator_panel.is_open()) \
+		or (kitchen_panel != null and kitchen_panel.is_open())
 
 func _on_service_panel_toggled() -> void:
 	if _service_panel_open():
@@ -165,10 +221,14 @@ func sync_player_input(paused: bool) -> void:
 	var blocked := paused or _service_panel_open()
 	if incinerator_panel != null and incinerator_panel.is_open():
 		incinerator_panel.refresh_key_guards()
+	if kitchen_panel != null and kitchen_panel.is_open():
+		kitchen_panel.refresh_key_guards()
 	$Player.set_world_input_blocked(blocked)
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if blocked else Input.MOUSE_MODE_CAPTURED
 
 func close_service_layer() -> bool:
+	if kitchen_panel != null and kitchen_panel.close_top():
+		return true
 	if incinerator_panel != null and incinerator_panel.close_top():
 		return true
 	return dispatch_panel != null and dispatch_panel.close_top()
