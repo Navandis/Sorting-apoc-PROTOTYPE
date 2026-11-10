@@ -209,7 +209,7 @@ Basis: [GDD §§3.1, 4.8, 6.3, 7.1–7.2, 8.2–8.4]; [D01–D03]; [ER-RESULT §
 
 ### 6.1.1 Deliberately excluded resilience work
 
-The locally accepted Incinerator build uses schema 7 in the existing collection save service under user://saves/collection/. It preserves the warning flag and exact disposal receipts separately from loadout credit. Save & Exit and the 60-active-second and first-victory attempts use the same service. Continue restores state before interaction with service panels closed. Schema 6 requires confirmed New Run to repoint the slot and its snapshot file is retained. Schema 5 and the separate M4 slot are preserved. Release durability remains CF-13. [D21; G16 §§5.5,15.3,18.5]
+The local continuous Kitchen build uses schema 8 through the existing collection save service under user://saves/collection/. It stores the two Kitchen random states, exact triggers, obligation, grace and receipts separately from disposal and loadout. Save & Exit, 60-active-second and first-victory attempts share the service. Continue applies the carrying and sprint rules before activation with panels closed. Confirmed New Run repoints the slot and preserves incompatible snapshots, including schema 7. Release durability remains CF-13. [G16 §§5.5,12,15.3,18.5]
 
 At the accepted M1/initial M2 delivery level, unsaved actions may be lost after unexpected termination. Ordinary continuation must still preserve exact ownership, credit and gameplay time. Do not use this intentionally limited implementation to assess the full-game randomness principle. Exact audiovisual-frame recovery remains unnecessary. [D03, D05, D21]
 
@@ -653,10 +653,10 @@ Basis: [PF §§3–4, 7, 12–14, 24–26, 33–34]; [ER-RESULT §§2–5].
 
 | ID / source | Work retained or explicitly superseded | Relationship to this foundation |
 | --- | --- | --- |
-| CF-13<br>GDD §§5.6, 18.5; PF §§16.5, 34.7 | Full-game continuous game-state preservation, one advancing continuation per run, journal/rotating recovery and an ideal 2–3-real-second loss target. [D21] | The Incinerator build uses schema 7 in the existing collection namespace. The 60-active-second cadence and first-victory attempts provide prototype continuation. Release durability and recovery remain open. |
+| CF-13<br>GDD §§5.6, 18.5; PF §§16.5, 34.7 | Full-game continuous game-state preservation, one advancing continuation per run, journal/rotating recovery and an ideal 2–3-real-second loss target. [D21] | The local continuous Kitchen build uses schema 8. Save cadence and first-victory attempts retain their prototype roles. Release durability and recovery remain open. |
 | CF-14<br>GDD §§9–10; PF §34.7 | Actual asynchronous expeditions, one player-assembled 1–4-person crew at a time, affinities, return outcomes and workforce availability. [G16 §§9–11] | The bounded healthy expedition loop is HUMAN-ACCEPTED / CLOSED IN ITS BOUNDED SCOPE. Production tuning remains open. |
 | CF-15<br>GDD §§12–13; PF §34.7 | Medical now supports availability. Slower natural recovery with substantially faster treated recovery is favored; detailed states/costs/timing remain open. [G16 §13] | Former daily triage, Meal Coverage rolls and fatal complications are historical—not pending obligations. No injured-away exception or hidden catch-up is introduced. |
-| CF-16<br>GDD §§12, 14–15, 20; PF §§19.4, 20.4 | Bounded Kitchen/Ops pressure; optional physical Rations; salvage/incineration and Workshop redesign. [G16 §§8,12,14–15] | Single-item disposal is accepted under GDD §15.3. The continuous Kitchen brief implements only §12. Fuel greyouts, Rations, Salvager and one-time Workshop purchases remain future work. |
+| CF-16<br>GDD §§12, 14–15, 20; PF §§19.4, 20.4 | Bounded Kitchen/Ops pressure; optional physical Rations; salvage/incineration and Workshop redesign. [G16 §§8,12,14–15] | Incinerator disposal is accepted. Continuous Kitchen is technically ready for developer playtest. Fuel greyouts, Rations, Salvager and one-time Workshop purchases remain future work. |
 | CF-17<br>PF §§19.4–19.5, 20.4; GDD §§7.5–7.6 | Labels, specialist storage, conditional furniture movement, starting stock and production capacity remain open. All storage initially available is favored. [G16 §§7,15] | Preserve supported surface names and authored installs. No chosen shelf roster, automatic unlocking or scene changes; qualifying storage must be defined explicitly. |
 | CF-18<br>PF §§12.3, 14.5, 24–26 | Manual under-base insertion, multi-column packing, crouch and expanded display-rotation UX. | Remain separate deferred/open work. Existing mixed-stack automatic rejection and two-state packing stay intact. |
 | CF-19<br>GDD §§19–21; PF §§20.4, 34 | Substantial live collection, equal targets with uneven sinks, completion time, workload/travel and final cargo/fixture bounds. [G16 §§19–21] | M4 values remain frozen test inputs. ADR/survival waves do not govern new balance. 2,000 Utility and ~80% occupancy are illustrative; spatial compression remains open. |
@@ -689,20 +689,20 @@ APPROVED DESIGN / REMAINING DELIVERY CHOICES
 
 ## 17. Current decisions & implementation boundaries
 
-M1–M4 remain published and closed at c9f9417. The table records the locally accepted Incinerator build alongside accepted expedition and retained M4 evidence. [PUB-M4, G16, §§12.3, 15.6]
+M1–M4 remain published and closed at c9f9417. The local continuous Kitchen slice is technically ready for developer playtest. Focused checks cover demand and receipts, over-limit rollback, exact continuation and native recovery with generated cargo. The collection and expedition fixtures remain provisional. [PUB-M4; G16 §§12,18.5]
 
 | Decision | Implemented baseline / distinct target boundary |
 | --- | --- |
-| Save foundation | Collection uses schema 7 under user://saves/collection/ through the existing codec, snapshot and service. Full-game durability remains CF-13. |
+| Save foundation | Collection uses schema 8 through the existing codec, snapshot and service. Confirmed New Run retains older incompatible snapshots. Release durability remains CF-13. |
 | Player / storage recovery | M1 accepted: exact pose, ladder height, held selection and committed storage. No base fallback required. |
-| Restore / lifecycle | Continue restores exact identities, stock, pending cargo, the Incinerator warning flag and disposal receipts, active time and the first completion record before activation. |
-| Menu / controls | The Incinerator panel and warning stay live. The run pauses in ESC menu, launch, offline, zoning and loading contexts. Ordinary focus loss stays active. Short silent Windows suspension remains a timing limit. |
+| Restore / lifecycle | Continue restores exact physical identities and placement, Incinerator warning and receipts, Kitchen schedule, grace and receipts, committed cargo, active time and first victory. |
+| Menu / controls | Kitchen, Dispatch and the Incinerator stay live. The run pauses in ESC menu, launch, offline, zoning and loading contexts. Ordinary focus loss stays active. Short silent Windows suspension remains a timing limit. |
 | Timed Medical | M4 timed Medical accepted. Target recovery/Medical requests follow GDD v0.16 §13; old deadlines and nightly mortality are not defaults. |
 | Cap / Utility policy | Retain selected-item cap-and-waste and full loadout Bulk. Target unified category differs from existing contextual fields; no data migration here. [G16 §§6,8] |
-| Clock / ordering | The current build uses one continuous active clock for elapsed time, expedition returns and lift boundaries. Calendar ordering is M4 evidence. |
+| Clock / ordering | One active clock drives expedition returns, lift boundaries and Kitchen. Kitchen settles expiry before a scheduled addition and player input. Calendar ordering is M4 evidence. |
 | Lift / midnight | Full outbound retirement precedes FIFO promotion and oldest-first admission. Nonempty returns release personnel on admission. Empty returns release them at return. |
 | Report / auto-save | The HUD shows eight live totals and first completion. Auto-save attempts follow 60 active seconds or first victory. The night report belongs to M4. |
-| Scenario / compatibility | The local build uses player-dispatched cargo and a test target of 6 Utility per category. Incompatible schema 6 and schema 5 snapshots and the separate M4 slot are preserved. |
+| Scenario / compatibility | Player-dispatched cargo and the six-Utility goal stay provisional. Incompatible schema 7, 6 and 5 files and the separate M4 slot are preserved. |
 | Full-game randomness | Settled principle (§19): continuous Ironman state, early natural commitment, narrow residual loss; incidental uncommitted rerolls tolerated. |
 | M3 Kitchen / meals | M4: meals 10/14/18, 3h windows, 48/40, 60/48, 60/48. No outcome effects. The separate continuous Kitchen scope follows GDD §12. |
 | M3 cargo / Utility | M3 fixture is dated history. M4: 167 locked rows; 85-item start; four 16-item deliveries/day for three days. No final-economy claim. |

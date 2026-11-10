@@ -461,7 +461,7 @@ Those dimensions describe the accepted installation, not an immutable travel-tim
 
 ## 19. Kitchen Service Room / unseen Kitchen and Mess
 
-The Kitchen remains a catering-support room. The continuous Food and Hydration panel uses the existing frontage, with notices and carrying status for grace, loss and clearance. The opaque inner wall still implies cooking and dining staff. Ration conversion and final furnishings remain separate. See GDD §12. [D16S; 38]
+The local continuous Kitchen panel uses the existing catering-support frontage. The carried HUD shows actual Bulk over effective capacity. Status and notices show grace, loss and clearance. The opaque inner wall still implies cooking and dining staff. Ration conversion and final furnishings remain separate. See GDD §12. [D16S; 38]
 
 - Spatial position: The approach leaves Gallery B through its eastern doorway under the developer's round-one correction. This explicitly replaces the former no-gallery-mediated Kitchen route. Preserve the modest separation from Medical and dirty machinery; no direct Medical↔Kitchen connection is added. [H16]
 

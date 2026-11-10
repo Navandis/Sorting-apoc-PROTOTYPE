@@ -49,7 +49,7 @@ The two 5 November records are included unchanged from the editions the develope
 
 ## What is playable now
 
-F5 launches `res://gameplay/run/run_shell.tscn` with live Utility targets, a continuous clock and player-dispatched expeditions. The local Incinerator build adds single-item disposal and uses schema 7. Confirmed New Run retains the incompatible schema-6 snapshot file. Standalone F6 `res://gameplay/logistics_wing/wing_gameplay.tscn` keeps the authored palette for scene review. The [survival-era archive](design_history/survival-era/README.md) preserves the earlier plans and frozen M4 input.
+F5 launches `res://gameplay/run/run_shell.tscn` with live Utility targets, player-dispatched expeditions, single-item disposal and the continuous Kitchen in the local build. Continue uses schema 8. Confirmed New Run retains incompatible snapshots, including schema 7. Standalone F6 `res://gameplay/logistics_wing/wing_gameplay.tscn` retains the authored palette. The [survival-era archive](design_history/survival-era/README.md) preserves the earlier plans and frozen M4 input.
 
 See [CURRENT_STATE](CURRENT_STATE.md) for the current content, scene, preservation and debt details. The [M4 validation record](testing/m4-expedition-loadout-validation-2026-10-24.md), [publication record](testing/m4-publication-2026-10-25.md), and [semantic reconciliation record](testing/m4-documentation-semantic-reconciliation-2026-10-25.md) preserve prior acceptance. They are not new tests of v0.16.
 
@@ -59,6 +59,6 @@ The expedition loop and the separate [furniture movement collision repair](testi
 
 The developer promoted and closed single-item disposal on 8 November 2026. The close-out is published on main. [Technical result and developer acceptance](testing/2026-11-08-incinerator-deliberate-disposal-result.md)
 
-GDD §§8–15 record the revised contribution allocation. The authorized gameplay slice covers continuous Kitchen. [Contribution decisions](design_history/2026-11-09-contribution-effects-and-kitchen-decisions.md) · [Continuous Kitchen brief](superpowers/plans/2026-11-09-continuous-kitchen-service.md)
+GDD §§8–15 record the approved contribution allocation. Continuous Kitchen is technically ready for developer playtest. Expedition bonuses, the Morale lane, Fuel greyouts, healing and Workshop purchases remain future scopes. [Technical result and developer playtest](testing/2026-11-09-continuous-kitchen-service-result.md) · [Contribution decisions](design_history/2026-11-09-contribution-effects-and-kitchen-decisions.md)
 
 The complete pre-adoption operational index remains available in [the pinned c9f9417 snapshot](https://github.com/Navandis/Sorting-apoc-PROTOTYPE/blob/c9f9417a97cf65ef416c58189ca1f741b6a90406/docs/README.md). Current-facing consolidation changes routing, not the historical evidence.

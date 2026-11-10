@@ -1,0 +1,12 @@
+Godot Engine v4.7.stable.official.5b4e0cb0f - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+STARTUP_REGISTRY configured=res://gameplay/run/run_shell.tscn resolved=res://gameplay/logistics_wing/wing_gameplay.tscn
+STARTUP_DECLARATIONS ["res://gameplay/logistics_wing/wing_gameplay.tscn"]
+ERROR: ASSERTION FAILED: startup test uses an injected external continuation directory
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tools/asset_pipeline/tests/wing_startup_parity_tests.gd:15)
+       [1] run (res://tools/asset_pipeline/tests/wing_startup_parity_tests.gd:43)
+wing_startup_parity_tests: FAIL

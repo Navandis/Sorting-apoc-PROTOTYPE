@@ -11,7 +11,7 @@
 | M1 / M2 / M3 / M4 | **HUMAN-PROMOTED / PUBLISHED / CLOSED**, each in its accepted bounded scope. No acceptance, publication or re-review backlog is reopened. |
 | Expedition-to-Storage Loop | **HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** [Technical result and developer acceptance](testing/2026-11-08-expedition-to-storage-loop-result.md). M5’s former combined daily scenario is historical. |
 | Incinerator and Deliberate Disposal | **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** [Technical result and developer acceptance](testing/2026-11-08-incinerator-deliberate-disposal-result.md) |
-| Continuous Kitchen | **APPROVED ITERATION SCOPE.** One cumulative Food and Hydration obligation governs carrying and sprint after grace. [Contribution decisions](design_history/2026-11-09-contribution-effects-and-kitchen-decisions.md) · [Continuous Kitchen brief](superpowers/plans/2026-11-09-continuous-kitchen-service.md) |
+| Continuous Kitchen | **TECHNICALLY READY FOR DEVELOPER PLAYTEST.** Local schema-8 build. [Technical result and developer playtest](testing/2026-11-09-continuous-kitchen-service-result.md) |
 | ADR cycle | Parked historical design, preserved for deliberate reuse or a possible survival mode. Not the current economy or immediate design priority. |
 | Implementation checkpoints | Foundation `a1d1db4494347e0dfb4dfb653ed71b2abaf76ce5`, expedition implementation `66a7f863e5cf6f2f2c9e8f7f34de99885fa76612` and technical verification `11f95354119058fe2ec90796d09e2c28c046a885`. [Foundation closure](testing/2026-11-07-continuous-run-collection-goal-closure.md). |
 | Publication | M4 acceptance is pinned at `c9f9417a97cf65ef416c58189ca1f741b6a90406`. The collection foundation, expedition loop and furniture collision repair are published. On 8 November 2026, `git ls-remote` verified `origin/main` at the repair acceptance commit `de6b9bd7102e555b46a45f6733d9e7669db5d3b5`. |
@@ -45,7 +45,7 @@ The purpose is to restore collecting, hoarding and organizing as the main experi
 | Eligible stock | Valid player storage only. Sorting table, carried items, lift/deposited/waiting cargo and expedition commitments do not count. No requirement to clear requests or other inventory before winning. |
 | Storage experience | Substantial hoard, uneven category accumulation and useful disposal choices. Roughly 80% occupancy is an aspiration, not a second objective or verified balance. Preserve maneuvering room and assisted placement. |
 | Run/time | Active real-world completion time, no calendar/day cycle, no completion deadline or designed terminal failure. Continue after victory or begin an independent run. |
-| Pause | ESC, main menu, application off and zoning pause. The Incinerator panel and warning stay live. Preparation tentatively remains live. Time acceleration is set aside. Focus, loading and other modal edges remain open. |
+| Pause | ESC, launch, offline and zoning pause. Kitchen, Dispatch and the Incinerator panel and warning stay live. Time acceleration is set aside. Platform timing and modal edges remain open. |
 | Incinerator | Available from the start through Fuel or energy outages. F opens the local panel. A distinct E destroys one eligible carried item without output. The live first-use warning is consumed when shown. See GDD §15.3. |
 | Items | Eight shared categories, no first-release dual/multi-use category profiles. Definitions stay stable; buffs affect composition or systems, not silent item Utility/Bulk rewrites. |
 | Preparation | One current team: choose 1–4 Ready scavengers, equip/select destination, explicitly dispatch; optionally repeat consecutively. No prebuilt roster, preparation tabs, parallel prepared loadouts or full-loadout auto-send. |
@@ -64,7 +64,9 @@ Normal F5 entry is `res://gameplay/run/run_shell.tscn`. New Run starts with the 
 
 In the local build, aim at the Incinerator at the end of the utility spur and press F to inspect the selected carried item. Press E to attempt destruction. On first valid use, choose Back or Continue in the live warning.
 
-Schema 7 uses the existing service under `user://saves/collection/`. It adds the warning flag and distinct destruction receipts to the physical run, preparation and exact expedition outcomes. Continue starts with service panels closed. Schema 6 is incompatible. Confirmed New Run repoints the collection slot and retains its incompatible snapshot file. The schema-5 foundation snapshot and separate M4 save remain preserved. Save & Exit, 60-active-second automatic attempts and first victory use the same continuation.
+Aim at the Kitchen frontage off Gallery B and press F. Use the wheel or number keys to inspect a carried item, then a distinct E to supply it. Kitchen opens on its own active-time schedule. Overdue demand lowers carrying capacity and stops sprint. Partial supply restores capacity proportionally and clearance restores sprint.
+
+Schema 8 uses the existing service under `user://saves/collection/`. It preserves exact Kitchen timing and balances, grace and receipts with physical, expedition, Incinerator and goal state. Continue starts with service panels closed. Confirmed New Run repoints the slot and retains incompatible snapshots, including schema 7. Save & Exit, 60-active-second attempts and first victory use the same service.
 
 Standalone F6 retains the authoring palette and canonical UID `uid://bljf1nlhijej`. The [expedition result](testing/2026-11-08-expedition-to-storage-loop-result.md) records the provisional pool and the technical checks and developer acceptance. The [accepted foundation result](testing/2026-11-07-continuous-run-collection-goal-result.md) preserves the exact two-haul fixture evidence.
 
@@ -148,7 +150,7 @@ Systems MVP §16 remains the full CF-01–CF-24 register. This entry-point updat
 | CF-06–CF-12 | Retain current interfaces/art evidence and renderer/content/ergonomics debt. No fresh fixes or approvals are claimed. |
 | CF-13 | Continuous durability remains future and must use coherent existing ownership. |
 | CF-14–CF-15 | The bounded healthy expedition loop is human-accepted and closed. Production tuning, population growth and Medical remain open. |
-| CF-16–CF-17 | The developer accepted the bounded single-item Incinerator slice locally. Other conversions, Workshop, labels/containers/progression require v0.16 scope. Night progression and storage expansion are not default requirements. |
+| CF-16–CF-17 | Single-item Incinerator disposal is accepted. Continuous Kitchen is technically ready for developer playtest. Fuel, other conversions, Workshop, labels and progression require separate scopes. [Technical result and developer playtest](testing/2026-11-09-continuous-kitchen-service-result.md) |
 | CF-18–CF-19 | Preserve explicit interaction deferrals; economy, loot bounds and routes now serve the collection objective. |
 | CF-20–CF-24 | Retain adjacent art work, measured limitations, saved/runtime distinctions, authoring and source/license safeguards. |
 

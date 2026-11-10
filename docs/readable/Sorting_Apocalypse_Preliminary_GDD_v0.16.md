@@ -604,7 +604,7 @@ An expedition with no loadout has its ordinary capabilities. Voluntary loadout b
 
 | **Concern** | **Retained contract / unresolved replacement** |
 | --- | --- |
-| Requirement source | Supplies the identity, lanes and targets. Continuous cadence and recurrence are new design work; no daily generator is inherited. |
+| Requirement source | Defines identity, lanes and targets. Kitchen uses its own continuous schedule in §12. Other service cadences need separate design. |
 | Live state | Stores accepted contributions, lifecycle, penalty state and relevant timestamps. Loading must not regenerate an open obligation. |
 | Submission | Validates and commits one exact item plus credit and Bulk where applicable. |
 | Consequences | Use actual supplied state under a defined department rule. Kitchen gives equal relief per Utility credited to either lane. |
@@ -883,7 +883,7 @@ Basis: [PIV §6]; [ADD] for sequential preparation context; retained [G15 §11],
 
 Kitchen remains the dedicated Food/Hydration consumer, separate from Ops, and may also convert selected Food into standardized physical Rations. Its purpose is to support the operating loop while creating meaningful use for stock that could otherwise count toward victory. It is not a cooking or serving minigame.
 
-The current intended request model follows §8: persistent obligations and bounded consequences, with short deferral legitimate and continued neglect generally costly. Fixed breakfast/lunch/dinner times, three-hour windows, a six-lane daily average and next-night consequences are no longer current mechanics. Their accepted prototype accounting remains historical evidence.
+The local continuous Kitchen uses independent active-time demand and a cumulative obligation under §12.2. Fixed meals and daily Meal Coverage remain historical evidence. The prototype keeps the original 20-Bulk normal capacity and six-Utility goal per category. Kitchen only affects player logistics.
 
 <a id="s_12_2_Demand_and_consequences_remain_"></a>
 
@@ -891,7 +891,7 @@ The current intended request model follows §8: persistent obligations and bound
 
 Kitchen maintains one cumulative obligation with separate Food and Hydration balances. Opening from zero starts one 60-active-second grace. Additions join the remaining balances under the same deadline. Further demand increases an overdue penalty immediately. Only clearing both lanes closes the obligation and restores sprint. A later opening starts a fresh grace.
 
-The provisional schedule draws uniform integer intervals of 180–300 active seconds, including the first trigger in this iteration. Each event draws a uniform total of 60–80 Utility, then a uniform feasible integer Food share. The iteration interprets the 25% gap as larger lane at most 1.25 times smaller lane. Timing and amounts use separate random streams and advance even at the cap. Deadlines follow scheduled timestamps and survive Continue. Pause and offline time leave the schedule unchanged. Kitchen remains live after victory.
+The provisional schedule draws uniform integer intervals of 180–300 active seconds, including the first trigger. Each next trigger is measured from the scheduled event time. Each event draws a uniform total of 60–80 Utility, then a uniform feasible integer Food share. The iteration interprets the 25% gap as larger lane at most 1.25 times smaller lane. Timing and amounts use separate random streams that advance even at the cap. Contributions leave the schedule unchanged. Continue preserves it, including through pauses and offline time. Kitchen stays live after victory.
 
 After grace, each 3 outstanding Utility costs one percentage point of normal carrying capacity. At combined demand D, effective capacity is floor(normal capacity × (300 − D) / 300). Grace preserves capacity and sprint. Overdue demand disables sprint while ordinary walking and ladders retain their baseline. The bound of 150 Utility limits loss to 50%. Each incoming addition uses proportional whole-Utility clipping. The iteration assigns largest remainders first and alternates exact ties by scheduled event index, odd favoring Food. Discarded overflow never returns.
 
@@ -911,7 +911,7 @@ Whether and how Ration output contributes to the Food storage objective must be 
 
 The Kitchen Service Room remains an enterable, elongated catering-support space with an opaque boundary to unseen cooking and dining areas. A competent chef and helpers can be implied through practical messages, warm service cues and fixed non-loot equipment. No empty staffed interior, visible residents or autonomous tray simulation is needed.
 
-The existing Gallery B approach leads to the service frontage. F opens or toggles the live panel, E commits one eligible selected whole item, and Escape closes the panel first. Each credit relieves the matching lane and excess is wasted. The panel shows outstanding lanes, grace, active or pending loss, sprint and selected-item preview. Notices report new admitted demand, expiry and clearance. The carry HUD shows actual Bulk over effective capacity. Existing carried ownership and exact failed-transfer rollback remain legal above that limit. New pickups must fit. At a shared timestamp settle expiry, then the scheduled addition, then input. Final furnishings and optional ration conversion remain separate.
+The existing Gallery B approach leads to the service frontage. F opens or toggles the live panel, E commits one eligible selected whole item, and Escape closes the panel first. The panel shows both balances, grace, active or pending percentage loss, sprint and the selected item's applied credit and waste. Percentages display up to two decimals. Capacity uses the exact ratio. Notices report admitted demand, expiry and clearance. The carry HUD shows actual Bulk over the effective limit. Existing carried ownership and failed-transfer rollback remain legal above that limit. New pickups must fit. Settle expiry, then the addition, then input at a shared timestamp.
 
 Basis: [PIV §§7,9–10]; retained concepts [G15 §12], with daily demand/outcome formulas superseded; [VDD §19].
 
@@ -1265,14 +1265,14 @@ Ordinary schema-4 continuation is accepted at M4, but is not continuous crash-du
 | --- | --- |
 | Physical ownership | Items in storage/carrying, exact spent receipts, pending and deposited cargo; no duplication or lost transfer halves. |
 | Organization | Zones, disabled cells, names, stacks, reserved cells, transforms and placed orientation—not fresh automatic packing. |
-| Current operations | Single editable preparation, exact away and waiting crews, and destination occupancy. Recovery and request/project progress are future scope. |
+| Current operations | Editable preparation, exact away and waiting crews, destination occupancy and Kitchen schedule, grace and balances. Medical recovery and Workshop project progress remain future scope. |
 | Time and completion | Active elapsed time, pause-independent logical progress, recorded first victory and exact pending transitions. |
 | Committed outcomes | Previously selected cargo and any already-resolved random facts; reopening a report or continuing cannot reroll them. |
 | Identity allocation | Run-scoped allocator state so new items/requests/expeditions remain unique after restart. |
 
 Outcome commitment should occur at a natural backend point after legitimate player choices are fixed, before presentation where possible. Preserve committed results through continuation. Incidental uncommitted rerolls within the tolerated loss interval are not a reason to build a general anti-cheat framework; reliable selection among already preserved outcomes remains disallowed by the inherited policy.
 
-The locally accepted Incinerator build uses schema 7 in the existing collection slot. It adds the warning flag and destruction receipts to the physical run, editable preparation and exact expedition state. Continue restores these facts with the panels closed. Confirmed New Run can repoint the slot and retains incompatible schema 6 and schema 5 snapshots. The M4 slot remains separate. Release migration and crash durability remain open.
+The local continuous Kitchen build uses schema 8 in the existing collection slot. It preserves exact Kitchen trigger times, independent random states, outstanding balances, grace and consumption receipts with the existing run, Incinerator, preparation, expedition and victory state. Continue restores effects before play with service panels closed. Confirmed New Run repoints the slot and retains incompatible prior snapshots. Schema 7 has no automatic conversion. The M4 slot remains separate. Release durability remains open.
 
 <a id="s_18_6_Environment_and_authored_produc"></a>
 
@@ -1302,7 +1302,7 @@ Basis: [G15 §18]; [MVP §§4–9,16,19]; [H25 §§6–7,13,15]; [PIV §11]; [WG
 
 The scarce physical installation and live category objective should make accumulation, rearrangement and selective spending worthwhile. Expeditions must create enough useful resident stock to support the hoarding fantasy. Requests must not remove practically every item immediately or monopolize the player’s attention.
 
-The new performance criterion is faster completion, but the player may take indefinitely long. Consequences should be legible and costly without turning the game into an inaccessible precision puzzle or creating an impossible state. There is no requirement for frequent game over, later attrition peaks or a survival equilibrium.
+Completion time supports mastery in a fair, understandable noncompetitive game. Players may take indefinitely long. Useful combinations and ordinary efficiency differences are welcome. Investigate gross bypasses and extreme completion-time collapse. Four to five hours versus thirty minutes illustrates the scale of a distortion to investigate. Production time targets remain open.
 
 <a id="s_19_2_Equal_goals_deliberately_uneven"></a>
 
@@ -1402,7 +1402,7 @@ These are historical M4 test values. Frozen inputs are preserved at [docs/design
 
 ### 20.3 Playable entry and human authoring
 
-Normal F5 launch uses res://gameplay/run/run_shell.tscn for the accepted expedition loop. Standalone F6 uses res://gameplay/logistics_wing/wing_gameplay.tscn with the authored palette. Legacy main.tscn and the spatial review scenes retain their distinct authoring roles.
+Normal F5 launch uses res://gameplay/run/run_shell.tscn. The local continuous Kitchen slice is technically ready for developer playtest and builds on the accepted expedition and Incinerator loops. Standalone F6 uses res://gameplay/logistics_wing/wing_gameplay.tscn with the authored palette. Legacy main.tscn and spatial review scenes retain their authoring roles.
 
 Current saved human content governs actual installations, poses, lighting, wear and source references. Future work must inspect actual dependencies before changes; remote documentation alone does not certify ignored commercial assets or runtime rendering. No game files are changed by this edition.
 
@@ -1471,8 +1471,8 @@ These are design-validation aims, not claimed test results or a new automated ac
 | O-08 · Population and upgrades | Initial Ready count, recruitment/growth, progression ownership for assembled crews, Workshop project roster and Training disposition. |
 | O-09 · Conversion and release | Rations and Salvage category and target rules, yields, capacity and output blocking remain open, along with Salvager access and restrictions. Incinerator rules are confirmed in §15.3. |
 | O-10 · Space and handling | Production shelf capacity/roster, all-storage-from-start decision, route compression and final ergonomics. |
-| O-11 · Interface and time edges | The local build uses live preparation and Incinerator panels with Escape priority. See §15.3 for the Incinerator warning. Journal scope, final interface and platform time edges remain open. |
-| O-12 · Delivery/continuation | The locally accepted Incinerator build uses schema 7 and preserves incompatible prior snapshots. Release migration and durability remain open. |
+| O-11 · Interface and time edges | The local build keeps Kitchen, preparation and the Incinerator live. Escape closes service layers before pause. Journal scope, final interface and platform timing edges remain open. |
+| O-12 · Delivery/continuation | Continuous Kitchen uses schema 8 with confirmed New Run for incompatible snapshots. Release migration and durability remain open. |
 
 The register deliberately leaves unanswered mechanics open. The project already has enough direction to produce this successor; these are boundaries for later design/implementation, not reasons to recreate the old behavior or repeatedly ask the developer to approve the pivot.
 

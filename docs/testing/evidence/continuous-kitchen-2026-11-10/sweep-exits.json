@@ -1,0 +1,17 @@
+{
+  "editor-import": 0,
+  "operations-final": 0,
+  "interaction-headless-final": 0,
+  "regression-collection_goal_tests": 0,
+  "regression-collection_continuation_tests": 0,
+  "regression-expedition_operations_tests": 0,
+  "regression-incinerator_operations_tests": 0,
+  "regression-incinerator_interaction_tests": 0,
+  "regression-incinerator_continuation_tests": 0,
+  "regression-storage_command_validation_tests": 0,
+  "regression-furniture_movement_collision_tests": 0,
+  "regression-continuous_run_foundation_tests": 0,
+  "regression-wing_startup_parity_tests": 1,
+  "normal-f5-smoke": 0,
+  "regression-wing_startup_parity_tests-rerun": 0
+}
