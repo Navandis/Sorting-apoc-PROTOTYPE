@@ -1,6 +1,6 @@
 # Sorting Apocalypse — current ChatGPT conversation bootstrap
 
-**Prepared 7 November 2026 and updated 10 November 2026 for continuous Kitchen promotion and local close-out. Approved GDD v0.16 with the contribution decisions governs intended gameplay. M1–M4 remain HUMAN-PROMOTED / PUBLISHED / CLOSED.**
+**Prepared 7 November 2026 and updated 10 November 2026 for continuous Kitchen publication. Approved GDD v0.16 with the contribution decisions governs intended gameplay. M1–M4 remain HUMAN-PROMOTED / PUBLISHED / CLOSED.**
 
 I am continuing Sorting Apocalypse, a solo-developed first-person collecting, hoarding and spatial-organizing game. The game is being redirected away from an endless survival/day-count objective. You are taking over after the collection pivot, approval of its design records, the single-current-team panel clarification, approval of the complete successor GDD v0.16, and preparation of the current-facing documentation update.
 
@@ -12,9 +12,9 @@ This is a collaboration handoff, not a Codex implementation brief or permission 
 
 - **Design authority** — approved GDD v0.16, with [Appendix A](superpowers/plans/2026-11-07-continuous-run-collection-goal-foundation.md#appendix-a--confirmed-expedition-lifecycle-decisions-for-the-next-milestone) superseding the specified earlier open statements about preparation, destination occupancy and handover.
 - **Current implementation** · The Expedition-to-Storage Loop is **HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE**. The [expedition result](testing/2026-11-08-expedition-to-storage-loop-result.md) follows the separately accepted [collection foundation](testing/2026-11-07-continuous-run-collection-goal-closure.md).
-- **Incinerator** · The developer promoted and closed bounded single-item disposal on 8 November 2026. The published build uses schema 7 in the collection namespace. [Technical result and developer acceptance](testing/2026-11-08-incinerator-deliberate-disposal-result.md)
-- **Continuous Kitchen** · **HUMAN-PROMOTED / CLOSED IN ITS BOUNDED SCOPE — LOCAL; PUBLICATION PENDING.** The local build uses schema 8. GDD §12 records the standing mechanics and provisional iteration settings. [Developer acceptance and close-out](testing/2026-11-09-continuous-kitchen-service-result.md) · [Contribution decisions](design_history/2026-11-09-contribution-effects-and-kitchen-decisions.md)
-- **Publication** · The collection foundation, expedition loop and furniture collision repair are published on `main`. The historical M1–M4 scopes are published and closed at `c9f9417a97cf65ef416c58189ca1f741b6a90406`. Frozen inputs and provenance are in the [survival-era index](design_history/survival-era/README.md).
+- **Incinerator** · The developer promoted and closed bounded single-item disposal on 8 November 2026. That release used schema 7 in the collection namespace. [Technical result and developer acceptance](testing/2026-11-08-incinerator-deliberate-disposal-result.md)
+- **Continuous Kitchen** · **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** The published build uses schema 8. GDD §12 records the standing mechanics and provisional iteration settings. [Developer acceptance and close-out](testing/2026-11-09-continuous-kitchen-service-result.md) · [Contribution decisions](design_history/2026-11-09-contribution-effects-and-kitchen-decisions.md)
+- **Publication** · The collection foundation, expedition loop, furniture collision repair, Incinerator and Continuous Kitchen are published on `main`. The historical M1–M4 scopes are published and closed at `c9f9417a97cf65ef416c58189ca1f741b6a90406`. Frozen inputs and provenance are in the [survival-era index](design_history/survival-era/README.md).
 - **Furniture collision** · The developer accepted the [furniture movement collision repair](testing/2026-11-08-furniture-collision-repair-result.md) on 8 November 2026, closing its separate scope. The old combined daily M5 proposal and ADR remain historical.
 
 ## 1. Roles and working method
@@ -110,7 +110,7 @@ Goal-progress visibility is always baseline and cannot be disabled or upgrade-ga
 
 ## 8. What already exists and must not be reopened by default
 
-The local build has continuous active time, player-dispatched expeditions, eight live stored Utility totals, single-item disposal and schema-7 continuation. Confirmed New Run can repoint the slot while retaining its incompatible schema-6 snapshot. M1–M4 daily scheduling, reports and prebuilt Dispatch describe historical evidence. Injuries, recruitment and the supporting economy remain open.
+The published build has continuous active time, player-dispatched expeditions, eight live stored Utility totals, single-item disposal, continuous Kitchen and schema-8 continuation. Confirmed New Run can repoint the slot while retaining earlier incompatible snapshots. M1–M4 daily scheduling, reports and prebuilt Dispatch describe historical evidence. Injuries, recruitment and the supporting economy remain open.
 
 The inspected baseline has 167 active/7 retired/174 sources. Preserve authored scale, pose/+Z Front, Footprint and support roles; twelve separate Auto Stack Group approvals remain pending with saved None. Never recycle retired IDs or replace authored values automatically. The current values are frozen testing content, not immutable release balance.
 

@@ -63,7 +63,7 @@ Legacy fixture: res://main.tscn
 Neutral review: res://greybox/logistics_wing/wing_review.tscn
 ```
 
-Continuous Kitchen is **HUMAN-PROMOTED / CLOSED IN ITS BOUNDED SCOPE — LOCAL; PUBLICATION PENDING** in the F5 loop. Open the service with F and supply the selected whole item with E. Continue restores schema 8 from `user://saves/collection/`. Confirmed New Run can repoint the slot while retaining incompatible snapshots including schema 7. The M4 slot remains separate. Standalone F6 keeps the human-authored `DevelopmentSetup/SeedItems` palette. [Developer acceptance and close-out](testing/2026-11-09-continuous-kitchen-service-result.md)
+Continuous Kitchen is **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE** in the F5 loop. Open the service with F and supply the selected whole item with E. Continue restores schema 8 from `user://saves/collection/`. Confirmed New Run can repoint the slot while retaining incompatible snapshots including schema 7. The M4 slot remains separate. Standalone F6 keeps the human-authored `DevelopmentSetup/SeedItems` palette. [Developer acceptance and close-out](testing/2026-11-09-continuous-kitchen-service-result.md)
 
 GDD §15.3 records the Incinerator design. The developer promoted and closed the bounded single-item slice on 8 November 2026. The close-out is published on main. [Technical result and developer acceptance](testing/2026-11-08-incinerator-deliberate-disposal-result.md)
 

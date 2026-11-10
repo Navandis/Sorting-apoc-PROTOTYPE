@@ -1402,7 +1402,7 @@ These are historical M4 test values. Frozen inputs are preserved at [docs/design
 
 ### 20.3 Playable entry and human authoring
 
-Normal F5 launch uses res://gameplay/run/run_shell.tscn. The continuous Kitchen slice is human-promoted and closed in its bounded scope on the local branch. Publication is pending. Standalone F6 uses res://gameplay/logistics_wing/wing_gameplay.tscn with the authored palette. Legacy main.tscn and spatial review scenes retain their authoring roles.
+Normal F5 launch uses res://gameplay/run/run_shell.tscn. The continuous Kitchen slice is human-promoted, published on main and closed in its bounded scope. Standalone F6 uses res://gameplay/logistics_wing/wing_gameplay.tscn with the authored palette. Legacy main.tscn and spatial review scenes retain their authoring roles.
 
 Current saved human content governs actual installations, poses, lighting, wear and source references. Future work must inspect actual dependencies before changes; remote documentation alone does not certify ignored commercial assets or runtime rendering. No game files are changed by this edition.
 

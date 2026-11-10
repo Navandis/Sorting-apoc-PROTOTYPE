@@ -1,8 +1,8 @@
 # Continuous Kitchen service
 
-**HUMAN-PROMOTED / CLOSED IN ITS BOUNDED SCOPE — LOCAL; PUBLICATION PENDING**
+**HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE**
 
-**10 November 2026 · TECHNICALLY READY FOR DEVELOPER PLAYTEST · Local branch**
+**Original technical handoff · 10 November 2026 · TECHNICALLY READY FOR DEVELOPER PLAYTEST · Local branch**
 
 The first continuous Kitchen service is live in the F5 collection run. The Food and Hydration schedule uses independent integer intervals of 180–300 active seconds, including the first event. Each event proposes 60–80 Utility with the larger lane at most 1.25 times the smaller. Whole-Utility largest-remainder clipping uses event parity for ties. Unissued overflow is discarded. Both random streams advance at the cap. [Contribution decisions](../design_history/2026-11-09-contribution-effects-and-kitchen-decisions.md) · [Implementation brief](../superpowers/plans/2026-11-09-continuous-kitchen-service.md)
 
@@ -11,6 +11,10 @@ The single cumulative obligation gets 60 active seconds of grace from opening. O
 F opens or toggles Kitchen at its existing Gallery B frontage. A runtime ray target matches the authored proxy and uses the movement layers for occlusion. The target adds no movement obstruction. One fresh E consumes the selected eligible whole item and commits its receipt and capped lane credit together. Escape closes the panel before pause. Live status and previews show grace, admitted demand, loss, sprint, credit and waste. The existing shared clock settles Kitchen alongside Receiving and expeditions, including after victory.
 
 The expedition fixture still has eight Ready scavengers, 8 Bulk per member, a sixteen-item pool, 90–180-second trips, the Medical loadout lane and the six-Utility collection goal per category. The master documents separately record the future expedition bonuses and Morale lane, Fuel greyouts, Medical healing and one-time Electronics purchases. Those effects, Workshop and Rations remain future scopes.
+
+## Publication on 10 November 2026
+
+The accepted close-out checkpoint, `17a007d3cec793ce8a676e1d2df2ff8676554425`, was fast-forwarded onto `main` and pushed to GitHub. An independent `git ls-remote origin refs/heads/main` read returned that exact SHA. The publication uses the original gameplay and cleanup evidence for the identical tree.
 
 ## Checkout and execution
 
