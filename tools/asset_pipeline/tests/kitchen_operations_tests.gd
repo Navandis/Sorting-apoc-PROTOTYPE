@@ -16,6 +16,7 @@ func run() -> void:
 	if check(FileAccess.file_exists(OperationsPath) and FileAccess.file_exists(ConfigPath), "dedicated Kitchen state owner and test configuration exist"):
 		test_generation(load(ConfigPath))
 		test_penalty_and_receipts(load(OperationsPath))
+		test_hydration_first(load(OperationsPath))
 		test_schedule(load(OperationsPath))
 	print("kitchen_operations_tests: %s (%d checks, %d failures)" % ["PASS" if failures == 0 else "FAIL", checks, failures])
 	quit(0 if failures == 0 else 1)
@@ -108,6 +109,29 @@ func test_penalty_and_receipts(script: GDScript) -> void:
 		"clearance restores baseline and retains the closed receipts")
 	ops._add_demand(Vector2i(30, 30), 120, 4)
 	check(ops.sprint_allowed() and ops.deadline_at() == 180, "a later opening receives fresh grace")
+	carry.free()
+
+func test_hydration_first(script: GDScript) -> void:
+	var clock := Clock.new()
+	var ops: RefCounted = script.new(clock)
+	ops.initialize(10, 20)
+	var carry := CarriedItems.new()
+	root.add_child(carry)
+	ops._add_demand(Vector2i(30, 30), 0, 1)
+	clock.elapsed = 60.0
+	ops.settle_due()
+	submit(ops, carry, "Hydration", 30)
+	check(ops.outstanding == Vector2i(30, 0) and not ops.sprint_allowed(), "Hydration can clear first without ending Food demand")
+	var extra := make_item("Hydration", 8)
+	carry.add_item(extra)
+	check(ops.preview(extra).reason == "Hydration is already supplied."
+		and not ops.contribute(carry, extra, func(): return true).ok
+		and carry.get_selected_item() == extra and ops.capture_state().receipts.size() == 1
+		and ops.outstanding == Vector2i(30, 0), "a full Hydration lane rejects without redirecting credit or removing the item")
+	carry.remove_selected()
+	submit(ops, carry, "Food", 30)
+	check(ops.outstanding == Vector2i.ZERO and ops.sprint_allowed() and ops.capture_state().receipts.size() == 2,
+		"Food clearance closes the remaining obligation and keeps both receipts")
 	carry.free()
 
 func test_schedule(script: GDScript) -> void:

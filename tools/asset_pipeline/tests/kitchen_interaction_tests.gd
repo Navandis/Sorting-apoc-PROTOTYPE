@@ -82,6 +82,8 @@ func test_live_panel() -> void:
 	timeline.advance(first_at - timeline.clock.elapsed)
 	check(kitchen.outstanding.x + kitchen.outstanding.y in range(60, 81) and kitchen.sprint_allowed()
 		and timeline.error.is_empty(), "live Kitchen issues demand at a timeline-only boundary and grants grace")
+	check(panel._balances.text.contains("Food %d" % kitchen.outstanding.x)
+		and panel._balances.text.contains("Hydration %d" % kitchen.outstanding.y), "the live panel shows both admitted lane balances")
 	var elapsed: float = timeline.clock.elapsed
 	wing.set_process(true)
 	await create_timer(0.7).timeout
