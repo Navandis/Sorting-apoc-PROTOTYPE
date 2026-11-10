@@ -59,6 +59,6 @@ The expedition loop and the separate [furniture movement collision repair](testi
 
 The developer promoted and closed single-item disposal on 8 November 2026. The close-out is published on main. [Technical result and developer acceptance](testing/2026-11-08-incinerator-deliberate-disposal-result.md)
 
-GDD §§8–15 record the approved contribution allocation. Continuous Kitchen is technically ready for developer playtest. Expedition bonuses, the Morale lane, Fuel greyouts, healing and Workshop purchases remain future scopes. [Technical result and developer playtest](testing/2026-11-09-continuous-kitchen-service-result.md) · [Contribution decisions](design_history/2026-11-09-contribution-effects-and-kitchen-decisions.md)
+GDD §§8–15 record the approved contribution allocation. Continuous Kitchen is **HUMAN-PROMOTED / CLOSED IN ITS BOUNDED SCOPE — LOCAL; PUBLICATION PENDING**. Expedition bonuses, the Morale lane, Fuel greyouts, healing and Workshop purchases remain future scopes. [Developer acceptance and close-out](testing/2026-11-09-continuous-kitchen-service-result.md) · [Contribution decisions](design_history/2026-11-09-contribution-effects-and-kitchen-decisions.md)
 
 The complete pre-adoption operational index remains available in [the pinned c9f9417 snapshot](https://github.com/Navandis/Sorting-apoc-PROTOTYPE/blob/c9f9417a97cf65ef416c58189ca1f741b6a90406/docs/README.md). Current-facing consolidation changes routing, not the historical evidence.

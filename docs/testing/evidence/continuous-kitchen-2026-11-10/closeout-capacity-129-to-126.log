@@ -1,0 +1,13 @@
+Godot Engine v4.7.stable.official.5b4e0cb0f - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+CAPACITY_PROBE user_data=C:/Users/BOSCHE~1/AppData/Local/Temp/SortingKitchenCloseout-3a0201d0/profile-capacity-129-to-126/Roaming/Godot/app_userdata/Sorting-apoc-PROTOTYPE
+Wing functional storage: installed 16 empty deterministic surface(s); F6 developer grids default OFF, F7 demo disabled.
+CAPACITY_PROBE timing_seed=10 amount_seed=19780
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/dummy/storage/material_storage.cpp:264)
+CAPACITY_PROBE before outstanding=(68, 61) loss=43% effective=11 HUD=CARRIED   BULK 15 / 11   •   Mouse wheel / 1–0 to select   ·   Canned Potatoes phase=Overdue   •   43% capacity loss   •   Sprint unavailable
+CAPACITY_PROBE after outstanding=(65, 61) loss=42% effective=11 HUD=CARRIED   BULK 14 / 11   •   Mouse wheel / 1–0 to select   ·   Med Kit phase=Overdue   •   42% capacity loss   •   Sprint unavailable
+CAPACITY_PROBE pickup attempted_totals=12(rejected),11(accepted) at outstanding=126
+kitchen_capacity_probe: PASS (17 checks, 0 failures)

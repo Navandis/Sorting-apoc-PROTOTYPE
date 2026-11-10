@@ -1,0 +1,81 @@
+10 November 2026 | Continuous Kitchen local close-out | cleanup 7e80d414c17c97bab6797bd799ce7f7556d8235c
+All runs used separate redirected application data and save directories.
+Source and serialized reference check: no references to the removed scripts/UIDs or retired calendar/scenario/report paths in scanned active code, scenes, resources, or tooling.
+Preservation: SHA-256 matched for 7 actual save files and 2 pre-existing untracked image sidecars.
+
+--- editor-import exit=0 ---
+Godot Engine v4.7.stable.official.5b4e0cb0f - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+[   0% ] [90m[1mfirst_scan_filesystem[22m | Started Project initialization (5 steps)[39m[0m
+[   0% ] [90m[1mfirst_scan_filesystem[22m | Scanning file structure...[39m[0m
+[  16% ] [90m[1mfirst_scan_filesystem[22m | Loading global class names...[39m[0m
+[  33% ] [90m[1mfirst_scan_filesystem[22m | Verifying GDExtensions...[39m[0m
+[  50% ] [90m[1mfirst_scan_filesystem[22m | Creating autoload scripts...[39m[0m
+[  66% ] [90m[1mfirst_scan_filesystem[22m | Initializing plugins...[39m[0m
+[  83% ] [90m[1mfirst_scan_filesystem[22m | Starting file scan...[39m[0m
+[92m[ DONE ][39m [1mfirst_scan_filesystem[22m
+[0m
+[   0% ] [90m[1mupdate_scripts_classes[22m | Started Registering global classes... (3 steps)[39m[0m
+[   0% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  25% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  50% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[92m[ DONE ][39m [1mupdate_scripts_classes[22m
+[0m
+[   0% ] [90m[1mloading_editor_layout[22m | Started Loading editor (5 steps)[39m[0m
+[   0% ] [90m[1mloading_editor_layout[22m | Loading editor layout...[39m[0m
+[  16% ] [90m[1mloading_editor_layout[22m | Loading docks...[39m[0m
+[  33% ] [90m[1mloading_editor_layout[22m | Reopening scenes...[39m[0m
+[  50% ] [90m[1mloading_editor_layout[22m | Loading central editor layout...[39m[0m
+[  66% ] [90m[1mloading_editor_layout[22m | Loading plugin window layout...[39m[0m
+[  83% ] [90m[1mloading_editor_layout[22m | Editor layout ready.[39m[0m
+[92m[ DONE ][39m [1mloading_editor_layout[22m
+[0m
+
+--- m1-contribution exit=0 ---
+Godot Engine v4.7.stable.official.5b4e0cb0f - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+M1_CONTRIBUTION_COMPLETE checks=17 failures=0
+
+--- kitchen-operations exit=0 ---
+Godot Engine v4.7.stable.official.5b4e0cb0f - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+kitchen_operations_tests: PASS (2839 checks, 0 failures)
+
+--- kitchen-interaction exit=0 ---
+Godot Engine v4.7.stable.official.5b4e0cb0f - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+Wing functional storage: installed 16 empty deterministic surface(s); F6 developer grids default OFF, F7 demo disabled.
+kitchen_interaction_tests: PASS (23 checks, 0 failures)
+
+--- expedition-operations exit=0 ---
+Godot Engine v4.7.stable.official.5b4e0cb0f - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+Wing functional storage: installed 16 empty deterministic surface(s); F6 developer grids default OFF, F7 demo disabled.
+ERROR: Authored cargo preparation failed for c0a18516f80f50e2d1406a5b:expedition:3: invalid_layout_input
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _prepare_exact_manifest (res://gameplay/logistics_wing/receiving/receiving_runtime.gd:247)
+       [1] prepare_expedition_manifest (res://gameplay/logistics_wing/receiving/receiving_runtime.gd:229)
+       [2] dispatch (res://gameplay/expeditions/expedition_operations.gd:173)
+       [3] run (res://tools/asset_pipeline/tests/expedition_operations_tests.gd:91)
+expedition_operations_tests: PASS failures=0
+
+--- startup-parity exit=0 ---
+Godot Engine v4.7.stable.official.5b4e0cb0f - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+STARTUP_REGISTRY configured=res://gameplay/run/run_shell.tscn resolved=res://gameplay/logistics_wing/wing_gameplay.tscn
+STARTUP_DECLARATIONS ["res://gameplay/logistics_wing/wing_gameplay.tscn"]
+Wing functional storage: installed 16 empty deterministic surface(s); F6 developer grids default OFF, F7 demo disabled.
+wing_startup_parity_tests: PASS

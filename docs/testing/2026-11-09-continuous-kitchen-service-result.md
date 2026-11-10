@@ -1,5 +1,7 @@
 # Continuous Kitchen service
 
+**HUMAN-PROMOTED / CLOSED IN ITS BOUNDED SCOPE — LOCAL; PUBLICATION PENDING**
+
 **10 November 2026 · TECHNICALLY READY FOR DEVELOPER PLAYTEST · Local branch**
 
 The first continuous Kitchen service is live in the F5 collection run. The Food and Hydration schedule uses independent integer intervals of 180–300 active seconds, including the first event. Each event proposes 60–80 Utility with the larger lane at most 1.25 times the smaller. Whole-Utility largest-remainder clipping uses event parity for ties. Unissued overflow is discarded. Both random streams advance at the cap. [Contribution decisions](../design_history/2026-11-09-contribution-effects-and-kitchen-decisions.md) · [Implementation brief](../superpowers/plans/2026-11-09-continuous-kitchen-service.md)
@@ -63,3 +65,61 @@ New-Item -ItemType Directory -Path $env:APPDATA,$env:LOCALAPPDATA -Force | Out-N
 4. Keep an obligation overdue through later events. Check that the original grace stays expired, the loss caps at 50%, and a contribution at the cap does not revive discarded demand.
 5. Save and Continue during grace, overdue with grandfathered carrying, and after partial or full service. Check Kitchen timing, balances and receipts along with Incinerator warning state, stock, pending cargo and first victory.
 6. Use ordinary Kitchen and Incinerator trips to relieve congestion. Check shelf and ladder handling and furniture collision. Continue after victory if the short collection goal completes before enough Kitchen cycles.
+
+## Developer acceptance on 10 November 2026
+
+The developer explicitly promoted the first continuous Kitchen iteration from gameplay testing. These observations are attributed to the developer's playtest.
+
+- The first demand arrived just after three minutes at 38 Food and 31 Hydration. After 60 seconds of grace, the penalty reached 23% and the carried display read 20/15. Existing items stayed carried, sprint was disabled, and new pickups respected the lower limit after legal storage reduced the carried load.
+- The second demand arrived near seven minutes and added 30 Food and 30 Hydration. The balance reached 68/61 with a 43% penalty and the original grace deadline. The developer described the carried display as 15/10. The exact-state check below qualifies that denominator.
+- A 1-Bulk, +3 Food contribution reduced the balances to 65/61 and the loss to 42%, with 14/11 shown. The contribution consumed the selected item and recalculated the penalty. At those exact inputs, the effective maximum stays at 11 Bulk.
+- A later addition clipped to +11 Food and +13 Hydration. The balances reached 76/74, the 150-Utility ceiling, with 50% loss, 10-Bulk capacity and the original grace deadline.
+- A +2 Hydration contribution lowered the debt to 148, with 10-Bulk capacity under floor rounding. The next event filled the two-Utility headroom as +1 Food and +1 Hydration from its clipped proposal. The developer expected and wanted that behavior. About ten minutes at the cap produced no further growth.
+- Full clearance restored 20 Bulk and sprint. The next obligation opened with fresh grace.
+- Saving and loading, goal contributions and victory, zoning, shelf handling, expedition dispatch, lift pickup and incineration remained functional in the scenarios tried.
+
+The developer identified an emergent strategy. Supplying Hydration while Food demand accumulates can reduce waste and the number of submissions when the player later supplies a high-Utility Food item. Waiting carries a cost in time under the penalty, handling limits and exposure to the demand ceiling. This finding describes a choice available in the tested fixture. Production balance and broader catalogue recovery remain open, along with the limits recorded above.
+
+## Capacity discrepancy checked on 10 November 2026
+
+Kitchen computes `floor(normal_capacity * (300 - outstanding_utility) / 300)` for the overdue loss. The wing binds that value to the carried-items owner. Pickup checks and the carried HUD read the same effective limit. The Kitchen change signal refreshes the HUD on demand changes, and the contents signal refreshes it after a contribution.
+
+The isolated headless probe ran the normal F5 shell with timing seed 10 and amount seed 19780 to obtain both narrated additions from the production sampler. Authored pickups assembled a 15-Bulk bundle including the 1-Bulk, +3 Food Canned Potatoes. The probe aimed at the real frontage, used the station request signal to open the panel under headless input, and sent E through the active panel.
+
+| State | Kitchen phase | Effective limit | Carried HUD |
+| --- | --- | --- | --- |
+| 68 Food + 61 Hydration = 129 | Overdue, 43% loss | 11 Bulk | 15/11 |
+| 65 Food + 61 Hydration = 126 after the contribution | Overdue, 42% loss | 11 Bulk | 14/11 |
+
+An ordinary pickup was rejected while carrying 15 at the 11-Bulk limit. After the contribution and ordinary placement of the 4-Bulk Med Kit, the pickup path rejected a proposed total of 12 and accepted exactly 11. The reported 15/10 was not reproduced at the stated inputs. Its cause is undetermined. The arithmetic and HUD required no correction. **17 checks passed, exit 0.** [Focused probe log](evidence/continuous-kitchen-2026-11-10/closeout-capacity-129-to-126.log)
+
+## Kitchen legacy disposition
+
+The local branch began this close-out at `e2c5a9704217a18ae93baa378455a7e75ec56415`, with all four Kitchen checkpoints in its ancestry. A read-only remote check found main at `812c316b42a4a37bb0791b6fbd2326d4ae7422d6`. The cleanup checkpoint is `7e80d414c17c97bab6797bd799ce7f7556d8235c`.
+
+| Candidate | Disposition | Evidence |
+| --- | --- | --- |
+| Meal issuance and windows, day schedule and scenario, timed validator, night report, and station adapters | Already retired | The foundation checkpoint `a1d1db4494347e0dfb4dfb653ed71b2abaf76ce5` removed these paths. The configured F5 shell binds the wing's active timeline, which settles the current Kitchen. The wing binds the dedicated panel and existing frontage. [Foundation removal record](2026-11-07-continuous-run-collection-goal-result.md#changed-and-retired-paths) |
+| Old fixed-target contribution modal and its M3 meal wrapper | Removed from active source | Before cleanup, only `m1_contribution_tests.gd` and `m3_contribution_tests.gd` loaded `contribution_panel.gd`. Dispatch and Kitchen own their panels. Removed `gameplay/requests/contribution_panel.gd` and `tools/asset_pipeline/tests/m3_contribution_tests.gd` with their two UID sidecars. The reference check covered script and UID references in active code, scenes, resources and tooling. |
+| Contextual request checks and two-lane Kitchen checks | Narrowly refactored | `m1_contribution_tests.gd` now exercises the shared request directly, including exact receipt ordering, contextual Utility, waste and rejection. The current Kitchen operations test covers Hydration-first clearance and full-lane rejection alongside the existing Food-first coverage. The current interaction test checks both displayed balances. |
+| Shared request and exact-item transaction | Retained and actively reused | `expedition_loadout.gd` extends `contribution_request.gd` for live Dispatch preview, cap and waste, receipts and draft/expedition snapshots. Kitchen uses the same carried-items transaction. M1-named Receiving lifecycle, pause/admission and reflection probes target their own current owners. |
+| Older schema diagnostics and current continuation | Retained and actively reused | The save service identifies incompatible older slots and preserves their snapshots. Schema 8 validates the live Kitchen obligation, RNG states and receipts alongside expedition loadouts and other run state. |
+| Fixed meals, Daily Meal Coverage and associated dated evidence | Historical only | The frozen M4 data, plans, acceptance and source references remain available. The survival archive is excluded from the Godot scan. [Survival-era index](../design_history/survival-era/README.md) |
+
+### Scoped verification
+
+After the cleanup, editor import and F5/F6 startup parity exited 0. The shared request test passed 17 checks, Kitchen operations passed 2,839 checks, Kitchen interaction passed 23 checks, and expedition operations passed. All used isolated application data and save paths. The logs retain the known certificate-store and material diagnostics and the deliberate invalid-cargo case. The earlier continuation, native recovery, selected sweep and independent review remain the original implementation evidence. [Cleanup logs and reference check](evidence/continuous-kitchen-2026-11-10/closeout-legacy-checks.log)
+
+The seven actual save files and both pre-existing untracked evidence image sidecars matched their preflight SHA-256 values. The change set leaves the approved gameplay behavior and schema 8 in place. The recorded promotion stands without a further human retest.
+
+The close-out updates GDD §20.3 and the Systems MVP CF-16 and §17 master text, then regenerates the matching Markdown. Both DOCX files retained 50 pages. The GDD page 40 and MVP pages 26 and 28 were the only changed render pages and were inspected. The VDD still describes the current frontage and presentation. Current-state, index and bootstrap links point to this result.
+
+### Changed paths
+
+| Scope | Paths |
+| --- | --- |
+| Retired modal and wrapper | `gameplay/requests/contribution_panel.gd`, `gameplay/requests/contribution_panel.gd.uid`, `tools/asset_pipeline/tests/m3_contribution_tests.gd`, `tools/asset_pipeline/tests/m3_contribution_tests.gd.uid` |
+| Retained regression coverage | `tools/asset_pipeline/tests/m1_contribution_tests.gd`, `tools/asset_pipeline/tests/kitchen_operations_tests.gd`, `tools/asset_pipeline/tests/kitchen_interaction_tests.gd` |
+| Masters and generated companions | [GDD DOCX](../Sorting_Apocalypse_Preliminary_GDD_v0.16.docx) · [GDD Markdown](../readable/Sorting_Apocalypse_Preliminary_GDD_v0.16.md) · [MVP DOCX](../Sorting_Apocalypse_Systems_MVP_Foundation_Design_and_Progress_v0.5.docx) · [MVP Markdown](../Sorting_Apocalypse_Systems_MVP_Foundation_Design_and_Progress_v0.5.md) |
+| Current-facing status | [Current state](../CURRENT_STATE.md) · [Documentation index](../README.md) · [Codex bootstrap](../CODEX_BOOTSTRAP.md) · [Conversation bootstrap](../Sorting_Apocalypse_Bootstrap_Prompt_Next_Session_07Nov2026.md) |
+| Result and evidence | This result, [capacity probe](evidence/continuous-kitchen-2026-11-10/closeout-capacity-129-to-126.log) and [legacy verification](evidence/continuous-kitchen-2026-11-10/closeout-legacy-checks.log) |

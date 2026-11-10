@@ -36,7 +36,7 @@ Two distinct unordered affinities identify one of 28 destinations. Dispatch requ
 
 Pending return cargo remains intact. Waiting crews stay unavailable until admission to the active lift or deposited queue. Healthy members become Ready at admission. Empty returns release the crew at their committed return time, outside Receiving.
 
-Kitchen §12 defines bounded cumulative demand and carrying/sprint consequences. The approved contribution map gives expeditions proactive bonuses and assigns restoration to Kitchen, Fuel and Medical. The authorized continuous Kitchen brief leaves the mechanical expedition fixture in place. [Contribution decisions](design_history/2026-11-09-contribution-effects-and-kitchen-decisions.md) · [Continuous Kitchen brief](superpowers/plans/2026-11-09-continuous-kitchen-service.md)
+Kitchen §12 defines bounded cumulative demand and carrying/sprint consequences. The approved contribution map gives expeditions proactive bonuses and assigns restoration to Kitchen, Fuel and Medical. The promoted continuous Kitchen slice uses the mechanical expedition fixture. The fixed meals and Daily Meal Coverage belong to the archived survival-era build. [Contribution decisions](design_history/2026-11-09-contribution-effects-and-kitchen-decisions.md) · [Continuous Kitchen brief](superpowers/plans/2026-11-09-continuous-kitchen-service.md)
 
 Medical's preferred slower natural and faster treated recovery remains open in detail. Fixed full storage is a favored direction. Workshop, Training, population growth and route compression need further design.
 
@@ -63,7 +63,7 @@ Legacy fixture: res://main.tscn
 Neutral review: res://greybox/logistics_wing/wing_review.tscn
 ```
 
-The local continuous Kitchen build extends the F5 loop. Open the service with F and supply the selected whole item with E. Continue restores schema 8 from `user://saves/collection/`. Confirmed New Run can repoint the slot while retaining incompatible snapshots including schema 7. The M4 slot remains separate. Standalone F6 keeps the human-authored `DevelopmentSetup/SeedItems` palette. [Technical result and developer playtest](testing/2026-11-09-continuous-kitchen-service-result.md)
+Continuous Kitchen is **HUMAN-PROMOTED / CLOSED IN ITS BOUNDED SCOPE — LOCAL; PUBLICATION PENDING** in the F5 loop. Open the service with F and supply the selected whole item with E. Continue restores schema 8 from `user://saves/collection/`. Confirmed New Run can repoint the slot while retaining incompatible snapshots including schema 7. The M4 slot remains separate. Standalone F6 keeps the human-authored `DevelopmentSetup/SeedItems` palette. [Developer acceptance and close-out](testing/2026-11-09-continuous-kitchen-service-result.md)
 
 GDD §15.3 records the Incinerator design. The developer promoted and closed the bounded single-item slice on 8 November 2026. The close-out is published on main. [Technical result and developer acceptance](testing/2026-11-08-incinerator-deliberate-disposal-result.md)
 
