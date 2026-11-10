@@ -116,9 +116,9 @@ FOUNDATION PURPOSE (M1–M4): operate the same storeroom across repeated days an
 
 | Consumer | Utility lanes | Competition introduced |
 | --- | --- | --- |
-| Medical | Medical | Departmental demand competes with loadout Medical and future reserves. |
-| Kitchen | Food, Hydration | In the implemented fixture, meals compete with loadout Food/Hydration. Future recurrence and effects require redesign. |
-| Expedition Loadout | Food, Hydration, Medical, Weapons, Protection | Broad equipment demand overlaps both departments; outgoing Bulk preserves equipment-efficiency choices. |
+| Medical | Medical | The mechanical expedition fixture still spends Medical. In the target, only the Ward accelerates natural recovery of Light and Severe injuries. |
+| Kitchen | Food, Hydration | The continuous Kitchen brief uses cumulative demand to reduce player capacity and disable sprint after grace. Partial credit restores capacity proportionally. Clearing restores sprint. |
+| Expedition Loadout | Food, Hydration, Medical, Weapons, Protection | These are the mechanical fixture lanes. The target substitutes Morale for Medical and adds Food capacity, Hydration time, Protection injury prevention, Weapons quality within category and Morale recruitment. |
 
 ### 3.1 What this slice can establish
 
@@ -130,7 +130,7 @@ Medical alone was a local implementation/usability checkpoint. The original M5 p
 
 Initial Medical and Kitchen requests are X needed → X submitted → X consumed, with durable fulfillment/shortfall records. No patient cohort or treatment calculation is required. Team-labelled loadout requests do not imply actual Expedition teams, journeys, casualties, return scheduling or population. Incoming loot remains scenario-controlled. [D01–D02]
 
-The fixture establishes depletion and competing obligations, not causal expedition returns, Medical recovery or collection-completion balance. Kitchen/Ops, Workshop, salvage/incineration, optional Rations, upgrades and real expeditions now follow their GDD v0.16 status; obsolete mortality, nightly output and storage-progression rules are not automatic future work. [G16 §§8–15,20]
+The daily fixture remains historical evidence. The continuous Kitchen brief adds independent timing and a 150-Utility outstanding cap under GDD §12. Future Fuel greyouts can dim environmental lights and suspend bunker machinery. Electronics funds one-time Workshop purchases. Those systems and the new expedition bonuses await their own work.
 
 Victory is immediate at eight simultaneous live qualifying-storage totals, with no permanent category banking or request/queue-clearing gate. 2,000 Utility/category is illustrative. No terminal dead end is allowed, but recovery need not be quick or assisted. This document selects no target number, starting bundle or new scenario. [G16 §5]
 
@@ -656,7 +656,7 @@ Basis: [PF §§3–4, 7, 12–14, 24–26, 33–34]; [ER-RESULT §§2–5].
 | CF-13<br>GDD §§5.6, 18.5; PF §§16.5, 34.7 | Full-game continuous game-state preservation, one advancing continuation per run, journal/rotating recovery and an ideal 2–3-real-second loss target. [D21] | The Incinerator build uses schema 7 in the existing collection namespace. The 60-active-second cadence and first-victory attempts provide prototype continuation. Release durability and recovery remain open. |
 | CF-14<br>GDD §§9–10; PF §34.7 | Actual asynchronous expeditions, one player-assembled 1–4-person crew at a time, affinities, return outcomes and workforce availability. [G16 §§9–11] | The bounded healthy expedition loop is HUMAN-ACCEPTED / CLOSED IN ITS BOUNDED SCOPE. Production tuning remains open. |
 | CF-15<br>GDD §§12–13; PF §34.7 | Medical now supports availability. Slower natural recovery with substantially faster treated recovery is favored; detailed states/costs/timing remain open. [G16 §13] | Former daily triage, Meal Coverage rolls and fatal complications are historical—not pending obligations. No injured-away exception or hidden catch-up is introduced. |
-| CF-16<br>GDD §§12, 14–15, 20; PF §§19.4, 20.4 | Bounded Kitchen/Ops pressure; optional physical Rations; salvage/incineration and Workshop redesign. [G16 §§8,12,14–15] | Single-item Incinerator disposal is implemented under GDD §15.3. Kitchen and Ops pressure, Rations, Salvager and Workshop remain open in their recorded scopes. |
+| CF-16<br>GDD §§12, 14–15, 20; PF §§19.4, 20.4 | Bounded Kitchen/Ops pressure; optional physical Rations; salvage/incineration and Workshop redesign. [G16 §§8,12,14–15] | Single-item disposal is accepted under GDD §15.3. The continuous Kitchen brief implements only §12. Fuel greyouts, Rations, Salvager and one-time Workshop purchases remain future work. |
 | CF-17<br>PF §§19.4–19.5, 20.4; GDD §§7.5–7.6 | Labels, specialist storage, conditional furniture movement, starting stock and production capacity remain open. All storage initially available is favored. [G16 §§7,15] | Preserve supported surface names and authored installs. No chosen shelf roster, automatic unlocking or scene changes; qualifying storage must be defined explicitly. |
 | CF-18<br>PF §§12.3, 14.5, 24–26 | Manual under-base insertion, multi-column packing, crouch and expanded display-rotation UX. | Remain separate deferred/open work. Existing mixed-stack automatic rejection and two-state packing stay intact. |
 | CF-19<br>GDD §§19–21; PF §§20.4, 34 | Substantial live collection, equal targets with uneven sinks, completion time, workload/travel and final cargo/fixture bounds. [G16 §§19–21] | M4 values remain frozen test inputs. ADR/survival waves do not govern new balance. 2,000 Utility and ~80% occupancy are illustrative; spatial compression remains open. |
@@ -704,7 +704,7 @@ M1–M4 remain published and closed at c9f9417. The table records the locally ac
 | Report / auto-save | The HUD shows eight live totals and first completion. Auto-save attempts follow 60 active seconds or first victory. The night report belongs to M4. |
 | Scenario / compatibility | The local build uses player-dispatched cargo and a test target of 6 Utility per category. Incompatible schema 6 and schema 5 snapshots and the separate M4 slot are preserved. |
 | Full-game randomness | Settled principle (§19): continuous Ironman state, early natural commitment, narrow residual loss; incidental uncommitted rerolls tolerated. |
-| M3 Kitchen / meals | M4: meals 10/14/18, 3h windows, 48/40, 60/48, 60/48; no outcome effects. Target Kitchen cadence and bounded consequences remain open. [G16 §12] |
+| M3 Kitchen / meals | M4: meals 10/14/18, 3h windows, 48/40, 60/48, 60/48. No outcome effects. The separate continuous Kitchen scope follows GDD §12. |
 | M3 cargo / Utility | M3 fixture is dated history. M4: 167 locked rows; 85-item start; four 16-item deliveries/day for three days. No final-economy claim. |
 
 Historical M4 test values remain player 20, per-member 28 and lanes 12/12/6/12/12. The expedition fixture retains 20 player Bulk, uses 8 Bulk per crew member and targets 6 Utility per category. These are test settings. [G16 §§9–10, 20]

@@ -36,7 +36,9 @@ Two distinct unordered affinities identify one of 28 destinations. Dispatch requ
 
 Pending return cargo remains intact. Waiting crews stay unavailable until admission to the active lift or deposited queue. Healthy members become Ready at admission. Empty returns release the crew at their committed return time, outside Receiving.
 
-Requests have bounded unresolved work/escalation, legitimate short deferral and meaningful neglect costs. Exact recurring/penalty behavior remains open. Medical favors slower natural recovery and faster treatment; do not add injured expedition participation or a full replacement treatment model by assumption. Fixed full storage is a favored direction, not a finalized shelf roster. Workshop, Training, population growth and route compression require further design.
+Kitchen §12 defines bounded cumulative demand and carrying/sprint consequences. The approved contribution map gives expeditions proactive bonuses and assigns restoration to Kitchen, Fuel and Medical. The authorized continuous Kitchen brief leaves the mechanical expedition fixture in place. [Contribution decisions](design_history/2026-11-09-contribution-effects-and-kitchen-decisions.md) · [Continuous Kitchen brief](superpowers/plans/2026-11-09-continuous-kitchen-service.md)
+
+Medical's preferred slower natural and faster treated recovery remains open in detail. Fixed full storage is a favored direction. Workshop, Training, population growth and route compression need further design.
 
 ## Known open boundaries before affected implementation
 
@@ -63,7 +65,7 @@ Neutral review: res://greybox/logistics_wing/wing_review.tscn
 
 The local Incinerator build adds single-item disposal to the F5 expedition-to-storage loop. Continue restores schema 7 from `user://saves/collection/`. Confirmed New Run can repoint the slot while retaining the incompatible schema-6 snapshot. Schema-5 and M4 snapshots are preserved. Standalone F6 keeps the human-authored `DevelopmentSetup/SeedItems` palette. The [historical M4 input and plans](design_history/survival-era/README.md) remain separate.
 
-GDD §15.3 records the confirmed Incinerator design. The developer promoted and closed the bounded single-item slice locally on 8 November 2026. Publication is pending. [Technical result and developer acceptance](testing/2026-11-08-incinerator-deliberate-disposal-result.md).
+GDD §15.3 records the Incinerator design. The developer promoted and closed the bounded single-item slice on 8 November 2026. The close-out is published on main. [Technical result and developer acceptance](testing/2026-11-08-incinerator-deliberate-disposal-result.md)
 
 ## Retained high-risk invariants
 

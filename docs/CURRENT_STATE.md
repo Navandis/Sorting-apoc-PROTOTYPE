@@ -1,6 +1,6 @@
 # Sorting Apocalypse — current development state
 
-**Document update: 8 November 2026. Intended game: developer-approved GDD v0.16. Published build: Expedition-to-Storage Loop.**
+**Document update: 10 November 2026. Intended game: developer-approved GDD v0.16 with the contribution decisions. Published build: Incinerator and Deliberate Disposal.**
 
 ## 1. At a glance: approval is not implementation
 
@@ -10,7 +10,8 @@
 | Collection foundation | **HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** [Result and developer acceptance](testing/2026-11-07-continuous-run-collection-goal-result.md). |
 | M1 / M2 / M3 / M4 | **HUMAN-PROMOTED / PUBLISHED / CLOSED**, each in its accepted bounded scope. No acceptance, publication or re-review backlog is reopened. |
 | Expedition-to-Storage Loop | **HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** [Technical result and developer acceptance](testing/2026-11-08-expedition-to-storage-loop-result.md). M5’s former combined daily scenario is historical. |
-| Incinerator and Deliberate Disposal | **HUMAN-PROMOTED / CLOSED IN ITS BOUNDED SCOPE — LOCAL; PUBLICATION PENDING.** [Technical result and developer acceptance](testing/2026-11-08-incinerator-deliberate-disposal-result.md). GDD §15.3 records the approved standing design. |
+| Incinerator and Deliberate Disposal | **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** [Technical result and developer acceptance](testing/2026-11-08-incinerator-deliberate-disposal-result.md) |
+| Continuous Kitchen | **APPROVED ITERATION SCOPE.** One cumulative Food and Hydration obligation governs carrying and sprint after grace. [Contribution decisions](design_history/2026-11-09-contribution-effects-and-kitchen-decisions.md) · [Continuous Kitchen brief](superpowers/plans/2026-11-09-continuous-kitchen-service.md) |
 | ADR cycle | Parked historical design, preserved for deliberate reuse or a possible survival mode. Not the current economy or immediate design priority. |
 | Implementation checkpoints | Foundation `a1d1db4494347e0dfb4dfb653ed71b2abaf76ce5`, expedition implementation `66a7f863e5cf6f2f2c9e8f7f34de99885fa76612` and technical verification `11f95354119058fe2ec90796d09e2c28c046a885`. [Foundation closure](testing/2026-11-07-continuous-run-collection-goal-closure.md). |
 | Publication | M4 acceptance is pinned at `c9f9417a97cf65ef416c58189ca1f741b6a90406`. The collection foundation, expedition loop and furniture collision repair are published. On 8 November 2026, `git ls-remote` verified `origin/main` at the repair acceptance commit `de6b9bd7102e555b46a45f6733d9e7669db5d3b5`. |
@@ -50,7 +51,7 @@ The purpose is to restore collecting, hoarding and organizing as the main experi
 | Preparation | One current team: choose 1–4 Ready scavengers, equip/select destination, explicitly dispatch; optionally repeat consecutively. No prebuilt roster, preparation tabs, parallel prepared loadouts or full-loadout auto-send. |
 | Destinations | Twenty-eight unordered pairs. Dispatch requires two affinities and an available pair. A destination is occupied only while its expedition is away. |
 | Receiving | Exact cargo moves through oldest-first admission to one active and two deposited slots. Healthy crew members become Ready on admission. Empty returns complete outside the lift. |
-| Requests | Bounded outstanding work and escalation. Brief deferral legitimate, routine indefinite neglect generally costly. Exact cadence, partial effects, penalty ceilings and restoration are open. No request-completion victory gate. |
+| Requests | Kitchen §12 specifies cumulative bounded Food and Hydration demand, active-time grace, proportional carrying relief and sprint restoration on clearance. Fuel greyouts and other contribution effects have separate future scopes. Victory has no service requirement. |
 | Medical | Preferred slower natural recovery and much faster treated recovery. No injured-away mechanic adopted. No-dead-end requirement is not guaranteed quick recovery or adaptive catch-up. Full injury/treatment rules remain open. |
 | Progression/layout | All storage from start is favored, not a finalized production roster. Carrying/expedition/information improvements remain candidates. Workshop/Training and spatial compression require further design. |
 | Information | Goal progress is baseline, never upgrade-gated or disabled by penalties/events. Journal/notification/overview roles survive; a daily report does not. |

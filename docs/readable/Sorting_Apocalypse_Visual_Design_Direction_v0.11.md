@@ -196,7 +196,7 @@ Receiving now uses deliberate warm apron practicals, balanced cage task lights a
 
 Purposeful room lighting is the current direction, with no automatic broad ambient/KeyLight floor. It does not permanently prohibit every future intentional ambient contribution. A global policy change, new fixture system or rendering system still needs deliberate design discussion; unfinished neighboring rooms need their own lighting decisions. [37]
 
-Retained lighting direction is distinct from gameplay penalties. The old Fuel/Electronics outage rules are not silently carried forward. Essential collection-goal information must remain available even if a future approved consequence affects other equipment. No light rig or monitor is changed by this pass. [38]
+Future Fuel greyouts reduce environmental light intensity and restore the authored baseline afterward. UI, goal information, targeting and interaction assistance retain their ordinary behavior. Greyout implementation and lighting changes are outside the Kitchen scope. See GDD §14. [38]
 
 ## 8. Signage, labels, humor, and human traces
 
@@ -461,7 +461,7 @@ Those dimensions describe the accepted installation, not an immutable travel-tim
 
 ## 19. Kitchen Service Room / unseen Kitchen and Mess
 
-The Kitchen remains a catering-support room, not a visible kitchen or mess hall. Competent staff and community life are implied beyond its inner wall. Food/Hydration service and the tentative ration-conversion role remain, but fixed meal anchors and overnight output are not target requirements. Cadence, consequences and conversion timing remain to be defined without adding cooking chores. [D16S; 38]
+The Kitchen remains a catering-support room. The continuous Food and Hydration panel uses the existing frontage, with notices and carrying status for grace, loss and clearance. The opaque inner wall still implies cooking and dining staff. Ration conversion and final furnishings remain separate. See GDD §12. [D16S; 38]
 
 - Spatial position: The approach leaves Gallery B through its eastern doorway under the developer's round-one correction. This explicitly replaces the former no-gallery-mediated Kitchen route. Preserve the modest separation from Medical and dirty machinery; no direct Medical↔Kitchen connection is added. [H16]
 
@@ -964,6 +964,6 @@ Reconciled owning sections: §1 authority; §§7, 13–14 information and single
 
 ### 38.3 Deliberately unresolved
 
-No new dimensions, corridor shortening, storage counts, target Utility or occupancy quota are selected. Journal versus monitor, detailed UI layout, unfinished team commitments, concurrent-destination reservation/release, personnel release on cargo delivery, request cadence/escalation, Medical recovery timing, Workshop projects, ration production and continuous repair/unlock presentation retain their GDD statuses. The favored removal of destination-availability events does not imply a ban on every narrative message or future separately approved boon.
+The accepted geometry and authored light rig remain the baseline. The continuous Kitchen brief uses the existing frontage. Fuel dimming, Medical recovery timing, Workshop projects, ration production, Journal and final interface composition retain their GDD scope. Future route or installation changes require explicit design.
 
 The earlier missing-MVP-source limitation is resolved by the developer’s attachment and accompanying Systems MVP v0.5 compatibility update. Both masters’ checks are recorded in docs/testing/2026-11-07-mvp-vdd-compatibility-consistency.md. M1–M4 evidence remains valid; obsolete survival/day assumptions do not override GDD v0.16. No game tests, new promotion, Git write, scene edit or save operation accompanies this completion.

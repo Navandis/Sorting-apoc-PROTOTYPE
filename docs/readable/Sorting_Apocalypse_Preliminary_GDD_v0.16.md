@@ -412,7 +412,7 @@ Basis: [PIV §§2,4,7–10]; [G15 §§5.6,18.5] and [MVP §§6–9,19] for retai
 | Definition and instance identity | Stable type data versus the durable identity of each physical copy. Visual nodes do not create a second copy. |
 | Salvage Yield / conversion metadata | Potential physical output from a defined transformation. This does not reintroduce context-dependent multi-category request use. |
 
-**CONFIRMED.** Dual-use and multi-use items are not part of the intended first release. The exploratory vodka example is superseded. A Medical item can serve a Medical lane at Dispatch or Medical without becoming a different resource; a Fuel item does not serve Kitchen Food. General remains a universal storage-zone type, not a ninth Item Category or goal.
+**CONFIRMED.** Dual-use and multi-use items are not part of the intended first release. The exploratory vodka example is superseded. A Medical item serves treatment in the target design. The mechanical Dispatch fixture still uses a Medical lane. A Fuel item cannot serve Kitchen Food. General remains a universal storage-zone type, not a ninth Item Category or goal.
 
 <a id="s_6_2_Stable_item_definitions"></a>
 
@@ -566,11 +566,11 @@ Basis: [G15 §§7,18.3]; [MVP §§5–6,16] for transfer/continuation; [VDD §§
 
 | **Consumer or destination** | **Categories / output** | **Current design role** |
 | --- | --- | --- |
-| Expedition loadout | Food, Hydration, Medical, Weapons, Protection | Voluntary preparation for acquisition; shared item transactions and team capacity. |
-| Kitchen | Food and Hydration; potential physical Rations | Recurring consumption and possible compaction, with continuous-flow timing to design. |
-| Medical | Medical | Substantially faster restoration of injured scavengers under the favored natural-recovery approach. |
-| Bunker Ops | Fuel, Morale, Electronics | Operational support whose neglected requests reduce efficiency without blocking victory permanently. |
-| Workshop | Project materials / possible Salvage | Optional lasting improvement purchased with goods that might otherwise support the hoard. |
+| Expedition loadout | Food, Hydration, Protection, Weapons, Morale (target) | Proactive bonuses to an individual expedition. The current mechanical fixture retains Medical in place of Morale and has no outcome bonuses. |
+| Kitchen | Food and Hydration; potential physical Rations | Food and Hydration relieve a shared player carrying and sprint penalty. Rations remain an optional future conversion. |
+| Medical | Medical | The Ward alone handles healing. Medical accelerates natural recovery of Light and Severe injuries. Treatment implementation remains open. |
+| Bunker Ops | Fuel (possible future Energy framing) | Future finite greyouts affect bunker machinery and environmental lighting. |
+| Workshop | Electronics for one-time purchases. Other materials and Salvage remain open. | Optional lasting improvement purchased with goods that might otherwise support the hoard. |
 | Salvager | Item → physical Salvage | Spatially useful conversion; output grammar and yields remain to revalidate. |
 | Incinerator | Item → no output | Deliberate permanent space release. |
 
@@ -594,9 +594,9 @@ Incineration follows the same exact-item transaction boundary. Its receipt recor
 
 **AGREED HIGH-LEVEL APPROACH.** Briefly deferring a request to finish another activity is legitimate; ignoring a department indefinitely should generally be costly. The working direction is persistent requests without ordinary short expiry windows, with a possible grace/wind-up interval before adverse effects intensify and persist until addressed.
 
-Neither an unlimited backlog nor unbounded multiplied penalties is approved. Both outstanding work and cumulative consequences need understandable bounds. The exact issuance model, concurrency, grace period, escalation ceiling, effect curve and restoration behavior are OPEN. Do not turn this paragraph into an invented fixed request count or universal timing formula.
+Both outstanding work and penalties need understandable bounds. Kitchen's cumulative obligation, grace and proportional restoration are defined in §12. Fuel greyout boundaries are in §14. Other services retain their own open issuance and recovery rules.
 
-Request service spends present goods to maintain or restore useful acquisition/handling conditions. Its benefit must justify the stock and effort expended across ordinary play. Finishing a request is never an additional victory condition; near victory, tolerating a cost instead of spending the last needed stock can be a legitimate final decision.
+An expedition with no loadout has its ordinary capabilities. Voluntary loadout buys advantages for that crew. Bunker services operate at baseline without an outstanding problem. Recurring contributions restore service under departmental rules. Kitchen affects player logistics. Fuel may delay bunker handover through the lift. Service obligations leave committed expedition duration, cargo, recruitment and injuries intact. Clearing a request is never a victory condition.
 
 <a id="s_8_4_Definition_state_and_consequence"></a>
 
@@ -607,7 +607,7 @@ Request service spends present goods to maintain or restore useful acquisition/h
 | Requirement source | Supplies the identity, lanes and targets. Continuous cadence and recurrence are new design work; no daily generator is inherited. |
 | Live state | Stores accepted contributions, lifecycle, penalty state and relevant timestamps. Loading must not regenerate an open obligation. |
 | Submission | Validates and commits one exact item plus credit and Bulk where applicable. |
-| Consequences | Use actual supplied state under a defined department rule. Partial fulfillment can be recorded without inventing its new penalty reduction. |
+| Consequences | Use actual supplied state under a defined department rule. Kitchen gives equal relief per Utility credited to either lane. |
 | Feedback | Shows current demand, accepted/projected contribution and comprehensible consequences. Qualitative world messages do not hide a request’s actual targets. |
 
 The predecessor’s shared RequestDefinition / OutcomeProfile separation remains useful. It does not authorize generic framework expansion, a universal zero-percent catastrophe or reuse of old midnight outcomes. Different services may have different causes and effects while retaining the same physical transaction grammar.
@@ -750,13 +750,13 @@ A successful contribution spends the whole outgoing item immediately and charges
 
 | **Lane** | **Retained contribution concept** | **Current outcome boundary** |
 | --- | --- | --- |
-| Food | Food goods and potential Rations | Duration/efficiency influence is inherited design material; new continuous-run effect and scale need validation. |
-| Hydration | Drinks and water-category goods | Duration/efficiency influence is inherited; no automatic change to base capacity. |
-| Medical | Medical goods | Protection from injury and treatment competition remain useful; mortality-based formulas are not current. |
-| Weapons | Weapons/tools classified as Weapons | Acquisition effectiveness remains a candidate role; utilization and recruitment effects need a deliberate post-pivot definition. |
-| Protection | Clothing/protective gear classified as Protection | Injury prevention can support availability; do not retain death probabilities merely because the old lane affected them. |
+| Food | Food goods and potential Rations | Increase that team's carrying capacity while charging full outgoing Bulk. Net headroom should reward useful provisioning. Formula, magnitude and validation order remain open. |
+| Hydration | Drinks and water-category goods | Shorten that expedition. Lift admission and backlog still follow their own rules. |
+| Morale | Morale goods | Increase recruitment opportunity in proportion to participating scavengers. Equal coverage and personnel totals should give comparable opportunity across team sizes. Rates, rolls, limits and joining remain open. |
+| Weapons | Weapons/tools classified as Weapons | Prefer better Utility per Bulk within the selected category. Affinity weights and item values stay fixed. The quality curve and pool remain open. |
+| Protection | Clothing/protective gear classified as Protection | Reduce injury chance. The Medical Ward owns healing. |
 
-The general principle that intentional provisioning can materially improve acquisition remains. Exact safety, time, utilization, quality and recruitment curves are not supplied by this edition. The old model’s equations and casualty endpoints are not approved tuning for the collection game.
+These five lanes define the intended loadout. The accepted mechanical fixture still uses Food, Hydration, Medical, Weapons and Protection. Its outgoing Bulk and lane costs are live. Outcome bonuses, recruitment and the Morale substitution remain future work. The example of zero baseline and five percent per member is illustrative.
 
 <a id="s_10_3_Whole_item_contribution_and_eff"></a>
 
@@ -774,7 +774,7 @@ The old aspirations of roughly 50% capacity used by an ordinary loadout and 70�
 
 Distinguish four matters: return capacity available; how much is filled; how useful the chosen items are for that Bulk; and which categories they represent. A larger capacity does not guarantee it will be filled, and equal returned Bulk can contain very different useful supplies.
 
-The inherited quality idea biases item selection toward higher useful contribution for available Bulk when preparation is better. The old five-lane arithmetic average is a candidate baseline, not a newly validated formula. Affinities add category emphasis without increasing capacity or changing item definitions. The exact interaction of quality, affinity and ordinary item availability remains OPEN.
+The intended Weapons benefit biases the whole-item draw toward higher Utility per Bulk within the category chosen by the sampler. Affinities still determine category emphasis. The quality curve, fit filtering interaction and ordinary item availability need later validation.
 
 Utility is the favored affinity measure, but physical footprint and handling load remain essential balance observations. High-Utility returns that fit too easily may undermine the substantial-hoard experience; abundant inefficient returns may create excessive handling or obstruct completion. Neither problem should be solved by Receiving deleting awkward objects.
 
@@ -887,13 +887,13 @@ The current intended request model follows §8: persistent obligations and bound
 
 <a id="s_12_2_Demand_and_consequences_remain_"></a>
 
-### 12.2 Demand and consequences remain open
+### 12.2 Continuous demand and proportional relief
 
-The background community can remain an inferred source of Food and Hydration demand without a simulated resident population. Whether Ready, away, preparing, waiting or injured scavengers change demand is a new continuous-flow question. Do not inherit “Ready/Away excluded because they have today’s rations” as an already settled answer.
+Kitchen maintains one cumulative obligation with separate Food and Hydration balances. Opening from zero starts one 60-active-second grace. Additions join the remaining balances under the same deadline. Further demand increases an overdue penalty immediately. Only clearing both lanes closes the obligation and restores sprint. A later opening starts a fresh grace.
 
-Food and Hydration remain distinct lanes. A contribution to one cannot spill into the other. Partial supply can be recorded; how it changes current penalties, grace or request completion needs definition. Exact quantities, recurrence and concurrent requests are open.
+The provisional schedule draws uniform integer intervals of 180–300 active seconds, including the first trigger in this iteration. Each event draws a uniform total of 60–80 Utility, then a uniform feasible integer Food share. The iteration interprets the 25% gap as larger lane at most 1.25 times smaller lane. Timing and amounts use separate random streams and advance even at the cap. Deadlines follow scheduled timestamps and survive Continue. Pause and offline time leave the schedule unchanged. Kitchen remains live after victory.
 
-The old Meal Coverage-driven treatment failure and nightly Workshop progress rules are not active defaults. A Kitchen consequence can affect relevant throughput or recovery only after its new relationship is chosen. Goal-progress visibility must remain available regardless of Kitchen state, and combined consequences must not eliminate the path to acquisition.
+After grace, each 3 outstanding Utility costs one percentage point of normal carrying capacity. At combined demand D, effective capacity is floor(normal capacity × (300 − D) / 300). Grace preserves capacity and sprint. Overdue demand disables sprint while ordinary walking and ladders retain their baseline. The bound of 150 Utility limits loss to 50%. Each incoming addition uses proportional whole-Utility clipping. The iteration assigns largest remainders first and alternates exact ties by scheduled event index, odd favoring Food. Discarded overflow never returns.
 
 <a id="s_12_3_Rations_as_a_retained_conversio"></a>
 
@@ -911,7 +911,7 @@ Whether and how Ration output contributes to the Food storage objective must be 
 
 The Kitchen Service Room remains an enterable, elongated catering-support space with an opaque boundary to unseen cooking and dining areas. A competent chef and helpers can be implied through practical messages, warm service cues and fixed non-loot equipment. No empty staffed interior, visible residents or autonomous tray simulation is needed.
 
-Existing Kitchen-from-Gallery-B access is the current spatial baseline, subject to later deliberate compression. Departmental equipment is not edible reserve or free Quartermaster storage. Separate meal-supply and optional conversion interfaces can be considered without specifying final mechanisms in this edition.
+The existing Gallery B approach leads to the service frontage. F opens or toggles the live panel, E commits one eligible selected whole item, and Escape closes the panel first. Each credit relieves the matching lane and excess is wasted. The panel shows outstanding lanes, grace, active or pending loss, sprint and selected-item preview. Notices report new admitted demand, expiry and clearance. The carry HUD shows actual Bulk over effective capacity. Existing carried ownership and exact failed-transfer rollback remain legal above that limit. New pickups must fit. At a shared timestamp settle expiry, then the scheduled addition, then input. Final furnishings and optional ration conversion remain separate.
 
 Basis: [PIV §§7,9–10]; retained concepts [G15 §12], with daily demand/outcome formulas superseded; [VDD §19].
 
@@ -931,7 +931,7 @@ Patients remain anonymous. The player need not individually assign medicines, ma
 
 ### 13.2 Preferred simple recovery approach
 
-**FAVORED DIRECTION, NOT A COMPLETE TREATMENT SPECIFICATION.** Untreated scavengers recover naturally at a slower rate; treatment substantially accelerates return to duty. That offers an ordinary route out of an all-injured/no-Medical situation without an adaptive rescue grant.
+**MEDICAL DIRECTION.** Light and Severe injuries recover naturally at a slower rate. Medical treatment in the Ward substantially accelerates return to duty. The Ward alone handles and modifies healing. Kitchen Food and Hydration affect neither healing speed nor success. Ordinary recovery remains available when no crew can leave for supplies.
 
 The developer is disinclined to send injured people on expeditions. Re-injury, altered carry capacity and special loadout rules would add simulation mainly to support that exception. Do not introduce them by assumption. Routine fatalities are likewise disfavored under a design that must never exhaust all progress routes; final injury states and personnel outcomes still need specification.
 
@@ -947,7 +947,7 @@ Poor management can mean a prolonged slow operation or substantial corrective wo
 | Treatment cost and application | Medical accelerates useful availability. Per-patient versus pooled accounting, partial contribution, when the benefit applies and any limits remain open. |
 | Natural recovery and supplies | The basic recovery path must not depend on supplies obtainable only from the people who cannot leave. |
 | Return admission | When injured crew leave the waiting-cargo state and enter Medical must align with the defined handover. |
-| Other departmental effects | No automatic Meal Coverage failure roll or rule that indefinitely disables all natural recovery. |
+| Other departmental effects | Healing belongs to the Ward. Keep untreated recovery available without Kitchen or other service supply. |
 | Communication | Explain current unavailable counts, treatment requirements and meaningful expected recovery without inventing outcome certainty. |
 
 The old first-treatment-next-day restriction, oldest-Severe daily triage, retained one-of-two-unit stage progress, midnight treatment-success rolls and escalating fatal complications are superseded as active rules. They remain in the predecessor for historical reference. Choosing any corresponding continuous mechanic later requires its own design justification.
@@ -972,23 +972,23 @@ Basis: [PIV §§5,7–8]; [G15 §13] for retained anonymous/service-space contex
 
 ### 14.1 Physical support for the unseen settlement
 
-Ops remains the Administrator’s material handoff for Fuel, Morale and Electronics, rather than a passive abstract resource reserve. Goods are physically carried and committed to active requirements. These sinks can remain uneven across categories, allowing Morale to accumulate sooner than frequently used expedition or Kitchen categories.
+Fuel is the planned recurring Ops input. Electronics moves to one-time Workshop upgrades. Morale has a prospective expedition role. Uneven sinks are intentional, including the potential for Electronics to accumulate faster.
 
-Ops should matter through useful operation and accumulation efficiency. Its request and penalty design follows the bounded-escalation direction in §8. One request per day, a longer daily deadline, next-day coverage effects and pre-rolled night outages are not inherited.
+Greyouts are finite and separated by meaningful powered intervals. Repeated rolls and accumulated debt cannot sustain one indefinitely. Fulfilling pending Fuel ends an active greyout immediately. Run time and outside expeditions continue. Salvager operation and Workshop work suspend at defined boundaries. Preserve funded progress and cargo.
 
 <a id="s_14_2_Lane_consequences_require_redes"></a>
 
-### 14.2 Lane consequences require redesign
+### 14.2 Fuel greyout direction
 
-| **Category** | **Historical function—not current replacement** | **Current constraint** |
+| **Category** | **Current design direction** | **Current constraint** |
 | --- | --- | --- |
-| Fuel | Incinerator/Salvager and ordinary lighting/request-light outage windows. | Incinerator access survives Fuel and energy outages. Any future Fuel effect must preserve legible core handling and a route to recovery. |
-| Electronics | Monitor, PA and music outages. | Essential live goal progress cannot be disabled or sold back. Any reduced convenience needs its own legible boundary. |
-| Morale | Recruitment chance reduction, including zero recruitment at zero daily coverage. | Recruitment itself is under redesign. Uneven Morale consumption is allowed; no unchosen efficiency or casualty modifier is implied. |
+| Fuel | Dim environmental lights and suspend relevant bunker machinery. | Restore authored light intensity on recovery. Preserve UI brightness, targeting, identities and handling assistance. The Incinerator remains usable. |
+| Electronics | One-time Workshop investment. | Preserve essential goal visibility and baseline information. |
+| Morale | Future expedition recruitment bonus. | Rate and joining details remain open. Recurring Ops is no longer its designated role. |
 
-The rows explain why old rules cannot be carried forward unchanged; they are not an approved new penalty roster. Exact lane inclusion, request combinations, partial fulfillment effects, grace, duration, ceilings and recovery triggers remain OPEN.
+Idle stays closed and available queue slots can accept a return. ARRIVAL finishes descent and holds at SEALED_READY. Hold before opening at SEALED_READY where practical. If that narrow boundary cannot be intercepted reliably, finish REVEALING to OPEN. A revealing lift finishes opening. OPEN allows normal TAKE and holds after the last TAKE before CLOSING. CLOSING finishes to a stable closed state before holding outbound pickup.
 
-Temporary operational inconvenience may be useful, but the system must not silently prevent reaching victory. Goal totals remain available under every penalty. Lighting, sound and monitors are also usability/accessibility tools; any intended interference must be tested against the sorting experience instead of assumed to add desirable pressure.
+A later stable boundary is acceptable where a fragile mid-transition interruption would otherwise be needed. Allowing outbound already in progress to finish is a recommendation. Exact chronology, slot integration, theatre resumption and persistence require the Fuel milestone. Environmental dimming may make identifying stock slower by requiring a closer look or a different viewpoint. The effect has no target delay in seconds.
 
 <a id="s_14_3_Deferral_investment_and_the_fin"></a>
 
@@ -1004,7 +1004,7 @@ Do not make “Ops satisfied” a hidden win predicate. Do not automatically sca
 
 The Administrator remains off-screen and communicates through brief practical one-way messages. The Transfer Landing is an open, dedicated onward-distribution space, with the submission interface distinct from an opaque personnel-sized door implying the wider settlement. No office interior, visible leader or new dialogue system is needed.
 
-The longer Deeper-Bunker route is a current implementation fact and a candidate for later compression, not a fixed requirement of the pivot. Fuel/Electronics terminology remains unchanged; discussing “Energy” historically did not rename the category or approve battery/generator simulation.
+The longer Deeper-Bunker route is the current layout baseline. Fuel-to-Energy naming, service naming, new catalogue items and reassignments remain future authoring. Any reframing uses the existing category slot. Batteries, power banks and compact generators or panels are candidates for physical loot. Charge, generation, renewables and permanent benefits from ordinary Fuel submission remain outside the current direction.
 
 Basis: [PIV §§2,7,9]; [G15 §14 and §15.10.6] for historical lane/context references; [VDD §20].
 
@@ -1053,7 +1053,7 @@ Single-item disposal is the approved scope. If mass disposal is adopted later, i
 
 ### 15.4 Workshop purpose and project mechanics
 
-Workshop remains player-initiated investment rather than another compulsory punitive quota. Goods spent on a project reduce present stock but can improve later carrying, acquisition or information access. Costs should matter within a finite run: a useful early investment may not pay back near the finish, without requiring different rules for those stages.
+Workshop remains player-initiated investment. Electronics funds one-time purchases, with one purchase per tier if tiers are used. A useful early investment can improve carrying, acquisition or information. Costs and roster remain open, including the role of other materials.
 
 The Workshop needs redesign. Its old one-active-project, Salvage/material funding, productive-nights and Meal Coverage framework is historical specification—not automatically a complete continuous project system. Project concurrency, recipes, work timing, installation states and cancellation require explicit decisions. No visible workers or construction simulation are required by the concept.
 
@@ -1466,8 +1466,8 @@ These are design-validation aims, not claimed test results or a new automated ac
 | O-03 · Destination lifecycle | Resolved for this slice. Exactly two distinct affinities, away-only exclusivity and explicit availability feedback. See §§9.5–9.7. |
 | O-04 · Return and personnel handover | Healthy release at admission or empty return is confirmed. Injury classification, Medical admission mechanics and treatment remain open. See §11.6 and O-07. |
 | O-05 · Acquisition model | The bounded test pool, capacity, lane targets, 90–180 active seconds and category weights are specified for this playtest. Production tuning and provisioning effects remain open. See §§9.7 and 10.5. |
-| O-06 · Requests and Ops | Recurrence, grace, bounded outstanding work/escalation, partial fulfillment, departmental penalty effects and restoration. |
-| O-07 · Medical | Injury states and risk; natural/treatment recovery rates and costs; treatment allocation and timing; no terminal blockage. |
+| O-06 · Requests and Ops | Kitchen standing rules and provisional iteration settings are in §12. Fuel greyout direction is in §14. Fuel scheduling, costs, exact machine boundaries and save representation remain open. |
+| O-07 · Medical | The Ward alone modifies natural healing with Medical treatment. Injury risk, recovery durations, pooled versus individual or FIFO treatment, costs, timing and UI remain open. |
 | O-08 · Population and upgrades | Initial Ready count, recruitment/growth, progression ownership for assembled crews, Workshop project roster and Training disposition. |
 | O-09 · Conversion and release | Rations and Salvage category and target rules, yields, capacity and output blocking remain open, along with Salvager access and restrictions. Incinerator rules are confirmed in §15.3. |
 | O-10 · Space and handling | Production shelf capacity/roster, all-storage-from-start decision, route compression and final ergonomics. |
@@ -1490,15 +1490,15 @@ Do not copy old population/day targets, mortality formulas, daily Kitchen averag
 
 The Systems MVP carry-forward register remains the detailed evidence home. Technical concerns such as CF-07 held/material diagnostics, certificate-store diagnostics, Pickaxe 108 co-located-LOD representation, pending group approvals and continuous durability are not silently fixed by this rewrite. Historical unrun checks remain unrun.
 
-Some carry-forward gameplay obligations change with the pivot: midnight handling, mortality, next-day Medical, nightly projects and socket expansion. Old-register entries do not override the new objective. The reconciled current-facing entries identify those supersessions; the MVP/VDD masters and dated evidence remain unchanged, with affected forward-looking passages requiring a separately scoped update.
+The collection pivot supersedes midnight handling, mortality, next-day Medical, nightly projects and socket expansion. The contribution decision record supplies provenance for the current allocation and the bounded Kitchen scope. Dated acceptance evidence still describes its original fixtures.
 
 <a id="s_21_5_Document_adoption_and_stopping_"></a>
 
 ### 21.5 Document adoption and stopping point
 
-This edition and its generated companion are developer-approved in their entirety. The approved source records, GDD v0.15, VDD v0.11 and Systems MVP v0.5 remain unchanged. Replacement README, CURRENT_STATE, CODEX_BOOTSTRAP and conversation-bootstrap files accompany this approval update; no game, scene, save or remote repository change is performed.
+The developer approved the complete v0.16 draft and subsequently approved the contribution allocation and Kitchen rules in the 9 November decision record. Kitchen values are provisional. The record separates iteration defaults from standing design and retains the open decisions for Fuel, provisioning, Medical and Workshop.
 
-The replacement entry points route new work to v0.16 for intended gameplay and retain the published M4 record for actual implementation. The developer will provision the package manually. Pending MVP/VDD forward-text reconciliation does not permit obsolete survival rules to fill open mechanics. Historical editions and completed reviews remain intact; no implementation or gameplay rerun is claimed.
+The entry points route current work to the owning masters and evidence. Kitchen is the sole implementation scope authorized by the continuous-service brief. The accepted expedition fixture and its Medical lane remain the mechanical baseline. Future contribution effects require their own implementation scopes.
 
 Basis: [PIV §§10–12]; [ADD]; [MVP §§16,21.4]; [H25 §§2–3,10,14]; [WG].
 
