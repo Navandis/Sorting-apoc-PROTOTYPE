@@ -94,6 +94,12 @@ func run() -> void:
 		and wing.run_identity.next_sequence == sequence, "presentation failure preserves the committed draft and draw without publishing Away")
 	check(ops.dispatch(ops.revision).ok and ops.ready_count == 0, "formed crew dispatches without requiring its members twice")
 	check(not ops.set_members(1) and not ops.dispatch(ops.revision).ok, "fresh preparation cannot reserve unavailable crew")
+	var empty: Dictionary = ops.capture_state()
+	revision = ops.revision
+	var editable: bool = ops.can_toggle_affinity("Fuel")
+	var toggled: bool = ops.toggle_affinity("Fuel")
+	check(not editable and not toggled and ops.capture_state() == empty and ops.revision == revision,
+		"empty preparation rejects affinity edits at the operation boundary")
 	var malformed := Snapshot.new().capture(wing)
 	var batch: Dictionary = malformed.expeditions.away_cargo.values()[0]
 	var group: String = batch.entries[0].presentation_stack_group_id

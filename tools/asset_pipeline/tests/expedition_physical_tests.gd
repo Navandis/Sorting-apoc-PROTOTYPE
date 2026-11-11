@@ -19,13 +19,7 @@ func _run() -> void:
 		finish()
 		return
 	current_scene = shell
-	wing = shell.wing
-	wing.set_process(false)
-	player = wing.get_node("Player")
-	player.set_process(false)
-	player.set_physics_process(false)
-	carry = player.carried_items
-	placement = player._storage_placement
+	bind_wing()
 	var runtime: ReceivingRuntime = wing.get_node("ReceivingRuntime")
 	var ops: RefCounted = wing.expeditions
 	var timeline: RefCounted = wing.run_timeline
@@ -44,6 +38,10 @@ func _run() -> void:
 	check(player._looks_at_dispatch(), "the authored Dispatch counter is in reticle reach")
 	await open_dispatch()
 	if not check(panel.is_open() and player.world_input_blocked and not paused, "F opens Dispatch with the live clock and blocks world controls"):
+		finish()
+		return
+	if OS.get_cmdline_user_args().has("--dispatch-no-ready"):
+		await prove_empty_workforce()
 		finish()
 		return
 	panel._members[2].pressed.emit()
@@ -113,6 +111,149 @@ func _run() -> void:
 	await prove_layout_extremes(runtime, timeline)
 	print("EXPEDITION_REACH max_take_m=", max_take_reach)
 	finish()
+
+func bind_wing() -> void:
+	wing = shell.wing
+	wing.set_process(false)
+	player = wing.get_node("Player")
+	player.set_process(false)
+	player.set_physics_process(false)
+	carry = player.carried_items
+	placement = player._storage_placement
+
+func prove_empty_workforce() -> void:
+	var ops: RefCounted = wing.expeditions
+	var panel: CanvasLayer = wing.dispatch_panel
+	for index in Config.CATEGORIES.size():
+		var first: String = Config.CATEGORIES[index]
+		var second: String = Config.CATEGORIES[(index + 1) % Config.CATEGORIES.size()]
+		if not check(depart_pair(ops, first, second, 9100 + index), "ordinary one-person zero-loadout departure"):
+			return
+	if not check(ops.ready_count == 0 and not ops.is_formed() and ops.active_ids().size() == 8,
+			"all eight scavengers are Away with an unformed draft"):
+		return
+	var food: WorldItem = wing.get_node("DevelopmentSetup/SeedItems/Food_DryGoodsA/WorldItem")
+	var hydration: WorldItem = wing.get_node("DevelopmentSetup/SeedItems/Hydration_FoodCan/WorldItem")
+	if not check(food.pickup_into(carry) and hydration.pickup_into(carry), "real eligible items are carried for both workforce cases"):
+		return
+	var empty := Snapshot.new().capture(wing)
+	check_empty_panel(panel)
+	check(panel._activity.text.count("Away") == 8, "the open panel lists all eight Away operations")
+	await press_preparation_button(panel._affinities.Food)
+	await press_preparation_button(panel._send)
+	await key_tap(KEY_E)
+	check(Snapshot.new().capture(wing) == empty, "empty panel click and E preserve the complete run snapshot")
+	if failures != 0:
+		return
+	await capture_render("dispatch-no-ready")
+
+	# Schema 9 allowed these dormant preferences to be written by the old panel.
+	for saved_affinities: Array in [["Food"], ["Food", "Weapons"]]:
+		var saved := empty.duplicate(true)
+		saved.expeditions.draft.affinities = saved_affinities
+		if not await continue_preparation(saved, "empty draft with %d stored affinities" % saved_affinities.size()):
+			return
+		ops = wing.expeditions
+		panel = wing.dispatch_panel
+		check_empty_panel(panel)
+		var revision: int = ops.revision
+		var removed: bool = ops.toggle_affinity("Food")
+		var added: bool = ops.toggle_affinity("Morale")
+		check(not removed and not added and not ops.set_members(1) and not ops.contribute(carry).ok
+			and not ops.dispatch(revision).ok and ops.revision == revision and Snapshot.new().capture(wing) == saved,
+			"direct edits, supply and departure leave dormant choices, inventory, receipts, RNG and identity intact")
+
+	var timeline: RefCounted = wing.run_timeline
+	timeline.advance(ops.next_return_at() - timeline.clock.elapsed)
+	if not check(ops.ready_count == 1 and panel.is_open() and panel._crew.text.contains("1 selected")
+			and panel._affinities.Food.button_pressed and panel._affinities.Weapons.button_pressed
+			and not panel._send.disabled and ops.journeys.size() == 8,
+			"admission re-enables the open draft with the same preferences and no auto-dispatch"):
+		return
+	await key_tap(KEY_E)
+	if not check(ops.ready_count == 0 and ops.is_formed() and ops.loadout.spent.size() == 1,
+			"first supply commits the final Ready scavenger"):
+		return
+	var formed_id: String = ops.loadout.request_id
+	await key_tap(KEY_F)
+	check(not panel.is_open(), "F closes the formed preparation")
+	await open_dispatch()
+	check(panel.is_open() and panel._crew.text.contains("1 selected") and not panel._send.disabled,
+		"reopening keeps the formed zero-Ready crew visible and dispatchable")
+	if not await continue_preparation(Snapshot.new().capture(wing), "formed draft at zero Ready", true):
+		return
+	ops = wing.expeditions
+	panel = wing.dispatch_panel
+	timeline = wing.run_timeline
+	check(ops.ready_count == 0 and ops.loadout.request_id == formed_id and panel._crew.text.contains("1 selected")
+		and panel._members.all(func(button: Button): return button.disabled),
+		"Continue preserves the formed identity and the visible locked count")
+	await press_preparation_button(panel._affinities.Weapons)
+	await press_preparation_button(panel._affinities.Morale)
+	check(ops.affinities == ["Food", "Morale"] and not panel._send.disabled, "formed zero-Ready crew can deselect and choose an available affinity")
+	await key_tap(KEY_E)
+	check(ops.loadout.spent.size() == 2 and carry.get_item_count() == 0, "formed zero-Ready crew accepts a second eligible supply")
+	await capture_render("dispatch-formed-zero-ready")
+	await press_preparation_button(panel._send)
+	if not check(ops.journeys.size() == 9 and ops.journeys.has(formed_id) and not ops.is_formed() and ops.ready_count == 0,
+			"the formed crew departs exactly once and leaves an empty preparation"):
+		return
+	check_empty_panel(panel)
+
+	# The first three nonempty returns fill the active slot and two deposits.
+	# Send each newly available member away so the fourth meets an empty roster.
+	for index in 2:
+		timeline.advance(ops.next_return_at() - timeline.clock.elapsed)
+		if not check(ops.ready_count == 1 and panel.is_open(), "queued admission returns a scavenger to Ready"):
+			return
+		if not check(depart_pair(ops, "Fuel", "Weapons" if index == 0 else "Morale", 9200 + index), "send the newly available scavenger away"):
+			return
+	timeline.advance(ops.next_return_at() - timeline.clock.elapsed)
+	check(ops.ready_count == 0 and panel._activity.text.contains("Awaiting Lift")
+		and ops.journeys.values().any(func(trip: Dictionary): return trip.status == Ops.WAITING and not ops.destination_busy(trip.destination)),
+		"a returned crew releases its destination while Awaiting Lift without releasing personnel")
+	check_empty_panel(panel)
+	print("DISPATCH_NO_READY_VIEWPORT ", root.size, " display=", DisplayServer.get_name())
+
+func check_empty_panel(panel: CanvasLayer) -> void:
+	check(panel.is_open() and panel._crew.text == "0 Ready  •  No crew available"
+		and panel._members.all(func(button: Button): return button.disabled and not button.button_pressed),
+		"empty roster shows no positive selection or pressed member button: " + panel._crew.text)
+	check(panel._affinities.values().all(func(button: Button): return button.disabled and not button.button_pressed)
+		and panel._send.disabled, "empty roster disables every affinity and Dispatch")
+	check(panel._bulk.text.contains("unavailable") and not panel._destination.text.contains("Development destination"),
+		"empty roster presents loadout, capacity and destination as unavailable")
+
+func depart_pair(ops: RefCounted, first: String, second: String, seed_value: int) -> bool:
+	if not ops.set_members(1) or not ops.toggle_affinity(first) or not ops.toggle_affinity(second):
+		return false
+	ops.rng.seed = seed_value
+	return ops.dispatch(ops.revision).ok
+
+func continue_preparation(saved: Dictionary, label: String, save_and_exit: bool = false) -> bool:
+	var saved_ok: bool = shell.save_and_exit() if save_and_exit else shell.save_service.save_snapshot(saved).ok
+	if not check(saved.schema == 9 and saved_ok and shell.continue_run(), "isolated schema-9 Continue: " + label + " " + shell.status_label.text):
+		return false
+	bind_wing()
+	if not check(Snapshot.new().capture(wing) == saved, "exact run snapshot, including cargo, goal, Fuel and Kitchen: " + label):
+		return false
+	await open_dispatch()
+	return check(wing.dispatch_panel.is_open(), "open restored preparation: " + label)
+
+func press_preparation_button(button: Button) -> void:
+	if DisplayServer.get_name() == "headless":
+		button.pressed.emit()
+		return
+	await process_frame
+	var center := button.get_global_rect().get_center()
+	for pressed in [true, false]:
+		var click := InputEventMouseButton.new()
+		click.button_index = MOUSE_BUTTON_LEFT
+		click.position = center
+		click.global_position = center
+		click.pressed = pressed
+		root.push_input(click, true)
+		await process_frame
 
 func prove_layout_extremes(runtime: ReceivingRuntime, timeline: RefCounted) -> void:
 	var pool := Config.build_pool(runtime.item_catalog)

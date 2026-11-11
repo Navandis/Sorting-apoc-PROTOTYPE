@@ -19,6 +19,7 @@ var _lanes: Dictionary = {}
 var _crew: Label
 var _bulk: Label
 var _item: Label
+var _supply_hint: Label
 var _destination: Label
 var _reason: Label
 var _activity: Label
@@ -127,33 +128,51 @@ func refresh() -> void:
 	if not is_open():
 		return
 	var locked: bool = operations.is_formed()
-	_crew.text = "%d Ready  •  %d selected%s" % [operations.ready_count, operations.members,
-		"  •  Crew formed, count locked" if locked else ""]
+	var can_prepare: bool = operations.can_prepare_crew()
+	if can_prepare:
+		_crew.text = "%d Ready  •  %d selected%s" % [operations.ready_count, operations.members,
+			"  •  Crew formed, count locked" if locked else ""]
+	else:
+		_crew.text = "0 Ready  •  No crew available"
 	for index in _members.size():
 		_members[index].disabled = locked or index + 1 > operations.ready_count
-		_members[index].set_pressed_no_signal(index + 1 == operations.members)
+		_members[index].set_pressed_no_signal(can_prepare and index + 1 == operations.members)
 	var loadout: RefCounted = operations.loadout
 	var item: ItemInstance = carry.get_selected_item()
-	var preview: Dictionary = operations.preview(item)
+	var preview: Dictionary = operations.preview(item) if can_prepare else {}
 	for lane: String in _lanes:
 		var row: Dictionary = _lanes[lane]
+		if not can_prepare:
+			row.bar.value = 0
+			row.value.text = "—"
+			continue
 		row.bar.max_value = loadout.targets[lane]
 		row.bar.value = loadout.credited[lane]
 		row.value.text = "%d / %d" % [loadout.credited[lane], loadout.targets[lane]]
 		if preview.status == "eligible" and preview.lane == lane:
 			row.value.text += "  →  %d" % preview.projected
-	_bulk.text = "%d / %d Bulk outgoing   •   %d Bulk for loot" % [
-		loadout.submitted_bulk(), loadout.raw_capacity, operations.return_capacity()]
-	_item.text = _selected_item_text(item, preview)
+	if can_prepare:
+		_bulk.text = "%d / %d Bulk outgoing   •   %d Bulk for loot" % [
+			loadout.submitted_bulk(), loadout.raw_capacity, operations.return_capacity()]
+		_item.text = _selected_item_text(item, preview)
+		_supply_hint.text = "[E] Contribute whole item  •  Wheel / 1–0 select"
+	else:
+		_bulk.text = "Loadout and return capacity unavailable."
+		_item.text = "A crew is required to contribute supplies."
+		_supply_hint.text = "Wheel / 1–0 select carried items"
 	for category: String in _affinities:
 		var button: Button = _affinities[category]
-		var selected: bool = operations.affinities.has(category)
+		var selected: bool = can_prepare and operations.affinities.has(category)
 		button.set_pressed_no_signal(selected)
 		button.disabled = not operations.can_toggle_affinity(category)
-		button.tooltip_text = _affinity_hint(category, selected, button.disabled)
+		button.tooltip_text = _affinity_hint(category, selected, button.disabled) if can_prepare else "Requires a crew."
 	var pair: String = operations.selected_destination()
-	_destination.text = "Select two categories for a destination." if pair.is_empty() else (
-		"Development destination\n%s\nReturns may favor these supplies." % Config.destination_label(pair))
+	if not can_prepare:
+		_destination.text = "Destination selection unavailable."
+	elif pair.is_empty():
+		_destination.text = "Select two categories for a destination."
+	else:
+		_destination.text = "Development destination\n%s\nReturns may favor these supplies." % Config.destination_label(pair)
 	var reason: String = operations.dispatch_error()
 	_send.disabled = not reason.is_empty()
 	_reason.text = _failure if not _failure.is_empty() else (
@@ -261,7 +280,7 @@ func _build_preparation() -> void:
 	_bulk = _label(supplies, "", 21, ACCENT)
 	_item = _label(supplies, "", 20)
 	_item.custom_minimum_size.y = 58
-	_label(supplies, "[E] Contribute whole item  •  Wheel / 1–0 select", 19, MUTED)
+	_supply_hint = _label(supplies, "", 19, MUTED)
 	_label(routing, "DESTINATION AFFINITIES", 22, ACCENT)
 	var choices := GridContainer.new()
 	choices.columns = 4

@@ -56,6 +56,9 @@ func bind(runtime: ReceivingRuntime) -> String:
 func is_formed() -> bool:
 	return not loadout.request_id.is_empty()
 
+func can_prepare_crew() -> bool:
+	return is_formed() or ready_count > 0
+
 func set_members(count: int) -> bool:
 	if is_formed() or count < 1 or count > mini(Config.MAX_MEMBERS, ready_count):
 		return false
@@ -75,7 +78,7 @@ func destination_busy(id: String) -> bool:
 	return _away_by_destination.has(id)
 
 func can_toggle_affinity(category: String) -> bool:
-	if not Config.CATEGORIES.has(category):
+	if not can_prepare_crew() or not Config.CATEGORIES.has(category):
 		return false
 	if affinities.has(category):
 		return true
@@ -138,7 +141,7 @@ func _crew_available() -> bool:
 
 func dispatch_error() -> String:
 	if not _crew_available():
-		return "Choose a crew from the available Ready scavengers."
+		return "Choose a crew from the available Ready scavengers." if can_prepare_crew() else "Wait for a scavenger to become Ready."
 	var id := selected_destination()
 	if id.is_empty():
 		return "Select two distinct supply affinities."

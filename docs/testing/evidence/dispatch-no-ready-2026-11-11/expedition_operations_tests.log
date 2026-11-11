@@ -1,0 +1,13 @@
+Godot Engine v4.7.stable.official.5b4e0cb0f - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+Wing functional storage: installed 16 empty deterministic surface(s); F6 developer grids default OFF, F7 demo disabled.
+ERROR: Authored cargo preparation failed for 0e278187c2d355b284094f99:expedition:3: invalid_layout_input
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _prepare_exact_manifest (res://gameplay/logistics_wing/receiving/receiving_runtime.gd:249)
+       [1] prepare_expedition_manifest (res://gameplay/logistics_wing/receiving/receiving_runtime.gd:231)
+       [2] dispatch (res://gameplay/expeditions/expedition_operations.gd:176)
+       [3] run (res://tools/asset_pipeline/tests/expedition_operations_tests.gd:91)
+expedition_operations_tests: PASS failures=0

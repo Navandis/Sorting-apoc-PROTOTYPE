@@ -77,4 +77,4 @@ The close-out starts from the verified local handoff on `codex/fuel-reserve-emer
 
 The developer separately reported that with zero Ready scavengers and no formed current crew, Dispatch displays `1 selected` and permits affinity edits. Departure is correctly blocked. The reported screenshot shows eight Away expeditions, zero Ready, selected affinities and a disabled Dispatch button.
 
-The introduction date and any relationship to Fuel remain open. Link the separate repair record here when it exists.
+The introduction date and any relationship to Fuel remain open. The repair is technically verified and awaits developer retest. [Dispatch repair result](2026-11-11-dispatch-no-ready-repair-result.md)
