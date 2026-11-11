@@ -1,0 +1,9 @@
+Godot Engine v4.7.stable.official.5b4e0cb0f - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+Wing functional storage: installed 16 empty deterministic surface(s); F6 developer grids default OFF, F7 demo disabled.
+CRT_RENDER skipped under dummy renderer; run with OpenGL for pixel proof
+Wing functional storage: installed 16 empty deterministic surface(s); F6 developer grids default OFF, F7 demo disabled.
+CRT_RENDER skipped under dummy renderer; run with OpenGL for pixel proof
+receiving_lift_crt_tests: PASS (0 failures)

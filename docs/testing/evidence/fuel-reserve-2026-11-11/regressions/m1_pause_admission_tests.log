@@ -1,0 +1,15 @@
+Godot Engine v4.7.stable.official.5b4e0cb0f - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+Wing functional storage: installed 16 empty deterministic surface(s); F6 developer grids default OFF, F7 demo disabled.
+AWAITING_MANIFEST team=prototype_team_A batch=receiving_debug_1842_9001_1_delivery_1 definitions=["loot_000001"]
+AWAITING_RETURN event=return_admitted team=prototype_team_A batch=receiving_debug_1842_9001_1_delivery_1 status=ADMITTED_RETURNED active=receiving_debug_1842_9001_1_delivery_1 queue=[] awaiting=[]
+AWAITING_MANIFEST team=prototype_team_B batch=receiving_debug_1843_9002_1_delivery_2 definitions=["loot_000011"]
+AWAITING_RETURN event=return_admitted team=prototype_team_B batch=receiving_debug_1843_9002_1_delivery_2 status=ADMITTED_RETURNED active=receiving_debug_1842_9001_1_delivery_1 queue=["receiving_debug_1843_9002_1_delivery_2"] awaiting=[]
+AWAITING_MANIFEST team=prototype_team_C batch=receiving_debug_1844_9003_1_delivery_3 definitions=["loot_000002"]
+AWAITING_RETURN event=return_admitted team=prototype_team_C batch=receiving_debug_1844_9003_1_delivery_3 status=ADMITTED_RETURNED active=receiving_debug_1842_9001_1_delivery_1 queue=["receiving_debug_1843_9002_1_delivery_2", "receiving_debug_1844_9003_1_delivery_3"] awaiting=[]
+AWAITING_MANIFEST team=prototype_team_D batch=receiving_debug_1845_9004_1_delivery_4 definitions=["loot_000032"]
+AWAITING_RETURN event=return_awaiting_lift team=prototype_team_D batch=receiving_debug_1845_9004_1_delivery_4 status=AWAITING_LIFT active=receiving_debug_1842_9001_1_delivery_1 queue=["receiving_debug_1843_9002_1_delivery_2", "receiving_debug_1844_9003_1_delivery_3"] awaiting=[{ "team_id": "prototype_team_D", "batch_id": "receiving_debug_1845_9004_1_delivery_4", "status": &"AWAITING_LIFT" }]
+AWAITING_RETURN event=return_admitted_after_waiting team=prototype_team_D batch=receiving_debug_1845_9004_1_delivery_4 status=ADMITTED_RETURNED active=receiving_debug_1843_9002_1_delivery_2 queue=["receiving_debug_1844_9003_1_delivery_3", "receiving_debug_1845_9004_1_delivery_4"] awaiting=[]
+M1_PAUSE_ADMISSION_COMPLETE failures=0

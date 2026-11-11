@@ -1,0 +1,33 @@
+Godot Engine v4.7.stable.official.5b4e0cb0f - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+Wing functional storage: installed 16 empty deterministic surface(s); F6 developer grids default OFF, F7 demo disabled.
+Wing functional storage: installed 16 empty deterministic surface(s); F6 developer grids default OFF, F7 demo disabled.
+Wing functional storage: installed 16 empty deterministic surface(s); F6 developer grids default OFF, F7 demo disabled.
+COLLECTION_AUTOSAVE elapsed=60.0 victory=false ok=true capture_ms=6.701 save_ms=45.133 validation_ms=22.753 disk_write_ms=7.31
+Wing functional storage: installed 16 empty deterministic surface(s); F6 developer grids default OFF, F7 demo disabled.
+Wing functional storage: installed 16 empty deterministic surface(s); F6 developer grids default OFF, F7 demo disabled.
+Wing functional storage: installed 16 empty deterministic surface(s); F6 developer grids default OFF, F7 demo disabled.
+Wing functional storage: installed 16 empty deterministic surface(s); F6 developer grids default OFF, F7 demo disabled.
+Wing functional storage: installed 16 empty deterministic surface(s); F6 developer grids default OFF, F7 demo disabled.
+Wing functional storage: installed 16 empty deterministic surface(s); F6 developer grids default OFF, F7 demo disabled.
+Wing functional storage: installed 16 empty deterministic surface(s); F6 developer grids default OFF, F7 demo disabled.
+Wing functional storage: installed 16 empty deterministic surface(s); F6 developer grids default OFF, F7 demo disabled.
+Wing functional storage: installed 16 empty deterministic surface(s); F6 developer grids default OFF, F7 demo disabled.
+Wing functional storage: installed 16 empty deterministic surface(s); F6 developer grids default OFF, F7 demo disabled.
+Wing functional storage: installed 16 empty deterministic surface(s); F6 developer grids default OFF, F7 demo disabled.
+COLLECTION_AUTOSAVE elapsed=577.307331121536 victory=true ok=true capture_ms=7.53 save_ms=63.648 validation_ms=31.605 disk_write_ms=10.674
+COLLECTION_AUTOSAVE elapsed=638.307331121536 victory=false ok=false capture_ms=7.472 save_ms=25.887 validation_ms=9.496 disk_write_ms=0.0
+WARNING: Collection automatic save failed. Unexpected save working file; left untouched: C:/Users/BOSCHE~1/AppData/Local/Temp/expedition-continuation-1089de66d960dfee/collection/.m1-snapshot.tmp
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _process (res://gameplay/run/run_shell.gd:192)
+       [1] prove_victory_and_failed_save (res://tools/asset_pipeline/tests/collection_continuation_tests.gd:351)
+       [2] run (res://tools/asset_pipeline/tests/collection_continuation_tests.gd:296)
+COLLECTION_AUTOSAVE elapsed=698.307331121536 victory=false ok=true capture_ms=7.364 save_ms=63.702 validation_ms=31.43 disk_write_ms=10.837
+Wing functional storage: installed 16 empty deterministic surface(s); F6 developer grids default OFF, F7 demo disabled.
+Wing functional storage: installed 16 empty deterministic surface(s); F6 developer grids default OFF, F7 demo disabled.
+COLLECTION_AUTOSAVE elapsed=516.307331121536 victory=true ok=true capture_ms=7.462 save_ms=63.857 validation_ms=31.402 disk_write_ms=10.528
+EXPEDITION_SAVE_WITNESS won_at=577.307331121536 validation_ms=31.402
+collection_continuation_tests: PASS checks=136 failures=0

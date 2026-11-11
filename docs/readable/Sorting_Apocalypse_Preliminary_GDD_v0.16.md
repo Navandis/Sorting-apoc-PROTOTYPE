@@ -1272,7 +1272,7 @@ Ordinary schema-4 continuation is accepted at M4, but is not continuous crash-du
 
 Outcome commitment should occur at a natural backend point after legitimate player choices are fixed, before presentation where possible. Preserve committed results through continuation. Incidental uncommitted rerolls within the tolerated loss interval are not a reason to build a general anti-cheat framework; reliable selection among already preserved outcomes remains disallowed by the inherited policy.
 
-The local continuous Kitchen build uses schema 8 in the existing collection slot. It preserves exact Kitchen trigger times, independent random states, outstanding balances, grace and consumption receipts with the existing run, Incinerator, preparation, expedition and victory state. Continue restores effects before play with service panels closed. Confirmed New Run repoints the slot and retains incompatible prior snapshots. Schema 7 has no automatic conversion. The M4 slot remains separate. Release durability remains open.
+Published Kitchen uses schema 8. The local Fuel slice uses schema 9 in the existing collection slot. It preserves the fractional reserve, accounting anchor, Fuel receipts and pending freight start alongside exact Kitchen, physical, expedition, Incinerator and victory state. Continue restores effects before play with service panels closed. Confirmed New Run retains incompatible snapshots, including schema 8. The M4 slot remains separate. Release durability remains open.
 
 <a id="s_18_6_Environment_and_authored_produc"></a>
 
@@ -1402,7 +1402,7 @@ These are historical M4 test values. Frozen inputs are preserved at [docs/design
 
 ### 20.3 Playable entry and human authoring
 
-Normal F5 launch uses res://gameplay/run/run_shell.tscn. The continuous Kitchen slice is human-promoted, published on main and closed in its bounded scope. Standalone F6 uses res://gameplay/logistics_wing/wing_gameplay.tscn with the authored palette. Legacy main.tscn and spatial review scenes retain their authoring roles.
+Normal F5 launch uses res://gameplay/run/run_shell.tscn. Continuous Kitchen is human-promoted and published on main. Fuel Reserve and Emergency Freight is technically ready for developer playtest on its local branch. Standalone F6 retains the authored palette in res://gameplay/logistics_wing/wing_gameplay.tscn. Legacy main.tscn and spatial review scenes retain their authoring roles.
 
 Current saved human content governs actual installations, poses, lighting, wear and source references. Future work must inspect actual dependencies before changes; remote documentation alone does not certify ignored commercial assets or runtime rendering. No game files are changed by this edition.
 
@@ -1471,8 +1471,8 @@ These are design-validation aims, not claimed test results or a new automated ac
 | O-08 · Population and upgrades | Initial Ready count, recruitment/growth, progression ownership for assembled crews, Workshop project roster and Training disposition. |
 | O-09 · Conversion and release | Rations and Salvage category and target rules, yields, capacity and output blocking remain open, along with Salvager access and restrictions. Incinerator rules are confirmed in §15.3. |
 | O-10 · Space and handling | Production shelf capacity/roster, all-storage-from-start decision, route compression and final ergonomics. |
-| O-11 · Interface and time edges | The local build keeps Kitchen, preparation and the Incinerator live. Escape closes service layers before pause. Journal scope, final interface and platform timing edges remain open. |
-| O-12 · Delivery/continuation | Published Kitchen uses schema 8. The Fuel slice calls for the next unused schema and confirmed New Run with incompatible snapshots retained. Release migration and durability remain open. |
+| O-11 · Interface and time edges | The local build keeps Kitchen, preparation, the Incinerator and Fuel live. Escape closes service layers before pause. Journal scope, final interface and platform timing edges remain open. |
+| O-12 · Delivery/continuation | Published Kitchen uses schema 8. The local Fuel slice uses schema 9 with confirmed New Run and retained incompatible snapshots. Release migration and durability remain open. |
 
 The register deliberately leaves unanswered mechanics open. The project already has enough direction to produce this successor; these are boundaries for later design/implementation, not reasons to recreate the old behavior or repeatedly ask the developer to approve the pivot.
 
@@ -1496,9 +1496,9 @@ The collection pivot supersedes midnight handling, mortality, next-day Medical, 
 
 ### 21.5 Document adoption and stopping point
 
-The developer approved the complete v0.16 draft and subsequently approved the contribution allocation and Kitchen rules in the 9 November decision record. Kitchen values are provisional. The record separates iteration defaults from standing design and retains the open decisions for Fuel, provisioning, Medical and Workshop.
+The developer approved the complete v0.16 draft, the 9 November contribution allocation and Kitchen rules, and the 11 November reserve and emergency freight rules in §14. The decision records distinguish standing rules from provisional first-test values. Production provisioning, Medical, future machinery and Workshop remain open.
 
-The entry points route current work to the owning masters and evidence. Kitchen is the sole implementation scope authorized by the continuous-service brief. The accepted expedition fixture and its Medical lane remain the mechanical baseline. Future contribution effects require their own implementation scopes.
+The continuous-service brief authorized Kitchen. The 11 November work order covers reserve accounting, refuelling and emergency freight. The accepted expedition fixture and its Medical lane remain the mechanical baseline. Future contribution effects require their own implementation scopes.
 
 Basis: [PIV §§10–12]; [ADD]; [MVP §§16,21.4]; [H25 §§2–3,10,14]; [WG].
 

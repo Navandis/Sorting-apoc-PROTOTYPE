@@ -196,7 +196,7 @@ Receiving now uses deliberate warm apron practicals, balanced cage task lights a
 
 Purposeful room lighting is the current direction, with no automatic broad ambient/KeyLight floor. It does not permanently prohibit every future intentional ambient contribution. A global policy change, new fixture system or rendering system still needs deliberate design discussion; unfinished neighboring rooms need their own lighting decisions. [37]
 
-The Fuel reserve tiers apply 1.000, 0.835, 0.670 and 0.500 to authored working light strength. Normal power restores the authored values. UI, goal information, indicators, targeting and interaction assistance keep their ordinary behavior. See GDD §14. [38]
+The local Fuel slice applies 1.000, 0.835, 0.670 and 0.500 to authored working light strength. Normal power restores the authored values. UI, goal information, indicators, targeting and interaction assistance keep their ordinary behavior. See GDD §14. [38]
 
 ## 8. Signage, labels, humor, and human traces
 
@@ -321,7 +321,7 @@ The promoted Stage B TAKE-only presenter arranges front crates, rear pallets and
 
 Receiving production uses P05_C02: the approved constructed/panel wall, Worn Concrete Floor and shuttered/formwork ceiling. Base applied finish, structural secondary and fixed base wear preset remain NONE; these base choices do not exclude independently authored wear layers. The EAF5 P01_C02 primary/P05_C03 alternate remain historical proof selections (§34).
 
-Receiving C1 and Stage C remain CLOSED / HUMAN-PROMOTED. Fully-OPEN TAKE, live read-only CRT and the stationary bay/deck/barrier with shutter/audio theatre are accepted. Admission releases healthy crew even when an admitted load must wait at the closed lift for an emergency start. The CRT keeps STATUS, DECK and QUEUE, with green normal and orange emergency mode text. The start wait has its own status. Existing deposited slots/CRT counts are implementation facts, not a cap on target waiting returns. Dispatch furnishing/lighting and sill material remain separate. [37; 38]
+Receiving C1 and Stage C remain CLOSED / HUMAN-PROMOTED. Fully-OPEN TAKE, live read-only CRT and the stationary bay/deck/barrier with shutter/audio theatre are accepted. Admission releases healthy crew even when an admitted load must wait at the closed lift for an emergency start. The local CRT keeps STATUS, DECK and QUEUE, with green normal and orange emergency mode text. A pending start shows WAITING and its remaining active seconds. Existing deposited slots/CRT counts are implementation facts, not a cap on target waiting returns. Dispatch furnishing/lighting and sill material remain separate. [37; 38]
 
 Dispatch preparation is one current crew at a time: choose 1–4 available Ready scavengers, equip and select two affinities, then explicitly send it. Another crew can follow consecutively in the same interface session. Do not furnish or specify parallel preparation tabs or a morning roster; an overview of already dispatched teams is separate. The preparation panel is tentatively live, not paused. [38]
 

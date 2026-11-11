@@ -1,0 +1,8 @@
+Godot Engine v4.7.stable.official.5b4e0cb0f - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+Wing functional storage: installed 16 empty deterministic surface(s); F6 developer grids default OFF, F7 demo disabled.
+FAIL: large advance retires A then opens B exactly once
+ACTIVE_TIME_SAMPLE wall=0.254051 active=0.24868200000037 paused=false fault=
+continuous_run_foundation_tests: FAIL failures=1

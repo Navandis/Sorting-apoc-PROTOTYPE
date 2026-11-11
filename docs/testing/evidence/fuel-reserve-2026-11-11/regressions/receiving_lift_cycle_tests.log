@@ -1,0 +1,13 @@
+Godot Engine v4.7.stable.official.5b4e0cb0f - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+Wing functional storage: installed 16 empty deterministic surface(s); F6 developer grids default OFF, F7 demo disabled.
+ERROR: ASSERTION FAILED: CRT footer AWAITING CARGO
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tools/asset_pipeline/tests/receiving_lift_cycle_tests.gd:23)
+       [1] check_display (res://tools/asset_pipeline/tests/receiving_lift_cycle_tests.gd:199)
+       [2] run_suite (res://tools/asset_pipeline/tests/receiving_lift_cycle_tests.gd:166)
+Wing functional storage: installed 16 empty deterministic surface(s); F6 developer grids default OFF, F7 demo disabled.
+receiving_lift_cycle_tests: FAIL (1 failures)

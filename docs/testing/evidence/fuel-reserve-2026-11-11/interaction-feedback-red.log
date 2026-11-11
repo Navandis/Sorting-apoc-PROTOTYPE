@@ -1,0 +1,9 @@
+Godot Engine v4.7.stable.official.5b4e0cb0f - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+Wing functional storage: installed 16 empty deterministic surface(s); F6 developer grids default OFF, F7 demo disabled.
+FAIL: current headroom clears the obsolete full-tank rejection
+FAIL: power permissions identify the future facilities
+FUEL_STATION path=/root/RunShell/WingGameplay/ReceivingSetDressing/CollisionProxies/ElectricalCabinetMovement viewport=(64, 64) light_normal=2.59999990463257 restored=2.59999990463257
+fuel_interaction_tests: FAIL (73 checks, 2 failures)

@@ -1,0 +1,250 @@
+{
+  "matched": true,
+  "before": [
+    {
+      "Path": "C:\\Users\\Boschetar\\AppData\\Roaming\\Godot\\app_userdata\\Sorting-apoc-PROTOTYPE\\saves\\active-slot.json",
+      "Hash": "4159CE329A1EAC5CC539D915446CB45A531FC6057B1FD73E6B2EDD5528045B63"
+    },
+    {
+      "Path": "C:\\Users\\Boschetar\\AppData\\Roaming\\Godot\\app_userdata\\Sorting-apoc-PROTOTYPE\\saves\\collection\\active-slot.json",
+      "Hash": "0D1D9F4B3BC90D9D00F7FC4BBCEC9B94361C0C85F2D1A16C74ED9B539640490A"
+    },
+    {
+      "Path": "C:\\Users\\Boschetar\\AppData\\Roaming\\Godot\\app_userdata\\Sorting-apoc-PROTOTYPE\\saves\\collection\\Save_695bc0da9ecb584df1576e91_101126-11-16.json",
+      "Hash": "9580CF45D7EB094DF04A2E588D32C3EB2541EFCAC6A9F325F9FDA21DEDC44086"
+    },
+    {
+      "Path": "C:\\Users\\Boschetar\\AppData\\Roaming\\Godot\\app_userdata\\Sorting-apoc-PROTOTYPE\\saves\\collection\\Save_a0dc0071dd2ff3fbf82d0dd1_071126-22-07.json",
+      "Hash": "C2C4E88CB3BC8A9BF3F44A1DC8473294524C2C5C6F902E6704B8ADE724257944"
+    },
+    {
+      "Path": "C:\\Users\\Boschetar\\AppData\\Roaming\\Godot\\app_userdata\\Sorting-apoc-PROTOTYPE\\saves\\collection\\Save_c4838e7fb5ebb5013796971f_081126-11-35.json",
+      "Hash": "00AFD7C334A94308E8AF6EE04BF7DE39081AAC36D955B0654652A4AE485ABEA7"
+    },
+    {
+      "Path": "C:\\Users\\Boschetar\\AppData\\Roaming\\Godot\\app_userdata\\Sorting-apoc-PROTOTYPE\\saves\\collection\\Save_fbd5347f898d8faab4cc1814_081126-15-21.json",
+      "Hash": "18FA3EA83731FD0EE5BE31E91A6805D992B45B8E5417FC1E0414A879B67406D0"
+    },
+    {
+      "Path": "C:\\Users\\Boschetar\\AppData\\Roaming\\Godot\\app_userdata\\Sorting-apoc-PROTOTYPE\\saves\\Save_341c889e7e8615bdfd79ea00_251026-17-33.json",
+      "Hash": "0EE5AF7408DFC0EC4435C4CF4D890DE54F50C9EAA6D2F56B7D8E60D93E65E168"
+    },
+    {
+      "Path": "D:\\Godot Projects\\Sorting-apoc-PROTOTYPE\\data\\environment\\receiving_proof\\eaf5_review_control.png.import",
+      "Hash": "621DE3C3B065AD001B9C30D7C72F98FA046535FEB69F5119061C508EDCD280EA"
+    },
+    {
+      "Path": "D:\\Godot Projects\\Sorting-apoc-PROTOTYPE\\docs\\readable\\media\\Sorting_Apocalypse_Visual_Design_Direction_v0.7_image_01.png.import",
+      "Hash": "7AC6CFC417EE3FC5BCCBB3D5276742EDDFA4F6B3F0E58AD310EA0649AD8AC32B"
+    },
+    {
+      "Path": "D:\\Godot Projects\\Sorting-apoc-PROTOTYPE\\docs\\readable\\media\\Sorting_Apocalypse_Visual_Design_Direction_v0.7_image_02.png.import",
+      "Hash": "6EFF9C787862373008C98D53F784954B8B95276FFC9D0B0B37AA3697555055CB"
+    },
+    {
+      "Path": "D:\\Godot Projects\\Sorting-apoc-PROTOTYPE\\docs\\readable\\media\\Sorting_Apocalypse_Visual_Design_Direction_v0.7_image_03.png.import",
+      "Hash": "D46AC6A89CDC5D8BA050336A3D7CA9F7C5B56C12DE94B66AC4B5D61286B39E09"
+    },
+    {
+      "Path": "D:\\Godot Projects\\Sorting-apoc-PROTOTYPE\\docs\\readable\\media\\Sorting_Apocalypse_Visual_Design_Direction_v0.7_image_04.png.import",
+      "Hash": "BA63F36D49EB5E842BD9842C365603D284B27A722D46D107A6EF3338CA029883"
+    },
+    {
+      "Path": "D:\\Godot Projects\\Sorting-apoc-PROTOTYPE\\docs\\readable\\media\\Sorting_Apocalypse_Visual_Design_Direction_v0.7_image_05.png.import",
+      "Hash": "3CBC5564BF80B91B826225E0F95C7F2EF78B4C7EE6A56E36CE27E7D759099907"
+    },
+    {
+      "Path": "D:\\Godot Projects\\Sorting-apoc-PROTOTYPE\\docs\\testing\\evidence\\continuous-kitchen-2026-11-10\\kitchen-cleared-2560x1421.png.import",
+      "Hash": "B98F0AE8B5B82069C9F3DFD5DB065A6E8D900650B7F52960290D8112B5C4410B"
+    },
+    {
+      "Path": "D:\\Godot Projects\\Sorting-apoc-PROTOTYPE\\docs\\testing\\evidence\\continuous-kitchen-2026-11-10\\kitchen-overdue-1280x720.png.import",
+      "Hash": "073C54D93292F77DF725DADBC1E6E833CF57B5EC9C4CAD573774F9C7C61BDF5D"
+    },
+    {
+      "Path": "D:\\Godot Projects\\Sorting-apoc-PROTOTYPE\\docs\\testing\\evidence\\incinerator-2026-11-08\\front-1280x720.png.import",
+      "Hash": "998D8AEBF7FEDD8996DE042236A959B5620B85ED23AB9F72BC883A6B852E3F16"
+    },
+    {
+      "Path": "D:\\Godot Projects\\Sorting-apoc-PROTOTYPE\\docs\\testing\\evidence\\incinerator-2026-11-08\\panel-1280x720.png.import",
+      "Hash": "5CF8D6669349BF578259A0CD1F54662150BA6676AE0B2769765B494C7EFAF901"
+    },
+    {
+      "Path": "D:\\Godot Projects\\Sorting-apoc-PROTOTYPE\\docs\\testing\\evidence\\incinerator-2026-11-08\\warning-1280x720.png.import",
+      "Hash": "D5DC7354A1C37AA6A3CF703776E2442EB34F71DD600C690581B63C76C8995BF7"
+    },
+    {
+      "Path": "D:\\Godot Projects\\Sorting-apoc-PROTOTYPE\\docs\\testing\\evidence\\incinerator-2026-11-08\\warning-2560x1440.png.import",
+      "Hash": "1B6EF804AFCE43EF8091BBDB948B6FBDDE27B47CF6DC257C6C7A8CC828711E57"
+    },
+    {
+      "Path": "D:\\Godot Projects\\Sorting-apoc-PROTOTYPE\\docs\\readable\\media\\Sorting_Apocalypse_Visual_Design_Direction_v0.5_image_01.png.import",
+      "Hash": "210BF709D8E71D28D2F6CC8537B4A6DBE583880BBE450D001E1E0A6A374A5C55"
+    },
+    {
+      "Path": "D:\\Godot Projects\\Sorting-apoc-PROTOTYPE\\docs\\readable\\media\\Sorting_Apocalypse_Visual_Design_Direction_v0.5_image_02.png.import",
+      "Hash": "41D22F1A834A7B8AFF17D657BC67B4350B4EC0CC8B77AF91EB67220DFABCF299"
+    },
+    {
+      "Path": "D:\\Godot Projects\\Sorting-apoc-PROTOTYPE\\docs\\readable\\media\\Sorting_Apocalypse_Visual_Design_Direction_v0.5_image_03.png.import",
+      "Hash": "AA681B5CA788459EF858E777AE6E232D97E84DCC80A188B47024D6035D64207C"
+    },
+    {
+      "Path": "D:\\Godot Projects\\Sorting-apoc-PROTOTYPE\\docs\\readable\\media\\Sorting_Apocalypse_Visual_Design_Direction_v0.5_image_04.png.import",
+      "Hash": "87879E6F1470BED47AE1A9B8FB608BBD5993EE300B01DBB664B8935E24929D8C"
+    },
+    {
+      "Path": "D:\\Godot Projects\\Sorting-apoc-PROTOTYPE\\docs\\readable\\media\\Sorting_Apocalypse_Visual_Design_Direction_v0.5_image_05.png.import",
+      "Hash": "BDA9EEBA179819BF7F9CC11D7A33C4F612CD83B27B630712FABC42B2FD257BF6"
+    },
+    {
+      "Path": "D:\\Godot Projects\\Sorting-apoc-PROTOTYPE\\docs\\readable\\media\\Sorting_Apocalypse_Visual_Design_Direction_v0.6_image_01.png.import",
+      "Hash": "E6E263F1E645E66B31154B9D8EB1C7CDE873A1D5ACC2841AF003A464C40426C4"
+    },
+    {
+      "Path": "D:\\Godot Projects\\Sorting-apoc-PROTOTYPE\\docs\\readable\\media\\Sorting_Apocalypse_Visual_Design_Direction_v0.6_image_02.png.import",
+      "Hash": "FE5C6E4D21890B5CB7C253C965BABF8358AA55B16900EEA0C85C68B36BD18328"
+    },
+    {
+      "Path": "D:\\Godot Projects\\Sorting-apoc-PROTOTYPE\\docs\\readable\\media\\Sorting_Apocalypse_Visual_Design_Direction_v0.6_image_03.png.import",
+      "Hash": "D92D60C0BCBA7D8C4B40E748A62B1243D76CAA4C6109D2D28C6A8BA507E07B09"
+    },
+    {
+      "Path": "D:\\Godot Projects\\Sorting-apoc-PROTOTYPE\\docs\\readable\\media\\Sorting_Apocalypse_Visual_Design_Direction_v0.6_image_04.png.import",
+      "Hash": "8091D5111A87AAAAF7C5D4ECF5C800A2AE22D7C75BDB9073FCE18DBCCC902309"
+    },
+    {
+      "Path": "D:\\Godot Projects\\Sorting-apoc-PROTOTYPE\\docs\\readable\\media\\Sorting_Apocalypse_Visual_Design_Direction_v0.6_image_05.png.import",
+      "Hash": "7B3D263C5E5D2F417F51D7BAE309FC377305FA454B753F5966DE3FE7BDDED557"
+    },
+    {
+      "Path": "D:\\Godot Projects\\Sorting-apoc-PROTOTYPE\\docs\\testing\\evidence\\greybox-accepted-2026-09-17\\overview_debug_topdown.png.import",
+      "Hash": "1E94A5EF6EE69B4034BFB2C33FC5A3C16CECA449ABA40205985D29F7A050E2F2"
+    }
+  ],
+  "after": [
+    {
+      "Path": "C:\\Users\\Boschetar\\AppData\\Roaming\\Godot\\app_userdata\\Sorting-apoc-PROTOTYPE\\saves\\active-slot.json",
+      "Hash": "4159CE329A1EAC5CC539D915446CB45A531FC6057B1FD73E6B2EDD5528045B63"
+    },
+    {
+      "Path": "C:\\Users\\Boschetar\\AppData\\Roaming\\Godot\\app_userdata\\Sorting-apoc-PROTOTYPE\\saves\\collection\\active-slot.json",
+      "Hash": "0D1D9F4B3BC90D9D00F7FC4BBCEC9B94361C0C85F2D1A16C74ED9B539640490A"
+    },
+    {
+      "Path": "C:\\Users\\Boschetar\\AppData\\Roaming\\Godot\\app_userdata\\Sorting-apoc-PROTOTYPE\\saves\\collection\\Save_695bc0da9ecb584df1576e91_101126-11-16.json",
+      "Hash": "9580CF45D7EB094DF04A2E588D32C3EB2541EFCAC6A9F325F9FDA21DEDC44086"
+    },
+    {
+      "Path": "C:\\Users\\Boschetar\\AppData\\Roaming\\Godot\\app_userdata\\Sorting-apoc-PROTOTYPE\\saves\\collection\\Save_a0dc0071dd2ff3fbf82d0dd1_071126-22-07.json",
+      "Hash": "C2C4E88CB3BC8A9BF3F44A1DC8473294524C2C5C6F902E6704B8ADE724257944"
+    },
+    {
+      "Path": "C:\\Users\\Boschetar\\AppData\\Roaming\\Godot\\app_userdata\\Sorting-apoc-PROTOTYPE\\saves\\collection\\Save_c4838e7fb5ebb5013796971f_081126-11-35.json",
+      "Hash": "00AFD7C334A94308E8AF6EE04BF7DE39081AAC36D955B0654652A4AE485ABEA7"
+    },
+    {
+      "Path": "C:\\Users\\Boschetar\\AppData\\Roaming\\Godot\\app_userdata\\Sorting-apoc-PROTOTYPE\\saves\\collection\\Save_fbd5347f898d8faab4cc1814_081126-15-21.json",
+      "Hash": "18FA3EA83731FD0EE5BE31E91A6805D992B45B8E5417FC1E0414A879B67406D0"
+    },
+    {
+      "Path": "C:\\Users\\Boschetar\\AppData\\Roaming\\Godot\\app_userdata\\Sorting-apoc-PROTOTYPE\\saves\\Save_341c889e7e8615bdfd79ea00_251026-17-33.json",
+      "Hash": "0EE5AF7408DFC0EC4435C4CF4D890DE54F50C9EAA6D2F56B7D8E60D93E65E168"
+    },
+    {
+      "Path": "D:\\Godot Projects\\Sorting-apoc-PROTOTYPE\\data\\environment\\receiving_proof\\eaf5_review_control.png.import",
+      "Hash": "621DE3C3B065AD001B9C30D7C72F98FA046535FEB69F5119061C508EDCD280EA"
+    },
+    {
+      "Path": "D:\\Godot Projects\\Sorting-apoc-PROTOTYPE\\docs\\readable\\media\\Sorting_Apocalypse_Visual_Design_Direction_v0.7_image_01.png.import",
+      "Hash": "7AC6CFC417EE3FC5BCCBB3D5276742EDDFA4F6B3F0E58AD310EA0649AD8AC32B"
+    },
+    {
+      "Path": "D:\\Godot Projects\\Sorting-apoc-PROTOTYPE\\docs\\readable\\media\\Sorting_Apocalypse_Visual_Design_Direction_v0.7_image_02.png.import",
+      "Hash": "6EFF9C787862373008C98D53F784954B8B95276FFC9D0B0B37AA3697555055CB"
+    },
+    {
+      "Path": "D:\\Godot Projects\\Sorting-apoc-PROTOTYPE\\docs\\readable\\media\\Sorting_Apocalypse_Visual_Design_Direction_v0.7_image_03.png.import",
+      "Hash": "D46AC6A89CDC5D8BA050336A3D7CA9F7C5B56C12DE94B66AC4B5D61286B39E09"
+    },
+    {
+      "Path": "D:\\Godot Projects\\Sorting-apoc-PROTOTYPE\\docs\\readable\\media\\Sorting_Apocalypse_Visual_Design_Direction_v0.7_image_04.png.import",
+      "Hash": "BA63F36D49EB5E842BD9842C365603D284B27A722D46D107A6EF3338CA029883"
+    },
+    {
+      "Path": "D:\\Godot Projects\\Sorting-apoc-PROTOTYPE\\docs\\readable\\media\\Sorting_Apocalypse_Visual_Design_Direction_v0.7_image_05.png.import",
+      "Hash": "3CBC5564BF80B91B826225E0F95C7F2EF78B4C7EE6A56E36CE27E7D759099907"
+    },
+    {
+      "Path": "D:\\Godot Projects\\Sorting-apoc-PROTOTYPE\\docs\\testing\\evidence\\continuous-kitchen-2026-11-10\\kitchen-cleared-2560x1421.png.import",
+      "Hash": "B98F0AE8B5B82069C9F3DFD5DB065A6E8D900650B7F52960290D8112B5C4410B"
+    },
+    {
+      "Path": "D:\\Godot Projects\\Sorting-apoc-PROTOTYPE\\docs\\testing\\evidence\\continuous-kitchen-2026-11-10\\kitchen-overdue-1280x720.png.import",
+      "Hash": "073C54D93292F77DF725DADBC1E6E833CF57B5EC9C4CAD573774F9C7C61BDF5D"
+    },
+    {
+      "Path": "D:\\Godot Projects\\Sorting-apoc-PROTOTYPE\\docs\\testing\\evidence\\incinerator-2026-11-08\\front-1280x720.png.import",
+      "Hash": "998D8AEBF7FEDD8996DE042236A959B5620B85ED23AB9F72BC883A6B852E3F16"
+    },
+    {
+      "Path": "D:\\Godot Projects\\Sorting-apoc-PROTOTYPE\\docs\\testing\\evidence\\incinerator-2026-11-08\\panel-1280x720.png.import",
+      "Hash": "5CF8D6669349BF578259A0CD1F54662150BA6676AE0B2769765B494C7EFAF901"
+    },
+    {
+      "Path": "D:\\Godot Projects\\Sorting-apoc-PROTOTYPE\\docs\\testing\\evidence\\incinerator-2026-11-08\\warning-1280x720.png.import",
+      "Hash": "D5DC7354A1C37AA6A3CF703776E2442EB34F71DD600C690581B63C76C8995BF7"
+    },
+    {
+      "Path": "D:\\Godot Projects\\Sorting-apoc-PROTOTYPE\\docs\\testing\\evidence\\incinerator-2026-11-08\\warning-2560x1440.png.import",
+      "Hash": "1B6EF804AFCE43EF8091BBDB948B6FBDDE27B47CF6DC257C6C7A8CC828711E57"
+    },
+    {
+      "Path": "D:\\Godot Projects\\Sorting-apoc-PROTOTYPE\\docs\\readable\\media\\Sorting_Apocalypse_Visual_Design_Direction_v0.5_image_01.png.import",
+      "Hash": "210BF709D8E71D28D2F6CC8537B4A6DBE583880BBE450D001E1E0A6A374A5C55"
+    },
+    {
+      "Path": "D:\\Godot Projects\\Sorting-apoc-PROTOTYPE\\docs\\readable\\media\\Sorting_Apocalypse_Visual_Design_Direction_v0.5_image_02.png.import",
+      "Hash": "41D22F1A834A7B8AFF17D657BC67B4350B4EC0CC8B77AF91EB67220DFABCF299"
+    },
+    {
+      "Path": "D:\\Godot Projects\\Sorting-apoc-PROTOTYPE\\docs\\readable\\media\\Sorting_Apocalypse_Visual_Design_Direction_v0.5_image_03.png.import",
+      "Hash": "AA681B5CA788459EF858E777AE6E232D97E84DCC80A188B47024D6035D64207C"
+    },
+    {
+      "Path": "D:\\Godot Projects\\Sorting-apoc-PROTOTYPE\\docs\\readable\\media\\Sorting_Apocalypse_Visual_Design_Direction_v0.5_image_04.png.import",
+      "Hash": "87879E6F1470BED47AE1A9B8FB608BBD5993EE300B01DBB664B8935E24929D8C"
+    },
+    {
+      "Path": "D:\\Godot Projects\\Sorting-apoc-PROTOTYPE\\docs\\readable\\media\\Sorting_Apocalypse_Visual_Design_Direction_v0.5_image_05.png.import",
+      "Hash": "BDA9EEBA179819BF7F9CC11D7A33C4F612CD83B27B630712FABC42B2FD257BF6"
+    },
+    {
+      "Path": "D:\\Godot Projects\\Sorting-apoc-PROTOTYPE\\docs\\readable\\media\\Sorting_Apocalypse_Visual_Design_Direction_v0.6_image_01.png.import",
+      "Hash": "E6E263F1E645E66B31154B9D8EB1C7CDE873A1D5ACC2841AF003A464C40426C4"
+    },
+    {
+      "Path": "D:\\Godot Projects\\Sorting-apoc-PROTOTYPE\\docs\\readable\\media\\Sorting_Apocalypse_Visual_Design_Direction_v0.6_image_02.png.import",
+      "Hash": "FE5C6E4D21890B5CB7C253C965BABF8358AA55B16900EEA0C85C68B36BD18328"
+    },
+    {
+      "Path": "D:\\Godot Projects\\Sorting-apoc-PROTOTYPE\\docs\\readable\\media\\Sorting_Apocalypse_Visual_Design_Direction_v0.6_image_03.png.import",
+      "Hash": "D92D60C0BCBA7D8C4B40E748A62B1243D76CAA4C6109D2D28C6A8BA507E07B09"
+    },
+    {
+      "Path": "D:\\Godot Projects\\Sorting-apoc-PROTOTYPE\\docs\\readable\\media\\Sorting_Apocalypse_Visual_Design_Direction_v0.6_image_04.png.import",
+      "Hash": "8091D5111A87AAAAF7C5D4ECF5C800A2AE22D7C75BDB9073FCE18DBCCC902309"
+    },
+    {
+      "Path": "D:\\Godot Projects\\Sorting-apoc-PROTOTYPE\\docs\\readable\\media\\Sorting_Apocalypse_Visual_Design_Direction_v0.6_image_05.png.import",
+      "Hash": "7B3D263C5E5D2F417F51D7BAE309FC377305FA454B753F5966DE3FE7BDDED557"
+    },
+    {
+      "Path": "D:\\Godot Projects\\Sorting-apoc-PROTOTYPE\\docs\\testing\\evidence\\greybox-accepted-2026-09-17\\overview_debug_topdown.png.import",
+      "Hash": "1E94A5EF6EE69B4034BFB2C33FC5A3C16CECA449ABA40205985D29F7A050E2F2"
+    }
+  ],
+  "save_file_count": 7,
+  "changed_hashes": [],
+  "changed_save_paths": []
+}
