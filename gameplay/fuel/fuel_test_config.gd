@@ -4,7 +4,8 @@ const CAPACITY := 60.0
 const STARTING_RESERVE := 55.0
 const SECONDS_PER_UTILITY := 30.0
 const EMERGENCY_WAIT := 60.0
-const THRESHOLDS := [45.0, 30.0, 15.0]
+const NORMAL_LIFT_MINIMUM := 15.0
+const THRESHOLDS := [45.0, 30.0, NORMAL_LIFT_MINIMUM]
 const LIGHT_STRENGTH := [1.0, 0.835, 0.670, 0.5]
 const BAND_NAMES := ["Full power", "Salvager offline", "Workshop offline", "Emergency freight"]
 

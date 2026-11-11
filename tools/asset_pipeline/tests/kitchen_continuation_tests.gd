@@ -290,6 +290,7 @@ func prove_compatibility(schema_seven: Dictionary) -> void:
 	schema_seven.erase("kitchen")
 	schema_seven.erase("fuel")
 	schema_seven.receiving.cycle.erase("start_due_at")
+	schema_seven.receiving.cycle.erase("last_turnaround_at")
 	current_scene = null
 	shell.free()
 	var directory := ProjectSettings.globalize_path("user://kitchen-legacy/collection")

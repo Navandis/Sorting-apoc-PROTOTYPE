@@ -3,7 +3,9 @@ extends RefCounted
 const Config := preload("res://gameplay/fuel/fuel_test_config.gd")
 const Catalog := preload("res://prototype_item_catalog.gd")
 
-static func validate(state: Dictionary, elapsed: float, items: Dictionary, terminal: Dictionary,
+var normal_freight_through := 0.0
+
+func validate(state: Dictionary, elapsed: float, items: Dictionary, terminal: Dictionary,
 		seed_prefix: String, seed_definition: Callable) -> String:
 	if not _shape(state, {"config": TYPE_DICTIONARY, "anchor_at": TYPE_FLOAT,
 			"anchor_reserve": TYPE_FLOAT, "reserve": TYPE_FLOAT, "receipts": TYPE_ARRAY}):
@@ -12,6 +14,7 @@ static func validate(state: Dictionary, elapsed: float, items: Dictionary, termi
 		return "Incompatible Fuel test configuration"
 	var anchor_at := 0.0
 	var amount := Config.STARTING_RESERVE
+	normal_freight_through = Config.crossing_at(amount, anchor_at, Config.NORMAL_LIFT_MINIMUM)
 	for receipt: Variant in state.receipts:
 		if not _shape(receipt, {"item_id": TYPE_STRING, "definition_id": TYPE_STRING,
 				"contaminated": TYPE_BOOL, "raw": TYPE_INT, "applied": TYPE_FLOAT,
@@ -37,6 +40,8 @@ static func validate(state: Dictionary, elapsed: float, items: Dictionary, termi
 			return "Fuel receipt does not conserve credited and wasted Utility: " + id
 		amount = Config.CAPACITY if raw >= headroom else before + applied
 		anchor_at = receipt.at
+		if amount >= Config.NORMAL_LIFT_MINIMUM:
+			normal_freight_through = Config.crossing_at(amount, anchor_at, Config.NORMAL_LIFT_MINIMUM)
 		terminal[id] = receipt
 	if anchor_at != state.anchor_at or amount != state.anchor_reserve \
 			or Config.reserve_at(amount, anchor_at, elapsed) != state.reserve:

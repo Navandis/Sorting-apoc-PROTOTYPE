@@ -47,7 +47,7 @@ func _update_readout() -> void:
 	if waiting:
 		_update_wait()
 	else:
-		ui.get_node("Waiting").text = "LIFT RETURNING" if _cycle.is_departing() else FOOTER[state]
+		ui.get_node("Waiting").text = FOOTER[state]
 
 func _process(_delta: float) -> void:
 	if _cycle != null and _cycle.is_waiting_to_start():

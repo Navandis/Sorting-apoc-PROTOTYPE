@@ -57,8 +57,13 @@ func run() -> void:
 			check(first.pickup_into(carry) and cycle.get_cycle_state() == ReceivingLiftCycle.State.CLOSING, "successful last TAKE starts closing")
 			timeline.advance(3.4)
 			check(manager.get_active_batch() == batches[0], "closed contact retains cargo through outbound")
-			timeline.advance(100.0)
-			check(manager.get_active_batch() == batches[1] and cycle.can_take_receiving(), "large advance retires A then opens B exactly once")
+			var starts := [0]
+			cycle.state_changed.connect(func(state):
+				if state == ReceivingLiftCycle.State.ARRIVAL:
+					starts[0] += 1)
+			timeline.advance(120.0)
+			check(manager.get_active_batch() == batches[1] and cycle.can_take_receiving() and starts[0] == 1,
+				"large advance completes outbound and the emergency wait, then opens B once")
 			check(manager.get_queued_batch_ids() == PackedStringArray([batches[2].batch_id, batches[3].batch_id]), "queued C precedes admitted D")
 			check(admission.get_return_status("pressure_003") == &"ADMITTED_RETURNED", "waiting cargo admits without changing identity")
 	var clock: RefCounted = timeline.clock

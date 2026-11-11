@@ -88,6 +88,10 @@ func prove_wait_and_receipts() -> bool:
 	timeline.advance(cycle.seconds_to_boundary() + 3.25)
 	check(runtime.receiving_manager.get_active_batch().source_ref == second and cycle.is_waiting_to_start()
 		and wing.expeditions.journeys[fourth].status == Ops.COMPLETE, "retirement promotes FIFO and admits the waiting crew before next start")
+	var shortened := capture()
+	shortened.receiving.cycle.start_due_at = shortened.timeline.elapsed + 1.0
+	check(Snapshot.new().validate(shortened).contains("deadline"),
+		"an early deadline cannot count deposited time before the last complete outbound turnaround")
 	if not await roundtrip("Fuel receipt after its source retired, fractional reserve and next wait"):
 		return false
 	var before_refill := capture()
@@ -209,6 +213,7 @@ func prove_compatibility(initial: Dictionary) -> void:
 	initial.schema = 8
 	initial.erase("fuel")
 	initial.receiving.cycle.erase("start_due_at")
+	initial.receiving.cycle.erase("last_turnaround_at")
 	current_scene = null
 	shell.free()
 	var directory := ProjectSettings.globalize_path("user://fuel-legacy/collection")

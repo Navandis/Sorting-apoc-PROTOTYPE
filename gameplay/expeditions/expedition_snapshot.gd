@@ -193,6 +193,7 @@ func validate_cargo(receiving: Dictionary, batches: Dictionary, items: Dictionar
 			return "Invalid deposited and Awaiting Lift FIFO order"
 		previous = team
 	var expected_returns := 0
+	var last_retired_handover := -1.0
 	var expedition_items := {}
 	for batch_id: String in _cargo_teams:
 		var id: String = _cargo_teams[batch_id]
@@ -207,6 +208,8 @@ func validate_cargo(receiving: Dictionary, batches: Dictionary, items: Dictionar
 			var status := AwaitingLiftAdmission.AWAITING_LIFT if trip.status == Ops.WAITING else AwaitingLiftAdmission.ADMITTED_RETURNED
 			if record.get("status") != status or record.get("batch_id") != batch_id:
 				return "Expedition handover disagrees with Receiving"
+		if batch == null and trip.status == Ops.COMPLETE:
+			last_retired_handover = maxf(last_retired_handover, trip.handover_at)
 		var entries: Array[LootBatchEntry] = []
 		if batch != null:
 			entries = batch.entries
@@ -250,6 +253,9 @@ func validate_cargo(receiving: Dictionary, batches: Dictionary, items: Dictionar
 				if bounds.intersects(other):
 					return "Expedition cargo has overlapping deck reservations"
 			occupied.append(bounds)
+	var turnaround: float = receiving.cycle.last_turnaround_at
+	if (turnaround == -1.0) != (last_retired_handover == -1.0) or turnaround < last_retired_handover:
+		return "Completed freight turnaround disagrees with retired cargo history"
 	if expected_returns != admission.returns.size() or batches.size() > _cargo_teams.size():
 		return "Cargo or handover has no expedition"
 	for batch_id: String in batches:

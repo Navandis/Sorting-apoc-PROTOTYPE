@@ -54,6 +54,7 @@ var _configured := false
 var _freight_clock: RefCounted
 var _emergency_mode := false
 var _start_due_at := NO_START_DEADLINE
+var _last_turnaround_at := -1.0
 var reconstructing := false
 var externally_driven := false
 
@@ -139,9 +140,6 @@ func is_waiting_to_start() -> bool:
 func wait_remaining() -> float:
 	return maxf(0.0, _start_due_at - _freight_clock.elapsed) if is_waiting_to_start() else 0.0
 
-func is_departing() -> bool:
-	return _departing
-
 func can_take_receiving() -> bool:
 	return (
 		_configured and _state == State.OPEN and not _departing
@@ -223,6 +221,8 @@ func _settle_boundary() -> void:
 				# Safe completed-turnaround retirement. FIFO promotion stays manager-owned.
 				_retiring = true
 				var promoted_id := _presenter.retire_drained_active_after_close()
+				if _freight_clock != null and _manager.get_active_batch_id() != _cycle_batch_id:
+					_last_turnaround_at = _freight_clock.elapsed
 				_retiring = false
 				_departing = false
 				_busy = false
@@ -334,7 +334,7 @@ func _request_refresh() -> void:
 func capture_state() -> Dictionary:
 	return {"state": int(_state), "elapsed": _elapsed, "duration": _phase_duration,
 		"warning_elapsed": _warning_elapsed, "busy": _busy, "departing": _departing,
-		"batch": _cycle_batch_id, "start_due_at": _start_due_at,
+		"batch": _cycle_batch_id, "start_due_at": _start_due_at, "last_turnaround_at": _last_turnaround_at,
 		"shutter_y": _shutter.position.y if is_instance_valid(_shutter) else _closed_y}
 
 
@@ -351,6 +351,7 @@ func restore_state(state: Dictionary) -> bool:
 	_departing = state.departing
 	_cycle_batch_id = state.batch
 	_start_due_at = state.start_due_at
+	_last_turnaround_at = state.last_turnaround_at
 	_retiring = false
 	_shutter.position.y = state.shutter_y
 	_presenter.suspend_pickup()

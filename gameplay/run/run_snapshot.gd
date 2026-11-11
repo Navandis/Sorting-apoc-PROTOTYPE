@@ -150,11 +150,12 @@ func validate(state: Dictionary) -> String:
 	var kitchen_error := KitchenSnapshot.new().validate(state.kitchen, state.timeline.elapsed, state.items,
 		terminal, state.run.id + ":wing_seed_v1:", _seed_definition)
 	if not kitchen_error.is_empty(): return kitchen_error
-	var fuel_error := FuelSnapshot.validate(state.fuel, state.timeline.elapsed, state.items,
+	var fuel := FuelSnapshot.new()
+	var fuel_error := fuel.validate(state.fuel, state.timeline.elapsed, state.items,
 		terminal, state.run.id + ":wing_seed_v1:", _seed_definition)
 	if not fuel_error.is_empty(): return fuel_error
 	terminal.make_read_only()
-	var receiving_error := _validate_receiving(state, owners, expedition, terminal)
+	var receiving_error := _validate_receiving(state, owners, expedition, terminal, fuel.normal_freight_through)
 	if not receiving_error.is_empty(): return receiving_error
 	if owners.size() != state.items.size(): return "Unowned physical item in save"
 	if not _fields(state.player, {"transform":TYPE_TRANSFORM3D,"camera":TYPE_TRANSFORM3D,"pitch":TYPE_FLOAT,
@@ -281,7 +282,8 @@ func _batch_states(receiving: Dictionary) -> Array:
 		all.append(pending.batch)
 	return all
 
-func _validate_receiving(state: Dictionary, owners: Dictionary, expedition: RefCounted, terminal: Dictionary) -> String:
+func _validate_receiving(state: Dictionary, owners: Dictionary, expedition: RefCounted, terminal: Dictionary,
+		normal_freight_through: float) -> String:
 	var receiving: Dictionary = state.receiving
 	var away: Dictionary = state.expeditions.away_cargo
 	var items: Dictionary = state.items
@@ -352,14 +354,15 @@ func _validate_receiving(state: Dictionary, owners: Dictionary, expedition: RefC
 		if not away.has(batch_id) and not receiving.admission.batch_teams.has(batch_id):
 			return "Cargo has no admission commitment"
 	var active: LootBatch = batches.get(manager.active)
-	var lift_error := _validate_lift(receiving.cycle, active, state, expedition)
+	var lift_error := _validate_lift(receiving.cycle, active, state.timeline.elapsed, expedition, normal_freight_through)
 	if not lift_error.is_empty(): return lift_error
 	return expedition.validate_cargo(receiving, batches, items, owners, current_profile, terminal)
 
-func _validate_lift(cycle: Variant, active: LootBatch, state: Dictionary, expedition: RefCounted) -> String:
+func _validate_lift(cycle: Variant, active: LootBatch, elapsed: float, expedition: RefCounted,
+		normal_freight_through: float) -> String:
 	if not _fields(cycle, {"state":TYPE_INT,"elapsed":TYPE_FLOAT,"duration":TYPE_FLOAT,"warning_elapsed":TYPE_FLOAT,
 		"busy":TYPE_BOOL,"departing":TYPE_BOOL,"batch":TYPE_STRING,"shutter_y":TYPE_FLOAT,
-		"start_due_at":TYPE_FLOAT}, "Lift"): return _error
+		"start_due_at":TYPE_FLOAT,"last_turnaround_at":TYPE_FLOAT}, "Lift"): return _error
 	var phase: int = cycle.state
 	var closed := phase == ReceivingLiftCycle.State.SEALED_EMPTY
 	var waiting: bool = cycle.start_due_at != ReceivingLiftCycle.NO_START_DEADLINE
@@ -373,13 +376,14 @@ func _validate_lift(cycle: Variant, active: LootBatch, state: Dictionary, expedi
 	if not is_finite(cycle.shutter_y): return "Invalid shutter pose"
 	if active != null and active.is_drained() != (phase == ReceivingLiftCycle.State.CLOSING or cycle.departing):
 		return "Lift phase/drained cargo mismatch"
+	var turnaround: float = cycle.last_turnaround_at
+	if not is_finite(turnaround) or (turnaround != -1.0 and (turnaround < 0.0 or turnaround > elapsed)):
+		return "Invalid completed freight turnaround time"
 	if waiting:
-		var elapsed: float = state.timeline.elapsed
 		var due: float = cycle.start_due_at
-		var fuel: Dictionary = state.fuel
-		if not is_finite(due) or due <= elapsed or due > elapsed + FuelConfig.EMERGENCY_WAIT \
-				or due < expedition.cargo_handover_at(active.batch_id) + FuelConfig.EMERGENCY_WAIT \
-				or FuelConfig.band_at(fuel.anchor_reserve, fuel.anchor_at, elapsed) != 3:
+		var eligible_at := maxf(turnaround, expedition.cargo_handover_at(active.batch_id))
+		if not is_finite(due) or due <= elapsed or eligible_at > elapsed \
+				or due != eligible_at + FuelConfig.EMERGENCY_WAIT or eligible_at <= normal_freight_through:
 			return "Invalid emergency freight start deadline or power"
 		if cycle.elapsed != 0.0 or cycle.duration != 0.0 or cycle.warning_elapsed != 0.0 \
 				or cycle.shutter_y != _authored_closed_shutter_y():

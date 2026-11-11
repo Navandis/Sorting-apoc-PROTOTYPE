@@ -197,7 +197,7 @@ func recover_freight() -> void:
 		if surplus == null or not store_recovery_surplus(surplus, stock):
 			return
 	timeline.advance(cycle.seconds_to_boundary())
-	check(cycle.is_departing() and not cycle.is_waiting_to_start(), "recovered freight keeps the full outbound leg")
+	check(cycle.capture_state().departing and not cycle.is_waiting_to_start(), "recovered freight keeps the full outbound leg")
 	timeline.advance(cycle.seconds_to_boundary())
 	check(runtime.receiving_manager.get_active_batch().source_ref == second and not cycle.is_waiting_to_start()
 		and cycle.get_cycle_state() == ReceivingLiftCycle.State.ARRIVAL,
