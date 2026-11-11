@@ -1,6 +1,6 @@
 # Fuel Reserve and Emergency Freight
 
-**Technically ready for developer playtest.** Local branch `codex/fuel-reserve-emergency-freight`.
+**HUMAN-PROMOTED / CLOSED IN ITS BOUNDED SCOPE — LOCAL; PUBLICATION PENDING.** Local branch `codex/fuel-reserve-emergency-freight`.
 
 ## Preflight and documentation checkpoint
 
@@ -10,7 +10,7 @@ GDD §14 owns the approved reserve and freight rules. The three current Word mas
 
 The foundation checkpoint `a1d1db4` already retired the daily schedule, timed validator, station adapters, night report and scenario-dependent tests and UIDs. Kitchen close-out `7e80d41` retired the unused contribution modal. Searches of current scripts, project/scene/resource references and test paths found no live Ops debt, chance, episode, stage freeze or Incinerator lockout policy. The logistics-wing geometry and traversal fixtures still use the authored Ops landing and boundary. The Fuel canister maintenance review and tests cover the physical catalogue and storage, so they remain useful. The exact selected-item transaction, run save service and old-schema diagnostics have live callers.
 
-Implementation and playtest verification are pending at this documentation checkpoint.
+Implementation and playtest verification were pending at this documentation checkpoint.
 
 
 ## Implemented behavior
@@ -33,6 +33,7 @@ One implementer worked in this Codex chat. The exact implementer model variant a
 | Word masters, reading copies and authority routing | `2c12eb88ce5a1a52a017b372f97eb2af5e019ecc` |
 | Reserve, live station, freight, lighting and schema 9 | `425c815558d0c371c8968214fe4eed4c977d81d7` |
 | Review correction and affected regressions | `ab77b76aa8d13683825d3dce046e1cb83abcca4e` |
+| Technical verification and developer handoff | `306cdba3d74573c3484d04f608eb25b54623d96e` |
 
 ## Verification
 
@@ -47,7 +48,7 @@ The native fixture positioned the player at ordinary reticle stances, about 1.25
 
 The fixtures use the existing six-Utility goal and sixteen-definition expedition pool. The focused post-victory sample took about 64 ms in the save service and 8 ms in capture. Windows certificate-store and held-item material diagnostics remain in the logs, along with the deliberate invalid-cargo and save-write-blocker cases. Larger-stock save cost, release balance, short silent suspension and crash durability remain open.
 
-## Developer playtest
+## Developer playtest checklist at technical handoff
 
 1. Start a New Run in an isolated profile. Verify 55/60, normal green freight, and that F only inspects. Select Fuel, check fractional credit and waste, then press E once. Try a full tank, an ineligible item and holding E through ESC.
 2. Use an isolated low-reserve fixture to check the three dimmer tiers, orange CRT and normal restoration. Observe goal and item legibility and ordinary W1 indication.
@@ -55,3 +56,25 @@ The fixtures use the existing six-Utility goal and sixteen-definition expedition
 4. Top up during a wait first below 15, then to at least 15. Observe the retained deadline and then one immediate start. Check that subsequent power loss leaves the ongoing cycle running.
 5. Save and Continue while waiting, during a cycle and after refuelling. Check the reserve fraction, exact cargo, crew, deadline and first-victory time. Try the ordinary Kitchen, shelf, ladder and Incinerator interactions.
 6. At zero reserve and 10 Bulk carrying capacity, unload and physically carry generated Fuel to the cabinet. Verify that refuelling restores ordinary freight and that the next deposit arrives after full turnaround.
+
+## 11 November 2026 developer promotion
+
+The developer explicitly promoted Fuel Reserve and Emergency Freight after a successful gameplay test. The milestone is **HUMAN-PROMOTED / CLOSED IN ITS BOUNDED SCOPE — LOCAL; PUBLICATION PENDING**.
+
+The developer reported the following observations from the scenarios played:
+
+- The starting reserve, maximum capacity and consumption behaved as specified. In the run without initial top-ups, the three thresholds took effect at the expected times and produced the expected lighting changes.
+- Below 15, the CRT displayed emergency freight in orange. The minute wait occurred at the expected stage, and the normal delivery animation and sounds played uninterrupted.
+- Refuelling above 15 restored normal freight. Refuelling across the other thresholds restored their corresponding lighting levels.
+- Refuelling produced no unexpected grace periods, threshold rewards or other triggers. At zero, the reserve stayed at zero without debt or an additional event.
+- Other game systems, saving and loading, and victory progress behaved as expected in the tested scenarios.
+
+The technical evidence above covers exact equality at 15, additional continuation boundaries and power permissions for the future Workshop and Salvager systems. Recovery coverage uses the sixteen-definition expedition pool. Production balance, broader catalogue recovery, large-stock save cost, short silent suspension, crash durability and the recorded diagnostics remain qualified.
+
+The close-out starts from the verified local handoff on `codex/fuel-reserve-emergency-freight`. The remote advertised `main` at `a58cbf594a4e12d202cd8ba56d3ef73c82b03019` on 11 November 2026 and had no branch ref for the local Fuel branch.
+
+## Open Dispatch follow-up
+
+The developer separately reported that with zero Ready scavengers and no formed current crew, Dispatch displays `1 selected` and permits affinity edits. Departure is correctly blocked. The reported screenshot shows eight Away expeditions, zero Ready, selected affinities and a disabled Dispatch button.
+
+The introduction date and any relationship to Fuel remain open. Link the separate repair record here when it exists.

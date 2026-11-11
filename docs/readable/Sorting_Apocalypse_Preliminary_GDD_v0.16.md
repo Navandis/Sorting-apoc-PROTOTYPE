@@ -1402,7 +1402,7 @@ These are historical M4 test values. Frozen inputs are preserved at [docs/design
 
 ### 20.3 Playable entry and human authoring
 
-Normal F5 launch uses res://gameplay/run/run_shell.tscn. Continuous Kitchen is human-promoted and published on main. Fuel Reserve and Emergency Freight is technically ready for developer playtest on its local branch. Standalone F6 retains the authored palette in res://gameplay/logistics_wing/wing_gameplay.tscn. Legacy main.tscn and spatial review scenes retain their authoring roles.
+Normal F5 launch uses res://gameplay/run/run_shell.tscn. Continuous Kitchen is human-promoted and published on main. Fuel Reserve and Emergency Freight is human-promoted and closed locally in its bounded scope. Publication is pending. Standalone F6 retains the authored palette in res://gameplay/logistics_wing/wing_gameplay.tscn. Legacy main.tscn and spatial review scenes retain their authoring roles.
 
 Current saved human content governs actual installations, poses, lighting, wear and source references. Future work must inspect actual dependencies before changes; remote documentation alone does not certify ignored commercial assets or runtime rendering. No game files are changed by this edition.
 
