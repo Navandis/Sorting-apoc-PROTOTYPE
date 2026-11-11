@@ -569,7 +569,7 @@ Basis: [G15 §§7,18.3]; [MVP §§5–6,16] for transfer/continuation; [VDD §§
 | Expedition loadout | Food, Hydration, Protection, Weapons, Morale (target) | Proactive bonuses to an individual expedition. The current mechanical fixture retains Medical in place of Morale and has no outcome bonuses. |
 | Kitchen | Food and Hydration; potential physical Rations | Food and Hydration relieve a shared player carrying and sprint penalty. Rations remain an optional future conversion. |
 | Medical | Medical | The Ward alone handles healing. Medical accelerates natural recovery of Light and Severe injuries. Treatment implementation remains open. |
-| Bunker Ops | Fuel (possible future Energy framing) | Future finite greyouts affect bunker machinery and environmental lighting. |
+| Bunker Ops | Fuel (possible future Energy framing) | Physical Fuel sustains an active-time reserve. Reserve tiers govern environmental lighting and machinery power. |
 | Workshop | Electronics for one-time purchases. Other materials and Salvage remain open. | Optional lasting improvement purchased with goods that might otherwise support the hoard. |
 | Salvager | Item → physical Salvage | Spatially useful conversion; output grammar and yields remain to revalidate. |
 | Incinerator | Item → no output | Deliberate permanent space release. |
@@ -594,9 +594,9 @@ Incineration follows the same exact-item transaction boundary. Its receipt recor
 
 **AGREED HIGH-LEVEL APPROACH.** Briefly deferring a request to finish another activity is legitimate; ignoring a department indefinitely should generally be costly. The working direction is persistent requests without ordinary short expiry windows, with a possible grace/wind-up interval before adverse effects intensify and persist until addressed.
 
-Both outstanding work and penalties need understandable bounds. Kitchen's cumulative obligation, grace and proportional restoration are defined in §12. Fuel greyout boundaries are in §14. Other services retain their own open issuance and recovery rules.
+Kitchen's cumulative obligation, grace and proportional restoration are defined in §12. Fuel uses the separate persistent reserve in §14. Other services retain their own open issuance and recovery rules.
 
-An expedition with no loadout has its ordinary capabilities. Voluntary loadout buys advantages for that crew. Bunker services operate at baseline without an outstanding problem. Recurring contributions restore service under departmental rules. Kitchen affects player logistics. Fuel may delay bunker handover through the lift. Service obligations leave committed expedition duration, cargo, recruitment and injuries intact. Clearing a request is never a victory condition.
+An expedition with no loadout has its ordinary capabilities. Voluntary loadout buys advantages for that crew. Kitchen contributions restore player logistics. Fuel supports environmental lighting and freight throughput. Service supply leaves admission, committed expedition duration, cargo, recruitment and injuries intact. Victory depends on the live stored totals.
 
 <a id="s_8_4_Definition_state_and_consequence"></a>
 
@@ -832,7 +832,7 @@ The all-destinations-busy case and the all-crews-waiting case must be legible, b
 
 | **State** | **Player-facing and ownership behavior** |
 | --- | --- |
-| SEALED_EMPTY | Shutter closed and TAKE disabled. During outbound turnaround the visible IDLE state still means the machinery is busy. |
+| SEALED_EMPTY | Shutter closed and TAKE disabled. This covers empty idle, outbound turnaround, or an admitted load waiting to start under §14. |
 | ARRIVAL | Arrival cue and amber warning. Committed cargo is not pickup-enabled. |
 | SEALED_READY | Exact cargo is staged behind the closed shutter and transitions when preparation is ready. |
 | REVEALING | Opening motion and cue; TAKE remains disabled until fully open. |
@@ -859,7 +859,7 @@ The irregular frozen-pile experiment remains rejected production research. Descr
 
 The published prototype’s MainDeck has 3.30 × 2.00 m usable area, 33 × 20 cells at 0.10 m, and profile revision 4. Physical support is approximately 3.441 × 2.100 m with authored margins. Fixture-integrated Receiving TAKE reach is 3.4 m; ordinary loose and storage/manual reaches are 1.4 m and 2.3 m. These are established prototype metrics, not final collection-game capacity promises.
 
-The read-only freight CRT reports lift status, individual remaining active cargo entries and deposited QUEUE 00–02. That count does not include upstream waiting crews. Any wider monitor must distinguish deposited cargo from waiting expeditions rather than silently relabeling the existing count. Basic accepted queue information is not removed to sell it back as an upgrade.
+The read-only freight CRT reports status, remaining active cargo and deposited QUEUE 00–02. The count covers only deposited loads. Normal power uses light green. Emergency power uses orange and a mode row, while STATUS distinguishes a pending start from an active cycle. A future repeater must preserve the distinction between deposited cargo and crews Awaiting Lift.
 
 Localized W1 warns amber during arrival/staging/opening, shows green while OPEN and is off during closing/idle. Existing authored sounds, shutter contact and full-cue handoff remain the presentation baseline. A faster game may eventually justify explicit timing changes, but no such retiming or art edit is authorized by this document.
 
@@ -972,23 +972,23 @@ Basis: [PIV §§5,7–8]; [G15 §13] for retained anonymous/service-space contex
 
 ### 14.1 Physical support for the unseen settlement
 
-Fuel is the planned recurring Ops input. Electronics moves to one-time Workshop upgrades. Morale has a prospective expedition role. Uneven sinks are intentional, including the potential for Electronics to accumulate faster.
+A new run begins at 55 of 60 Fuel Utility. The reserve falls continuously by one Utility per 30 active seconds and floors at zero. Pause, launch and offline time leave it unchanged. These first-test values are provisional. Fuel can be supplied proactively using the whole selected carried item and ordinary carry limits. Credit caps at the tank capacity and any excess is spent, including fractional credit and waste. Reserve contributes no stored Utility and offers no withdrawal.
 
-Greyouts are finite and separated by meaningful powered intervals. Repeated rolls and accumulated debt cannot sustain one indefinitely. Fulfilling pending Fuel ends an active greyout immediately. Run time and outside expeditions continue. Salvager operation and Workshop work suspend at defined boundaries. Preserve funded progress and cargo.
+The fixed first-test thresholds are 45, 30 and 15 Utility, with equality in the higher band. At 45 or more, environmental lights use their authored strength and Salvager and Workshop have power permission. Below 45, light strength is 0.835 and Salvager loses permission. Below 30, strength is 0.670 and Workshop also loses permission. Below 15, strength is 0.500 and freight enters emergency mode. The two facility permissions are for future systems. UI and indicators retain their authored brightness.
 
 <a id="s_14_2_Lane_consequences_require_redes"></a>
 
-### 14.2 Fuel greyout direction
+### 14.2 Reserve power and emergency freight
 
 | **Category** | **Current design direction** | **Current constraint** |
 | --- | --- | --- |
-| Fuel | Dim environmental lights and suspend relevant bunker machinery. | Restore authored light intensity on recovery. Preserve UI brightness, targeting, identities and handling assistance. The Incinerator remains usable. |
+| Fuel | Environmental dimming and fixed power permissions follow the reserve tiers. | Restore authored light strength at normal power. The Incinerator and ordinary handling remain available. |
 | Electronics | One-time Workshop investment. | Preserve essential goal visibility and baseline information. |
 | Morale | Future expedition recruitment bonus. | Rate and joining details remain open. Recurring Ops is no longer its designated role. |
 
-Idle stays closed and available queue slots can accept a return. ARRIVAL finishes descent and holds at SEALED_READY. Hold before opening at SEALED_READY where practical. If that narrow boundary cannot be intercepted reliably, finish REVEALING to OPEN. A revealing lift finishes opening. OPEN allows normal TAKE and holds after the last TAKE before CLOSING. CLOSING finishes to a stable closed state before holding outbound pickup.
+Below 15 Utility, an eligible next load waits 60 active seconds before ARRIVAL. Eligibility begins when a valid load is selected and the previous load has completed unloading, closing and full outbound retirement. An empty idle lift accumulates no waiting time. An already-started cycle completes its ordinary cues, motions and TAKE sequence.
 
-A later stable boundary is acceptable where a fragile mid-transition interruption would otherwise be needed. Allowing outbound already in progress to finish is a recommendation. Exact chronology, slot integration, theatre resumption and persistence require the Fuel milestone. Environmental dimming may make identifying stock slower by requiring a closer look or a different viewpoint. The effect has no target delay in seconds.
+Each wait belongs to its admitted active load. Admission releases healthy crew and preserves the two deposited slots, FIFO order, and destination release on return. Empty returns bypass the lift. Additional loads and top-ups below 15 leave the deadline in place. Refuelling to at least 15 starts the waiting load once. The reserve and pending identity and deadline persist on Continue.
 
 <a id="s_14_3_Deferral_investment_and_the_fin"></a>
 
@@ -996,7 +996,7 @@ A later stable boundary is acceptable where a fragile mid-transition interruptio
 
 Supplying Ops can compete with retaining category progress or buying an upgrade. That is useful when maintenance earns its resource and handling cost. A short delay while organizing can be reasonable; indefinite neglect should generally be slower or less effective. A player near victory may still choose to tolerate a current penalty rather than spend the final items.
 
-Do not make “Ops satisfied” a hidden win predicate. Do not automatically scale demand to undo good performance or erase the benefits of a larger reserve. Exact balance must be established through the continuous collection loop, not the old survival equilibrium.
+Collection victory depends on live stored Utility. Future tank upgrades would add headroom while keeping the same fixed operating thresholds. The first slice uses a fixed consumption rate. Release balance and upgrades remain open.
 
 <a id="s_14_4_Administrator_and_spatial_ident"></a>
 
@@ -1004,7 +1004,7 @@ Do not make “Ops satisfied” a hidden win predicate. Do not automatically sca
 
 The Administrator remains off-screen and communicates through brief practical one-way messages. The Transfer Landing is an open, dedicated onward-distribution space, with the submission interface distinct from an opaque personnel-sized door implying the wider settlement. No office interior, visible leader or new dialogue system is needed.
 
-The longer Deeper-Bunker route is the current layout baseline. Fuel-to-Energy naming, service naming, new catalogue items and reassignments remain future authoring. Any reframing uses the existing category slot. Batteries, power banks and compact generators or panels are candidates for physical loot. Charge, generation, renewables and permanent benefits from ordinary Fuel submission remain outside the current direction.
+For the first slice, F opens a live refuelling panel at the existing electrical panel to the right of the Receiving shutter. A distinct E submits the selected Fuel and ESC closes the panel before pause. The distant Transfer Landing retains its authored form. Fuel remains the category ID. Energy naming, new items, generators and other power sources remain future design.
 
 Basis: [PIV §§2,7,9]; [G15 §14 and §15.10.6] for historical lane/context references; [VDD §20].
 
@@ -1039,7 +1039,7 @@ The relationship of Salvage to the unified category grammar and eight goal total
 
 ### 15.3 Incinerator and working-space release
 
-**CONFIRMED.** The Incinerator is available from the beginning of every run. It has no unlock, repair, Fuel cost, cooldown or throughput limit. Energy blackouts leave it usable. It accepts any valid portable item the player is carrying, including items with zero Utility and future carried Rations or Salvage when those objects exist. The player picks up and carries the item to the machine under the ordinary carrying limits.
+**CONFIRMED.** The Incinerator is available from the beginning of every run. It has no unlock, repair, Fuel cost, cooldown or throughput limit. It remains usable at zero reserve. It accepts any valid portable item the player is carrying, including items with zero Utility and future carried Rations or Salvage when those objects exist. The player picks up and carries the item to the machine under the ordinary carrying limits.
 
 Aim at the machine and press F to inspect the selected item's name, category, Utility and Bulk. A distinct E press attempts to destroy one selected whole item. The red action label states that destruction is permanent and yields no output. A successful action frees the item's Bulk immediately and leaves the panel open.
 
@@ -1073,7 +1073,7 @@ Within-run progression remains the inherited direction. No cross-run unlocks, pe
 
 Optional displays may help the player inspect request state from another working area, see returning crews or compare incoming/consumed category totals. Those are candidates, not a required statistics suite. Existing lift queue data is not removed and resold. Exact project roster, costs, device sockets, tutorial and accessibility treatment remain open.
 
-The old clock-repair tutorial and additional day clocks need reinterpretation without daily anchors. Do not create a paid requirement to see active run time or collection progress. Building a light with Electronics also does not automatically settle its future outage owner; penalty design is separate and unfinished.
+The old clock-repair tutorial and additional day clocks need reinterpretation without daily anchors. Do not create a paid requirement to see active run time or collection progress. Future installation purchases and reserve consumption are separate upgrade decisions.
 
 <a id="s_15_6_Training_Readiness_retain_prove"></a>
 
@@ -1251,7 +1251,7 @@ The existing item pose workbench is res://gameplay/dev/item_storage_pose/item_st
 
 Removing calendar days does not remove chronology. Expedition progress, recovery, requests, project work, receiving theatre and the completion record must share coherent active elapsed time and pause semantics. No subsystem should gain time because the application was closed, restart a duration on load, or extend deadlines through repeated reconstruction.
 
-Retain the lift sequence from last TAKE through closing, full outbound, retirement and FIFO promotion. At the same active timestamp the lift settles older waiters first. Expedition returns sharing a timestamp are processed in dispatch identity order.
+Retain the lift sequence from last TAKE through closing, full outbound, retirement and FIFO promotion. Settle Fuel consumption before evaluating a fresh start. At the same active timestamp the lift settles older waiters first. Expedition returns sharing a timestamp are processed in dispatch identity order.
 
 <a id="s_18_5_Continuation_and_durable_commit"></a>
 
@@ -1466,13 +1466,13 @@ These are design-validation aims, not claimed test results or a new automated ac
 | O-03 · Destination lifecycle | Resolved for this slice. Exactly two distinct affinities, away-only exclusivity and explicit availability feedback. See §§9.5–9.7. |
 | O-04 · Return and personnel handover | Healthy release at admission or empty return is confirmed. Injury classification, Medical admission mechanics and treatment remain open. See §11.6 and O-07. |
 | O-05 · Acquisition model | The bounded test pool, capacity, lane targets, 90–180 active seconds and category weights are specified for this playtest. Production tuning and provisioning effects remain open. See §§9.7 and 10.5. |
-| O-06 · Requests and Ops | Kitchen standing rules and provisional iteration settings are in §12. Fuel greyout direction is in §14. Fuel scheduling, costs, exact machine boundaries and save representation remain open. |
+| O-06 · Requests and Ops | Kitchen standing rules are in §12. The approved reserve, power tiers and freight start wait are in §14. Release tuning, final location and future upgrades remain open. |
 | O-07 · Medical | The Ward alone modifies natural healing with Medical treatment. Injury risk, recovery durations, pooled versus individual or FIFO treatment, costs, timing and UI remain open. |
 | O-08 · Population and upgrades | Initial Ready count, recruitment/growth, progression ownership for assembled crews, Workshop project roster and Training disposition. |
 | O-09 · Conversion and release | Rations and Salvage category and target rules, yields, capacity and output blocking remain open, along with Salvager access and restrictions. Incinerator rules are confirmed in §15.3. |
 | O-10 · Space and handling | Production shelf capacity/roster, all-storage-from-start decision, route compression and final ergonomics. |
 | O-11 · Interface and time edges | The local build keeps Kitchen, preparation and the Incinerator live. Escape closes service layers before pause. Journal scope, final interface and platform timing edges remain open. |
-| O-12 · Delivery/continuation | Continuous Kitchen uses schema 8 with confirmed New Run for incompatible snapshots. Release migration and durability remain open. |
+| O-12 · Delivery/continuation | Published Kitchen uses schema 8. The Fuel slice calls for the next unused schema and confirmed New Run with incompatible snapshots retained. Release migration and durability remain open. |
 
 The register deliberately leaves unanswered mechanics open. The project already has enough direction to produce this successor; these are boundaries for later design/implementation, not reasons to recreate the old behavior or repeatedly ask the developer to approve the pivot.
 
@@ -1583,7 +1583,7 @@ This map records where the substantive predecessor topics went. “Retained” p
 | §11 · Receiving | Retains exact content, identity, private TAKE-only deck, cycle and FIFO. Replaces midnight loss with waiting crews and intact cargo; exact handover open. |
 | §12 · Kitchen | Retains Food/Hydration sink and ration concept; removes fixed meals/daily coverage/night output. Continuous effects and conversion details open. |
 | §13 · Medical | Retains anonymous patients/service identity; favors slower natural and faster treated recovery. Daily stages, complication/death formulas no longer active. |
-| §14 · Ops | Retains categories and physical Administrator handoff; old next-day outage/recruitment rules require redesign. |
+| §14 · Ops | The reserve and emergency freight rules supersede daily and episode-based power. The Administrator and Transfer Landing remain authored context. |
 | §15 · Machines/progression | Retains disposal/conversion and optional capability investment; daily project mechanics and capacity progression not inherited. Training slots explicitly under redesign. |
 | §16 · Presentation | Retains core data/input/feedback and bounded freight cues. Adds protected baseline goal visibility and no-tab preparation; removes day/night report requirements. |
 | §17 · Narrative | Retains inferred world, one-way messages, optional reactions and dog scope; removes dependence on particular days or mortality. |

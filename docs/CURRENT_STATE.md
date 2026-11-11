@@ -12,6 +12,7 @@
 | Expedition-to-Storage Loop | **HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** [Technical result and developer acceptance](testing/2026-11-08-expedition-to-storage-loop-result.md). M5’s former combined daily scenario is historical. |
 | Incinerator and Deliberate Disposal | **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** [Technical result and developer acceptance](testing/2026-11-08-incinerator-deliberate-disposal-result.md) |
 | Continuous Kitchen | **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** Schema 8. [Developer acceptance and close-out](testing/2026-11-09-continuous-kitchen-service-result.md) |
+| Fuel Reserve and Emergency Freight | Approved design and provisional first-test settings. Pending local implementation at the published Kitchen baseline. [Fuel decisions](design_history/2026-11-11-fuel-reserve-and-emergency-freight-decisions.md) · [Implementation plan](superpowers/plans/2026-11-11-fuel-reserve-emergency-freight.md) |
 | ADR cycle | Parked historical design, preserved for deliberate reuse or a possible survival mode. Not the current economy or immediate design priority. |
 | Implementation checkpoints | Foundation `a1d1db4494347e0dfb4dfb653ed71b2abaf76ce5`, expedition implementation `66a7f863e5cf6f2f2c9e8f7f34de99885fa76612` and technical verification `11f95354119058fe2ec90796d09e2c28c046a885`. [Foundation closure](testing/2026-11-07-continuous-run-collection-goal-closure.md). |
 | Publication | M4 acceptance is pinned at `c9f9417a97cf65ef416c58189ca1f741b6a90406`. The collection foundation, expedition loop, furniture collision repair, Incinerator and Continuous Kitchen are published on main. On 8 November 2026, `git ls-remote` verified `origin/main` at the repair acceptance commit `de6b9bd7102e555b46a45f6733d9e7669db5d3b5`. |
@@ -51,7 +52,7 @@ The purpose is to restore collecting, hoarding and organizing as the main experi
 | Preparation | One current team: choose 1–4 Ready scavengers, equip/select destination, explicitly dispatch; optionally repeat consecutively. No prebuilt roster, preparation tabs, parallel prepared loadouts or full-loadout auto-send. |
 | Destinations | Twenty-eight unordered pairs. Dispatch requires two affinities and an available pair. A destination is occupied only while its expedition is away. |
 | Receiving | Exact cargo moves through oldest-first admission to one active and two deposited slots. Healthy crew members become Ready on admission. Empty returns complete outside the lift. |
-| Requests | Kitchen §12 specifies cumulative bounded Food and Hydration demand, active-time grace, proportional carrying relief and sprint restoration on clearance. Fuel greyouts and other contribution effects have separate future scopes. Victory has no service requirement. |
+| Requests | Kitchen §12 specifies cumulative bounded Food and Hydration demand, active-time grace, proportional carrying relief and sprint restoration on clearance. Fuel uses the separately approved reserve and emergency freight rules in GDD §14. Victory has no service requirement. |
 | Medical | Preferred slower natural recovery and much faster treated recovery. No injured-away mechanic adopted. No-dead-end requirement is not guaranteed quick recovery or adaptive catch-up. Full injury/treatment rules remain open. |
 | Progression/layout | All storage from start is favored, not a finalized production roster. Carrying/expedition/information improvements remain candidates. Workshop/Training and spatial compression require further design. |
 | Information | Goal progress is baseline, never upgrade-gated or disabled by penalties/events. Journal/notification/overview roles survive; a daily report does not. |
@@ -150,7 +151,7 @@ Systems MVP §16 remains the full CF-01–CF-24 register. This entry-point updat
 | CF-06–CF-12 | Retain current interfaces/art evidence and renderer/content/ergonomics debt. No fresh fixes or approvals are claimed. |
 | CF-13 | Continuous durability remains future and must use coherent existing ownership. |
 | CF-14–CF-15 | The bounded healthy expedition loop is human-accepted and closed. Production tuning, population growth and Medical remain open. |
-| CF-16–CF-17 | Single-item Incinerator disposal is accepted. Continuous Kitchen is human-promoted, published and closed. Fuel, other conversions, Workshop, labels and progression require separate scopes. [Developer acceptance and close-out](testing/2026-11-09-continuous-kitchen-service-result.md) |
+| CF-16–CF-17 | Single-item Incinerator disposal is accepted. Continuous Kitchen is human-promoted, published and closed. GDD §14 governs the Fuel slice. Other conversions, Workshop, labels and progression require separate scopes. [Developer acceptance and close-out](testing/2026-11-09-continuous-kitchen-service-result.md) |
 | CF-18–CF-19 | Preserve explicit interaction deferrals; economy, loot bounds and routes now serve the collection objective. |
 | CF-20–CF-24 | Retain adjacent art work, measured limitations, saved/runtime distinctions, authoring and source/license safeguards. |
 
@@ -164,7 +165,7 @@ The authoritative asset-equipped checkout is `D:\Godot Projects\Sorting-apoc-PRO
 
 No reset, stash, clean, force-push, rebase/squash, branch/worktree deletion, untracked staging sweep or ignored-asset cleanup is authorized. Preserve local evidence and human `.tres`/scene edits. A remote clone is not a runnable licensed-art backup. Git ignore is not Godot scan exclusion: keep checkpoint scenes with production UIDs and duplicate global classes outside scanned paths. Preserve startup parity checks and avoid concurrent Godot/import writers on one mutable checkout.
 
-The developer accepted the [expedition loop](testing/2026-11-08-expedition-to-storage-loop-result.md) in its bounded scope. The [furniture movement collision repair](testing/2026-11-08-furniture-collision-repair-result.md) was accepted by the developer after an in-game retest on 8 November 2026 and is closed in its bounded scope. O-06 and O-07 replacement service rules remain open.
+The developer accepted the [expedition loop](testing/2026-11-08-expedition-to-storage-loop-result.md) in its bounded scope. The [furniture movement collision repair](testing/2026-11-08-furniture-collision-repair-result.md) was accepted by the developer after an in-game retest on 8 November 2026 and is closed in its bounded scope. GDD §14 resolves first-slice Fuel rules under O-06. O-07 Medical recovery remains open.
 
 ## 11. Focused evidence navigation
 

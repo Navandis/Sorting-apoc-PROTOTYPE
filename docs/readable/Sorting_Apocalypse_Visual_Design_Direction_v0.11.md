@@ -196,7 +196,7 @@ Receiving now uses deliberate warm apron practicals, balanced cage task lights a
 
 Purposeful room lighting is the current direction, with no automatic broad ambient/KeyLight floor. It does not permanently prohibit every future intentional ambient contribution. A global policy change, new fixture system or rendering system still needs deliberate design discussion; unfinished neighboring rooms need their own lighting decisions. [37]
 
-Future Fuel greyouts reduce environmental light intensity and restore the authored baseline afterward. UI, goal information, targeting and interaction assistance retain their ordinary behavior. Greyout implementation and lighting changes are outside the Kitchen scope. See GDD §14. [38]
+The Fuel reserve tiers apply 1.000, 0.835, 0.670 and 0.500 to authored working light strength. Normal power restores the authored values. UI, goal information, indicators, targeting and interaction assistance keep their ordinary behavior. See GDD §14. [38]
 
 ## 8. Signage, labels, humor, and human traces
 
@@ -321,7 +321,7 @@ The promoted Stage B TAKE-only presenter arranges front crates, rear pallets and
 
 Receiving production uses P05_C02: the approved constructed/panel wall, Worn Concrete Floor and shuttered/formwork ceiling. Base applied finish, structural secondary and fixed base wear preset remain NONE; these base choices do not exclude independently authored wear layers. The EAF5 P01_C02 primary/P05_C03 alternate remain historical proof selections (§34).
 
-Receiving C1 and Stage C remain CLOSED / HUMAN-PROMOTED. Fully-OPEN TAKE, live read-only CRT and the stationary bay/deck/barrier with shutter/audio theatre are accepted. The target now preserves pending cargo without forfeiture and keeps waiting teams occupied until delivery; the personnel-release boundary remains open. Existing deposited slots/CRT counts are implementation facts, not a cap on target waiting returns. Dispatch furnishing/lighting and sill material remain separate. [37; 38]
+Receiving C1 and Stage C remain CLOSED / HUMAN-PROMOTED. Fully-OPEN TAKE, live read-only CRT and the stationary bay/deck/barrier with shutter/audio theatre are accepted. Admission releases healthy crew even when an admitted load must wait at the closed lift for an emergency start. The CRT keeps STATUS, DECK and QUEUE, with green normal and orange emergency mode text. The start wait has its own status. Existing deposited slots/CRT counts are implementation facts, not a cap on target waiting returns. Dispatch furnishing/lighting and sill material remain separate. [37; 38]
 
 Dispatch preparation is one current crew at a time: choose 1–4 available Ready scavengers, equip and select two affinities, then explicitly send it. Another crew can follow consecutively in the same interface session. Do not furnish or specify parallel preparation tabs or a morning roster; an overview of already dispatched teams is separate. The preparation panel is tentatively live, not paused. [38]
 
@@ -488,7 +488,7 @@ The existing Deeper-Bunker Approach is the longest sparse circulation leg: wider
 
 - Transfer Landing: Use a more open, clearly bounded widening at the shared approach terminus. Reserve a modest material-handoff position along one side, with clear arrival and turning space. It is not a fourth enclosed storeroom or a furnished empty office. Supplies move onward to the wider unseen settlement. [D16S]
 
-- Inner boundary: The future Bunker Ops intake belongs to an opaque departmental/distribution boundary at the landing's edge. Territorial entry, supply commitment and the inner world limit remain distinct. Exact counter, compartment, manifests and delivery mechanisms are later design, not this footprint milestone.
+- Inner boundary: The future Bunker Ops intake belongs to the opaque boundary at the landing's edge. The first Fuel slice uses the existing electrical panel to the right of the Receiving shutter as a temporary station. Territorial entry, supply commitment and the inner world limit remain distinct. Exact counter, compartment, manifests and delivery mechanisms are later design, not this footprint milestone.
 
 - Settlement continuation: A separate regular personnel-door-sized opaque closure sits within a surrounding wall beside/beyond the handoff. Do not make it the width of the entire terminal wall or route the player through the submission device. Nothing beyond it is modeled. Its operation remains off-map; no new operable-door gameplay is added. [H16]
 
@@ -506,7 +506,7 @@ Retain the accepted narrowed Incinerator pocket, front-operated machine envelope
 
 - Safety: Restrained but credible keep-clear, hot-surface, extinguisher, emergency cutoff and electrical markings.
 
-- Availability from the start of the run is confirmed in GDD §15.3. The machine works through Fuel and energy outages. [38]
+- Availability from the start of the run is confirmed in GDD §15.3. The machine works at every Fuel reserve tier. [38]
 
 - The player chooses which carried item to sacrifice for working space. The interaction shows its facts and makes the permanent loss explicit.
 
@@ -964,6 +964,6 @@ Reconciled owning sections: §1 authority; §§7, 13–14 information and single
 
 ### 38.3 Deliberately unresolved
 
-The accepted geometry and authored light rig remain the baseline. The continuous Kitchen brief uses the existing frontage. Fuel dimming, Medical recovery timing, Workshop projects, ration production, Journal and final interface composition retain their GDD scope. Future route or installation changes require explicit design.
+The accepted geometry and authored light rig remain the baseline. The continuous Kitchen brief uses the existing frontage. GDD §14 governs Fuel dimming and the temporary Receiving station. Medical recovery timing, Workshop projects, ration production, Journal and final interface composition retain their GDD scope. Future route or installation changes require explicit design.
 
 The earlier missing-MVP-source limitation is resolved by the developer’s attachment and accompanying Systems MVP v0.5 compatibility update. Both masters’ checks are recorded in docs/testing/2026-11-07-mvp-vdd-compatibility-consistency.md. M1–M4 evidence remains valid; obsolete survival/day assumptions do not override GDD v0.16. No game tests, new promotion, Git write, scene edit or save operation accompanies this completion.

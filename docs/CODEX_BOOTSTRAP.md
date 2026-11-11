@@ -38,6 +38,8 @@ Pending return cargo remains intact. Waiting crews stay unavailable until admiss
 
 Kitchen §12 defines bounded cumulative demand and carrying/sprint consequences. The approved contribution map gives expeditions proactive bonuses and assigns restoration to Kitchen, Fuel and Medical. The promoted continuous Kitchen slice uses the mechanical expedition fixture. The fixed meals and Daily Meal Coverage belong to the archived survival-era build. [Contribution decisions](design_history/2026-11-09-contribution-effects-and-kitchen-decisions.md) · [Continuous Kitchen brief](superpowers/plans/2026-11-09-continuous-kitchen-service.md)
 
+Fuel §14 specifies continuous reserve consumption and a 60-active-second wait before each eligible emergency delivery. Crew handover remains on admission and ongoing cycles finish normally. [Fuel decisions](design_history/2026-11-11-fuel-reserve-and-emergency-freight-decisions.md) · [Implementation plan](superpowers/plans/2026-11-11-fuel-reserve-emergency-freight.md)
+
 Medical's preferred slower natural and faster treated recovery remains open in detail. Fixed full storage is a favored direction. Workshop, Training, population growth and route compression need further design.
 
 ## Known open boundaries before affected implementation

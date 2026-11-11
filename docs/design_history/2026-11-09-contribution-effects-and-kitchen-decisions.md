@@ -2,6 +2,8 @@
 
 **9 November 2026 | Conversation-derived design record and Kitchen iteration specification**
 
+The [11 November Fuel decisions](2026-11-11-fuel-reserve-and-emergency-freight-decisions.md) supersede this record's episode-based Fuel proposals. GDD §14 owns the reserve and emergency freight rules. The Kitchen and other contribution decisions below retain their recorded scope.
+
 ## 1. Authority, status and purpose
 
 This record consolidates the developer's decisions after the Incinerator documentation close-out. It is the design source for the accompanying first continuous Kitchen implementation, not a claim that the wider contribution systems already exist. Reconcile its applicable content into the current DOCX masters and regenerate their reading copies in the documentation-first work block. Do not maintain conflicting parallel specifications afterward.
