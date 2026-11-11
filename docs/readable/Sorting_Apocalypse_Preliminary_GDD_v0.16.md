@@ -1272,7 +1272,7 @@ Ordinary schema-4 continuation is accepted at M4, but is not continuous crash-du
 
 Outcome commitment should occur at a natural backend point after legitimate player choices are fixed, before presentation where possible. Preserve committed results through continuation. Incidental uncommitted rerolls within the tolerated loss interval are not a reason to build a general anti-cheat framework; reliable selection among already preserved outcomes remains disallowed by the inherited policy.
 
-Published Kitchen uses schema 8. The local Fuel slice uses schema 9 in the existing collection slot. It preserves the fractional reserve, accounting anchor, Fuel receipts and pending freight start alongside exact Kitchen, physical, expedition, Incinerator and victory state. Continue restores effects before play with service panels closed. Confirmed New Run retains incompatible snapshots, including schema 8. The M4 slot remains separate. Release durability remains open.
+Continuous Kitchen introduced schema 8. Published main uses schema 9 in the existing collection slot. It preserves the fractional reserve, accounting anchor, Fuel receipts and pending freight start alongside exact Kitchen, physical, expedition, Incinerator and victory state. Continue restores effects before play with service panels closed. Confirmed New Run retains incompatible snapshots, including schema 8. The M4 slot remains separate. Release durability remains open.
 
 <a id="s_18_6_Environment_and_authored_produc"></a>
 
@@ -1402,7 +1402,7 @@ These are historical M4 test values. Frozen inputs are preserved at [docs/design
 
 ### 20.3 Playable entry and human authoring
 
-Normal F5 launch uses res://gameplay/run/run_shell.tscn. Continuous Kitchen is human-promoted and published on main. Fuel Reserve and Emergency Freight is human-promoted and closed locally in its bounded scope. Publication is pending. Standalone F6 retains the authored palette in res://gameplay/logistics_wing/wing_gameplay.tscn. Legacy main.tscn and spatial review scenes retain their authoring roles.
+Normal F5 launch uses res://gameplay/run/run_shell.tscn. Continuous Kitchen is human-promoted and published on main. Fuel Reserve and Emergency Freight is human-promoted, published on main and closed in its bounded scope. Standalone F6 retains the authored palette in res://gameplay/logistics_wing/wing_gameplay.tscn. Legacy main.tscn and spatial review scenes retain their authoring roles.
 
 Current saved human content governs actual installations, poses, lighting, wear and source references. Future work must inspect actual dependencies before changes; remote documentation alone does not certify ignored commercial assets or runtime rendering. No game files are changed by this edition.
 
@@ -1472,7 +1472,7 @@ These are design-validation aims, not claimed test results or a new automated ac
 | O-09 · Conversion and release | Rations and Salvage category and target rules, yields, capacity and output blocking remain open, along with Salvager access and restrictions. Incinerator rules are confirmed in §15.3. |
 | O-10 · Space and handling | Production shelf capacity/roster, all-storage-from-start decision, route compression and final ergonomics. |
 | O-11 · Interface and time edges | The local build keeps Kitchen, preparation, the Incinerator and Fuel live. Escape closes service layers before pause. Journal scope, final interface and platform timing edges remain open. |
-| O-12 · Delivery/continuation | Published Kitchen uses schema 8. The local Fuel slice uses schema 9 with confirmed New Run and retained incompatible snapshots. Release migration and durability remain open. |
+| O-12 · Delivery/continuation | Published main uses schema 9. Confirmed New Run retains incompatible snapshots. Release migration and durability remain open. |
 
 The register deliberately leaves unanswered mechanics open. The project already has enough direction to produce this successor; these are boundaries for later design/implementation, not reasons to recreate the old behavior or repeatedly ask the developer to approve the pivot.
 

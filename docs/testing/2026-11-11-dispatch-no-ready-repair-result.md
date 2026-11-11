@@ -1,6 +1,6 @@
 # Dispatch preparation with no Ready scavengers
 
-**11 November 2026 · HUMAN-ACCEPTED / CLOSED IN ITS BOUNDED SCOPE — LOCAL; PUBLICATION PENDING**
+**11 November 2026 · HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE**
 
 ## Reproduction and correction
 
@@ -40,3 +40,7 @@ $project = 'D:/Godot Projects/Sorting-apoc-PROTOTYPE'
 The developer reported that their in-game retest confirmed the Dispatch bug was fixed and the panel displayed correct information and appropriate interactions when no crew was available. The developer authorized merging and pushing the pending changes.
 
 At acceptance the repair was **HUMAN-ACCEPTED / CLOSED IN ITS BOUNDED SCOPE — LOCAL; PUBLICATION PENDING**.
+
+## 11 November 2026 publication
+
+GitHub `main` first published the accepted Fuel and Dispatch history on 11 November 2026. A separate `git ls-remote origin refs/heads/main` check verified `a19636df5df5169cd4c2e41b80f0986c78f7a83b`.

@@ -65,11 +65,11 @@ Legacy fixture: res://main.tscn
 Neutral review: res://greybox/logistics_wing/wing_review.tscn
 ```
 
-Continuous Kitchen is **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE** in the F5 loop. Open the service with F and supply the selected whole item with E. On published main, Continue restores schema 8 from `user://saves/collection/`. Confirmed New Run can repoint the slot while retaining incompatible snapshots including schema 7. The M4 slot remains separate. Standalone F6 keeps the human-authored `DevelopmentSetup/SeedItems` palette. [Developer acceptance and close-out](testing/2026-11-09-continuous-kitchen-service-result.md)
+Continuous Kitchen is **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE** in the F5 loop. Open the service with F and supply the selected whole item with E. Continuous Kitchen introduced schema 8 through `user://saves/collection/`. Confirmed New Run can repoint the slot while retaining incompatible snapshots. The M4 slot remains separate. Standalone F6 keeps the human-authored `DevelopmentSetup/SeedItems` palette. [Developer acceptance and close-out](testing/2026-11-09-continuous-kitchen-service-result.md)
 
-Fuel Reserve and Emergency Freight is **HUMAN-PROMOTED / CLOSED IN ITS BOUNDED SCOPE — LOCAL; PUBLICATION PENDING**. It uses schema 9 and the existing save service. Schema 8 requires confirmed New Run and its snapshot is retained. Refuel at the cabinet right of the Receiving shutter with F and a distinct E. [Fuel technical result and developer acceptance](testing/2026-11-11-fuel-reserve-emergency-freight-result.md)
+Fuel Reserve and Emergency Freight is **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE**. It uses schema 9 and the existing save service. Schema 8 requires confirmed New Run and its snapshot is retained. Refuel at the cabinet right of the Receiving shutter with F and a distinct E. [Fuel technical result and developer acceptance](testing/2026-11-11-fuel-reserve-emergency-freight-result.md)
 
-The zero-Ready Dispatch repair is **HUMAN-ACCEPTED / CLOSED IN ITS BOUNDED SCOPE — LOCAL; PUBLICATION PENDING**. [Dispatch repair result](testing/2026-11-11-dispatch-no-ready-repair-result.md)
+The zero-Ready Dispatch repair is **HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE**. [Dispatch repair result](testing/2026-11-11-dispatch-no-ready-repair-result.md)
 
 GDD §15.3 records the Incinerator design. The developer promoted and closed the bounded single-item slice on 8 November 2026. The close-out is published on main. [Technical result and developer acceptance](testing/2026-11-08-incinerator-deliberate-disposal-result.md)
 

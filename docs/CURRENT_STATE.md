@@ -1,6 +1,6 @@
 # Sorting Apocalypse — current development state
 
-**Document update: 11 November 2026. Intended game: developer-approved GDD v0.16 with the contribution decisions. Published build: Continuous Kitchen.**
+**Document update: 11 November 2026. Intended game: developer-approved GDD v0.16 with the contribution decisions. Published build: Fuel Reserve and Emergency Freight with the accepted Dispatch repair.**
 
 ## 1. At a glance: approval is not implementation
 
@@ -12,10 +12,10 @@
 | Expedition-to-Storage Loop | **HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** [Technical result and developer acceptance](testing/2026-11-08-expedition-to-storage-loop-result.md). M5’s former combined daily scenario is historical. |
 | Incinerator and Deliberate Disposal | **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** [Technical result and developer acceptance](testing/2026-11-08-incinerator-deliberate-disposal-result.md) |
 | Continuous Kitchen | **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** Schema 8. [Developer acceptance and close-out](testing/2026-11-09-continuous-kitchen-service-result.md) |
-| Fuel Reserve and Emergency Freight | **HUMAN-PROMOTED / CLOSED IN ITS BOUNDED SCOPE — LOCAL; PUBLICATION PENDING.** Schema 9. [Fuel technical result and developer acceptance](testing/2026-11-11-fuel-reserve-emergency-freight-result.md) · [Fuel decisions](design_history/2026-11-11-fuel-reserve-and-emergency-freight-decisions.md) · [Implementation plan](superpowers/plans/2026-11-11-fuel-reserve-emergency-freight.md) |
+| Fuel Reserve and Emergency Freight | **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** Schema 9. [Fuel technical result and developer acceptance](testing/2026-11-11-fuel-reserve-emergency-freight-result.md) · [Fuel decisions](design_history/2026-11-11-fuel-reserve-and-emergency-freight-decisions.md) · [Implementation plan](superpowers/plans/2026-11-11-fuel-reserve-emergency-freight.md) |
 | ADR cycle | Parked historical design, preserved for deliberate reuse or a possible survival mode. Not the current economy or immediate design priority. |
 | Implementation checkpoints | Foundation `a1d1db4494347e0dfb4dfb653ed71b2abaf76ce5`, expedition implementation `66a7f863e5cf6f2f2c9e8f7f34de99885fa76612` and technical verification `11f95354119058fe2ec90796d09e2c28c046a885`. [Foundation closure](testing/2026-11-07-continuous-run-collection-goal-closure.md). |
-| Publication | M4 acceptance is pinned at `c9f9417a97cf65ef416c58189ca1f741b6a90406`. The collection foundation, expedition loop, furniture collision repair, Incinerator and Continuous Kitchen are published on main. On 8 November 2026, `git ls-remote` verified `origin/main` at the repair acceptance commit `de6b9bd7102e555b46a45f6733d9e7669db5d3b5`. |
+| Publication | M4 acceptance is pinned at `c9f9417a97cf65ef416c58189ca1f741b6a90406`. The collection foundation, expedition loop, furniture collision repair, Incinerator and Continuous Kitchen are published on main. On 8 November 2026, `git ls-remote` verified `origin/main` at the repair acceptance commit `de6b9bd7102e555b46a45f6733d9e7669db5d3b5`. On 11 November 2026, GitHub main was verified at `a19636df5df5169cd4c2e41b80f0986c78f7a83b` for Fuel and the Dispatch repair. |
 
 This file replaces current-facing routing, not historical evidence. The later [MVP/VDD compatibility completion](testing/2026-11-07-mvp-vdd-compatibility-consistency.md) records both targeted master edits and their checks; it does not change the implemented checkpoint. The [approval record](design_history/2026-11-07-gdd-v0.16-approval-and-authority-transition.md) records this task. The complete [pre-adoption CURRENT_STATE snapshot](https://github.com/Navandis/Sorting-apoc-PROTOTYPE/blob/c9f9417a97cf65ef416c58189ca1f741b6a90406/docs/CURRENT_STATE.md), dated validation reports and prior masters remain available. Their then-pending statements do not undo later promotions.
 
@@ -67,9 +67,9 @@ In the local build, aim at the Incinerator at the end of the utility spur and pr
 
 Aim at the Kitchen frontage off Gallery B and press F. Use the wheel or number keys to inspect a carried item, then a distinct E to supply it. Kitchen opens on its own active-time schedule. Overdue demand lowers carrying capacity and stops sprint. Partial supply restores capacity proportionally and clearance restores sprint.
 
-On the local Fuel branch, aim at the existing electrical cabinet right of the Receiving shutter. F inspects and a distinct E supplies the selected carried Fuel. The reserve starts at 55/60 and consumes one Utility per 30 active seconds. Below 15, each eligible delivery waits 60 active seconds before ARRIVAL. [Fuel technical result and developer acceptance](testing/2026-11-11-fuel-reserve-emergency-freight-result.md)
+Aim at the existing electrical cabinet right of the Receiving shutter. F inspects and a distinct E supplies the selected carried Fuel. The reserve starts at 55/60 and consumes one Utility per 30 active seconds. Below 15, each eligible delivery waits 60 active seconds before ARRIVAL. [Fuel technical result and developer acceptance](testing/2026-11-11-fuel-reserve-emergency-freight-result.md)
 
-Published Kitchen schema 8 uses the existing service under `user://saves/collection/`. It preserves exact Kitchen timing and balances, grace and receipts with physical, expedition, Incinerator and goal state. Continue starts with service panels closed. Confirmed New Run repoints the slot and retains incompatible snapshots, including schema 7. The local Fuel branch uses schema 9 through the same service. Continue preserves the fractional reserve, receipts and exact pending start. Confirmed New Run retains schema-8 snapshots. Save & Exit, 60-active-second attempts and first victory use the same service.
+Continuous Kitchen introduced schema 8 through the existing service under `user://saves/collection/`. It preserves exact Kitchen timing and balances, grace and receipts with physical, expedition, Incinerator and goal state. Continue starts with service panels closed. Confirmed New Run repoints the slot and retains incompatible snapshots, including schema 7. Published main uses schema 9 through the same service. Continue preserves the fractional reserve, receipts and exact pending start. Confirmed New Run retains schema-8 snapshots. Save & Exit, 60-active-second attempts and first victory use the same service.
 
 Standalone F6 retains the authoring palette and canonical UID `uid://bljf1nlhijej`. The [expedition result](testing/2026-11-08-expedition-to-storage-loop-result.md) records the provisional pool and the technical checks and developer acceptance. The [accepted foundation result](testing/2026-11-07-continuous-run-collection-goal-result.md) preserves the exact two-haul fixture evidence.
 
@@ -117,7 +117,7 @@ Exact outcome content belongs upstream. Receiving may arrange/present but may no
 
 **Expedition handover.** Destination occupancy ends on return. Healthy crew members become Ready on admission or on empty return. The future Medical route begins at handover. The [expedition brief](superpowers/plans/2026-11-07-expedition-to-storage-loop.md) records the slice decisions.
 
-The curved CRT is live and read-only with STATUS, DECK and QUEUE. The local Fuel branch adds normal green and emergency orange mode text, plus WAITING and a countdown for an admitted load before ARRIVAL. QUEUE 00–02 counts deposited waiting batches. The separate expedition display lists Away and Awaiting Lift crews. The 704×400 viewport, Surface 1 binding, fonts, mounting and subdued bezel are accepted. W1 is amber during arrival, staging and reveal, green when OPEN, and off during closing and idle. The emergency-stop control remains decorative.
+The curved CRT is live and read-only with STATUS, DECK and QUEUE. It shows normal green and emergency orange mode text, plus WAITING and a countdown for an admitted load before ARRIVAL. QUEUE 00–02 counts deposited waiting batches. The separate expedition display lists Away and Awaiting Lift crews. The 704×400 viewport, Surface 1 binding, fonts, mounting and subdued bezel are accepted. W1 is amber during arrival, staging and reveal, green when OPEN, and off during closing and idle. The emergency-stop control remains decorative.
 
 ## 8. Spatial, art and source safeguards
 
@@ -159,7 +159,7 @@ Systems MVP §16 remains the full CF-01–CF-24 register. This entry-point updat
 
 Known remaining items include CF-07 held-material diagnostics, Windows certificate-store diagnostics, Pickaxe 108 co-located LOD, twelve pending Auto Stack Group approvals, loading investigation, baseline cross-wing awareness, final furnishing/interface work and continuous durability. Historical reflection costs (~3.56 s cold addition, 125–132 ms first cargo, 8–10 ms later on the measured machine), unrelated `gallery_a_fixture_front` failure, tolerated residual shadow and unexplained .30/.40 comparison retain their original evidence limits. Unrun editor captures remain unrun. No universal error-free or release-performance claim is made.
 
-**Dispatch repair.** **HUMAN-ACCEPTED / CLOSED IN ITS BOUNDED SCOPE — LOCAL; PUBLICATION PENDING.** [Dispatch repair result](testing/2026-11-11-dispatch-no-ready-repair-result.md)
+**Dispatch repair.** **HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** [Dispatch repair result](testing/2026-11-11-dispatch-no-ready-repair-result.md)
 
 The old Fuel/locker maintenance, EAF1 WallGrazing repair, R-01–R-03 and bounded M1 R-04 repair are completed, not recurring work orders. New credible defects can receive focused repair without repeating the entire engineering audit.
 

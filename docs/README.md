@@ -49,7 +49,7 @@ The two 5 November records are included unchanged from the editions the develope
 
 ## What is playable now
 
-F5 launches `res://gameplay/run/run_shell.tscn` with live Utility targets, player-dispatched expeditions, single-item disposal and the continuous Kitchen in the published build. Published Kitchen Continue uses schema 8. Confirmed New Run retains incompatible snapshots, including schema 7. Standalone F6 `res://gameplay/logistics_wing/wing_gameplay.tscn` retains the authored palette. The [survival-era archive](design_history/survival-era/README.md) preserves the earlier plans and frozen M4 input.
+F5 launches `res://gameplay/run/run_shell.tscn` with live Utility targets, player-dispatched expeditions, single-item disposal, continuous Kitchen and Fuel Reserve and Emergency Freight. Published main includes the accepted Dispatch repair and uses schema 9 for Continue. Confirmed New Run retains incompatible snapshots, including schema 8. Standalone F6 `res://gameplay/logistics_wing/wing_gameplay.tscn` retains the authored palette. The [survival-era archive](design_history/survival-era/README.md) preserves the earlier plans and frozen M4 input.
 
 See [CURRENT_STATE](CURRENT_STATE.md) for the current content, scene, preservation and debt details. The [M4 validation record](testing/m4-expedition-loadout-validation-2026-10-24.md), [publication record](testing/m4-publication-2026-10-25.md), and [semantic reconciliation record](testing/m4-documentation-semantic-reconciliation-2026-10-25.md) preserve prior acceptance. They are not new tests of v0.16.
 
@@ -59,8 +59,8 @@ The expedition loop and the separate [furniture movement collision repair](testi
 
 The developer promoted and closed single-item disposal on 8 November 2026. The close-out is published on main. [Technical result and developer acceptance](testing/2026-11-08-incinerator-deliberate-disposal-result.md)
 
-GDD §§8–15 record the approved contribution allocation. Continuous Kitchen is **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE**. The Fuel reserve and emergency freight slice under GDD §14 is **HUMAN-PROMOTED / CLOSED IN ITS BOUNDED SCOPE — LOCAL; PUBLICATION PENDING** and uses schema 9. Expedition bonuses, the Morale lane, healing and Workshop purchases remain future scopes. [Fuel technical result and developer acceptance](testing/2026-11-11-fuel-reserve-emergency-freight-result.md) · [Developer acceptance and close-out](testing/2026-11-09-continuous-kitchen-service-result.md) · [Contribution decisions](design_history/2026-11-09-contribution-effects-and-kitchen-decisions.md)
+GDD §§8–15 record the approved contribution allocation. Continuous Kitchen is **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE**. The Fuel reserve and emergency freight slice under GDD §14 is **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE** and uses schema 9. Expedition bonuses, the Morale lane, healing and Workshop purchases remain future scopes. [Fuel technical result and developer acceptance](testing/2026-11-11-fuel-reserve-emergency-freight-result.md) · [Developer acceptance and close-out](testing/2026-11-09-continuous-kitchen-service-result.md) · [Contribution decisions](design_history/2026-11-09-contribution-effects-and-kitchen-decisions.md)
 
-The zero-Ready Dispatch repair is **HUMAN-ACCEPTED / CLOSED IN ITS BOUNDED SCOPE — LOCAL; PUBLICATION PENDING**. [Dispatch repair result](testing/2026-11-11-dispatch-no-ready-repair-result.md)
+The zero-Ready Dispatch repair is **HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE**. [Dispatch repair result](testing/2026-11-11-dispatch-no-ready-repair-result.md)
 
 The complete pre-adoption operational index remains available in [the pinned c9f9417 snapshot](https://github.com/Navandis/Sorting-apoc-PROTOTYPE/blob/c9f9417a97cf65ef416c58189ca1f741b6a90406/docs/README.md). Current-facing consolidation changes routing, not the historical evidence.

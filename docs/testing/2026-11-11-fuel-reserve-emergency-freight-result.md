@@ -1,6 +1,6 @@
 # Fuel Reserve and Emergency Freight
 
-**HUMAN-PROMOTED / CLOSED IN ITS BOUNDED SCOPE — LOCAL; PUBLICATION PENDING.** Local branch `codex/fuel-reserve-emergency-freight`.
+**HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.**
 
 ## Preflight and documentation checkpoint
 
@@ -59,7 +59,7 @@ The fixtures use the existing six-Utility goal and sixteen-definition expedition
 
 ## 11 November 2026 developer promotion
 
-The developer explicitly promoted Fuel Reserve and Emergency Freight after a successful gameplay test. The milestone is **HUMAN-PROMOTED / CLOSED IN ITS BOUNDED SCOPE — LOCAL; PUBLICATION PENDING**.
+The developer explicitly promoted Fuel Reserve and Emergency Freight after a successful gameplay test. At promotion the milestone was **HUMAN-PROMOTED / CLOSED IN ITS BOUNDED SCOPE — LOCAL; PUBLICATION PENDING**.
 
 The developer reported the following observations from the scenarios played:
 
@@ -77,4 +77,8 @@ The close-out starts from the verified local handoff on `codex/fuel-reserve-emer
 
 The developer separately reported that with zero Ready scavengers and no formed current crew, Dispatch displays `1 selected` and permits affinity edits. Departure is correctly blocked. The reported screenshot shows eight Away expeditions, zero Ready, selected affinities and a disabled Dispatch button.
 
-The introduction date and any relationship to Fuel remain open. The developer accepted the repair on 11 November 2026. Its publication is pending. [Dispatch repair result](2026-11-11-dispatch-no-ready-repair-result.md)
+The introduction date and any relationship to Fuel remain open. The developer accepted the repair on 11 November 2026. The repair is published on main. [Dispatch repair result](2026-11-11-dispatch-no-ready-repair-result.md)
+
+## 11 November 2026 publication
+
+GitHub `main` first published the accepted Fuel and Dispatch history on 11 November 2026. A separate `git ls-remote origin refs/heads/main` check verified `a19636df5df5169cd4c2e41b80f0986c78f7a83b`.
