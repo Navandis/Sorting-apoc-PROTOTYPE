@@ -15,7 +15,7 @@ func _run() -> void:
 		finish()
 		return
 	var original := capture()
-	if not check(original.has("kitchen") and original.schema == 8, "normal snapshot captures Kitchen in schema 8"):
+	if not check(original.has("kitchen") and original.schema == Snapshot.SCHEMA, "current snapshot captures Kitchen"):
 		finish()
 		return
 	bind_run()
@@ -288,6 +288,8 @@ func open_shell(directory: String) -> void:
 func prove_compatibility(schema_seven: Dictionary) -> void:
 	schema_seven.schema = 7
 	schema_seven.erase("kitchen")
+	schema_seven.erase("fuel")
+	schema_seven.receiving.cycle.erase("start_due_at")
 	current_scene = null
 	shell.free()
 	var directory := ProjectSettings.globalize_path("user://kitchen-legacy/collection")
@@ -306,8 +308,8 @@ func prove_compatibility(schema_seven: Dictionary) -> void:
 	check(FileAccess.get_sha256(pointer) == pointer_hash, "cancel New Run keeps the old pointer")
 	shell.request_new_run()
 	shell.confirm_new_run()
-	check(service.load_snapshot().ok and service.load_snapshot().snapshot.schema == 8 and FileAccess.get_sha256(old) == old_hash
-		and FileAccess.get_sha256(pointer) != pointer_hash, "confirmed New Run repoints to schema 8 and retains schema 7 bytes")
+	check(service.load_snapshot().ok and service.load_snapshot().snapshot.schema == Snapshot.SCHEMA and FileAccess.get_sha256(old) == old_hash
+		and FileAccess.get_sha256(pointer) != pointer_hash, "confirmed New Run repoints to the current schema and retains schema 7 bytes")
 
 func write_text(path: String, data: String) -> void:
 	var file := FileAccess.open(path, FileAccess.WRITE)

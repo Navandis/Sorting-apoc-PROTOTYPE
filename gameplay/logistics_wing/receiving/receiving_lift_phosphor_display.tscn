@@ -76,9 +76,9 @@ text = "STATUS : IDLE"
 [node name="Deck" type="Label" parent="ScreenViewport/Interface"]
 layout_mode = 0
 offset_left = 48.0
-offset_top = 175.0
+offset_top = 163.0
 offset_right = 656.0
-offset_bottom = 235.0
+offset_bottom = 223.0
 mouse_filter = 2
 theme_override_colors/font_color = Color(0.39, 0.61, 0.44, 1)
 theme_override_fonts/font = SubResource("SystemFont_phosphor")
@@ -88,30 +88,42 @@ text = "DECK   : CLEAR"
 [node name="Queue" type="Label" parent="ScreenViewport/Interface"]
 layout_mode = 0
 offset_left = 48.0
-offset_top = 240.0
+offset_top = 221.0
 offset_right = 656.0
-offset_bottom = 300.0
+offset_bottom = 281.0
 mouse_filter = 2
 theme_override_colors/font_color = Color(0.39, 0.61, 0.44, 1)
 theme_override_fonts/font = SubResource("SystemFont_phosphor")
 theme_override_font_sizes/font_size = 46
 text = "QUEUE  : 00"
 
+[node name="Mode" type="Label" parent="ScreenViewport/Interface"]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 294.0
+offset_right = 656.0
+offset_bottom = 334.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.44, 0.69, 0.49, 1)
+theme_override_fonts/font = SubResource("SystemFont_phosphor")
+theme_override_font_sizes/font_size = 29
+text = "MODE   : NORMAL FREIGHT"
+
 [node name="FooterRule" type="ColorRect" parent="ScreenViewport/Interface"]
 layout_mode = 0
 offset_left = 48.0
-offset_top = 316.0
+offset_top = 340.0
 offset_right = 656.0
-offset_bottom = 319.0
+offset_bottom = 343.0
 mouse_filter = 2
 color = Color(0.2, 0.34, 0.24, 1)
 
 [node name="Waiting" type="Label" parent="ScreenViewport/Interface"]
 layout_mode = 0
 offset_left = 48.0
-offset_top = 332.0
+offset_top = 352.0
 offset_right = 656.0
-offset_bottom = 365.0
+offset_bottom = 385.0
 mouse_filter = 2
 theme_override_colors/font_color = Color(0.34, 0.52, 0.38, 1)
 theme_override_fonts/font = SubResource("SystemFont_phosphor")

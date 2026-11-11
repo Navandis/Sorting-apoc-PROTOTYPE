@@ -6,7 +6,9 @@ const Goal = preload("res://gameplay/run/collection_goal.gd")
 const ExpeditionSnapshot = preload("res://gameplay/expeditions/expedition_snapshot.gd")
 const KitchenSnapshot = preload("res://gameplay/kitchen/kitchen_snapshot.gd")
 const WING_PATH := "res://gameplay/logistics_wing/wing_gameplay.tscn"
-const SCHEMA := 8
+const FuelSnapshot := preload("res://gameplay/fuel/fuel_snapshot.gd")
+const FuelConfig := preload("res://gameplay/fuel/fuel_test_config.gd")
+const SCHEMA := 9
 const NORMAL_CARRY_BULK := 20
 static var _seed_definitions: Dictionary = {}
 var _error := ""
@@ -55,7 +57,7 @@ func capture(wing: Node) -> Dictionary:
 	return {"schema": SCHEMA, "content": content_fingerprint(), "run": wing.run_identity.capture_state(),
 		"timeline": wing.run_timeline.capture_state(), "goal": wing.collection_goal.capture_state(),
 		"expeditions": expeditions, "incinerator": wing.incinerator.capture_state(),
-		"kitchen": wing.kitchen.capture_state(),
+		"kitchen": wing.kitchen.capture_state(), "fuel": wing.fuel.capture_state(),
 		"items": items, "carry": player.carried_items.capture_state(),
 		"hosts": hosts, "surfaces": surfaces, "player": player.capture_state(wing), "receiving": receiving}
 
@@ -97,12 +99,14 @@ func validate(state: Dictionary) -> String:
 		return "This continuation is from the expedition build (schema 6). Incinerator continuation requires a New Run. The previous snapshot is preserved."
 	if state.get("schema") == 7:
 		return "This continuation is from the Incinerator build (schema 7). Continuous Kitchen requires a New Run. The previous snapshot is preserved."
+	if state.get("schema") == 8:
+		return "This continuation is from the Kitchen build (schema 8). Fuel reserve requires a New Run. The previous snapshot is preserved."
 	if state.get("schema") != SCHEMA:
 		return "Unsupported save schema %s (collection schema %s required)" % [state.get("schema"), SCHEMA]
 	if not _fields(state, {"schema":TYPE_INT,"content":TYPE_STRING,"run":TYPE_DICTIONARY,"timeline":TYPE_DICTIONARY,"goal":TYPE_DICTIONARY,
 		"items":TYPE_DICTIONARY,"carry":TYPE_DICTIONARY,"hosts":TYPE_ARRAY,"surfaces":TYPE_DICTIONARY,
 		"player":TYPE_DICTIONARY,"receiving":TYPE_DICTIONARY,"expeditions":TYPE_DICTIONARY,
-		"incinerator":TYPE_DICTIONARY,"kitchen":TYPE_DICTIONARY}, "Snapshot"): return _error
+		"incinerator":TYPE_DICTIONARY,"kitchen":TYPE_DICTIONARY,"fuel":TYPE_DICTIONARY}, "Snapshot"): return _error
 	if state.content != content_fingerprint(): return "Save's physical item data is incompatible with this build"
 	if not _fields(state.run, {"id":TYPE_STRING,"next_sequence":TYPE_INT}, "Run"): return _error
 	if state.run.id.length() != 24 or not state.run.id.is_valid_hex_number(false) or state.run.next_sequence < 1:
@@ -146,8 +150,11 @@ func validate(state: Dictionary) -> String:
 	var kitchen_error := KitchenSnapshot.new().validate(state.kitchen, state.timeline.elapsed, state.items,
 		terminal, state.run.id + ":wing_seed_v1:", _seed_definition)
 	if not kitchen_error.is_empty(): return kitchen_error
+	var fuel_error := FuelSnapshot.validate(state.fuel, state.timeline.elapsed, state.items,
+		terminal, state.run.id + ":wing_seed_v1:", _seed_definition)
+	if not fuel_error.is_empty(): return fuel_error
 	terminal.make_read_only()
-	var receiving_error := _validate_receiving(state.receiving, state.expeditions.away_cargo, state.items, owners, expedition, terminal)
+	var receiving_error := _validate_receiving(state, owners, expedition, terminal)
 	if not receiving_error.is_empty(): return receiving_error
 	if owners.size() != state.items.size(): return "Unowned physical item in save"
 	if not _fields(state.player, {"transform":TYPE_TRANSFORM3D,"camera":TYPE_TRANSFORM3D,"pitch":TYPE_FLOAT,
@@ -274,8 +281,10 @@ func _batch_states(receiving: Dictionary) -> Array:
 		all.append(pending.batch)
 	return all
 
-func _validate_receiving(receiving: Variant, away: Dictionary, items: Dictionary, owners: Dictionary,
-		expedition: RefCounted, terminal: Dictionary) -> String:
+func _validate_receiving(state: Dictionary, owners: Dictionary, expedition: RefCounted, terminal: Dictionary) -> String:
+	var receiving: Dictionary = state.receiving
+	var away: Dictionary = state.expeditions.away_cargo
+	var items: Dictionary = state.items
 	if not _fields(receiving, {"manager":TYPE_DICTIONARY,"admission":TYPE_DICTIONARY,"cycle":TYPE_DICTIONARY}, "Receiving"): return _error
 	if not _fields(receiving.manager, {"active":TYPE_STRING,"queue":TYPE_ARRAY,"batches":TYPE_ARRAY}, "Deposits"): return _error
 	if not _fields(receiving.admission, {"returns":TYPE_DICTIONARY,"batch_teams":TYPE_DICTIONARY,"pending":TYPE_ARRAY}, "Return admission"): return _error
@@ -342,12 +351,56 @@ func _validate_receiving(receiving: Variant, away: Dictionary, items: Dictionary
 	for batch_id: String in batches:
 		if not away.has(batch_id) and not receiving.admission.batch_teams.has(batch_id):
 			return "Cargo has no admission commitment"
-	if not _fields(receiving.cycle, {"state":TYPE_INT,"elapsed":TYPE_FLOAT,"duration":TYPE_FLOAT,"warning_elapsed":TYPE_FLOAT,
-		"busy":TYPE_BOOL,"departing":TYPE_BOOL,"batch":TYPE_STRING,"shutter_y":TYPE_FLOAT}, "Lift"): return _error
-	var cycle: Dictionary = receiving.cycle
-	if cycle.state not in [0,1,2,3,4,5] or cycle.elapsed < 0.0 or cycle.duration < 0.0 or cycle.departing != (cycle.state == 0 and cycle.busy) or cycle.busy != (not manager.active.is_empty()) or cycle.batch != manager.active: return "Inconsistent lift continuation"
-	if not manager.active.is_empty() and batches[manager.active].is_drained() != (cycle.state == 5 or cycle.departing): return "Lift phase/drained cargo mismatch"
+	var active: LootBatch = batches.get(manager.active)
+	var lift_error := _validate_lift(receiving.cycle, active, state, expedition)
+	if not lift_error.is_empty(): return lift_error
 	return expedition.validate_cargo(receiving, batches, items, owners, current_profile, terminal)
+
+func _validate_lift(cycle: Variant, active: LootBatch, state: Dictionary, expedition: RefCounted) -> String:
+	if not _fields(cycle, {"state":TYPE_INT,"elapsed":TYPE_FLOAT,"duration":TYPE_FLOAT,"warning_elapsed":TYPE_FLOAT,
+		"busy":TYPE_BOOL,"departing":TYPE_BOOL,"batch":TYPE_STRING,"shutter_y":TYPE_FLOAT,
+		"start_due_at":TYPE_FLOAT}, "Lift"): return _error
+	var phase: int = cycle.state
+	var closed := phase == ReceivingLiftCycle.State.SEALED_EMPTY
+	var waiting: bool = cycle.start_due_at != ReceivingLiftCycle.NO_START_DEADLINE
+	if phase < ReceivingLiftCycle.State.SEALED_EMPTY or phase > ReceivingLiftCycle.State.CLOSING \
+			or cycle.busy != (active != null) or cycle.batch != (active.batch_id if active != null else "") \
+			or cycle.busy != (not closed or waiting or cycle.departing) \
+			or (waiting and cycle.departing) or ((waiting or cycle.departing) and not closed):
+		return "Inconsistent lift continuation"
+	for value: float in [cycle.elapsed, cycle.duration, cycle.warning_elapsed]:
+		if not is_finite(value) or value < 0.0: return "Invalid lift phase time"
+	if not is_finite(cycle.shutter_y): return "Invalid shutter pose"
+	if active != null and active.is_drained() != (phase == ReceivingLiftCycle.State.CLOSING or cycle.departing):
+		return "Lift phase/drained cargo mismatch"
+	if waiting:
+		var elapsed: float = state.timeline.elapsed
+		var due: float = cycle.start_due_at
+		var fuel: Dictionary = state.fuel
+		if not is_finite(due) or due <= elapsed or due > elapsed + FuelConfig.EMERGENCY_WAIT \
+				or due < expedition.cargo_handover_at(active.batch_id) + FuelConfig.EMERGENCY_WAIT \
+				or FuelConfig.band_at(fuel.anchor_reserve, fuel.anchor_at, elapsed) != 3:
+			return "Invalid emergency freight start deadline or power"
+		if cycle.elapsed != 0.0 or cycle.duration != 0.0 or cycle.warning_elapsed != 0.0 \
+				or cycle.shutter_y != _authored_closed_shutter_y():
+			return "Emergency freight must wait with the shutter closed and no cycle underway"
+		for entry: LootBatchEntry in active.entries:
+			if not entry.remaining_in_batch:
+				return "Emergency freight waiting to start has released cargo"
+	return ""
+
+func _authored_closed_shutter_y() -> float:
+	var scene: SceneState = (load(WING_PATH) as PackedScene).get_state()
+	const CLOSED_MARKER := "ReceivingLiftInstallation/ShutterPoseMarkers/Closed"
+	for index in scene.get_node_count():
+		if String(scene.get_node_path(index)).trim_prefix("./") != CLOSED_MARKER:
+			continue
+		for property in scene.get_node_property_count(index):
+			if scene.get_node_property_name(index, property) == &"transform":
+				var pose: Transform3D = scene.get_node_property_value(index, property)
+				return pose.origin.y
+		break
+	return INF
 
 func restore(wing: Node, state: Dictionary) -> String:
 	var validation := validate(state)

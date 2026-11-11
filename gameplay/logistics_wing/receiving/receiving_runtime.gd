@@ -207,12 +207,14 @@ func capture_state() -> Dictionary:
 
 
 func restore_state(state: Dictionary, batches: Dictionary, items: Dictionary) -> bool:
+	lift_cycle.reconstructing = true
 	receiving_manager.restore_state(state.manager, batches)
 	return_admission.restore_state(state.admission, batches)
 	deck_presenter.restored_items = items
-	if not state.manager.active.is_empty() and not deck_presenter.present_active_batch():
-		return false
-	return lift_cycle.restore_state(state.cycle)
+	var presented: bool = state.manager.active.is_empty() or deck_presenter.present_active_batch()
+	var restored: bool = presented and lift_cycle.restore_state(state.cycle)
+	lift_cycle.reconstructing = false
+	return restored
 
 
 ## Exact controlled content uses the established committed batch and preparation

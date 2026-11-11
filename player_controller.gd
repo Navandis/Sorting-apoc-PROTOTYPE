@@ -3,6 +3,7 @@ extends CharacterBody3D
 signal dispatch_requested
 signal incinerator_requested
 signal kitchen_requested
+signal fuel_requested
 
 @export var move_speed: float = 4.0
 @export var sprint_multiplier: float = 2.0
@@ -66,6 +67,7 @@ var world_input_blocked := false
 var dispatch_station: StaticBody3D
 var incinerator_station: StaticBody3D
 var kitchen_station: StaticBody3D
+var fuel_station: StaticBody3D
 var sprint_allowed: Callable
 var _require_e_release := false
 var _require_f_release := false
@@ -145,6 +147,9 @@ func _unhandled_input(event: InputEvent) -> void:
 				get_viewport().set_input_as_handled()
 			elif can_reach_kitchen():
 				kitchen_requested.emit()
+				get_viewport().set_input_as_handled()
+			elif can_reach_fuel():
+				fuel_requested.emit()
 				get_viewport().set_input_as_handled()
 			elif _looks_at_dispatch():
 				dispatch_requested.emit()
@@ -588,6 +593,11 @@ func _update_interaction_target() -> void:
 		_interaction_prompt.text = "[F] OPEN KITCHEN"
 		_interaction_prompt.visible = true
 		return
+	if not has_loot_target and can_reach_fuel():
+		_set_aim_dot_color(DOT_PLACE)
+		_interaction_prompt.text = "[F] OPEN FUEL RESERVE"
+		_interaction_prompt.visible = true
+		return
 	if not has_loot_target and _looks_at_dispatch():
 		_set_aim_dot_color(DOT_PLACE)
 		_interaction_prompt.text = "[F] PREPARE EXPEDITION"
@@ -647,6 +657,10 @@ func can_reach_incinerator() -> bool:
 
 func can_reach_kitchen() -> bool:
 	return _looks_at_station(kitchen_station, collision_mask)
+
+
+func can_reach_fuel() -> bool:
+	return _looks_at_station(fuel_station, collision_mask)
 
 
 func _looks_at_station(station: StaticBody3D, occlusion_mask: int = 0) -> bool:

@@ -8,6 +8,9 @@ enum State { SEALED_EMPTY, ARRIVAL, SEALED_READY, REVEALING, OPEN, CLOSING }
 signal state_changed(state: State)
 signal readout_changed
 
+const FuelConfig := preload("res://gameplay/fuel/fuel_test_config.gd")
+const NO_START_DEADLINE := -1.0
+
 @export_group("Shutter synchronization")
 @export_range(0.0, 2.0, 0.05) var arrival_open_overlap_s := 0.65
 @export_range(0.0, 1.0, 0.05) var opening_motion_delay_s := 0.15
@@ -48,6 +51,10 @@ var _departing := false
 var _retiring := false
 var _cycle_batch_id := ""
 var _configured := false
+var _freight_clock: RefCounted
+var _emergency_mode := false
+var _start_due_at := NO_START_DEADLINE
+var reconstructing := false
 var externally_driven := false
 
 func _ready() -> void:
@@ -110,6 +117,31 @@ func get_cycle_state() -> State:
 func is_busy() -> bool:
 	return _busy
 
+func bind_freight_clock(clock: RefCounted, emergency: bool) -> void:
+	_freight_clock = clock
+	set_emergency_mode(emergency)
+
+func set_emergency_mode(emergency: bool) -> void:
+	if _emergency_mode == emergency:
+		return
+	_emergency_mode = emergency
+	if is_waiting_to_start() and not emergency and not reconstructing:
+		_start_arrival()
+	else:
+		readout_changed.emit()
+
+func is_emergency_mode() -> bool:
+	return _emergency_mode
+
+func is_waiting_to_start() -> bool:
+	return _start_due_at != NO_START_DEADLINE
+
+func wait_remaining() -> float:
+	return maxf(0.0, _start_due_at - _freight_clock.elapsed) if is_waiting_to_start() else 0.0
+
+func is_departing() -> bool:
+	return _departing
+
 func can_take_receiving() -> bool:
 	return (
 		_configured and _state == State.OPEN and not _departing
@@ -118,7 +150,7 @@ func can_take_receiving() -> bool:
 	)
 
 func get_deck_item_count() -> int:
-	if not _configured or _state == State.SEALED_EMPTY or _state == State.ARRIVAL:
+	if not _configured or (_state == State.SEALED_EMPTY and not is_waiting_to_start()) or _state == State.ARRIVAL:
 		return 0
 	var batch := _manager.get_active_batch()
 	if batch == null or batch.batch_id != _cycle_batch_id:
@@ -138,6 +170,8 @@ func _process(delta: float) -> void:
 
 ## Persistent runs split at this owner's real-time mechanical endpoints.
 func seconds_to_boundary() -> float:
+	if is_waiting_to_start():
+		return wait_remaining()
 	match _state:
 		State.ARRIVAL, State.CLOSING:
 			return maxf(0.0, _phase_duration - _elapsed)
@@ -148,7 +182,11 @@ func seconds_to_boundary() -> float:
 	return INF
 
 func advance_time(delta: float) -> void:
-	if not _configured:
+	if not _configured or reconstructing:
+		return
+	if is_waiting_to_start():
+		if _freight_clock.elapsed >= _start_due_at:
+			_start_arrival()
 		return
 	_elapsed += delta
 	_warning_elapsed += delta
@@ -197,12 +235,12 @@ func _settle_boundary() -> void:
 				_on_active_batch_changed(promoted_id)
 
 func _move_shutter(from_y: float, to_y: float, delay_s: float, duration_s: float) -> bool:
+	if _elapsed >= delay_s + duration_s:
+		_shutter.position.y = to_y
+		return true
 	var progress := clampf((_elapsed - delay_s) / maxf(duration_s, .001), 0.0, 1.0)
 	_shutter.position.y = lerpf(from_y, to_y, smoothstep(0.0, 1.0, progress))
-	if progress < 1.0:
-		return false
-	_shutter.position.y = to_y
-	return is_equal_approx(_shutter.position.y, to_y)
+	return false
 
 func _set_state(next: State) -> bool:
 	var previous := _state
@@ -220,10 +258,21 @@ func _set_state(next: State) -> bool:
 	return true
 
 func _on_active_batch_changed(batch_id: String) -> void:
-	if batch_id.is_empty() or _busy or _retiring:
+	if batch_id.is_empty() or _busy or _retiring or reconstructing:
 		return
 	_busy = true
 	_cycle_batch_id = batch_id
+	if _emergency_mode:
+		_elapsed = 0.0
+		_phase_duration = 0.0
+		_warning_elapsed = 0.0
+		_start_due_at = _freight_clock.elapsed + FuelConfig.EMERGENCY_WAIT
+		readout_changed.emit()
+	else:
+		_start_arrival()
+
+func _start_arrival() -> void:
+	_start_due_at = NO_START_DEADLINE
 	_warning_elapsed = 0.0
 	_phase_duration = maxf(0.0, _cue_duration($Arrival) - arrival_open_overlap_s)
 	_set_state(State.ARRIVAL)
@@ -285,7 +334,8 @@ func _request_refresh() -> void:
 func capture_state() -> Dictionary:
 	return {"state": int(_state), "elapsed": _elapsed, "duration": _phase_duration,
 		"warning_elapsed": _warning_elapsed, "busy": _busy, "departing": _departing,
-		"batch": _cycle_batch_id, "shutter_y": _shutter.position.y if is_instance_valid(_shutter) else _closed_y}
+		"batch": _cycle_batch_id, "start_due_at": _start_due_at,
+		"shutter_y": _shutter.position.y if is_instance_valid(_shutter) else _closed_y}
 
 
 func restore_state(state: Dictionary) -> bool:
@@ -300,6 +350,7 @@ func restore_state(state: Dictionary) -> bool:
 	_busy = state.busy
 	_departing = state.departing
 	_cycle_batch_id = state.batch
+	_start_due_at = state.start_due_at
 	_retiring = false
 	_shutter.position.y = state.shutter_y
 	_presenter.suspend_pickup()

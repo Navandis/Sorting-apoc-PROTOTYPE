@@ -11,6 +11,10 @@ const IncineratorOperations = preload("res://gameplay/disposal/incinerator_opera
 const IncineratorPanel = preload("res://gameplay/disposal/incinerator_panel.gd")
 const KitchenOperations = preload("res://gameplay/kitchen/kitchen_operations.gd")
 const KitchenPanel = preload("res://gameplay/kitchen/kitchen_panel.gd")
+const FuelOperations := preload("res://gameplay/fuel/fuel_operations.gd")
+const FuelPanel := preload("res://gameplay/fuel/fuel_panel.gd")
+const FuelLighting := preload("res://gameplay/fuel/fuel_lighting.gd")
+const FUEL_STATION := "ReceivingSetDressing/CollisionProxies/ElectricalCabinetMovement"
 const KITCHEN_MESH := "Environment/Greybox/Proxies/KitchenInterface/Mesh"
 const KITCHEN_INTERACTION_LAYER := 1 << 10
 
@@ -26,6 +30,9 @@ var incinerator: RefCounted
 var incinerator_panel: CanvasLayer
 var kitchen: RefCounted
 var kitchen_panel: CanvasLayer
+var fuel: RefCounted
+var fuel_panel: CanvasLayer
+var _fuel_lighting: RefCounted
 var _collection_error := ""
 
 
@@ -36,6 +43,7 @@ func configure_new_run() -> void:
 	_configure_services()
 	var seeds := Crypto.new().generate_random_bytes(16)
 	kitchen.initialize(seeds.decode_s64(0), seeds.decode_s64(8))
+	fuel.initialize()
 
 
 func configure_continue(state: Dictionary) -> void:
@@ -45,17 +53,20 @@ func configure_continue(state: Dictionary) -> void:
 	run_timeline = Timeline.new()
 	run_timeline.restore_state(state.timeline)
 	_configure_services()
+	fuel.restore_state(state.fuel)
 	collection_goal = Goal.new(state.goal.target)
 	collection_goal.restore_state(state.goal)
 
 func _configure_services() -> void:
 	expeditions = ExpeditionOperations.new(run_identity, run_timeline.clock)
 	incinerator = IncineratorOperations.new(run_timeline.clock,
-		func(id: String): return expeditions.has_spent_item(id) or kitchen.has_spent_item(id))
+		func(id: String): return expeditions.has_spent_item(id) or kitchen.has_spent_item(id) or fuel.has_spent_item(id))
 	kitchen = KitchenOperations.new(run_timeline.clock,
-		func(id: String): return expeditions.has_spent_item(id) or incinerator.has_spent_item(id))
+		func(id: String): return expeditions.has_spent_item(id) or incinerator.has_spent_item(id) or fuel.has_spent_item(id))
+	fuel = FuelOperations.new(run_timeline.clock, func(id: String):
+		return expeditions.has_spent_item(id) or incinerator.has_spent_item(id) or kitchen.has_spent_item(id))
 	expeditions.other_consumer_has_spent = func(id: String):
-		return incinerator.has_spent_item(id) or kitchen.has_spent_item(id)
+		return incinerator.has_spent_item(id) or kitchen.has_spent_item(id) or fuel.has_spent_item(id)
 
 func _enter_tree() -> void:
 	if run_identity != null:
@@ -75,7 +86,7 @@ func _enter_tree() -> void:
 
 func _ready() -> void:
 	if run_timeline != null:
-		run_timeline.bind($ReceivingRuntime, expeditions, kitchen)
+		run_timeline.bind($ReceivingRuntime, expeditions, kitchen, fuel)
 		if run_timeline.error.is_empty():
 			_bind_collection()
 	for station: Array in [["MedicalInterface", "Medical"], ["KitchenInterface", "Kitchen"], ["DispatchWorkSurface", "Dispatch"]]:
@@ -106,6 +117,16 @@ func _bind_collection() -> void:
 	if not _bind_kitchen_frontage():
 		_collection_error = "Kitchen frontage could not initialize"
 		return
+	$Player.fuel_station = get_node_or_null(FUEL_STATION) as StaticBody3D
+	if $Player.fuel_station == null:
+		_collection_error = "Receiving Fuel station could not initialize"
+		return
+	_fuel_lighting = FuelLighting.new()
+	if not _fuel_lighting.bind(self):
+		_collection_error = "Fuel working lights could not initialize"
+		return
+	fuel.power_changed.connect(_apply_fuel_lighting)
+	_apply_fuel_lighting()
 	var surfaces: Array[StorageSurface] = fixtures.get_collection_surfaces()
 	collection_goal.bind(surfaces)
 	for surface: StorageSurface in surfaces:
@@ -137,6 +158,10 @@ func _bind_kitchen_frontage() -> bool:
 	player.carried_items.capacity_for_normal = kitchen.effective_capacity
 	kitchen.changed.connect(player.carried_items.capacity_changed.emit)
 	return true
+
+func _apply_fuel_lighting() -> void:
+	_fuel_lighting.apply(fuel.lighting_multiplier())
+
 
 func _refresh_collection() -> void:
 	if restoring:
@@ -204,13 +229,25 @@ func _attach_service_panels() -> void:
 			kitchen_panel.open_panel())
 	kitchen_panel.panel_toggled.connect(_on_service_panel_toggled)
 
+	fuel_panel = FuelPanel.new()
+	fuel_panel.name = "FuelPanel"
+	fuel_panel.operations = fuel
+	fuel_panel.carry = player.carried_items
+	fuel_panel.station_reachable = player.can_reach_fuel
+	add_child(fuel_panel)
+	player.fuel_requested.connect(func():
+		if _can_open_service_panel() and player.can_reach_fuel():
+			fuel_panel.open_panel())
+	fuel_panel.panel_toggled.connect(_on_service_panel_toggled)
+
 func _can_open_service_panel() -> bool:
 	return not get_tree().paused and not $Player.world_input_blocked and not $Player._zone_editor_open
 
 func _service_panel_open() -> bool:
 	return (dispatch_panel != null and dispatch_panel.is_open()) \
 		or (incinerator_panel != null and incinerator_panel.is_open()) \
-		or (kitchen_panel != null and kitchen_panel.is_open())
+		or (kitchen_panel != null and kitchen_panel.is_open()) \
+		or (fuel_panel != null and fuel_panel.is_open())
 
 func _on_service_panel_toggled() -> void:
 	if _service_panel_open():
@@ -223,10 +260,14 @@ func sync_player_input(paused: bool) -> void:
 		incinerator_panel.refresh_key_guards()
 	if kitchen_panel != null and kitchen_panel.is_open():
 		kitchen_panel.refresh_key_guards()
+	if fuel_panel != null and fuel_panel.is_open():
+		fuel_panel.refresh_key_guards()
 	$Player.set_world_input_blocked(blocked)
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if blocked else Input.MOUSE_MODE_CAPTURED
 
 func close_service_layer() -> bool:
+	if fuel_panel != null and fuel_panel.close_top():
+		return true
 	if kitchen_panel != null and kitchen_panel.close_top():
 		return true
 	if incinerator_panel != null and incinerator_panel.close_top():

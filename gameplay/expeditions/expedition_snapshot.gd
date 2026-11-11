@@ -162,6 +162,10 @@ func _validate_loadout(loadout: Dictionary, id: String, members: int, until: flo
 			result[lane] = {"required": targets[lane], "supplied": credited[lane], "unmet": 0}
 	return bulk if loadout.credited == credited and loadout.closed == full and loadout.result == result else -1
 
+func cargo_handover_at(batch_id: String) -> float:
+	var trip: Dictionary = _journeys.get(_cargo_teams.get(batch_id, ""), {})
+	return trip.get("handover_at", INF)
+
 func validate_cargo(receiving: Dictionary, batches: Dictionary, items: Dictionary, owners: Dictionary,
 		profile: ReceivingDeckProfile, terminal: Dictionary) -> String:
 	var admission: Dictionary = receiving.admission
@@ -176,6 +180,18 @@ func validate_cargo(receiving: Dictionary, batches: Dictionary, items: Dictionar
 		waiting.append(pending.team)
 	if waiting != _waiting:
 		return "Awaiting Lift crew or FIFO mismatch"
+	var order: Array = []
+	if not receiving.manager.active.is_empty():
+		order.append(receiving.manager.active)
+	order.append_array(receiving.manager.queue)
+	for pending: Dictionary in admission.pending:
+		order.append(pending.batch.batch_id)
+	var previous := ""
+	for batch_id: String in order:
+		var team: String = _cargo_teams.get(batch_id, "")
+		if team.is_empty() or (not previous.is_empty() and not _earlier_return(previous, team)):
+			return "Invalid deposited and Awaiting Lift FIFO order"
+		previous = team
 	var expected_returns := 0
 	var expedition_items := {}
 	for batch_id: String in _cargo_teams:

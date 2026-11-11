@@ -2,6 +2,7 @@ extends SceneTree
 # Catches wrong-surface binding, broken viewport scope, moved authored art,
 # and a configured display that never actually produces pixels.
 const WING = "res://gameplay/logistics_wing/wing_gameplay.tscn"
+const SaveService = preload("res://gameplay/run/run_save_service.gd")
 const CRT = "ReceivingLiftMonitor/SM_KB3D_CPP_PropTV_A"
 var failures = 0
 func _init(): call_deferred("run")
@@ -11,9 +12,21 @@ func check(ok: bool, message: String):
   push_error("ASSERTION FAILED: "+message)
 func run():
  for launch in [String(ProjectSettings.get_setting("application/run/main_scene")),WING]:
-  var wing = load(launch).instantiate()
+  var entry = load(launch).instantiate()
+  var wing = entry
+  if entry.has_method("start_new_run"):
+   entry.save_service = SaveService.new("user://crt-fixture")
+   root.add_child(entry)
+   if not entry.start_new_run():
+    check(false, "configured RunShell starts an isolated New Run")
+    entry.free()
+    continue
+   entry.set_process(false)
+   wing = entry.wing
+   wing.set_process(false)
+  else:
+   root.add_child(wing)
   wing.get_node("Player").set_physics_process(false)
-  root.add_child(wing)
   await process_frame
   var crt: Node3D = wing.get_node(CRT)
   var mesh: MeshInstance3D = crt.get_node("Mesh")
@@ -45,6 +58,7 @@ func run():
     check(control.mouse_filter == Control.MOUSE_FILTER_IGNORE and control.focus_mode == Control.FOCUS_NONE,"read-only display has no input/focus: "+str(control.name))
    for kind in ["Light3D","CollisionObject3D","CollisionShape3D","Area3D"]:
     check(wing.get_node("ReceivingLiftMonitor").find_children("*",kind,true,false).is_empty(),"monitor has no "+kind)
+   check(viewport.get_node("Interface/Mode").text.contains("NORMAL FREIGHT"), "ordinary F5 and F6 display normal freight power")
    check(display.find_children("*","Label",true,false).size() >= 4,"static labels render status/deck/queue")
    if DisplayServer.get_name() != "headless":
     for i in 8: await process_frame
@@ -61,6 +75,6 @@ func run():
      print("CRT_RENDER launch=",launch," pixels=",image.get_size()," green_samples=",phosphor)
    else:
     print("CRT_RENDER skipped under dummy renderer; run with OpenGL for pixel proof")
-  wing.free()
+  entry.free()
  print("receiving_lift_crt_tests: %s (%d failures)" % ["PASS" if failures == 0 else "FAIL",failures])
  quit(0 if failures == 0 else 1)
