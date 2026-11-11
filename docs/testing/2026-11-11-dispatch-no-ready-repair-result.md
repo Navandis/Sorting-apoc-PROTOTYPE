@@ -1,6 +1,6 @@
 # Dispatch preparation with no Ready scavengers
 
-**11 November 2026 · Technically verified locally · Developer retest pending**
+**11 November 2026 · HUMAN-ACCEPTED / CLOSED IN ITS BOUNDED SCOPE — LOCAL; PUBLICATION PENDING**
 
 ## Reproduction and correction
 
@@ -30,7 +30,13 @@ $project = 'D:/Godot Projects/Sorting-apoc-PROTOTYPE'
 & $godot --path $project --headless --quit-after 12
 ```
 
-## Developer retest
+## Developer retest checklist at technical handoff
 
 1. Send all available crews away so the current draft is unformed at zero Ready. Open Dispatch and check that preparation is unavailable, affinities cannot be edited and operations remain visible.
 2. With one scavenger Ready, contribute one eligible item to form the final crew. At zero Ready, check that its count stays locked, then change its affinities and dispatch it.
+
+## 11 November 2026 developer acceptance
+
+The developer reported that their in-game retest confirmed the Dispatch bug was fixed and the panel displayed correct information and appropriate interactions when no crew was available. The developer authorized merging and pushing the pending changes.
+
+At acceptance the repair was **HUMAN-ACCEPTED / CLOSED IN ITS BOUNDED SCOPE — LOCAL; PUBLICATION PENDING**.

@@ -61,4 +61,6 @@ The developer promoted and closed single-item disposal on 8 November 2026. The c
 
 GDD §§8–15 record the approved contribution allocation. Continuous Kitchen is **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE**. The Fuel reserve and emergency freight slice under GDD §14 is **HUMAN-PROMOTED / CLOSED IN ITS BOUNDED SCOPE — LOCAL; PUBLICATION PENDING** and uses schema 9. Expedition bonuses, the Morale lane, healing and Workshop purchases remain future scopes. [Fuel technical result and developer acceptance](testing/2026-11-11-fuel-reserve-emergency-freight-result.md) · [Developer acceptance and close-out](testing/2026-11-09-continuous-kitchen-service-result.md) · [Contribution decisions](design_history/2026-11-09-contribution-effects-and-kitchen-decisions.md)
 
+The zero-Ready Dispatch repair is **HUMAN-ACCEPTED / CLOSED IN ITS BOUNDED SCOPE — LOCAL; PUBLICATION PENDING**. [Dispatch repair result](testing/2026-11-11-dispatch-no-ready-repair-result.md)
+
 The complete pre-adoption operational index remains available in [the pinned c9f9417 snapshot](https://github.com/Navandis/Sorting-apoc-PROTOTYPE/blob/c9f9417a97cf65ef416c58189ca1f741b6a90406/docs/README.md). Current-facing consolidation changes routing, not the historical evidence.

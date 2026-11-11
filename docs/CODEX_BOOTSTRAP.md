@@ -69,6 +69,8 @@ Continuous Kitchen is **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE
 
 Fuel Reserve and Emergency Freight is **HUMAN-PROMOTED / CLOSED IN ITS BOUNDED SCOPE — LOCAL; PUBLICATION PENDING**. It uses schema 9 and the existing save service. Schema 8 requires confirmed New Run and its snapshot is retained. Refuel at the cabinet right of the Receiving shutter with F and a distinct E. [Fuel technical result and developer acceptance](testing/2026-11-11-fuel-reserve-emergency-freight-result.md)
 
+The zero-Ready Dispatch repair is **HUMAN-ACCEPTED / CLOSED IN ITS BOUNDED SCOPE — LOCAL; PUBLICATION PENDING**. [Dispatch repair result](testing/2026-11-11-dispatch-no-ready-repair-result.md)
+
 GDD §15.3 records the Incinerator design. The developer promoted and closed the bounded single-item slice on 8 November 2026. The close-out is published on main. [Technical result and developer acceptance](testing/2026-11-08-incinerator-deliberate-disposal-result.md)
 
 ## Retained high-risk invariants

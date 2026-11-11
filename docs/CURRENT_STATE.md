@@ -159,7 +159,7 @@ Systems MVP §16 remains the full CF-01–CF-24 register. This entry-point updat
 
 Known remaining items include CF-07 held-material diagnostics, Windows certificate-store diagnostics, Pickaxe 108 co-located LOD, twelve pending Auto Stack Group approvals, loading investigation, baseline cross-wing awareness, final furnishing/interface work and continuous durability. Historical reflection costs (~3.56 s cold addition, 125–132 ms first cargo, 8–10 ms later on the measured machine), unrelated `gallery_a_fixture_front` failure, tolerated residual shadow and unexplained .30/.40 comparison retain their original evidence limits. Unrun editor captures remain unrun. No universal error-free or release-performance claim is made.
 
-**Dispatch follow-up.** The zero-Ready preparation repair is technically verified and awaits developer retest. [Dispatch repair result](testing/2026-11-11-dispatch-no-ready-repair-result.md)
+**Dispatch repair.** **HUMAN-ACCEPTED / CLOSED IN ITS BOUNDED SCOPE — LOCAL; PUBLICATION PENDING.** [Dispatch repair result](testing/2026-11-11-dispatch-no-ready-repair-result.md)
 
 The old Fuel/locker maintenance, EAF1 WallGrazing repair, R-01–R-03 and bounded M1 R-04 repair are completed, not recurring work orders. New credible defects can receive focused repair without repeating the entire engineering audit.
 

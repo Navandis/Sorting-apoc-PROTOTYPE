@@ -73,8 +73,8 @@ The technical evidence above covers exact equality at 15, additional continuatio
 
 The close-out starts from the verified local handoff on `codex/fuel-reserve-emergency-freight`. The remote advertised `main` at `a58cbf594a4e12d202cd8ba56d3ef73c82b03019` on 11 November 2026 and had no branch ref for the local Fuel branch.
 
-## Open Dispatch follow-up
+## Dispatch follow-up
 
 The developer separately reported that with zero Ready scavengers and no formed current crew, Dispatch displays `1 selected` and permits affinity edits. Departure is correctly blocked. The reported screenshot shows eight Away expeditions, zero Ready, selected affinities and a disabled Dispatch button.
 
-The introduction date and any relationship to Fuel remain open. The repair is technically verified and awaits developer retest. [Dispatch repair result](2026-11-11-dispatch-no-ready-repair-result.md)
+The introduction date and any relationship to Fuel remain open. The developer accepted the repair on 11 November 2026. Its publication is pending. [Dispatch repair result](2026-11-11-dispatch-no-ready-repair-result.md)
