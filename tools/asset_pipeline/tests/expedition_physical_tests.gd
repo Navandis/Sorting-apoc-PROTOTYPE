@@ -218,7 +218,9 @@ func prove_empty_workforce() -> void:
 	for index in Config.CATEGORIES.size():
 		var first: String = Config.CATEGORIES[index]
 		var second: String = Config.CATEGORIES[(index + 1) % Config.CATEGORIES.size()]
-		if not check(depart_pair(ops, first, second, 9100 + index), "ordinary one-person zero-loadout departure"):
+		# Disjoint seed ranges keep this single-handover witness distinct
+		# from the simultaneous-return cases in collection continuation.
+		if not check(depart_pair(ops, first, second, 9100 + index * 2000), "ordinary one-person zero-loadout departure"):
 			return
 	if not check(ops.ready_count == 0 and not ops.is_formed() and ops.active_ids().size() == 8,
 			"all eight scavengers are Away with an unformed draft"):
@@ -259,7 +261,7 @@ func prove_empty_workforce() -> void:
 	if not check(ops.ready_count == 1 and panel.is_open() and panel._crew.text.contains("1 selected")
 			and panel._affinities.Food.button_pressed and panel._affinities.Weapons.button_pressed
 			and not panel._send.disabled and ops.journeys.size() == 8,
-			"admission re-enables the open draft with the same preferences and no auto-dispatch"):
+			"admission re-enables the open draft with the same preferences and no auto-dispatch. Ready=%d, draft=%s" % [ops.ready_count, panel._crew.text]):
 		return
 	await key_tap(KEY_E)
 	if not check(ops.ready_count == 0 and ops.is_formed() and ops.loadout.spent.size() == 1,
