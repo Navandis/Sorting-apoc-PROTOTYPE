@@ -40,7 +40,7 @@ func prove_continuation() -> bool:
 		world.pickup_into(carry)
 		if carry.get_remaining_bulk() == 0:
 			break
-	check(carry.get_current_bulk() == 20 and kitchen.sprint_allowed(), "grace preserves a legitimate full bundle")
+	check(carry.get_current_bulk() == 22 and kitchen.sprint_allowed(), "grace preserves a legitimate full bundle")
 	if not await roundtrip("during grace with a full bundle"):
 		return false
 	var grace: Dictionary = kitchen.capture_state()
@@ -52,7 +52,7 @@ func prove_continuation() -> bool:
 	advance_to(kitchen.deadline_at())
 	if not await roundtrip("overdue with grandfathered carrying"):
 		return false
-	check(carry.get_current_bulk() == 20 and carry.get_effective_bulk_limit() < 20 and not kitchen.sprint_allowed(),
+	check(carry.get_current_bulk() == 22 and carry.get_effective_bulk_limit() < 22 and not kitchen.sprint_allowed(),
 		"Continue applies overdue effects while preserving the exact full bundle")
 	var old: int = kitchen.total_outstanding()
 	var food := carry.get_selected_item() as ItemInstance
@@ -68,9 +68,9 @@ func prove_continuation() -> bool:
 			return false
 
 	for event in 3:
-		if kitchen.total_outstanding() < 150:
+		if kitchen.total_outstanding() < 105:
 			advance_to(kitchen.capture_state().next_at)
-	if not check(kitchen.total_outstanding() == 150 and runtime.lift_cycle.can_take_receiving(),
+	if not check(kitchen.total_outstanding() == 105 and runtime.lift_cycle.can_take_receiving(),
 			"actual active chronology reaches the cap and a fully OPEN genuine return"):
 		return false
 	var before_cap_event := capture()
@@ -214,9 +214,11 @@ func prove_victory() -> bool:
 
 func depart(affinities: Array) -> String:
 	var ops: RefCounted = wing.expeditions
-	var seed := recovery_seed(affinities, Config.build_pool(runtime.item_catalog))
-	if not check(seed >= 0 and ops.set_members(4) and ops.toggle_affinity(affinities[0]) and ops.toggle_affinity(affinities[1]),
+	if not check(ops.set_members(4) and ops.toggle_affinity(affinities[0]) and ops.toggle_affinity(affinities[1]),
 			"genuine four-member expedition uses a bounded, repeatable manifest"):
+		return ""
+	var seed := recovery_seed(ops, runtime)
+	if not check(seed >= 0, "find seeded return for Kitchen"):
 		return ""
 	ops.rng.seed = seed
 	var result: Dictionary = ops.dispatch(ops.revision)

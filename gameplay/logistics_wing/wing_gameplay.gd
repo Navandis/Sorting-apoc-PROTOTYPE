@@ -4,7 +4,8 @@ const Timeline = preload("res://gameplay/run/collection_timeline.gd")
 const Identity = preload("res://gameplay/run/run_identity.gd")
 const Goal = preload("res://gameplay/run/collection_goal.gd")
 const GoalHUD = preload("res://gameplay/run/collection_goal_hud.gd")
-const ExpeditionConfig = preload("res://gameplay/expeditions/expedition_test_config.gd")
+const ExpeditionConfig = preload("res://gameplay/expeditions/expedition_config.gd")
+const RunSnapshot = preload("res://gameplay/run/run_snapshot.gd")
 const ExpeditionOperations = preload("res://gameplay/expeditions/expedition_operations.gd")
 const DispatchPanel = preload("res://gameplay/expeditions/dispatch_panel.gd")
 const IncineratorOperations = preload("res://gameplay/disposal/incinerator_operations.gd")
@@ -14,9 +15,11 @@ const KitchenPanel = preload("res://gameplay/kitchen/kitchen_panel.gd")
 const FuelOperations := preload("res://gameplay/fuel/fuel_operations.gd")
 const FuelPanel := preload("res://gameplay/fuel/fuel_panel.gd")
 const FuelLighting := preload("res://gameplay/fuel/fuel_lighting.gd")
+const MedicalPanel := preload("res://gameplay/medical/medical_recovery_panel.gd")
 const FUEL_STATION := "ReceivingSetDressing/CollisionProxies/ElectricalCabinetMovement"
 const KITCHEN_MESH := "Environment/Greybox/Proxies/KitchenInterface/Mesh"
-const KITCHEN_INTERACTION_LAYER := 1 << 10
+const MEDICAL_MESH := "Environment/Greybox/Proxies/MedicalInterface/Mesh"
+const SERVICE_INTERACTION_LAYER := 1 << 10
 
 @export var development_setup_enabled: bool = true
 var run_identity: RefCounted
@@ -32,6 +35,7 @@ var kitchen: RefCounted
 var kitchen_panel: CanvasLayer
 var fuel: RefCounted
 var fuel_panel: CanvasLayer
+var medical_panel: CanvasLayer
 var _fuel_lighting: RefCounted
 var _collection_error := ""
 
@@ -98,6 +102,8 @@ func _ready() -> void:
 				label.text = "Dispatch\n[F] Prepare expedition"
 			elif station[1] == "Kitchen" and $Player.kitchen_station != null:
 				label.text = "Kitchen\n[F] Open service"
+			elif station[1] == "Medical" and $Player.medical_station != null:
+				label.text = "Medical\n[F] View patients"
 			label.font_size = 36
 			label.pixel_size = 0.003
 			label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
@@ -114,11 +120,21 @@ func _bind_collection() -> void:
 		_collection_error = Goal.definition_error(definition)
 		if not _collection_error.is_empty():
 			return
-	if not _bind_kitchen_frontage():
+	var player := $Player
+	player.kitchen_station = _bind_service_frontage(KITCHEN_MESH, "KitchenInteraction")
+	if player.kitchen_station == null:
 		_collection_error = "Kitchen frontage could not initialize"
 		return
-	$Player.fuel_station = get_node_or_null(FUEL_STATION) as StaticBody3D
-	if $Player.fuel_station == null:
+	player.medical_station = _bind_service_frontage(MEDICAL_MESH, "MedicalInteraction")
+	if player.medical_station == null:
+		_collection_error = "Medical frontage could not initialize"
+		return
+	player.carried_items.max_bulk = RunSnapshot.NORMAL_CARRY_BULK
+	player.sprint_allowed = kitchen.sprint_allowed
+	player.carried_items.capacity_for_normal = kitchen.effective_capacity
+	kitchen.changed.connect(player.carried_items.capacity_changed.emit)
+	player.fuel_station = get_node_or_null(FUEL_STATION) as StaticBody3D
+	if player.fuel_station == null:
 		_collection_error = "Receiving Fuel station could not initialize"
 		return
 	_fuel_lighting = FuelLighting.new()
@@ -137,14 +153,14 @@ func _bind_collection() -> void:
 			_attach_collection_hud()
 			_attach_service_panels()
 
-func _bind_kitchen_frontage() -> bool:
-	var mesh := get_node_or_null(KITCHEN_MESH) as MeshInstance3D
+func _bind_service_frontage(path: NodePath, station_name: String) -> StaticBody3D:
+	var mesh := get_node_or_null(path) as MeshInstance3D
 	if mesh == null or not mesh.mesh is BoxMesh:
-		return false
+		return null
 	# The authored proxy is decorative. Match its mesh for station rays only.
 	var station := StaticBody3D.new()
-	station.name = "KitchenInteraction"
-	station.collision_layer = KITCHEN_INTERACTION_LAYER
+	station.name = station_name
+	station.collision_layer = SERVICE_INTERACTION_LAYER
 	station.collision_mask = 0
 	var bounds := BoxShape3D.new()
 	bounds.size = mesh.mesh.size
@@ -152,12 +168,7 @@ func _bind_kitchen_frontage() -> bool:
 	shape.shape = bounds
 	station.add_child(shape)
 	mesh.add_child(station)
-	var player := $Player
-	player.kitchen_station = station
-	player.sprint_allowed = kitchen.sprint_allowed
-	player.carried_items.capacity_for_normal = kitchen.effective_capacity
-	kitchen.changed.connect(player.carried_items.capacity_changed.emit)
-	return true
+	return station
 
 func _apply_fuel_lighting() -> void:
 	_fuel_lighting.apply(fuel.lighting_multiplier())
@@ -240,6 +251,16 @@ func _attach_service_panels() -> void:
 			fuel_panel.open_panel())
 	fuel_panel.panel_toggled.connect(_on_service_panel_toggled)
 
+	medical_panel = MedicalPanel.new()
+	medical_panel.name = "MedicalRecoveryPanel"
+	medical_panel.medical = expeditions.medical
+	medical_panel.clock = run_timeline.clock
+	add_child(medical_panel)
+	player.medical_requested.connect(func():
+		if _can_open_service_panel() and player.can_reach_medical():
+			medical_panel.open_panel())
+	medical_panel.panel_toggled.connect(_on_service_panel_toggled)
+
 func _can_open_service_panel() -> bool:
 	return not get_tree().paused and not $Player.world_input_blocked and not $Player._zone_editor_open
 
@@ -247,7 +268,8 @@ func _service_panel_open() -> bool:
 	return (dispatch_panel != null and dispatch_panel.is_open()) \
 		or (incinerator_panel != null and incinerator_panel.is_open()) \
 		or (kitchen_panel != null and kitchen_panel.is_open()) \
-		or (fuel_panel != null and fuel_panel.is_open())
+		or (fuel_panel != null and fuel_panel.is_open()) \
+		or (medical_panel != null and medical_panel.is_open())
 
 func _on_service_panel_toggled() -> void:
 	if _service_panel_open():
@@ -266,6 +288,8 @@ func sync_player_input(paused: bool) -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if blocked else Input.MOUSE_MODE_CAPTURED
 
 func close_service_layer() -> bool:
+	if medical_panel != null and medical_panel.close_top():
+		return true
 	if fuel_panel != null and fuel_panel.close_top():
 		return true
 	if kitchen_panel != null and kitchen_panel.close_top():

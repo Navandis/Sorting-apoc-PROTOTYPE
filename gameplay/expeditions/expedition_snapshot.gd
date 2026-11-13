@@ -1,8 +1,11 @@
 extends RefCounted
 
 const Ops = preload("res://gameplay/expeditions/expedition_operations.gd")
-const Config = preload("res://gameplay/expeditions/expedition_test_config.gd")
+const Config = preload("res://gameplay/expeditions/expedition_config.gd")
 const Loadout = preload("res://gameplay/expeditions/expedition_loadout.gd")
+const Outcomes = preload("res://gameplay/expeditions/expedition_outcomes.gd")
+const Acquisition = preload("res://gameplay/expeditions/expedition_acquisition.gd")
+const Medical = preload("res://gameplay/medical/medical_recovery.gd")
 const DeckPose = preload("res://receiving/receiving_deck_item_pose.gd")
 
 var spent: Dictionary = {}
@@ -11,16 +14,22 @@ var _cargo_teams: Dictionary = {}
 var _waiting: Array[String] = []
 var _run: Dictionary
 var _elapsed: float
+var _seed_definition: Callable
+var _pool: Dictionary
 
-func validate(state: Dictionary, run: Dictionary, elapsed: float, items: Dictionary) -> String:
+func validate(state: Dictionary, run: Dictionary, elapsed: float, items: Dictionary, seed_definition: Callable) -> String:
 	if not _shape(state, {"config": TYPE_DICTIONARY, "ready": TYPE_INT, "rng_state": TYPE_INT,
-			"draft": TYPE_DICTIONARY, "journeys": TYPE_DICTIONARY, "away_cargo": TYPE_DICTIONARY}):
+			"draft": TYPE_DICTIONARY, "journeys": TYPE_DICTIONARY, "away_cargo": TYPE_DICTIONARY, "medical": TYPE_DICTIONARY}):
 		return "Invalid expedition state"
-	if state.config != Config.signature():
-		return "Incompatible expedition test configuration"
+	if state.config != Ops.config_signature():
+		return "Incompatible expedition configuration"
 	_run = run
 	_elapsed = elapsed
 	_journeys = state.journeys
+	_seed_definition = seed_definition
+	_pool = Acquisition.build_pool(PrototypeItemCatalog._catalogue() as ItemCatalog)
+	if _pool.is_empty():
+		return "Invalid Expedition catalogue"
 	var draft: Dictionary = state.draft
 	if not _shape(draft, {"members": TYPE_INT, "affinities": TYPE_ARRAY, "loadout": TYPE_DICTIONARY}) \
 			or not _valid_count(draft.members) or draft.affinities.size() > 2:
@@ -36,7 +45,6 @@ func validate(state: Dictionary, run: Dictionary, elapsed: float, items: Diction
 	var draft_bulk := _validate_loadout(draft.loadout, draft_id, draft.members, elapsed, items)
 	if draft_bulk < 0 or draft_id.is_empty() != draft.loadout.spent.is_empty():
 		return "Invalid preparation receipts or formation"
-	var unavailable: int = 0 if draft_id.is_empty() else draft.members
 	var away := {}
 	var ids: Array[String] = []
 	for id: Variant in _journeys:
@@ -46,17 +54,13 @@ func validate(state: Dictionary, run: Dictionary, elapsed: float, items: Diction
 		if not _valid_journey(trip):
 			return "Invalid expedition timing, status or destination: " + id
 		var bulk := _validate_loadout(trip.loadout, id, trip.members, trip.departed_at, items)
-		if bulk < 0 or not _valid_manifest(trip, id, trip.members * Config.BULK_PER_MEMBER - bulk):
-			return "Invalid expedition supply or manifest commitment: " + id
-		if trip.status != Ops.COMPLETE:
-			unavailable += int(trip.members)
+		if bulk < 0 or not _valid_outcome(trip, id, trip.members * Config.BULK_PER_MEMBER - bulk):
+			return "Invalid expedition supply or outcome commitment: " + id
 		if trip.status == Ops.AWAY and not trip.batch_id.is_empty():
 			away[trip.batch_id] = true
 		if trip.status == Ops.WAITING:
 			_waiting.append(id)
 		ids.append(id)
-	if state.ready < 0 or state.ready + unavailable != Config.READY_START:
-		return "Expedition personnel do not add up to the initial roster"
 	if state.away_cargo.size() != away.size():
 		return "Missing or duplicate Away cargo"
 	for batch_id: String in away:
@@ -67,12 +71,16 @@ func validate(state: Dictionary, run: Dictionary, elapsed: float, items: Diction
 	var previous_departure := 0.0
 	for id: String in ids:
 		var trip: Dictionary = _journeys[id]
-		if trip.departed_at < previous_departure or trip.departed_at < destination_returns.get(trip.destination, 0.0):
-			return "Overlapping destination occupancy or invalid departure order"
+		if _formed_at(trip) < previous_departure or trip.departed_at < destination_returns.get(trip.destination, 0.0):
+			return "Overlapping destination occupancy or invalid preparation order"
 		destination_returns[trip.destination] = trip.return_at
 		previous_departure = trip.departed_at
-	if not draft_id.is_empty() and not ids.is_empty() and Ops.sequence(draft_id) <= Ops.sequence(ids.back()):
-		return "Formed preparation predates a later departure"
+	if not draft_id.is_empty() and not ids.is_empty():
+		if Ops.sequence(draft_id) <= Ops.sequence(ids.back()) or draft.loadout.spent[0].at < previous_departure:
+			return "Formed preparation predates a later departure"
+	var personnel_error := _validate_personnel(state, ids, draft_id)
+	if not personnel_error.is_empty():
+		return personnel_error
 	_waiting.sort_custom(_earlier_return)
 	return ""
 
@@ -86,10 +94,11 @@ func _valid_id(id: String) -> bool:
 func _valid_journey(trip: Variant) -> bool:
 	if not _shape(trip, {"members": TYPE_INT, "destination": TYPE_STRING, "departed_at": TYPE_FLOAT,
 			"duration": TYPE_FLOAT, "return_at": TYPE_FLOAT, "handover_at": TYPE_FLOAT, "status": TYPE_STRING,
-			"loadout": TYPE_DICTIONARY, "batch_id": TYPE_STRING, "manifest": TYPE_ARRAY, "presentation_seed": TYPE_INT}):
+			"loadout": TYPE_DICTIONARY, "batch_id": TYPE_STRING, "manifest": TYPE_ARRAY, "presentation_seed": TYPE_INT,
+			"seeds": TYPE_ARRAY, "ordinary_count": TYPE_INT, "originals": TYPE_ARRAY}):
 		return false
 	if not _valid_count(trip.members) or not Config.valid_destination(trip.destination) \
-			or not _in_range(trip.departed_at, 0.0, _elapsed) or not _in_range(trip.duration, Config.MIN_DURATION, Config.MAX_DURATION) \
+			or not _in_range(trip.departed_at, 0.0, _elapsed) or not is_finite(trip.duration) \
 			or not is_finite(trip.return_at) or trip.return_at != trip.departed_at + trip.duration:
 		return false
 	match trip.status:
@@ -103,23 +112,58 @@ func _valid_journey(trip: Variant) -> bool:
 				and (not trip.manifest.is_empty() or trip.handover_at == trip.return_at)
 	return false
 
-func _valid_manifest(trip: Dictionary, id: String, capacity: int) -> bool:
-	var remaining := capacity
-	for item_id: Variant in trip.manifest:
-		if not item_id is String:
-			return false
-		var definition := PrototypeItemCatalog.get_definition_by_id(StringName(item_id))
-		if definition == null or not Config.POOL_IDS.get(definition.storage_category, []).has(item_id) or definition.bulk > remaining:
-			return false
-		remaining -= definition.bulk
-	if remaining >= Config.MIN_POOL_BULK:
+func _valid_outcome(trip: Dictionary, id: String, capacity: int) -> bool:
+	if trip.seeds.size() != Outcomes.Stream.size() or trip.originals.size() != trip.members:
 		return false
+	for seed_value: Variant in trip.seeds:
+		if not seed_value is int or seed_value < 0 or seed_value > 0xffffffff:
+			return false
+	var expected := Outcomes.resolve(trip.members, trip.loadout.credited, capacity,
+		Array(trip.destination.split("|")), trip.seeds, _pool)
+	for field: String in expected:
+		if trip[field] != expected[field]:
+			return false
 	if trip.manifest.is_empty():
-		return trip.batch_id.is_empty() and trip.presentation_seed == 0
-	if trip.batch_id != Ops.cargo_id(id) or trip.presentation_seed < 0 or trip.presentation_seed > 0xffffffff:
+		return trip.batch_id.is_empty()
+	if trip.batch_id != Ops.cargo_id(id):
 		return false
 	_cargo_teams[trip.batch_id] = id
 	return true
+
+func _formed_at(trip: Dictionary) -> float:
+	return trip.departed_at if trip.loadout.spent.is_empty() else trip.loadout.spent[0].at
+
+func _validate_personnel(state: Dictionary, ids: Array[String], draft_id: String) -> String:
+	var patients := {}
+	var changes: Array[Array] = []
+	for id: String in ids:
+		var trip: Dictionary = _journeys[id]
+		changes.append([_formed_at(trip), -trip.members])
+		if trip.status != Ops.COMPLETE:
+			continue
+		var totals := Outcomes.summarize(trip.originals)
+		changes.append([trip.handover_at, totals.healthy + totals.recruits])
+		for index in trip.members:
+			var health: String = trip.originals[index].health
+			if health == Outcomes.HEALTHY:
+				continue
+			var patient := Medical.patient_record(health, trip.handover_at)
+			if patient.recovery_at <= _elapsed:
+				patient.recovered = true
+				changes.append([patient.recovery_at, 1])
+			patients[Medical.patient_id(id, index)] = patient
+	if state.medical != patients:
+		return "Medical history disagrees with expedition handover or active recovery deadlines"
+	if not draft_id.is_empty():
+		changes.append([state.draft.loadout.spent[0].at, -state.draft.members])
+	# A boundary settles handover and recovery before the next player input.
+	changes.sort_custom(func(a: Array, b: Array): return a[0] < b[0] or (a[0] == b[0] and a[1] > b[1]))
+	var ready := Config.READY_START
+	for change: Array in changes:
+		ready += change[1]
+		if ready < 0:
+			return "Expedition formed without enough Ready scavengers"
+	return "" if state.ready == ready else "Expedition personnel disagree with handover and recovery history"
 
 func _validate_loadout(loadout: Dictionary, id: String, members: int, until: float, items: Dictionary) -> int:
 	if not _shape(loadout, {"id": TYPE_STRING, "destination": TYPE_STRING, "targets": TYPE_DICTIONARY,
@@ -143,6 +187,9 @@ func _validate_loadout(loadout: Dictionary, id: String, members: int, until: flo
 			return -1
 		var definition := PrototypeItemCatalog.get_definition_by_id(StringName(receipt.definition_id))
 		if definition == null or definition.storage_category != receipt.lane or definition.bulk != receipt.bulk:
+			return -1
+		var seed_prefix: String = _run.id + ":wing_seed_v1:"
+		if receipt.item_id.begins_with(seed_prefix) and receipt.definition_id != _seed_definition.call(receipt.item_id.trim_prefix(seed_prefix)):
 			return -1
 		var item := ItemInstance.new(definition, receipt.item_id)
 		item.contaminated = receipt.contaminated

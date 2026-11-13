@@ -29,14 +29,18 @@ func advance(delta: float) -> void:
 		return
 	var endpoint := clock.elapsed + delta
 	var cycle: ReceivingLiftCycle = _runtime.lift_cycle
+	var recovered: bool = _expeditions.settle_recovery()
 	if _fuel != null:
 		_fuel.settle_power()
 	_settle_boundary()
+	if recovered:
+		_expeditions.changed.emit()
 	while clock.elapsed < endpoint and error.is_empty():
 		var return_at: float = _expeditions.next_return_at()
 		var kitchen_at := _next_kitchen_boundary()
 		var fuel_at := _next_fuel_boundary()
-		var boundary := minf(endpoint, minf(return_at, minf(kitchen_at, fuel_at)))
+		var recovery_at: float = _expeditions.medical.next_boundary_at()
+		var boundary := minf(endpoint, minf(recovery_at, minf(return_at, minf(kitchen_at, fuel_at))))
 		var phase_left := cycle.seconds_to_boundary()
 		var phase_at := clock.elapsed + phase_left
 		# Keep the lift's exact remaining cue time when an absolute boundary rounds.
@@ -46,14 +50,18 @@ func advance(delta: float) -> void:
 		var was_waiting := cycle.is_waiting_to_start()
 		var batch_id := _runtime.receiving_manager.get_active_batch_id()
 		clock.elapsed = minf(boundary, phase_at)
+		recovered = _expeditions.settle_recovery()
 		# At equal timestamps, evaluate power before promotion or new return admission.
 		if _fuel != null:
 			_fuel.settle_power()
 		cycle.advance_time(step)
 		_settle_boundary()
+		if recovered:
+			_expeditions.changed.emit()
 		if clock.elapsed == elapsed_before and cycle.get_cycle_state() == before and _runtime.receiving_manager.get_active_batch_id() == batch_id \
 				and _expeditions.next_return_at() == return_at and _next_kitchen_boundary() == kitchen_at \
-				and cycle.is_waiting_to_start() == was_waiting and _next_fuel_boundary() == fuel_at:
+				and cycle.is_waiting_to_start() == was_waiting and _next_fuel_boundary() == fuel_at \
+				and _expeditions.medical.next_boundary_at() == recovery_at:
 			error = "An active-time boundary could not settle"
 			push_error(error)
 

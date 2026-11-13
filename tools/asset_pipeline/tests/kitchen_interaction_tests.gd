@@ -103,7 +103,7 @@ func test_live_panel() -> void:
 func test_over_capacity_rollback() -> void:
 	var real := PrototypeItemCatalog.get_definition_by_id(&"loot_000007")
 	var items: Array[ItemInstance] = []
-	for bulk in [9, 1, 10]:
+	for bulk in [10, 1, 11]:
 		var definition := real.duplicate() as ItemDefinition
 		definition.bulk = bulk
 		var item := ItemInstance.new(definition, "rollback-%d" % bulk)
@@ -111,9 +111,9 @@ func test_over_capacity_rollback() -> void:
 		items.append(item)
 	var full := carry.capture_state()
 	advance_to_cap()
-	check(carry.capture_state() == full and carry.get_current_bulk() == 20 and carry.get_effective_bulk_limit() == 10,
-		"20/10 is legal and grace/additions preserve all slots")
-	check(wing.get_node("HUD/CarriedItemsHUD")._bulk_label.text.contains("20 / 10"), "HUD reflects capacity without a contents mutation")
+	check(carry.capture_state() == full and carry.get_current_bulk() == 22 and carry.get_effective_bulk_limit() == 14,
+		"22/14 is legal and grace/additions preserve all slots")
+	check(wing.get_node("HUD/CarriedItemsHUD")._bulk_label.text.contains("22 / 14"), "HUD reflects capacity without a contents mutation")
 	check(not carry.can_add(ItemInstance.new(real, "new")) and not carry.add_item(ItemInstance.new(real, "new")),
 		"new ownership still enforces effective capacity")
 	carry.remove_item(items[1]) # Leave a gap immediately before the selected tail slot.
@@ -136,18 +136,20 @@ func test_over_capacity_rollback() -> void:
 func recover_from_generated_cargo() -> void:
 	var runtime: ReceivingRuntime = wing.get_node("ReceivingRuntime")
 	var ops: RefCounted = wing.expeditions
-	var pool := Config.build_pool(runtime.item_catalog)
+	var pool := TestSeeds.Acquisition.build_pool(runtime.item_catalog)
 	var definitions := 0
 	var largest := 0
 	for lane: Array in pool.values():
 		definitions += lane.size()
 		for definition: ItemDefinition in lane:
 			largest = maxi(largest, definition.bulk)
-	check(definitions == 16 and largest <= 8, "unchanged generated pool contains sixteen items bounded by 8 Bulk")
+	check(definitions == 167 and largest == 14, "full catalogue maximum Bulk equals the worst effective carry limit")
 	for affinities in [["Food", "Hydration"], ["Food", "Medical"]]:
-		var seed := recovery_seed(affinities, pool)
-		if not check(seed >= 0 and ops.set_members(4) and ops.toggle_affinity(affinities[0]) and ops.toggle_affinity(affinities[1]),
+		if not check(ops.set_members(4) and ops.toggle_affinity(affinities[0]) and ops.toggle_affinity(affinities[1]),
 				"controlled recovery seed and ordinary four-member draft"):
+			return
+		var seed := recovery_seed(ops, runtime)
+		if not check(seed >= 0, "find seeded return for Kitchen"):
 			return
 		ops.rng.seed = seed
 		var result: Dictionary = ops.dispatch(ops.revision)
@@ -155,7 +157,7 @@ func recover_from_generated_cargo() -> void:
 			return
 		print("KITCHEN_RECOVERY dispatch_seed=", seed, " affinities=", affinities)
 	advance_to_cap()
-	if not check(runtime.lift_cycle.can_take_receiving() and carry.get_effective_bulk_limit() == 10 and not kitchen.sprint_allowed(),
+	if not check(runtime.lift_cycle.can_take_receiving() and carry.get_effective_bulk_limit() == 14 and not kitchen.sprint_allowed(),
 			"actual Kitchen schedule reaches maximum loss with genuine OPEN cargo"):
 		return
 	var walk := await walk_at_kitchen(false)
@@ -181,8 +183,8 @@ func recover_from_generated_cargo() -> void:
 			starting_supply[lane] = item
 		elif not store_recovery_surplus(item, stock):
 			return
-	check(carry.get_effective_bulk_limit() == 10 and carry.get_items().size() == 2,
-		"real Food and Hydration both enter carrying under the 10-Bulk limit")
+	check(carry.get_effective_bulk_limit() == 14 and carry.get_items().size() == 2,
+		"real Food and Hydration both enter carrying under the 14-Bulk limit")
 	await aim_at_kitchen()
 	await key_event(KEY_E, true)
 	await open_kitchen()
@@ -202,7 +204,7 @@ func recover_from_generated_cargo() -> void:
 	await key_event(KEY_E, true)
 	check(after < opening_total and after == kitchen.total_outstanding() and carry.get_items() == [other],
 		"held E and key echo cannot spend the next eligible selection")
-	check(carry.get_effective_bulk_limit() == floori(20.0 * (300 - after) / 300.0) and not kitchen.sprint_allowed(),
+	check(carry.get_effective_bulk_limit() == floori(22.0 * (300 - after) / 300.0) and not kitchen.sprint_allowed(),
 		"real credit changes loss proportionally even if the whole-Bulk limit is unchanged")
 	credited[0 if selected.get_storage_category() == "Food" else 1] += opening_total - after
 	await key_tap(KEY_ESCAPE)
@@ -212,7 +214,7 @@ func recover_from_generated_cargo() -> void:
 	var other_quote: Dictionary = kitchen.preview(other)
 	await key_tap(KEY_E)
 	check(not carry.get_items().has(other) and kitchen.has_spent_item(other.instance_id)
-		and carry.get_effective_bulk_limit() > 10 and not kitchen.sprint_allowed(), "fresh native E credits the other lane and frees whole-Bulk capacity")
+		and carry.get_effective_bulk_limit() >= 14 and not kitchen.sprint_allowed(), "fresh native E credits the other lane")
 	credited[0 if other.get_storage_category() == "Food" else 1] += other_quote.applied
 	await key_tap(KEY_ESCAPE)
 	for haul in 2:
@@ -245,7 +247,7 @@ func recover_from_generated_cargo() -> void:
 		if kitchen.total_outstanding() > 0:
 			timeline.advance(60.0)
 	var sprint := await walk_at_kitchen(true)
-	check(credited.x > 0 and credited.y > 0 and kitchen.outstanding == Vector2i.ZERO and carry.get_effective_bulk_limit() == 20
+	check(credited.x > 0 and credited.y > 0 and kitchen.outstanding == Vector2i.ZERO and carry.get_effective_bulk_limit() == 22
 		and kitchen.sprint_allowed() and sprint > walk * 1.5, "both real cargo lanes clear and actual Shift sprint returns")
 	print("KITCHEN_RECOVERY taken=", cargo_taken, " credited=", credited, " final_shift_m=", sprint)
 
@@ -276,21 +278,20 @@ func advance_to_cap() -> void:
 	for boundary in 4: # First trigger, grace expiry, then two more scheduled additions.
 		timeline.advance(kitchen.next_boundary_at() - timeline.clock.elapsed)
 
-func recovery_seed(affinities: Array, pool: Dictionary) -> int:
-	var rng := RandomNumberGenerator.new()
-	for seed in range(20000):
-		rng.seed = seed
-		rng.randf_range(Config.MIN_DURATION, Config.MAX_DURATION) # The draw before the normal manifest.
+func recovery_seed(ops: RefCounted, runtime: ReceivingRuntime) -> int:
+	var matches := func(outcome: Dictionary):
 		var totals := Vector2i.ZERO
-		for id: String in Config.sample_manifest(32, affinities, rng, pool):
+		var small := Vector2i(99, 99)
+		for id: String in outcome.manifest:
 			var definition := PrototypeItemCatalog.get_definition_by_id(StringName(id))
 			if definition.storage_category == "Food":
 				totals.x += definition.utility_value
+				small.x = mini(small.x, definition.bulk)
 			elif definition.storage_category == "Hydration":
 				totals.y += definition.utility_value
-		if totals.x >= 45 and totals.y >= 44:
-			return seed
-	return -1
+				small.y = mini(small.y, definition.bulk)
+		return totals.x >= 60 and totals.y >= 60 and small.x + small.y <= 6
+	return TestSeeds.find_seed(ops, runtime, matches)
 
 func native_take(runtime: ReceivingRuntime) -> ItemInstance:
 	await physics_frame

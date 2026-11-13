@@ -8,8 +8,8 @@ const KitchenSnapshot = preload("res://gameplay/kitchen/kitchen_snapshot.gd")
 const WING_PATH := "res://gameplay/logistics_wing/wing_gameplay.tscn"
 const FuelSnapshot := preload("res://gameplay/fuel/fuel_snapshot.gd")
 const FuelConfig := preload("res://gameplay/fuel/fuel_test_config.gd")
-const SCHEMA := 10
-const NORMAL_CARRY_BULK := 20
+const SCHEMA := 11
+const NORMAL_CARRY_BULK := 22
 static var _seed_definitions: Dictionary = {}
 var _error := ""
 
@@ -103,6 +103,8 @@ func validate(state: Dictionary) -> String:
 		return "This continuation is from the Kitchen build (schema 8). Fuel reserve requires a New Run. The previous snapshot is preserved."
 	if state.get("schema") == 9:
 		return "This continuation is from the Fuel build (schema 9). Receiving stack continuation requires a New Run. The previous snapshot is preserved."
+	if state.get("schema") == 10:
+		return "This continuation is from the Receiving build (schema 10). Expedition outcomes require a New Run. The previous snapshot is preserved."
 	if state.get("schema") != SCHEMA:
 		return "Unsupported save schema %s (collection schema %s required)" % [state.get("schema"), SCHEMA]
 	if not _fields(state, {"schema":TYPE_INT,"content":TYPE_STRING,"run":TYPE_DICTIONARY,"timeline":TYPE_DICTIONARY,"goal":TYPE_DICTIONARY,
@@ -144,7 +146,7 @@ func validate(state: Dictionary) -> String:
 	var collection_error := _validate_collection_state(state)
 	if not collection_error.is_empty(): return collection_error
 	var expedition := ExpeditionSnapshot.new()
-	var expedition_error := expedition.validate(state.expeditions, state.run, state.timeline.elapsed, state.items)
+	var expedition_error := expedition.validate(state.expeditions, state.run, state.timeline.elapsed, state.items, _seed_definition)
 	if not expedition_error.is_empty(): return expedition_error
 	var terminal := expedition.spent.duplicate()
 	var disposal_error := _validate_disposals(state, terminal)

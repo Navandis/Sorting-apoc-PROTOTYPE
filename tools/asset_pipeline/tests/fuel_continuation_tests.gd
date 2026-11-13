@@ -20,7 +20,7 @@ func _run() -> void:
 
 func prove_wait_and_receipts() -> bool:
 	timeline.advance(1770.25)
-	if not check(fuel.reserve() == 0.0 and carry.get_effective_bulk_limit() == 10, "empty reserve and maximum Kitchen loss before freight"):
+	if not check(fuel.reserve() == 0.0 and carry.get_effective_bulk_limit() == 14, "empty reserve and maximum Kitchen loss before freight"):
 		return false
 	var allowed := func(): return true
 	var supplied := take_authored("Food_DryGoodsA")
@@ -28,27 +28,26 @@ func prove_wait_and_receipts() -> bool:
 	var waste := take_authored("Electronics_ComputerMouse")
 	wing.incinerator.mark_warning_displayed()
 	check(waste != null and wing.incinerator.incinerate(carry, waste, allowed), "genuine Incinerator receipt and warning share the run")
-	var first := dispatch_fixture(runtime, ["Fuel", "Food"], 4, Vector2(94, 108), 20)
-	var second := dispatch_fixture(runtime, ["Food", "Medical"], 1, Vector2(109, 119))
-	var third := dispatch_fixture(runtime, ["Medical", "Morale"], 1, Vector2(121, 135))
-	var fourth := dispatch_fixture(runtime, ["Protection", "Weapons"], 1, Vector2(137, 145))
+	var first := dispatch_fixture(runtime, ["Fuel", "Food"], 4, Vector2(214, 228), 20, true)
+	var second := dispatch_fixture(runtime, ["Food", "Medical"], 1, Vector2(229, 239))
+	var third := dispatch_fixture(runtime, ["Medical", "Morale"], 1, Vector2(241, 255))
+	var fourth := dispatch_fixture(runtime, ["Protection", "Weapons"], 1, Vector2(257, 265))
 	if [first, second, third, fourth].has(""):
 		return false
-	for host: String in ["Food_Bread", "Hydration_FoodCan", "Medical_Antibiotics", "Protection_Boots", "Weapons_Pistol"]:
+	for host: String in ["Food_Bread", "Protection_Boots", "Weapons_Pistol", "CDStack_A"]:
 		if not check(take_authored(host) != null and wing.expeditions.contribute(carry).ok, "real loadout keeps its terminal identity"):
 			return false
-	if not check(wing.expeditions.return_capacity() == 0, "whole-item loadout fills the unchanged 8-Bulk expedition capacity"):
+	if not check(wing.expeditions.return_capacity() == 15, "whole-item loadout leaves 15 ordinary Bulk"):
 		return false
-	var empty := dispatch_fixture(runtime, ["Food", "Hydration"], 1, Vector2(146, 149))
-	if empty.is_empty():
+	var fifth := dispatch_fixture(runtime, ["Food", "Hydration"], 1, Vector2(266, 269))
+	if fifth.is_empty():
 		return false
-	advance_to(wing.expeditions.journeys[empty].return_at)
+	advance_to(wing.expeditions.journeys[fifth].return_at)
 	var cycle: ReceivingLiftCycle = runtime.lift_cycle
-	check(cycle.is_waiting_to_start() and cycle.get_queued_batch_count() == 2 and wing.expeditions.ready_count == 7
-		and wing.expeditions.journeys[empty].batch_id.is_empty()
-		and wing.expeditions.journeys[empty].status == Ops.COMPLETE
+	check(cycle.is_waiting_to_start() and cycle.get_queued_batch_count() == 2 and wing.expeditions.ready_count == 6
+		and wing.expeditions.journeys[fifth].status == Ops.WAITING
 		and wing.expeditions.journeys[fourth].status == Ops.WAITING,
-		"held start, two deposits and upstream waiter coexist with a lift-free empty return")
+		"held start, two deposits and two upstream waiters coexist")
 	var waiting := capture()
 	prove_invalid_waits(waiting)
 	if not await roundtrip("partway through emergency wait with full admitted capacity"):
@@ -64,7 +63,7 @@ func prove_wait_and_receipts() -> bool:
 		var item := await take_exposed(runtime)
 		if item == null:
 			return false
-		if item.get_utility_id() == &"Fuel" and not source.is_drained():
+		if item.get_utility_id() == &"Fuel" and item.get_utility_value() < 15 and not source.is_drained():
 			var observed: Array[String] = []
 			carry.item_removed.connect(func(_item): observed.append(Snapshot.new().validate(capture())), CONNECT_ONE_SHOT)
 			var totals: Dictionary = wing.collection_goal.totals.duplicate()
@@ -117,13 +116,15 @@ func prove_invalid_waits(valid: Dictionary) -> void:
 	var early_take := valid.duplicate(true)
 	for batch: Dictionary in early_take.receiving.manager.batches:
 		if batch.batch_id == early_take.receiving.manager.active:
-			var entry: Dictionary = batch.entries[0]
+			var entry: Dictionary = batch.entries.back()
 			entry.remaining_in_batch = false
+			entry.released_as_base = entry.presentation_stack_index == 0
 			early_take.carry.slots = [entry.item_instance_id]
 			early_take.carry.selected = 0
 			break
-	check(Snapshot.new().validate(early_take).contains("released cargo"),
-		"an otherwise exactly owned item cannot leave a pending-start load")
+	var early_error := Snapshot.new().validate(early_take)
+	check(early_error.contains("released cargo"),
+		"an otherwise exactly owned item cannot leave a pending-start load: " + early_error)
 	for edit: Callable in [
 		func(state): state.receiving.cycle.start_due_at = state.timeline.elapsed,
 		func(state): state.receiving.cycle.start_due_at = state.timeline.elapsed + 60.01,
@@ -156,7 +157,8 @@ func prove_invalid_receipts(valid: Dictionary) -> void:
 		func(state): state.fuel.receipts.append(receipt.duplicate()),
 		func(state): state.fuel.receipts[0].definition_id = "loot_000015",
 		func(state): state.fuel.receipts[0].item_id = state.kitchen.receipts[0].item_id,
-		func(state): state.fuel.receipts[0].item_id = state.expeditions.journeys.values().back().loadout.spent[0].item_id,
+		func(state): state.fuel.receipts[0].item_id = state.expeditions.journeys.values().filter(
+			func(trip: Dictionary): return not trip.loadout.spent.is_empty())[0].loadout.spent[0].item_id,
 		func(state): state.incinerator.receipts.append({"item_id": receipt.item_id, "definition_id": receipt.definition_id, "at": receipt.at}),
 	]:
 		var invalid := valid.duplicate(true)

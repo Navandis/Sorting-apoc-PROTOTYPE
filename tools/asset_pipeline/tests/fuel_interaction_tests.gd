@@ -139,10 +139,10 @@ func recover_freight() -> void:
 	var runtime: ReceivingRuntime = wing.get_node("ReceivingRuntime")
 	var cycle: ReceivingLiftCycle = runtime.lift_cycle
 	timeline.advance(1770.0)
-	if not check(fuel.reserve() == 0.0 and kitchen.total_outstanding() == 150 and carry.get_effective_bulk_limit() == 10,
+	if not check(fuel.reserve() == 0.0 and kitchen.total_outstanding() == 105 and carry.get_effective_bulk_limit() == 14,
 			"ordinary active time reaches zero Fuel and maximum Kitchen penalty"):
 		return
-	var first := dispatch_fixture(runtime, ["Fuel", "Food"], 4, Vector2(94, 108), 20)
+	var first := dispatch_fixture(runtime, ["Fuel", "Food"], 4, Vector2(214, 228), 20)
 	if first.is_empty():
 		return
 	var at: float = wing.expeditions.journeys[first].return_at
@@ -157,7 +157,7 @@ func recover_freight() -> void:
 	timeline.advance(cycle.seconds_to_boundary())
 	if not check(cycle.can_take_receiving() and cycle.is_emergency_mode(), "emergency cargo reaches fully OPEN"):
 		return
-	var second := dispatch_fixture(runtime, ["Medical", "Weapons"], 1, Vector2(109, 135))
+	var second := dispatch_fixture(runtime, ["Medical", "Weapons"], 1, Vector2(229, 255))
 	if second.is_empty():
 		return
 	var second_at: float = wing.expeditions.journeys[second].return_at
@@ -191,7 +191,7 @@ func recover_freight() -> void:
 		count += 1
 		await key_tap(KEY_ESCAPE)
 	check(credited >= 15.0 and fuel.reserve() == credited and not cycle.is_emergency_mode()
-		and carry.get_effective_bulk_limit() == 10, "generated Fuel alone recovers normal freight under maximum Kitchen penalty")
+		and carry.get_effective_bulk_limit() == 14, "generated Fuel alone recovers normal freight under maximum Kitchen penalty")
 	while cycle.can_take_receiving():
 		var surplus := await native_take(runtime)
 		if surplus == null or not store_recovery_surplus(surplus, stock):
@@ -205,31 +205,31 @@ func recover_freight() -> void:
 	print("FUEL_RECOVERY generated_items=", count, " credit=", credited, " reserve=", fuel.reserve(),
 		" carry_limit=", carry.get_effective_bulk_limit(), " viewport=", root.size)
 
-func dispatch_fixture(runtime: ReceivingRuntime, affinities: Array, members: int, duration: Vector2, required_fuel: int = 0) -> String:
-	var rng := RandomNumberGenerator.new()
-	var pool := Config.build_pool(runtime.item_catalog)
+func dispatch_fixture(runtime: ReceivingRuntime, affinities: Array, members: int, duration: Vector2,
+		required_fuel: int = 0, needs_subthreshold_fuel: bool = false) -> String:
 	var ops: RefCounted = wing.expeditions
 	if not check((ops.members == members or ops.set_members(members)) and ops.toggle_affinity(affinities[0]) and ops.toggle_affinity(affinities[1]),
 			"real expedition draft selects a crew and pair"):
 		return ""
-	for seed in range(20000):
-		rng.seed = seed
-		var seconds := rng.randf_range(Config.MIN_DURATION, Config.MAX_DURATION)
-		if seconds < duration.x or seconds > duration.y:
-			continue
+	var matches := func(outcome: Dictionary):
+		if outcome.duration < duration.x or outcome.duration > duration.y or not TestSeeds.all_healthy(outcome):
+			return false
 		var utility := 0
-		for id: String in Config.sample_manifest(ops.return_capacity(), affinities, rng, pool):
+		var subthreshold := false
+		for id: String in outcome.manifest:
 			var definition := PrototypeItemCatalog.get_definition_by_id(StringName(id))
 			if definition.utility_id == &"Fuel":
 				utility += definition.utility_value
-		if utility >= required_fuel:
-			ops.rng.seed = seed
-			var sent: Dictionary = ops.dispatch(ops.revision, ops.return_capacity() == 0)
-			check(sent.ok, "ordinary dispatch commits the generated outcome")
-			print("FUEL_TRIP seed=", seed, " duration=", seconds, " fuel=", utility)
-			return sent.get("id", "")
-	check(false, "bounded fixture search found a suitable committed manifest")
-	return ""
+				subthreshold = subthreshold or definition.utility_value < 15
+		return utility >= required_fuel and (not needs_subthreshold_fuel or subthreshold)
+	var seed_value := TestSeeds.find_seed(ops, runtime, matches)
+	if not check(seed_value >= 0, "find a reproducible production manifest for the freight regression"):
+		return ""
+	ops.rng.seed = seed_value
+	var sent: Dictionary = ops.dispatch(ops.revision, ops.return_capacity() == 0)
+	check(sent.ok, "ordinary dispatch commits the generated outcome")
+	print("FUEL_TRIP seed=", seed_value, " duration_range=", duration)
+	return sent.get("id", "")
 
 func take_authored(host: String) -> ItemInstance:
 	var world: WorldItem = wing.get_node_or_null("DevelopmentSetup/SeedItems/" + host + "/WorldItem")
