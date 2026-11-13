@@ -1,6 +1,6 @@
 # Receiving mixed stacking technical result
 
-**13 November 2026 · HUMAN-APPROVED / CLOSED IN ITS BOUNDED SCOPE — LOCAL; PUBLICATION PENDING**
+**13 November 2026 · HUMAN-APPROVED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE**
 
 The original technical evidence below covers implementation commit `6c82e59ffa00f1f63cda78ebf5a0a127aa049e26` and the pre-adoption catalogue. The later [acceptance and Fedora adoption](#13-november-2026-developer-acceptance-and-fedora-adoption) records the approved item revision and its own verification.
 
@@ -45,3 +45,7 @@ All nine preparations of the three revised Fedora witnesses preserved exact cont
 The 92-ordinary-Fedora haul is a historical witness. At Bulk 2 it would spend 184 ordinary Bulk. Mystery Meat Large retains its current values. The developer deferred the canonical 157-Bulk meat-and-mice area overrun and the long-object bounded-planner failure. Their exact witnesses remain recorded. Safe rejection continues to preserve the exact haul and prevents partial commitments. Any player-facing fallback requires a separate decision.
 
 The stress cases exposed localized packing pressure, led to a general Receiving stacking improvement and one targeted catalogue revision, and established a process for approving item changes and reconciling their dependencies. A larger catalogue and real Expedition and Medical gameplay may change which cases and coefficients matter. The adversarial matrix provides no occurrence-rate estimate.
+
+## Publication
+
+On 13 November 2026, `git ls-remote origin refs/heads/main` verified GitHub main at Fedora adoption commit `ed521a2a0cea5ba829430bf04c8046eed1e79f0a`, which includes the accepted mixed-stacking commit `6c82e59ffa00f1f63cda78ebf5a0a127aa049e26`. Publication reused the gameplay checks attributed above. The local Fedora adoption record and its raw evidence remain under `C:/Users/Boschetar/.codex/attachments/Sorting_Apocalypse_Assessments/2026-11-13-fedora-adoption/`.

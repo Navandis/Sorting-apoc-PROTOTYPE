@@ -67,7 +67,9 @@ Neutral review: res://greybox/logistics_wing/wing_review.tscn
 
 Continuous Kitchen is **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE** in the F5 loop. Open the service with F and supply the selected whole item with E. Continuous Kitchen introduced schema 8 through `user://saves/collection/`. Confirmed New Run can repoint the slot while retaining incompatible snapshots. The M4 slot remains separate. Standalone F6 keeps the human-authored `DevelopmentSetup/SeedItems` palette. [Developer acceptance and close-out](testing/2026-11-09-continuous-kitchen-service-result.md)
 
-Fuel Reserve and Emergency Freight is **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE**. It uses schema 9 and the existing save service. Schema 8 requires confirmed New Run and its snapshot is retained. Refuel at the cabinet right of the Receiving shutter with F and a distinct E. [Fuel technical result and developer acceptance](testing/2026-11-11-fuel-reserve-emergency-freight-result.md)
+Fuel Reserve and Emergency Freight is **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE**. It introduced schema 9 through the existing save service. Refuel at the cabinet right of the Receiving shutter with F and a distinct E. [Fuel technical result and developer acceptance](testing/2026-11-11-fuel-reserve-emergency-freight-result.md)
+
+Receiving mixed stacking is **HUMAN-APPROVED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE** with the approved Fedora revision. Published main uses schema 10. Confirmed New Run retains incompatible saves without migration. The 157-Bulk meat-and-mice area overrun and the long-object planner failure remain developer-deferred. [Receiving and Fedora result](testing/2026-11-13-receiving-mixed-stacking-result.md)
 
 The zero-Ready Dispatch repair is **HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE**. [Dispatch repair result](testing/2026-11-11-dispatch-no-ready-repair-result.md)
 

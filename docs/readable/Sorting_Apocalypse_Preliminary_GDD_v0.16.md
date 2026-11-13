@@ -1272,7 +1272,7 @@ Ordinary schema-4 continuation is accepted at M4, but is not continuous crash-du
 
 Outcome commitment should occur at a natural backend point after legitimate player choices are fixed, before presentation where possible. Preserve committed results through continuation. Incidental uncommitted rerolls within the tolerated loss interval are not a reason to build a general anti-cheat framework; reliable selection among already preserved outcomes remains disallowed by the inherited policy.
 
-Continuous Kitchen introduced schema 8. Published main uses schema 9 in the existing collection slot. It preserves the fractional reserve, accounting anchor, Fuel receipts and pending freight start alongside exact Kitchen, physical, expedition, Incinerator and victory state. Continue restores effects before play with service panels closed. Confirmed New Run retains incompatible snapshots, including schema 8. The M4 slot remains separate. Release durability remains open.
+Continuous Kitchen introduced schema 8. Published main uses schema 10 in the existing collection slot. It preserves the fractional reserve, accounting anchor, Fuel receipts and pending freight start alongside exact Kitchen, physical, expedition, Incinerator and victory state. Continue restores effects before play with service panels closed. Confirmed New Run retains incompatible snapshots, including schemas 8 and 9. The M4 slot remains separate. Release durability remains open.
 
 <a id="s_18_6_Environment_and_authored_produc"></a>
 
@@ -1472,7 +1472,7 @@ These are design-validation aims, not claimed test results or a new automated ac
 | O-09 · Conversion and release | Rations and Salvage category and target rules, yields, capacity and output blocking remain open, along with Salvager access and restrictions. Incinerator rules are confirmed in §15.3. |
 | O-10 · Space and handling | Production shelf capacity/roster, all-storage-from-start decision, route compression and final ergonomics. |
 | O-11 · Interface and time edges | The local build keeps Kitchen, preparation, the Incinerator and Fuel live. Escape closes service layers before pause. Journal scope, final interface and platform timing edges remain open. |
-| O-12 · Delivery/continuation | Published main uses schema 9. Confirmed New Run retains incompatible snapshots. Release migration and durability remain open. |
+| O-12 · Delivery/continuation | Published main uses schema 10. Confirmed New Run retains incompatible snapshots. Release migration and durability remain open. |
 
 The register deliberately leaves unanswered mechanics open. The project already has enough direction to produce this successor; these are boundaries for later design/implementation, not reasons to recreate the old behavior or repeatedly ask the developer to approve the pivot.
 

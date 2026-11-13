@@ -1,6 +1,6 @@
 # Sorting Apocalypse — current ChatGPT conversation bootstrap
 
-**Prepared 7 November 2026 and updated 10 November 2026 for Continuous Kitchen publication and 11 November 2026 for Fuel and Dispatch publication. Approved GDD v0.16 with the contribution decisions governs intended gameplay. M1–M4 remain HUMAN-PROMOTED / PUBLISHED / CLOSED.**
+**Prepared 7 November 2026. Updated 10 November for Continuous Kitchen publication, 11 November for Fuel and Dispatch publication, and 13 November for Receiving and Fedora publication. Approved GDD v0.16 with the contribution decisions governs intended gameplay. M1–M4 remain HUMAN-PROMOTED / PUBLISHED / CLOSED.**
 
 I am continuing Sorting Apocalypse, a solo-developed first-person collecting, hoarding and spatial-organizing game. The game is being redirected away from an endless survival/day-count objective. You are taking over after the collection pivot, approval of its design records, the single-current-team panel clarification, approval of the complete successor GDD v0.16, and preparation of the current-facing documentation update.
 
@@ -16,6 +16,7 @@ This is a collaboration handoff, not a Codex implementation brief or permission 
 - **Continuous Kitchen** · **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** This milestone introduced schema 8. GDD §12 records the standing mechanics and provisional iteration settings. [Developer acceptance and close-out](testing/2026-11-09-continuous-kitchen-service-result.md) · [Contribution decisions](design_history/2026-11-09-contribution-effects-and-kitchen-decisions.md)
 - **Fuel Reserve and Emergency Freight** · **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** Schema 9 retains incompatible schema-8 snapshots and requires confirmed New Run. [Fuel technical result and developer acceptance](testing/2026-11-11-fuel-reserve-emergency-freight-result.md)
 - **Zero-Ready Dispatch repair** · **HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** [Dispatch repair result](testing/2026-11-11-dispatch-no-ready-repair-result.md)
+- **Receiving mixed stacking and Fedora adoption** · Receiving is **HUMAN-APPROVED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE**. The approved Fedora is on main. The 157-Bulk meat-and-mice area overrun and the long-object planner failure are developer-deferred. [Receiving and Fedora result](testing/2026-11-13-receiving-mixed-stacking-result.md)
 - **Publication** · The collection foundation, expedition loop, furniture collision repair, Incinerator and Continuous Kitchen are published on `main`. The historical M1–M4 scopes are published and closed at `c9f9417a97cf65ef416c58189ca1f741b6a90406`. Frozen inputs and provenance are in the [survival-era index](design_history/survival-era/README.md).
 - **Furniture collision** · The developer accepted the [furniture movement collision repair](testing/2026-11-08-furniture-collision-repair-result.md) on 8 November 2026, closing its separate scope. The old combined daily M5 proposal and ADR remain historical.
 
@@ -112,7 +113,7 @@ Goal-progress visibility is always baseline and cannot be disabled or upgrade-ga
 
 ## 8. What already exists and must not be reopened by default
 
-The published build has continuous active time, player-dispatched expeditions, eight live stored Utility totals, single-item disposal, continuous Kitchen, Fuel Reserve and Emergency Freight, the accepted Dispatch repair and schema-9 continuation. Confirmed New Run can repoint the slot while retaining earlier incompatible snapshots. M1–M4 daily scheduling, reports and prebuilt Dispatch describe historical evidence. Injuries, recruitment and the supporting economy remain open.
+The published build has continuous active time, player-dispatched expeditions, eight live stored Utility totals, single-item disposal, continuous Kitchen, Fuel Reserve and Emergency Freight, the accepted Dispatch repair, Receiving mixed stacking and the approved Fedora revision. Schema 10 governs Continue. Confirmed New Run can repoint the slot while retaining incompatible snapshots without migration. M1–M4 daily scheduling, reports and prebuilt Dispatch describe historical evidence. Injuries, recruitment and the supporting economy remain open.
 
 The inspected baseline has 167 active/7 retired/174 sources. Preserve authored scale, pose/+Z Front, Footprint and support roles; twelve separate Auto Stack Group approvals remain pending with saved None. Never recycle retired IDs or replace authored values automatically. The current values are frozen testing content, not immutable release balance.
 
