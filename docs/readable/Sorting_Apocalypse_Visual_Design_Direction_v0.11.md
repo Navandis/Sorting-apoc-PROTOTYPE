@@ -445,7 +445,7 @@ Retain the accepted bent/oblique Salvager spur, front-operated machine envelope 
 
 Medical is reached without crossing a gallery: the full A/B connector belongs to Main Storage, followed by a 10 m Medical-exclusive protected corridor. The anteroom keeps its 7.8 x 7.0 m nominal size, lies north of that corridor and widens westward; its eastern wall continues the corridor wall and entry is at the south-east. This accepted arrangement keeps the shared circulation, departmental buffer and opaque staffed-core boundary distinct. No direct Medical-Kitchen route is introduced. [A17]
 
-Those dimensions describe the accepted installation, not an immutable travel-time requirement. Medical now supports workforce availability; natural recovery substantially accelerated by treatment is the preferred direction. Injury/treatment timings remain open, with no dead-end state or requirement for visible patients. No geometry is altered here. [38]
+The first Expedition outcomes slice uses the existing Medical frontage for a live read-only view of anonymous patients, severity and remaining natural recovery time. Staff and patients remain behind the protected boundary. Treatment and future route adjustments retain their own design scope. [38]
 
 - Protected territory: The approach and anteroom are not Quartermaster storage-expansion or backlog sockets. Preserve clear floor as intentional departmental support space, even before later equipment is selected. Crossing the outer room threshold does not submit supplies.
 
@@ -875,7 +875,7 @@ Hand-authored ReceivingSetDressing and the separate curved monitor remain accept
 
 The original curved CRT retains Surface 1 art, runtime texture binding, 704 × 400 green SubViewport, fonts/layout, mounting, subdued bezel and no added screen spill. It is now live, read-only FREIGHT LIFT / ONLINE, without L-01. STATUS maps SEALED_EMPTY→IDLE, ARRIVAL/SEALED_READY→INCOMING, REVEALING→OPENING, OPEN→OPEN and CLOSING→CLOSING. DECK counts individual remaining active items including fixture/stack entries, with CLEAR where appropriate. QUEUE 00–02 excludes active cargo and Awaiting Lift teams. Decorative EMERGENCY STOP signage/button remains noninteractive. [37]
 
-This deposited QUEUE 00–02 readout is retained implementation evidence. The target’s uncapped waiting-expedition queue, occupied personnel and eventual cargo handover need a separate truthful overview; they are not implemented by changing these labels. The exact personnel and destination-release boundaries remain open. [38]
+The deposited QUEUE 00–02 readout covers admitted loads. Dispatch shows upstream crews Awaiting Lift separately and retains outcomes after return. Personnel hand over on admission, including during a pending emergency start. [38]
 
 The four-cue theatre preserves the stationary bay illusion. OPEN waits for actual last TAKE; shutter contact around 3.40 s holds through reverberation/latch and the full closing cue. IDLE is displayed during departure while the lift remains internally busy; FIFO promotion/new admission follows full outbound turnaround, without opposing travel overlap. [37]
 
@@ -964,6 +964,6 @@ Reconciled owning sections: §1 authority; §§7, 13–14 information and single
 
 ### 38.3 Deliberately unresolved
 
-The accepted geometry and authored light rig remain the baseline. The continuous Kitchen brief uses the existing frontage. GDD §14 governs Fuel dimming and the temporary Receiving station. Medical recovery timing, Workshop projects, ration production, Journal and final interface composition retain their GDD scope. Future route or installation changes require explicit design.
+The accepted geometry and authored light rig remain the baseline. Kitchen and the read-only Medical view use their existing frontages. GDD §14 governs Fuel dimming. Workshop, Rations, Journal and final interface composition retain their GDD scope.
 
 The earlier missing-MVP-source limitation is resolved by the developer’s attachment and accompanying Systems MVP v0.5 compatibility update. Both masters’ checks are recorded in docs/testing/2026-11-07-mvp-vdd-compatibility-consistency.md. M1–M4 evidence remains valid; obsolete survival/day assumptions do not override GDD v0.16. No game tests, new promotion, Git write, scene edit or save operation accompanies this completion.

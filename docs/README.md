@@ -21,6 +21,8 @@ Read [AI working guidelines](AI_WORKING_GUIDELINES.md), [current development sta
 
 DOCX masters govern. Edit the relevant DOCX first and regenerate its Markdown; do not maintain a second independent gameplay specification. Approval of v0.16 preserves its internal **CONFIRMED / RETAINED / DIRECTION / PROVISIONAL / OPEN / HISTORICAL** distinctions. It does not finalize placeholders or complete unresolved mechanics.
 
+The [13 November Expedition decision record](design_history/2026-11-13-expedition-outcomes-and-provisioning-decisions.md) governs the approved first-iteration outcomes. The [local implementation](superpowers/plans/2026-11-13-expedition-outcomes-and-provisioning.md) is pending at this documentation checkpoint.
+
 **An unresolved post-pivot rule stays unresolved. Do not fill it with a survival-era rule merely because an older document specifies that rule in detail.** Existing source establishes what the prototype does, not the intended release design or automatic permission to modify it.
 
 The targeted Systems MVP v0.5 and VDD v0.11 master reconciliations are now complete as dated 7 November compatibility updates. The [two-master consistency record](testing/2026-11-07-mvp-vdd-compatibility-consistency.md) describes the earlier compatibility pass. Systems MVP §15.6 records the later local foundation acceptance. [GDD Appendix C](readable/Sorting_Apocalypse_Preliminary_GDD_v0.16.md#s_Appendix_C_Supersession_and_retentio) remains the original approval-time retention map.

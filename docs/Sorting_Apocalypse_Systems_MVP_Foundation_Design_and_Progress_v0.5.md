@@ -118,7 +118,7 @@ FOUNDATION PURPOSE (M1–M4): operate the same storeroom across repeated days an
 | --- | --- | --- |
 | Medical | Medical | The mechanical expedition fixture still spends Medical. In the target, only the Ward accelerates natural recovery of Light and Severe injuries. |
 | Kitchen | Food, Hydration | The continuous Kitchen brief uses cumulative demand to reduce player capacity and disable sprint after grace. Partial credit restores capacity proportionally. Clearing restores sprint. |
-| Expedition Loadout | Food, Hydration, Medical, Weapons, Protection | These are the mechanical fixture lanes. The target substitutes Morale for Medical and adds Food capacity, Hydration time, Protection injury prevention, Weapons quality within category and Morale recruitment. |
+| Expedition Loadout | Food, Hydration, Medical, Weapons, Protection | The 13 November Expedition design uses Food, Hydration, Protection, Weapons and Morale. Food adds bonus cargo outside 23 ordinary Bulk per original. The other lanes affect journey time, injury risk, Utility/Bulk preference and recruitment respectively. |
 
 ### 3.1 What this slice can establish
 
@@ -209,7 +209,7 @@ Basis: [GDD §§3.1, 4.8, 6.3, 7.1–7.2, 8.2–8.4]; [D01–D03]; [ER-RESULT §
 
 ### 6.1.1 Deliberately excluded resilience work
 
-Continuous Kitchen introduced schema 8. Published main uses schema 10 through the existing service at user://saves/collection/. It preserves the Fuel reserve and receipts, an admitted delivery's exact wait, and the Kitchen schedule, grace, balances and receipts. Physical ownership, expedition, disposal and first-victory state share the same continuation. Save & Exit, 60-active-second and first-victory attempts share the service. Confirmed New Run retains incompatible snapshots including schemas 8 and 9. Release durability remains CF-13. [G16 §§5.5,12,14,15.3,18.5]
+Published main uses schema 10 through the collection save service at user://saves/collection/. The 13 November Expedition candidate targets schema 11 to store exact ordinary and bonus cargo, personnel outcomes, handover and natural recovery. Confirmed New Run retains incompatible snapshots. Release durability remains CF-13. [G16 §§5.5,12–14,15.3,18.5]
 
 At the accepted M1/initial M2 delivery level, unsaved actions may be lost after unexpected termination. Ordinary continuation must still preserve exact ownership, credit and gameplay time. Do not use this intentionally limited implementation to assess the full-game randomness principle. Exact audiovisual-frame recovery remains unnecessary. [D03, D05, D21]
 
@@ -557,7 +557,7 @@ This section replaces Prototype Findings as the active phase tracker. Dated evid
 | --- | --- | --- |
 | Prototype foundations | HUMAN-PROMOTED in recorded scopes | PF retained as historical evidence; no new acceptance task. |
 | Pre-MVP review + repairs | HUMAN-PROMOTED / PUBLISHED | R-01–R-03 accepted; bounded R-04 subsequently repaired within M1. |
-| MVP foundation contracts | Accepted foundations and scoped collection successor | M1–M4, the collection foundation and the expedition loop are human-accepted and published. See §12.3 and §15.6. |
+| MVP foundation contracts | Accepted foundations and scoped collection successor | M1–M4, the collection foundation and the prior expedition loop are human-accepted and published. The 13 November Expedition outcomes are approved design with local implementation pending. See §15.6 for prior evidence. |
 | M1 persistent Medical | HUMAN-PROMOTED / PUBLISHED / CLOSED | 6c56edf → a7b764e → 36d527d; independent ACCEPT and successful human play. |
 | M2 clock / midnight / HUD | HUMAN-PROMOTED / PUBLISHED / CLOSED | 524edf1 → c7bbf44 → 3465098; independent ACCEPT and final human PASS (§15.2). |
 | M3 Kitchen | HUMAN-PROMOTED / PUBLISHED / CLOSED | 7d3d6c7 → a0f066a; independent ACCEPT decisions, native retests and subsequent publication retained (§15.3). |
@@ -653,7 +653,7 @@ Basis: [PF §§3–4, 7, 12–14, 24–26, 33–34]; [ER-RESULT §§2–5].
 
 | ID / source | Work retained or explicitly superseded | Relationship to this foundation |
 | --- | --- | --- |
-| CF-13<br>GDD §§5.6, 18.5; PF §§16.5, 34.7 | Full-game continuous game-state preservation, one advancing continuation per run, journal/rotating recovery and an ideal 2–3-real-second loss target. [D21] | Continuous Kitchen introduced schema 8. Published main uses schema 10. Save cadence and first-victory attempts retain their prototype roles. Release durability and recovery remain open. |
+| CF-13<br>GDD §§5.6, 18.5; PF §§16.5, 34.7 | Full-game continuous game-state preservation, one advancing continuation per run, journal/rotating recovery and an ideal 2–3-real-second loss target. [D21] | Published main uses schema 10. The Expedition candidate targets schema 11 and confirmed New Run. Save cadence and first-victory attempts retain their prototype roles. Release durability and recovery remain open. |
 | CF-14<br>GDD §§9–10; PF §34.7 | Actual asynchronous expeditions, one player-assembled 1–4-person crew at a time, affinities, return outcomes and workforce availability. [G16 §§9–11] | The bounded healthy expedition loop is HUMAN-ACCEPTED / CLOSED IN ITS BOUNDED SCOPE. Production tuning remains open. |
 | CF-15<br>GDD §§12–13; PF §34.7 | Medical now supports availability. Slower natural recovery with substantially faster treated recovery is favored; detailed states/costs/timing remain open. [G16 §13] | Former daily triage, Meal Coverage rolls and fatal complications are historical—not pending obligations. No injured-away exception or hidden catch-up is introduced. |
 | CF-16<br>GDD §§12, 14–15, 20; PF §§19.4, 20.4 | Bounded Kitchen/Ops pressure; optional physical Rations; salvage/incineration and Workshop redesign. [G16 §§8,12,14–15] | Incinerator disposal is accepted. Continuous Kitchen is human-promoted, published on main and closed in its bounded scope. The bounded Fuel reserve slice is human-promoted, published on main and closed. Its Salvager and Workshop effects are power permissions for future systems. Rations and one-time purchases remain future work. |

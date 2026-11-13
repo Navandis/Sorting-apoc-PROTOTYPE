@@ -412,7 +412,7 @@ Basis: [PIV §§2,4,7–10]; [G15 §§5.6,18.5] and [MVP §§6–9,19] for retai
 | Definition and instance identity | Stable type data versus the durable identity of each physical copy. Visual nodes do not create a second copy. |
 | Salvage Yield / conversion metadata | Potential physical output from a defined transformation. This does not reintroduce context-dependent multi-category request use. |
 
-**CONFIRMED.** Dual-use and multi-use items are not part of the intended first release. The exploratory vodka example is superseded. A Medical item serves treatment in the target design. The mechanical Dispatch fixture still uses a Medical lane. A Fuel item cannot serve Kitchen Food. General remains a universal storage-zone type, not a ninth Item Category or goal.
+**CONFIRMED. Each item has one primary category for first-release systems. Medical remains a collection and destination affinity category. Dispatch uses Morale for recruitment. General remains a universal storage-zone type.
 
 <a id="s_6_2_Stable_item_definitions"></a>
 
@@ -436,7 +436,7 @@ A compact high-Utility object may be desirable to retain for the goal or to send
 
 The preferred measure of an affinity’s value is received category Utility across comparable expeditions. Both affinities receive the same mathematical bonus. Different item pools, item sizes and randomness can still produce unequal returns, and neither affinity is guaranteed to appear in every small haul.
 
-This is a design objective, not a settled sampler. Exact weighting, normalization across categories, category choice versus item choice, capacity fitting and interaction with provisioning quality remain OPEN. Do not equate equal bonus with forced equal Utility in each batch, or add extra carrying capacity for favored items.
+The first-iteration sampler uses category weights of 9 for either chosen affinity and 7 for each other category. See §10.5 for fit filtering and the separate Weapons preference.
 
 <a id="s_6_5_No_default_junk_and_no_forced_un"></a>
 
@@ -482,7 +482,7 @@ The player carries a bundle constrained by total Bulk. A compact HUD strip displ
 
 For requests, F opens/closes the panel without spending. Each distinct E submits only the selected whole eligible item. Held E must not repeat irreversible submissions or search the bundle for suitable items. The accepted held-E automatic-storage behavior is separate and remains reversible physical placement.
 
-Basket/carrier/cart-like upgrades may raise carried Bulk or improve bundle readability without requiring a physical cart simulation. Values and progression remain open. The old M4 player capacity of 20 Bulk is an implemented fixture value, not the new release balance.
+The first iteration gives the player 22 normal Bulk. Carrying upgrades remain open, including their form, values and progression.
 
 <a id="s_7_3_Surfaces_Front_and_orientation"></a>
 
@@ -566,9 +566,9 @@ Basis: [G15 §§7,18.3]; [MVP §§5–6,16] for transfer/continuation; [VDD §§
 
 | **Consumer or destination** | **Categories / output** | **Current design role** |
 | --- | --- | --- |
-| Expedition loadout | Food, Hydration, Protection, Weapons, Morale (target) | Proactive bonuses to an individual expedition. The current mechanical fixture retains Medical in place of Morale and has no outcome bonuses. |
+| Expedition loadout | Food, Hydration, Protection, Weapons, Morale | Proactive cargo, travel, quality and personnel effects for an individual expedition. |
 | Kitchen | Food and Hydration; potential physical Rations | Food and Hydration relieve a shared player carrying and sprint penalty. Rations remain an optional future conversion. |
-| Medical | Medical | The Ward alone handles healing. Medical accelerates natural recovery of Light and Severe injuries. Treatment implementation remains open. |
+| Medical | Medical | Medical owns natural recovery. Spending Medical goods to accelerate recovery remains future design. |
 | Bunker Ops | Fuel (possible future Energy framing) | Physical Fuel sustains an active-time reserve. Reserve tiers govern environmental lighting and machinery power. |
 | Workshop | Electronics for one-time purchases. Other materials and Salvage remain open. | Optional lasting improvement purchased with goods that might otherwise support the hoard. |
 | Salvager | Item → physical Salvage | Spatially useful conversion; output grammar and yields remain to revalidate. |
@@ -640,7 +640,7 @@ Scavengers remain the only dynamically tracked population. Other bunker resident
 
 The player needs to understand who is Ready, being prepared, away, waiting with cargo or recovering. Exact accounting and transition names remain technical/design work. A scavenger cannot be allocated simultaneously to two crews. No morning batch formation or next-day readiness gate remains in the target design.
 
-Opening population, recruitment, population growth and any release cap remain OPEN under the pivot. Historical survival targets of three opening teams or six–seven teams around Day 60–70 are not current continuous-run calibration. More personnel can increase useful inflow and also create more provisioning and sorting work; they are not a survival-life counter.
+The first iteration retains eight Ready scavengers and adds Morale recruitment at handover. Final opening population, long-run pacing and progression remain open.
 
 <a id="s_9_2_One_current_preparation_not_a_pr"></a>
 
@@ -711,17 +711,17 @@ Available partners follow the currently occupied pairs. The selector explains un
 
 Dispatch requires an explicit action with a valid crew and two distinct affinities identifying an available destination. Incomplete affinity selection disables Dispatch and explains the requirement. Zero provisioning is permitted.
 
-Zero return capacity opens a confirmation before departure. Back preserves the preparation and receipts. Confirming revalidates the crew and destination, then commits an empty journey if still valid.
+Zero ordinary capacity opens a live confirmation that describes the possible Food bonus cargo. Back preserves the draft. Confirm revalidates the draft and commits the journey only after its exact outcome and presentation are prepared.
 
-The expedition playtest draws one uniform 90–180 active-second journey at departure for every crew size and loadout. The exact return timestamp persists through Continue. Production duration and any provisioning or crew-size effects remain open.
+At successful departure the prototype draws one uniform base duration of 210–300 active seconds. Hydration reduces it by up to 25% in proportion to credited Utility. Full Hydration gives 157.5–225 seconds. Crew size sets the Hydration target. Continue preserves the sampled time.
 
 <a id="s_9_8_Return_personnel_and_growth"></a>
 
 ### 9.8 Return, personnel and growth
 
-Nonempty returns complete personnel handover when Receiving admits the cargo to either the active lift or the deposited queue. Crews awaiting a slot remain unavailable. Empty returns complete at the return timestamp. Every member in this slice returns healthy and becomes Ready at the applicable handover boundary.
+Nonempty handover occurs on admission to the active lift or either deposited slot, including an active load waiting for emergency start. Empty handover occurs at return. Healthy originals and recruits become Ready. Injured originals enter Medical. A crew awaiting admission remains unavailable.
 
-Recruitment and permanent progression must be reconsidered without death-driven survival pressure. A larger workforce may be a useful investment, but no recruit frequency, acceptance timer, next-morning join or compulsory growth path is inherited. Persistent team-slot Training is specifically incompatible as written with disposable player-assembled crews; see §15.6.
+Each original independently recruits at up to 5% with full Morale. A healthy newcomer joins at handover and contributes to later crews. Long-run population and permanent progression remain open. See §15.6 for Training.
 
 Basis: [ADD] overrides [PIV §5.3]; [PIV §§4–6,8–10]; [ADR §5] only for independently retained affinity reasoning; [G15 §§9–10] for selected capacity/identity concepts, not daily lifecycle.
 
@@ -742,7 +742,7 @@ RETURN CAPACITY = Team Load Capacity − Outgoing Bulk
 
 Equal-sized teams with equal applicable upgrades have equal base requirements and capacity. The new 1–4-person choice scales those values proportionally; no arbitrary heterogeneous scavenger stats or destination-specific equipment requirements are implied. Upgrades can deliberately introduce defined modifiers after their design is agreed.
 
-A successful contribution spends the whole outgoing item immediately and charges its full Bulk against return capacity. Departure uses the accepted receipts and leaves the remaining capacity available for cargo.
+Ordinary capacity is 23 Bulk per original scavenger. Each whole contribution charges full Bulk and receives only the remaining Utility credit in its own lane. Food bonus cargo travels outside the ordinary return budget.
 
 <a id="s_10_2_Five_lanes_and_outcome_boundari"></a>
 
@@ -750,13 +750,13 @@ A successful contribution spends the whole outgoing item immediately and charges
 
 | **Lane** | **Retained contribution concept** | **Current outcome boundary** |
 | --- | --- | --- |
-| Food | Food goods and potential Rations | Increase that team's carrying capacity while charging full outgoing Bulk. Net headroom should reward useful provisioning. Formula, magnitude and validation order remain open. |
-| Hydration | Drinks and water-category goods | Shorten that expedition. Lift admission and backlog still follow their own rules. |
-| Morale | Morale goods | Increase recruitment opportunity in proportion to participating scavengers. Equal coverage and personnel totals should give comparable opportunity across team sizes. Rates, rolls, limits and joining remain open. |
-| Weapons | Weapons/tools classified as Weapons | Prefer better Utility per Bulk within the selected category. Affinity weights and item values stay fixed. The quality curve and pool remain open. |
-| Protection | Clothing/protective gear classified as Protection | Reduce injury chance. The Medical Ward owns healing. |
+| Food | Food goods and potential Rations | 10 Utility per member. Each credit adds 0.125 expected bonus items. Award the integer quotient of Food divided by eight, plus one with probability given by the remainder divided by eight. |
+| Hydration | Drinks and water-category goods | 5 Utility per member. Journey duration decreases linearly by up to 25%. Lift and emergency deadlines follow their own rules. |
+| Morale | Morale goods | 15 Utility per member. Recruitment rises linearly from zero to 5% per original. Each newcomer joins healthy at handover. |
+| Weapons | Weapons/tools classified as Weapons | 10 Utility per member. Mix uniform item selection with Utility/Bulk weighting in the chosen category. The quality-weighted share rises linearly to 50%. |
+| Protection | Clothing/protective gear classified as Protection | 12 Utility per member. Each original has one Light, Severe or Healthy outcome. Light starts at 20% and Severe at 10%. Full coverage halves both injury probabilities. |
 
-These five lanes define the intended loadout. The accepted mechanical fixture still uses Food, Hydration, Medical, Weapons and Protection. Its outgoing Bulk and lane costs are live. Outcome bonuses, recruitment and the Morale substitution remain future work. The example of zero baseline and five percent per member is illustrative.
+The lane targets and rates are provisional playtest values. Injury and recruitment draws are independent for each original. Committed cargo and time are independent of personnel outcomes.
 
 <a id="s_10_3_Whole_item_contribution_and_eff"></a>
 
@@ -764,7 +764,7 @@ These five lanes define the intended loadout. The accepted mechanical fixture st
 
 The current accepted foundation charges the full Bulk of each submitted item, caps Utility at the remaining lane target, previews waste and rejects objects that exceed remaining capacity. Filling a lane stops further submissions to that lane. No surplus bonus or capacity discount is added.
 
-Efficient provisioning preserves Bulk for incoming cargo. A crew can depart with zero return capacity after confirmation and can return empty when the remaining Bulk cannot fit a whole eligible item. Provisioning effects and economy balance remain open.
+Efficient provisioning leaves more room for ordinary cargo. Food awards a separate lottery even when ordinary room is zero. Each bonus item keeps its canonical Bulk for later carrying, storage and contribution.
 
 The old aspirations of roughly 50% capacity used by an ordinary loadout and 70–75% left by efficient loading are historical calibration examples, not targets this edition reaffirms. The M4 28 Bulk per scavenger and lane values 12/12/6/12/12 remain testing evidence only. New per-member capacities may be deliberately increased if useful for a substantial collection and manageable run length.
 
@@ -774,7 +774,7 @@ The old aspirations of roughly 50% capacity used by an ordinary loadout and 70�
 
 Distinguish four matters: return capacity available; how much is filled; how useful the chosen items are for that Bulk; and which categories they represent. A larger capacity does not guarantee it will be filled, and equal returned Bulk can contain very different useful supplies.
 
-The intended Weapons benefit biases the whole-item draw toward higher Utility per Bulk within the category chosen by the sampler. Affinities still determine category emphasis. The quality curve, fit filtering interaction and ordinary item availability need later validation.
+Weapons improves the chance of a higher Utility/Bulk item in the selected category. With zero Weapons, definitions in that candidate set are equally likely. Both acquisition portions use the same preference.
 
 Utility is the favored affinity measure, but physical footprint and handling load remain essential balance observations. High-Utility returns that fit too easily may undermine the substantial-hoard experience; abundant inefficient returns may create excessive handling or obstruct completion. Neither problem should be solved by Receiving deleting awkward objects.
 
@@ -786,15 +786,15 @@ An upstream expedition outcome owns the selected items. It must respect the agre
 
 Precomputation is allowed only after the inputs the player may legitimately influence are fixed. It does not reveal hidden results, start a return early, occupy deposited lift slots or become an independent timer. Preserved outcomes survive save/load rather than being redrawn near arrival.
 
-For this playtest the sampler draws a category first with weight 9 for each of the two affinities and 7 for each other category. With all categories eligible this is 15% for each affinity and 7/60 for each other category. Categories without a fitting item are removed, then one fitting definition in the selected category is drawn uniformly. Whole items fill the remaining Bulk until none fits. Duration, the exact manifest and a validated deck arrangement commit at Dispatch. These settings and the declared pool apply to the test configuration.
+Draw a category first with weights 9 and 7. For ordinary loot, exclude categories without a fitting whole item at each draw and fill until none fits. Food bonus draws use the full active catalogue without the ordinary Bulk filter. Duplicate definitions have distinct identities. Dispatch commits an ordinary prefix and bonus suffix in one exact delivery.
 
 <a id="s_10_6_What_should_be_legible_to_the_p"></a>
 
 ### 10.6 What should be legible to the player
 
-The player sees item Category, Utility, Bulk, lane completion/waste, assigned member count, outgoing and remaining capacity, destination affinities and relevant current status. Internal normalization and sampling weights need not be exposed. Narrative descriptions can contextualize outcomes without numerical modifier lists. Actual targets and valid choices remain concrete at the moment of commitment.
+Dispatch shows lane credit and waste, ordinary Bulk remaining, bonus counts, travel range, the Weapons preference and per-original injury and recruitment chances. History shows actual returned counts and personnel outcomes after return, including when handover is pending.
 
-Basis: [PIV §§3,5,7]; retained [G15 §10] and [MVP §§5,12,21]; new formula/effect work remains open rather than inferred from survival tuning.
+Basis: 13 November Expedition outcomes and provisioning decision record, and retained physical and preparation rules from the collection pivot.
 
 <a id="s_11_Receiving_and_waiting_expeditions"></a>
 
@@ -820,7 +820,7 @@ Receiving is TAKE-only. Its private presentation surfaces expose no PUT, zoning,
 | Returned teams waiting to hand over | Effectively uncapped pending queue under the new direction. Each keeps its exact haul and unavailable personnel; backlog costs throughput and time. |
 | Deposited physical queue | Existing owner supports one active plus two deposited FIFO loads. This is separate from pending team records; the pivot does not by itself enlarge physical capacity. |
 | Active revealed load | Materialized objects are progressively taken from the apron. The lift waits for successful removal of all items. |
-| After cargo handover | Admission completes crew handover. Healthy personnel become Ready, and injured personnel will go directly to Medical once that system is defined. Destination occupancy ended at return. |
+| After cargo handover | Admission makes healthy originals and recruits Ready and starts Medical recovery for injured originals. Destination occupancy ends at return. |
 
 A player can leave returning teams queued as long as desired. The cost is tied-up productive capacity and a longer completion time, not missing goods. The waiting cargo itself cannot complete the goal. Clearing the lift and keeping storage workable makes the workforce useful again.
 
@@ -867,9 +867,9 @@ Localized W1 warns amber during arrival/staging/opening, shows green while OPEN 
 
 ### 11.6 Handover and empty returns
 
-Successful admission to the active lift or the deposited queue completes nonempty handover. The healthy crew becomes Ready once, while Receiving owns the cargo. An awaiting crew remains unavailable and its destination is free for another departure.
+Admission completes nonempty handover once, even when an admitted emergency load is still waiting to start. Upstream crews keep their exact cargo and personnel until admission. Empty outcomes hand over directly at return.
 
-Empty outcomes complete in Expedition at their return timestamp without creating a batch or occupying a lift slot. Future triage uses the handover boundary. Healthy members go Ready and injured members go directly to Medical. Injury and treatment rules remain open.
+The 157-Bulk meat-and-mice overrun and the long-object packing failure remain deferred prototype limits. When preparation fails, Dispatch preserves the exact draft and random state and reports the failure. A repeat of the unchanged request produces the same outcome.
 
 Basis: [PIV §6]; [ADD] for sequential preparation context; retained [G15 §11], [MVP §§6–8,16] and [VDD §§13,34.7] except explicitly removed midnight loss.
 
@@ -883,7 +883,7 @@ Basis: [PIV §6]; [ADD] for sequential preparation context; retained [G15 §11],
 
 Kitchen remains the dedicated Food/Hydration consumer, separate from Ops, and may also convert selected Food into standardized physical Rations. Its purpose is to support the operating loop while creating meaningful use for stock that could otherwise count toward victory. It is not a cooking or serving minigame.
 
-The local continuous Kitchen uses independent active-time demand and a cumulative obligation under §12.2. Fixed meals and daily Meal Coverage remain historical evidence. The prototype keeps the original 20-Bulk normal capacity and six-Utility goal per category. Kitchen only affects player logistics.
+Kitchen uses independent active-time demand under §12.2 and affects player logistics. This iteration sets 22 normal player Bulk and retains the six-Utility fixture goal per category.
 
 <a id="s_12_2_Demand_and_consequences_remain_"></a>
 
@@ -893,7 +893,7 @@ Kitchen maintains one cumulative obligation with separate Food and Hydration bal
 
 The provisional schedule draws uniform integer intervals of 180–300 active seconds, including the first trigger. Each next trigger is measured from the scheduled event time. Each event draws a uniform total of 60–80 Utility, then a uniform feasible integer Food share. The iteration interprets the 25% gap as larger lane at most 1.25 times smaller lane. Timing and amounts use separate random streams that advance even at the cap. Contributions leave the schedule unchanged. Continue preserves it, including through pauses and offline time. Kitchen stays live after victory.
 
-After grace, each 3 outstanding Utility costs one percentage point of normal carrying capacity. At combined demand D, effective capacity is floor(normal capacity × (300 − D) / 300). Grace preserves capacity and sprint. Overdue demand disables sprint while ordinary walking and ladders retain their baseline. The bound of 150 Utility limits loss to 50%. Each incoming addition uses proportional whole-Utility clipping. The iteration assigns largest remainders first and alternates exact ties by scheduled event index, odd favoring Food. Discarded overflow never returns.
+After grace, each three outstanding Utility costs one percentage point of normal carrying capacity. Effective capacity is floor(normal capacity × (300 − D) / 300). The cap of 105 Utility gives 35% loss and 14 effective Bulk at normal capacity 22. Overdue demand disables sprint. Additions clip proportionally by whole Utility, assigning largest remainders first and alternating exact ties by event index, odd favoring Food.
 
 <a id="s_12_3_Rations_as_a_retained_conversio"></a>
 
@@ -923,7 +923,7 @@ Basis: [PIV §§7,9–10]; retained concepts [G15 §12], with daily demand/outco
 
 ### 13.1 Purpose under the collection objective
 
-Medical spends Medical-category goods to shorten the time scavengers are unavailable, thereby returning productive capacity to expeditions sooner. This is a direct contribution to faster acquisition and completion, not an additional win condition or a survival-loss system.
+Medical owns the natural recovery of injured originals and releases each recovered scavenger to Ready. A future treatment slice may use physical Medical goods to accelerate recovery.
 
 Patients remain anonymous. The player need not individually assign medicines, manage named characters or operate a treatment minigame. Aggregate state and clear recovery information can remain sufficient; exact patient/cohort bookkeeping should be only as detailed as the agreed mechanics need.
 
@@ -931,9 +931,9 @@ Patients remain anonymous. The player need not individually assign medicines, ma
 
 ### 13.2 Preferred simple recovery approach
 
-**MEDICAL DIRECTION.** Light and Severe injuries recover naturally at a slower rate. Medical treatment in the Ward substantially accelerates return to duty. The Ward alone handles and modifies healing. Kitchen Food and Hydration affect neither healing speed nor success. Ordinary recovery remains available when no crew can leave for supplies.
+**CONFIRMED FIRST ITERATION. At handover, Light recovery begins with 120 active seconds and Severe with 300. Each patient progresses independently in parallel. Pausing or closing the run suspends active time. Kitchen, Fuel and the availability of other crews leave natural recovery in progress.
 
-The developer is disinclined to send injured people on expeditions. Re-injury, altered carry capacity and special loadout rules would add simulation mainly to support that exception. Do not introduce them by assumption. Routine fatalities are likewise disfavored under a design that must never exhaust all progress routes; final injury states and personnel outcomes still need specification.
+Recovering scavengers are unavailable for preparation until Medical completes their deadlines. Recovery returns an existing original to Ready once.
 
 Poor management can mean a prolonged slow operation or substantial corrective work. Natural recovery is not a promise of a short wait, automatic full stock replenishment or guaranteed parity with an efficiently played run. The no-dead-end requirement and the speed of recovery are different design concerns.
 
@@ -943,12 +943,12 @@ Poor management can mean a prolonged slow operation or substantial corrective wo
 
 | **Open point** | **Boundary already known** |
 | --- | --- |
-| Injury states and durations | Exact severities, rates and recovery times are undefined. Do not copy Light/Severe daily stage counts or death curves. |
-| Treatment cost and application | Medical accelerates useful availability. Per-patient versus pooled accounting, partial contribution, when the benefit applies and any limits remain open. |
+| Injury states and durations | Light and Severe rates are set in §10.2. Natural deadlines begin at handover. Release values remain subject to playtest. |
+| Treatment cost and application | Future treatment may accelerate recovery. Individual versus pooled treatment, cost, credit, timing and limits remain open. |
 | Natural recovery and supplies | The basic recovery path must not depend on supplies obtainable only from the people who cannot leave. |
-| Return admission | When injured crew leave the waiting-cargo state and enter Medical must align with the defined handover. |
+| Return admission | Injured originals enter Medical at admission or empty return under §11.6. |
 | Other departmental effects | Healing belongs to the Ward. Keep untreated recovery available without Kitchen or other service supply. |
-| Communication | Explain current unavailable counts, treatment requirements and meaningful expected recovery without inventing outcome certainty. |
+| Communication | The live read-only view lists patient severity and remaining natural recovery time. The treatment interface remains future design. |
 
 The old first-treatment-next-day restriction, oldest-Severe daily triage, retained one-of-two-unit stage progress, midnight treatment-success rolls and escalating fatal complications are superseded as active rules. They remain in the predecessor for historical reference. Choosing any corresponding continuous mechanic later requires its own design justification.
 
@@ -960,7 +960,7 @@ Light injuries worsening is an independent candidate to assess on gameplay merit
 
 Medical’s fixed red identity is retained, with redundant text/icon/audio rather than color alone. The Supply Anteroom stays a usable support space rather than a treatment ward or empty hospital set. Patients and staff are unseen. The protected approach is not default overflow storage.
 
-Exact equipment, interface layout and revised route length remain later design/authoring. Current accepted geometry and materials are evidence to preserve until deliberately changed, not proof that long travel is appropriate for faster continuous treatment decisions.
+The existing Supply Anteroom frontage opens the live read-only patient view using F. ESC closes the view first. The accepted route, equipment and art remain the presentation baseline.
 
 Basis: [PIV §§5,7–8]; [G15 §13] for retained anonymous/service-space context and explicitly superseded daily rules; [VDD §18].
 
@@ -984,11 +984,11 @@ The fixed first-test thresholds are 45, 30 and 15 Utility, with equality in the 
 | --- | --- | --- |
 | Fuel | Environmental dimming and fixed power permissions follow the reserve tiers. | Restore authored light strength at normal power. The Incinerator and ordinary handling remain available. |
 | Electronics | One-time Workshop investment. | Preserve essential goal visibility and baseline information. |
-| Morale | Future expedition recruitment bonus. | Rate and joining details remain open. Recurring Ops is no longer its designated role. |
+| Morale | Expedition recruitment through Morale. | Up to 5% per original at full Morale. Healthy recruits join at handover. |
 
 Below 15 Utility, an eligible next load waits 60 active seconds before ARRIVAL. Eligibility begins when a valid load is selected and the previous load has completed unloading, closing and full outbound retirement. An empty idle lift accumulates no waiting time. An already-started cycle completes its ordinary cues, motions and TAKE sequence.
 
-Each wait belongs to its admitted active load. Admission releases healthy crew and preserves the two deposited slots, FIFO order, and destination release on return. Empty returns bypass the lift. Additional loads and top-ups below 15 leave the deadline in place. Refuelling to at least 15 starts the waiting load once. The reserve and pending identity and deadline persist on Continue.
+Each wait belongs to its admitted active load. Admission completes normal personnel handover, including Medical intake and healthy recruits, before the lift starts. The reserve and exact pending identity and deadline persist on Continue.
 
 <a id="s_14_3_Deferral_investment_and_the_fin"></a>
 
@@ -1265,7 +1265,7 @@ Ordinary schema-4 continuation is accepted at M4, but is not continuous crash-du
 | --- | --- |
 | Physical ownership | Items in storage/carrying, exact spent receipts, pending and deposited cargo; no duplication or lost transfer halves. |
 | Organization | Zones, disabled cells, names, stacks, reserved cells, transforms and placed orientation—not fresh automatic packing. |
-| Current operations | Editable preparation, exact away and waiting crews, destination occupancy and Kitchen schedule, grace and balances. Medical recovery and Workshop project progress remain future scope. |
+| Current operations | Exact draft, away and waiting crews, committed cargo and personnel outcomes, handover, Medical deadlines and recovery history. Kitchen and Fuel state remain part of continuation. |
 | Time and completion | Active elapsed time, pause-independent logical progress, recorded first victory and exact pending transitions. |
 | Committed outcomes | Previously selected cargo and any already-resolved random facts; reopening a report or continuing cannot reroll them. |
 | Identity allocation | Run-scoped allocator state so new items/requests/expeditions remain unique after restart. |
@@ -1464,15 +1464,15 @@ These are design-validation aims, not claimed test results or a new automated ac
 | O-01 · Goal/capacity calibration | Actual shared Utility target, starting stock, qualifying storage/output classification and a useful occupancy measure. 2,000/80% remain placeholders. |
 | O-02 · Single preparation lifecycle | Resolved for this slice. Formation at first accepted supply or zero-loadout Dispatch, with persistent draft edits, locked count after formation and whole-item receipts. See §§8.5 and 9.3. |
 | O-03 · Destination lifecycle | Resolved for this slice. Exactly two distinct affinities, away-only exclusivity and explicit availability feedback. See §§9.5–9.7. |
-| O-04 · Return and personnel handover | Healthy release at admission or empty return is confirmed. Injury classification, Medical admission mechanics and treatment remain open. See §11.6 and O-07. |
-| O-05 · Acquisition model | The bounded test pool, capacity, lane targets, 90–180 active seconds and category weights are specified for this playtest. Production tuning and provisioning effects remain open. See §§9.7 and 10.5. |
+| O-04 · Return and personnel handover | Admission or empty return releases healthy originals and recruits and begins natural recovery for injured originals. See §§11.6 and 13. |
+| O-05 · Acquisition model | The first iteration uses the active catalogue, 23 ordinary Bulk per original and five provisional provision effects. See §§9.7 and 10. |
 | O-06 · Requests and Ops | Kitchen standing rules are in §12. The approved reserve, power tiers and freight start wait are in §14. Release tuning, final location and future upgrades remain open. |
-| O-07 · Medical | The Ward alone modifies natural healing with Medical treatment. Injury risk, recovery durations, pooled versus individual or FIFO treatment, costs, timing and UI remain open. |
-| O-08 · Population and upgrades | Initial Ready count, recruitment/growth, progression ownership for assembled crews, Workshop project roster and Training disposition. |
+| O-07 · Medical | Natural recovery and the minimal view are specified in §13. Treatment timing, cost and assignment remain open. |
+| O-08 · Population and upgrades | The iteration retains eight starting Ready and adds Morale recruitment. Release population pacing, progression, Workshop and Training remain open. |
 | O-09 · Conversion and release | Rations and Salvage category and target rules, yields, capacity and output blocking remain open, along with Salvager access and restrictions. Incinerator rules are confirmed in §15.3. |
 | O-10 · Space and handling | Production shelf capacity/roster, all-storage-from-start decision, route compression and final ergonomics. |
 | O-11 · Interface and time edges | The local build keeps Kitchen, preparation, the Incinerator and Fuel live. Escape closes service layers before pause. Journal scope, final interface and platform timing edges remain open. |
-| O-12 · Delivery/continuation | Published main uses schema 10. Confirmed New Run retains incompatible snapshots. Release migration and durability remain open. |
+| O-12 · Delivery/continuation | Published main uses schema 10. The Expedition candidate targets schema 11 with a confirmed New Run and retained incompatible snapshots. Release migration and durability remain open. |
 
 The register deliberately leaves unanswered mechanics open. The project already has enough direction to produce this successor; these are boundaries for later design/implementation, not reasons to recreate the old behavior or repeatedly ask the developer to approve the pivot.
 
@@ -1496,9 +1496,9 @@ The collection pivot supersedes midnight handling, mortality, next-day Medical, 
 
 ### 21.5 Document adoption and stopping point
 
-The developer approved the complete v0.16 draft, the 9 November contribution allocation and Kitchen rules, and the 11 November reserve and emergency freight rules in §14. The decision records distinguish standing rules from provisional first-test values. Production provisioning, Medical, future machinery and Workshop remain open.
+The developer approved v0.16, continuous Kitchen and Fuel, and the 13 November Expedition outcomes and provisioning design. The lane, recovery, carry and Kitchen values are provisional. Treatment and later progression remain open.
 
-The continuous-service brief authorized Kitchen. The 11 November work order covers reserve accounting, refuelling and emergency freight. The accepted expedition fixture and its Medical lane remain the mechanical baseline. Future contribution effects require their own implementation scopes.
+The 13 November work order authorizes the bounded Expedition outcomes, natural recovery and player/Kitchen adjustment. The new local implementation is pending. The earlier pool and healthy-only outcomes remain in dated acceptance evidence.
 
 Basis: [PIV §§10–12]; [ADD]; [MVP §§16,21.4]; [H25 §§2–3,10,14]; [WG].
 

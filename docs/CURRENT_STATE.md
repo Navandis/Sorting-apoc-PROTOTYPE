@@ -2,6 +2,8 @@
 
 **Document update 13 November 2026. The intended game follows the developer-approved GDD v0.16 and its contribution decisions. Published main includes Receiving mixed stacking and the approved Fedora revision.**
 
+The [13 November Expedition decisions](design_history/2026-11-13-expedition-outcomes-and-provisioning-decisions.md) specify full-catalogue acquisition, five provision effects, injury, recruitment and Medical-owned natural recovery. The [local implementation](superpowers/plans/2026-11-13-expedition-outcomes-and-provisioning.md) is pending at this documentation checkpoint. Published main remains the schema-10 baseline.
+
 ## 1. At a glance: approval is not implementation
 
 | Area | Current disposition |
@@ -52,9 +54,9 @@ The purpose is to restore collecting, hoarding and organizing as the main experi
 | Items | Eight shared categories, no first-release dual/multi-use category profiles. Definitions stay stable; buffs affect composition or systems, not silent item Utility/Bulk rewrites. |
 | Preparation | One current team: choose 1–4 Ready scavengers, equip/select destination, explicitly dispatch; optionally repeat consecutively. No prebuilt roster, preparation tabs, parallel prepared loadouts or full-loadout auto-send. |
 | Destinations | Twenty-eight unordered pairs. Dispatch requires two affinities and an available pair. A destination is occupied only while its expedition is away. |
-| Receiving | Exact cargo moves through oldest-first admission to one active and two deposited slots. Healthy crew members become Ready on admission. Empty returns complete outside the lift. |
+| Receiving | One exact ordinary-plus-bonus manifest moves through oldest-first admission to one active and two deposited slots. Healthy originals and recruits become Ready on admission. Injured originals enter Medical. Empty returns hand over outside the lift. |
 | Requests | Kitchen §12 specifies cumulative bounded Food and Hydration demand, active-time grace, proportional carrying relief and sprint restoration on clearance. Fuel uses the separately approved reserve and emergency freight rules in GDD §14. Victory has no service requirement. |
-| Medical | Preferred slower natural recovery and much faster treated recovery. No injured-away mechanic adopted. No-dead-end requirement is not guaranteed quick recovery or adaptive catch-up. Full injury/treatment rules remain open. |
+| Medical | Light and Severe patients recover in 120 and 300 active seconds from handover. The Medical frontage shows natural recovery in a read-only view. Treatment remains open. |
 | Progression/layout | All storage from start is favored, not a finalized production roster. Carrying/expedition/information improvements remain candidates. Workshop/Training and spatial compression require further design. |
 | Information | Goal progress is baseline, never upgrade-gated or disabled by penalties/events. Journal/notification/overview roles survive; a daily report does not. |
 
@@ -176,7 +178,7 @@ The authoritative asset-equipped checkout is `D:\Godot Projects\Sorting-apoc-PRO
 
 No reset, stash, clean, force-push, rebase/squash, branch/worktree deletion, untracked staging sweep or ignored-asset cleanup is authorized. Preserve local evidence and human `.tres`/scene edits. A remote clone is not a runnable licensed-art backup. Git ignore is not Godot scan exclusion: keep checkpoint scenes with production UIDs and duplicate global classes outside scanned paths. Preserve startup parity checks and avoid concurrent Godot/import writers on one mutable checkout.
 
-The developer accepted the [expedition loop](testing/2026-11-08-expedition-to-storage-loop-result.md) in its bounded scope. The [furniture movement collision repair](testing/2026-11-08-furniture-collision-repair-result.md) was accepted by the developer after an in-game retest on 8 November 2026 and is closed in its bounded scope. GDD §14 resolves first-slice Fuel rules under O-06. O-07 Medical recovery remains open.
+The developer accepted the [expedition loop](testing/2026-11-08-expedition-to-storage-loop-result.md) in its bounded scope. The [furniture movement collision repair](testing/2026-11-08-furniture-collision-repair-result.md) was accepted by the developer after an in-game retest on 8 November 2026 and is closed in its bounded scope. GDD §14 resolves first-slice Fuel rules under O-06. GDD §13 specifies natural recovery. Treatment remains open under O-07.
 
 ## 11. Focused evidence navigation
 

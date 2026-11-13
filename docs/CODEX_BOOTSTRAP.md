@@ -4,6 +4,8 @@
 
 The current intended game is collection, hoarding and spatial organization. The [Expedition-to-Storage Loop](superpowers/plans/2026-11-07-expedition-to-storage-loop.md) is **HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE**. See its [technical result and developer acceptance](testing/2026-11-08-expedition-to-storage-loop-result.md) and the [accepted foundation checkpoint](testing/2026-11-07-continuous-run-collection-goal-closure.md).
 
+The [13 November Expedition decisions](design_history/2026-11-13-expedition-outcomes-and-provisioning-decisions.md) supersede the fixture acquisition and healthy-only outcomes for the next local candidate. The [implementation plan](superpowers/plans/2026-11-13-expedition-outcomes-and-provisioning.md) is pending at this documentation checkpoint.
+
 ## Read first
 
 1. [AI_WORKING_GUIDELINES.md](AI_WORKING_GUIDELINES.md).
@@ -34,20 +36,19 @@ Active real-world completion time replaces days survived. No day cycle, morning 
 
 Two distinct unordered affinities identify one of 28 destinations. Dispatch requires an available pair. The destination is occupied only while its crew is away. The development sampler favors both affinities equally before whole-item fit filtering. See GDD §§9–10 and the expedition brief.
 
-Pending return cargo remains intact. Waiting crews stay unavailable until admission to the active lift or deposited queue. Healthy members become Ready at admission. Empty returns release the crew at their committed return time, outside Receiving.
+Pending return cargo remains intact. Waiting crews stay unavailable until admission to the active lift or deposited queue. At handover healthy originals and recruits become Ready and injured originals enter Medical. Empty returns hand over at their committed return time, outside Receiving.
 
-Kitchen §12 defines bounded cumulative demand and carrying/sprint consequences. The approved contribution map gives expeditions proactive bonuses and assigns restoration to Kitchen, Fuel and Medical. The promoted continuous Kitchen slice uses the mechanical expedition fixture. The fixed meals and Daily Meal Coverage belong to the archived survival-era build. [Contribution decisions](design_history/2026-11-09-contribution-effects-and-kitchen-decisions.md) · [Continuous Kitchen brief](superpowers/plans/2026-11-09-continuous-kitchen-service.md)
+Kitchen §12 defines bounded cumulative demand and carrying/sprint consequences. The Expedition iteration sets 22 normal player Bulk, 105 Kitchen demand cap and a 35% maximum penalty. The fixed meals and Daily Meal Coverage belong to the archived survival-era build. [Contribution decisions](design_history/2026-11-09-contribution-effects-and-kitchen-decisions.md) · [Continuous Kitchen brief](superpowers/plans/2026-11-09-continuous-kitchen-service.md)
 
 Fuel §14 specifies continuous reserve consumption and a 60-active-second wait before each eligible emergency delivery. Crew handover remains on admission and ongoing cycles finish normally. [Fuel decisions](design_history/2026-11-11-fuel-reserve-and-emergency-freight-decisions.md) · [Implementation plan](superpowers/plans/2026-11-11-fuel-reserve-emergency-freight.md)
 
-Medical's preferred slower natural and faster treated recovery remains open in detail. Fixed full storage is a favored direction. Workshop, Training, population growth and route compression need further design.
+Medical's natural recovery begins at handover and uses 120 or 300 active seconds. Treatment remains future design. Fixed full storage is a favored direction. Workshop, Training, long-run population pacing and route compression need further design.
 
 ## Known open boundaries before affected implementation
 
 Use GDD §21.2 rather than asking for reapproval of the whole pivot. In particular:
 
-- O-02–O-04 cover the confirmed preparation, destination and healthy handover rules in the expedition brief. Injury classification and Medical treatment remain open.
-- O-05/O-06/O-07: acquisition, persistent requests, bounded penalties and Medical recovery.
+- O-02–O-07 cover preparation, destination, handover, catalogue acquisition, bounded requests and natural recovery. Medical treatment remains open.
 - O-08–O-12: population/progression, conversions, storage/layout, UI/time edges, compatibility and successor test scope.
 
 Do not invent automatic refunds, lost loadouts, saved parallel prepared-team storage, new technical frameworks or old daily defaults to bypass these boundaries. Resolve only what an agreed task actually reaches.
