@@ -12707,10 +12707,10 @@
 				"status": "UNREVIEWED"
 			},
 			"footprint_review": {
-				"notes": "Machine proposal: canonical X/Z bounds, ceil at 0.10 m, minimum one cell; human overrides pending.\n2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied.",
+				"notes": "Machine proposal: canonical X/Z bounds, ceil at 0.10 m, minimum one cell; human overrides pending.\n2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied.\n2026-11-13 developer approved 3×3×1 at scale 0.897. Measured posed size is 0.270470 × 0.131143 × 0.299760 m.",
 				"reviewed_footprint": [
-					4,
-					4,
+					3,
+					3,
 					1
 				],
 				"reviewed_rotation_degrees": [
@@ -12723,7 +12723,7 @@
 			},
 			"item_id": "loot_000172",
 			"scale_review": {
-				"notes": "Machine proposal: measured imported scale unchanged. Three meshes form brim/crown/trim of one hat. Internal centimeter conversion yields plausible 0.30 x 0.15 x 0.33 m at unit root; do not normalize source.\n2026-10-24: source fingerprint and visual_scale=1.0 unchanged; separate human scale acceptance was not reported. UNREVIEWED: confirm source/world scale plausibility; do not regenerate accepted pose/Footprint/roles.\n2026-10-24 M4 locked handoff: developer explicitly approves the saved 163–174 scales. Geometry unchanged; separate Auto Stack Group approval remains pending.",
+				"notes": "Machine proposal: measured imported scale unchanged. Three meshes form brim/crown/trim of one hat. Internal centimeter conversion yields plausible 0.30 x 0.15 x 0.33 m at unit root; do not normalize source.\n2026-10-24: source fingerprint and visual_scale=1.0 unchanged; separate human scale acceptance was not reported. UNREVIEWED: confirm source/world scale plausibility; do not regenerate accepted pose/Footprint/roles.\n2026-10-24 M4 locked handoff: developer explicitly approves the saved 163–174 scales. Geometry unchanged; separate Auto Stack Group approval remains pending.\n2026-11-13 developer approved the absolute visual scale 0.897 for the Fedora.",
 				"reviewed_source_fingerprint": "3ce9f949a9f8ea558dcb91b68a69f9984b66228f652dc5459e6f577e3c975b59",
 				"status": "APPROVED"
 			},
@@ -12731,12 +12731,12 @@
 			"source_path": "res://assets/props/protection/SM_Fedora_Hat_01.glb",
 			"stack_role_review": {
 				"flags": [],
-				"notes": "Machine proposal: Hat may rest on support; soft curved crown cannot credibly support cargo.\n2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied.",
+				"notes": "Machine proposal: Hat may rest on support; soft curved crown cannot credibly support cargo.\n2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied.\n2026-11-13 reconciled the reviewed Footprint with the approved Fedora geometry. Existing support permissions are retained.",
 				"reviewed_can_be_stacked": true,
 				"reviewed_can_support_stack": false,
 				"reviewed_footprint": [
-					4,
-					4,
+					3,
+					3,
 					1
 				],
 				"reviewed_rotation_degrees": [

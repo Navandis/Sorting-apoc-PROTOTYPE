@@ -19588,7 +19588,7 @@
 				"IRREGULAR_REVIEW"
 			],
 			"review_status": "SCALE_POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
-			"numerical_status": "Utility None/0 and Bulk 1 are temporary physical-onboarding placeholders; no capacity-derived values.",
+			"numerical_status": "2026-11-13 developer approved Bulk 2. Active Utility is 1 Protection.",
 			"submesh_count": 3,
 			"human_review": {
 				"date": "2026-10-24",
@@ -19600,27 +19600,27 @@
 					0
 				],
 				"storage_footprint": [
-					4,
-					4,
+					3,
+					3,
 					1
 				],
 				"can_be_stacked": true,
 				"can_support_stack": false,
 				"auto_stack_group": "",
-				"visual_scale": 1,
+				"visual_scale": 0.897,
 				"posed_dimensions_m": [
-					0.301527440547943,
-					0.146201923489571,
-					0.334180235862732
+					0.270470142364502,
+					0.131143122911453,
+					0.299759656190872
 				],
 				"suggested_footprint": [
-					4,
-					4,
+					3,
+					3,
 					1
 				],
 				"observed_source_fingerprint": "3ce9f949a9f8ea558dcb91b68a69f9984b66228f652dc5459e6f577e3c975b59",
 				"post_correction_physical_status": "SCALE_POSE_FOOTPRINT_STACK_REVIEWED_2026_10_24",
-				"notes": "2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied. Separate scale and Auto Stack Group acceptance remain UNREVIEWED; scale/group values above are observed saved data only.\n2026-10-24 M4 locked handoff explicitly approves saved scale; no physical values changed. Auto Stack Group approval remains pending."
+				"notes": "2026-10-24: developer confirms personally reviewing orientation/+Z Front, Footprint and stacking capability, editing as needed and saving the external .tres. Exact saved definition checkpoint a669c0d5c218696d9f977a505551063e0160b69f is authority; no automatic suggestions reapplied. Separate scale and Auto Stack Group acceptance remain UNREVIEWED; scale/group values above are observed saved data only.\n2026-10-24 M4 locked handoff explicitly approves saved scale; no physical values changed. Auto Stack Group approval remains pending.\n2026-11-13 approved Fedora revision supersedes the scale and Footprint from the dated checkpoint above. Pose, support roles and pending group status continue from that checkpoint."
 			}
 		},
 		{

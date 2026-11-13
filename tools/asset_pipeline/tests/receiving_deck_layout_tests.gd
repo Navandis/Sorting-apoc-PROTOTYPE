@@ -294,7 +294,7 @@ func _test_legal_append_stack_and_incompatible_fallback() -> void:
 		LootBatchEntryScript.new("hat", "fallback_batch:hat", &"loot_000172"),
 	]
 	var fallback_batch: LootBatch = LootBatchScript.create_committed(
-		"fallback_batch", &"test", "fallback", 2, 2, 1, 7, incompatible_entries
+		"fallback_batch", &"test", "fallback", 3, 3, 1, 7, incompatible_entries
 	)
 	var fallback_result = DeckPlannerScript.new().prepare(fallback_batch, PersistentItemCatalog, ProofProfile)
 	_check(fallback_result.succeeded, "failed append falls back to empty placement")

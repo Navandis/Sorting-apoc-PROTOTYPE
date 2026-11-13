@@ -2,6 +2,7 @@ extends SceneTree
 
 const Catalog = preload("res://data/items/item_catalog.tres")
 const Retired: Array[int] = [5, 23, 24, 34, 36, 37, 42]
+const Fedora := &"loot_000172"
 var failures := 0
 
 func check(ok: bool, message: String) -> void:
@@ -47,7 +48,8 @@ func _init() -> void:
 		if record.disposition in ["new", "topup"]:
 			var baseline: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://docs/design_history/survival-era/m4/Sorting_Apocalypse_M4_Locked_Baseline_24Oct2026.json"))
 			var row: Dictionary = baseline.approved_items.filter(func(r): return r.item_id == record.item_id)[0]
-			check(String(definition.utility_id) == row.utility_lane and definition.utility_value == int(row.utility) and definition.bulk == int(row.bulk),"Approved M4 numbers replace onboarding placeholders")
+			var expected_bulk := 2 if definition.item_id == Fedora else int(row.bulk)
+			check(String(definition.utility_id) == row.utility_lane and definition.utility_value == int(row.utility) and definition.bulk == expected_bulk,"Active numbers match approved M4 values and the Fedora revision: "+record.item_id)
 			for field: String in ["scale_review","storage_pose_review","footprint_review","stack_role_review","auto_group_review"]:
 				var status: String = manifest.assets[record.item_id][field].status
 				if record.disposition=="topup":
@@ -81,7 +83,11 @@ func _init() -> void:
 		if definition==null: continue
 		var expected: Array=topup_sources[number]
 		check(definition.visual_scene.resource_path=="res://assets/props/"+expected[0] and definition.display_name==expected[1] and definition.storage_category==expected[2],"Exact authorized identity/name/category: %d" % number)
-		check(definition.auto_stack_group==&"" and definition.visual_scale==1.0,"Conservative explicit None group and untouched source scale: %d" % number)
+		var expected_scale := 0.897 if definition.item_id == Fedora else 1.0
+		check(definition.auto_stack_group == &"" and is_equal_approx(definition.visual_scale, expected_scale),"Saved None group and approved scale: %d" % number)
+		if definition.item_id == Fedora:
+			check(definition.storage_footprint == Vector3i(3, 3, 1) and definition.storage_rotation_degrees == Vector3.ZERO
+				and definition.can_be_stacked and not definition.can_support_stack, "Approved Fedora footprint and preserved pose/support roles")
 	var old_catalogue:=ItemCatalog.new()
 	old_catalogue.definitions=[Catalog.get_definition_by_id(&"loot_000041")]
 	check(adapter.next_sequence(old_catalogue,retired,{"assets":{}})==43,"Deleting highest old ID 42 never permits reuse")

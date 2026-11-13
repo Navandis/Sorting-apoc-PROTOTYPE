@@ -6,11 +6,12 @@
 [resource]
 script = ExtResource("1_8xbon")
 item_id = &"loot_000172"
-bulk = 1
+bulk = 2
 utility_value = 1
 utility_id = &"Protection"
 display_name = "Fedora Hat"
 storage_category = "Protection"
-storage_footprint = Vector3i(4, 4, 1)
+storage_footprint = Vector3i(3, 3, 1)
 can_be_stacked = true
+visual_scale = 0.897
 visual_scene = ExtResource("2_768x4")

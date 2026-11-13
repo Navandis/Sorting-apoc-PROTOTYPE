@@ -1,6 +1,8 @@
 # Receiving mixed stacking technical result
 
-**13 November 2026 · Local implementation ready for developer review**
+**13 November 2026 · HUMAN-APPROVED / CLOSED IN ITS BOUNDED SCOPE — LOCAL; PUBLICATION PENDING**
+
+The original technical evidence below covers implementation commit `6c82e59ffa00f1f63cda78ebf5a0a127aa049e26` and the pre-adoption catalogue. The later [acceptance and Fedora adoption](#13-november-2026-developer-acceptance-and-fedora-adoption) records the approved item revision and its own verification.
 
 The local branch `codex/receiving-mixed-stacking` starts at `57b217d39c23f1bc3147ff8b78d7808b3add8eed`. Receiving tries every eligible same-group append on the applicable surfaces before considering mixed top-appends and empty positions. It uses the shared physical validator and the existing 95% clearance limit. The production exact-manifest route uses BARE, 33×20 cells, 1.50 m clearance and four attempts. A successful preparation commits the exact haul to one delivery cycle.
 
@@ -24,10 +26,22 @@ The prepared order, identities and positions remain committed during unloading. 
 
 The 92 Fedora hats and the 157-Bulk meat-and-mice haul need 1,472 and 721 cells, respectively, on the 660-cell deck. All items in the 619-cell long-object haul lack support permission. Each of the 12 attempts left 157–475 free cells but reached a Hockey Stick (19×2) or Double Barreled Shotgun (13×3) with no contiguous fit in either packing turn. Feasibility for a different arrangement remains unresolved.
 
-All 167 resolved catalogue records and measured poses matched the previous assessment. Fedora's earlier raw hash differed by CRLF line endings. The canonical item files, real save files and pre-existing sidecars matched this task's before and after fingerprints. The Fedora and Mystery Meat Large comparison scenes used external probes and in-memory duplicates. Item decisions are pending.
+All 167 resolved catalogue records and measured poses matched the previous assessment at that checkpoint. Fedora's earlier raw hash differed by CRLF line endings. The canonical item files, real save files and pre-existing sidecars matched the technical review's before and after fingerprints. The Fedora and Mystery Meat Large comparison scenes used external probes and in-memory duplicates before the developer's item decision.
 
 The prospective native replays start at the exact-manifest Receiving seam. The separate whole-run continuation uses the installed Dispatch fixture and current production carry settings. Raw logs retain the Windows certificate-store and Godot material diagnostics also seen in the baseline. The external review bundle includes the row-level results, native evidence and reproduction commands.
 
 ## Developer retest
 
 Run the external launcher's 36-object manual case in an isolated profile. From the apron, take an exposed middle or base item on a mixed stack and observe the survivors settle. Clear carried items onto ordinary shelves with E and finish the haul. For a whole-run check, run the supplied Dispatch continuation fixture, or use Save & Exit and Continue after unloading part of a mixed delivery in a New Run on this branch.
+
+## 13 November 2026 developer acceptance and Fedora adoption
+
+The developer approved Receiving-only mixed stacking and the exact Fedora row in the 13 November acceptance work order. The mixed-stacking technical evidence above remains attached to its tested revision. The approval records the developer's decision.
+
+Fedora Hat `loot_000172` now uses scale **0.897**, Footprint **3×3×1** and Bulk **2**. Its 1 Protection Utility, source, orientation and support permissions were preserved. Separate approval of Auto Stack Group None remains pending. The posed footprint measures 0.270470 × 0.299760 m and the packing turn swaps those axes. The authoring review, derived inventory pose and current analytical exports and workbook now use the approved row. All 20 loadout recipes and the 22/23/24 comparisons reproduced from the installed catalogue.
+
+All nine preparations of the three revised Fedora witnesses preserved exact content and identities. In native Compatibility, the seed-9001 partial-Food delivery unloaded and shelved all 48 hats and one mouse at 14 effective Bulk. Both packing orientations appeared on the deck. An over-capacity pickup left the cargo intact. The native replay retrieved a stored Fedora and put it back into ordinary storage. A separate isolated palette fixture passed exact schema-10 Save/Continue with a carried and a shelved Fedora, including its nine-cell reservation and visual transform. The installed Dispatch pool has no Fedora. Its genuine mixed-stack continuation evidence remains the original replay above.
+
+The 92-ordinary-Fedora haul is a historical witness. At Bulk 2 it would spend 184 ordinary Bulk. Mystery Meat Large retains its current values. The developer deferred the canonical 157-Bulk meat-and-mice area overrun and the long-object bounded-planner failure. Their exact witnesses remain recorded. Safe rejection continues to preserve the exact haul and prevents partial commitments. Any player-facing fallback requires a separate decision.
+
+The stress cases exposed localized packing pressure, led to a general Receiving stacking improvement and one targeted catalogue revision, and established a process for approving item changes and reconciling their dependencies. A larger catalogue and real Expedition and Medical gameplay may change which cases and coefficients matter. The adversarial matrix provides no occurrence-rate estimate.
