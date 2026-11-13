@@ -8,7 +8,7 @@ const KitchenSnapshot = preload("res://gameplay/kitchen/kitchen_snapshot.gd")
 const WING_PATH := "res://gameplay/logistics_wing/wing_gameplay.tscn"
 const FuelSnapshot := preload("res://gameplay/fuel/fuel_snapshot.gd")
 const FuelConfig := preload("res://gameplay/fuel/fuel_test_config.gd")
-const SCHEMA := 9
+const SCHEMA := 10
 const NORMAL_CARRY_BULK := 20
 static var _seed_definitions: Dictionary = {}
 var _error := ""
@@ -101,6 +101,8 @@ func validate(state: Dictionary) -> String:
 		return "This continuation is from the Incinerator build (schema 7). Continuous Kitchen requires a New Run. The previous snapshot is preserved."
 	if state.get("schema") == 8:
 		return "This continuation is from the Kitchen build (schema 8). Fuel reserve requires a New Run. The previous snapshot is preserved."
+	if state.get("schema") == 9:
+		return "This continuation is from the Fuel build (schema 9). Receiving stack continuation requires a New Run. The previous snapshot is preserved."
 	if state.get("schema") != SCHEMA:
 		return "Unsupported save schema %s (collection schema %s required)" % [state.get("schema"), SCHEMA]
 	if not _fields(state, {"schema":TYPE_INT,"content":TYPE_STRING,"run":TYPE_DICTIONARY,"timeline":TYPE_DICTIONARY,"goal":TYPE_DICTIONARY,
@@ -301,6 +303,8 @@ func _validate_receiving(state: Dictionary, owners: Dictionary, expedition: RefC
 		if not batch_state is Dictionary: return "Invalid batch record"
 		var batch := LootBatch.from_snapshot(batch_state)
 		if batch == null or batches.has(batch.batch_id) or batch.preparation_state != LootBatch.STATE_PREPARED: return "Invalid/duplicate committed batch"
+		for entry_state: Dictionary in batch_state.entries:
+			if not entry_state.has("released_as_base"): return "Missing Receiving base removal history"
 		if batch.presentation_profile_id != current_profile.profile_id or batch.presentation_profile_revision != current_profile.revision: return "Incompatible Receiving presentation profile"
 		batches[batch.batch_id] = batch
 		for entry: LootBatchEntry in batch.entries:

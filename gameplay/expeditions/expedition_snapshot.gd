@@ -236,8 +236,9 @@ func validate_cargo(receiving: Dictionary, batches: Dictionary, items: Dictionar
 				if not grid.encloses(bounds):
 					return "Expedition cargo lies outside the deck"
 				var group := entry.presentation_stack_group_id
-				var reserved: Rect2i = groups.get(group, bounds)
-				groups[group] = reserved.merge(bounds)
+				if not groups.has(group):
+					groups[group] = []
+				(groups[group] as Array).append(entry)
 			if terminal.has(item_id):
 				var receipt: Dictionary = terminal[item_id]
 				if trip.status != Ops.COMPLETE or (batch != null and entries[index].remaining_in_batch) \
@@ -248,11 +249,28 @@ func validate_cargo(receiving: Dictionary, batches: Dictionary, items: Dictionar
 		if batch != null and (batch.actual_bulk != bulk or batch.target_bulk != bulk):
 			return "Expedition batch Bulk mismatch"
 		var occupied: Array[Rect2i] = []
-		for bounds: Rect2i in groups.values():
-			for other: Rect2i in occupied:
-				if bounds.intersects(other):
-					return "Expedition cargo has overlapping deck reservations"
-			occupied.append(bounds)
+		for members: Array in groups.values():
+			members.sort_custom(func(a: LootBatchEntry, b: LootBatchEntry) -> bool:
+				return a.presentation_stack_index < b.presentation_stack_index)
+			var stack := StorageStack.new()
+			for entry: LootBatchEntry in members:
+				var definition := PrototypeItemCatalog.get_definition_by_id(entry.definition_id)
+				var item := ItemInstance.new(definition, entry.item_instance_id)
+				var measured := DeckPose.measure_item(item, entry.presentation_quarter_turns)
+				if not measured.get("valid", false):
+					return "Expedition cargo pose is invalid"
+				var member := StorageStack.create_entry(item, measured.footprint, measured.packing_rotated, measured.aligned_bounds)
+				if stack.entries.is_empty():
+					if not DeckPose.fits_as_base(member, spec.stack_clearance_m):
+						return "Expedition cargo base exceeds deck clearance"
+					var bounds := Rect2i(entry.presentation_cell_origin, member.footprint)
+					for other: Rect2i in occupied:
+						if bounds.intersects(other):
+							return "Expedition cargo has overlapping deck reservations"
+					occupied.append(bounds)
+				elif not DeckPose.find_stack_append(stack, member, spec.stack_clearance_m).get("valid", false):
+					return "Expedition cargo has an invalid support chain"
+				stack.entries.append(member)
 	var turnaround: float = receiving.cycle.last_turnaround_at
 	if (turnaround == -1.0) != (last_retired_handover == -1.0) or turnaround < last_retired_handover:
 		return "Completed freight turnaround disagrees with retired cargo history"

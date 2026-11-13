@@ -232,7 +232,7 @@ func depart_pair(ops: RefCounted, first: String, second: String, seed_value: int
 
 func continue_preparation(saved: Dictionary, label: String, save_and_exit: bool = false) -> bool:
 	var saved_ok: bool = shell.save_and_exit() if save_and_exit else shell.save_service.save_snapshot(saved).ok
-	if not check(saved.schema == 9 and saved_ok and shell.continue_run(), "isolated schema-9 Continue: " + label + " " + shell.status_label.text):
+	if not check(saved.schema == Snapshot.SCHEMA and saved_ok and shell.continue_run(), "isolated current-build Continue: " + label + " " + shell.status_label.text):
 		return false
 	bind_wing()
 	if not check(Snapshot.new().capture(wing) == saved, "exact run snapshot, including cargo, goal, Fuel and Kitchen: " + label):

@@ -13,7 +13,7 @@ func _run() -> void:
 		finish()
 		return
 	var initial := capture()
-	if check(initial.schema == 9 and initial.has("fuel"), "collection snapshot uses schema 9 and records Fuel") and bind_saved():
+	if check(initial.schema == Snapshot.SCHEMA and initial.has("fuel"), "current collection snapshot records Fuel") and bind_saved():
 		if await roundtrip("new 55/60") and await prove_wait_and_receipts():
 			prove_compatibility(initial)
 	finish()
@@ -232,8 +232,8 @@ func prove_compatibility(initial: Dictionary) -> void:
 	shell.request_new_run()
 	shell.confirm_new_run()
 	var loaded: Dictionary = service.load_snapshot()
-	check(loaded.ok and loaded.snapshot.schema == 9 and FileAccess.get_sha256(old) == hashes[0]
-		and FileAccess.get_sha256(pointer) != hashes[1], "confirmed New Run repoints to 9 and keeps incompatible bytes")
+	check(loaded.ok and loaded.snapshot.schema == Snapshot.SCHEMA and FileAccess.get_sha256(old) == hashes[0]
+		and FileAccess.get_sha256(pointer) != hashes[1], "confirmed New Run repoints to the current schema and keeps incompatible bytes")
 
 func write_text(path: String, data: String) -> void:
 	var file := FileAccess.open(path, FileAccess.WRITE)

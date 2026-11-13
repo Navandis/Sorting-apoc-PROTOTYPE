@@ -13,6 +13,7 @@ var _presentation_quarter_turns: int = 0
 var _presentation_stack_group_id: String = ""
 var _presentation_stack_index: int = -1
 var _remaining_in_batch: bool = true
+var _released_as_base: bool = false
 
 var entry_id: String:
 	set(_value):
@@ -74,6 +75,11 @@ var remaining_in_batch: bool:
 		pass
 	get:
 		return _remaining_in_batch
+var released_as_base: bool:
+	set(_value):
+		pass
+	get:
+		return _released_as_base
 
 
 func _init(
@@ -100,6 +106,7 @@ func to_snapshot() -> Dictionary:
 		"presentation_stack_group_id": _presentation_stack_group_id,
 		"presentation_stack_index": _presentation_stack_index,
 		"remaining_in_batch": _remaining_in_batch,
+		"released_as_base": _released_as_base,
 	}
 
 
@@ -122,6 +129,7 @@ static func from_snapshot(snapshot: Dictionary) -> LootBatchEntry:
 		String(snapshot.get("presentation_stack_group_id", "")),
 		int(snapshot.get("presentation_stack_index", -1))
 	)
+	entry._released_as_base = snapshot.get("released_as_base", false)
 	return entry
 
 
@@ -147,8 +155,9 @@ func _commit_deck_layout(
 	_commit_frozen_transform(value)
 
 
-func _mark_released() -> void:
+func _mark_released(was_base: bool) -> void:
 	_remaining_in_batch = false
+	_released_as_base = was_base
 
 
 func _restore_presentation_state(
@@ -186,6 +195,11 @@ static func _has_valid_snapshot_fields(snapshot: Dictionary) -> bool:
 	if typeof(snapshot.get("has_frozen_transform")) != TYPE_BOOL:
 		return false
 	if typeof(snapshot.get("remaining_in_batch")) != TYPE_BOOL:
+		return false
+	var released_as_base_value: Variant = snapshot.get("released_as_base", false)
+	if typeof(released_as_base_value) != TYPE_BOOL:
+		return false
+	if released_as_base_value and (snapshot["remaining_in_batch"] or not snapshot.get("has_deck_layout", false)):
 		return false
 	var transform: Transform3D = snapshot["frozen_transform"] as Transform3D
 	if not _is_finite_transform(transform):

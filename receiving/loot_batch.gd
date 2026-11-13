@@ -314,7 +314,14 @@ func mark_entry_released(entry_id: String, item_instance_id: String) -> bool:
 		return false
 	if entry.item_instance_id != item_instance_id or not entry.remaining_in_batch:
 		return false
-	entry._mark_released()
+	var was_base := entry.has_deck_layout
+	if was_base:
+		for other: LootBatchEntry in _entries:
+			if other.remaining_in_batch and other.presentation_stack_group_id == entry.presentation_stack_group_id \
+					and other.presentation_stack_index < entry.presentation_stack_index:
+				was_base = false
+				break
+	entry._mark_released(was_base)
 	return true
 
 
@@ -545,7 +552,7 @@ static func _has_consistent_deck_snapshot(restored_entries: Array[LootBatchEntry
 		var indices: Dictionary = indices_by_group.get(group_id, {}) as Dictionary
 		if indices.has(entry.presentation_stack_index):
 			return false
-		indices[entry.presentation_stack_index] = true
+		indices[entry.presentation_stack_index] = entry
 		indices_by_group[group_id] = indices
 		var anchor: Dictionary = anchor_by_group.get(group_id, {}) as Dictionary
 		if anchor.is_empty():
@@ -564,9 +571,16 @@ static func _has_consistent_deck_snapshot(restored_entries: Array[LootBatchEntry
 		return false
 	for group_value: Variant in indices_by_group.values():
 		var indices: Dictionary = group_value as Dictionary
+		var reached_survivor := false
 		for expected_index: int in range(indices.size()):
 			if not indices.has(expected_index):
 				return false
+			var member: LootBatchEntry = indices[expected_index]
+			if member.released_as_base and reached_survivor:
+				return false
+			if expected_index == 0 and not member.remaining_in_batch and not member.released_as_base:
+				return false
+			reached_survivor = reached_survivor or member.remaining_in_batch
 	return true
 
 

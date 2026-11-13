@@ -215,7 +215,9 @@ func _test_fixture_modes_preserve_exact_content() -> void:
 	for batch: LootBatch in batches:
 		_check(_content_signature(batch) == expected_content, "fixture mode changes presentation only")
 	_check(batches[0].presentation_fixtures.is_empty(), "bare mode creates no fixtures")
-	_check(not batches[1].presentation_fixtures.is_empty(), "representative crate mode activates demand-driven crates")
+	# The generated mix may fill the sockets with larger bases before it
+	# sees a crate-eligible item. The controlled small fixture below proves
+	# demand-driven crate activation with free sockets.
 	_check(not batches[2].presentation_fixtures.is_empty(), "representative pallet mode activates demand-driven pallets")
 	_check(not batches[3].presentation_fixtures.is_empty(), "representative mixed mode activates demand-driven fixtures")
 	for fixture in batches[1].presentation_fixtures:

@@ -1,6 +1,6 @@
 # Sorting Apocalypse — current development state
 
-**Document update: 11 November 2026. Intended game: developer-approved GDD v0.16 with the contribution decisions. Published build: Fuel Reserve and Emergency Freight with the accepted Dispatch repair.**
+**Document update 13 November 2026. The intended game follows the developer-approved GDD v0.16 and its contribution decisions. The published build is Fuel Reserve and Emergency Freight with the accepted Dispatch repair.**
 
 ## 1. At a glance: approval is not implementation
 
@@ -13,6 +13,7 @@
 | Incinerator and Deliberate Disposal | **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** [Technical result and developer acceptance](testing/2026-11-08-incinerator-deliberate-disposal-result.md) |
 | Continuous Kitchen | **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** Schema 8. [Developer acceptance and close-out](testing/2026-11-09-continuous-kitchen-service-result.md) |
 | Fuel Reserve and Emergency Freight | **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** Schema 9. [Fuel technical result and developer acceptance](testing/2026-11-11-fuel-reserve-emergency-freight-result.md) · [Fuel decisions](design_history/2026-11-11-fuel-reserve-and-emergency-freight-decisions.md) · [Implementation plan](superpowers/plans/2026-11-11-fuel-reserve-emergency-freight.md) |
+| Receiving mixed stacking | **IMPLEMENTED LOCALLY / READY FOR DEVELOPER REVIEW.** Schema 10 on the local review branch. [Technical result and retest](testing/2026-11-13-receiving-mixed-stacking-result.md). |
 | ADR cycle | Parked historical design, preserved for deliberate reuse or a possible survival mode. Not the current economy or immediate design priority. |
 | Implementation checkpoints | Foundation `a1d1db4494347e0dfb4dfb653ed71b2abaf76ce5`, expedition implementation `66a7f863e5cf6f2f2c9e8f7f34de99885fa76612` and technical verification `11f95354119058fe2ec90796d09e2c28c046a885`. [Foundation closure](testing/2026-11-07-continuous-run-collection-goal-closure.md). |
 | Publication | M4 acceptance is pinned at `c9f9417a97cf65ef416c58189ca1f741b6a90406`. The collection foundation, expedition loop, furniture collision repair, Incinerator and Continuous Kitchen are published on main. On 8 November 2026, `git ls-remote` verified `origin/main` at the repair acceptance commit `de6b9bd7102e555b46a45f6733d9e7669db5d3b5`. On 11 November 2026, GitHub main was verified at `a19636df5df5169cd4c2e41b80f0986c78f7a83b` for Fuel and the Dispatch repair. |
@@ -112,6 +113,8 @@ SEALED_EMPTY → ARRIVAL → SEALED_READY → REVEALING → OPEN → CLOSING →
 OPEN waits for every active item to be successfully removed. Last TAKE starts closing, approximately 3.40-second contact, reverberation/latch and the full cue. Retirement, FIFO promotion and resulting new admission follow complete outbound turnaround. IDLE during outbound is not a free lift. There is no call button, player close/confirmation or automatic unload timer.
 
 Exact outcome content belongs upstream. Receiving may arrange/present but may not add filler, omit awkward items, replace, reroll or bias a haul. Content and accepted placement commitment remain distinct. Repeated seeds do not reuse item identity. Private surfaces are TAKE-only: no PUT, zoning, labels, manual placement, ordinary storage registration, grid or fixture prompt. Front crates/rear pallets and legal stack TAKE/compression remain; no fixture starts empty and emptied fixtures remain through retirement.
+
+The local review branch uses the exact BARE production route. Receiving tries legal same-group appends first, then legal mixed top-appends, then empty placement within the applicable surface routing. The saved commitment records which removed items served as bases so Continue can restore the same compacted position. Local schema 10 requires a fresh run and retains prior save files.
 
 **Local collection foundation:** one active plus two deposited FIFO batches and oldest-first upstream admission through `AwaitingLiftAdmission`. Waiting commitments persist across play and continuation.
 

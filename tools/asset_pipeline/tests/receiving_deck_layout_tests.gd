@@ -16,6 +16,10 @@ var _pending_helpers: int = 0
 
 
 func _init() -> void:
+	call_deferred("_run")
+
+
+func _run() -> void:
 	_run_suite()
 	_check(_pending_helpers == 0, "%d test or fixture helpers did not complete" % _pending_helpers)
 	if _failures > 0:
@@ -36,6 +40,7 @@ func _run_suite() -> void:
 	_test_same_seed_reproduces_and_alternate_seed_changes_only_layout()
 	_test_front_to_rear_scan_starts_at_frontmost_legal_row()
 	_test_legal_append_stack_and_incompatible_fallback()
+	_test_mixed_receiving_policy()
 	_test_capacity_failure_is_explicit_and_byte_atomic()
 	_pending_helpers -= 1
 
@@ -286,7 +291,7 @@ func _test_legal_append_stack_and_incompatible_fallback() -> void:
 
 	var incompatible_entries: Array[LootBatchEntry] = [
 		LootBatchEntryScript.new("flat", "fallback_batch:flat", &"loot_000030"),
-		LootBatchEntryScript.new("mouse", "fallback_batch:mouse", &"loot_000001"),
+		LootBatchEntryScript.new("hat", "fallback_batch:hat", &"loot_000172"),
 	]
 	var fallback_batch: LootBatch = LootBatchScript.create_committed(
 		"fallback_batch", &"test", "fallback", 2, 2, 1, 7, incompatible_entries
@@ -296,6 +301,100 @@ func _test_legal_append_stack_and_incompatible_fallback() -> void:
 	_check(fallback_batch.entries[0].presentation_stack_group_id != fallback_batch.entries[1].presentation_stack_group_id, "incompatible/unsupported item is not stacked")
 	_check(fallback_batch.entries[0].presentation_stack_index == 0 and fallback_batch.entries[1].presentation_stack_index == 0, "new fallback bases remain base index zero")
 	_pending_helpers -= 1
+
+
+func _test_mixed_receiving_policy() -> void:
+	var mixed := _receiving_batch("mixed_chain", [&"loot_000028", &"loot_000001", &"loot_000030"])
+	var mixed_profile := _single_deck(0.5, 0.4, 1.5)
+	var before := _content_signature(mixed)
+	var diagnostics = DeckPlannerScript.new().prepare(mixed, PersistentItemCatalog, mixed_profile)
+	if _check(diagnostics.succeeded, "Med Kit, Book and Computer Mouse fit as a mixed three-level Receiving stack"):
+		var entries := mixed.entries
+		_check(entries[0].presentation_stack_index == 0 and entries[2].presentation_stack_index == 1
+			and entries[1].presentation_stack_index == 2, "supporters are placed before the terminal mixed cap")
+		_check(_content_signature(mixed) == before, "mixed planning preserves immutable manifest order and identity")
+		var restored := LootBatchScript.from_snapshot(mixed.to_snapshot())
+		_check(restored != null and restored.to_snapshot() == mixed.to_snapshot(), "prepared mixed commitment round trips exactly")
+
+	var grouped_caps := _receiving_batch("grouped_caps", [&"loot_000063", &"loot_000065", &"loot_000041"])
+	var cap_result = DeckPlannerScript.new().prepare(grouped_caps, PersistentItemCatalog, ProofProfile)
+	if _check(cap_result.succeeded, "grouped and ungrouped caps both fit the deck"):
+		var entries := grouped_caps.entries
+		_check(entries[0].presentation_stack_group_id == entries[1].presentation_stack_group_id
+			and entries[2].presentation_stack_index == 0, "same-group terminal continuation precedes the ungrouped cap")
+
+	var competing_support := _receiving_batch("competing_support", [&"loot_000063", &"loot_000007", &"loot_000065"])
+	var competing_result = DeckPlannerScript.new().prepare(competing_support, PersistentItemCatalog, ProofProfile)
+	if _check(competing_result.succeeded, "the two Pasta Jars and Cereal Box fit the deck"):
+		var entries := competing_support.entries
+		_check(entries[0].presentation_stack_group_id == entries[2].presentation_stack_group_id
+			and entries[2].presentation_stack_index == 1,
+			"the narrower Cereal Box must not consume support for the same-group Small Pasta Jar")
+
+	var preferred := _receiving_batch("same_group_priority", [&"loot_000028", &"loot_000064", &"loot_000043"])
+	var preferred_profile := _single_deck(0.9, 0.6, 0.38)
+	var result = DeckPlannerScript.new().prepare(preferred, PersistentItemCatalog, preferred_profile)
+	if _check(result.succeeded, "Med Kit and Pasta Jar expose two valid supports for Canned Corn"):
+		var entries := preferred.entries
+		_check(entries[0].presentation_stack_group_id != entries[1].presentation_stack_group_id
+			and entries[1].presentation_stack_group_id == entries[2].presentation_stack_group_id,
+			"a later same-group support beats the earlier legal mixed support")
+
+	for witness: Array in [
+		["non-supporting cap", [&"loot_000028", &"loot_000001", &"loot_000001"], 0.5, 0.4, 1.5],
+		["immediate top footprint", [&"loot_000028", &"loot_000030", &"loot_000156"], 0.5, 0.4, 1.5],
+		["non-stackable upper item", [&"loot_000159", &"loot_000108"], 1.2, 0.6, 1.5],
+		["95 percent height", [&"loot_000028", &"loot_000001"], 0.5, 0.4, 0.195],
+	]:
+		var invalid := _receiving_batch(witness[0], witness[1])
+		var snapshot := invalid.to_snapshot()
+		var profile := _single_deck(witness[2], witness[3], witness[4])
+		var rejection = DeckPlannerScript.new().prepare(invalid, PersistentItemCatalog, profile)
+		_check(not rejection.succeeded and rejection.failure_reason == &"insufficient_layout_capacity",
+			"Receiving rejects a mixed append violating %s" % witness[0])
+		_check(invalid.to_snapshot() == snapshot, "rejected mixed commitment stays byte-equivalent: %s" % witness[0])
+
+	var shelf := StorageSurface.new()
+	root.add_child(shelf)
+	shelf.configure(&"policy_shelf", 0.5, 0.4, 0.1)
+	shelf.initialize_zones_if_needed(StorageCategories.GENERAL)
+	var base_item := mixed.create_item_instance("entry_0", PersistentItemCatalog)
+	var top_item := mixed.create_item_instance("entry_2", PersistentItemCatalog)
+	var base_pose: Dictionary = DeckPoseScript.measure_item(base_item, 0)
+	var top_pose: Dictionary = DeckPoseScript.measure_item(top_item, 0)
+	var base := StorageStack.create_entry(base_item, base_pose.footprint, false, base_pose.aligned_bounds)
+	var top := StorageStack.create_entry(top_item, top_pose.footprint, false, top_pose.aligned_bounds)
+	_check(shelf.commit_stack_entry(base, shelf.find_zone_stack_or_empty_fit(base_item.get_storage_category(), base)),
+		"ordinary shelf holds the same Med Kit base")
+	_check(not shelf.find_zone_stack_or_empty_fit(top_item.get_storage_category(), top).get("valid", false),
+		"ordinary shelf automatic placement still refuses the same mixed append")
+	_check(shelf.find_manual_stack_fit(base.item_key, top).get("valid", false),
+		"ordinary shelf manual placement still permits the same mixed append")
+	shelf.free()
+
+
+func _receiving_batch(label: String, ids: Array) -> LootBatch:
+	var entries: Array[LootBatchEntry] = []
+	var bulk := 0
+	for index: int in ids.size():
+		var definition := PersistentItemCatalog.get_definition_by_id(ids[index])
+		bulk += definition.bulk
+		entries.append(LootBatchEntryScript.new("entry_%d" % index, "%s:item_%d" % [label, index], ids[index]))
+	return LootBatchScript.create_committed(label, &"test", label, bulk, bulk, 1, 9001, entries)
+
+
+func _single_deck(width: float, depth: float, clearance: float) -> ReceivingDeckProfile:
+	var profile := DeckProfileScript.new() as ReceivingDeckProfile
+	var surface := DeckSurfaceSpecScript.new() as ReceivingDeckSurfaceSpec
+	surface.surface_id = &"MainDeck"
+	surface.usable_width_m = width
+	surface.usable_depth_m = depth
+	surface.stack_clearance_m = clearance
+	profile.profile_id = &"mixed_policy_test"
+	profile.revision = 1
+	profile.max_layout_attempts = 1
+	profile.surfaces = [surface]
+	return profile
 
 
 func _test_capacity_failure_is_explicit_and_byte_atomic() -> void:

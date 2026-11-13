@@ -38,6 +38,7 @@ func _run_suite() -> void:
 	await _test_real_camera_ray_uses_receiving_range()
 	await _test_presenter_exact_identity_visibility_release_and_close_boundary()
 	await _test_reconstruction_after_released_base_compacts_without_replanning()
+	_test_mixed_middle_then_base_removal_restores_exact_origin()
 	await _test_fixture_reconstruction_reservation_and_empty_persistence()
 	await _test_actual_main_deck_and_fixture_stacks_reject_manual_put()
 	_test_fixture_stack_base_take_compacts()
@@ -321,6 +322,52 @@ func _test_runtime_debug_delivery_is_explicit() -> void:
 	_pending_helpers -= 1
 
 
+func _test_mixed_middle_then_base_removal_restores_exact_origin() -> void:
+	var ids: Array[StringName] = [&"loot_000028", &"loot_000128", &"loot_000030"]
+	var entries: Array[LootBatchEntry] = []
+	var placements := {}
+	for index: int in ids.size():
+		var entry := LootBatchEntryScript.new("mixed_%d" % index, "mixed:item_%d" % index, ids[index])
+		entries.append(entry)
+		placements[entry.entry_id] = {
+			"surface_id": &"MainDeck", "cell_origin": Vector2i(3, 13),
+			"quarter_turns": 0, "stack_group_id": "mixed_group", "stack_index": index,
+			"frozen_transform": Transform3D.IDENTITY,
+		}
+	var batch := LootBatchScript.create_committed("mixed_restore", &"test", "mixed", 8, 8, 0, 9001, entries)
+	_check(batch.commit_deck_layout(placements, ProofProfile.profile_id, ProofProfile.revision),
+		"commit a physically legal 5×4, 3×3, 2×2 chain")
+	var manager := ReceivingManagerScript.new()
+	root.add_child(manager)
+	var presenter = DeckPresenterScript.new()
+	root.add_child(presenter)
+	presenter.configure(manager, PersistentItemCatalog, ProofProfile)
+	var carry := CarriedItemsScript.new()
+	root.add_child(carry)
+	if _check(manager.deposit_batch(batch) and presenter.reveal_active_batch(), "mixed stack materializes with the ordinary support validator"):
+		var by_id := {}
+		for world: WorldItem in presenter.get_materialized_world_items():
+			by_id[world.get_item_instance().instance_id] = world
+		_check(by_id["mixed:item_1"].pickup_into(carry), "middle TAKE recompresses the mixed stack")
+		_check(by_id["mixed:item_0"].pickup_into(carry), "base TAKE promotes the exact surviving book")
+		var before: Transform3D = by_id["mixed:item_2"].get_parent().global_transform
+		var restored := LootBatchScript.from_snapshot(batch.to_snapshot())
+		var state := manager.capture_state()
+		if _check(restored != null, "partly unloaded mixed stack decodes"):
+			manager.restore_state(state, {batch.batch_id: restored})
+			if _check(presenter.present_active_batch() and presenter.reveal_active_batch(), "partly unloaded mixed stack restores"):
+				var remaining: Array[WorldItem] = presenter.get_materialized_world_items()
+				_check(remaining.size() == 1 and remaining[0].get_item_instance().instance_id == "mixed:item_2",
+					"restore keeps only the original survivor")
+				if remaining.size() == 1:
+					_check(remaining[0].get_parent().global_transform == before,
+						"middle-before-base restore preserves the actual compacted position")
+					_check(remaining[0].pickup_into(carry) and restored.is_drained(), "restored survivor can finish the batch")
+	presenter.free()
+	manager.free()
+	carry.free()
+
+
 func _test_fixture_reconstruction_reservation_and_empty_persistence() -> void:
 	_pending_helpers += 1
 	var batch: LootBatch = LootSourceScript.new().generate_committed_batch(
@@ -383,10 +430,20 @@ func _test_actual_main_deck_and_fixture_stacks_reject_manual_put() -> void:
 	isolated.free()
 	var runtime := _spawn_runtime_in_wing()
 	await process_frame
-	_check(
-		runtime.call("run_debug_delivery", 1842, 9001, 24, DeckPlannerScript.FixtureMode.MIXED),
-		"private PUT regression mixed delivery prepares"
+	# A small can routes to the crate and the broad Med Kit to MainDeck.
+	# Both are valid manual stack targets if exposed as shelves.
+	var entries: Array[LootBatchEntry] = [
+		LootBatchEntryScript.new("kit", "private_put:kit", &"loot_000028"),
+		LootBatchEntryScript.new("can", "private_put:can", &"loot_000009"),
+	]
+	var batch := LootBatchScript.create_committed("private_put", &"test", "private_put", 5, 5, 0, 9001, entries)
+	var prepared = DeckPlannerScript.new().prepare(
+		batch, PersistentItemCatalog, ProofProfile, DeckPlannerScript.FixtureMode.CRATES_ALLOWED
 	)
+	_check(prepared.succeeded and runtime.return_admission.submit_return("private_put", batch)
+		== AwaitingLiftAdmission.ReturnResult.ADMITTED, "private PUT regression uses both original surface routes")
+	_check(batch.entries[0].presentation_surface_id == &"MainDeck" and
+		String(batch.entries[1].presentation_surface_id).begins_with("Crate"), "fixture has one stackable object per private surface kind")
 	_open_debug_cycle(runtime)
 	await physics_frame
 	await physics_frame
@@ -463,9 +520,8 @@ func _compatible_private_stack_target(
 		var looked_at := controller.call("_get_looked_at_stored_world_item") as WorldItem
 		if looked_at == null or looked_at.get_storage_surface() != surface:
 			continue
-		var source_item := looked_at.get_item_instance()
 		var incoming := ItemInstanceScript.new(
-			source_item.definition,
+			PersistentItemCatalog.get_definition_by_id(&"loot_000043"),
 			"private_put_regression:%s" % surface_kind.to_lower()
 		)
 		var unit_state := surface.get_semantic_orientation_quarter_turns()

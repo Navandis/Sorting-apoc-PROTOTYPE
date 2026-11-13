@@ -431,6 +431,16 @@ func _check(condition: bool, message: String) -> bool:
 # Bounded legal corner/middle controls use planner-authored singleton poses,
 # normal batch commit, production materialization and the same real TAKE rays.
 func _prepare_case(runtime: Node, case: Dictionary) -> bool:
+	if int(case["fixture_mode"]) == DeckPlannerScript.FixtureMode.MIXED:
+		# Pin all three surface routes independently of generated cargo order.
+		var entries: Array[LootBatchEntry] = [
+			LootBatchEntry.new("mouse", "mixed_reach:mouse", &"loot_000001"),
+			LootBatchEntry.new("can", "mixed_reach:can", &"loot_000009"),
+			LootBatchEntry.new("firewood", "mixed_reach:firewood", &"loot_000013"),
+		]
+		var batch := LootBatch.create_committed("mixed_reach", &"test", "fixture reach", 6, 6, 0, PRESENTATION_SEED, entries)
+		var planned = DeckPlannerScript.new().prepare(batch, runtime.item_catalog, runtime.deck_profile, DeckPlannerScript.FixtureMode.MIXED)
+		return planned.succeeded and runtime.get_node("ReceivingManager").deposit_batch(batch)
 	if not bool(case.get("legal_extents", false)):
 		return bool(runtime.call("run_debug_delivery", int(case["content_seed"]), PRESENTATION_SEED, TARGET_BULK, int(case["fixture_mode"])))
 	var catalog: ItemCatalog = runtime.get("item_catalog")

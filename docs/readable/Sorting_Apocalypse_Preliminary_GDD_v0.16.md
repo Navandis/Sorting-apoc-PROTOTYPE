@@ -806,7 +806,7 @@ Basis: [PIV §§3,5,7]; retained [G15 §10] and [MVP §§5,12,21]; new formula/e
 
 Receiving remains a stationary shallow bay behind a permanent player barrier and moving shutter. The player stays on the apron and takes revealed objects; they do not board the lift or obstruct moving machinery. Arrival, opening, closing and departure cues imply unseen freight travel while the deck and enclosing walls remain fixed.
 
-Receiving is TAKE-only. Its private presentation surfaces expose no PUT, zoning, player labels, manual placement, ordinary storage registration or visible gameplay grid. Cargo there never counts toward the stored collection objective. The decorative emergency-stop control remains noninteractive unless explicitly redesigned.
+Receiving is TAKE-only. Its private presentation surfaces expose no PUT, zoning, player labels, manual placement, ordinary storage registration or visible gameplay grid. Cargo there never counts toward the stored collection objective. The decorative emergency-stop control remains noninteractive unless explicitly redesigned. Automatic cargo placement prefers a legal same-group append, then a physically legal mixed top-append, then an empty position on the applicable Receiving surface.
 
 <a id="s_11_2_Uncapped_pending_returns_finite"></a>
 

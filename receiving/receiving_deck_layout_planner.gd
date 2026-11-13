@@ -9,10 +9,6 @@ const FreightFixtureInstanceScript = preload("res://receiving/receiving_freight_
 const FreightFixturePolicyScript = preload("res://receiving/receiving_freight_fixture_policy.gd")
 const StorageStackScript = preload("res://storage_stack.gd")
 
-const MAX_STACK_USED_FRACTION: float = 0.95
-# Preserve the accepted conservative stack capacity while changing only contact.
-# Fit decisions use the former 12 mm datum; committed/rendered hosts are seated.
-const STACK_FIT_DATUM_M: float = 0.012
 const FAILURE_INVALID_INPUT: StringName = &"invalid_layout_input"
 const FAILURE_INSUFFICIENT_CAPACITY: StringName = &"insufficient_layout_capacity"
 const FAILURE_COMMIT_REJECTED: StringName = &"layout_commit_rejected"
@@ -120,6 +116,8 @@ func _build_attempt(
 	_shuffle_entries(entries, rng)
 	if fixture_mode != FixtureMode.BARE:
 		_prioritize_large_positions(entries, batch, catalog, rng.seed)
+	_prioritize_supports(entries, catalog)
+	attempt_state["pending_stack_groups"] = _count_pending_stack_groups(entries, catalog)
 	var scan_left_to_right := (rng.randi() & 1) == 0
 	var placements: Dictionary = {}
 	for entry: LootBatchEntry in entries:
@@ -207,6 +205,8 @@ func _create_attempt_state(
 		"used_socket_ids": {},
 		"crate_count": 0,
 		"pallet_count": 0,
+		"pending_stack_groups": {},
+		"pending_stack_poses": {},
 	}
 
 
@@ -248,14 +248,18 @@ func _place_entry(
 	scan_left_to_right: bool,
 	rng: RandomNumberGenerator
 ) -> Dictionary:
+	var pending_groups: Dictionary = attempt_state["pending_stack_groups"]
+	var pending: Dictionary = pending_groups.get(item.get_auto_stack_group(), {})
+	if pending.has(item.definition):
+		if pending[item.definition] == 1:
+			pending.erase(item.definition)
+		else:
+			pending[item.definition] -= 1
 	var mode: FixtureMode = int(attempt_state["fixture_mode"]) as FixtureMode
 	if mode == FixtureMode.BARE:
-		var bare_placement := _try_append_stack(orientation_records, attempt_state)
-		if bare_placement.is_empty():
-			bare_placement = _try_empty_placement(
-				orientation_records, attempt_state, scan_left_to_right
-			)
-		return bare_placement
+		return _try_place_on_surfaces(
+			orientation_records, attempt_state["surface_order"], attempt_state, scan_left_to_right
+		)
 
 	var main_deck_ids: Array[StringName] = [attempt_state["main_deck_id"] as StringName]
 	var band := FreightFixturePolicyScript.size_band(item.definition)
@@ -356,35 +360,70 @@ func _try_append_stack_on_surfaces(
 	surface_ids: Array,
 	attempt_state: Dictionary
 ) -> Dictionary:
+	var candidate: StorageStack.Entry = orientation_records[0]["entry"]
+	if not candidate.can_be_stacked:
+		return {}
+	if not candidate.auto_stack_group.is_empty():
+		var preferred := _find_stack_append(orientation_records, surface_ids, attempt_state, true)
+		if not preferred.is_empty():
+			return preferred
+	return _find_stack_append(orientation_records, surface_ids, attempt_state, false)
+
+
+func _find_stack_append(
+	orientation_records: Array[Dictionary],
+	surface_ids: Array,
+	attempt_state: Dictionary,
+	same_group_only: bool
+) -> Dictionary:
 	var surfaces: Dictionary = attempt_state["surfaces"] as Dictionary
+	var group: StringName = orientation_records[0]["entry"].auto_stack_group
 	for surface_id: StringName in surface_ids:
 		if not surfaces.has(surface_id):
 			continue
 		var surface_state: Dictionary = surfaces[surface_id] as Dictionary
 		var stacks: Dictionary = surface_state["stacks"] as Dictionary
+		var clearance_m := float(surface_state["stack_clearance_m"])
 		for stack_id: String in surface_state["stack_order"] as Array[String]:
 			var stack: StorageStack = stacks[stack_id] as StorageStack
-			if stack == null or not stack.is_auto_coherent():
+			if not stack.entries.back().can_support_stack:
+				continue
+			if same_group_only and (stack.entries[0].auto_stack_group != group or not stack.is_auto_coherent()):
 				continue
 			for orientation: Dictionary in orientation_records:
 				var candidate: StorageStack.Entry = orientation["entry"] as StorageStack.Entry
-				if candidate.auto_stack_group == &"" or candidate.auto_stack_group != stack.entries[0].auto_stack_group:
-					continue
-				var base_position := _local_placement_position(surface_state, stack.surface_origin, stack.base_footprint)
-				var physical_fit: Dictionary = stack.find_manual_append(
-					candidate,
-					float(surface_state["stack_clearance_m"]) * MAX_STACK_USED_FRACTION,
-					STACK_FIT_DATUM_M
-				)
+				var physical_fit := DeckPoseScript.find_stack_append(stack, candidate, clearance_m)
 				if not bool(physical_fit.get("valid", false)):
 					continue
+				if not same_group_only and _has_pending_same_group_append(stack, clearance_m, attempt_state):
+					break
+				var base_position := _local_placement_position(surface_state, stack.surface_origin, stack.base_footprint)
 				var stack_index := stack.entries.size()
 				stack.entries.append(candidate)
 				return _placement_record(
 					surface_id, stack.surface_origin, int(orientation["quarter_turns"]),
-					stack_id, stack_index, float(physical_fit["host_y_m"]) + base_position.y - STACK_FIT_DATUM_M, surface_state
+					stack_id, stack_index,
+					float(physical_fit["host_y_m"]) + base_position.y - DeckPoseScript.STACK_FIT_DATUM_M,
+					surface_state
 				)
 	return {}
+
+
+func _has_pending_same_group_append(stack: StorageStack, clearance_m: float, attempt_state: Dictionary) -> bool:
+	var pending_groups: Dictionary = attempt_state["pending_stack_groups"]
+	var pending: Dictionary = pending_groups.get(stack.entries[0].auto_stack_group, {})
+	if pending.is_empty() or not stack.is_auto_coherent():
+		return false
+	# Reserve this top only for an actual remaining item that can use it.
+	var pose_cache: Dictionary = attempt_state["pending_stack_poses"]
+	for definition: ItemDefinition in pending:
+		if not pose_cache.has(definition):
+			var item := ItemInstance.new(definition, String(definition.item_id))
+			pose_cache[definition] = [_orientation_record(item, 0), _orientation_record(item, 1)]
+		for orientation: Dictionary in pose_cache[definition]:
+			if not orientation.is_empty() and DeckPoseScript.find_stack_append(stack, orientation["entry"], clearance_m)["valid"]:
+				return true
+	return false
 
 
 func _try_empty_on_surfaces(
@@ -406,7 +445,7 @@ func _try_empty_on_surfaces(
 			var group_number := int(surface_state["next_stack_number"])
 			var stack_id := "%s:stack_%04d" % [String(surface_id), group_number]
 			var host_y_m := _local_placement_position(surface_state, origin, candidate.footprint).y
-			if STACK_FIT_DATUM_M + candidate.aligned_bounds.end.y > float(surface_state["stack_clearance_m"]):
+			if not DeckPoseScript.fits_as_base(candidate, surface_state["stack_clearance_m"]):
 				continue
 			_reserve(surface_state, stack_id, origin, candidate.footprint)
 			var stack: StorageStack = StorageStackScript.new()
@@ -531,25 +570,6 @@ func _unreserve(surface_state: Dictionary, owner_key: String) -> void:
 			cells[index] = ""
 
 
-func _try_append_stack(orientation_records: Array[Dictionary], attempt_state: Dictionary) -> Dictionary:
-	return _try_append_stack_on_surfaces(
-		orientation_records, attempt_state["surface_order"] as Array, attempt_state
-	)
-
-
-func _try_empty_placement(
-	orientation_records: Array[Dictionary],
-	attempt_state: Dictionary,
-	scan_left_to_right: bool
-) -> Dictionary:
-	return _try_empty_on_surfaces(
-		orientation_records,
-		attempt_state["surface_order"] as Array,
-		attempt_state,
-		scan_left_to_right
-	)
-
-
 func _find_front_to_rear_fit(surface_state: Dictionary, footprint: Vector2i, left_to_right: bool) -> Vector2i:
 	var grid: Vector2i = surface_state["grid_size"] as Vector2i
 	if footprint.x > grid.x or footprint.y > grid.y:
@@ -667,6 +687,47 @@ func _shuffle_variants(values: Array, rng: RandomNumberGenerator) -> void:
 		var temporary: Variant = values[index]
 		values[index] = values[other]
 		values[other] = temporary
+
+
+func _prioritize_supports(entries: Array[LootBatchEntry], catalog: ItemCatalog) -> void:
+	# Give broad supports and same-group continuations first use of the deck.
+	# Grouped caps get a chance to finish their group before unrelated caps.
+	var supporters: Array[Dictionary] = []
+	var grouped_caps: Array[LootBatchEntry] = []
+	var other_caps: Array[LootBatchEntry] = []
+	for index: int in entries.size():
+		var entry := entries[index]
+		var definition := catalog.get_definition_by_id(entry.definition_id)
+		if not definition.can_support_stack:
+			if definition.auto_stack_group.is_empty():
+				other_caps.append(entry)
+			else:
+				grouped_caps.append(entry)
+			continue
+		supporters.append({
+			"entry": entry, "index": index,
+			"area": FreightFixturePolicyScript.footprint_area(definition),
+		})
+	supporters.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
+		if a.area != b.area:
+			return a.area > b.area
+		return a.index < b.index
+	)
+	entries.clear()
+	for supporter: Dictionary in supporters:
+		entries.append(supporter.entry)
+	entries.append_array(grouped_caps)
+	entries.append_array(other_caps)
+
+
+func _count_pending_stack_groups(entries: Array[LootBatchEntry], catalog: ItemCatalog) -> Dictionary:
+	var pending_groups: Dictionary = {}
+	for entry: LootBatchEntry in entries:
+		var definition := catalog.get_definition_by_id(entry.definition_id)
+		if definition.can_be_stacked and not definition.auto_stack_group.is_empty():
+			var pending: Dictionary = pending_groups.get_or_add(definition.auto_stack_group, {})
+			pending[definition] = int(pending.get(definition, 0)) + 1
+	return pending_groups
 
 
 func _prioritize_large_positions(

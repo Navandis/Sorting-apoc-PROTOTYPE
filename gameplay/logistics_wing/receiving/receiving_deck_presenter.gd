@@ -196,7 +196,12 @@ func _materialize_group(batch: LootBatch, entries: Array) -> bool:
 
 	var current_origin := first_entry.presentation_cell_origin
 	var previous_footprint: Vector2i = (item_records[0]["measured"] as Dictionary)["footprint"] as Vector2i
+	# Only former bases moved the reservation. A middle item removed before
+	# the base never took part in the integer cell-centering steps.
 	for index: int in range(1, first_remaining_index + 1):
+		var former: LootBatchEntry = item_records[index]["entry"]
+		if index < first_remaining_index and not former.released_as_base:
+			continue
 		var next_footprint: Vector2i = (item_records[index]["measured"] as Dictionary)["footprint"] as Vector2i
 		current_origin = StorageStackScript.centered_shrink_origin(current_origin, previous_footprint, next_footprint)
 		previous_footprint = next_footprint

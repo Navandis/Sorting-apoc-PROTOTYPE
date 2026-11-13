@@ -7,6 +7,9 @@ const StorageVisualPoseScript = preload("res://storage_visual_pose.gd")
 # Keep the authored MainDeck frame unchanged; seat its cargo on the plate.
 const MAIN_DECK_PLATE_INSET_M: float = 0.010392
 const CONTACT_EPSILON_M: float = 0.0005
+# Preserve the conservative fit datum separately from the seated visual pose.
+const STACK_FIT_DATUM_M: float = 0.012
+const MAX_STACK_USED_FRACTION: float = 0.95
 
 
 static func surface_host_y_m(surface_id: StringName) -> float:
@@ -42,6 +45,14 @@ static func measure_item(item: ItemInstance, quarter_turns: int) -> Dictionary:
 	result["outer_yaw_radians"] = PI if normalized >= 2 else 0.0
 	result["footprint"] = footprint_for(item, normalized)
 	return result
+
+
+static func fits_as_base(entry: StorageStack.Entry, clearance_m: float) -> bool:
+	return STACK_FIT_DATUM_M + entry.aligned_bounds.end.y <= clearance_m
+
+
+static func find_stack_append(stack: StorageStack, entry: StorageStack.Entry, clearance_m: float) -> Dictionary:
+	return stack.find_manual_append(entry, clearance_m * MAX_STACK_USED_FRACTION, STACK_FIT_DATUM_M)
 
 
 static func build_visual(
