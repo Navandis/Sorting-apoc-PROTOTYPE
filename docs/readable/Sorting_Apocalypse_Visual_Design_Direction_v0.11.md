@@ -879,7 +879,7 @@ The deposited QUEUE 00–02 readout covers admitted loads. Dispatch shows upstre
 
 The four-cue theatre preserves the stationary bay illusion. OPEN waits for actual last TAKE; shutter contact around 3.40 s holds through reverberation/latch and the full closing cue. IDLE is displayed during departure while the lift remains internally busy; FIFO promotion/new admission follows full outbound turnaround, without opposing travel overlap. [37]
 
-Verified CRT footers, in cycle order: SEALED_EMPTY — AWAITING EXPEDITION LOOT; ARRIVAL and SEALED_READY — DELIVERING EXPEDITION LOOT; REVEALING — LIFT SHUTTER OPENING; OPEN — LOOT READY FOR PICK-UP; CLOSING — LIFT SHUTTER CLOSING. Awaiting Lift team feedback belongs to future Dispatch/Expedition. [37]
+The CRT retains the existing freight-cycle labels and lift statuses. Dispatch separately reports Away and Awaiting Lift, cargo counts, injuries, recruits and completed handovers. [37]
 
 The accepted initial 10 October wear composition had 18 layers (17 scalar plus one conventional). Later human authoring at 9ede796 removed alternatives and refined wear/light instances; current saved scene has eleven scalar instances plus one conventional OilStain, including retained visibility overrides. Preserve actual saved identities and placement; old counts are not quotas or instructions to resurrect removed art. Seven original Codex Road Dust placements and ReceivingFinishPass remain retired. Ordinary appropriate refinements do not automatically reopen EAF4, C1 or Stage C. [37]
 
@@ -891,9 +891,9 @@ The accepted initial 10 October wear composition had 18 layers (17 scalar plus o
 
 2. C1, intentional lighting, Stage C and M1–M4 stay human-promoted/published/closed in their recorded scopes. Ordinary scoped wear, furnishing or light tuning does not automatically reopen a milestone. This pass changes documentation only, not scenes or settings. [38]
 
-3. M4 already supplies a real daily clock, timed Medical/Kitchen/Dispatch and ordinary continuation. Its daily behavior remains implemented evidence, not the collection target. Actual asynchronous expeditions, the new victory/active-time loop, continuous Medical/request consequences and full durability remain future scopes. [38]
+3. M4 daily services remain historical evidence. The local collection candidate includes asynchronous expeditions, a live collection goal, injury, recruitment and a read-only natural-recovery view. Treatment and full durability remain future work. [38]
 
-4. Next implementation must be separately scoped against GDD v0.16. Do not start M5, revive ADR, add storage progression, change corridors, resolve open handover/treatment rules or run unchanged gameplay suites to complete these documentation updates. [38]
+4. The Expedition candidate uses the existing Dispatch and Medical frontages. The retained route and installation remain the visual baseline for developer playtest. [38]
 
 Technical assertions/captures, supplied-source review, human gameplay, visual promotion and publication checks remain distinct. The unexplained pixel-identical .30/.40 probe trial did not diagnose a technical cause; later human review nevertheless accepted the actual metallic appearance. That uncertainty is not an open visual blocker. Accepted probe/held-view debt, excluded brace-junction artifacts, unfinished Backlog/Dispatch and sill material retain their recorded scope. [37]
 

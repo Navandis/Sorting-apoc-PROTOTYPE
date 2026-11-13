@@ -4,7 +4,7 @@
 
 The current intended game is collection, hoarding and spatial organization. The [Expedition-to-Storage Loop](superpowers/plans/2026-11-07-expedition-to-storage-loop.md) is **HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE**. See its [technical result and developer acceptance](testing/2026-11-08-expedition-to-storage-loop-result.md) and the [accepted foundation checkpoint](testing/2026-11-07-continuous-run-collection-goal-closure.md).
 
-The [13 November Expedition decisions](design_history/2026-11-13-expedition-outcomes-and-provisioning-decisions.md) supersede the fixture acquisition and healthy-only outcomes for the next local candidate. The [implementation plan](superpowers/plans/2026-11-13-expedition-outcomes-and-provisioning.md) is pending at this documentation checkpoint.
+The [13 November Expedition decisions](design_history/2026-11-13-expedition-outcomes-and-provisioning-decisions.md) supersede the fixture acquisition and healthy-only outcomes. The local schema-11 candidate is technically ready for developer playtest. [Technical result](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md)
 
 ## Read first
 
@@ -71,6 +71,8 @@ Continuous Kitchen is **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE
 Fuel Reserve and Emergency Freight is **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE**. It introduced schema 9 through the existing save service. Refuel at the cabinet right of the Receiving shutter with F and a distinct E. [Fuel technical result and developer acceptance](testing/2026-11-11-fuel-reserve-emergency-freight-result.md)
 
 Receiving mixed stacking is **HUMAN-APPROVED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE** with the approved Fedora revision. Published main uses schema 10. Confirmed New Run retains incompatible saves without migration. The 157-Bulk meat-and-mice area overrun and the long-object planner failure remain developer-deferred. [Receiving and Fedora result](testing/2026-11-13-receiving-mixed-stacking-result.md)
+
+The local Expedition candidate uses schema 11 and the same collection slot. Confirm New Run to start its playtest. Its provisions, recovery and freight chronology are exercised in the [Expedition technical result](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md).
 
 The zero-Ready Dispatch repair is **HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE**. [Dispatch repair result](testing/2026-11-11-dispatch-no-ready-repair-result.md)
 

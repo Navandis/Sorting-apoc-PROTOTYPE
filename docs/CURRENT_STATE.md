@@ -2,7 +2,7 @@
 
 **Document update 13 November 2026. The intended game follows the developer-approved GDD v0.16 and its contribution decisions. Published main includes Receiving mixed stacking and the approved Fedora revision.**
 
-The [13 November Expedition decisions](design_history/2026-11-13-expedition-outcomes-and-provisioning-decisions.md) specify full-catalogue acquisition, five provision effects, injury, recruitment and Medical-owned natural recovery. The [local implementation](superpowers/plans/2026-11-13-expedition-outcomes-and-provisioning.md) is pending at this documentation checkpoint. Published main remains the schema-10 baseline.
+The local Expedition candidate implements full-catalogue acquisition, five provision effects, injury, recruitment and Medical-owned natural recovery. It uses schema 11 and awaits developer playtest. Published main remains the schema-10 baseline. [Decision record](design_history/2026-11-13-expedition-outcomes-and-provisioning-decisions.md) · [Technical result](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md)
 
 ## 1. At a glance: approval is not implementation
 
@@ -12,6 +12,7 @@ The [13 November Expedition decisions](design_history/2026-11-13-expedition-outc
 | Collection foundation | **HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** [Result and developer acceptance](testing/2026-11-07-continuous-run-collection-goal-result.md). |
 | M1 / M2 / M3 / M4 | **HUMAN-PROMOTED / PUBLISHED / CLOSED**, each in its accepted bounded scope. No acceptance, publication or re-review backlog is reopened. |
 | Expedition-to-Storage Loop | **HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** [Technical result and developer acceptance](testing/2026-11-08-expedition-to-storage-loop-result.md). M5’s former combined daily scenario is historical. |
+| Expedition outcomes and provisioning | **TECHNICALLY READY FOR DEVELOPER PLAYTEST.** Local schema 11. [Technical result](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md) |
 | Incinerator and Deliberate Disposal | **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** [Technical result and developer acceptance](testing/2026-11-08-incinerator-deliberate-disposal-result.md) |
 | Continuous Kitchen | **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** Schema 8. [Developer acceptance and close-out](testing/2026-11-09-continuous-kitchen-service-result.md) |
 | Fuel Reserve and Emergency Freight | **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** Schema 9. [Fuel technical result and developer acceptance](testing/2026-11-11-fuel-reserve-emergency-freight-result.md) · [Fuel decisions](design_history/2026-11-11-fuel-reserve-and-emergency-freight-decisions.md) · [Implementation plan](superpowers/plans/2026-11-11-fuel-reserve-emergency-freight.md) |
@@ -64,15 +65,17 @@ Read the GDD for the actual detail and source distinctions. This table is routin
 
 ## 4. Playable expedition loop
 
-Normal F5 entry is `res://gameplay/run/run_shell.tscn`. New Run starts with the authored loose stock and eight Ready scavengers. Aim at the Dispatch counter and press F to prepare a crew. Player-dispatched expeditions supply Receiving. The HUD still tracks six authored primary Utility per category and records the first simultaneous completion.
+Normal F5 entry is `res://gameplay/run/run_shell.tscn`. New Run starts with the authored loose stock and eight Ready scavengers. Aim at Dispatch and press F to prepare a crew with 23 ordinary Bulk per member. Food, Hydration, Protection, Weapons and Morale change that crew's outcome. The HUD tracks six authored primary Utility per category and records the first simultaneous completion. The run continues afterward.
+
+Open the read-only patient view with F at the Medical frontage. Light and Severe patients progress in parallel for 120 and 300 active seconds from handover.
 
 In the local build, aim at the Incinerator at the end of the utility spur and press F to inspect the selected carried item. Press E to attempt destruction. On first valid use, choose Back or Continue in the live warning.
 
-Aim at the Kitchen frontage off Gallery B and press F. Use the wheel or number keys to inspect a carried item, then a distinct E to supply it. Kitchen opens on its own active-time schedule. Overdue demand lowers carrying capacity and stops sprint. Partial supply restores capacity proportionally and clearance restores sprint.
+Aim at the Kitchen frontage off Gallery B and press F. Use the wheel or number keys to inspect a carried item, then a distinct E to supply it. Kitchen opens on its own active-time schedule. At the 105-Utility cap the 35% loss leaves 14 of 22 normal Bulk. Overdue demand stops sprint until both lanes clear.
 
 Aim at the existing electrical cabinet right of the Receiving shutter. F inspects and a distinct E supplies the selected carried Fuel. The reserve starts at 55/60 and consumes one Utility per 30 active seconds. Below 15, each eligible delivery waits 60 active seconds before ARRIVAL. [Fuel technical result and developer acceptance](testing/2026-11-11-fuel-reserve-emergency-freight-result.md)
 
-Continuous Kitchen introduced schema 8 through the existing service under `user://saves/collection/`. It preserves exact Kitchen timing and balances, grace and receipts with physical, expedition, Incinerator and goal state. Fuel introduced schema 9 for the fractional reserve, receipts and exact pending start. Published main uses schema 10 and also preserves Receiving base-removal history. Continue starts with service panels closed. Confirmed New Run repoints the slot and retains incompatible snapshots without migration. Save & Exit, 60-active-second attempts and first victory use the same service.
+The local candidate uses schema 11 under `user://saves/collection/`. It adds committed ordinary and bonus cargo, personnel, handover and Medical recovery to the existing Kitchen, Fuel, Receiving, disposal, physical and goal state. Continue starts with service panels closed. Confirmed New Run repoints the slot and retains incompatible snapshots, including schema 10 from published main. Save & Exit, 60-active-second attempts and first victory use the same service.
 
 Standalone F6 retains the authoring palette and canonical UID `uid://bljf1nlhijej`. The [expedition result](testing/2026-11-08-expedition-to-storage-loop-result.md) records the provisional pool and the technical checks and developer acceptance. The [accepted foundation result](testing/2026-11-07-continuous-run-collection-goal-result.md) preserves the exact two-haul fixture evidence.
 
@@ -161,7 +164,7 @@ Systems MVP §16 remains the full CF-01–CF-24 register. This entry-point updat
 | CF-05 | Admission/fairness/ownership survive. The archived M4 evidence includes the old midnight rule. |
 | CF-06–CF-12 | Retain current interfaces/art evidence and renderer/content/ergonomics debt. No fresh fixes or approvals are claimed. |
 | CF-13 | Continuous durability remains future and must use coherent existing ownership. |
-| CF-14–CF-15 | The bounded healthy expedition loop is human-accepted and closed. Production tuning, population growth and Medical remain open. |
+| CF-14–CF-15 | The local Expedition candidate implements real outcomes and Medical-owned natural recovery. Treatment, release tuning and long-run population pacing remain open. |
 | CF-16–CF-17 | Single-item Incinerator disposal is accepted. Continuous Kitchen is human-promoted, published and closed. GDD §14 governs the Fuel slice. Other conversions, Workshop, labels and progression require separate scopes. [Developer acceptance and close-out](testing/2026-11-09-continuous-kitchen-service-result.md) |
 | CF-18–CF-19 | Preserve explicit interaction deferrals; economy, loot bounds and routes now serve the collection objective. |
 | CF-20–CF-24 | Retain adjacent art work, measured limitations, saved/runtime distinctions, authoring and source/license safeguards. |

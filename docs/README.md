@@ -21,7 +21,7 @@ Read [AI working guidelines](AI_WORKING_GUIDELINES.md), [current development sta
 
 DOCX masters govern. Edit the relevant DOCX first and regenerate its Markdown; do not maintain a second independent gameplay specification. Approval of v0.16 preserves its internal **CONFIRMED / RETAINED / DIRECTION / PROVISIONAL / OPEN / HISTORICAL** distinctions. It does not finalize placeholders or complete unresolved mechanics.
 
-The [13 November Expedition decision record](design_history/2026-11-13-expedition-outcomes-and-provisioning-decisions.md) governs the approved first-iteration outcomes. The [local implementation](superpowers/plans/2026-11-13-expedition-outcomes-and-provisioning.md) is pending at this documentation checkpoint.
+The [13 November Expedition decision record](design_history/2026-11-13-expedition-outcomes-and-provisioning-decisions.md) governs the approved first-iteration outcomes. The local schema-11 candidate awaits developer playtest. [Technical result](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md)
 
 **An unresolved post-pivot rule stays unresolved. Do not fill it with a survival-era rule merely because an older document specifies that rule in detail.** Existing source establishes what the prototype does, not the intended release design or automatic permission to modify it.
 
@@ -35,7 +35,7 @@ Active real-world completion time replaces days survived. There is no day cycle,
 
 Expedition preparation is **one current crew at a time**. Choose 1–4 Ready scavengers, contribute selected whole items, select two distinct affinities and explicitly Dispatch. Occupancy lasts until return. The [expedition brief](superpowers/plans/2026-11-07-expedition-to-storage-loop.md) records the committed lifecycle and provisional acquisition rules.
 
-Requests are intended to use bounded pressure. Nonempty expedition returns release healthy personnel on admission to an active or deposited lift slot. Empty outcomes complete at return. See GDD §§5–16 for the full rules and status distinctions.
+Nonempty expeditions hand over on admission to an active or deposited lift slot. Empty outcomes hand over at return. Healthy originals and recruits become Ready and injured originals enter Medical natural recovery. See GDD §§9–14 for the current rules.
 
 ## Approved records and superseded history
 
@@ -51,7 +51,7 @@ The two 5 November records are included unchanged from the editions the develope
 
 ## What is playable now
 
-F5 launches `res://gameplay/run/run_shell.tscn` with live Utility targets, player-dispatched expeditions, single-item disposal, continuous Kitchen and Fuel Reserve and Emergency Freight. Published main includes the accepted Dispatch repair, Receiving mixed stacking and the approved Fedora revision. Continue uses schema 10. Confirmed New Run retains incompatible snapshots without migration. Standalone F6 `res://gameplay/logistics_wing/wing_gameplay.tscn` retains the authored palette. The [survival-era archive](design_history/survival-era/README.md) preserves the earlier plans and frozen M4 input.
+F5 launches `res://gameplay/run/run_shell.tscn` with live Utility targets, player-dispatched expeditions, single-item disposal, continuous Kitchen and emergency freight. The local candidate uses schema 11 and adds the five Expedition outcomes and read-only Medical view. Published main retains schema 10 with Receiving mixed stacking and the adopted Fedora. Confirmed New Run retains incompatible snapshots. Standalone F6 `res://gameplay/logistics_wing/wing_gameplay.tscn` retains the authored palette. The [survival-era archive](design_history/survival-era/README.md) preserves earlier plans and frozen M4 input.
 
 See [CURRENT_STATE](CURRENT_STATE.md) for the current content, scene, preservation and debt details. The [M4 validation record](testing/m4-expedition-loadout-validation-2026-10-24.md), [publication record](testing/m4-publication-2026-10-25.md), and [semantic reconciliation record](testing/m4-documentation-semantic-reconciliation-2026-10-25.md) preserve prior acceptance. They are not new tests of v0.16.
 

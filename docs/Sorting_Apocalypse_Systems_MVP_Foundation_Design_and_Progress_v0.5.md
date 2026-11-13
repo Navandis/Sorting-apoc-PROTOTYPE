@@ -104,7 +104,7 @@ Later disposition: M1–M4 were published and closed at c9f9417a97cf65ef416c5818
 
 The repair record preserves the initial 16 selected suites and six abort canaries, the independent REVISE for two manual-address cases, and the seven-suite/unchanged-probe follow-up with one focused review. The developer subsequently reported correct behavior in all manually tested scenarios and promoted the repairs. These are attributed prior results, not new executions or an exhaustive runtime guarantee. [CR15]
 
-M1 establishes Medical and continuation; M2 adds time, Medical/cargo scheduling and midnight; M3 adds Kitchen and Meal Coverage. M4 adds five-lane loadout, full Bulk/capped Utility, dispatch and schema-4 continuation. Continuous full-game Ironman and actual Expedition outcomes remain NOT IMPLEMENTED.
+M1 established the historical Medical request and continuation. M2 added the daily clock, scheduling and midnight. M3 added Kitchen and Meal Coverage. M4 added fixture loadouts and schema 4. The local continuous run now includes real Expedition outcomes. Release durability remains open.
 
 Basis: [PF §§24–30, 34]; [CR15]; [R15].
 
@@ -116,9 +116,9 @@ FOUNDATION PURPOSE (M1–M4): operate the same storeroom across repeated days an
 
 | Consumer | Utility lanes | Competition introduced |
 | --- | --- | --- |
-| Medical | Medical | The mechanical expedition fixture still spends Medical. In the target, only the Ward accelerates natural recovery of Light and Severe injuries. |
-| Kitchen | Food, Hydration | The continuous Kitchen brief uses cumulative demand to reduce player capacity and disable sprint after grace. Partial credit restores capacity proportionally. Clearing restores sprint. |
-| Expedition Loadout | Food, Hydration, Medical, Weapons, Protection | The 13 November Expedition design uses Food, Hydration, Protection, Weapons and Morale. Food adds bonus cargo outside 23 ordinary Bulk per original. The other lanes affect journey time, injury risk, Utility/Bulk preference and recruitment respectively. |
+| Medical | Medical | Medical owns natural recovery of Light and Severe patients at handover. Medical goods retain their collection and affinity roles. Treatment remains future design. |
+| Kitchen | Food, Hydration | The local candidate uses cumulative Food and Hydration demand capped at 105 Utility. The maximum carry loss is 35% of 22 Bulk. Partial credit restores capacity proportionally and clearing both lanes restores sprint. |
+| Expedition Loadout | Food, Hydration, Protection, Weapons, Morale | The 13 November Expedition design uses Food, Hydration, Protection, Weapons and Morale. Food adds bonus cargo outside 23 ordinary Bulk per original. The other lanes affect journey time, injury risk, Utility/Bulk preference and recruitment respectively. |
 
 ### 3.1 What this slice can establish
 
@@ -130,7 +130,7 @@ Medical alone was a local implementation/usability checkpoint. The original M5 p
 
 Initial Medical and Kitchen requests are X needed → X submitted → X consumed, with durable fulfillment/shortfall records. No patient cohort or treatment calculation is required. Team-labelled loadout requests do not imply actual Expedition teams, journeys, casualties, return scheduling or population. Incoming loot remains scenario-controlled. [D01–D02]
 
-The published continuous Kitchen uses independent timing and a 150-Utility outstanding cap under GDD §12. The published Fuel slice implements continuous reserve consumption, whole-item refuelling, four light tiers, power permission flags and a per-delivery emergency start wait under GDD §14. The developer promoted the bounded Fuel slice on 11 November, and it is published on main. Electronics purchases and expedition bonuses remain future work.
+Published Kitchen and Fuel establish independent demand timing, whole-item reserve supply and emergency freight. The local Expedition candidate uses 22 normal player Bulk, a 105-Utility Kitchen cap and 35% maximum loss. Its five provision effects are implemented. Electronics purchases remain open.
 
 Victory is immediate at eight simultaneous live qualifying-storage totals, with no permanent category banking or request/queue-clearing gate. 2,000 Utility/category is illustrative. No terminal dead end is allowed, but recovery need not be quick or assisted. This document selects no target number, starting bundle or new scenario. [G16 §5]
 
@@ -209,7 +209,7 @@ Basis: [GDD §§3.1, 4.8, 6.3, 7.1–7.2, 8.2–8.4]; [D01–D03]; [ER-RESULT §
 
 ### 6.1.1 Deliberately excluded resilience work
 
-Published main uses schema 10 through the collection save service at user://saves/collection/. The 13 November Expedition candidate targets schema 11 to store exact ordinary and bonus cargo, personnel outcomes, handover and natural recovery. Confirmed New Run retains incompatible snapshots. Release durability remains CF-13. [G16 §§5.5,12–14,15.3,18.5]
+The local Expedition candidate uses schema 11 through the collection save service at user://saves/collection/. It stores exact ordinary and bonus cargo, personnel outcomes, handover and natural recovery. Confirmed New Run retains incompatible snapshots, including schema 10 from main. Release durability remains CF-13. [G16 §§5.5,12–14,15.3,18.5]
 
 At the accepted M1/initial M2 delivery level, unsaved actions may be lost after unexpected termination. Ordinary continuation must still preserve exact ownership, credit and gameplay time. Do not use this intentionally limited implementation to assess the full-game randomness principle. Exact audiovisual-frame recovery remains unnecessary. [D03, D05, D21]
 
@@ -557,7 +557,7 @@ This section replaces Prototype Findings as the active phase tracker. Dated evid
 | --- | --- | --- |
 | Prototype foundations | HUMAN-PROMOTED in recorded scopes | PF retained as historical evidence; no new acceptance task. |
 | Pre-MVP review + repairs | HUMAN-PROMOTED / PUBLISHED | R-01–R-03 accepted; bounded R-04 subsequently repaired within M1. |
-| MVP foundation contracts | Accepted foundations and scoped collection successor | M1–M4, the collection foundation and the prior expedition loop are human-accepted and published. The 13 November Expedition outcomes are approved design with local implementation pending. See §15.6 for prior evidence. |
+| MVP foundation contracts | Accepted foundations and scoped collection successor | M1–M4, the collection foundation and the prior expedition loop are human-accepted and published. The 13 November Expedition outcomes are a local technical candidate pending developer playtest. See §15.6 for prior evidence. |
 | M1 persistent Medical | HUMAN-PROMOTED / PUBLISHED / CLOSED | 6c56edf → a7b764e → 36d527d; independent ACCEPT and successful human play. |
 | M2 clock / midnight / HUD | HUMAN-PROMOTED / PUBLISHED / CLOSED | 524edf1 → c7bbf44 → 3465098; independent ACCEPT and final human PASS (§15.2). |
 | M3 Kitchen | HUMAN-PROMOTED / PUBLISHED / CLOSED | 7d3d6c7 → a0f066a; independent ACCEPT decisions, native retests and subsequent publication retained (§15.3). |
@@ -653,9 +653,9 @@ Basis: [PF §§3–4, 7, 12–14, 24–26, 33–34]; [ER-RESULT §§2–5].
 
 | ID / source | Work retained or explicitly superseded | Relationship to this foundation |
 | --- | --- | --- |
-| CF-13<br>GDD §§5.6, 18.5; PF §§16.5, 34.7 | Full-game continuous game-state preservation, one advancing continuation per run, journal/rotating recovery and an ideal 2–3-real-second loss target. [D21] | Published main uses schema 10. The Expedition candidate targets schema 11 and confirmed New Run. Save cadence and first-victory attempts retain their prototype roles. Release durability and recovery remain open. |
-| CF-14<br>GDD §§9–10; PF §34.7 | Actual asynchronous expeditions, one player-assembled 1–4-person crew at a time, affinities, return outcomes and workforce availability. [G16 §§9–11] | The bounded healthy expedition loop is HUMAN-ACCEPTED / CLOSED IN ITS BOUNDED SCOPE. Production tuning remains open. |
-| CF-15<br>GDD §§12–13; PF §34.7 | Medical now supports availability. Slower natural recovery with substantially faster treated recovery is favored; detailed states/costs/timing remain open. [G16 §13] | Former daily triage, Meal Coverage rolls and fatal complications are historical—not pending obligations. No injured-away exception or hidden catch-up is introduced. |
+| CF-13<br>GDD §§5.6, 18.5; PF §§16.5, 34.7 | Full-game continuous game-state preservation, one advancing continuation per run, journal/rotating recovery and an ideal 2–3-real-second loss target. [D21] | The local candidate uses schema 11 with confirmed New Run. Published main uses schema 10. Save cadence and first-victory attempts retain their prototype roles. Release durability remains open. |
+| CF-14<br>GDD §§9–10; PF §34.7 | Actual asynchronous expeditions, one player-assembled 1–4-person crew at a time, affinities, return outcomes and workforce availability. [G16 §§9–11] | The previous Expedition loop is human-accepted. The local outcome candidate uses the active catalogue and all five provision effects. Production tuning remains open. |
+| CF-15<br>GDD §§12–13; PF §34.7 | Medical owns natural recovery. Light and Severe patients return to Ready after 120 and 300 active seconds from handover. Treatment remains future design. [G16 §13] | The local candidate implements a read-only patient view, deadlines and exactly-once recovery. Daily triage, Meal Coverage rolls and fatal complications remain historical. |
 | CF-16<br>GDD §§12, 14–15, 20; PF §§19.4, 20.4 | Bounded Kitchen/Ops pressure; optional physical Rations; salvage/incineration and Workshop redesign. [G16 §§8,12,14–15] | Incinerator disposal is accepted. Continuous Kitchen is human-promoted, published on main and closed in its bounded scope. The bounded Fuel reserve slice is human-promoted, published on main and closed. Its Salvager and Workshop effects are power permissions for future systems. Rations and one-time purchases remain future work. |
 | CF-17<br>PF §§19.4–19.5, 20.4; GDD §§7.5–7.6 | Labels, specialist storage, conditional furniture movement, starting stock and production capacity remain open. All storage initially available is favored. [G16 §§7,15] | Preserve supported surface names and authored installs. No chosen shelf roster, automatic unlocking or scene changes; qualifying storage must be defined explicitly. |
 | CF-18<br>PF §§12.3, 14.5, 24–26 | Manual under-base insertion, multi-column packing, crouch and expanded display-rotation UX. | Remain separate deferred/open work. Ordinary shelves still reject automatic mixed stacking. Two-state packing stays intact. |
