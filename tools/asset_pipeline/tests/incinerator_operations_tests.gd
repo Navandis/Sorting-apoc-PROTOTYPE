@@ -2,7 +2,7 @@ extends SceneTree
 
 const OperationsPath := "res://gameplay/disposal/incinerator_operations.gd"
 const Clock = preload("res://gameplay/run/run_clock.gd")
-const Config = preload("res://gameplay/expeditions/expedition_test_config.gd")
+const Config = preload("res://gameplay/expeditions/expedition_config.gd")
 
 var failures := 0
 var checks := 0

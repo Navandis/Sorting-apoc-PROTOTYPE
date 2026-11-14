@@ -1,8 +1,9 @@
 extends SceneTree
 
 const WingScene = preload("res://gameplay/logistics_wing/wing_gameplay.tscn")
-const Config = preload("res://gameplay/expeditions/expedition_test_config.gd")
+const Config = preload("res://gameplay/expeditions/expedition_config.gd")
 const Snapshot = preload("res://gameplay/run/run_snapshot.gd")
+const TestSeeds = preload("res://tools/asset_pipeline/tests/expedition_test_support.gd")
 
 var failures := 0
 var wing: Node3D
@@ -24,11 +25,11 @@ func run() -> void:
 		return
 	var ops: RefCounted = wing.expeditions
 	var runtime: ReceivingRuntime = wing.get_node("ReceivingRuntime")
-	check_sampler(runtime.item_catalog)
+	check_destinations()
 	check(wing.get_initialization_error().is_empty(), "asset-equipped expedition run initializes")
 	check(ops.ready_count == 8 and ops.members == 1 and ops.affinities.is_empty(), "fresh draft has one unreserved member and no affinities")
 	for count in range(1, 5):
-		check(ops.set_members(count) and ops.return_capacity() == 8 * count, "draft count scales raw Bulk")
+		check(ops.set_members(count) and ops.return_capacity() == 23 * count, "draft count scales ordinary Bulk")
 	check(not ops.set_members(5) and not ops.set_members(0) and ops.ready_count == 8, "invalid counts cannot change the roster")
 	ops.set_members(1)
 	check(not ops.dispatch(ops.revision).ok, "no affinity cannot dispatch")
@@ -43,54 +44,54 @@ func run() -> void:
 	if mouse == null:
 		mouse = take_definition("loot_000001")
 	check(mouse != null and not ops.contribute(carry).ok and not ops.is_formed() and ops.ready_count == 8 and carry.get_items().has(mouse), "wrong-category first supply spends nothing and does not form")
-	var bulky := take_definition("loot_000011")
-	check(bulky != null and not ops.contribute(carry).ok and not ops.is_formed() and ops.return_capacity() == 8, "over-capacity first supply spends nothing")
 	var cereal := take_definition("loot_000007")
 	var preview: Dictionary = ops.preview(cereal)
-	check(preview.applied == 5 and preview.wasted == 7 and preview.bulk == 2 and ops.ready_count == 8, "preview shows capped credit, waste and full Bulk without formation")
+	check(preview.applied == 10 and preview.wasted == 2 and preview.bulk == 2 and ops.ready_count == 8, "preview shows capped credit, waste and full Bulk without formation")
 	var receipt_seen := [false]
 	carry.item_removed.connect(func(item: ItemInstance):
 		receipt_seen[0] = item == cereal and ops.ready_count == 7 and ops.is_formed() and ops.loadout.spent.size() == 1,
 		CONNECT_ONE_SHOT)
-	check(ops.contribute(carry).ok and receipt_seen[0] and ops.return_capacity() == 6, "first receipt and crew formation precede carry notifications")
+	check(ops.contribute(carry).ok and receipt_seen[0] and ops.return_capacity() == 21, "first receipt and crew formation precede carry notifications")
 	var locked_id: String = ops.loadout.request_id
 	check(not ops.set_members(2) and ops.members == 1 and ops.loadout.request_id == locked_id, "formed count and identity stay locked")
 	var potato := take_definition("loot_000008")
 	check(not ops.contribute(carry).ok and carry.get_items().has(potato) and ops.loadout.spent.size() == 1, "full lane rejects a whole item without spending")
-	carry.remove_item(bulky)
-	for id in ["loot_000019", "loot_000025", "loot_000039", "loot_000033"]:
+	carry.remove_item(mouse)
+	carry.remove_item(potato)
+	for id in ["loot_000020", "loot_000032", "loot_000038", "loot_000029", "loot_000031"]:
 		take_definition(id)
 		check(ops.contribute(carry).ok and ops.loadout.request_id == locked_id, "accepted supply reuses the same formed crew")
-	check(ops.return_capacity() == 0 and ops.loadout.closed and ops.journeys.is_empty() and ops.is_formed(), "fully supplied crew remains editable before dispatch")
+	check(ops.return_capacity() == 5 and ops.loadout.closed and ops.journeys.is_empty() and ops.is_formed(), "fully supplied crew remains editable before dispatch")
 	check(ops.toggle_affinity("Weapons") and ops.selected_destination() != pair, "destination remains editable after formation")
 	var revision: int = ops.revision
-	var warning: Dictionary = ops.dispatch(revision)
-	check(warning.get("confirm", false) and ops.journeys.is_empty() and ops.ready_count == 7, "zero capacity asks for confirmation without sending")
 	check(ops.toggle_affinity("Weapons") and not ops.dispatch(revision, true).ok, "stale confirmation cannot send an edited draft")
 	check(ops.toggle_affinity("Weapons"), "reselect second affinity")
 	revision = ops.revision
+	ops.rng.seed = TestSeeds.find_seed(ops, runtime, TestSeeds.all_healthy)
 	var sent: Dictionary = ops.dispatch(revision, true)
 	check(sent.ok and sent.get("id") == locked_id and ops.ready_count == 7 and not ops.is_formed(), "confirmed departure neither reforms nor spends twice")
 	check(not ops.dispatch(revision, true).ok and ops.journeys.size() == 1, "repeated confirmed dispatch is inert")
 	check(ops.set_members(4) and ops.toggle_affinity("Food") and ops.toggle_affinity("Hydration"), "next crew can be drafted immediately")
-	ops.rng.seed = 4127
+	ops.rng.seed = TestSeeds.find_seed(ops, runtime, TestSeeds.all_healthy, 4127)
 	var second: Dictionary = ops.dispatch(ops.revision)
 	check(second.ok and ops.ready_count == 3 and not ops.set_members(4), "zero-loadout dispatch forms once and next draft cannot select unavailable count")
 	if second.ok:
 		var trip: Dictionary = ops.journeys[second.id]
-		check(trip.duration >= 90.0 and trip.duration <= 180.0 and trip.return_at == trip.departed_at + trip.duration, "successful dispatch commits an exact return deadline")
-		check(trip.manifest.size() <= 16 and not trip.manifest.is_empty(), "four-member manifest fits bounded pool")
+		check(trip.duration >= 210.0 and trip.duration <= 300.0 and trip.return_at == trip.departed_at + trip.duration, "successful dispatch commits an exact return deadline")
+		check(trip.manifest.size() == trip.ordinary_count and not trip.manifest.is_empty(), "unprovisioned four-member manifest contains ordinary cargo")
 	check(ops.set_members(3), "the remaining three Ready can form a crew")
-	carry.select_index(carry.get_slots().find(potato))
+	potato = take_definition("loot_000009")
 	check(ops.contribute(carry).ok and ops.ready_count == 0 and ops.is_formed(), "accepted supply reserves the last Ready members")
 	check(ops.toggle_affinity("Medical") and ops.toggle_affinity("Morale"), "formed crew keeps a valid destination at zero Ready")
+	ops.rng.seed = TestSeeds.find_seed(ops, runtime, TestSeeds.all_healthy, 5200)
 	var before: Dictionary = ops.capture_state()
 	var sequence: int = wing.run_identity.next_sequence
 	var profile := runtime.deck_profile
 	runtime.deck_profile = null
 	var rejected: Dictionary = ops.dispatch(ops.revision)
+	var repeated: Dictionary = ops.dispatch(ops.revision)
 	runtime.deck_profile = profile
-	check(not rejected.ok and rejected.error.contains("Cargo could not be prepared") and ops.capture_state() == before
+	check(not rejected.ok and rejected.error.contains("Cargo could not be prepared") and repeated == rejected and ops.capture_state() == before
 		and wing.run_identity.next_sequence == sequence, "presentation failure preserves the committed draft and draw without publishing Away")
 	check(ops.dispatch(ops.revision).ok and ops.ready_count == 0, "formed crew dispatches without requiring its members twice")
 	check(not ops.set_members(1) and not ops.dispatch(ops.revision).ok, "fresh preparation cannot reserve unavailable crew")
@@ -113,11 +114,61 @@ func run() -> void:
 		for active_id: String in ops.active_ids():
 			check(runtime.return_admission.get_return_status(active_id) != AwaitingLiftAdmission.ADMITTED_RETURNED,
 				"deposit notification sees coherent cargo and personnel ownership"))
-	wing.run_timeline.advance(220.0)
-	check(observed.size() == 2 and ops.ready_count == 8, "two cargo deposits and an empty return settle the whole roster")
+	wing.run_timeline.advance(310.0)
+	check(observed.size() == 3 and ops.ready_count == 8, "all three deposits settle the seeded healthy rosters")
+	check_zero_ordinary(ops, runtime, true)
+	check_zero_ordinary(ops, runtime, false)
 	finish()
 
-func check_sampler(catalog: ItemCatalog) -> void:
+func check_zero_ordinary(ops: RefCounted, runtime: ReceivingRuntime, food: bool) -> void:
+	# Controlled Bulk variants isolate the 23-Bulk boundary.
+	var kinds := [&"loot_000020", &"loot_000032", &"loot_000038", &"loot_000031"]
+	var bulk := [2, 5, 5, 11]
+	if food:
+		kinds = [&"loot_000010", &"loot_000020", &"loot_000032", &"loot_000038", &"loot_000031"]
+		bulk = [1, 2, 5, 5, 10]
+	for index in kinds.size():
+		var definition := PrototypeItemCatalog.get_definition_by_id(kinds[index]).duplicate() as ItemDefinition
+		definition.bulk = bulk[index]
+		var item := ItemInstance.new(definition, "boundary-%s-%d" % [food, index])
+		check(carry.add_item(item) and ops.contribute(carry).ok, "controlled provision charges whole Bulk")
+	check(ops.return_capacity() == 0, "outgoing supplies fill exactly 23 ordinary Bulk")
+	var extra := ItemInstance.new(PrototypeItemCatalog.get_definition_by_id(&"loot_000030"), "boundary-rejected-%s" % food)
+	check(carry.add_item(extra) and ops.preview(extra).reason == "capacity" and not ops.contribute(carry).ok
+		and carry.get_items().has(extra), "Food cannot authorize overpacking")
+	carry.remove_item(extra)
+	ops.toggle_affinity("Hydration")
+	ops.toggle_affinity("Weapons")
+	var panel: CanvasLayer = wing.dispatch_panel
+	panel.open_panel()
+	var before: Dictionary = ops.capture_state()
+	panel._send.pressed.emit()
+	check(panel._warning.visible and ops.capture_state() == before and not paused, "zero ordinary warning commits nothing")
+	check(panel._warning_body.text.contains("chance") if food else panel._warning_body.text.contains("empty"),
+		"warning describes the actual bonus allowance")
+	panel.close_top()
+	check(panel.is_open() and ops.capture_state() == before, "back preserves the paid draft and RNG")
+	var matches := func(outcome: Dictionary):
+		return not outcome.manifest.is_empty() if food else outcome.originals[0].health != "healthy"
+	ops.rng.seed = TestSeeds.find_seed(ops, runtime, matches)
+	panel._send.pressed.emit()
+	panel._confirm()
+	var trip: Dictionary = ops.journeys.values().back()
+	check(trip.status == ops.AWAY and trip.ordinary_count == 0 and trip.manifest.size() == int(food),
+		"zero ordinary crew commits exactly its permitted cargo")
+	panel.close_top()
+	var lift_before := runtime.capture_state()
+	wing.run_timeline.advance(trip.return_at - wing.run_timeline.clock.elapsed)
+	if not food:
+		check(trip.status == ops.COMPLETE and trip.handover_at == trip.return_at and ops.medical.active_count() > 0,
+			"empty injured crew hands over directly to Medical")
+		var lift_after := runtime.capture_state()
+		check(lift_after.manager == lift_before.manager and lift_after.admission == lift_before.admission,
+			"empty return leaves all freight ownership untouched")
+	else:
+		check(trip.status == ops.WAITING, "bonus-only cargo uses the ordinary admission queue")
+
+func check_destinations() -> void:
 	var destinations := {}
 	for first: String in Config.CATEGORIES:
 		for second: String in Config.CATEGORIES:
@@ -135,19 +186,6 @@ func check_sampler(catalog: ItemCatalog) -> void:
 		"exact 9/60, 9/60 and six 7/60 category weights")
 	check(Config.category_weights(affinities, ["Food", "Fuel"]) == {"Food": 9, "Fuel": 7},
 		"fit masking leaves the relative weights unchanged")
-	var pool := Config.build_pool(catalog)
-	var rng := RandomNumberGenerator.new()
-	var independent := RandomNumberGenerator.new()
-	for seed_value in 16:
-		rng.seed = 1000 + seed_value
-		independent.seed = rng.seed
-		var ticket := independent.randi_range(0, 50) # 9 + 6 × 7. Electronics cannot fit B2.
-		var fitting := ["Food", "Fuel", "Hydration", "Medical", "Morale", "Protection", "Weapons"]
-		var category: String = "Food" if ticket < 9 else fitting[1 + floori(float(ticket - 9) / 7.0)]
-		var choices: Array = pool[category].filter(func(item: ItemDefinition): return item.bulk == 2)
-		var wanted: String = String(choices[independent.randi_range(0, choices.size() - 1)].item_id)
-		check(Config.sample_manifest(2, affinities, rng, pool) == [wanted], "category-first fitting draw and uniform item index")
-	check(Config.sample_manifest(1, affinities, rng, pool).is_empty(), "positive unfillable residual stops cleanly")
 
 func take_seed(host: String) -> ItemInstance:
 	var world: Node = wing.get_node_or_null("DevelopmentSetup/SeedItems/" + host + "/WorldItem")

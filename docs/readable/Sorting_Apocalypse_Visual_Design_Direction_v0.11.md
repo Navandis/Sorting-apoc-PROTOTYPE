@@ -445,7 +445,7 @@ Retain the accepted bent/oblique Salvager spur, front-operated machine envelope 
 
 Medical is reached without crossing a gallery: the full A/B connector belongs to Main Storage, followed by a 10 m Medical-exclusive protected corridor. The anteroom keeps its 7.8 x 7.0 m nominal size, lies north of that corridor and widens westward; its eastern wall continues the corridor wall and entry is at the south-east. This accepted arrangement keeps the shared circulation, departmental buffer and opaque staffed-core boundary distinct. No direct Medical-Kitchen route is introduced. [A17]
 
-Those dimensions describe the accepted installation, not an immutable travel-time requirement. Medical now supports workforce availability; natural recovery substantially accelerated by treatment is the preferred direction. Injury/treatment timings remain open, with no dead-end state or requirement for visible patients. No geometry is altered here. [38]
+The first Expedition outcomes slice uses the existing Medical frontage for a live read-only view of anonymous patients, severity and remaining natural recovery time. Staff and patients remain behind the protected boundary. Treatment and future route adjustments retain their own design scope. [38]
 
 - Protected territory: The approach and anteroom are not Quartermaster storage-expansion or backlog sockets. Preserve clear floor as intentional departmental support space, even before later equipment is selected. Crossing the outer room threshold does not submit supplies.
 
@@ -875,11 +875,11 @@ Hand-authored ReceivingSetDressing and the separate curved monitor remain accept
 
 The original curved CRT retains Surface 1 art, runtime texture binding, 704 × 400 green SubViewport, fonts/layout, mounting, subdued bezel and no added screen spill. It is now live, read-only FREIGHT LIFT / ONLINE, without L-01. STATUS maps SEALED_EMPTY→IDLE, ARRIVAL/SEALED_READY→INCOMING, REVEALING→OPENING, OPEN→OPEN and CLOSING→CLOSING. DECK counts individual remaining active items including fixture/stack entries, with CLEAR where appropriate. QUEUE 00–02 excludes active cargo and Awaiting Lift teams. Decorative EMERGENCY STOP signage/button remains noninteractive. [37]
 
-This deposited QUEUE 00–02 readout is retained implementation evidence. The target’s uncapped waiting-expedition queue, occupied personnel and eventual cargo handover need a separate truthful overview; they are not implemented by changing these labels. The exact personnel and destination-release boundaries remain open. [38]
+The deposited QUEUE 00–02 readout covers admitted loads. Dispatch shows upstream crews Awaiting Lift separately and retains outcomes after return. Personnel hand over on admission, including during a pending emergency start. [38]
 
 The four-cue theatre preserves the stationary bay illusion. OPEN waits for actual last TAKE; shutter contact around 3.40 s holds through reverberation/latch and the full closing cue. IDLE is displayed during departure while the lift remains internally busy; FIFO promotion/new admission follows full outbound turnaround, without opposing travel overlap. [37]
 
-Verified CRT footers, in cycle order: SEALED_EMPTY — AWAITING EXPEDITION LOOT; ARRIVAL and SEALED_READY — DELIVERING EXPEDITION LOOT; REVEALING — LIFT SHUTTER OPENING; OPEN — LOOT READY FOR PICK-UP; CLOSING — LIFT SHUTTER CLOSING. Awaiting Lift team feedback belongs to future Dispatch/Expedition. [37]
+The CRT retains the existing freight-cycle labels and lift statuses. Dispatch separately reports Away and Awaiting Lift, cargo counts, injuries, recruits and completed handovers. [37]
 
 The accepted initial 10 October wear composition had 18 layers (17 scalar plus one conventional). Later human authoring at 9ede796 removed alternatives and refined wear/light instances; current saved scene has eleven scalar instances plus one conventional OilStain, including retained visibility overrides. Preserve actual saved identities and placement; old counts are not quotas or instructions to resurrect removed art. Seven original Codex Road Dust placements and ReceivingFinishPass remain retired. Ordinary appropriate refinements do not automatically reopen EAF4, C1 or Stage C. [37]
 
@@ -891,9 +891,9 @@ The accepted initial 10 October wear composition had 18 layers (17 scalar plus o
 
 2. C1, intentional lighting, Stage C and M1–M4 stay human-promoted/published/closed in their recorded scopes. Ordinary scoped wear, furnishing or light tuning does not automatically reopen a milestone. This pass changes documentation only, not scenes or settings. [38]
 
-3. M4 already supplies a real daily clock, timed Medical/Kitchen/Dispatch and ordinary continuation. Its daily behavior remains implemented evidence, not the collection target. Actual asynchronous expeditions, the new victory/active-time loop, continuous Medical/request consequences and full durability remain future scopes. [38]
+3. M4 daily services remain historical evidence. The local collection candidate includes asynchronous expeditions, a live collection goal, injury, recruitment and a read-only natural-recovery view. Treatment and full durability remain future work. [38]
 
-4. Next implementation must be separately scoped against GDD v0.16. Do not start M5, revive ADR, add storage progression, change corridors, resolve open handover/treatment rules or run unchanged gameplay suites to complete these documentation updates. [38]
+4. The Expedition candidate uses the existing Dispatch and Medical frontages. The retained route and installation remain the visual baseline for developer playtest. [38]
 
 Technical assertions/captures, supplied-source review, human gameplay, visual promotion and publication checks remain distinct. The unexplained pixel-identical .30/.40 probe trial did not diagnose a technical cause; later human review nevertheless accepted the actual metallic appearance. That uncertainty is not an open visual blocker. Accepted probe/held-view debt, excluded brace-junction artifacts, unfinished Backlog/Dispatch and sill material retain their recorded scope. [37]
 
@@ -964,6 +964,6 @@ Reconciled owning sections: §1 authority; §§7, 13–14 information and single
 
 ### 38.3 Deliberately unresolved
 
-The accepted geometry and authored light rig remain the baseline. The continuous Kitchen brief uses the existing frontage. GDD §14 governs Fuel dimming and the temporary Receiving station. Medical recovery timing, Workshop projects, ration production, Journal and final interface composition retain their GDD scope. Future route or installation changes require explicit design.
+The accepted geometry and authored light rig remain the baseline. Kitchen and the read-only Medical view use their existing frontages. GDD §14 governs Fuel dimming. Workshop, Rations, Journal and final interface composition retain their GDD scope.
 
 The earlier missing-MVP-source limitation is resolved by the developer’s attachment and accompanying Systems MVP v0.5 compatibility update. Both masters’ checks are recorded in docs/testing/2026-11-07-mvp-vdd-compatibility-consistency.md. M1–M4 evidence remains valid; obsolete survival/day assumptions do not override GDD v0.16. No game tests, new promotion, Git write, scene edit or save operation accompanies this completion.

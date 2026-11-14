@@ -2,8 +2,9 @@ extends "res://tools/asset_pipeline/tests/collection_goal_tests.gd"
 
 const Shell = preload("res://gameplay/run/run_shell.tscn")
 const SaveService = preload("res://gameplay/run/run_save_service.gd")
-const Config = preload("res://gameplay/expeditions/expedition_test_config.gd")
+const Config = preload("res://gameplay/expeditions/expedition_config.gd")
 const Ops = preload("res://gameplay/expeditions/expedition_operations.gd")
+const TestSeeds = preload("res://tools/asset_pipeline/tests/expedition_test_support.gd")
 const Snapshot = preload("res://gameplay/run/run_snapshot.gd")
 
 var shell: Node
@@ -24,8 +25,6 @@ func _run() -> void:
 	var ops: RefCounted = wing.expeditions
 	var timeline: RefCounted = wing.run_timeline
 	var panel: CanvasLayer = wing.dispatch_panel
-	var stock: StorageSurface = wing.get_functional_surfaces()[1]
-	stock.initialize_zones_if_needed(StorageCategories.GENERAL)
 	check(runtime.receiving_manager.get_active_batch_id().is_empty() and ops.journeys.is_empty(),
 		"ordinary New Run starts without foundation cargo")
 
@@ -51,66 +50,158 @@ func _run() -> void:
 	check(not panel.is_open() and ops.ready_count == 8, "F closes without spending")
 	await open_dispatch()
 	check(panel.is_open() and ops.members == 3 and ops.affinities == ["Electronics"], "F reopen retains the exact unformed draft")
-	panel._members[0].pressed.emit()
-	panel._affinities.Food.pressed.emit()
-	check(not panel._send.disabled, "valid pair enables Dispatch")
-	ops.rng.seed = 9100
-	panel._send.pressed.emit()
-	check(ops.journeys.size() == 1 and ops.ready_count == 7 and panel.is_open(), "explicit zero-loadout Dispatch opens the next draft immediately")
-	var first: String = ops.journeys.keys()[0]
-	check(ops.journeys[first].status == Ops.AWAY and ops.journeys[first].members == 1, "first crew leaves at one-member capacity")
-	panel._affinities.Electronics.pressed.emit()
-	check(panel._affinities.Food.disabled and not panel._affinities.Fuel.disabled, "only currently available partners are selectable")
-
-	var seed: WorldItem = wing.get_node("DevelopmentSetup/SeedItems/Food_DryGoodsA/WorldItem")
-	var hydration: WorldItem = wing.get_node("DevelopmentSetup/SeedItems/Hydration_FoodCan/WorldItem")
-	check(seed.pickup_into(carry) and hydration.pickup_into(carry), "two real selected supplies are carried")
-	panel._members[3].pressed.emit()
-	panel._affinities.Fuel.pressed.emit()
-	await key_event(KEY_E, true)
-	await key_event(KEY_E, true, true)
-	await key_event(KEY_E, true)
-	await key_event(KEY_E, false)
-	check(ops.is_formed() and ops.members == 4 and ops.loadout.spent.size() == 1 and carry.get_item_count() == 1,
-		"one distinct E consumes a whole selected item, with no held repeat")
-	check(panel._members.all(func(button: Button): return button.disabled), "formed crew count is visibly locked")
-	check(ops.toggle_affinity("Fuel") and ops.toggle_affinity("Hydration"), "formed crew can edit affinity while supply stays spent")
-	await observe_live_clock(timeline)
-	await capture_render("dispatch-preparation")
-	ops.rng.seed = 9311
-	panel._send.pressed.emit()
-	check(ops.journeys.size() == 2 and ops.ready_count == 3, "second crew commits a four-member budget")
-	var second: String = ops.journeys.keys()[1]
 	await key_tap(KEY_ESCAPE)
-	check(not panel.is_open() and not paused, "ESC closes preparation before Pause")
-	await key_tap(KEY_ESCAPE)
-	check(shell.menu_open and paused, "next ESC opens the normal pause")
-	await key_tap(KEY_ESCAPE)
-	check(not shell.menu_open and not paused, "ESC resumes the normal world")
-	var elapsed: float = timeline.clock.elapsed
-	timeline.advance(maxf(ops.journeys[first].return_at, ops.journeys[second].return_at) - elapsed + 30.0)
-	check(ops.ready_count == 8 and runtime.lift_cycle.can_take_receiving(), "both healthy crews are Ready on active and queued admission")
-	var observed := []
-	for index in 2:
-		var batch := runtime.receiving_manager.get_active_batch()
-		var trip: Dictionary = ops.journeys[batch.source_ref]
-		observed.append(trip.members)
-		var count := batch.entries.size()
-		check(count > 0 and count <= trip.members * 4, "committed batch matches a bounded crew")
-		if index == 0:
-			await capture_receiving(runtime)
-		if not await drain_into_stock(runtime, stock, count, true):
-			finish()
-			return
-		timeline.advance(60.0)
-		print("EXPEDITION_TAKE crew=", trip.members, " items=", count, " bulk=", batch.actual_bulk,
-			" manifest=", trip.manifest)
-	check(observed.has(1) and observed.has(4), "both one- and four-member journeys reached ordinary storage")
-	check(wing.collection_goal.totals.values().max() > 0 and Snapshot.new().validate(Snapshot.new().capture(wing)).is_empty(),
-		"live collection and exact retired cargo ownership validate")
-	await prove_layout_extremes(runtime, timeline)
-	print("EXPEDITION_REACH max_take_m=", max_take_reach)
+	await prove_generated_outcomes()
 	finish()
+
+func prove_generated_outcomes() -> void:
+	var ops: RefCounted = wing.expeditions
+	var runtime: ReceivingRuntime = wing.get_node("ReceivingRuntime")
+	var timeline: RefCounted = wing.run_timeline
+	var panel: CanvasLayer = wing.dispatch_panel
+	timeline.advance(1770.0)
+	check(wing.fuel.reserve() == 0.0 and carry.get_effective_bulk_limit() == 14,
+		"active timeline reaches zero Fuel and 14-Bulk pickup capacity")
+	ops.set_members(1)
+	ops.toggle_affinity("Electronics")
+	for host in ["CerealBox_A", "Hydration_MilkCarton", "Weapons_Pistol", "Protection_Boots", "CDStack_A"]:
+		if not await take_supply(host):
+			return
+		await aim_dispatch()
+		await open_dispatch()
+		if not check(panel.is_open(), "Dispatch opens from its authored counter"):
+			return
+		var supplies: int = ops.loadout.spent.size()
+		if supplies == 4:
+			await capture_render("dispatch-projected-morale")
+		await key_event(KEY_E, true)
+		await key_event(KEY_E, true, true)
+		await key_event(KEY_E, false)
+		if not check(ops.loadout.spent.size() == supplies + 1 and carry.get_item_count() == 0,
+				"one fresh E spends the exact selected " + host):
+			return
+		if supplies < 4:
+			await key_tap(KEY_F)
+			if not check(not panel.is_open(), "F closes the live panel"):
+				return
+	check(ops.loadout.credited == {"Food": 10, "Hydration": 5, "Protection": 7, "Weapons": 10, "Morale": 12},
+		"all five real lanes applied their canonical Utility and caps")
+	check(panel._crew.text.contains("locked") and panel._lanes.Protection.effect.text.contains("per original"),
+		"Dispatch shows formed crew and per-original effect")
+	await press_preparation_button(panel._affinities.Food)
+	await press_preparation_button(panel._affinities.Weapons)
+	var matches := func(outcome: Dictionary):
+		return outcome.originals[0].health != "healthy" and outcome.originals[0].recruited \
+			and outcome.duration >= 205.0 and outcome.manifest.size() > outcome.ordinary_count
+	var seed_value := TestSeeds.find_seed(ops, runtime, matches)
+	if not check(seed_value >= 0 and not panel._send.disabled, "seeded production outcome and available destination"):
+		return
+	ops.rng.seed = seed_value
+	await observe_live_clock(timeline)
+	await capture_render("dispatch-five-lanes")
+	await press_preparation_button(panel._send)
+	if not check(ops.journeys.size() == 1, "native Dispatch commits the staged result"):
+		return
+	var id: String = ops.journeys.keys()[0]
+	var trip: Dictionary = ops.journeys[id]
+	check(not panel._activity.text.contains("recruits"), "Away hides committed personnel outcomes")
+	print("EXPEDITION_GENERATED seed=", seed_value, " original=", trip.originals, " duration=", trip.duration,
+		" ordinary_count=", trip.ordinary_count, " manifest=", trip.manifest)
+	await key_tap(KEY_ESCAPE)
+	check(not paused and not panel.is_open(), "Escape closes Dispatch before pause")
+	for pair: Array in [["Food", "Medical"], ["Hydration", "Protection"], ["Electronics", "Fuel"]]:
+		if not depart_pair(ops, pair[0], pair[1], 9100, Vector2(229, 253)):
+			check(false, "dispatch a genuine later return to exercise freight congestion")
+			return
+	timeline.advance(trip.return_at - timeline.clock.elapsed)
+	check(trip.status == Ops.COMPLETE and ops.medical.active_count() == 1 and ops.ready_count == 5
+		and runtime.lift_cycle.is_waiting_to_start() and wing.fuel.reserve() == 0.0,
+		"zero-Fuel pending start already handed over recruit and injured original")
+	var medical_deadline: float = ops.medical.next_boundary_at()
+	var last: float = trip.return_at
+	for departure: Dictionary in ops.journeys.values():
+		last = maxf(last, departure.return_at)
+	timeline.advance(last - timeline.clock.elapsed)
+	var waiting: Array = ops.journeys.keys().filter(func(key): return ops.journeys[key].status == Ops.WAITING)
+	if not check(waiting.size() == 1, "one upstream waiter remains"):
+		return
+	var waiter: String = waiting[0]
+	check(runtime.lift_cycle.get_queued_batch_count() == 2 and ops.ready_count == 7
+		and not ops.destination_busy(ops.journeys[waiter].destination), "two deposits and one upstream waiter preserve exact ownership")
+	if not resume_exact("emergency pending, active patient and upstream waiter"):
+		return
+	ops = wing.expeditions
+	runtime = wing.get_node("ReceivingRuntime")
+	timeline = wing.run_timeline
+	trip = ops.journeys[id]
+	var station: StaticBody3D = player.medical_station
+	if not await aim_at_medical(station):
+		return
+	if DisplayServer.get_name() == "headless":
+		player.medical_requested.emit()
+	else:
+		await key_tap(KEY_F)
+	var medical_panel: CanvasLayer = wing.medical_panel
+	if not check(medical_panel.is_open() and player.world_input_blocked and not paused
+			and medical_panel._patients.text.contains(trip.originals[0].health.capitalize()),
+			"authored frontage opens a live natural-recovery view"):
+		return
+	var before_e := Snapshot.new().capture(wing)
+	await key_tap(KEY_E)
+	check(Snapshot.new().capture(wing) == before_e, "Medical input leaves ownership, patient and draft unchanged")
+	await capture_render("medical-natural-recovery")
+	await key_tap(KEY_ESCAPE)
+	check(not medical_panel.is_open() and not paused, "Escape closes Medical before pause")
+	var cycle: ReceivingLiftCycle = runtime.lift_cycle
+	timeline.advance(cycle.wait_remaining())
+	for phase in 3:
+		if not cycle.can_take_receiving():
+			timeline.advance(cycle.seconds_to_boundary())
+	if not check(cycle.can_take_receiving(), "emergency freight reaches fully OPEN"):
+		return
+	var batch := runtime.receiving_manager.get_active_batch()
+	var batch_id := batch.batch_id
+	check(batch.source_ref == id and batch.entries.size() == trip.manifest.size(), "both portions are one exact active cargo batch")
+	var before_camera: Transform3D = player.camera.global_transform
+	player.camera.global_position = Vector3(-32.6, 1.75, 2.85)
+	player.camera.look_at(Vector3(-36.5, 1.65, -0.5))
+	await capture_render("expedition-native-open")
+	player.camera.global_transform = before_camera
+	if not await take_and_shelve(runtime):
+		return
+	if not resume_exact("partially unloaded generated haul"):
+		return
+	ops = wing.expeditions
+	timeline = wing.run_timeline
+	runtime = wing.get_node("ReceivingRuntime")
+	cycle = runtime.lift_cycle
+	batch = runtime.receiving_manager.get_active_batch()
+	check(batch.batch_id == batch_id and not batch.entries.all(func(entry: LootBatchEntry): return entry.remaining_in_batch),
+		"Continue keeps the taken entry and remaining layout")
+	while cycle.can_take_receiving():
+		if not await take_and_shelve(runtime):
+			return
+	check(batch.is_drained(), "every ordinary and bonus item was taken and stored")
+	for phase in 2:
+		timeline.advance(cycle.seconds_to_boundary())
+	check(ops.journeys[waiter].status == Ops.COMPLETE and ops.ready_count == 8, "oldest waiter hands over after full outbound")
+	if not await aim_at_medical(player.medical_station):
+		return
+	if DisplayServer.get_name() == "headless":
+		player.medical_requested.emit()
+	else:
+		await key_tap(KEY_F)
+	timeline.advance(medical_deadline - timeline.clock.elapsed)
+	await process_frame
+	check(ops.ready_count == 9 and ops.medical.active_count() == 0 and wing.fuel.reserve() == 0.0,
+		"exact natural deadline releases the original under zero Fuel and congestion")
+	check(wing.medical_panel.is_open() and wing.medical_panel._patients.text == "No patients."
+		and wing.dispatch_panel._summary.text.contains("Ready 9"), "open Medical view and workforce display refresh on recovery")
+	await capture_render("medical-recovered")
+	check(Snapshot.new().validate(Snapshot.new().capture(wing)).is_empty(), "combined return and recovery continuation is coherent")
+	print("EXPEDITION_NATIVE display=", DisplayServer.get_name(), " viewport=", root.size, " max_take_m=", max_take_reach,
+		" returned_items=", trip.manifest.size(), " handover=", trip.handover_at, " recovery=", medical_deadline,
+		" ready=", ops.ready_count, " fuel=", wing.fuel.reserve())
 
 func bind_wing() -> void:
 	wing = shell.wing
@@ -127,7 +218,9 @@ func prove_empty_workforce() -> void:
 	for index in Config.CATEGORIES.size():
 		var first: String = Config.CATEGORIES[index]
 		var second: String = Config.CATEGORIES[(index + 1) % Config.CATEGORIES.size()]
-		if not check(depart_pair(ops, first, second, 9100 + index), "ordinary one-person zero-loadout departure"):
+		# Disjoint seed ranges keep this single-handover witness distinct
+		# from the simultaneous-return cases in collection continuation.
+		if not check(depart_pair(ops, first, second, 9100 + index * 2000), "ordinary one-person zero-loadout departure"):
 			return
 	if not check(ops.ready_count == 0 and not ops.is_formed() and ops.active_ids().size() == 8,
 			"all eight scavengers are Away with an unformed draft"):
@@ -147,7 +240,7 @@ func prove_empty_workforce() -> void:
 		return
 	await capture_render("dispatch-no-ready")
 
-	# Schema 9 allowed these dormant preferences to be written by the old panel.
+	# Controlled dormant preferences exercise restoration with no Ready crew.
 	for saved_affinities: Array in [["Food"], ["Food", "Weapons"]]:
 		var saved := empty.duplicate(true)
 		saved.expeditions.draft.affinities = saved_affinities
@@ -168,7 +261,7 @@ func prove_empty_workforce() -> void:
 	if not check(ops.ready_count == 1 and panel.is_open() and panel._crew.text.contains("1 selected")
 			and panel._affinities.Food.button_pressed and panel._affinities.Weapons.button_pressed
 			and not panel._send.disabled and ops.journeys.size() == 8,
-			"admission re-enables the open draft with the same preferences and no auto-dispatch"):
+			"admission re-enables the open draft with the same preferences and no auto-dispatch. Ready=%d, draft=%s" % [ops.ready_count, panel._crew.text]):
 		return
 	await key_tap(KEY_E)
 	if not check(ops.ready_count == 0 and ops.is_formed() and ops.loadout.spent.size() == 1,
@@ -194,6 +287,7 @@ func prove_empty_workforce() -> void:
 	await key_tap(KEY_E)
 	check(ops.loadout.spent.size() == 2 and carry.get_item_count() == 0, "formed zero-Ready crew accepts a second eligible supply")
 	await capture_render("dispatch-formed-zero-ready")
+	ops.rng.seed = TestSeeds.find_seed(ops, wing.get_node("ReceivingRuntime"), TestSeeds.all_healthy)
 	await press_preparation_button(panel._send)
 	if not check(ops.journeys.size() == 9 and ops.journeys.has(formed_id) and not ops.is_formed() and ops.ready_count == 0,
 			"the formed crew departs exactly once and leaves an empty preparation"):
@@ -224,8 +318,13 @@ func check_empty_panel(panel: CanvasLayer) -> void:
 	check(panel._bulk.text.contains("unavailable") and not panel._destination.text.contains("Development destination"),
 		"empty roster presents loadout, capacity and destination as unavailable")
 
-func depart_pair(ops: RefCounted, first: String, second: String, seed_value: int) -> bool:
+func depart_pair(ops: RefCounted, first: String, second: String, first_seed: int, duration: Vector2 = Vector2(0, INF)) -> bool:
 	if not ops.set_members(1) or not ops.toggle_affinity(first) or not ops.toggle_affinity(second):
+		return false
+	var runtime: ReceivingRuntime = wing.get_node("ReceivingRuntime")
+	var seed_value := TestSeeds.find_seed(ops, runtime, func(outcome: Dictionary):
+		return TestSeeds.all_healthy(outcome) and outcome.duration >= duration.x and outcome.duration <= duration.y, first_seed)
+	if seed_value < 0:
 		return false
 	ops.rng.seed = seed_value
 	return ops.dispatch(ops.revision).ok
@@ -255,78 +354,75 @@ func press_preparation_button(button: Button) -> void:
 		root.push_input(click, true)
 		await process_frame
 
-func prove_layout_extremes(runtime: ReceivingRuntime, timeline: RefCounted) -> void:
-	var pool := Config.build_pool(runtime.item_catalog)
-	var tested := 0
-	# Maximum-count homogeneous cases bound each declared footprint and height.
-	for category: String in Config.CATEGORIES:
-		for definition: ItemDefinition in pool[category]:
-			var copies := floori(float(Config.MAX_MEMBERS * Config.BULK_PER_MEMBER) / definition.bulk)
-			var manifest: Array = []
-			manifest.resize(copies)
-			manifest.fill(String(definition.item_id))
-			check(runtime.can_prepare_manifest(manifest, "extreme_" + String(definition.item_id), 8310 + tested),
-				"deck prepares maximum homogeneous count for " + definition.display_name)
-			tested += 1
-	var rng := RandomNumberGenerator.new()
-	for index in 16:
-		rng.seed = 8200 + index
-		var manifest := Config.sample_manifest(32, [Config.CATEGORIES[index % 8], Config.CATEGORIES[(index + 3) % 8]], rng, pool)
-		check(runtime.can_prepare_manifest(manifest, "mixed_%d" % index, 8340 + index), "deck prepares bounded mixed haul %d" % index)
-		tested += 1
-	for id in ["loot_000084", "loot_000033", "loot_000007"]:
-		var manifest: Array = []
-		manifest.resize(16)
-		manifest.fill(id)
-		var batch := runtime.prepare_manifest(manifest, "reach_" + id, 8401)
-		if not check(batch != null and runtime.return_admission.submit_return("reach_" + id, batch) != 0, "extreme delivery submits"):
-			return
-		timeline.advance(60.0)
-		var identities := {}
-		for entry: LootBatchEntry in batch.entries:
-			identities[entry.item_instance_id] = true
-		check(identities.size() == 16, "repeated types preserve distinct exact item identities")
-		if not await drain_into_stock(runtime, null, 16, false):
-			return
-		timeline.advance(60.0)
-	print("EXPEDITION_LAYOUT prepared_extremes_and_mixed=", tested, " progressive_extremes=3")
+func resume_exact(label: String) -> bool:
+	var saved := Snapshot.new().capture(wing)
+	if not check(shell.save_and_exit() and shell.continue_run(), "Save & Exit / Continue " + label + " " + shell.status_label.text):
+		return false
+	bind_wing()
+	return check(Snapshot.new().capture(wing) == saved and not wing.medical_panel.is_open(), "exact resume " + label)
 
-func drain_into_stock(runtime: ReceivingRuntime, stock: StorageSurface, count: int, use_input: bool) -> bool:
-	for index in count:
+func aim_dispatch() -> void:
+	var station: StaticBody3D = player.dispatch_station
+	player.global_position = Vector3(station.global_position.x, 0.02, station.global_position.z + 1.5)
+	player.camera.look_at(station.global_position + Vector3(0.0, 0.2, 0.0))
+	await physics_frame
+	await physics_frame
+
+func aim_at_medical(station: StaticBody3D) -> bool:
+	var at := station.global_position
+	for outward: Vector3 in [Vector3.BACK, Vector3.FORWARD, Vector3.RIGHT, Vector3.LEFT]:
+		player.global_position = Vector3(at.x, 0.04, at.z) + outward * 1.4
+		player.camera.look_at(at)
 		await physics_frame
+		if player.can_reach_medical():
+			return true
+	return check(false, "real reticle reaches the Medical frontage")
+
+func take_supply(host: String) -> bool:
+	var world := wing.get_node_or_null("DevelopmentSetup/SeedItems/" + host + "/WorldItem") as WorldItem
+	if not check(world != null, "authored supply present: " + host):
+		return false
+	var target: Vector3 = world.get_node("PickupArea/PickupShape").global_position
+	var item := world.get_item_instance()
+	for direction: Vector3 in [Vector3.BACK, Vector3.FORWARD, Vector3.LEFT, Vector3.RIGHT,
+			Vector3(0.7, 0, 0.7), Vector3(-0.7, 0, -0.7)]:
+		player.global_position = Vector3(target.x, 0.04, target.z) + direction * 0.95
+		player.camera.look_at(target)
 		await physics_frame
-		var candidate := _nearest_exposed_candidate(player, player.camera, runtime.deck_presenter.get_materialized_world_items())
-		if not check(not candidate.is_empty(), "a progressive reticle target is available for " + runtime.receiving_manager.get_active_batch().source_ref):
-			return false
-		var hit: float = candidate.hit_distance_m
-		max_take_reach = maxf(max_take_reach, hit)
-		_place_player_at_stance(player, candidate.stance_z)
-		player.camera.look_at(candidate.target_position)
-		var world: WorldItem = candidate.world_item
-		if not check(hit <= player.receiving_interaction_distance and player._get_looked_at_world_item() == world,
-			"production ray reaches the exposed item"):
-			return false
-		var item := world.get_item_instance()
-		if use_input and DisplayServer.get_name() != "headless":
-			await mouse_take()
-		else:
+		if player._get_looked_at_world_item() != world:
+			continue
+		if DisplayServer.get_name() == "headless":
 			player._attempt_pickup_click()
-		if not check(carry.get_items().has(item), "TAKE transfers the exact item"):
-			return false
-		if stock != null:
-			var stored := false
-			placement.set_suppressed(false)
-			for shelf: StorageSurface in [stock, wing.get_functional_surfaces()[2], wing.get_functional_surfaces()[3]]:
-				shelf.initialize_zones_if_needed(StorageCategories.GENERAL)
-				if put(item, shelf):
-					stored = true
-					break
-			if not check(stored, "ordinary placement stores the expedition item"):
-				return false
 		else:
-			carry.remove_item(item) # Test-only handoff to expose the next crate-free deck item.
-	return check(runtime.receiving_manager.get_active_batch().is_drained(), "every committed item was taken")
+			await mouse_take()
+		return check(carry.get_selected_item() == item, "ordinary reticle pickup transfers " + host)
+	return check(false, "real pickup target is reachable from a controlled stance: " + host)
 
+func take_and_shelve(runtime: ReceivingRuntime) -> bool:
+	await physics_frame
+	await physics_frame
+	var target := _nearest_exposed_candidate(player, player.camera, runtime.deck_presenter.get_materialized_world_items())
+	if not check(not target.is_empty(), "progressive Receiving target exists"):
+		return false
+	_place_player_at_stance(player, target.stance_z)
+	player.camera.look_at(target.target_position)
+	var world: WorldItem = target.world_item
+	if not check(player._get_looked_at_world_item() == world, "production reticle reaches the generated cargo"):
+		return false
+	max_take_reach = maxf(max_take_reach, target.hit_distance_m)
+	var item := world.get_item_instance()
+	if DisplayServer.get_name() == "headless":
+		player._attempt_pickup_click()
+	else:
+		await mouse_take()
+	if not check(carry.get_items().has(item), "TAKE transfers the exact generated item"):
+		return false
+	placement.set_suppressed(false)
+	for shelf: StorageSurface in wing.get_functional_surfaces():
+		shelf.set_zone_rect(StorageCategories.GENERAL, Vector2i.ZERO, shelf.grid_size - Vector2i.ONE)
+		if put(item, shelf):
+			return true
+	return check(false, "ordinary placement accepts the generated item")
 func key_tap(code: Key) -> void:
 	await key_event(code, true)
 	await key_event(code, false)
@@ -374,22 +470,6 @@ func observe_live_clock(timeline: RefCounted) -> void:
 	check(progress >= 1.0 and wing.dispatch_panel.is_open() and wing._collection_hud._time.text != time_text,
 		"ordinary frames advance the visible clock with Dispatch open")
 	print("DISPATCH_LIVE_CLOCK active_delta=", progress, " hud=", wing._collection_hud._time.text)
-
-func capture_receiving(runtime: ReceivingRuntime) -> void:
-	var crt := wing.get_node("ReceivingLiftMonitor/PhosphorDisplay/ScreenViewport/Interface")
-	check(crt.get_node("Status").text.contains("OPEN") and crt.get_node("Queue").text.ends_with("01")
-		and runtime.lift_cycle.can_take_receiving(), "CRT retains OPEN and counts only the other deposited haul")
-	var previous: Transform3D = player.camera.global_transform
-	var held: Node3D = player._held_item_view
-	var held_visible := held != null and held.visible
-	if held_visible:
-		held.hide()
-	player.camera.global_position = Vector3(-32.6, 1.75, 2.85)
-	player.camera.look_at(Vector3(-36.5, 1.65, -0.5))
-	await capture_render("receiving-expedition-open")
-	player.camera.global_transform = previous
-	if held_visible:
-		held.show()
 
 func capture_render(label: String) -> void:
 	var evidence := OS.get_environment("SORTING_EXPEDITION_RENDER_DIR")

@@ -1,11 +1,11 @@
 extends RefCounted
 
-const REVISION := 1
+const REVISION := 2
 const INTERVAL := Vector2i(180, 300)
 const PROPOSAL := Vector2i(60, 80)
 const GRACE_SECONDS := 60
 const UTILITY_PER_POINT := 3
-const MAX_LOSS := 50
+const MAX_LOSS := 35
 const CAP := UTILITY_PER_POINT * MAX_LOSS
 const LANES := ["Food", "Hydration"]
 

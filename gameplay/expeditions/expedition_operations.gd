@@ -1,7 +1,10 @@
 extends RefCounted
 
-const Config = preload("res://gameplay/expeditions/expedition_test_config.gd")
+const Config = preload("res://gameplay/expeditions/expedition_config.gd")
 const Loadout = preload("res://gameplay/expeditions/expedition_loadout.gd")
+const Acquisition = preload("res://gameplay/expeditions/expedition_acquisition.gd")
+const Outcomes = preload("res://gameplay/expeditions/expedition_outcomes.gd")
+const Medical = preload("res://gameplay/medical/medical_recovery.gd")
 const AWAY := "away"
 const WAITING := "awaiting_lift"
 const COMPLETE := "complete"
@@ -16,6 +19,7 @@ var loadout := Loadout.new(Config.DEFAULT_MEMBERS)
 var journeys: Dictionary = {}
 var revision := 0
 var rng := RandomNumberGenerator.new()
+var medical := Medical.new()
 var error := ""
 var last_empty_return_at := -INF
 var other_consumer_has_spent: Callable
@@ -28,6 +32,7 @@ var _away_by_destination: Dictionary = {}
 var _active: Dictionary = {}
 var _away_cargo: Dictionary = {}
 var _spent_ids: Dictionary = {}
+var _recent_handovers: Array[String] = []
 
 func has_spent_item(item_id: String) -> bool:
 	return _spent_ids.has(item_id)
@@ -43,9 +48,9 @@ func _init(identity: RefCounted, clock: RefCounted) -> void:
 func bind(runtime: ReceivingRuntime) -> String:
 	if runtime.return_admission == null or not runtime.lift_cycle.is_configured():
 		return "Receiving failed to initialize"
-	_pool = Config.build_pool(runtime.item_catalog)
+	_pool = Acquisition.build_pool(runtime.item_catalog)
 	if _pool.is_empty():
-		return "Expedition test pool is incompatible with the active catalogue"
+		return "Expedition could not validate the active item catalogue"
 	_runtime = runtime
 	runtime.return_admission.commit_handover = _on_handover_committed
 	runtime.return_admission.return_admitted.connect(_on_admitted)
@@ -166,26 +171,27 @@ func dispatch(expected_revision: int, confirm_empty_capacity: bool = false) -> D
 	# Stage the outcome and layout before spending a sequence or forming a crew.
 	var id: String = loadout.request_id if is_formed() else _identity.next_id(ID_KIND)
 	var before_draw := rng.state
-	var duration := rng.randf_range(Config.MIN_DURATION, Config.MAX_DURATION)
-	var manifest := Config.sample_manifest(capacity, affinities, rng, _pool)
+	var seeds := Outcomes.draw_seeds(rng)
+	var outcome := Outcomes.resolve(members, loadout.credited, capacity, affinities, seeds, _pool)
+	var manifest: Array[String] = outcome.manifest
 	var batch_id := ""
-	var presentation_seed := 0
 	if not manifest.is_empty():
 		batch_id = cargo_id(id)
-		presentation_seed = rng.randi()
-		var batch := _runtime.prepare_expedition_manifest(manifest, id, presentation_seed, batch_id)
+		var batch := _runtime.prepare_expedition_manifest(manifest, id, outcome.presentation_seed, batch_id)
 		if batch == null:
 			rng.state = before_draw
+			print("Expedition preparation rejected: ", id, " destination=", selected_destination(),
+				" ordinary=", outcome.ordinary_count, " seeds=", seeds, " manifest=", manifest)
 			return {"ok": false, "error": "Cargo could not be prepared. Departure did not commit."}
 		_away_cargo[batch_id] = batch
 	if not is_formed():
 		_form_crew()
 	var destination := selected_destination()
 	var departed_at: float = _clock.elapsed
-	var journey := {"members": members, "destination": destination, "departed_at": departed_at,
-		"duration": duration, "return_at": departed_at + duration, "handover_at": -1.0, "status": AWAY,
-		"loadout": loadout.capture_state(), "batch_id": batch_id, "manifest": manifest,
-		"presentation_seed": presentation_seed}
+	var journey := outcome
+	journey.merge({"members": members, "destination": destination, "departed_at": departed_at,
+		"return_at": departed_at + outcome.duration, "handover_at": -1.0, "status": AWAY,
+		"loadout": loadout.capture_state(), "batch_id": batch_id, "seeds": seeds})
 	journeys[id] = journey
 	_active[id] = journey
 	_away_by_destination[destination] = id
@@ -256,10 +262,21 @@ func _on_admitted(id: String, batch_id: String) -> void:
 
 func _complete(id: String, at: float) -> void:
 	var journey: Dictionary = journeys[id]
+	var totals := Outcomes.summarize(journey.originals)
+	for index in journey.originals.size():
+		var health: String = journey.originals[index].health
+		if health != Outcomes.HEALTHY:
+			medical.admit(id, index, health, at)
+	ready_count += totals.healthy + totals.recruits
 	journey.status = COMPLETE
 	journey.handover_at = at
-	ready_count += int(journey.members)
 	_active.erase(id)
+	_remember_handover(id)
+
+func settle_recovery() -> bool:
+	var recovered := medical.settle_due(_clock.elapsed)
+	ready_count += recovered
+	return recovered > 0
 
 func _on_invalidated(id: String, batch_id: String, reason: String) -> void:
 	if error.is_empty() and _active.has(id):
@@ -269,6 +286,19 @@ func _on_invalidated(id: String, batch_id: String, reason: String) -> void:
 func active_ids() -> Array:
 	return _active.keys()
 
+func recent_handover_ids() -> Array[String]:
+	return _recent_handovers
+
+func _remember_handover(id: String) -> void:
+	_recent_handovers.push_front(id)
+	if _recent_handovers.size() > 6:
+		_recent_handovers.pop_back()
+
+static func config_signature() -> Dictionary:
+	var signature := Config.signature()
+	signature.natural_recovery = [Medical.LIGHT_SECONDS, Medical.SEVERE_SECONDS]
+	return signature
+
 func _edited() -> void:
 	revision += 1
 	changed.emit()
@@ -277,27 +307,40 @@ func capture_state() -> Dictionary:
 	var cargo := {}
 	for id: String in _away_cargo:
 		cargo[id] = _away_cargo[id].to_snapshot()
-	return {"config": Config.signature(), "ready": ready_count, "rng_state": rng.state,
+	return {"config": config_signature(), "ready": ready_count, "rng_state": rng.state,
+		"medical": medical.capture_state(),
 		"draft": {"members": members, "affinities": affinities.duplicate(), "loadout": loadout.capture_state()},
 		"journeys": journeys.duplicate(true), "away_cargo": cargo}
 
 func restore_state(state: Dictionary) -> void:
 	ready_count = state.ready
 	rng.state = state.rng_state
+	medical.restore_state(state.medical)
 	members = state.draft.members
 	affinities.assign(state.draft.affinities)
 	loadout = Loadout.new(members)
 	loadout.restore_state(state.draft.loadout.duplicate(true))
 	journeys = state.journeys.duplicate(true)
+	var completed: Array[String] = []
 	for id: String in journeys:
 		var journey: Dictionary = journeys[id]
 		if journey.status == AWAY:
 			_away_by_destination[journey.destination] = id
 		if journey.status != COMPLETE:
 			_active[id] = journey
-		elif journey.batch_id.is_empty():
-			last_empty_return_at = maxf(last_empty_return_at, journey.return_at)
+		else:
+			completed.append(id)
+			if journey.batch_id.is_empty():
+				last_empty_return_at = maxf(last_empty_return_at, journey.return_at)
 		_index_receipts(journey.loadout.spent)
+	completed.sort_custom(func(a: String, b: String):
+		var first: Dictionary = journeys[a]
+		var second: Dictionary = journeys[b]
+		if first.handover_at != second.handover_at:
+			return first.handover_at < second.handover_at
+		return first.return_at < second.return_at or (first.return_at == second.return_at and sequence(a) < sequence(b)))
+	for id: String in completed:
+		_remember_handover(id)
 	_index_receipts(loadout.spent)
 	for batch_id: String in state.away_cargo:
 		_away_cargo[batch_id] = LootBatch.from_snapshot(state.away_cargo[batch_id])

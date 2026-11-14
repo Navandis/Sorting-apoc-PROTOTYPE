@@ -3,7 +3,7 @@ extends SceneTree
 const Wing := preload("res://gameplay/logistics_wing/wing_gameplay.tscn")
 const Lift := ReceivingLiftCycle.State
 const Kitchen := preload("res://gameplay/kitchen/kitchen_operations.gd")
-const ExpeditionConfig := preload("res://gameplay/expeditions/expedition_test_config.gd")
+const ExpeditionSeeds := preload("res://tools/asset_pipeline/tests/expedition_test_support.gd")
 
 var checks := 0
 var failures := 0
@@ -170,12 +170,13 @@ func test_simultaneous_boundary() -> void:
 	wing.kitchen.notice.connect(func(message: String):
 		if message.contains("grace expired"):
 			expires[0] += 1)
-	rng.seed = 27
-	var duration := rng.randf_range(ExpeditionConfig.MIN_DURATION, ExpeditionConfig.MAX_DURATION)
-	timeline.advance(300.0 - duration)
-	operations.rng.seed = 27
 	operations.toggle_affinity("Food")
 	operations.toggle_affinity("Fuel")
+	var seed_value := ExpeditionSeeds.find_seed(operations, runtime, ExpeditionSeeds.all_healthy, 27)
+	var pool := ExpeditionSeeds.Acquisition.build_pool(runtime.item_catalog)
+	var duration: float = ExpeditionSeeds.seeded_outcome(operations, pool, seed_value).duration
+	timeline.advance(300.0 - duration)
+	operations.rng.seed = seed_value
 	var sent: Dictionary = operations.dispatch(operations.revision)
 	check(sent.ok and operations.journeys[sent.id].return_at == 300.0, "real nonempty return shares the grace and threshold endpoint")
 	timeline.advance(300.0 - timeline.clock.elapsed)

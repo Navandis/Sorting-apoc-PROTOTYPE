@@ -1,7 +1,8 @@
 extends CanvasLayer
 
-const Config = preload("res://gameplay/expeditions/expedition_test_config.gd")
+const Config = preload("res://gameplay/expeditions/expedition_config.gd")
 const Ops = preload("res://gameplay/expeditions/expedition_operations.gd")
+const Outcomes = preload("res://gameplay/expeditions/expedition_outcomes.gd")
 const MUTED := Color(0.72, 0.82, 0.79)
 const ACCENT := Color(0.62, 0.95, 0.74)
 
@@ -24,6 +25,7 @@ var _destination: Label
 var _reason: Label
 var _activity: Label
 var _summary: Label
+var _warning_body: Label
 var _send: Button
 var _confirmation_revision := -1
 var _failure := ""
@@ -97,6 +99,7 @@ func _dispatch() -> void:
 	var sent: Dictionary = operations.dispatch(revision)
 	if sent.get("confirm", false):
 		_confirmation_revision = revision
+		_warning_body.text = _zero_capacity_text(operations.loadout.credited.Food)
 		_warning.show()
 		return
 	_show_dispatch_result(sent)
@@ -140,19 +143,36 @@ func refresh() -> void:
 	var loadout: RefCounted = operations.loadout
 	var item: ItemInstance = carry.get_selected_item()
 	var preview: Dictionary = operations.preview(item) if can_prepare else {}
+	var current := {}
+	var projected := {}
+	if can_prepare:
+		current = Outcomes.effects(operations.members, loadout.credited)
+		var credits: Dictionary = loadout.credited.duplicate()
+		if preview.status == "eligible":
+			credits[preview.lane] = preview.projected
+		projected = Outcomes.effects(operations.members, credits)
 	for lane: String in _lanes:
 		var row: Dictionary = _lanes[lane]
 		if not can_prepare:
 			row.bar.value = 0
 			row.value.text = "—"
+			row.effect.text = ""
 			continue
 		row.bar.max_value = loadout.targets[lane]
 		row.bar.value = loadout.credited[lane]
 		row.value.text = "%d / %d" % [loadout.credited[lane], loadout.targets[lane]]
+		row.effect.text = _effect_text(lane, current)
 		if preview.status == "eligible" and preview.lane == lane:
 			row.value.text += "  →  %d" % preview.projected
+			var after := _effect_text(lane, projected)
+			if lane == "Food" and after == row.effect.text and projected.food.extra_chance > current.food.extra_chance:
+				row.effect.text += " · Higher chance of the upper count"
+			elif lane == "Weapons" and after == row.effect.text and projected.weapons_bias > current.weapons_bias:
+				row.effect.text += " · Stronger preference"
+			elif after != row.effect.text:
+				row.effect.text += "  →  " + after
 	if can_prepare:
-		_bulk.text = "%d / %d Bulk outgoing   •   %d Bulk for loot" % [
+		_bulk.text = "%d / %d Bulk outgoing   •   %d ordinary Bulk left" % [
 			loadout.submitted_bulk(), loadout.raw_capacity, operations.return_capacity()]
 		_item.text = _selected_item_text(item, preview)
 		_supply_hint.text = "[E] Contribute whole item  •  Wheel / 1–0 select"
@@ -177,6 +197,32 @@ func refresh() -> void:
 	_send.disabled = not reason.is_empty()
 	_reason.text = _failure if not _failure.is_empty() else (
 		reason if not reason.is_empty() else "Crew can depart with this loadout.")
+
+func _effect_text(lane: String, modifiers: Dictionary) -> String:
+	match lane:
+		"Food":
+			var count: int = modifiers.food.guaranteed
+			if modifiers.food.extra_chance > 0.0:
+				return "%d–%d Bonus Items" % [count, count + 1]
+			return "%d Bonus Item%s" % [count, "" if count == 1 else "s"]
+		"Hydration":
+			var duration: Vector2 = modifiers.duration_range
+			return "%.1f–%.1fs travel" % [duration.x, duration.y]
+		"Weapons":
+			return "Uniform quality" if modifiers.weapons_bias == 0.0 else "Favors higher Utility/Bulk"
+		"Protection":
+			return "%.2f%% light / %.2f%% severe per original" % [modifiers.light_chance * 100, modifiers.severe_chance * 100]
+		"Morale":
+			return "%.2f%% recruit per original" % (modifiers.recruit_chance * 100)
+	return ""
+
+func _zero_capacity_text(food_credit: int) -> String:
+	var bonus := Outcomes.food_bonus(food_credit)
+	if food_credit == 0:
+		return "Supplies occupy all ordinary Bulk. This crew will return empty."
+	if bonus.guaranteed == 0:
+		return "Supplies occupy all ordinary Bulk. Food gives a chance of one bonus item."
+	return "Supplies occupy all ordinary Bulk. Food can return %s." % _effect_text("Food", {"food": bonus})
 
 func _selected_item_text(item: ItemInstance, preview: Dictionary) -> String:
 	if item == null:
@@ -218,16 +264,28 @@ func _refresh_activity() -> void:
 		else:
 			waiting += 1
 		if is_open():
-			lines.append("%02d  %s  ·  %s" % [Ops.sequence(id), stage, Config.destination_label(trip.destination)])
-	var summary := "Ready %d    Away %d    Awaiting Lift %d" % [operations.ready_count, away, waiting]
+			if trip.status == Ops.AWAY:
+				lines.append("%02d  %s  ·  %s" % [Ops.sequence(id), stage, Config.destination_label(trip.destination)])
+			else:
+				lines.append(_return_text(id, trip, stage))
+	var summary := "Ready %d    Recovering %d\nAway %d    Awaiting Lift %d" % [
+		operations.ready_count, operations.medical.active_count(), away, waiting]
 	if clock.elapsed - operations.last_empty_return_at < 12.0:
 		summary += "\nCrew returned without loot"
 	if _summary.text != summary:
 		_summary.text = summary
 	if is_open():
+		for id: String in operations.recent_handover_ids():
+			lines.append(_return_text(id, operations.journeys[id], "Handed over"))
 		var activity := "\n".join(lines) if not lines.is_empty() else "No crews away or awaiting handover."
 		if _activity.text != activity:
 			_activity.text = activity
+
+func _return_text(id: String, trip: Dictionary, stage: String) -> String:
+	var totals := Outcomes.summarize(trip.originals)
+	return "%02d  %s  ·  %s\n       %d cargo  ·  %d light / %d severe  ·  %d recruits" % [
+		Ops.sequence(id), stage, Config.destination_label(trip.destination),
+		trip.manifest.size(), totals.light, totals.severe, totals.recruits]
 
 func _build_status() -> void:
 	var anchor := MarginContainer.new()
@@ -268,7 +326,7 @@ func _build_preparation() -> void:
 	var grid := GridContainer.new()
 	grid.columns = 3
 	grid.add_theme_constant_override("h_separation", 12)
-	grid.add_theme_constant_override("v_separation", 8)
+	grid.add_theme_constant_override("v_separation", 2)
 	supplies.add_child(grid)
 	for lane: String in Config.PER_MEMBER_TARGETS:
 		_label(grid, lane, 22)
@@ -276,7 +334,13 @@ func _build_preparation() -> void:
 		bar.show_percentage = false
 		bar.custom_minimum_size = Vector2(255, 14)
 		grid.add_child(bar)
-		_lanes[lane] = {"bar": bar, "value": _label(grid, "", 20)}
+		var value := _label(grid, "", 18)
+		_label(grid, "", 16)
+		var effect := _label(grid, "", 16, MUTED)
+		effect.custom_minimum_size.x = 255
+		effect.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		_label(grid, "", 16)
+		_lanes[lane] = {"bar": bar, "value": value, "effect": effect}
 	_bulk = _label(supplies, "", 21, ACCENT)
 	_item = _label(supplies, "", 20)
 	_item.custom_minimum_size.y = 58
@@ -296,16 +360,23 @@ func _build_preparation() -> void:
 	_reason = _label(routing, "", 20, MUTED)
 	_reason.custom_minimum_size.y = 52
 	_send = _button(routing, "Dispatch", _dispatch)
-	_label(routing, "OPERATIONS", 18, ACCENT)
-	_activity = _label(routing, "", 19)
+	_label(routing, "EXPEDITION ACTIVITY", 18, ACCENT)
+	var activity_scroll := ScrollContainer.new()
+	activity_scroll.custom_minimum_size = Vector2(550, 122)
+	activity_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	routing.add_child(activity_scroll)
+	_activity = _label(activity_scroll, "", 16)
+	_activity.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_activity.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 
 func _build_warning() -> void:
 	_warning = _center()
 	_warning.mouse_filter = Control.MOUSE_FILTER_STOP
 	_warning.hide()
 	var column := _card(_warning, 630)
-	_label(column, "NO RETURN CAPACITY", 27, Color(1, 0.79, 0.44))
-	_label(column, "The crew’s supplies occupy its entire carrying capacity.\nIt will return without loot.", 23)
+	_label(column, "NO ORDINARY RETURN CAPACITY", 27, Color(1, 0.79, 0.44))
+	_warning_body = _label(column, "", 20)
+	_warning_body.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	var actions := HBoxContainer.new()
 	actions.add_theme_constant_override("separation", 12)
 	column.add_child(actions)

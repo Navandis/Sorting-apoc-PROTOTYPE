@@ -3,6 +3,7 @@ extends SceneTree
 const ShellScene = preload("res://gameplay/run/run_shell.tscn")
 const SaveService = preload("res://gameplay/run/run_save_service.gd")
 const Snapshot = preload("res://gameplay/run/run_snapshot.gd")
+const TestSeeds = preload("res://tools/asset_pipeline/tests/expedition_test_support.gd")
 const Codec = preload("res://gameplay/run/state_codec.gd")
 const Ops = preload("res://gameplay/expeditions/expedition_operations.gd")
 
@@ -33,19 +34,19 @@ func run() -> void:
 	var path := OS.get_temp_dir().path_join("expedition-continuation-" + Crypto.new().generate_random_bytes(8).hex_encode())
 	var older := path.path_join("Save_m4.json")
 	var directory := path.path_join("collection")
-	var foundation := directory.path_join("Save_foundation.json")
+	var foundation := directory.path_join("Save_receiving.json")
 	var pointer := directory.path_join(SaveService.POINTER)
 	DirAccess.make_dir_recursive_absolute(directory)
 	write(path.path_join(SaveService.POINTER), JSON.stringify({"snapshot": older.get_file()}))
 	write(older, Codec.new().stringify({"schema": 4}))
 	write(pointer, JSON.stringify({"snapshot": foundation.get_file()}))
-	write(foundation, Codec.new().stringify({"schema": 5}))
+	write(foundation, Codec.new().stringify({"schema": 10}))
 	var foundation_hash := FileAccess.get_sha256(foundation)
 	var pointer_hash := FileAccess.get_sha256(pointer)
 	var legacy_hash := FileAccess.get_sha256(older)
 	service = MeasuredSaveService.new(directory)
 	open_shell()
-	check(shell.continue_button.disabled and shell.status_label.text.contains("schema 5") and shell.status_label.text.contains("Legacy M4"),
+	check(shell.continue_button.disabled and shell.status_label.text.contains("schema 10") and shell.status_label.text.contains("Legacy M4"),
 		"launch explains both incompatible continuations")
 	check(not shell.continue_run() and shell.wing == null and shell.launch.visible and FileAccess.get_sha256(pointer) == pointer_hash
 		and FileAccess.get_sha256(foundation) == foundation_hash, "failed Continue preserves the older slot exactly")
@@ -88,12 +89,12 @@ func run() -> void:
 	if not roundtrip("locked partial preparation"):
 		finish()
 		return
-	check(ops.ready_count == 7 and ops.is_formed() and ops.loadout.spent.size() == 1 and ops.return_capacity() == 7,
+	check(ops.ready_count == 7 and ops.is_formed() and ops.loadout.spent.size() == 1 and ops.return_capacity() == 22,
 		"formation, whole receipt and partial capacity survive Continue")
-	var first := depart("Food", "Fuel", 8901)
-	var second := depart("Hydration", "Medical", 8901)
-	var third := depart("Morale", "Weapons", 8901)
-	var fourth := depart("Protection", "Electronics", 8901)
+	var first := depart("Food", "Fuel", 8901, true)
+	var second := depart("Hydration", "Medical", 8901, true)
+	var third := depart("Morale", "Weapons", 8901, true)
+	var fourth := depart("Protection", "Electronics", 8901, true)
 	if [first, second, third, fourth].has(""):
 		finish()
 		return
@@ -134,7 +135,8 @@ func run() -> void:
 		and runtime.receiving_manager.get_queued_batch_ids() == queue, "large step and ordinary frames agree on the tied return order")
 	check(active == ops.journeys[first].batch_id and queue == PackedStringArray([ops.journeys[second].batch_id, ops.journeys[third].batch_id])
 		and ops.journeys[fourth].status == Ops.WAITING, "ties admit by dispatch identity, with the fourth crew Awaiting Lift")
-	check(ops.ready_count == 7 and ops.journeys[first].handover_at == return_at and ops.journeys[third].handover_at == return_at,
+	check(ops.ready_count + ops.medical.active_count() == 7
+		and ops.journeys[first].handover_at == return_at and ops.journeys[third].handover_at == return_at,
 		"active and queued deposits release personnel at the committed timestamp")
 	var held := cycle.capture_state()
 	check(cycle.get_cycle_state() == ReceivingLiftCycle.State.ARRIVAL and absf(held.elapsed - 0.125) < 0.00001,
@@ -166,51 +168,26 @@ func run() -> void:
 		return
 	timeline.advance(ops.journeys[repeated].return_at - timeline.clock.elapsed)
 	check(ops.journeys[repeated].status == Ops.WAITING and ops.journeys[fourth].status == Ops.WAITING
-		and ops.journeys[repeated].destination == same_pair and ops.ready_count == 6, "two distinct crews can await handover from the same destination")
+		and ops.journeys[repeated].destination == same_pair and ops.ready_count + ops.medical.active_count() == 6,
+		"two distinct crews can await handover from the same destination")
 	if not roundtrip("two same-destination waiters and two deposited crews"):
 		finish()
 		return
 	check(cycle.can_take_receiving() and runtime.return_admission.get_awaiting_returns().size() == 2, "deposited and upstream owners restore separately")
 
 	var lift_before := runtime.capture_state()
-	for definition in ["loot_000007", "loot_000019", "loot_000025", "loot_000039", "loot_000033"]:
-		check(supply(definition), "zero-capacity recipe uses authored item " + definition)
-	check(ops.return_capacity() == 0, "exact zero-capacity recipe")
-	select_pair("Food", "Weapons")
-	var panel: CanvasLayer = wing.dispatch_panel
-	panel.open_panel()
-	panel._send.pressed.emit()
-	check(panel._warning.visible and not paused and ops.is_formed(), "zero-capacity warning holds only input")
-	var before: Dictionary = ops.capture_state()
-	shell._input(escape_event(true))
-	shell._input(escape_event(false))
-	check(panel.is_open() and not panel._warning.visible and not paused and ops.capture_state() == before,
-		"Escape backs out of the warning and preserves the committed preparation")
-	panel._confirm()
-	check(ops.capture_state() == before, "stale modal action cannot depart")
-	panel._send.pressed.emit()
-	panel._confirm()
-	var zero: String = ops.journeys.keys().back()
-	check(ops.journeys[zero].status == Ops.AWAY and ops.journeys[zero].batch_id.is_empty(), "zero-capacity crew travels without a batch")
-	panel.close_top()
-	for definition in ["loot_000006", "loot_000020", "loot_000026", "loot_000035"]:
-		check(supply(definition), "one-Bulk residual recipe uses authored item " + definition)
-	check(ops.return_capacity() == 1, "positive residual is smaller than every pool item")
-	var unfillable := depart("Hydration", "Protection", 8903)
-	if unfillable.is_empty() or not roundtrip("both legitimate empty outcomes Away"):
+	for definition in ["loot_000010", "loot_000020", "loot_000035"]:
+		check(supply(definition), "partial-provision recipe uses authored item " + definition)
+	check(ops.return_capacity() == 18, "partial provisions charge the full outgoing Bulk")
+	var supplied := depart("Food", "Weapons", 8903)
+	if supplied.is_empty() or not roundtrip("supplied crew Away while lift is congested"):
 		finish()
 		return
-	timeline.advance(maxf(ops.journeys[zero].return_at, ops.journeys[unfillable].return_at) - timeline.clock.elapsed)
-	check(ops.journeys[zero].status == Ops.COMPLETE and ops.journeys[unfillable].status == Ops.COMPLETE and ops.ready_count == 6
-		and ops.journeys[unfillable].handover_at == ops.journeys[unfillable].return_at, "both empty outcomes release crew at return")
-	var lift_after := runtime.capture_state()
-	check(lift_after.manager == lift_before.manager and lift_after.admission == lift_before.admission and cycle.can_take_receiving(),
-		"empty returns leave the full lift and upstream FIFO untouched")
-	check(wing.dispatch_panel._summary.text.contains("without loot"), "empty return has a brief visible status")
-	if not roundtrip("completed zero-item returns with full queues"):
-		finish()
-		return
-	check(ops.ready_count == 6 and not ops.destination_busy(ops.journeys[zero].destination), "restoration does not repeat empty handover")
+	timeline.advance(ops.journeys[supplied].return_at - timeline.clock.elapsed)
+	check(ops.journeys[supplied].status == Ops.WAITING and not ops.destination_busy(ops.journeys[supplied].destination),
+		"later supplied return joins the waiting queue and frees its destination")
+	check(runtime.capture_state().manager == lift_before.manager and cycle.can_take_receiving(),
+		"additional waiters leave the occupied lift and deposited queue intact")
 
 	var first_world: WorldItem = runtime.deck_presenter.get_materialized_world_items()[0]
 	var released_id := first_world.get_item_instance().instance_id
@@ -275,7 +252,7 @@ func run() -> void:
 		return
 	timeline.advance(cycle.seconds_to_boundary() - 0.125)
 	check(runtime.receiving_manager.get_active_batch_id() == active, "no promotion before full outbound")
-	var ready: int = ops.ready_count
+	var available_or_recovering: int = ops.ready_count + ops.medical.active_count()
 	var observed_delayed: Array[String] = []
 	runtime.receiving_manager.contents_changed.connect(func():
 		if runtime.return_admission.get_return_status(fourth) == AwaitingLiftAdmission.ADMITTED_RETURNED:
@@ -285,10 +262,12 @@ func run() -> void:
 	check(runtime.receiving_manager.get_active_batch_id() == ops.journeys[second].batch_id and cycle.can_take_receiving()
 		and runtime.receiving_manager.get_queued_batch_ids() == PackedStringArray([ops.journeys[third].batch_id, ops.journeys[fourth].batch_id]),
 		"oldest waiter admits behind existing deposits after the full outbound")
-	check(ops.ready_count == ready + 1 and ops.journeys[fourth].status == Ops.COMPLETE and ops.journeys[repeated].status == Ops.WAITING,
+	check(ops.ready_count + ops.medical.active_count() == available_or_recovering + 1
+		and ops.journeys[fourth].status == Ops.COMPLETE and ops.journeys[repeated].status == Ops.WAITING,
 		"delayed deposited admission releases only the oldest crew")
+	var before_duplicate: Dictionary = ops.capture_state()
 	runtime.return_admission.return_admitted_after_waiting.emit(fourth, ops.journeys[fourth].batch_id)
-	check(ops.ready_count == ready + 1, "duplicate handover callback is inert")
+	check(ops.capture_state() == before_duplicate, "duplicate handover callback is inert")
 	if not roundtrip("completed nonempty handover after waiting"):
 		finish()
 		return
@@ -379,6 +358,12 @@ func prove_victory_and_failed_save(path: String) -> bool:
 	attempts = service.attempts
 	shell._process(0.0)
 	check(service.attempts == attempts + 1 and service.load_snapshot().snapshot.goal.completed, "first victory saves inside the 60-second interval")
+	var after_victory := depart("Food", "Hydration", 9050)
+	if after_victory.is_empty() or not roundtrip("post-victory departure"):
+		return false
+	timeline.advance(ops.journeys[after_victory].return_at - timeline.clock.elapsed)
+	check(wing.collection_goal.completed and ops.journeys[after_victory].status != Ops.AWAY,
+		"post-victory active time still settles real expedition returns")
 	print("EXPEDITION_SAVE_WITNESS won_at=", won_at, " validation_ms=", service.last_validation_ms)
 	return true
 
@@ -430,9 +415,12 @@ func select_pair(first: String, second: String) -> void:
 		ops.toggle_affinity(category)
 	check(ops.toggle_affinity(first) and ops.toggle_affinity(second), "select available pair " + first + " + " + second)
 
-func depart(first: String, second: String, seed: int) -> String:
+func depart(first: String, second: String, seed: int, tied: bool = false) -> String:
 	select_pair(first, second)
-	ops.rng.seed = seed
+	if tied:
+		ops.rng.seed = seed
+	else:
+		ops.rng.seed = TestSeeds.find_seed(ops, runtime, TestSeeds.all_healthy, seed)
 	var result: Dictionary = ops.dispatch(ops.revision)
 	check(result.ok, "departure commits: " + str(result.get("error", "")))
 	return result.get("id", "")

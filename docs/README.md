@@ -21,6 +21,8 @@ Read [AI working guidelines](AI_WORKING_GUIDELINES.md), [current development sta
 
 DOCX masters govern. Edit the relevant DOCX first and regenerate its Markdown; do not maintain a second independent gameplay specification. Approval of v0.16 preserves its internal **CONFIRMED / RETAINED / DIRECTION / PROVISIONAL / OPEN / HISTORICAL** distinctions. It does not finalize placeholders or complete unresolved mechanics.
 
+The [13 November Expedition decision record](design_history/2026-11-13-expedition-outcomes-and-provisioning-decisions.md) governs the approved first-iteration outcomes. The developer promoted the local schema-11 iteration on 14 November. Publication is pending. [Acceptance and technical evidence](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md)
+
 **An unresolved post-pivot rule stays unresolved. Do not fill it with a survival-era rule merely because an older document specifies that rule in detail.** Existing source establishes what the prototype does, not the intended release design or automatic permission to modify it.
 
 The targeted Systems MVP v0.5 and VDD v0.11 master reconciliations are now complete as dated 7 November compatibility updates. The [two-master consistency record](testing/2026-11-07-mvp-vdd-compatibility-consistency.md) describes the earlier compatibility pass. Systems MVP §15.6 records the later local foundation acceptance. [GDD Appendix C](readable/Sorting_Apocalypse_Preliminary_GDD_v0.16.md#s_Appendix_C_Supersession_and_retentio) remains the original approval-time retention map.
@@ -33,7 +35,7 @@ Active real-world completion time replaces days survived. There is no day cycle,
 
 Expedition preparation is **one current crew at a time**. Choose 1–4 Ready scavengers, contribute selected whole items, select two distinct affinities and explicitly Dispatch. Occupancy lasts until return. The [expedition brief](superpowers/plans/2026-11-07-expedition-to-storage-loop.md) records the committed lifecycle and provisional acquisition rules.
 
-Requests are intended to use bounded pressure. Nonempty expedition returns release healthy personnel on admission to an active or deposited lift slot. Empty outcomes complete at return. See GDD §§5–16 for the full rules and status distinctions.
+Nonempty expeditions hand over on admission to an active or deposited lift slot. Empty outcomes hand over at return. Healthy originals and recruits become Ready and injured originals enter Medical natural recovery. See GDD §§9–14 for the current rules.
 
 ## Approved records and superseded history
 
@@ -49,17 +51,19 @@ The two 5 November records are included unchanged from the editions the develope
 
 ## What is playable now
 
-F5 launches `res://gameplay/run/run_shell.tscn` with live Utility targets, player-dispatched expeditions, single-item disposal, continuous Kitchen and Fuel Reserve and Emergency Freight. Published main includes the accepted Dispatch repair, Receiving mixed stacking and the approved Fedora revision. Continue uses schema 10. Confirmed New Run retains incompatible snapshots without migration. Standalone F6 `res://gameplay/logistics_wing/wing_gameplay.tscn` retains the authored palette. The [survival-era archive](design_history/survival-era/README.md) preserves the earlier plans and frozen M4 input.
+F5 launches `res://gameplay/run/run_shell.tscn` with live Utility targets, player-dispatched expeditions, single-item disposal, continuous Kitchen and emergency freight. The promoted local build uses schema 11 and includes the five Expedition outcomes and read-only Medical view. Published main retains schema 10 with Receiving mixed stacking and the adopted Fedora. Confirmed New Run retains incompatible snapshots. Standalone F6 `res://gameplay/logistics_wing/wing_gameplay.tscn` retains the authored palette. The [survival-era archive](design_history/survival-era/README.md) preserves earlier plans and frozen M4 input.
 
 See [CURRENT_STATE](CURRENT_STATE.md) for the current content, scene, preservation and debt details. The [M4 validation record](testing/m4-expedition-loadout-validation-2026-10-24.md), [publication record](testing/m4-publication-2026-10-25.md), and [semantic reconciliation record](testing/m4-documentation-semantic-reconciliation-2026-10-25.md) preserve prior acceptance. They are not new tests of v0.16.
 
 ## Next-work boundary
 
-The expedition loop and the separate [furniture movement collision repair](testing/2026-11-08-furniture-collision-repair-result.md) are human-accepted, published and closed in their bounded scopes.
+Bunker scale and route review take priority. Final economy and pacing evaluation follows layout work and completion of the remaining services. Exact geometry and tuning remain open. [Extended playtest findings](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md#extended-playtest-findings)
+
+The original Expedition-to-Storage Loop and the separate [furniture movement collision repair](testing/2026-11-08-furniture-collision-repair-result.md) are human-accepted, published and closed in their bounded scopes.
 
 The developer promoted and closed single-item disposal on 8 November 2026. The close-out is published on main. [Technical result and developer acceptance](testing/2026-11-08-incinerator-deliberate-disposal-result.md)
 
-GDD §§8–15 record the approved contribution allocation. Continuous Kitchen is **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE**. The Fuel reserve and emergency freight slice under GDD §14 is **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE** and introduced schema 9. Expedition bonuses, the Morale lane, healing and Workshop purchases remain future scopes. [Fuel technical result and developer acceptance](testing/2026-11-11-fuel-reserve-emergency-freight-result.md) · [Developer acceptance and close-out](testing/2026-11-09-continuous-kitchen-service-result.md) · [Contribution decisions](design_history/2026-11-09-contribution-effects-and-kitchen-decisions.md)
+GDD §§8–15 record the approved contribution allocation. Continuous Kitchen is **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE**. The Fuel reserve and emergency freight slice under GDD §14 is **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE** and introduced schema 9. Medical treatment and Workshop purchases remain future work. [Fuel technical result and developer acceptance](testing/2026-11-11-fuel-reserve-emergency-freight-result.md) · [Developer acceptance and close-out](testing/2026-11-09-continuous-kitchen-service-result.md) · [Contribution decisions](design_history/2026-11-09-contribution-effects-and-kitchen-decisions.md)
 
 The zero-Ready Dispatch repair is **HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE**. [Dispatch repair result](testing/2026-11-11-dispatch-no-ready-repair-result.md)
 

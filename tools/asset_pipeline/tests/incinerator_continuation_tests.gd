@@ -136,7 +136,7 @@ func prove_rejections(state: Dictionary, first: String, waiting: String) -> void
 func prove_congestion(waiting: String) -> bool:
 	var batch := runtime.receiving_manager.get_active_batch()
 	var retired_id := batch.batch_id
-	var ready: int = wing.expeditions.ready_count
+	var accounted: int = wing.expeditions.ready_count + wing.expeditions.medical.active_count()
 	var deck_before: Dictionary = runtime.capture_state()
 	for surface: StorageSurface in wing.get_functional_surfaces():
 		surface.clear_all_zones()
@@ -146,7 +146,8 @@ func prove_congestion(waiting: String) -> bool:
 		(world as WorldItem).pickup_into(carry)
 		if carry.get_remaining_bulk() == 0:
 			break
-	if not check(carry.get_current_bulk() == 20, "small congestion fixture fills all carrying Bulk with physical pickups"):
+	var capacity := carry.get_effective_bulk_limit()
+	if not check(carry.get_current_bulk() == capacity, "congestion fixture fills current carrying capacity with physical pickups"):
 		return false
 	placement.set_suppressed(false)
 	check(not put(carry.get_selected_item(), stock), "one spare cell does not accept the selected bulky stock")
@@ -158,13 +159,13 @@ func prove_congestion(waiting: String) -> bool:
 	_place_player_at_stance(player, target.stance_z)
 	player.camera.look_at(target.target_position)
 	player._attempt_pickup_click()
-	check(carry.get_current_bulk() == 20 and runtime.capture_state() == deck_before,
+	check(carry.get_current_bulk() == capacity and runtime.capture_state() == deck_before,
 		"full carrying rejects normal reticle TAKE without changing the lift")
 
 	var required := 0
 	for entry: LootBatchEntry in batch.entries:
 		if entry.remaining_in_batch:
-			required += PrototypeItemCatalog.get_definition_by_id(entry.definition_id).bulk
+			required = maxi(required, PrototypeItemCatalog.get_definition_by_id(entry.definition_id).bulk)
 	var totals: Dictionary = wing.collection_goal.totals.duplicate()
 	var seed_receipt_ids: Array[String] = []
 	open_machine()
@@ -176,20 +177,29 @@ func prove_congestion(waiting: String) -> bool:
 			return false
 		seed_receipt_ids.append(seed.instance_id)
 	panel.close_top()
-	check(wing.collection_goal.totals == totals and runtime.capture_state() == deck_before and wing.expeditions.ready_count == ready,
+	check(wing.collection_goal.totals == totals and runtime.capture_state() == deck_before
+		and wing.expeditions.ready_count + wing.expeditions.medical.active_count() == accounted,
 		"loose seed disposal neither changes score nor unloads cargo or releases the waiting crew")
 	var retired_item: ItemInstance
 	while not batch.is_drained():
 		retired_item = await take_exposed(runtime)
 		if retired_item == null:
 			return false
-	check(runtime.lift_cycle.get_cycle_state() == ReceivingLiftCycle.State.CLOSING and wing.expeditions.ready_count == ready,
+		if not batch.is_drained():
+			open_machine()
+			await key_tap(KEY_E)
+			if not check(not carry.get_items().has(retired_item), "disposing a taken item frees room for the next exact cargo item"):
+				return false
+			panel.close_top()
+	check(runtime.lift_cycle.get_cycle_state() == ReceivingLiftCycle.State.CLOSING
+		and wing.expeditions.ready_count + wing.expeditions.medical.active_count() == accounted,
 		"last TAKE starts closing while the waiting crew stays unavailable")
 	timeline.advance(runtime.lift_cycle.seconds_to_boundary() + 0.001)
 	check(runtime.lift_cycle.is_busy() and runtime.receiving_manager.get_active_batch_id() == retired_id
-		and wing.expeditions.ready_count == ready, "no admission during outbound turnaround")
+		and wing.expeditions.ready_count + wing.expeditions.medical.active_count() == accounted, "no admission during outbound turnaround")
 	timeline.advance(runtime.lift_cycle.seconds_to_boundary() + 0.01)
-	check(runtime.receiving_manager.get_active_batch_id() != retired_id and wing.expeditions.ready_count == ready + 1
+	check(runtime.receiving_manager.get_active_batch_id() != retired_id
+		and wing.expeditions.ready_count + wing.expeditions.medical.active_count() == accounted + 1
 		and wing.expeditions.journeys[waiting].status == Ops.COMPLETE, "full turnaround promotes FIFO and admission releases the waiting crew")
 	open_machine()
 	carry.select_index(carry.get_slots().find(retired_item))
@@ -204,7 +214,7 @@ func prove_congestion(waiting: String) -> bool:
 	invalid.incinerator.receipts[1].definition_id = "loot_000001"
 	check(not Snapshot.new().validate(invalid).is_empty(), "known but mismatched seed definition rejects")
 	print("INCINERATOR_CONGESTION carry_start=20 free_for_take=", required, " destroyed_seed_count=", seed_receipt_ids.size(),
-		" ready_before=", ready, " ready_after_admission=", wing.expeditions.ready_count)
+		" ready_or_recovering_before=", accounted, " ready_after_admission=", wing.expeditions.ready_count)
 	return roundtrip("retired and newly disposed cargo with exact ongoing expedition history")
 
 func prove_goal() -> bool:

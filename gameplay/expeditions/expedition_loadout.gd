@@ -1,6 +1,6 @@
 extends "res://gameplay/requests/contribution_request.gd"
 
-const Config = preload("res://gameplay/expeditions/expedition_test_config.gd")
+const Config = preload("res://gameplay/expeditions/expedition_config.gd")
 const CONTEXT := "expedition"
 
 var raw_capacity: int

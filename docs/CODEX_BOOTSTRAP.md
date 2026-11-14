@@ -4,6 +4,8 @@
 
 The current intended game is collection, hoarding and spatial organization. The [Expedition-to-Storage Loop](superpowers/plans/2026-11-07-expedition-to-storage-loop.md) is **HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE**. See its [technical result and developer acceptance](testing/2026-11-08-expedition-to-storage-loop-result.md) and the [accepted foundation checkpoint](testing/2026-11-07-continuous-run-collection-goal-closure.md).
 
+The [13 November Expedition decisions](design_history/2026-11-13-expedition-outcomes-and-provisioning-decisions.md) supersede the fixture acquisition and healthy-only outcomes. The developer promoted the local schema-11 iteration on 14 November. Publication is pending. [Acceptance and technical evidence](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md)
+
 ## Read first
 
 1. [AI_WORKING_GUIDELINES.md](AI_WORKING_GUIDELINES.md).
@@ -34,20 +36,19 @@ Active real-world completion time replaces days survived. No day cycle, morning 
 
 Two distinct unordered affinities identify one of 28 destinations. Dispatch requires an available pair. The destination is occupied only while its crew is away. The development sampler favors both affinities equally before whole-item fit filtering. See GDD §§9–10 and the expedition brief.
 
-Pending return cargo remains intact. Waiting crews stay unavailable until admission to the active lift or deposited queue. Healthy members become Ready at admission. Empty returns release the crew at their committed return time, outside Receiving.
+Pending return cargo remains intact. Waiting crews stay unavailable until admission to the active lift or deposited queue. At handover healthy originals and recruits become Ready and injured originals enter Medical. Empty returns hand over at their committed return time, outside Receiving.
 
-Kitchen §12 defines bounded cumulative demand and carrying/sprint consequences. The approved contribution map gives expeditions proactive bonuses and assigns restoration to Kitchen, Fuel and Medical. The promoted continuous Kitchen slice uses the mechanical expedition fixture. The fixed meals and Daily Meal Coverage belong to the archived survival-era build. [Contribution decisions](design_history/2026-11-09-contribution-effects-and-kitchen-decisions.md) · [Continuous Kitchen brief](superpowers/plans/2026-11-09-continuous-kitchen-service.md)
+Kitchen §12 defines bounded cumulative demand and carrying/sprint consequences. The Expedition iteration sets 22 normal player Bulk, 105 Kitchen demand cap and a 35% maximum penalty. The fixed meals and Daily Meal Coverage belong to the archived survival-era build. [Contribution decisions](design_history/2026-11-09-contribution-effects-and-kitchen-decisions.md) · [Continuous Kitchen brief](superpowers/plans/2026-11-09-continuous-kitchen-service.md)
 
 Fuel §14 specifies continuous reserve consumption and a 60-active-second wait before each eligible emergency delivery. Crew handover remains on admission and ongoing cycles finish normally. [Fuel decisions](design_history/2026-11-11-fuel-reserve-and-emergency-freight-decisions.md) · [Implementation plan](superpowers/plans/2026-11-11-fuel-reserve-emergency-freight.md)
 
-Medical's preferred slower natural and faster treated recovery remains open in detail. Fixed full storage is a favored direction. Workshop, Training, population growth and route compression need further design.
+Medical's natural recovery begins at handover and uses 120 or 300 active seconds. Treatment remains future design. Fixed full storage is a favored direction. Bunker scale and route review take priority. Final economy and pacing evaluation follows layout work and completion of the remaining services. Exact geometry remains open. [Extended playtest findings](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md#extended-playtest-findings)
 
 ## Known open boundaries before affected implementation
 
 Use GDD §21.2 rather than asking for reapproval of the whole pivot. In particular:
 
-- O-02–O-04 cover the confirmed preparation, destination and healthy handover rules in the expedition brief. Injury classification and Medical treatment remain open.
-- O-05/O-06/O-07: acquisition, persistent requests, bounded penalties and Medical recovery.
+- O-02–O-07 cover preparation, destination, handover, catalogue acquisition, bounded requests and natural recovery. Medical treatment remains open.
 - O-08–O-12: population/progression, conversions, storage/layout, UI/time edges, compatibility and successor test scope.
 
 Do not invent automatic refunds, lost loadouts, saved parallel prepared-team storage, new technical frameworks or old daily defaults to bypass these boundaries. Resolve only what an agreed task actually reaches.
@@ -55,7 +56,8 @@ Do not invent automatic refunds, lost loadouts, saved parallel prepared-team sto
 ## Actual playable baseline — preserve until deliberately changed
 
 ```text
-Authoritative asset-equipped checkout: D:\Godot Projects\Sorting-apoc-PROTOTYPE
+Promoted local Expedition checkout: C:/Users/Boschetar/Documents/ChatGPT/Sorting Apocalypse - Prototype/Expedition
+Published baseline checkout: D:/Godot Projects/Sorting-apoc-PROTOTYPE
 Repository: Navandis/Sorting-apoc-PROTOTYPE
 Reported engine: Godot 4.7 / Compatibility (verify installed executable)
 F5 entry: res://gameplay/run/run_shell.tscn
@@ -70,6 +72,8 @@ Continuous Kitchen is **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE
 Fuel Reserve and Emergency Freight is **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE**. It introduced schema 9 through the existing save service. Refuel at the cabinet right of the Receiving shutter with F and a distinct E. [Fuel technical result and developer acceptance](testing/2026-11-11-fuel-reserve-emergency-freight-result.md)
 
 Receiving mixed stacking is **HUMAN-APPROVED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE** with the approved Fedora revision. Published main uses schema 10. Confirmed New Run retains incompatible saves without migration. The 157-Bulk meat-and-mice area overrun and the long-object planner failure remain developer-deferred. [Receiving and Fedora result](testing/2026-11-13-receiving-mixed-stacking-result.md)
+
+The promoted local Expedition build uses schema 11 and the same collection slot. Confirmed New Run retains incompatible snapshots. Its provisions, recovery and freight chronology are exercised in the [Expedition technical result](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md).
 
 The zero-Ready Dispatch repair is **HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE**. [Dispatch repair result](testing/2026-11-11-dispatch-no-ready-repair-result.md)
 
@@ -95,4 +99,4 @@ Godot can scan Git-ignored scenes/scripts. Keep checkpoint copies with productio
 
 Use one implementer by default, affected checks and proportionate contextual/human review. Documentation alone does not justify unchanged-game sweeps. Preserve evidence attribution and CF-01–CF-24; new technical findings may need focused repair, not milestone reacceptance. Do not silently suppress existing/new diagnostics together.
 
-The developer accepted the [furniture movement collision repair](testing/2026-11-08-furniture-collision-repair-result.md) on 8 November 2026, closing its separate scope. The expedition close-out and repair acceptance are published on `main`.
+The developer accepted the [furniture movement collision repair](testing/2026-11-08-furniture-collision-repair-result.md) on 8 November 2026, closing its separate scope. That repair and the original Expedition-to-Storage Loop close-out are published on `main`.

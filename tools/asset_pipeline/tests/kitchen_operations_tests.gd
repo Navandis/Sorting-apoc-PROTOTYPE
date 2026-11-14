@@ -82,26 +82,26 @@ func test_penalty_and_receipts(script: GDScript) -> void:
 		and ops.effective_capacity(25) == 21 and not ops.sprint_allowed(), "45 remaining costs 15% and keeps sprint disabled")
 	var partial: Dictionary = ops.capture_state()
 	ops._add_demand(Vector2i(35, 40), 100, 2)
-	check(ops.outstanding == Vector2i(60, 60) and ops.effective_capacity(25) == 15 and ops.deadline_at() == 60,
+	check(ops.outstanding == Vector2i(53, 52) and ops.effective_capacity(25) == 16 and ops.deadline_at() == 60,
 		"35/40 joins the 25/20 remainder at the original deadline")
 	ops.restore_state(partial)
 	submit(ops, carry, "Food", 9)
 	check(ops.outstanding == Vector2i(16, 20) and ops.effective_capacity(25) == 22, "nine more credit gives 12% loss and capacity 22")
 	ops._add_demand(Vector2i(44, 40), 100, 2)
-	check(ops.outstanding == Vector2i(60, 60) and ops.effective_capacity(25) == 15 and ops.deadline_at() == 60,
+	check(ops.outstanding == Vector2i(52, 53) and ops.effective_capacity(25) == 16 and ops.deadline_at() == 60,
 		"later additions merge into the remainder without renewing grace")
 	ops._add_demand(Vector2i(35, 40), 110, 3)
-	check(ops.outstanding == Vector2i(74, 76) and ops.effective_capacity(20) == 10, "overdue addition clips at 150 and half capacity")
-	submit(ops, carry, "Food", 71)
+	check(ops.outstanding == Vector2i(52, 53) and ops.effective_capacity(22) == 14, "overdue demand caps at 105 and permits 14 Bulk")
+	submit(ops, carry, "Food", 49)
 	var oversized: Dictionary = submit(ops, carry, "Food", 9)
 	check(oversized.applied == 3 and oversized.wasted == 6 and oversized.before - oversized.after == 3
-		and ops.outstanding == Vector2i(0, 76), "oversize credits only three Food and wastes six without Hydration spill")
+		and ops.outstanding == Vector2i(0, 53), "oversize credits only three Food and wastes six without Hydration spill")
 	for item: ItemInstance in [make_item("Food", 1), make_item("Weapons", 5), make_item("Hydration", 5, "already-spent")]:
 		carry.add_item(item)
 		check(not ops.contribute(carry, item, func(): return true).ok and carry.get_selected_item() == item,
 			"full lane, wrong category or another consumer's receipt rejects without spending")
 		carry.remove_selected()
-	submit(ops, carry, "Hydration", 75)
+	submit(ops, carry, "Hydration", 52)
 	check(ops.outstanding == Vector2i(0, 1) and ops.effective_capacity(25) == 24 and not ops.sprint_allowed(),
 		"one Utility still costs a fractional point and disables sprint")
 	submit(ops, carry, "Hydration", 1)
@@ -170,7 +170,7 @@ func test_schedule(script: GDScript) -> void:
 		for draw in range(event * 7):
 			expedition_rng.randi()
 		if event > 3:
-			check(blocked.outstanding.x + blocked.outstanding.y == 150, "fully capped event issues nothing")
+			check(blocked.outstanding.x + blocked.outstanding.y == 105, "fully capped event issues nothing")
 		if paid.outstanding.x > 0:
 			submit(paid, carry, "Food", 100)
 		submit(paid, carry, "Hydration", 100)
@@ -182,7 +182,7 @@ func test_schedule(script: GDScript) -> void:
 		previous = due
 	var next: float = blocked.next_boundary_at()
 	submit(blocked, carry, "Food", 9)
-	check(blocked.outstanding.x + blocked.outstanding.y == 141 and blocked.next_boundary_at() == next,
+	check(blocked.outstanding.x + blocked.outstanding.y == 96 and blocked.next_boundary_at() == next,
 		"discarded overflow cannot refill credited Utility or move a trigger")
 	carry.free()
 
