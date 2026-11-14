@@ -4,7 +4,7 @@
 
 The current intended game is collection, hoarding and spatial organization. The [Expedition-to-Storage Loop](superpowers/plans/2026-11-07-expedition-to-storage-loop.md) is **HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE**. See its [technical result and developer acceptance](testing/2026-11-08-expedition-to-storage-loop-result.md) and the [accepted foundation checkpoint](testing/2026-11-07-continuous-run-collection-goal-closure.md).
 
-The [13 November Expedition decisions](design_history/2026-11-13-expedition-outcomes-and-provisioning-decisions.md) supersede the fixture acquisition and healthy-only outcomes. The local schema-11 candidate is technically ready for developer playtest. [Technical result](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md)
+The [13 November Expedition decisions](design_history/2026-11-13-expedition-outcomes-and-provisioning-decisions.md) supersede the fixture acquisition and healthy-only outcomes. The developer promoted the local schema-11 iteration on 14 November. Publication is pending. [Acceptance and technical evidence](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md)
 
 ## Read first
 
@@ -42,7 +42,7 @@ Kitchen §12 defines bounded cumulative demand and carrying/sprint consequences.
 
 Fuel §14 specifies continuous reserve consumption and a 60-active-second wait before each eligible emergency delivery. Crew handover remains on admission and ongoing cycles finish normally. [Fuel decisions](design_history/2026-11-11-fuel-reserve-and-emergency-freight-decisions.md) · [Implementation plan](superpowers/plans/2026-11-11-fuel-reserve-emergency-freight.md)
 
-Medical's natural recovery begins at handover and uses 120 or 300 active seconds. Treatment remains future design. Fixed full storage is a favored direction. Workshop, Training, long-run population pacing and route compression need further design.
+Medical's natural recovery begins at handover and uses 120 or 300 active seconds. Treatment remains future design. Fixed full storage is a favored direction. Bunker scale and route review take priority. Final economy and pacing evaluation follows layout work and completion of the remaining services. Exact geometry remains open. [Extended playtest findings](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md#extended-playtest-findings)
 
 ## Known open boundaries before affected implementation
 
@@ -56,7 +56,8 @@ Do not invent automatic refunds, lost loadouts, saved parallel prepared-team sto
 ## Actual playable baseline — preserve until deliberately changed
 
 ```text
-Authoritative asset-equipped checkout: D:\Godot Projects\Sorting-apoc-PROTOTYPE
+Promoted local Expedition checkout: C:/Users/Boschetar/Documents/ChatGPT/Sorting Apocalypse - Prototype/Expedition
+Published baseline checkout: D:/Godot Projects/Sorting-apoc-PROTOTYPE
 Repository: Navandis/Sorting-apoc-PROTOTYPE
 Reported engine: Godot 4.7 / Compatibility (verify installed executable)
 F5 entry: res://gameplay/run/run_shell.tscn
@@ -72,7 +73,7 @@ Fuel Reserve and Emergency Freight is **HUMAN-PROMOTED / PUBLISHED / CLOSED IN I
 
 Receiving mixed stacking is **HUMAN-APPROVED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE** with the approved Fedora revision. Published main uses schema 10. Confirmed New Run retains incompatible saves without migration. The 157-Bulk meat-and-mice area overrun and the long-object planner failure remain developer-deferred. [Receiving and Fedora result](testing/2026-11-13-receiving-mixed-stacking-result.md)
 
-The local Expedition candidate uses schema 11 and the same collection slot. Confirm New Run to start its playtest. Its provisions, recovery and freight chronology are exercised in the [Expedition technical result](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md).
+The promoted local Expedition build uses schema 11 and the same collection slot. Confirmed New Run retains incompatible snapshots. Its provisions, recovery and freight chronology are exercised in the [Expedition technical result](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md).
 
 The zero-Ready Dispatch repair is **HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE**. [Dispatch repair result](testing/2026-11-11-dispatch-no-ready-repair-result.md)
 
@@ -98,4 +99,4 @@ Godot can scan Git-ignored scenes/scripts. Keep checkpoint copies with productio
 
 Use one implementer by default, affected checks and proportionate contextual/human review. Documentation alone does not justify unchanged-game sweeps. Preserve evidence attribution and CF-01–CF-24; new technical findings may need focused repair, not milestone reacceptance. Do not silently suppress existing/new diagnostics together.
 
-The developer accepted the [furniture movement collision repair](testing/2026-11-08-furniture-collision-repair-result.md) on 8 November 2026, closing its separate scope. The expedition close-out and repair acceptance are published on `main`.
+The developer accepted the [furniture movement collision repair](testing/2026-11-08-furniture-collision-repair-result.md) on 8 November 2026, closing its separate scope. That repair and the original Expedition-to-Storage Loop close-out are published on `main`.

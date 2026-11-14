@@ -1,6 +1,6 @@
 # Sorting Apocalypse — current ChatGPT conversation bootstrap
 
-**Prepared 7 November 2026. Updated 10 November for Continuous Kitchen publication, 11 November for Fuel and Dispatch publication, and 13 November for Receiving and Fedora publication. Approved GDD v0.16 with the contribution decisions governs intended gameplay. M1–M4 remain HUMAN-PROMOTED / PUBLISHED / CLOSED.**
+**Prepared 7 November 2026. Updated 10 November for Continuous Kitchen publication, 11 November for Fuel and Dispatch publication, 13 November for Receiving and Fedora publication, and 14 November for local Expedition promotion. Approved GDD v0.16 with the contribution decisions governs intended gameplay. M1–M4 remain HUMAN-PROMOTED / PUBLISHED / CLOSED.**
 
 I am continuing Sorting Apocalypse, a solo-developed first-person collecting, hoarding and spatial-organizing game. The game is being redirected away from an endless survival/day-count objective. You are taking over after the collection pivot, approval of its design records, the single-current-team panel clarification, approval of the complete successor GDD v0.16, and preparation of the current-facing documentation update.
 
@@ -12,6 +12,7 @@ This is a collaboration handoff, not a Codex implementation brief or permission 
 
 - **Design authority** — approved GDD v0.16, with [Appendix A](superpowers/plans/2026-11-07-continuous-run-collection-goal-foundation.md#appendix-a--confirmed-expedition-lifecycle-decisions-for-the-next-milestone) superseding the specified earlier open statements about preparation, destination occupancy and handover.
 - **Current implementation** · The Expedition-to-Storage Loop is **HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE**. The [expedition result](testing/2026-11-08-expedition-to-storage-loop-result.md) follows the separately accepted [collection foundation](testing/2026-11-07-continuous-run-collection-goal-closure.md).
+- **Expedition outcomes and provisioning** · **HUMAN-PROMOTED / CLOSED IN ITS BOUNDED SCOPE — LOCAL; PUBLICATION PENDING.** The developer reported more than two hours of play with no observed functional failures. The accepted settings and schema 11 belong to this provisional iteration. [Acceptance and technical evidence](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md)
 - **Incinerator** · The developer promoted and closed bounded single-item disposal on 8 November 2026. That release used schema 7 in the collection namespace. [Technical result and developer acceptance](testing/2026-11-08-incinerator-deliberate-disposal-result.md)
 - **Continuous Kitchen** · **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** This milestone introduced schema 8. GDD §12 records the standing mechanics and provisional iteration settings. [Developer acceptance and close-out](testing/2026-11-09-continuous-kitchen-service-result.md) · [Contribution decisions](design_history/2026-11-09-contribution-effects-and-kitchen-decisions.md)
 - **Fuel Reserve and Emergency Freight** · **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** Schema 9 retains incompatible schema-8 snapshots and requires confirmed New Run. [Fuel technical result and developer acceptance](testing/2026-11-11-fuel-reserve-emergency-freight-result.md)
@@ -101,19 +102,19 @@ Requirements/capacity scale with assigned members. Outgoing Bulk remains a real 
 
 ## 7. Receiving, Medical, progression and information
 
-Pending returns keep exact cargo and unavailable crew until admission into an active or deposited lift slot. Healthy crew become Ready at admission. The destination becomes available at return. Empty returns release the crew at return without using a lift slot. Injury classification and Medical treatment remain future work.
+Pending returns keep exact cargo and unavailable crew until admission into an active or deposited lift slot. The destination becomes available at return. Healthy originals and recruits become Ready at admission and injured originals begin natural recovery. Empty returns hand over at return without using a lift slot. Medical treatment remains future work.
 
 The finite physical deck, exact content/identity, fully-OPEN TAKE, safe permanent barrier, stationary-bay theatre and FIFO ownership remain useful. Uncapped waiting does not authorize infinite rendered cargo. Preserve existing machinery until an explicit affected implementation task changes policy.
 
 Medical owns natural recovery starting at handover. Light and Severe patients return to Ready in 120 and 300 active seconds, respectively. The first iteration adds a live read-only Medical view. Treatment remains future design.
 
-Kitchen Food and Hydration restore carrying capacity and sprint. The first iteration sets 22 normal player Bulk and bounds Kitchen demand at 105 Utility with 35% maximum loss. Fuel tiers govern lights and emergency freight. Below 15 Fuel Utility each eligible delivery waits 60 active seconds before it starts. The local schema-11 candidate implements the five Expedition lanes and full catalogue and awaits developer playtest. Rations, Salvager and Training remain future design. [Decisions](design_history/2026-11-13-expedition-outcomes-and-provisioning-decisions.md) · [Technical result](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md)
+Kitchen Food and Hydration restore carrying capacity and sprint. The first iteration sets 22 normal player Bulk and bounds Kitchen demand at 105 Utility with 35% maximum loss. Fuel tiers govern lights and emergency freight. Below 15 Fuel Utility each eligible delivery waits 60 active seconds before it starts. The human-promoted local schema-11 iteration includes the five Expedition lanes and full catalogue. Rations, Salvager and Training remain future design. [Decisions](design_history/2026-11-13-expedition-outcomes-and-provisioning-decisions.md) · [Technical result](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md)
 
 Goal-progress visibility is always baseline and cannot be disabled or upgrade-gated. Notification, central overview and a diegetic Journal have distinct roles. Optional information tools may improve access or analysis of existing facts, not hide indispensable data. Narrative remains short, qualitative and inferred; gameplay choices lead and fiction supports them. No visible outside world or human simulation is introduced.
 
 ## 8. What already exists and must not be reopened by default
 
-The published build has continuous active time, player-dispatched expeditions, eight live stored Utility totals, single-item disposal, continuous Kitchen, Fuel Reserve and Emergency Freight, the accepted Dispatch repair, Receiving mixed stacking and the approved Fedora revision. Schema 10 governs Continue. Confirmed New Run can repoint the slot while retaining incompatible snapshots without migration. M1–M4 daily scheduling, reports and prebuilt Dispatch describe historical evidence. Injuries, recruitment and the supporting economy remain open.
+The published build has continuous active time, player-dispatched expeditions, eight live stored Utility totals, single-item disposal, continuous Kitchen, Fuel Reserve and Emergency Freight, the accepted Dispatch repair, Receiving mixed stacking and the approved Fedora revision. Schema 10 governs Continue. Confirmed New Run can repoint the slot while retaining incompatible snapshots without migration. M1–M4 daily scheduling, reports and prebuilt Dispatch describe historical evidence. The promoted local build adds injuries, recruitment and natural recovery. Production economy balance remains open.
 
 The inspected baseline has 167 active/7 retired/174 sources. Preserve authored scale, pose/+Z Front, Footprint and support roles; twelve separate Auto Stack Group approvals remain pending with saved None. Never recycle retired IDs or replace authored values automatically. The current values are frozen testing content, not immutable release balance.
 
@@ -140,6 +141,8 @@ Ordinary appropriate light/wear/furnishing changes use focused tracked authoring
 Keep source inspection, automated assertions, rendered proof, native input/audio observations, human promotion and publication distinct. Reuse same-state evidence with attribution. Do not rerun unchanged gameplay for document edits. Known rendering/content/loading/durability debt remains; consult CF-01–CF-24 without importing obsolete gameplay commitments.
 
 ## 10. Next design slices remain bounded
+
+Bunker scale and route review are the next priority. Keep the physical hoard and storage functionality central. Exact geometry remains open. Finish the remaining services before drawing final economy and pacing conclusions. Fuel as an additional Workshop purchase cost remains an option under consideration. [Extended playtest findings](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md#extended-playtest-findings)
 
 The [expedition loop](testing/2026-11-08-expedition-to-storage-loop-result.md) is closed in its bounded scope. Any further work requires its own agreed scope.
 

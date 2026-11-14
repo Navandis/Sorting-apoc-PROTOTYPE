@@ -1,5 +1,38 @@
 # Expedition outcomes and provisioning technical result
 
+**14 November 2026 · HUMAN-PROMOTED / CLOSED IN ITS BOUNDED SCOPE — LOCAL; PUBLICATION PENDING.**
+
+The developer accepted the schema-11 Expedition iteration at technical handoff `e54709345eb27bd0695a0f7be39f61b95031ba4c`. On 14 November, read-only `git ls-remote` and GitHub comparison verified `main` at `d9eeb6cc937dd7b20d3aebacddf23cfadf51fd2d`. The implementation commit `421cfb7f738445f71503cea9197a7e87dad4e0fb` is an ancestor of the handoff. The intervening commits changed a native test witness and documentation.
+
+## Developer acceptance — 14 November 2026
+
+The developer played for more than two hours and reported no observed bugs or functional failures. Bonus items, injuries, natural recovery and recruitment behaved as expected during that playtest. The developer explicitly promoted the working Expedition system, including real loot, affinities, personnel outcomes and the agreed lifecycle. The bounded promotion includes the installed provisional configuration and schema-11 continuation. Medical treatment and Workshop remain future work. The playtest adds session-level evidence alongside the technical verification below.
+
+The 14 November close-out verifies lineage and documentation only. Synchronous save performance at scale, release crash durability, universal haul presentation and timing during brief silent suspensions remain open.
+
+## Extended playtest findings
+
+### Observations reported by the developer
+
+- **Walking.** The developer spent too much time travelling through the existing bunker even before Medical treatment and Workshop. They identified the bunker's size and the trips required for services and item handling as major contributors.
+- **Food and Hydration.** Supplies depleted too quickly to sustain Kitchen and Expedition provisioning comfortably in this session. Sprint was unavailable for much of the playtest and smaller carried bundles required more trips. The penalties behaved as designed. Their experienced severity and frequency need later balance evaluation.
+- **Workload.** The developer was continually behind on unloading the lift, preparing crews and meeting requests, even with refuelling temporarily near the elevator and the remaining services still pending. They assessed that the overall pace may be too high.
+- **Fuel surplus.** Fuel accumulated much faster than other categories despite deliberate waste during refuelling, including using roughly 40-Utility items to fill a roughly 10-Utility gap. This was the result of the reported session.
+
+### Possible causes
+
+The developer described a reinforcing cycle. Longer routes consumed more time ferrying goods and supplying services, which delayed unloading and provisioning. Food and Hydration pressure then reduced sprint availability and carry capacity, adding further trips and congestion. The playtest did not isolate how much each factor contributed or establish that shorter routes alone would resolve the supply pressure.
+
+The developer suspects that Fuel's mix of high-Utility items and its interaction with bonus acquisition and Weapons may contribute to the surplus. That explanation is unverified. The category-first sampler and Weapons' within-category Utility/Bulk weighting remain the accepted rules.
+
+### Follow-up priority
+
+Review bunker scale and routes first. Complete the remaining services before drawing final economy and pacing conclusions. Exact geometry, room connections, station locations, storage capacity and movement speeds remain open. Layout exploration should preserve storage functionality and the collecting, hoarding and sorting experience. An asset-wide downscale would require a separate design decision.
+
+Fuel alongside Electronics for some one-time Workshop purchases is an option under consideration. The developer is considering it before increases to reserve consumption or reductions in Fuel Utility. Purchase rules, costs and effects on the surplus remain open.
+
+## Technical handoff — 13 November 2026
+
 **13 November 2026 · TECHNICALLY READY FOR DEVELOPER PLAYTEST**
 
 The local branch is `codex/expedition-outcomes-provisioning` in the asset-equipped [Expedition checkout](<C:/Users/Boschetar/Documents/ChatGPT/Sorting Apocalypse - Prototype/Expedition>). Published `main` was verified at `d9eeb6cc937dd7b20d3aebacddf23cfadf51fd2d`. The ancestry checks both exited 0 for Receiving `6c82e59ffa00f1f63cda78ebf5a0a127aa049e26` and Fedora adoption `ed521a2a0cea5ba829430bf04c8046eed1e79f0a`. The GitHub comparison reported identical refs. The local commits are `9da46bd` for the approved-design checkpoint, `421cfb7` for implementation, and `3e768ac` for a test-only change that gives the zero-Ready witness distinct return times. This record and current status updates are in the documentation closeout commit.
@@ -26,7 +59,7 @@ Godot `4.7.stable.official.5b4e0cb0f`, Compatibility. The native renderer report
 | `final-deltas` | `expedition_operations_tests` and `expedition_outcomes_continuation_tests` both exit 0. Includes repeated rollback, bonus-only and empty boundary fixtures, eight simultaneously recovering originals, late admission with a pending recruit, and exact partial mixed-stack Continue. |
 | `final-post-victory` | `collection_continuation_tests` exit 0, 124 checks. Includes schema 10 confirmation and byte retention, tied arrivals, terminal owner rejection, save failure, first victory and continued departures. |
 | `affected-check` and `follow-up` | `kitchen_operations_tests` 2839, `kitchen_continuation_tests` 263, `fuel_operations_tests` 28, `fuel_receiving_tests` 44, `incinerator_operations_tests` 29, `incinerator_continuation_tests` 116 and `incinerator_interaction_tests` 35 checks. All exit 0 with zero failures on their final runs. |
-| `receiving-storage` | `m1_contribution_tests`, `receiving_awaiting_lift_integration_tests`, `receiving_deck_layout_tests`, `receiving_deck_presenter_tests`, `storage_stacking_interaction_tests` and `collection_goal_tests` exit 0. The old `receiving_queued_delivery_tests` exits 1 for three CRT OPEN assertions on both the published baseline and candidate. It expects single-digit cargo counts and the display uses two digits. The fixtures' ownership and lifecycle assertions pass. |
+| `receiving-storage` | `m1_contribution_tests`, `receiving_awaiting_lift_integration_tests`, `receiving_deck_layout_tests`, `receiving_deck_presenter_tests`, `storage_stacking_interaction_tests` and `collection_goal_tests` exit 0. The old `receiving_queued_delivery_tests` exits 1 for three CRT OPEN assertions on both the published baseline and candidate. It expects single-digit cargo counts and the display uses two digits. The fixtures' ownership and lifecycle assertions pass. The CRT assertions remain test-maintenance debt. |
 | `final-startup`, `native-crt-final`, `launch-f5`, `launch-f6` | All exit 0. The CRT produced a 704×400 texture with 4,221 green samples through both entries. |
 | `native-final-1280x720`, `native-1600x900` | `expedition_physical_tests` exits 0 at both actual Windows viewport sizes. Production seed 1220 yielded 3 ordinary items plus 1 Food bonus item, 1 Light injury and 1 recruit. All four items were taken through the reticle and shelved. |
 | `native-no-ready-final`, `native-kitchen`, `native-fuel` | The zero-Ready variant of `expedition_physical_tests`, `kitchen_interaction_tests` and `fuel_interaction_tests` each exit 0. Kitchen ran 80 checks and recovered sprint. Fuel ran 175 and recovered normal freight using generated Fuel while Kitchen retained the 14-Bulk limit. |
@@ -60,9 +93,9 @@ For native evidence, the environment and argument setup is recorded verbatim in 
 | Design masters | GDD v0.16, Systems MVP v0.5 and VDD v0.11 edited in Word package XML first. Regenerated changed text in their Markdown companions. Preserved non-document package parts, tables, styles, media and anchor structure. Rendered all three through LibreOffice/Poppler and visually checked affected pages. |
 | Known limits | The 157-Bulk meat-and-mice overrun and the long-object planner failure remain deferred. Preparation rejects safely and an unchanged retry repeats the same manifest. This candidate retains the Windows certificate-store and held-material diagnostics and the active clock's existing ten-second suspension cutoff. Long-run balance, universal haul presentation, save performance at large stock and release crash durability remain open. |
 
-The implementation had one independent contextual review against `d9eeb6c..421cfb7`. It found no actionable issues. The review and the native witnesses establish the tested local candidate. Developer acceptance and publication remain pending.
+The implementation had one independent contextual review against `d9eeb6c..421cfb7`. It found no actionable issues. The review and the native witnesses establish the tested local candidate. Developer acceptance and publication were pending at the technical handoff.
 
-## Developer playtest
+## Original developer playtest checklist
 
 1. Run [Play-Expedition-Candidate.ps1](<C:/Users/Boschetar/.codex/attachments/Sorting_Apocalypse_Assessments/2026-11-13-expedition-outcomes/Play-Expedition-Candidate.ps1>) and choose **New Run**. The launcher uses a dedicated profile. Confirm when prompted.
 2. At Dispatch, send one unprovisioned crew. Prepare another with all five lanes. Check the selected item's credited Utility, waste and full outgoing Bulk, the Food bonus range and the travel, quality, injury and recruit previews.

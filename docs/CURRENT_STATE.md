@@ -1,8 +1,8 @@
 # Sorting Apocalypse — current development state
 
-**Document update 13 November 2026. The intended game follows the developer-approved GDD v0.16 and its contribution decisions. Published main includes Receiving mixed stacking and the approved Fedora revision.**
+**Document update 14 November 2026. The intended game follows the developer-approved GDD v0.16 and its contribution decisions. Published main includes Receiving mixed stacking and the approved Fedora revision.**
 
-The local Expedition candidate implements full-catalogue acquisition, five provision effects, injury, recruitment and Medical-owned natural recovery. It uses schema 11 and awaits developer playtest. Published main remains the schema-10 baseline. [Decision record](design_history/2026-11-13-expedition-outcomes-and-provisioning-decisions.md) · [Technical result](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md)
+The developer promoted the local Expedition iteration after more than two hours of play on 14 November. The accepted scope includes full-catalogue acquisition, five provision effects, injury, recruitment, Medical-owned natural recovery and schema 11 with provisional settings. Published main remains the schema-10 baseline. [Decision record](design_history/2026-11-13-expedition-outcomes-and-provisioning-decisions.md) · [Technical result](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md)
 
 ## 1. At a glance: approval is not implementation
 
@@ -12,7 +12,7 @@ The local Expedition candidate implements full-catalogue acquisition, five provi
 | Collection foundation | **HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** [Result and developer acceptance](testing/2026-11-07-continuous-run-collection-goal-result.md). |
 | M1 / M2 / M3 / M4 | **HUMAN-PROMOTED / PUBLISHED / CLOSED**, each in its accepted bounded scope. No acceptance, publication or re-review backlog is reopened. |
 | Expedition-to-Storage Loop | **HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** [Technical result and developer acceptance](testing/2026-11-08-expedition-to-storage-loop-result.md). M5’s former combined daily scenario is historical. |
-| Expedition outcomes and provisioning | **TECHNICALLY READY FOR DEVELOPER PLAYTEST.** Local schema 11. [Technical result](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md) |
+| Expedition outcomes and provisioning | **HUMAN-PROMOTED / CLOSED IN ITS BOUNDED SCOPE — LOCAL; PUBLICATION PENDING.** Local schema 11. [Developer acceptance](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md) |
 | Incinerator and Deliberate Disposal | **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** [Technical result and developer acceptance](testing/2026-11-08-incinerator-deliberate-disposal-result.md) |
 | Continuous Kitchen | **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** Schema 8. [Developer acceptance and close-out](testing/2026-11-09-continuous-kitchen-service-result.md) |
 | Fuel Reserve and Emergency Freight | **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** Schema 9. [Fuel technical result and developer acceptance](testing/2026-11-11-fuel-reserve-emergency-freight-result.md) · [Fuel decisions](design_history/2026-11-11-fuel-reserve-and-emergency-freight-decisions.md) · [Implementation plan](superpowers/plans/2026-11-11-fuel-reserve-emergency-freight.md) |
@@ -75,7 +75,7 @@ Aim at the Kitchen frontage off Gallery B and press F. Use the wheel or number k
 
 Aim at the existing electrical cabinet right of the Receiving shutter. F inspects and a distinct E supplies the selected carried Fuel. The reserve starts at 55/60 and consumes one Utility per 30 active seconds. Below 15, each eligible delivery waits 60 active seconds before ARRIVAL. [Fuel technical result and developer acceptance](testing/2026-11-11-fuel-reserve-emergency-freight-result.md)
 
-The local candidate uses schema 11 under `user://saves/collection/`. It adds committed ordinary and bonus cargo, personnel, handover and Medical recovery to the existing Kitchen, Fuel, Receiving, disposal, physical and goal state. Continue starts with service panels closed. Confirmed New Run repoints the slot and retains incompatible snapshots, including schema 10 from published main. Save & Exit, 60-active-second attempts and first victory use the same service.
+The promoted local build uses schema 11 under `user://saves/collection/`. It adds committed ordinary and bonus cargo, personnel, handover and Medical recovery to the existing Kitchen, Fuel, Receiving, disposal, physical and goal state. Continue starts with service panels closed. Confirmed New Run repoints the slot and retains incompatible snapshots, including schema 10 from published main. Save & Exit, 60-active-second attempts and first victory use the same service.
 
 Standalone F6 retains the authoring palette and canonical UID `uid://bljf1nlhijej`. The [expedition result](testing/2026-11-08-expedition-to-storage-loop-result.md) records the provisional pool and the technical checks and developer acceptance. The [accepted foundation result](testing/2026-11-07-continuous-run-collection-goal-result.md) preserves the exact two-haul fixture evidence.
 
@@ -127,7 +127,7 @@ The developer deferred the canonical 157-Bulk meat-and-mice area overrun and the
 
 **Local collection foundation:** one active plus two deposited FIFO batches and oldest-first upstream admission through `AwaitingLiftAdmission`. Waiting commitments persist across play and continuation.
 
-**Expedition handover.** Destination occupancy ends on return. Healthy crew members become Ready on admission or on empty return. The future Medical route begins at handover. The [expedition brief](superpowers/plans/2026-11-07-expedition-to-storage-loop.md) records the slice decisions.
+**Expedition handover.** Destination occupancy ends on return. On admission or empty return, healthy originals and recruits become Ready and injured originals begin natural recovery. [Expedition decisions](design_history/2026-11-13-expedition-outcomes-and-provisioning-decisions.md)
 
 The curved CRT is live and read-only with STATUS, DECK and QUEUE. It shows normal green and emergency orange mode text, plus WAITING and a countdown for an admitted load before ARRIVAL. QUEUE 00–02 counts deposited waiting batches. The separate expedition display lists Away and Awaiting Lift crews. The 704×400 viewport, Surface 1 binding, fonts, mounting and subdued bezel are accepted. W1 is amber during arrival, staging and reveal, green when OPEN, and off during closing and idle. The emergency-stop control remains decorative.
 
@@ -164,7 +164,7 @@ Systems MVP §16 remains the full CF-01–CF-24 register. This entry-point updat
 | CF-05 | Admission/fairness/ownership survive. The archived M4 evidence includes the old midnight rule. |
 | CF-06–CF-12 | Retain current interfaces/art evidence and renderer/content/ergonomics debt. No fresh fixes or approvals are claimed. |
 | CF-13 | Continuous durability remains future and must use coherent existing ownership. |
-| CF-14–CF-15 | The local Expedition candidate implements real outcomes and Medical-owned natural recovery. Treatment, release tuning and long-run population pacing remain open. |
+| CF-14–CF-15 | Real Expedition outcomes and Medical-owned natural recovery are human-promoted locally. Treatment, release tuning and long-run population pacing remain open. |
 | CF-16–CF-17 | Single-item Incinerator disposal is accepted. Continuous Kitchen is human-promoted, published and closed. GDD §14 governs the Fuel slice. Other conversions, Workshop, labels and progression require separate scopes. [Developer acceptance and close-out](testing/2026-11-09-continuous-kitchen-service-result.md) |
 | CF-18–CF-19 | Preserve explicit interaction deferrals; economy, loot bounds and routes now serve the collection objective. |
 | CF-20–CF-24 | Retain adjacent art work, measured limitations, saved/runtime distinctions, authoring and source/license safeguards. |
@@ -177,7 +177,9 @@ The old Fuel/locker maintenance, EAF1 WallGrazing repair, R-01–R-03 and bounde
 
 ## 10. Execution and next-work boundary
 
-The authoritative asset-equipped checkout is `D:\Godot Projects\Sorting-apoc-PROTOTYPE`; reported engine baseline is Godot 4.7 Compatibility. Verify actual branch/tree/worktrees/engine before writing. The prior publication report’s clean tracked state, eighteen preserved untracked sidecars and protected saves are historical local reports, not this task’s inspection.
+Bunker scale and route review are the next design priority. Evaluate Food and Hydration pressure, workload and Fuel surplus after layout work and completion of the remaining services. Exact geometry and tuning remain open. [Extended playtest findings](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md#extended-playtest-findings)
+
+The accepted local Expedition build is in `C:/Users/Boschetar/Documents/ChatGPT/Sorting Apocalypse - Prototype/Expedition`. The published baseline checkout is `D:/Godot Projects/Sorting-apoc-PROTOTYPE`. The engine baseline is Godot 4.7 Compatibility. Verify actual branch/tree/worktrees/engine before writing. The prior publication report’s clean tracked state, eighteen preserved untracked sidecars and protected saves are historical local reports, not this task’s inspection.
 
 No reset, stash, clean, force-push, rebase/squash, branch/worktree deletion, untracked staging sweep or ignored-asset cleanup is authorized. Preserve local evidence and human `.tres`/scene edits. A remote clone is not a runnable licensed-art backup. Git ignore is not Godot scan exclusion: keep checkpoint scenes with production UIDs and duplicate global classes outside scanned paths. Preserve startup parity checks and avoid concurrent Godot/import writers on one mutable checkout.
 
