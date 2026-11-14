@@ -1,167 +1,259 @@
 # Sorting Apocalypse — current ChatGPT conversation bootstrap
 
-**Prepared 7 November 2026. Updated 10 November for Continuous Kitchen publication, 11 November for Fuel and Dispatch publication, 13 November for Receiving and Fedora publication, and 14 November for local Expedition promotion. Approved GDD v0.16 with the contribution decisions governs intended gameplay. M1–M4 remain HUMAN-PROMOTED / PUBLISHED / CLOSED.**
+**Updated 14 November 2026 after Expedition publication. Next milestone: design and test a more compact working bunker layout.**
 
-I am continuing Sorting Apocalypse, a solo-developed first-person collecting, hoarding and spatial-organizing game. The game is being redirected away from an endless survival/day-count objective. You are taking over after the collection pivot, approval of its design records, the single-current-team panel clarification, approval of the complete successor GDD v0.16, and preparation of the current-facing documentation update.
+I am continuing **Sorting Apocalypse**, a solo-developed first-person collecting, hoarding and spatial-organizing game. You are taking over after the fundamental collection-goal pivot, implementation and acceptance of the continuous services, and publication of the real Expedition outcomes/provisioning system. **We are no longer designing an endless survival game.** The current goal is how quickly the player can build the required physical stockpile, not how many days they can avoid extinction.
 
-This replaces the **25 October 2026 conversation bootstrap** and the older 14 October handoff as the current conversation entry. Their evidence and reasoning remain history; their ADR-first or engineering-review-first work orders are not current.
+The developer reports that local and remote repositories are aligned. A read-only GitHub check during this handoff found `Navandis/Sorting-apoc-PROTOTYPE` main at **`d242de49441b410c4abb88ab4f7b61971b6424d1`**, whose commit message is “Publish promoted Expedition outcomes and provisioning.” That revision contains the real Expedition implementation and its human acceptance. Some prose still says “local; publication pending” or describes schema 10 as published: these are stale publication labels, not unfinished gameplay work. The [14 November publication and handoff alignment record](design_history/2026-11-14-publication-and-layout-handoff.md) qualifies those labels. **Current published continuation is schema 11.** Check later repository changes; this SHA is an evidence anchor, never a reset target.
 
-This is a collaboration handoff, not a Codex implementation brief or permission to write/publish the repository. Do not ask me to reconstruct decisions already recorded. Read the at-a-glance state, authority map and first-response instructions, then targeted owning sections.
+This updates the existing **7 November bootstrap in place**, retaining its filename so current repository links continue to work. It supersedes earlier editions of that conversation entry and the 25 October/14 October operational handoffs. The old documents remain historical evidence, not active ADR-first, engineering-review-first or publication work orders.
+
+This is a **ChatGPT collaboration handoff**, not a Codex implementation brief, permission to edit scenes, or permission to push the repository. Read the authority map and first-response instructions, then the relevant source sections. Do not ask me to reconstruct settled decisions or repeat completed reviews.
 
 ## At a glance
 
-- **Design authority** — approved GDD v0.16, with [Appendix A](superpowers/plans/2026-11-07-continuous-run-collection-goal-foundation.md#appendix-a--confirmed-expedition-lifecycle-decisions-for-the-next-milestone) superseding the specified earlier open statements about preparation, destination occupancy and handover.
-- **Current implementation** · The Expedition-to-Storage Loop is **HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE**. The [expedition result](testing/2026-11-08-expedition-to-storage-loop-result.md) follows the separately accepted [collection foundation](testing/2026-11-07-continuous-run-collection-goal-closure.md).
-- **Expedition outcomes and provisioning** · **HUMAN-PROMOTED / CLOSED IN ITS BOUNDED SCOPE — LOCAL; PUBLICATION PENDING.** The developer reported more than two hours of play with no observed functional failures. The accepted settings and schema 11 belong to this provisional iteration. [Acceptance and technical evidence](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md)
-- **Incinerator** · The developer promoted and closed bounded single-item disposal on 8 November 2026. That release used schema 7 in the collection namespace. [Technical result and developer acceptance](testing/2026-11-08-incinerator-deliberate-disposal-result.md)
-- **Continuous Kitchen** · **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** This milestone introduced schema 8. GDD §12 records the standing mechanics and provisional iteration settings. [Developer acceptance and close-out](testing/2026-11-09-continuous-kitchen-service-result.md) · [Contribution decisions](design_history/2026-11-09-contribution-effects-and-kitchen-decisions.md)
-- **Fuel Reserve and Emergency Freight** · **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** Schema 9 retains incompatible schema-8 snapshots and requires confirmed New Run. [Fuel technical result and developer acceptance](testing/2026-11-11-fuel-reserve-emergency-freight-result.md)
-- **Zero-Ready Dispatch repair** · **HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** [Dispatch repair result](testing/2026-11-11-dispatch-no-ready-repair-result.md)
-- **Receiving mixed stacking and Fedora adoption** · Receiving is **HUMAN-APPROVED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE**. The approved Fedora is on main. The 157-Bulk meat-and-mice area overrun and the long-object planner failure are developer-deferred. [Receiving and Fedora result](testing/2026-11-13-receiving-mixed-stacking-result.md)
-- **Publication** · The collection foundation, expedition loop, furniture collision repair, Incinerator and Continuous Kitchen are published on `main`. The historical M1–M4 scopes are published and closed at `c9f9417a97cf65ef416c58189ca1f741b6a90406`. Frozen inputs and provenance are in the [survival-era index](design_history/survival-era/README.md).
-- **Furniture collision** · The developer accepted the [furniture movement collision repair](testing/2026-11-08-furniture-collision-repair-result.md) on 8 November 2026, closing its separate scope. The old combined daily M5 proposal and ADR remain historical.
+| Area | Current disposition |
+| --- | --- |
+| Intended game | Developer-approved **GDD v0.16**, with later approved contribution, Fuel and Expedition decisions incorporated in the owning documents. Provisional/open distinctions remain meaningful. |
+| Historical M1–M4 | **HUMAN-PROMOTED / PUBLISHED / CLOSED** in their bounded scopes. The old combined daily M5 and accumulation–drawdown–recovery design are historical/parked. |
+| Collection foundation and original Expedition-to-Storage Loop | Human-accepted, published and closed; their original mechanical fixtures are historical evidence, not current acquisition rules. |
+| Incinerator, Continuous Kitchen, Fuel Reserve/Emergency Freight | Human-promoted, published and closed in bounded scopes. Their numbers remain provisional. |
+| Furniture collision and zero-Ready Dispatch repairs | Human-accepted, published and closed. Do not reopen them as pending tasks. |
+| Receiving mixed stacking and Fedora adoption | Human-approved, published and closed in bounded scopes. Same-group-first, Receiving-only mixed stacking; Fedora scale **0.897**, Footprint **3×3×1**, Bulk **2**. |
+| Real Expedition outcomes and provisioning | **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** Full active catalogue, all five effects, real injuries/recruitment, Medical-owned natural recovery and schema 11. Developer played for more than two hours without observed functional issues. |
+| Medical | Natural recovery and a read-only patient view are implemented. **Medical contributions/treatment acceleration are not.** |
+| Workshop and other progression | Still separate design/implementation work. Fuel as an additional Workshop purchase resource is only under consideration. |
+| Immediate next milestone | **Design and test a more compact working bunker layout.** No exact geometry, topology, service positions or scene edits are approved yet. Detailed economy tuning follows layout work and the remaining services. |
 
 ## 1. Roles and working method
 
-Act as game-design collaborator, systems/technical architect, debugging strategist, evidence reviewer, documentation partner and solo-development scope guardian. Challenge a proposal when it conflicts with the organizing fantasy; do not merely make its supporting simulation more internally elaborate.
+Act as game-design collaborator, systems/technical architect, debugging strategist, evidence reviewer, documentation partner and solo-development scope guardian. Challenge changes that displace sorting and hoarding with a more elaborate supporting simulation. Prefer understandable rules, ordinary recovery paths and opportunities to trade resources for efficiency/time.
 
-I own design, scope, gameplay, visual and authoring decisions. Local Codex operates the authoritative Windows checkout, Godot, ignored assets, branches and saves under explicit scoped briefs. ChatGPT’s repository access is read-only evidence about tracked files unless a write task is separately authorized; it does not expose unsaved scenes, local saves or licensed originals.
+I own design, scope, gameplay, visual and authoring decisions. Local Codex operates the asset-equipped Windows checkout, Godot, local branches and saves under explicitly scoped briefs. ChatGPT can inspect tracked repository content and supplied evidence; that does not reveal unsaved editor changes, local imports, all evidence folders or licensed source assets. Repository access is read-only unless a write task is separately authorized.
 
-Read [AI_WORKING_GUIDELINES](AI_WORKING_GUIDELINES.md). Use one implementer by default; evidence and review should be proportionate. Do not introduce a review hierarchy, new generic framework, broad regression sweep, asset audit or another foundation milestone merely to prepare a design discussion.
+Read [AI_WORKING_GUIDELINES](AI_WORKING_GUIDELINES.md). This is a solo project: use one implementer by default, focused checks and a proportionate consolidated review. Do not invent a review hierarchy, generic framework, broad audit, exhaustive combination campaign or new foundation milestone merely to begin a design discussion. Reuse same-state evidence with attribution. Inspect errors as well as PASS markers and exit codes. Documentation-only changes do not justify rerunning unchanged gameplay.
 
-Distinguish explicit decisions, favored directions, placeholders, assistant proposals, implemented behavior, reported checks, human acceptance and publication. Approval of a document containing open questions approves their recorded status; it does not settle them. New numerical suggestions remain hypotheses until tested.
+Work in manageable decision batches. Distinguish **explicit decisions, favored directions, provisional numbers, assistant suggestions, actual implementation, reported tests, human acceptance and publication**. Approval of a document containing open questions approves their recorded status, not answers that have not been chosen. Successful mechanical acceptance is not evidence of final balance.
 
-I do not have native DOCX editing capability. Edit DOCX programmatically and regenerate readable companions. Preserve substantive motivation, examples, tradeoffs and unresolved choices in owning sections, not just a bootstrap synopsis. Supply substantial Codex handoffs as downloadable Markdown. Describe model/effort/session choices using available options, not historical guesses.
+I do not have native DOCX editing capability. When updating owning design documents, edit the DOCX programmatically first, then regenerate its readable Markdown and verify affected content/rendering. Preserve motivations, examples, trade-offs, rejected alternatives and unresolved choices in their owning sections; a short bootstrap does not replace them. Supply substantial handoffs as downloadable Markdown, with a ZIP/plain-text alternative because downloads have occasionally failed. Specify intended model/effort and new versus existing session without inventing unavailable model metadata.
+
+Prefer narrow, explicit changes over perfecting every edge case. Item values, physical scale and layout are adjustable when a real gameplay need warrants it, but not through unapproved global normalization. Keep historical evidence; remove obsolete live code when safely superseded. No old/new gameplay toggle or dormant survival-mode scaffolding is wanted.
 
 ## 2. Authority map and reading order
 
-| Source | Use |
+Relative links in this file are based at the repository's `docs/` directory. When it is attached outside the repository, resolve them against `Navandis/Sorting-apoc-PROTOTYPE/docs/`, not against a fictitious local download folder.
+
+| Source | Authority and use |
 | --- | --- |
-| [GDD v0.16 DOCX](Sorting_Apocalypse_Preliminary_GDD_v0.16.docx) / [generated Markdown](readable/Sorting_Apocalypse_Preliminary_GDD_v0.16.md) | **Current approved intended game.** Rules, retained physical foundations, local status, open replacement design. |
-| [Systems MVP v0.5](Sorting_Apocalypse_Systems_MVP_Foundation_Design_and_Progress_v0.5.md) | Implementation/contracts/progress/evidence and CF-01–CF-24. Old future survival behavior does not override v0.16. |
-| [VDD v0.11](readable/Sorting_Apocalypse_Visual_Design_Direction_v0.11.md) | Retained world/art/material direction and existing authored spatial context. A proposed shorter bunker is not an already-changed scene. |
-| [Findings v0.14](readable/Sorting_Apocalypse_Prototype_Findings_v0.14.md) | Historical prototype evidence, not active progress tracking. |
-| [Approved pivot record](design_history/Sorting_Apocalypse_Design_Pivot_Record_05Nov2026.md) | Why the design changed; accepted input with local status preserved. Team-tab paragraph superseded by the later single-team addendum. |
-| [Approved ADR archive](design_history/Sorting_Apocalypse_ADR_Design_Archive_05Nov2026.md) | Parked survival-cycle reasoning and proposals. Deliberate future reuse only. |
-| [GDD v0.15](readable/Sorting_Apocalypse_Preliminary_GDD_v0.15.md) | Superseded survival-era design/history, not a second current ruleset. |
-| [Approval/authority-transition record](design_history/2026-11-07-gdd-v0.16-approval-and-authority-transition.md) | This adoption’s scope, provenance and publication limit. |
+| [AI working guidelines](AI_WORKING_GUIDELINES.md), [CURRENT_STATE](CURRENT_STATE.md), [README](README.md), [CODEX_BOOTSTRAP](CODEX_BOOTSTRAP.md) | Current routing, working method, implementation and preservation. Apply the later publication alignment where old labels conflict. |
+| [GDD v0.16 DOCX](Sorting_Apocalypse_Preliminary_GDD_v0.16.docx) / [generated Markdown](readable/Sorting_Apocalypse_Preliminary_GDD_v0.16.md) | **Current intended gameplay.** Consolidated successor, retained physical contracts, provisional values and open mechanics. |
+| [Systems MVP v0.5 DOCX](Sorting_Apocalypse_Systems_MVP_Foundation_Design_and_Progress_v0.5.docx) / [Markdown](Sorting_Apocalypse_Systems_MVP_Foundation_Design_and_Progress_v0.5.md) | Implemented contracts, progress, test evidence and CF-01–CF-24. Older survival-era forward statements do not override the successor design. |
+| [VDD v0.11 DOCX](Sorting_Apocalypse_Visual_Design_Direction_v0.11.docx) / [Markdown](readable/Sorting_Apocalypse_Visual_Design_Direction_v0.11.md) | World/art/material direction and authored spatial context. Existing dimensions establish a baseline, not a veto on deliberate compact-layout design. |
+| [Prototype Findings v0.14](readable/Sorting_Apocalypse_Prototype_Findings_v0.14.md) | Historical experiments and evidence, not the current progress tracker. |
+| [Approved pivot record](design_history/Sorting_Apocalypse_Design_Pivot_Record_05Nov2026.md) | Why the objective changed. Its parallel team-tabs text was superseded by the single-current-team decision. |
+| [Approved ADR archive](design_history/Sorting_Apocalypse_ADR_Design_Archive_05Nov2026.md), [GDD v0.15](readable/Sorting_Apocalypse_Preliminary_GDD_v0.15.md), [survival-era index](design_history/survival-era/README.md) | Preserved survival-era reasoning, tentative settings, alternatives, frozen M4 inputs and completed evidence. Deliberate future reuse only. |
+| [Approval/authority transition](design_history/2026-11-07-gdd-v0.16-approval-and-authority-transition.md) | The successor's approval and original publication boundaries. Read dated statements in their historical context. |
+| [Kitchen/contribution decisions](design_history/2026-11-09-contribution-effects-and-kitchen-decisions.md), [Fuel decisions](design_history/2026-11-11-fuel-reserve-and-emergency-freight-decisions.md), [Expedition decisions](design_history/2026-11-13-expedition-outcomes-and-provisioning-decisions.md) | Detailed approved refinements; later decisions supersede earlier tentative versions, especially Food's former capacity bonus and Fuel's former request/greyout model. |
+| [Expedition result, acceptance and extended playtest](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md) | Primary current evidence and the reason spatial work now has priority. Original technical evidence remains separately attributed. |
+| [Publication and layout handoff alignment](design_history/2026-11-14-publication-and-layout-handoff.md) | Current disposition and next-scope clarification only; not a competing gameplay specification. |
 
-Start with [guidelines](AI_WORKING_GUIDELINES.md), [CURRENT_STATE](CURRENT_STATE.md), [README](README.md) and [CODEX_BOOTSTRAP](CODEX_BOOTSTRAP.md). Then read GDD §§1–5 for vision/objective; §§8–11 for requests, current-team preparation and Receiving; §§12–16 as relevant; §§20–21 for actual implementation and open boundaries. Appendix C maps retained/replaced topics, Appendix D gives sources.
+Start with the four entry points and the latest Expedition acceptance/extended-playtest sections. Then read GDD §§1–5 for purpose/objective, §4 and §7 for spatial/storage constraints, §§8–16 as they affect routes, and §§19–21 for tuning and open scope. Read the relevant VDD world/spatial passages and current-scene notes, including its later Receiving baseline rather than treating the original September schematics as current geometry. Consult Systems MVP for affected implemented contracts and evidence. Do not reload every historical report before discussing the layout.
 
-The targeted MVP v0.5 and VDD v0.11 master reconciliations are complete as dated 7 November compatibility updates. Their generated companions preserve implementation/evidence while bringing future-work and presentation assumptions into line with GDD v0.16. The [two-master consistency record](testing/2026-11-07-mvp-vdd-compatibility-consistency.md) records the checks and unresolved boundaries. Do not repeat the completed reconciliation or import old rules into an undefined replacement.
+The targeted MVP/VDD compatibility pass is already complete; [its record](testing/2026-11-07-mvp-vdd-compatibility-consistency.md) is evidence, not pending work. DOCX masters remain gameplay authority; their older dated implementation/publication notices are qualified by subsequent acceptance/publication records. **An undefined successor mechanic stays undefined. Never fill it with an obsolete mortality, midnight, prebuilt-team or daily-request rule.**
 
-**An undefined replacement mechanic stays undefined. Do not import mortality, midnight, next-day effects, prebuilt teams, permanent training slots or daily request defaults to fill it.** Code establishes actual behavior, not automatic design approval.
+## 3. Why we pivoted — preserve the reasons, not just the new goal
 
-## 3. Why we pivoted
+The original fantasy was receiving messy loot, sorting it, arranging it on shelves, hoarding until space mattered, and making difficult choices about spending, salvaging or destroying possessions. Requests and expeditions were added to deepen that backbone with useful sinks and supply sources.
 
-The original experience was receiving messy loot, organizing it, hoarding enough to fill shelves, and making difficult choices about spending, salvaging and destroying useful possessions. Requests and expeditions were supporting sinks/faucets to add depth.
+“Survive as many days as possible,” with no scavengers left as failure, gradually inverted the relationship. More incoming goods trivialized survival pressure; more consumption emptied the stock that was supposed to make storage valuable. Daily windows, forced dispatch and midnight added timetable constraints and difficulties keeping the player appropriately occupied. Accumulation–drawdown–recovery and time acceleration were attempts to repair symptoms while retaining that objective.
 
-“Survive as many days as possible,” with scavenger extinction as failure, gradually inverted that relationship. Increasing supply trivialized survival pressure; increasing demand consumed the resident inventory needed to make storage matter. Daily windows and midnight introduced additional timetable and workload problems. The ADR cycle and time acceleration were attempts to repair those symptoms while retaining the survival objective.
+The developer explicitly changed the objective to **accumulation speed**, removed the day cycle and rejected designed terminal dead ends. This is not a clean slate: physical storage, Receiving, ownership, interaction and much of the world remain useful. Supporting systems now create decisions about exchanging stock for time/efficiency. They must not become the main activity at the expense of organization.
 
-The developer explicitly chose to change the objective and remove the day cycle. Do not respond by rebuilding a survival director or multiplying simulation systems. Keep organization itself rewarding and the stockpile itself the achievement. Most physical foundations remain useful; this is not a clean slate. GDD and VDD are not immutable barriers to this approved course correction, but changes to actual scenes/code still need deliberate scope.
+The prior ADR discussions were extensive and deliberately preserved, including their reasons and unfinished choices. They are not current progression, event, scarcity, population or failure rules. A potential survival sequel/mode does not justify keeping obsolete runtime code or connection points in the main game. Archived implementation/evidence can remain without being live dependencies.
 
-The M4 playtest remains evidence with limits: all four stress-fixture teams were fully provisioned/dispatched before cutoff, narrowly; the early scripted delivery helped, unfamiliar stock and text-heavy UI hindered; meals reached 100% while Medical was 0/24/expired, and shelves were nearly empty. That motivated design work without invalidating mechanical M4 acceptance. It did not prove the complete economy or audience response.
+The original M4 test remains a successful bounded mechanical test, not proof of a balanced survival economy. Its stress provisioning, daily cutoffs and nearly empty shelves helped motivate the pivot; they are not instructions to restore those conditions.
 
 ## 4. Current collection objective and storage experience
 
-There are eight categories: Electronics, Food, Fuel, Hydration, Medical, Morale, Protection and Weapons. All eight live totals must reach the shared target on qualifying player storage at the same moment. **2,000 Utility/category is a placeholder**, not a calibrated release number.
+The eight categories are **Electronics, Food, Fuel, Hydration, Medical, Morale, Protection and Weapons**. All eight **live Utility totals on qualifying player storage** must meet the shared target simultaneously. Victory is immediate, with no hold interval or permanently banked category. Before success, removing goods can make a category incomplete again. The first completion time is then retained while continued play and live totals remain available.
 
-A category falling below its target becomes incomplete again before victory; no subgoal is permanently banked. The sorting table, carried items, Receiving cargo and returning-crew commitments do not count. Victory is immediate once the condition is met. There is no extra hold interval, request-clearance requirement, queue-empty requirement or inventory-empty requirement. The player can continue sorting after success or start an independent run for a better time.
+Sorting tables, carried inventory, lift/deposited/upstream cargo and expedition commitments do not count. Clearing requests, emptying the queue or emptying inventory are not extra victory requirements. **2,000 Utility/category is still illustrative. The published test fixture uses six Utility/category**, so serious playtesting continues after its early victory. Neither figure is an established release balance target.
 
-Uneven sinks are desirable: Morale may accumulate sooner than Food even though both have the same target. The player manages unequal category progress within shared physical capacity. Roughly 80% occupied storage at a typical win is an experiential ballpark, not a quota or validated catalogue result. A winning collection should feel substantial but leave practical maneuvering room; this is not a geometric-precision puzzle.
+Uneven sinks and uneven category accumulation are desirable. Roughly 80% occupied storage at a typical win is an experiential ballpark, not a quota or a validated capacity result. Preserve room to maneuver and assisted organization; this is not intended to be a geometric-precision puzzle. All storage available from the start is the favored direction, not a finalized production roster. Storage upgrades are not a default solution to layout problems.
 
-All storage installations available from the start is the favored direction rather than capacity upgrades, with exact roster/capacity still open. Carrying, expedition and optional information improvements remain possible. Bulk is handling burden, Footprint/shape/stacking govern shelf use, and Utility measures contribution; they are not interchangeable. Keep stable item definitions and one shared Item Category: the first release has no dual/multi-use category conversions.
+Bulk measures carrying burden; Footprint, shape and support/stacking govern space; Utility governs contribution and collection. They are not interchangeable. The first release uses one shared category per item and no dual/multi-use conversions. Buffs affect acquisition/systems, not silent changes to an item's definition. Explicit surgical authoring changes remain possible with approval and reconciliation of current derivatives.
 
-## 5. Continuous time, pressure and fairness
+## 5. Continuous time, service pressure and fairness
 
-Active real-world completion time replaces days survived. The main game has no daily cycle, fixed dispatch window, forced return clamp, midnight resolution or terminal failure state. No overall time limit exists. The player may work slowly or never complete the objective.
+Active real-world completion time replaces days survived. No day/night cycle, preparation window, mandatory daily return, midnight abandonment, completion deadline or designed terminal failure. ESC/main menu/offline/zoning pause the run. Dispatch, Kitchen, Fuel, Incinerator and the read-only Medical view remain live. Time acceleration is set aside. Preserve the actual shared timeline and pause ownership rather than introducing new timers or unapproved focus/suspension behavior.
 
-ESC menu, main menu before a run, game-off and zoning pause the timer. Ordinary handling and travel use active time. The accepted Expedition panel stays live during preparation. Time acceleration is set aside. Focus/loading and exact modal edges remain open rather than assumed.
+No dead end means an ordinary route back to progress remains, not guaranteed quick recovery, hidden grants, adaptive loot or a protected stock floor. A player may voluntarily restart an inefficient run. The player controls dispatch timing and can create more workload than they comfortably handle; that does not absolve us from providing time for sorting.
 
-Aim for alert, often busy play with time to organize. The player controls whether/when to send available crews, and can deliberately create a workload they struggle to handle. Do not guarantee perfect workload smoothing or fill quiet moments with more mandatory consumption.
+### Kitchen — reactive cumulative demand, already implemented
 
-No dead end means a clear ordinary route to victory continues to exist. It does **not** mean rapid recovery, hidden rescue grants, adaptive loot, protected stock floors or a promise that every run remains efficient. A player may decide a badly managed run is too costly to repair and voluntarily restart. Consequences must follow understandable choices/outcomes, not unfair hidden system traps.
+An independent Kitchen timing stream chooses the first and subsequent intervals in **180–300 active seconds**, anchored to scheduled triggers, never payment. Each event proposes **60–80 total Food/Hydration Utility**, with the larger proposed lane no more than 1.25 times the smaller. Separate category balances form one obligation. There is one **60-second grace period** on opening; additions do not reset it, and overdue additions increase the penalty immediately.
 
-Requests should allow short deferral while making routine indefinite neglect costly. Both unfinished work and escalation must be bounded; unlimited stacking is not the current direction. Their exact effects, cadence, ceilings and removal remain design work. Near victory it may be legitimate to accept a penalty rather than spend the last needed supplies. Do not make request completion an additional victory rule.
+Outstanding Utility is capped at **105**. Additions are clipped to available headroom; overflow is discarded, not banked. Cap-blocked events are consumed and the schedule continues. Each **three outstanding Utility means one percentage point** of carrying loss, capped at **35%**. Normal player capacity is **22**, so maximum penalty leaves `floor(22 × .65) = 14` Bulk. Partial credited contributions proportionally relieve capacity loss; sprint returns only when both balances clear. Ordinary walking speed is unchanged.
 
-## 6. Expeditions: one team being prepared at a time
+Existing carried goods are grandfathered when the limit falls; no forced deletion/drop/storage. New pickups enforce the effective limit. Whole items are submitted with capped credit and waste, and rejected transfers preserve exact state. The panel displays percentage loss and selected-item consequences. Older 20/10 carrying, 150-Utility debt and 50% penalty belong to earlier evidence, not current settings.
 
-This is the latest approved clarification and supersedes the pivot record’s per-team tabs:
+### Fuel — proactive reserve, not another recurring request system
 
-**Choose 1–4 currently Ready scavengers → equip that current team and choose a destination → explicitly Dispatch → optionally prepare another team consecutively, in the same panel session.**
+Reserve starts **55/60**, drains continuously at **one Utility per 30 active seconds**, and never becomes negative. Fixed operating thresholds are **45, 30 and 15 Utility**. Environmental light-strength multipliers are **1.000 / 0.835 / 0.670 / 0.500**. Below 45 Salvager permission is off; below 30 Workshop permission is also off; those facilities' actual mechanics remain future work. These fixed thresholds are not stretched by later tank-capacity upgrades.
 
-No automatic full-four-first roster; no morning allocation; no per-team preparation tabs; no parallel unfinished loadouts. Four Ready could be sent as 3+1, 4, or other permitted groupings. Multiple dispatched expeditions may operate concurrently and can have a separate status overview. All useful current loadout data must survive the broader interface: member count, five lanes, selected item, projected/applied credit, waste, full Bulk, raw/outgoing/return capacity and eligibility.
+Below 15, each otherwise-ready delivery waits **60 active seconds before ARRIVAL**. The wait starts only when cargo exists and the preceding turnaround is complete; unloading and empty idle do not bank waiting credit. A top-up below 15 retains the deadline; reaching at least 15 removes the restriction and starts the eligible load once. Already-started cycles finish normally, preserving audiovisual timing. At zero, emergency freight remains possible. There are no greyout episodes, overlapping timers, Fuel debt, threshold bonuses or renewed grace periods.
 
-Appendix A fixes the preparation lifecycle. An editable draft becomes a committed crew at first accepted supply or successful explicit zero-loadout Dispatch. Accepted contributions are irreversible. Size is fixed after formation, affinity choices remain editable until departure, and closing/reopening retains the draft or commitment.
+CRT text is green for normal and orange for emergency freight, with explicit mode/waiting information; essential UI is not dimmed. Physical refuelling uses the **temporary cabinet beside the lift**, with whole-item fractional headroom credit and waste. Its convenient position is not a finalized production location. Consumption/tank upgrades remain Workshop candidates.
 
-The working destination model is two distinct unordered affinities, giving 28 archetypes. Equal mathematical bonuses do not guarantee equal returns. All categories may occur; affinities neither guarantee particular cargo nor expand capacity. Use qualitative emphasis and retain actual item values. No bespoke ordinary location dangers, travel profiles, exterior map, depletion or lifetime caps are required.
+### Incinerator — deliberate disposal
 
-Selectors remain the alphabetical eight icons in two rows of four. A pair identifies one archetype. One concurrent expedition occupies a destination only from successful Dispatch to return. Dispatch is disabled until two distinct affinities identify an available destination.
+Available from the start, instantaneous, no output, no Fuel cost, cooldown or outage dependency. Carry the selected item physically; F opens, a fresh E submits. The exact irreversible-destruction warning appears once per run and is consumed when shown, including Back. No remote disposal or automatic floor dropping. Only single-item disposal is implemented; mass disposal is not implicitly authorized.
 
-Requirements/capacity scale with assigned members. Outgoing Bulk remains a real cost. Expedition durations and per-member capacity can be retuned for the collection experience. A larger-team speed bonus was a possible lever, not an agreed rule. Opening population/growth and old day-60 targets must not be silently carried over.
+## 6. Expeditions — the real system is implemented and published
+
+Prepare **one current crew of 1–4 Ready scavengers** in the live panel, contribute selected whole items, choose two distinct affinities, then explicitly Dispatch. No per-team loadout tabs, prebuilt morning allocation, parallel unfinished crews, cutoff or automatic dispatch at full provision. A crew forms at first accepted supply or successful zero-loadout Dispatch. Size then locks; affinities remain editable until departure. Closing/reopening preserves draft choices and committed supplies. At zero Ready, an unformed draft is unavailable; a legitimately formed last crew remains usable.
+
+There are **28 unordered affinity pairs**. A destination is occupied from successful departure until return, not until personnel handover. No repeated-location depletion, destination-specific hazards, external map or closure-event system is required. Dispatch requires both affinities; no current random-destination fallback.
+
+### First-iteration numerical contract — provisional, not production balance
+
+| Lane | Credited Utility ceiling per original scavenger | Effect |
+| --- | ---: | --- |
+| Food | **10** | Each Utility adds **0.125 expected bonus items**. Pool across the crew: whole count guaranteed, one additional item rolled from the fraction. Fully supplied crews of 1/2/3/4 have expected counts 1.25/2.5/3.75/5; a full four-person crew guarantees five. |
+| Hydration | **5** | Linear reduction up to **25%** of a uniformly sampled **210–300-active-second** journey. Baseline duration does not depend on crew size. Full provision gives 157.5–225 seconds. |
+| Protection | **12** | Linear relative reduction up to **50%** of both per-member risks: Light **20%→10%**, Severe **10%→5%**. Exactly one healthy/Light/Severe result per original member. No immunity or duration-based risk. |
+| Weapons | **10** | Linear blend up to **50% uniform + 50% Utility/Bulk-weighted** selection among eligible items in the already-chosen category. No quality exclusions or alteration of category odds. |
+| Morale | **15** | Linear recruitment chance **0→5% per original member**, independently rolled. One success adds one healthy recruit. No population ceiling or one-recruit-per-team cap. |
+
+Ordinary capacity is **23 Bulk per original scavenger**. Full Bulk of every submitted item, including Food, subtracts from the ordinary return budget. Food's bonus haul is separate from that budget but joins the **same exact physical delivery**. Bonus objects retain their normal Bulk everywhere else and have no bonus-only Bulk/Utility ceiling. Food does not increase carrying capacity. The UI displays guaranteed/possible counts such as “1–2 Bonus Items,” or an exact count when certain, and must explain useful contributions that do not change the displayed range. Zero ordinary capacity does not necessarily mean zero returned loot.
+
+The generator uses all **167 active definitions**, not the earlier sixteen-item fixture. Baseline categories are equal; two affinities each receive a **20% relative probability increase** from 12.5% to 15% when all eight categories are feasible. Relative weights **9:7** for affinity/non-affinity implement that distribution; remove categories with no fitting ordinary item for that draw and renormalize. Category catalogue size does not itself alter category odds. Within-category selection is uniform without Weapons; duplicates are allowed. Ordinary generation continues until no eligible whole item fits. Bonus draws use full-category eligibility without the ordinary remaining-Bulk filter, with the same affinity and Weapons rules.
+
+Provision effects are linear/capped; percentage effects normalize credited Utility by original crew size. Extra Food count uses total credit with a crew-scaled ceiling. Whole-item overfill is wasted. Outcomes commit once at successful Dispatch and persist; reopening a panel or continuing a save does not reroll rewards.
+
+Injury and recruitment are **independent**. An injured original can recruit; injury does not remove that person's carrying capacity or alter the committed journey. Recruits do not expand or dilute that journey's cargo/provisioning, change its duration, suffer its injury rolls or roll again for more recruits. Healthy joining is current behavior; injured recruits are only a possible later tuning option. No HP, treatment-success rolls, severity shifting or mortality is implemented.
 
 ## 7. Receiving, Medical, progression and information
 
-Pending returns keep exact cargo and unavailable crew until admission into an active or deposited lift slot. The destination becomes available at return. Healthy originals and recruits become Ready at admission and injured originals begin natural recovery. Empty returns hand over at return without using a lift slot. Medical treatment remains future work.
+### Handover and recovery
 
-The finite physical deck, exact content/identity, fully-OPEN TAKE, safe permanent barrier, stationary-bay theatre and FIFO ownership remain useful. Uncapped waiting does not authorize infinite rendered cargo. Preserve existing machinery until an explicit affected implementation task changes policy.
+Receiving accepts one active plus **two deposited FIFO** batches, with upstream Awaiting Lift beyond that capacity. A nonempty expedition releases its destination at return, but personnel stay unavailable until the exact cargo is admitted to an active/deposited slot. Admission completes handover even if emergency freight has not begun descending. Healthy originals and recruits become Ready; injured originals enter Medical as patients. Empty combined manifests hand over at return without using a slot or starting an empty lift trip.
 
-Medical owns natural recovery starting at handover. Light and Severe patients return to Ready in 120 and 300 active seconds, respectively. The first iteration adds a live read-only Medical view. Treatment remains future design.
+Medical owns **120-second Light / 300-second Severe natural recovery**, starting at handover, progressing in active time and returning each patient to Ready once. Waiting for cargo admission is not healing time. The existing frontage has a read-only patient panel. **Medical contributions, treatment acceleration/costs and their interface remain undefined/unimplemented**; do not import old daily treatment, fatality or injury-on-injury mechanics.
 
-Kitchen Food and Hydration restore carrying capacity and sprint. The first iteration sets 22 normal player Bulk and bounds Kitchen demand at 105 Utility with 35% maximum loss. Fuel tiers govern lights and emergency freight. Below 15 Fuel Utility each eligible delivery waits 60 active seconds before it starts. The human-promoted local schema-11 iteration includes the five Expedition lanes and full catalogue. Rations, Salvager and Training remain future design. [Decisions](design_history/2026-11-13-expedition-outcomes-and-provisioning-decisions.md) · [Technical result](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md)
+Workshop remains a one-time upgrade-purchase direction, with work taking time and power permission able to pause progress rather than erase it. Electronics is no longer a recurring Ops demand. Adding Fuel to some Workshop costs is a new option under consideration, not approved. Rations, Salvager conversion, Training and final progression are separate work. These must not be implemented merely to begin layout design.
 
-Goal-progress visibility is always baseline and cannot be disabled or upgrade-gated. Notification, central overview and a diegetic Journal have distinct roles. Optional information tools may improve access or analysis of existing facts, not hide indispensable data. Narrative remains short, qualitative and inferred; gameplay choices lead and fiction supports them. No visible outside world or human simulation is introduced.
+### Exact presentation and accepted improvements
 
-## 8. What already exists and must not be reopened by default
+Preserve one exact haul/one delivery, full-OPEN TAKE, permanent barrier, stationary-bay theatre, complete outbound turnaround and FIFO ownership. Cargo surfaces remain private TAKE-only surfaces, not ordinary goal storage. No hidden filler, loss, content substitution or reroll of awkward objects.
 
-The published build has continuous active time, player-dispatched expeditions, eight live stored Utility totals, single-item disposal, continuous Kitchen, Fuel Reserve and Emergency Freight, the accepted Dispatch repair, Receiving mixed stacking and the approved Fedora revision. Schema 10 governs Continue. Confirmed New Run can repoint the slot while retaining incompatible snapshots without migration. M1–M4 daily scheduling, reports and prebuilt Dispatch describe historical evidence. The promoted local build adds injuries, recruitment and natural recovery. Production economy balance remains open.
+Receiving now prefers valid same-group stacking, then valid mixed top-appends, then empty placement. Existing support flags, Footprint fit and clearance still apply. Ordinary shelf automatic stacking is unchanged. Committed layouts and removal history survive current-build continuation. Mixed stacking is a general capability whose value may grow with future catalogue combinations; its first stress-test pass count is not its entire value.
 
-The inspected baseline has 167 active/7 retired/174 sources. Preserve authored scale, pose/+Z Front, Footprint and support roles; twelve separate Auto Stack Group approvals remain pending with saved None. Never recycle retired IDs or replace authored values automatically. The current values are frozen testing content, not immutable release balance.
+The surgical Fedora adjustment is adopted: `loot_000172`, scale **0.897**, Footprint **3×3×1**, Bulk **2**, other properties retained. Current derivatives were reconciled; historical data remained unchanged. Mystery Meat Large remains scale 1, Footprint 13×5, Bulk 14. Its smaller trial and the assistant's 11×5 grid witness were diagnostic/proposed only, not approved edits.
 
-Storage, selected fixed ladders, rack authoring, Receiving A/B/C, EAF1–EAF5, C1 and intentional lighting remain promoted in their bounded scopes. Irregular frozen piles remain rejected and C1A remains parked. Do not revive old dimensions, removed props or failed experiments to “restore” a historical screenshot.
+Two extreme cases remain **developer-deferred prototype limitations**: the 157-Bulk meat-and-mice area overrun and long-object bounded-planner failure. The current safe pre-dispatch path rejects an unpreparable exact outcome without losing the draft, supplies, personnel or random state; an unchanged retry repeats it. This is not the final universal presentation solution, but fixing every extreme is not a prerequisite for the next milestone.
 
-Current-state technical details, preservation rules and evidence links are in CURRENT_STATE §§4–11 and Systems MVP §16/§21. Use them selectively. Existing physical/gameplay acceptance does not mean the collection loop, final layout or full durability is already validated.
+The developer strongly rejected haul chunking as a default answer because random geometry would impose extra delivery/fuel-delay penalties disconnected from player choices. The preferred response order is Receiving-only mixed stacking; surgical scale/Footprint tuning; justified Bulk tuning; small manually authored widening; shelves only much later; split deliveries far behind those. No broad shrinking, item-ID-specific packing recipes, lift rebuilding or exhaustive stress campaign is authorized. Reassess after a significant catalogue expansion or a concrete new playtest problem, not on every handoff.
 
-## 9. Local execution, source ownership and evidence discipline
+Goal visibility remains baseline. A diegetic Journal, PA and central monitoring remain presentation directions, not proof that their final systems already exist. The broader bunker population and surface world are inferred through goods, requests and reports, not visible simulated people or exterior gameplay.
+
+## 8. Progress and lessons from the session being handed over
+
+This session moved from the surviving M4 mechanical prototype and extensive ADR discussion to the approved collection-game successor, reconciled the current document authorities, and implemented the following bounded slices. Do not restart any as unfinished design:
+
+| Progress | Record / lesson |
+| --- | --- |
+| Collection foundation | [Result](testing/2026-11-07-continuous-run-collection-goal-result.md) and [closure](testing/2026-11-07-continuous-run-collection-goal-closure.md): continuous active time, stored-Utility objective, continuing after victory; broad obsolete calendar/report infrastructure retired. |
+| Original expedition loop | [Result](testing/2026-11-08-expedition-to-storage-loop-result.md): draft formation, departure, exact cargo, zero-item returns, destination occupancy versus personnel release, continuation. Temporary acquisition rules later replaced. |
+| Furniture collision | [Repair](testing/2026-11-08-furniture-collision-repair-result.md): seven fixtures restored without removing storage/pickup behavior; accepted separately. |
+| Incinerator | [Result](testing/2026-11-08-incinerator-deliberate-disposal-result.md): physical selected-item disposal and once-per-run warning, with no power dependency. |
+| Kitchen | [Result](testing/2026-11-09-continuous-kitchen-service-result.md): bounded cumulative demand, percentage relief, independent timing and recovery; old meal/UI remnants reconciled. A narrated 15/10 display at an earlier 43% penalty was not reproduced; the focused probe found correct 15/11 then 14/11. It is not an open confirmed bug. |
+| Fuel and zero-Ready repair | [Fuel result](testing/2026-11-11-fuel-reserve-emergency-freight-result.md), [Dispatch repair](testing/2026-11-11-dispatch-no-ready-repair-result.md): proactive reserve/emergency throughput replaced request/episode proposals; formed versus unformed last-crew behavior preserved. |
+| New loadout assessment | Recipes rebuilt from the active catalogue and new five-lane targets, not reused from M4. **23 Bulk/scavenger chosen.** Ordinary ~50% usage and efficient 70–75% remaining were aspirations. Solo efficient headroom is lower and explicitly acceptable; do not raise all crews to 33–40 Bulk to fix that asymmetry. Reassess after significant catalogue expansion. |
+| Receiving stress and adoption | [Mixed-stacking/Fedora result](testing/2026-11-13-receiving-mixed-stacking-result.md): mixed stacks implemented, Fedora adopted, current derivatives reconciled, remaining extremes deferred. The v0.2 assessment retained all 20 recipes and capacity comparisons. |
+| Real Expeditions | [Result and extended playtest](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md): full catalogue, five actual effects, real personnel outcomes and recovery, schema 11. Old sixteen-item/8-Bulk/90–180-second/Medical-lane/fixed-population assumptions retired or their useful coverage migrated. |
+
+The developer's **more-than-two-hour sustained playtest** found no bugs or functional failures and explicitly promoted Expeditions. It did reveal four important experience/balance observations:
+
+1. **Too much walking**, even without treatment and Workshop. Existing bunker size and frequent service/item-handling trips were major contributors.
+2. **Food and Hydration depleted too quickly** to sustain Kitchen and loadouts comfortably. Sprint was unavailable much of the time; reduced carrying meant more trips. The consequences behaved correctly but their frequency/cost felt excessive.
+3. **Workload may be too high**: continually behind on unloading, crew preparation and requests, despite the conveniently located temporary refuelling panel and missing services.
+4. **Fuel accumulated much faster than other categories**, even when wasting roughly 40-Utility items to fill roughly ten-Utility gaps.
+
+The observed reinforcing cycle was: long routes → slower unloading/provisioning → supply pressure → loss of sprint and carrying capacity → more trips → further congestion. This is a reported interaction, not a measurement isolating each cause. Shorter routes may improve throughput but also enable more dispatches; do not promise layout alone resolves the economy.
+
+Fuel's high-end catalogue mix and Weapons/bonus acquisition are **suspected contributors**, not a proven diagnosis. Fuel alongside Electronics for some Workshop upgrades is **under consideration**, not a newly approved sink. Do not respond by immediately lowering Fuel Utility, raising reserve consumption, reducing Kitchen requests or changing expedition durations.
+
+**The accepted next priority is compact-layout design/testing before detailed economic tuning.** A representative working layout is enough; final visual polish is not a prerequisite for later treatment/Workshop work. Sustained integrated playtesting after those systems exist will be more informative than another isolated balance model now.
+
+## 9. Local execution, physical ownership and evidence discipline
 
 ```text
-Authoritative Windows project: D:\Godot Projects\Sorting-apoc-PROTOTYPE
 Repository: Navandis/Sorting-apoc-PROTOTYPE
-Reported engine baseline: Godot 4.7, Compatibility renderer
+Read-only handoff anchor: d242de49441b410c4abb88ab4f7b61971b6424d1 (14 November 2026)
+Latest implementation/retest checkout:
+  C:/Users/Boschetar/Documents/ChatGPT/Sorting Apocalypse - Prototype/Expedition
+Long-standing asset-equipped project:
+  D:/Godot Projects/Sorting-apoc-PROTOTYPE
+Reported engine: Godot 4.7.stable.official.5b4e0cb0f, Compatibility
 Normal F5: res://gameplay/run/run_shell.tscn
 Standalone F6: res://gameplay/logistics_wing/wing_gameplay.tscn
+Current save schema: 11, existing user://saves/collection/ service
 ```
 
-Check actual local branch, changes, worktrees, engine and remote state before execution. Prior reports of clean tracked files, eighteen preserved untracked sidecars and protected saves are not fresh inspection. Preserve human-authored scenes/data, ignored licensed assets, caches, reports, branches/worktrees and saves. No reset, stash, clean, force-push, history rewrite, deletion or staging sweep for convenience.
+The writable Expedition clone was introduced because the app-created checkout was outside the writable workspace; it uses junctions to existing assets/imports. The developer now reports local/remote alignment. **Do not infer which local copy will own the next scene edit, or that shared directories are independent.** Verify the actual authoring checkout, branch, worktrees, dirty changes and engine before local writes. GitHub verifies tracked publication, not that local inspection.
 
-GitHub cannot certify the Windows checkout, imports, rendered art or all raw evidence. A local path named in a report is not an attachment that was read. Git-ignored scenes can still be scanned by Godot: externalize checkpoints with production UIDs/duplicate classes; retain startup-parity checks. Use guarded configured EAF source roots, not arbitrary drive scans, and avoid concurrent Godot/import writers.
+Use current saved scenes/builder and human overrides as the physical baseline. Relevant owners include `gameplay/logistics_wing/wing_gameplay.tscn` and its script, `gameplay/run/run_shell.tscn`, `player_controller.gd`, storage/ladder owners, and `gameplay/logistics_wing/receiving/receiving_runtime.gd`. Discover connected structural/environment owners from those references rather than inventing filenames or treating old plan pixels as current topology. CURRENT_STATE §§6–8 and VDD's later physical notes identify the accepted environment and source safeguards.
 
-Ordinary appropriate light/wear/furnishing changes use focused tracked authoring; they do not automatically require a full visual/gameplay audit. Future compression is an explicit design possibility, not current permission to move walls or discard approved art.
+The current catalogue is **167 active / seven retired / 174 sources**. Never recycle retired IDs or regenerate accepted values from old scoring proposals. Twelve separate Auto Stack Group approvals remain pending with saved None; do not turn a scope-limited approval into completion of unrelated metadata. Catalogue values can change surgically when explicitly approved, with canonical definitions and affected current data reconciled; historical evidence is not retroactively rewritten.
 
-Keep source inspection, automated assertions, rendered proof, native input/audio observations, human promotion and publication distinct. Reuse same-state evidence with attribution. Do not rerun unchanged gameplay for document edits. Known rendering/content/loading/durability debt remains; consult CF-01–CF-24 without importing obsolete gameplay commitments.
+Retain exact item identity/ownership, atomic consumption/TAKE/storage, rejection rollback, zoning, support/clearance, current shelf and fixed-ladder functionality, fully OPEN freight access, shared active-time/pause logic and current-build continuation. Layout edits may intentionally move authorized components, but their collisions, interaction targets, lights and linked surfaces must move coherently. Do not simply delete difficult props or extend reach to conceal layout problems.
 
-## 10. Next design slices remain bounded
+No reset, stash, clean, force-push, history rewrite, branch/worktree deletion, untracked staging sweep, commercial-asset cleanup or arbitrary drive scan for convenience. Keep checkpoint scenes with production UIDs or duplicate global classes outside Godot-scanned roots. Avoid concurrent Godot/import writers, especially across junction-linked clones. A tracked repository clone is not a licensed-asset backup.
 
-Bunker scale and route review are the next priority. Keep the physical hoard and storage functionality central. Exact geometry remains open. Finish the remaining services before drawing final economy and pacing conclusions. Fuel as an additional Workshop purchase cost remains an option under consideration. [Extended playtest findings](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md#extended-playtest-findings)
+Old-save migration/backward compatibility was explicitly waived for the recent changes. Existing save files still should not be deleted as housekeeping. Current-build saving/loading must remain correct, and incompatible saved layouts should be rejected explainably rather than silently relocated. Reconfirm only if a new task materially changes this scope.
 
-The [expedition loop](testing/2026-11-08-expedition-to-storage-loop-result.md) is closed in its bounded scope. Any further work requires its own agreed scope.
+Known debt includes synchronous autosaves/large-stock costs, release crash durability, brief silent-suspension timing, Windows certificate-store and held-material diagnostics, and other CF-01–CF-24 items. An older CRT test has three formatting assertions failing on baseline and candidate (single-digit expectation versus two-digit output); relevant current CRT/native/FIFO checks passed. Do not claim universal green tests, invent a new regression, or make unrelated test cleanup a prerequisite for layout discussion.
 
-GDD §21.2 records the completed expedition decisions and open boundaries, including production tuning, bounded requests and Ops, Medical, population and progression, conversions, storage, interface, timing and release durability.
+## 10. Next milestone — compact working bunker layout
 
-A next task can reuse accepted physical/transactional systems where relevant. No Workshop, Training, entire event framework, whole-wing remodel or new asset pass becomes a prerequisite by default. M5’s historical combined multi-day allocation scope is not automatically the next collection prototype or a name for actual expedition implementation.
+**Confirmed next scope:** design and test a more compact working layout that reduces excessive repetitive transit while keeping collecting, storing and organizing central. This is not authorization to implement a new layout without discussing it, nor a requirement to finish a whole-bunker art pass.
+
+**Still open:** exact footprint, dimensions, corridor lengths, room connections, station adjacency, future service placement, storage roster/capacity and how much of the existing shell to retain. Do not invent a target percentage shrink or assume the entire bunker should be uniformly scaled. Preservation of accepted functionality does not freeze every wall in its old position.
+
+The prior discussion suggests the following approach, **as a working method rather than an already-approved floor plan**:
+
+- Inspect the actual current layout and the frequent routes: Receiving↔storage, storage↔Dispatch/Kitchen, disposal/refuelling, and the future Medical-treatment/Workshop visits. Distinguish unavoidable item handling from empty transit and detours.
+- Develop a small number of compact alternatives. Preserve useful storage, readable shelf approaches, maneuvering space, departmental identity, accepted object scale and the unseen-world fantasy. Do not solve travel by turning every service into adjacent buttons or by squeezing aisles into a precision maze.
+- Include future services and a deliberate Fuel-station location in the spatial discussion. The temporary cabinet beside the lift must not silently become a permanent constraint or invalidate comparisons.
+- Compare basic route distance/time and ordinary walk-without-sprint usability. A small route table and a playable rough layout are enough; no telemetry framework, exhaustive optimization or guessed whole-game throughput model is required.
+- For an initial spatial comparison, prefer retaining the accepted provisional gameplay coefficients so the effect of layout is interpretable. Any simultaneous tuning is a separate explicit choice, not an automatic part of “compression.”
+
+The art direction remains an adapted unfinished/decommissioned underground municipal/service facility, not a passenger station, military bunker or futuristic base. Architecture should feel rational, with historically caused irregularity and competent survivor adaptation. Mineral shell, practical readable lighting and meaningful districts support the logistics fantasy. Existing Receiving spectacle, art and authored scale should be reused where appropriate; a new blanket asset pass is not needed.
+
+Do not reopen the meat/long-object extreme-haul work, rejected rigid-body/frozen-pile approaches, historical ADR, already-accepted system reviews or a complete catalogue recalibration to start this milestone. If a credible issue is actually caused or reached by the chosen layout, address that issue in a bounded scope.
+
+After an agreed playable spatial revision, proceed with the remaining service design/implementation, then integrated pacing/economy evaluation. Nothing here mandates a specific station topology, movement-speed change or new Fuel sink.
 
 ## 11. First response in the new session
 
-Verify accessible current repository state against the inspected checkpoint without resetting it. Read the current entry points and targeted approved GDD sections. If manual provision has not occurred, use the supplied approved v0.16 and disclose the discrepancy; do not mistake absence on the remote for lack of developer approval.
+First verify accessible current repository state and read the entry points, this handoff, the publication-alignment record and the latest Expedition acceptance/extended-playtest sections. Read the targeted GDD/VDD spatial and interaction sections, and inspect current scene ownership before asserting dimensions or recommending concrete moves. Prior local paths are evidence locations, not proof that you have opened their contents.
 
-Orient to the approved design, the human-accepted and published collection and expedition checkpoints. Keep the historical M1–M4 results and the current scope distinct.
+Then give a concise orientation that:
+
+1. Recognizes the **completed survival→accumulation-speed pivot** and the **human-promoted, published Expedition system/schema 11**. No acceptance/publication task remains for those milestones.
+2. Distinguishes implemented natural recovery from unimplemented treatment and Workshop, and observations from suspected causes or potential tuning ideas.
+3. Identifies the concrete current layout information available versus any genuinely missing visual/local context, without asking me to repeat decisions recorded above.
+4. Proposes a small first design batch for compact-layout work and, only where useful, asks one consequential layout question whose answer is not already in the sources.
+
+Do not begin by drafting another Expedition implementation prompt, rerunning every review, changing coefficients, automatically editing scenes, or promising a complete redesign. Do not turn an outdated “publication pending” paragraph into a new blocker. If repository access is unavailable, use the supplied source material, state that limit, and ask only for the specific missing current-layout input required to continue.
 
 ## 12. Provenance and maintenance
 
-This handoff derives from the developer-approved v0.16 DOCX/Markdown, approved reconstructed 5 November pivot/ADR records, the explicit one-team addendum and the later whole-document approval. Those source records remain unchanged; v0.16 incorporates the tab supersession. It also uses the supplied 25 October handoff and read-only repository operational sources at `c9f9417` for implementation/evidence/preservation.
+This revision updates the supplied `Sorting_Apocalypse_Bootstrap_Prompt_Next_Session_07Nov2026(1).md`, compares the later repository edition at `d242de4`, and carries forward the approved v0.16/pivot/ADR records, current entry points, later service/Expedition decisions, assessment/adoption history, and the developer's final publication and next-milestone statements. The repository's 14 November Expedition result already records the long playtest and reasons for prioritizing layout.
 
-No fabricated timestamps are assigned to individual design messages. The dates on source documents retain their original meaning. This update is dated 7 November 2026, not a claim that the design discussion happened entirely on that date.
+The filename's 7 November date is retained for link stability; **this content is current to 14 November 2026**. That is a handoff date, not a fabricated timestamp for every earlier design decision. Earlier source dates and acceptance evidence remain unchanged.
 
-The package records approval and prepares manual publication; it performs no remote write, local Windows inspection, Godot test, new economic simulation, source-asset operation or save migration. The developer may upload these files later. Inspect that later state instead of treating this preparation checkpoint as forever current.
+The accompanying alignment record supersedes stale publication/snapshot-status labels only. It does not silently revise gameplay authority or mark release balance/durability complete. This package was prepared for provision; it is not evidence of a remote write, a Windows inspection, a Godot test, a scene edit or a new economic simulation.
 
-**Operating rule:** keep collection and organization central; preserve the approved detail and its open boundaries; reuse accepted foundations; leave historical survival rules in history; implement only an agreed bounded task.
+**Operating rule: keep collection and organization central; preserve current accepted systems and historical reasoning; keep known limits proportionate; design the compact working layout next; implement only the next explicitly agreed bounded task.**

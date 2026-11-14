@@ -1,6 +1,7 @@
 # Sorting Apocalypse — documentation index
 
 **Current intended game: GDD v0.16, approved by the developer in its entirety.**
+**14 November 2026: Expedition outcomes and provisioning is HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE. Current published continuation is schema 11.**
 **Continuous Run and Collection Goal Foundation: HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.**
 **Expedition-to-Storage Loop · HUMAN-ACCEPTED / CLOSED IN ITS BOUNDED SCOPE.** [Technical result and developer acceptance](testing/2026-11-08-expedition-to-storage-loop-result.md).
 
@@ -21,7 +22,7 @@ Read [AI working guidelines](AI_WORKING_GUIDELINES.md), [current development sta
 
 DOCX masters govern. Edit the relevant DOCX first and regenerate its Markdown; do not maintain a second independent gameplay specification. Approval of v0.16 preserves its internal **CONFIRMED / RETAINED / DIRECTION / PROVISIONAL / OPEN / HISTORICAL** distinctions. It does not finalize placeholders or complete unresolved mechanics.
 
-The [13 November Expedition decision record](design_history/2026-11-13-expedition-outcomes-and-provisioning-decisions.md) governs the approved first-iteration outcomes. The developer promoted the local schema-11 iteration on 14 November. Publication is pending. [Acceptance and technical evidence](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md)
+The [13 November Expedition decision record](design_history/2026-11-13-expedition-outcomes-and-provisioning-decisions.md) governs the approved first-iteration outcomes. The developer promoted and published the schema-11 iteration on 14 November. Read-only GitHub verification found `main` at `d242de49441b410c4abb88ab4f7b61971b6424d1`. [Publication and handoff alignment](design_history/2026-11-14-publication-and-layout-handoff.md) qualifies earlier dated local/pending status notices without changing their original evidence. [Acceptance and technical evidence](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md)
 
 **An unresolved post-pivot rule stays unresolved. Do not fill it with a survival-era rule merely because an older document specifies that rule in detail.** Existing source establishes what the prototype does, not the intended release design or automatic permission to modify it.
 
@@ -31,9 +32,9 @@ The targeted Systems MVP v0.5 and VDD v0.11 master reconciliations are now compl
 
 The player builds a substantial physical hoard and wins immediately when all eight category totals on qualifying player storage meet the shared Utility target simultaneously. Totals remain live; reaching one category does not bank it permanently. The sorting table, carried items, Receiving cargo and waiting expedition cargo do not count. Outstanding requests and queued or carried goods are not additional victory conditions. **2,000 Utility per category and roughly 80% storage occupancy remain illustrative, unvalidated values.** Uneven category sinks are intentional.
 
-Active real-world completion time replaces days survived. There is no day cycle, imposed completion deadline or designed terminal failure state. Poor decisions may create a lengthy recovery; ordinary rules must prevent a true dead end without hidden catch-up. ESC, main menu, game-off and zoning pause the timer. Preparation is tentatively unpaused; time acceleration is set aside. Goal visibility is baseline and cannot be gated or disabled by upgrades or penalties.
+Active real-world completion time replaces days survived. There is no day cycle, imposed completion deadline or designed terminal failure state. Poor decisions may create a lengthy recovery; ordinary rules must prevent a true dead end without hidden catch-up. ESC, main menu, game-off and zoning pause the timer. The accepted preparation panel is live; time acceleration is set aside. Goal visibility is baseline and cannot be gated or disabled by upgrades or penalties.
 
-Expedition preparation is **one current crew at a time**. Choose 1–4 Ready scavengers, contribute selected whole items, select two distinct affinities and explicitly Dispatch. Occupancy lasts until return. The [expedition brief](superpowers/plans/2026-11-07-expedition-to-storage-loop.md) records the committed lifecycle and provisional acquisition rules.
+Expedition preparation is **one current crew at a time**. Choose 1–4 Ready scavengers, contribute selected whole items, select two distinct affinities and explicitly Dispatch. Occupancy lasts until return. The [original expedition brief](superpowers/plans/2026-11-07-expedition-to-storage-loop.md) records the accepted lifecycle; the [13 November decisions](design_history/2026-11-13-expedition-outcomes-and-provisioning-decisions.md) and owning GDD sections specify the implemented full-catalogue acquisition and outcomes.
 
 Nonempty expeditions hand over on admission to an active or deposited lift slot. Empty outcomes hand over at return. Healthy originals and recruits become Ready and injured originals enter Medical natural recovery. See GDD §§9–14 for the current rules.
 
@@ -51,13 +52,13 @@ The two 5 November records are included unchanged from the editions the develope
 
 ## What is playable now
 
-F5 launches `res://gameplay/run/run_shell.tscn` with live Utility targets, player-dispatched expeditions, single-item disposal, continuous Kitchen and emergency freight. The promoted local build uses schema 11 and includes the five Expedition outcomes and read-only Medical view. Published main retains schema 10 with Receiving mixed stacking and the adopted Fedora. Confirmed New Run retains incompatible snapshots. Standalone F6 `res://gameplay/logistics_wing/wing_gameplay.tscn` retains the authored palette. The [survival-era archive](design_history/survival-era/README.md) preserves earlier plans and frozen M4 input.
+F5 launches `res://gameplay/run/run_shell.tscn` with live Utility targets, player-dispatched expeditions, single-item disposal, continuous Kitchen and emergency freight. Published main uses schema 11 and includes the five Expedition effects, full-catalogue loot, injuries, recruitment and read-only Medical natural-recovery view, alongside Receiving mixed stacking and the adopted Fedora. Medical treatment and Workshop remain future work. Confirmed New Run retains incompatible snapshots. Standalone F6 `res://gameplay/logistics_wing/wing_gameplay.tscn` retains the authored palette. The [survival-era archive](design_history/survival-era/README.md) preserves earlier plans and frozen M4 input.
 
 See [CURRENT_STATE](CURRENT_STATE.md) for the current content, scene, preservation and debt details. The [M4 validation record](testing/m4-expedition-loadout-validation-2026-10-24.md), [publication record](testing/m4-publication-2026-10-25.md), and [semantic reconciliation record](testing/m4-documentation-semantic-reconciliation-2026-10-25.md) preserve prior acceptance. They are not new tests of v0.16.
 
 ## Next-work boundary
 
-Bunker scale and route review take priority. Final economy and pacing evaluation follows layout work and completion of the remaining services. Exact geometry and tuning remain open. [Extended playtest findings](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md#extended-playtest-findings)
+The agreed next milestone is design and testing of a more compact working bunker layout. Reduce excessive repeated transit while preserving the collecting, hoarding and sorting experience. Final economy and pacing evaluation follows representative layout work and completion of the remaining services. Exact geometry, connections, station placement and any simultaneous tuning remain open; no scene edit is authorized by this index. [Extended playtest findings](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md#extended-playtest-findings)
 
 The original Expedition-to-Storage Loop and the separate [furniture movement collision repair](testing/2026-11-08-furniture-collision-repair-result.md) are human-accepted, published and closed in their bounded scopes.
 

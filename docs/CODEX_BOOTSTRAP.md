@@ -1,10 +1,10 @@
 # Sorting Apocalypse — Codex bootstrap
 
-**7 November 2026 authority update: GDD v0.16 APPROVED; M1–M4 HUMAN-PROMOTED / PUBLISHED / CLOSED.**
+**Authority established 7 November; handoff aligned 14 November 2026. GDD v0.16 APPROVED; M1–M4 and the bounded Expedition outcomes/provisioning iteration HUMAN-PROMOTED / PUBLISHED / CLOSED.**
 
 The current intended game is collection, hoarding and spatial organization. The [Expedition-to-Storage Loop](superpowers/plans/2026-11-07-expedition-to-storage-loop.md) is **HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE**. See its [technical result and developer acceptance](testing/2026-11-08-expedition-to-storage-loop-result.md) and the [accepted foundation checkpoint](testing/2026-11-07-continuous-run-collection-goal-closure.md).
 
-The [13 November Expedition decisions](design_history/2026-11-13-expedition-outcomes-and-provisioning-decisions.md) supersede the fixture acquisition and healthy-only outcomes. The developer promoted the local schema-11 iteration on 14 November. Publication is pending. [Acceptance and technical evidence](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md)
+The [13 November Expedition decisions](design_history/2026-11-13-expedition-outcomes-and-provisioning-decisions.md) supersede the fixture acquisition and healthy-only outcomes. The developer promoted and published the schema-11 iteration on 14 November. Read-only GitHub verification found `main` at `d242de49441b410c4abb88ab4f7b61971b6424d1`. [Publication and layout handoff](design_history/2026-11-14-publication-and-layout-handoff.md) qualifies older dated local/pending notices; no acceptance or publication task remains for this iteration. [Acceptance and technical evidence](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md)
 
 ## Read first
 
@@ -20,7 +20,7 @@ The [current conversation bootstrap](Sorting_Apocalypse_Bootstrap_Prompt_Next_Se
 
 The developer approved the complete v0.16 draft and authorized approval-state and entry-point updates for manual provision. Every internal PROVISIONAL, DIRECTION, OPEN and HISTORICAL label remains meaningful. [The approval record](design_history/2026-11-07-gdd-v0.16-approval-and-authority-transition.md) separates this approval from implementation/publication.
 
-At preparation, read-only GitHub comparison showed `main == c9f9417a97cf65ef416c58189ca1f741b6a90406`. The approval package was prepared for manual publication. After manual upload, verify the actual ref and relevant files; the baseline SHA is not a reset target and the dated upload boundary is not a reason for recursive housekeeping commits.
+At the original 7 November approval-package preparation, read-only GitHub comparison showed `main == c9f9417a97cf65ef416c58189ca1f741b6a90406`; that was a historical publication boundary. The 14 November publication anchor is recorded above. Verify later actual refs and relevant files; no recorded SHA is a reset target and dated pending text is not a reason for recursive housekeeping commits.
 
 GDD v0.16 governs intended gameplay. Systems MVP v0.5 remains the implementation/evidence home, and VDD v0.11 retains visual/material/current spatial context. Their dated 7 November compatibility updates are complete; consult the [two-master consistency record](testing/2026-11-07-mvp-vdd-compatibility-consistency.md). Do not repeat that documentation reconciliation as pending work. Conflicting survival-era future requirements are superseded by v0.16; unresolved replacements are **not** filled by old midnight, mortality, training or daily-request rules. Source code establishes what exists, not approval of the next mechanic.
 
@@ -30,11 +30,11 @@ The [pivot record](design_history/Sorting_Apocalypse_Design_Pivot_Record_05Nov20
 
 The objective is simultaneous **live qualifying stored Utility** across all eight categories, with immediate victory and optional continued play. No banked category, sorting-table/carrying/cargo credit, hold interval or request-clearance gate. 2,000/category and roughly 80% occupancy are illustrations, not final numbers or additional goals. Uneven category sinks are intentional.
 
-Active real-world completion time replaces days survived. No day cycle, morning cutoff, forced daily return, midnight loss, designed terminal failure or artificial catch-up. A poor run may take considerable effort to recover; ordinary rules must avoid a true dead end. ESC/main menu/game-off/zoning pause; preparation is tentatively live; acceleration is set aside. Goal visibility is baseline and protected from upgrades/penalties.
+Active real-world completion time replaces days survived. No day cycle, morning cutoff, forced daily return, midnight loss, designed terminal failure or artificial catch-up. A poor run may take considerable effort to recover; ordinary rules must avoid a true dead end. ESC/main menu/game-off/zoning pause; the accepted preparation panel is live; acceleration is set aside. Goal visibility is baseline and protected from upgrades/penalties.
 
 **Prepare one current team, not multiple cards:** choose 1–4 Ready scavengers, equip and choose destination, click Dispatch, then optionally prepare the next crew consecutively in the same panel. No prebuilt morning roster, per-team loadout tabs, parallel unfinished teams or automatic dispatch at 100%. Concurrent dispatched expeditions may be monitored separately. Preserve every useful M4 loadout datum in the wider panel.
 
-Two distinct unordered affinities identify one of 28 destinations. Dispatch requires an available pair. The destination is occupied only while its crew is away. The development sampler favors both affinities equally before whole-item fit filtering. See GDD §§9–10 and the expedition brief.
+Two distinct unordered affinities identify one of 28 destinations. Dispatch requires an available pair. The destination is occupied only while its crew is away. The full-catalogue sampler favors both affinities equally; ordinary draws filter categories and items by remaining Bulk, while bonus draws have no ordinary-budget restriction. See GDD §§9–10 and the 13 November Expedition decisions.
 
 Pending return cargo remains intact. Waiting crews stay unavailable until admission to the active lift or deposited queue. At handover healthy originals and recruits become Ready and injured originals enter Medical. Empty returns hand over at their committed return time, outside Receiving.
 
@@ -42,7 +42,7 @@ Kitchen §12 defines bounded cumulative demand and carrying/sprint consequences.
 
 Fuel §14 specifies continuous reserve consumption and a 60-active-second wait before each eligible emergency delivery. Crew handover remains on admission and ongoing cycles finish normally. [Fuel decisions](design_history/2026-11-11-fuel-reserve-and-emergency-freight-decisions.md) · [Implementation plan](superpowers/plans/2026-11-11-fuel-reserve-emergency-freight.md)
 
-Medical's natural recovery begins at handover and uses 120 or 300 active seconds. Treatment remains future design. Fixed full storage is a favored direction. Bunker scale and route review take priority. Final economy and pacing evaluation follows layout work and completion of the remaining services. Exact geometry remains open. [Extended playtest findings](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md#extended-playtest-findings)
+Medical's natural recovery begins at handover and uses 120 or 300 active seconds. Treatment remains future design. Fixed full storage is a favored direction. The next milestone is design and testing of a more compact working bunker layout. Final economy and pacing evaluation follows representative layout work and completion of the remaining services. Exact geometry, connections and station positions remain open. Begin with a bounded design proposal; do not infer permission to move walls, uniformly shrink assets, change coefficients or implement remaining services. [Extended playtest findings](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md#extended-playtest-findings)
 
 ## Known open boundaries before affected implementation
 
@@ -56,8 +56,9 @@ Do not invent automatic refunds, lost loadouts, saved parallel prepared-team sto
 ## Actual playable baseline — preserve until deliberately changed
 
 ```text
-Promoted local Expedition checkout: C:/Users/Boschetar/Documents/ChatGPT/Sorting Apocalypse - Prototype/Expedition
-Published baseline checkout: D:/Godot Projects/Sorting-apoc-PROTOTYPE
+Latest implementation/retest checkout: C:/Users/Boschetar/Documents/ChatGPT/Sorting Apocalypse - Prototype/Expedition
+Long-standing asset-equipped project: D:/Godot Projects/Sorting-apoc-PROTOTYPE
+Developer reports local/remote alignment; verify which copy owns the next authored edit.
 Repository: Navandis/Sorting-apoc-PROTOTYPE
 Reported engine: Godot 4.7 / Compatibility (verify installed executable)
 F5 entry: res://gameplay/run/run_shell.tscn
@@ -71,9 +72,9 @@ Continuous Kitchen is **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE
 
 Fuel Reserve and Emergency Freight is **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE**. It introduced schema 9 through the existing save service. Refuel at the cabinet right of the Receiving shutter with F and a distinct E. [Fuel technical result and developer acceptance](testing/2026-11-11-fuel-reserve-emergency-freight-result.md)
 
-Receiving mixed stacking is **HUMAN-APPROVED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE** with the approved Fedora revision. Published main uses schema 10. Confirmed New Run retains incompatible saves without migration. The 157-Bulk meat-and-mice area overrun and the long-object planner failure remain developer-deferred. [Receiving and Fedora result](testing/2026-11-13-receiving-mixed-stacking-result.md)
+Receiving mixed stacking is **HUMAN-APPROVED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE** with the approved Fedora revision. That milestone introduced schema 10; published main now uses schema 11. Confirmed New Run retains incompatible saves without migration. The 157-Bulk meat-and-mice area overrun and the long-object planner failure remain developer-deferred. [Receiving and Fedora result](testing/2026-11-13-receiving-mixed-stacking-result.md)
 
-The promoted local Expedition build uses schema 11 and the same collection slot. Confirmed New Run retains incompatible snapshots. Its provisions, recovery and freight chronology are exercised in the [Expedition technical result](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md).
+The human-promoted, published Expedition build uses schema 11 and the same collection slot. Confirmed New Run retains incompatible snapshots. Its provisions, recovery and freight chronology are exercised in the [Expedition technical result](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md).
 
 The zero-Ready Dispatch repair is **HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE**. [Dispatch repair result](testing/2026-11-11-dispatch-no-ready-repair-result.md)
 
