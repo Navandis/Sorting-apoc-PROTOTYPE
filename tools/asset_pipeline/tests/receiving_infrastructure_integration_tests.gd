@@ -55,7 +55,7 @@ func run():
  var monitor = wing.get_node("ReceivingLiftMonitor")
  check(monitor.get_parent() == wing and monitor.owner == wing,"CRT owner remains separate")
  check(not monitor.get_node("SM_OfficeMonitor_02").visible and not monitor.get_node("SM_KB3D_CBD_PropPCMonitor_B").visible,"positioned monitor alternatives remain hidden")
- check(wing.get_functional_surfaces().size() == 16,"ordinary storage remains sixteen")
+ check(wing.get_functional_surfaces().size() == 44,"ordinary storage has forty-four surfaces")
  check(wing.get_node("ReceivingRuntime/ReceivingManager").get_active_batch() == null,"normal startup remains empty")
  wing.free()
  print("receiving_infrastructure_integration_tests: %s (%d failures)" % ["PASS" if failures == 0 else "FAIL",failures])

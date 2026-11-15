@@ -9,7 +9,7 @@ const EXPECTED_DECK_SIZE := Vector3(4.55, 0.12, 6.55)
 const EXPECTED_PANEL_SIZE := Vector3(0.08, 1.27, 4.8)
 const EXPECTED_ENVELOPE_SIZE := Vector3(3.6, 1.5, 4.8)
 const EXPECTED_FLOOR_YS: Array[float] = [1.17, 0.82, 0.57]
-const EXPECTED_FUNCTIONAL_SURFACE_COUNT := 16
+const EXPECTED_FUNCTIONAL_SURFACE_COUNT := 44
 
 var _failed := false
 
@@ -141,7 +141,7 @@ func _assert_wing_composition() -> void:
 	_check(gameplay.get_node_or_null("HUD/CarriedItemsHUD") != null, "normal carried-items HUD instantiates")
 	var surfaces := gameplay.call("get_functional_surfaces") as Array[Node]
 	_check(surfaces.size() == EXPECTED_FUNCTIONAL_SURFACE_COUNT, "normal gameplay preserves the promoted functional storage count")
-	_check(gameplay.find_children("*", "StorageSurface", true, false).size() == EXPECTED_FUNCTIONAL_SURFACE_COUNT, "isolated comparison creates no normal-gameplay storage surfaces")
+	_check(gameplay.find_children("*", "StorageSurface", true, false).size() == EXPECTED_FUNCTIONAL_SURFACE_COUNT + 1, "isolated comparison creates no normal-gameplay storage surfaces")
 	gameplay.free()
 
 

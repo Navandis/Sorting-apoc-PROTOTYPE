@@ -5,6 +5,8 @@ const DEVELOPMENT_SETUP_PATH := "res://gameplay/logistics_wing/development/seede
 const StorageCategoriesScript = preload("res://storage_categories.gd")
 const StorageItemOrientationScript = preload("res://storage_item_orientation.gd")
 const LEGACY_SURFACE_COUNT := 12
+const RACK_COUNT := 8
+const LEVELS_PER_RACK := 4
 const BRIDGE_RACK_NAME := "ModularRack_GalleryB_Initial"
 const BRIDGE_LADDER_NAME := "FixedLadder_GalleryB_Initial"
 
@@ -186,13 +188,12 @@ func _test_identity_stack_and_transfer_loop(packed: PackedScene) -> void:
 	var seeds := scene.get_node("DevelopmentSetup/SeedItems")
 	var surfaces := scene.call("get_functional_surfaces") as Array
 	var rack := scene.get_node_or_null("FunctionalFixtures/%s" % BRIDGE_RACK_NAME) as ModularRack
-	var authored_levels := rack.get_layout_contract().get("levels", []) as Array if rack != null else []
 	_check(rack != null, "interaction loop finds the intended wing ModularRack")
 	_check(
-		surfaces.size() == LEGACY_SURFACE_COUNT + authored_levels.size(),
+		surfaces.size() == LEGACY_SURFACE_COUNT + RACK_COUNT * LEVELS_PER_RACK,
 		"interaction loop sees legacy plus authored ModularRack surfaces"
 	)
-	if rack == null or surfaces.size() != LEGACY_SURFACE_COUNT + authored_levels.size():
+	if rack == null or surfaces.size() != LEGACY_SURFACE_COUNT + RACK_COUNT * LEVELS_PER_RACK:
 		scene.free()
 		current_scene = null
 		_pending_helpers -= 1

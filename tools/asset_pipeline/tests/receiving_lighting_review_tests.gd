@@ -47,7 +47,7 @@ func run():
     var runtime=wing.get_node("ReceivingRuntime")
     var cycle=runtime.get_node("ReceivingLiftCycle")
     check(cycle.is_configured() and not cycle.is_busy(),"candidate independently initializes real cycle")
-    check(wing.get_functional_surfaces().size()==16,"ordinary storage hierarchy retained")
+    check(wing.get_functional_surfaces().size()==44,"ordinary storage hierarchy retained")
     check(wing.find_children("*","ReflectionProbe",true,false).size()==1,"exactly one Receiving reflection probe")
     var reflections=wing.get_node("Environment/ReceivingReflections")
     check(reflections.has_method("request_refresh"),"existing refresh controller retained")

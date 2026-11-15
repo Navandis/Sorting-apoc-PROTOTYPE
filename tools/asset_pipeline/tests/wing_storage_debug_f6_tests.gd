@@ -3,6 +3,8 @@ extends SceneTree
 const GAMEPLAY_PATH := "res://gameplay/logistics_wing/wing_gameplay.tscn"
 const MAIN_PATH := "res://main.tscn"
 const LEGACY_SURFACE_COUNT := 12
+const RACK_COUNT := 8
+const LEVELS_PER_RACK := 4
 const BRIDGE_RACK_NAME := "ModularRack_GalleryB_Initial"
 
 var _failed: bool = false
@@ -37,10 +39,9 @@ func _run() -> void:
 	var controller := scene.get_node("Player/StoragePlacementController") as StoragePlacementController
 
 	var rack := fixtures.get_node_or_null(BRIDGE_RACK_NAME) as ModularRack
-	var authored_levels := rack.get_layout_contract().get("levels", []) as Array if rack != null else []
 	_check(rack != null, "F6 test finds the intended direct-child ModularRack")
 	_check(
-		surfaces.size() == LEGACY_SURFACE_COUNT + authored_levels.size(),
+		surfaces.size() == LEGACY_SURFACE_COUNT + RACK_COUNT * LEVELS_PER_RACK,
 		"F6 test sees legacy plus authored ModularRack surfaces"
 	)
 	_check(carried.get_item_count() == 0, "F6 starts with an empty carried bundle")

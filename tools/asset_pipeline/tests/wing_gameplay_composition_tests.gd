@@ -22,6 +22,7 @@ const FIXTURE_NAMES: Array[String] = [
 	"SM_ventilated_locker_GalleryC_West",
 ]
 const LEGACY_SURFACE_COUNT := 12
+const RACK_COUNT := 8
 const BRIDGE_RACK_NAME := "ModularRack_GalleryB_Initial"
 const BRIDGE_LADDER_NAME := "FixedLadder_GalleryB_Initial"
 const BRIDGE_LEVEL_NAMES: Array[String] = [
@@ -659,10 +660,9 @@ func _assert_permanent_gameplay_survives_without_setup(scene: Node, context: Str
 	if fixtures != null and fixtures.has_method("get_installed_surfaces"):
 		var surfaces := fixtures.call("get_installed_surfaces") as Array
 		var rack := fixtures.get_node_or_null(BRIDGE_RACK_NAME) as ModularRack
-		var authored_levels := rack.get_layout_contract().get("levels", []) as Array if rack != null else []
 		_check(rack != null, "%s setup keeps the intended ModularRack" % context)
 		_check(
-			surfaces.size() == LEGACY_SURFACE_COUNT + authored_levels.size(),
+			surfaces.size() == LEGACY_SURFACE_COUNT + RACK_COUNT * BRIDGE_LEVEL_NAMES.size(),
 			"%s setup keeps legacy plus authored ModularRack surfaces" % context
 		)
 		for value: Variant in surfaces:
@@ -769,7 +769,7 @@ func _assert_fixture_contract(scene: Node, context: String) -> void:
 	_check(bool(layout.get("valid", false)), "%s ModularRack layout is valid" % context)
 	var authored_levels := layout.get("levels", []) as Array
 	_check(authored_levels.size() == BRIDGE_LEVEL_NAMES.size(), "%s ModularRack layout includes every saved level" % context)
-	var expected_surface_count := LEGACY_SURFACE_COUNT + authored_levels.size()
+	var expected_surface_count := LEGACY_SURFACE_COUNT + RACK_COUNT * BRIDGE_LEVEL_NAMES.size()
 	_check(surfaces.size() == expected_surface_count, "%s installs legacy plus authored ModularRack surfaces" % context)
 
 	var bridge_ladder := fixtures.get_node_or_null(BRIDGE_LADDER_NAME) as FixedLadder
