@@ -1,6 +1,6 @@
 # Sorting Apocalypse — Codex bootstrap
 
-**15 November 2026. Compact bunker layout — HUMAN-ACCEPTED / PUBLICATION VERIFICATION PENDING.** GDD v0.16 is approved. Current continuation is schema 11. [Acceptance and main verification](design_history/2026-11-15-compact-bunker-layout-acceptance-and-publication.md) · [Roof-off north-up overview](design_history/media/2026-11-15-compact-bunker-layout-north-up.png)
+**15 November 2026. Compact bunker layout — HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** GDD v0.16 is approved. Current continuation is schema 11. [Acceptance and main verification](design_history/2026-11-15-compact-bunker-layout-acceptance-and-publication.md) · [Roof-off north-up overview](design_history/media/2026-11-15-compact-bunker-layout-north-up.png)
 
 The current intended game is collection, hoarding and spatial organization. The [Expedition-to-Storage Loop](superpowers/plans/2026-11-07-expedition-to-storage-loop.md) is **HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE**. See its [technical result and developer acceptance](testing/2026-11-08-expedition-to-storage-loop-result.md) and the [accepted foundation checkpoint](testing/2026-11-07-continuous-run-collection-goal-closure.md).
 

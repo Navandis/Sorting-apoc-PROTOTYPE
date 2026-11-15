@@ -1,7 +1,7 @@
 # Sorting Apocalypse — documentation index
 
 **Current intended game: GDD v0.16, approved by the developer in its entirety.**
-**Compact bunker layout — HUMAN-ACCEPTED / PUBLICATION VERIFICATION PENDING.** [Acceptance and main verification](design_history/2026-11-15-compact-bunker-layout-acceptance-and-publication.md) · [Roof-off north-up overview](design_history/media/2026-11-15-compact-bunker-layout-north-up.png)
+**Compact bunker layout — HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** [Acceptance and main verification](design_history/2026-11-15-compact-bunker-layout-acceptance-and-publication.md) · [Roof-off north-up overview](design_history/media/2026-11-15-compact-bunker-layout-north-up.png)
 **14 November 2026: Expedition outcomes and provisioning is HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE. Current published continuation is schema 11.**
 **Continuous Run and Collection Goal Foundation: HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.**
 **Expedition-to-Storage Loop · HUMAN-ACCEPTED / CLOSED IN ITS BOUNDED SCOPE.** [Technical result and developer acceptance](testing/2026-11-08-expedition-to-storage-loop-result.md).

@@ -1,6 +1,6 @@
 # Compact bunker layout acceptance and publication
 
-**15 November 2026 · HUMAN-ACCEPTED / PUBLICATION VERIFICATION PENDING.** The developer completed Slice 9 without reporting an issue, confirmed conformance to the plan and accepted all nine slices. The major spatial rebuild is closed in its bounded scope. The developer authorized the accepted source and aligned documentation for publication to the existing main branch.
+**15 November 2026 · HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** The developer completed Slice 9 without reporting an issue, confirmed conformance to the plan and accepted all nine slices. The major spatial rebuild is closed in its bounded scope. The developer authorized the accepted source and aligned documentation for publication to the existing main branch.
 
 ## Why the bunker changed
 
@@ -33,4 +33,4 @@ VDD v0.12 owns spatial and visual direction. GDD v0.16 and Systems MVP v0.5 rece
 
 ## Publication verification
 
-The observed preflight local and remote main reference was `4e12a235d858e7357b931813a61b51d9356e8d34`. The accepted cumulative work and aligned masters are the publication set. The receipt will record the source commit after remote main verification.
+The preflight local and remote main reference was `4e12a235d858e7357b931813a61b51d9356e8d34`. A normal fast-forward push published the accepted nine-slice source and aligned documentation in [commit e7cee326b9ae62b15d258b1d30fbc4269ebeef0c](https://github.com/Navandis/Sorting-apoc-PROTOTYPE/commit/e7cee326b9ae62b15d258b1d30fbc4269ebeef0c). A fresh `git ls-remote origin refs/heads/main` returned the same SHA as local main after the push.

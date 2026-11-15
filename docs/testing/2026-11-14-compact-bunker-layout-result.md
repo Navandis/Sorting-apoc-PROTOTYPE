@@ -1,6 +1,6 @@
 # Compact bunker layout result
 
-**15 November 2026. Compact bunker layout — HUMAN-ACCEPTED / PUBLICATION VERIFICATION PENDING.** The developer accepted all nine slices and closed the major rebuild in its bounded scope. [Acceptance and main verification](../design_history/2026-11-15-compact-bunker-layout-acceptance-and-publication.md) · [Roof-off north-up overview](../design_history/media/2026-11-15-compact-bunker-layout-north-up.png)
+**15 November 2026. Compact bunker layout — HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** The developer accepted all nine slices and closed the major rebuild in its bounded scope. [Acceptance and main verification](../design_history/2026-11-15-compact-bunker-layout-acceptance-and-publication.md) · [Roof-off north-up overview](../design_history/media/2026-11-15-compact-bunker-layout-north-up.png)
 
 ## Slice 1 · Backlog and Receiving/Dispatch · 14 November 2026
 

@@ -1,6 +1,6 @@
 # Sorting Apocalypse — current ChatGPT conversation bootstrap
 
-**Updated 15 November 2026. Compact bunker layout — HUMAN-ACCEPTED / PUBLICATION VERIFICATION PENDING.** [Acceptance and main verification](design_history/2026-11-15-compact-bunker-layout-acceptance-and-publication.md) · [Roof-off north-up overview](design_history/media/2026-11-15-compact-bunker-layout-north-up.png)
+**Updated 15 November 2026. Compact bunker layout — HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** [Acceptance and main verification](design_history/2026-11-15-compact-bunker-layout-acceptance-and-publication.md) · [Roof-off north-up overview](design_history/media/2026-11-15-compact-bunker-layout-north-up.png)
 
 I am continuing **Sorting Apocalypse**, a solo-developed first-person collecting, hoarding and spatial-organizing game. You are taking over after the fundamental collection-goal pivot, implementation and acceptance of the continuous services, and publication of the real Expedition outcomes/provisioning system. **We are no longer designing an endless survival game.** The current goal is how quickly the player can build the required physical stockpile, not how many days they can avoid extinction.
 
