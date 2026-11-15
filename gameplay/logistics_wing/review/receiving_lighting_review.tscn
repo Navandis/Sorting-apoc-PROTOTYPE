@@ -19,7 +19,7 @@ metadata/purpose = "Playable Receiving review; practical lights inherit the huma
 environment = SubResource("Environment_review")
 
 [node name="Player" parent="Gameplay" index="3"]
-position = Vector3(-29.6, 0.05, 2.5)
+position = Vector3(-22.85, 0.05, 2.5)
 rotation_degrees = Vector3(0, 56.89, 0)
 
 [editable path="Gameplay"]

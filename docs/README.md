@@ -1,6 +1,7 @@
 # Sorting Apocalypse — documentation index
 
 **Current intended game: GDD v0.16, approved by the developer in its entirety.**
+**Compact bunker layout — HUMAN-ACCEPTED / PUBLICATION VERIFICATION PENDING.** [Acceptance and main verification](design_history/2026-11-15-compact-bunker-layout-acceptance-and-publication.md) · [Roof-off north-up overview](design_history/media/2026-11-15-compact-bunker-layout-north-up.png)
 **14 November 2026: Expedition outcomes and provisioning is HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE. Current published continuation is schema 11.**
 **Continuous Run and Collection Goal Foundation: HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.**
 **Expedition-to-Storage Loop · HUMAN-ACCEPTED / CLOSED IN ITS BOUNDED SCOPE.** [Technical result and developer acceptance](testing/2026-11-08-expedition-to-storage-loop-result.md).
@@ -17,7 +18,7 @@ Read [AI working guidelines](AI_WORKING_GUIDELINES.md), [current development sta
 | --- | --- | --- |
 | **Intended game design** | [GDD v0.16](Sorting_Apocalypse_Preliminary_GDD_v0.16.docx) | [Generated Markdown](readable/Sorting_Apocalypse_Preliminary_GDD_v0.16.md). Approved successor; owns the collection game, retained physical rules, provisional directions and open replacement mechanics. |
 | **Implemented contracts, progress and evidence** | [Systems MVP v0.5](Sorting_Apocalypse_Systems_MVP_Foundation_Design_and_Progress_v0.5.docx) | [Generated Markdown](Sorting_Apocalypse_Systems_MVP_Foundation_Design_and_Progress_v0.5.md). M4 fixture/evidence and CF-01–CF-24 remain useful; obsolete survival-era forward requirements do not override v0.16. |
-| **World, art, material and spatial context** | [VDD v0.11](Sorting_Apocalypse_Visual_Design_Direction_v0.11.docx) | [Generated Markdown](readable/Sorting_Apocalypse_Visual_Design_Direction_v0.11.md). Retained visual direction and current authored scene baseline; day/night/socket assumptions are subject to v0.16. No geometry change is authorized here. |
+| **World, art, material and spatial context** | [VDD v0.12](Sorting_Apocalypse_Visual_Design_Direction_v0.12.docx) | [Generated Markdown](readable/Sorting_Apocalypse_Visual_Design_Direction_v0.12.md). Current visual direction and accepted compact footprint. |
 | **Historical prototype evidence** | [Findings v0.14](Sorting_Apocalypse_Prototype_Findings_v0.14.docx) | [Generated Markdown](readable/Sorting_Apocalypse_Prototype_Findings_v0.14.md). Historical experiments, promotions and debt, not the active progress tracker. |
 
 DOCX masters govern. Edit the relevant DOCX first and regenerate its Markdown; do not maintain a second independent gameplay specification. Approval of v0.16 preserves its internal **CONFIRMED / RETAINED / DIRECTION / PROVISIONAL / OPEN / HISTORICAL** distinctions. It does not finalize placeholders or complete unresolved mechanics.
@@ -26,7 +27,7 @@ The [13 November Expedition decision record](design_history/2026-11-13-expeditio
 
 **An unresolved post-pivot rule stays unresolved. Do not fill it with a survival-era rule merely because an older document specifies that rule in detail.** Existing source establishes what the prototype does, not the intended release design or automatic permission to modify it.
 
-The targeted Systems MVP v0.5 and VDD v0.11 master reconciliations are now complete as dated 7 November compatibility updates. The [two-master consistency record](testing/2026-11-07-mvp-vdd-compatibility-consistency.md) describes the earlier compatibility pass. Systems MVP §15.6 records the later local foundation acceptance. [GDD Appendix C](readable/Sorting_Apocalypse_Preliminary_GDD_v0.16.md#s_Appendix_C_Supersession_and_retentio) remains the original approval-time retention map.
+The [7 November compatibility record](testing/2026-11-07-mvp-vdd-compatibility-consistency.md) documents the earlier Systems MVP and VDD v0.11 pass. The 15 November alignment retains those scopes and adopts VDD v0.12 for current spatial direction. [GDD Appendix C](readable/Sorting_Apocalypse_Preliminary_GDD_v0.16.md#s_Appendix_C_Supersession_and_retentio) records the original retention map.
 
 ## The approved direction
 
@@ -58,7 +59,11 @@ See [CURRENT_STATE](CURRENT_STATE.md) for the current content, scene, preservati
 
 ## Next-work boundary
 
-The agreed next milestone is design and testing of a more compact working bunker layout. Reduce excessive repeated transit while preserving the collecting, hoarding and sorting experience. Final economy and pacing evaluation follows representative layout work and completion of the remaining services. Exact geometry, connections, station placement and any simultaneous tuning remain open; no scene edit is authorized by this index. [Extended playtest findings](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md#extended-playtest-findings)
+The developer accepted all nine compact-layout slices on 15 November 2026. The asset-equipped authoring checkout is `D:/Godot Projects/Sorting-apoc-PROTOTYPE`. F5 starts the continuing run and uses schema 11.
+
+The accepted wing runs from Receiving and Dispatch through shortened Backlog and Sorting into Main Storage. A–D remain, including the shared A/B circulation and C–D link. Medical and Kitchen have separate approaches, Workshop leads west to Salvager, Incinerator branches directly south from Main Storage, and the straight 3 m eastern link reaches Bunker Ops. The working Fuel cabinet is in Receiving.
+
+Use the accepted scene as the baseline for later materials, lighting, furnishing and focused playtest adjustments. Starting stock, final capacity, progression, integrated economy and remaining service mechanics retain separate scope. Further work begins with an agreed brief. [Acceptance and main verification](design_history/2026-11-15-compact-bunker-layout-acceptance-and-publication.md) · [Nine-slice technical result](testing/2026-11-14-compact-bunker-layout-result.md)
 
 The original Expedition-to-Storage Loop and the separate [furniture movement collision repair](testing/2026-11-08-furniture-collision-repair-result.md) are human-accepted, published and closed in their bounded scopes.
 

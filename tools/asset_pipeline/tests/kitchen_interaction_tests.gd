@@ -45,13 +45,14 @@ func test_live_panel() -> void:
 	var station: StaticBody3D = player.kitchen_station
 	check((station.collision_layer & player.collision_mask) == 0, "Kitchen ray target adds no movement obstruction")
 	var wall: Node3D = wing.get_node("Environment/Greybox/Boundaries/KitchenInnerBoundary")
-	player.global_position = Vector3(wall.global_position.x, 0.05, wall.global_position.z - 0.8)
+	var into_room := station.global_basis.z.normalized()
+	player.global_position = Vector3(wall.global_position.x, 0.05, wall.global_position.z) - into_room * 0.8
 	player.camera.look_at(station.global_position)
 	await physics_frame
 	check(not player.can_reach_kitchen(), "the authored inner wall occludes an otherwise in-range Kitchen ray")
 	var start: Marker3D = wing.get_node("Environment/Greybox/Anchors/KitchenService")
 	player.global_position = start.global_position
-	player.rotation.y = 0.0
+	player.rotation.y = start.global_rotation.y
 	player.camera.look_at(station.global_position)
 	await physics_frame
 	await open_kitchen()
@@ -61,7 +62,7 @@ func test_live_panel() -> void:
 		player.set_physics_process(true)
 		await key_event(KEY_W, true)
 		var timeout := Time.get_ticks_msec() + 2500
-		while approach.z - player.global_position.z < 1.5 and Time.get_ticks_msec() < timeout:
+		while (approach - player.global_position).dot(into_room) < 1.5 and Time.get_ticks_msec() < timeout:
 			await physics_frame
 		await key_event(KEY_W, false)
 		player.set_physics_process(false)
@@ -310,9 +311,10 @@ func native_take(runtime: ReceivingRuntime) -> ItemInstance:
 
 func walk_at_kitchen(shift: bool) -> float:
 	await aim_at_kitchen()
-	player.rotation.y = 0.0
+	player.rotation.y = player.kitchen_station.global_rotation.y
 	player.velocity = Vector3.ZERO
-	var start := player.global_position.x
+	var start := player.global_position
+	var right := player.global_basis.x.normalized()
 	if shift:
 		await key_event(KEY_SHIFT, true)
 	await key_event(KEY_D, true)
@@ -324,7 +326,7 @@ func walk_at_kitchen(shift: bool) -> float:
 	await key_event(KEY_D, false)
 	if shift:
 		await key_event(KEY_SHIFT, false)
-	return absf(player.global_position.x - start)
+	return absf((player.global_position - start).dot(right))
 
 func open_kitchen() -> void:
 	if DisplayServer.get_name() == "headless":
@@ -335,7 +337,7 @@ func open_kitchen() -> void:
 func aim_at_kitchen() -> void:
 	var station: StaticBody3D = player.kitchen_station
 	var front: Marker3D = wing.get_node("Environment/Greybox/Anchors/KitchenSafeSide")
-	player.global_position = front.global_position + Vector3(0.0, 0.0, -0.5)
+	player.global_position = front.global_position - front.global_basis.z.normalized() * 0.5
 	player.camera.look_at(station.global_position + Vector3.UP * 0.4)
 	await physics_frame
 	await physics_frame

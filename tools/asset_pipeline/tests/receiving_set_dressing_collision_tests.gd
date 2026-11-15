@@ -66,17 +66,17 @@ func run():
   # Contextual traversal below uses every saved collider without exclusions.
   # Hand-measured approach points in the saved human composition, not generated from proxies.
   for route in [
-   ["DeskMovement",Vector3(-30.55,.01,2.15),Vector3(0,0,1.3)],
-   ["StoolMovement",Vector3(-29.48,.01,1.75),Vector3(0,0,1.2)],
-   ["UtilityBoxMovement",Vector3(-32.89,.01,2.1),Vector3(0,0,1.3)],
-   ["RedWhiteBarrelMovement",Vector3(-33.55,.01,3.4),Vector3(-1.2,0,0)],
-   ["PalletJackMovement",Vector3(-33.8,.01,1.55),Vector3(0,0,1.15)],
-   ["LeaningPalletMovement",Vector3(-34.65,.01,3.0),Vector3(-1,0,0)],
-   ["ElectricalCabinetMovement",Vector3(-34.7,.01,-3.17),Vector3(-1.2,0,0)],
-   ["BucketMovement",Vector3(-29.6,.01,-2.85),Vector3(.9,0,0)],
-   ["PlasticBoxMovement",Vector3(-29.65,.01,-2.45),Vector3(0,0,-1.2)],
-   ["DollyMovement",Vector3(-30.13,.01,-2.3),Vector3(0,0,-1.2)],
-   ["BlueBarrelMovement",Vector3(-30.0,.01,-3.5),Vector3(1.2,0,0)]]:
+   ["DeskMovement",Vector3(-23.8,.01,2.15),Vector3(0,0,1.3)],
+   ["StoolMovement",Vector3(-22.73,.01,1.75),Vector3(0,0,1.2)],
+   ["UtilityBoxMovement",Vector3(-26.14,.01,2.1),Vector3(0,0,1.3)],
+   ["RedWhiteBarrelMovement",Vector3(-26.8,.01,3.4),Vector3(-1.2,0,0)],
+   ["PalletJackMovement",Vector3(-27.05,.01,1.55),Vector3(0,0,1.15)],
+   ["LeaningPalletMovement",Vector3(-27.9,.01,3.0),Vector3(-1,0,0)],
+   ["ElectricalCabinetMovement",Vector3(-27.95,.01,-3.17),Vector3(-1.2,0,0)],
+   ["BucketMovement",Vector3(-22.85,.01,-2.85),Vector3(.9,0,0)],
+   ["PlasticBoxMovement",Vector3(-22.9,.01,-2.45),Vector3(0,0,-1.2)],
+   ["DollyMovement",Vector3(-23.38,.01,-2.3),Vector3(0,0,-1.2)],
+   ["BlueBarrelMovement",Vector3(-23.25,.01,-3.5),Vector3(1.2,0,0)]]:
    var excluded: Array[RID] = []
    for other in proxies.get_children():
     if str(other.name) != route[0]: excluded.append(other.get_rid())
@@ -84,22 +84,22 @@ func run():
    var collider = hit.result.get_collider() if hit.blocked and hit.result.get_collision_count()>0 else null
    check(hit.blocked and collider == proxies.get_node(route[0]),"real player capsule blocked by "+route[0]+" (hit "+str(collider)+")")
   for route in [
-   ["central lift apron",Vector3(-35.15,.01,-2.25),Vector3(0,0,4.0)],
-   ["front service circulation",Vector3(-34.8,.01,1.25),Vector3(5.7,0,0)],
-   ["Dispatch opening",Vector3(-31.714286,.01,-2.8),Vector3(0,0,-2.4)],
-   ["Backlog opening",Vector3(-29.6,.01,0),Vector3(3,0,0)],
-   ["cleaning nook front",Vector3(-30.7,.01,-1.9),Vector3(1.4,0,0)],
-   ["desk return walk-around",Vector3(-30.2,.01,1.25),Vector3(1,0,0)],
-   ["left TAKE stance",Vector3(-35.3,.01,-1.2),Vector3(0,0,.6)],
-   ["right TAKE stance",Vector3(-35.3,.01,.6),Vector3(0,0,.6)]]:
+   ["central lift apron",Vector3(-28.4,.01,-2.25),Vector3(0,0,4.0)],
+   ["front service circulation",Vector3(-28.05,.01,1.25),Vector3(5.7,0,0)],
+   ["Dispatch opening",Vector3(-24.964286,.01,-2.8),Vector3(0,0,-2.4)],
+   ["Backlog opening",Vector3(-22.85,.01,0),Vector3(3,0,0)],
+   ["cleaning nook front",Vector3(-23.95,.01,-1.9),Vector3(1.4,0,0)],
+   ["desk return walk-around",Vector3(-23.45,.01,1.25),Vector3(1,0,0)],
+   ["left TAKE stance",Vector3(-28.55,.01,-1.2),Vector3(0,0,.6)],
+   ["right TAKE stance",Vector3(-28.55,.01,.6),Vector3(0,0,.6)]]:
    var hit = motion(player,route[1],route[2])
    check(not hit.blocked,"clear production capsule route: "+route[0]+" (hit "+str(hit.result.get_collider() if hit.blocked else null)+")")
-  var legacy_ray = PhysicsRayQueryParameters3D.create(Vector3(-35.05,1.65,3.05),Vector3(-35.05,1.65,3.8),1)
+  var legacy_ray = PhysicsRayQueryParameters3D.create(Vector3(-28.3,1.65,3.05),Vector3(-28.3,1.65,3.8),1)
   check(wing.get_world_3d().direct_space_state.intersect_ray(legacy_ray).is_empty(),"no phantom physics in retired cabinet upper housing")
   # Empty desk leg space stays physically empty below tabletop, even though a standing player hits the top.
-  var query = PhysicsRayQueryParameters3D.create(Vector3(-28.95,.35,2.35),Vector3(-28.95,.35,1.9),1)
+  var query = PhysicsRayQueryParameters3D.create(Vector3(-22.2,.35,2.35),Vector3(-22.2,.35,1.9),1)
   check(wing.get_world_3d().direct_space_state.intersect_ray(query).is_empty(),"desk underside has no solid full-bound box")
-  var forks_ray = PhysicsRayQueryParameters3D.create(Vector3(-34.1,.6,1.95),Vector3(-34.1,.6,3.1),1)
+  var forks_ray = PhysicsRayQueryParameters3D.create(Vector3(-27.35,.6,1.95),Vector3(-27.35,.6,3.1),1)
   check(wing.get_world_3d().direct_space_state.intersect_ray(forks_ray).is_empty(),"pallet-jack forks leave empty space above low base")
   var fresh = ResourceLoader.load(WING,"",ResourceLoader.CACHE_MODE_IGNORE).instantiate()
   var fresh_proxies = fresh.get_node("ReceivingSetDressing/CollisionProxies")

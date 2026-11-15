@@ -23,31 +23,78 @@ func _run() -> void:
 	await physics_frame
 	var player := scene.get_node("Player") as CharacterBody3D
 	var routes := [
-		_route("receiving_through_backlog", Vector3(-34.2, PLAYER_FLOOR_Y, 0.6), [
-			Vector3(-29.2, PLAYER_FLOOR_Y, 0.6),
-			Vector3(-26.7, PLAYER_FLOOR_Y, 0.6),
+		_route("receiving_through_backlog", Vector3(-27.45, PLAYER_FLOOR_Y, 0.6), [
+			Vector3(-22.45, PLAYER_FLOOR_Y, 0.6),
+			Vector3(-19.95, PLAYER_FLOOR_Y, 0.6),
+			Vector3(-16.0, PLAYER_FLOOR_Y, 0.375),
+			Vector3(-13.65, PLAYER_FLOOR_Y, 0.375),
 		]),
-		_route("spawn_to_table_pickup", Vector3(-10.0, PLAYER_FLOOR_Y, -2.5), [
-			Vector3(-10.0, PLAYER_FLOOR_Y, -0.2),
-			Vector3(-9.6, PLAYER_FLOOR_Y, 1.3),
+		_route("spawn_to_table_pickup", player.position, [
+			Vector3(-11.6, PLAYER_FLOOR_Y, 1.5),
+			Vector3(-12.5, PLAYER_FLOOR_Y, 2.15),
 		]),
-		_route("gallery_a_fixture_front", Vector3(4.0, PLAYER_FLOOR_Y, -8.2), [
-			Vector3(1.5, PLAYER_FLOOR_Y, -8.0),
-			Vector3(0.0, PLAYER_FLOOR_Y, -7.0),
-			Vector3(-2.28, PLAYER_FLOOR_Y, -5.2),
+		_route("backlog_through_sorting_to_storage", Vector3(-16.7, PLAYER_FLOOR_Y, 0.375), [
+			Vector3(-13.5, PLAYER_FLOOR_Y, 0.375),
+			Vector3(-9.5, PLAYER_FLOOR_Y, 1.8),
+			Vector3(-6.0, PLAYER_FLOOR_Y, 2.55),
+			Vector3(-3.5, PLAYER_FLOOR_Y, 2.60),
 		]),
-		_route("gallery_b_fixture_front", Vector3(9.5, PLAYER_FLOOR_Y, -8.2), [
-			Vector3(12.0, PLAYER_FLOOR_Y, -7.0),
-			Vector3(14.0, PLAYER_FLOOR_Y, -10.7),
+		_route("sorting_through_workshop_threshold", Vector3(-10.0, PLAYER_FLOOR_Y, 1.0), [
+			Vector3(-10.0, PLAYER_FLOOR_Y, 3.4),
+			Vector3(-10.0, PLAYER_FLOOR_Y, 6.75),
 		]),
-		_route("gallery_c_locker_front", Vector3(2.0, PLAYER_FLOOR_Y, 3.0), [
-			Vector3(2.0, PLAYER_FLOOR_Y, 6.0),
-			Vector3(-1.35, PLAYER_FLOOR_Y, 6.9),
+		_route("sorting_to_workshop_interface", Vector3(-10.0, PLAYER_FLOOR_Y, 3.3), [
+			Vector3(-10.0, PLAYER_FLOOR_Y, 7.5),
+			Vector3(-10.0, PLAYER_FLOOR_Y, 11.3),
+			Vector3(-9.48004, PLAYER_FLOOR_Y, 14.1833),
 		]),
-		_route("gallery_c_to_d_connection", Vector3(4.5, PLAYER_FLOOR_Y, 10.25), [
-			Vector3(7.0, PLAYER_FLOOR_Y, 10.25),
-			Vector3(8.0, PLAYER_FLOOR_Y, 10.0),
-			Vector3(10.0, PLAYER_FLOOR_Y, 9.0),
+		_route("workshop_west_turn_to_salvager", Vector3(-9.48004, PLAYER_FLOOR_Y, 14.1833), [
+			Vector3(-12.0, PLAYER_FLOOR_Y, 15.10),
+			Vector3(-18.6, PLAYER_FLOOR_Y, 15.10),
+			Vector3(-23.7, PLAYER_FLOOR_Y, 15.10),
+			Vector3(-25.62, PLAYER_FLOOR_Y, 16.25),
+			Vector3(-25.61996, PLAYER_FLOOR_Y, 17.8666),
+		]),
+		_route("salvager_return_to_sorting", Vector3(-25.61996, PLAYER_FLOOR_Y, 17.8666), [
+			Vector3(-25.62, PLAYER_FLOOR_Y, 15.10),
+			Vector3(-18.6, PLAYER_FLOOR_Y, 15.10),
+			Vector3(-12.0, PLAYER_FLOOR_Y, 15.10),
+			Vector3(-10.0, PLAYER_FLOOR_Y, 11.3),
+			Vector3(-10.0, PLAYER_FLOOR_Y, 7.5),
+			Vector3(-10.0, PLAYER_FLOOR_Y, 3.3),
+		]),
+		# The rack occupies the old diagonal through A. Walk around its south end.
+		_route("gallery_a_fixture_front", Vector3(3.7, PLAYER_FLOOR_Y, -4.9), [
+			Vector3(0.55, PLAYER_FLOOR_Y, -4.90),
+			Vector3(0.55, PLAYER_FLOOR_Y, -2.70),
+			Vector3(-2.65, PLAYER_FLOOR_Y, -2.70),
+			Vector3(-2.65, PLAYER_FLOOR_Y, -2.62),
+		]),
+		_route("gallery_b_fixture_front", Vector3(5.9, PLAYER_FLOOR_Y, -4.9), [
+			Vector3(8.80, PLAYER_FLOOR_Y, -4.90),
+			Vector3(11.85, PLAYER_FLOOR_Y, -6.00),
+			Vector3(12.00, PLAYER_FLOOR_Y, -8.30),
+		]),
+		_route("gallery_c_locker_front", Vector3(1.6, PLAYER_FLOOR_Y, 3.0), [
+			Vector3(1.6, PLAYER_FLOOR_Y, 6.5),
+			Vector3(0.0, PLAYER_FLOOR_Y, 7.75),
+		]),
+		_route("gallery_c_to_d_connection", Vector3(4.5, PLAYER_FLOOR_Y, 9.05), [
+			Vector3(7.0, PLAYER_FLOOR_Y, 9.05),
+			Vector3(8.0, PLAYER_FLOOR_Y, 8.80),
+			Vector3(10.0, PLAYER_FLOOR_Y, 7.80),
+		]),
+		_route("storage_to_incinerator_front", Vector3(18.0, PLAYER_FLOOR_Y, 2.5), [
+			Vector3(21.5, PLAYER_FLOOR_Y, 3.35),
+			Vector3(21.5, PLAYER_FLOOR_Y, 6.3),
+			Vector3(21.5, PLAYER_FLOOR_Y, 9.1),
+			Vector3(21.5, PLAYER_FLOOR_Y, 11.2),
+		]),
+		_route("storage_through_link_to_ops", Vector3(17.5, PLAYER_FLOOR_Y, 2.50), [
+			Vector3(24.70, PLAYER_FLOOR_Y, 2.30),
+			Vector3(27.50, PLAYER_FLOOR_Y, 2.30),
+			Vector3(32.50, PLAYER_FLOOR_Y, 2.30),
+			Vector3(32.50, PLAYER_FLOOR_Y, -0.70),
 		]),
 	]
 	for record: Dictionary in routes:

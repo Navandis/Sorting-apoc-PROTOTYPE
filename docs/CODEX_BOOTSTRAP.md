@@ -1,6 +1,6 @@
 # Sorting Apocalypse — Codex bootstrap
 
-**Authority established 7 November; handoff aligned 14 November 2026. GDD v0.16 APPROVED; M1–M4 and the bounded Expedition outcomes/provisioning iteration HUMAN-PROMOTED / PUBLISHED / CLOSED.**
+**15 November 2026. Compact bunker layout — HUMAN-ACCEPTED / PUBLICATION VERIFICATION PENDING.** GDD v0.16 is approved. Current continuation is schema 11. [Acceptance and main verification](design_history/2026-11-15-compact-bunker-layout-acceptance-and-publication.md) · [Roof-off north-up overview](design_history/media/2026-11-15-compact-bunker-layout-north-up.png)
 
 The current intended game is collection, hoarding and spatial organization. The [Expedition-to-Storage Loop](superpowers/plans/2026-11-07-expedition-to-storage-loop.md) is **HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE**. See its [technical result and developer acceptance](testing/2026-11-08-expedition-to-storage-loop-result.md) and the [accepted foundation checkpoint](testing/2026-11-07-continuous-run-collection-goal-closure.md).
 
@@ -12,7 +12,7 @@ The [13 November Expedition decisions](design_history/2026-11-13-expedition-outc
 2. [CURRENT_STATE.md](CURRENT_STATE.md) for the current implementation, retained contracts, authoring and debt.
 3. [README.md](README.md) for the authority map.
 4. [GDD v0.16](readable/Sorting_Apocalypse_Preliminary_GDD_v0.16.md), especially the owning sections for the actual task and §21 for unresolved choices. DOCX is the editable master.
-5. Relevant Systems MVP v0.5/VDD v0.11 passages and only the focused validation records needed for the task.
+5. Relevant Systems MVP v0.5 and [VDD v0.12](readable/Sorting_Apocalypse_Visual_Design_Direction_v0.12.md) passages and only the focused validation records needed for the task.
 
 The [current conversation bootstrap](Sorting_Apocalypse_Bootstrap_Prompt_Next_Session_07Nov2026.md) supplies fuller collaboration context. The old 25 October ADR-first handoff is historical.
 
@@ -22,7 +22,7 @@ The developer approved the complete v0.16 draft and authorized approval-state an
 
 At the original 7 November approval-package preparation, read-only GitHub comparison showed `main == c9f9417a97cf65ef416c58189ca1f741b6a90406`; that was a historical publication boundary. The 14 November publication anchor is recorded above. Verify later actual refs and relevant files; no recorded SHA is a reset target and dated pending text is not a reason for recursive housekeeping commits.
 
-GDD v0.16 governs intended gameplay. Systems MVP v0.5 remains the implementation/evidence home, and VDD v0.11 retains visual/material/current spatial context. Their dated 7 November compatibility updates are complete; consult the [two-master consistency record](testing/2026-11-07-mvp-vdd-compatibility-consistency.md). Do not repeat that documentation reconciliation as pending work. Conflicting survival-era future requirements are superseded by v0.16; unresolved replacements are **not** filled by old midnight, mortality, training or daily-request rules. Source code establishes what exists, not approval of the next mechanic.
+GDD v0.16 governs intended gameplay. Systems MVP v0.5 owns implementation and evidence. [VDD v0.12](readable/Sorting_Apocalypse_Visual_Design_Direction_v0.12.md) owns visual direction and the accepted spatial baseline. The [7 November compatibility record](testing/2026-11-07-mvp-vdd-compatibility-consistency.md) and its VDD v0.11 source are historical. Undefined replacement mechanics retain their explicit open scope.
 
 The [pivot record](design_history/Sorting_Apocalypse_Design_Pivot_Record_05Nov2026.md) is approved provenance; its §5.3 tabs are superseded by the single-team addendum incorporated in v0.16. The [ADR archive](design_history/Sorting_Apocalypse_ADR_Design_Archive_05Nov2026.md) and [GDD v0.15](readable/Sorting_Apocalypse_Preliminary_GDD_v0.15.md) are historical. Do not resume ADR, invent a survival mode, delete history or reopen completed reviews.
 
@@ -42,7 +42,7 @@ Kitchen §12 defines bounded cumulative demand and carrying/sprint consequences.
 
 Fuel §14 specifies continuous reserve consumption and a 60-active-second wait before each eligible emergency delivery. Crew handover remains on admission and ongoing cycles finish normally. [Fuel decisions](design_history/2026-11-11-fuel-reserve-and-emergency-freight-decisions.md) · [Implementation plan](superpowers/plans/2026-11-11-fuel-reserve-emergency-freight.md)
 
-Medical's natural recovery begins at handover and uses 120 or 300 active seconds. Treatment remains future design. Fixed full storage is a favored direction. The next milestone is design and testing of a more compact working bunker layout. Final economy and pacing evaluation follows representative layout work and completion of the remaining services. Exact geometry, connections and station positions remain open. Begin with a bounded design proposal; do not infer permission to move walls, uniformly shrink assets, change coefficients or implement remaining services. [Extended playtest findings](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md#extended-playtest-findings)
+Medical's natural recovery begins at handover and uses 120 or 300 active seconds. Treatment remains future design. Fixed full storage remains favored. Use the accepted scene as the baseline for later materials, lighting, furnishing and focused playtest adjustments. Starting stock, final capacity, progression, integrated economy and remaining service mechanics retain separate scope. Further work begins with an agreed brief.
 
 ## Known open boundaries before affected implementation
 
@@ -56,9 +56,9 @@ Do not invent automatic refunds, lost loadouts, saved parallel prepared-team sto
 ## Actual playable baseline — preserve until deliberately changed
 
 ```text
-Latest implementation/retest checkout: C:/Users/Boschetar/Documents/ChatGPT/Sorting Apocalypse - Prototype/Expedition
-Long-standing asset-equipped project: D:/Godot Projects/Sorting-apoc-PROTOTYPE
-Developer reports local/remote alignment; verify which copy owns the next authored edit.
+Current layout authoring checkout: D:/Godot Projects/Sorting-apoc-PROTOTYPE
+Current branch: main
+Run schema: 11
 Repository: Navandis/Sorting-apoc-PROTOTYPE
 Reported engine: Godot 4.7 / Compatibility (verify installed executable)
 F5 entry: res://gameplay/run/run_shell.tscn
@@ -67,6 +67,8 @@ Wing UID: uid://bljf1nlhijej
 Legacy fixture: res://main.tscn
 Neutral review: res://greybox/logistics_wing/wing_review.tscn
 ```
+
+The accepted wing runs from Receiving and Dispatch through shortened Backlog and Sorting into Main Storage. A–D remain, including the shared A/B circulation and C–D link. Medical and Kitchen have separate approaches, Workshop leads west to Salvager, Incinerator branches directly south from Main Storage, and the straight 3 m eastern link reaches Bunker Ops. The working Fuel cabinet is in Receiving. [Nine-slice technical result](testing/2026-11-14-compact-bunker-layout-result.md)
 
 Continuous Kitchen is **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE** in the F5 loop. Open the service with F and supply the selected whole item with E. Continuous Kitchen introduced schema 8 through `user://saves/collection/`. Confirmed New Run can repoint the slot while retaining incompatible snapshots. The M4 slot remains separate. Standalone F6 keeps the human-authored `DevelopmentSetup/SeedItems` palette. [Developer acceptance and close-out](testing/2026-11-09-continuous-kitchen-service-result.md)
 

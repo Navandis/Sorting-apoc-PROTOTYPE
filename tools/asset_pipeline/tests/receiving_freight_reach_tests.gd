@@ -246,7 +246,9 @@ func _nearest_exposed_candidate(
 func _place_player_at_stance(player: CharacterBody3D, stance_z: float) -> void:
 	player.rotation = Vector3.ZERO
 	player.velocity = Vector3.ZERO
-	player.global_position = Vector3(-34.8, 0.05, stance_z)
+	# Start 1.2 m east of the authored barrier plane before sweeping toward it.
+	var barrier: Node3D = player.get_node("../ReceivingLiftInstallation/BarrierCollision/Shape")
+	player.global_position = Vector3(barrier.global_position.x + 1.2, 0.05, stance_z)
 	player.move_and_collide(Vector3(-3.0, 0.0, 0.0))
 	player.move_and_collide(Vector3(0.0, -1.0, 0.0))
 

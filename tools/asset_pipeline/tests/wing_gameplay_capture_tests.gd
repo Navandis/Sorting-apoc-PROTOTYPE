@@ -28,11 +28,11 @@ func _init() -> void:
 	_check(capture.call("should_capture", PackedStringArray(["--capture"])), "--capture enables evidence generation")
 	_check(
 		String(capture.call("get_output_directory"))
-		== "res://reports/logistics_wing/storage_bridge/initial",
+		== "res://reports/logistics_wing/storage_bridge/compact_layout_slice_9",
 		"capture output is isolated from accepted evidence"
 	)
 	var records := capture.call("get_view_records") as Array
-	_check(records.size() == 11, "gameplay review declares eleven proportionate views")
+	_check(records.size() == 12, "gameplay review includes a view of the short Ops link")
 	var basenames: Dictionary = {}
 	var states: Dictionary = {}
 	for value: Variant in records:
@@ -41,6 +41,10 @@ func _init() -> void:
 		_check(not basename.is_empty() and not basenames.has(basename), "capture basename is unique: %s" % basename)
 		basenames[basename] = true
 		states[String(record.get("state", ""))] = true
+		if basename == "whole_wing_plan.png":
+			_check(record.get("target") == Vector3(0.875, 0, 0.1833), "plan is centered over the compact floor footprint")
+		if basename == "short_ops_link.png":
+			_check(record.get("position") == Vector3(24.5, 1.7162851, 2.30) and record.get("ceiling_on") == true, "Ops view looks along the link with ordinary ceilings")
 		_check(record.get("position") is Vector3, "capture position is explicit: %s" % basename)
 		_check(record.get("target") is Vector3, "capture target is explicit: %s" % basename)
 	_check(states.has("initial"), "capture includes initial editor-authored arrangement")
@@ -48,12 +52,14 @@ func _init() -> void:
 	_check(states.has("stacked"), "capture includes a real stored stack")
 	_check(states.has("transferred"), "capture includes retrieval and cross-shelf transfer")
 	_check(basenames.has("whole_wing_plan.png"), "capture includes whole-wing plan")
+	_check(basenames.has("short_ops_link.png"), "capture includes the current eastern link")
 	_check(basenames.has("table_loot_coverage.png"), "capture includes table-loot coverage")
 	_check(basenames.has("carrying_hud.png"), "capture includes carried HUD")
 	_check(basenames.has("stored_stack_gallery_a.png"), "capture includes stored stack")
 	_check(basenames.has("retrieval_transfer_gallery_b.png"), "capture includes transfer result")
 	var fields := capture.call("get_manifest_static_fields") as Dictionary
 	_check(fields.get("scene") == CAPTURE_SCENE_PATH, "manifest names capture scene")
+	_check(fields.get("layout_revision") == "logistics-wing-compact-layout-slice-9", "manifest identifies current geometry")
 	_check(fields.get("gameplay_scene") == GAMEPLAY_PATH, "manifest names continuing gameplay scene")
 	_check((fields.get("source_hash_paths") as PackedStringArray).size() >= 8, "manifest hashes focused source set")
 	capture.free()

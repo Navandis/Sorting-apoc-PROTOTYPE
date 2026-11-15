@@ -74,7 +74,7 @@ func run_suite() -> void:
 		var audio: AudioStreamPlayer3D = cycle.get_node(name)
 		check(audio.stream is AudioStreamWAV and audio.stream.get_length() > 5.0, name + " full supplied cue")
 		check(audio.stream.loop_mode == AudioStreamWAV.LOOP_DISABLED and audio.stream.format == AudioStreamWAV.FORMAT_QOA, name + " non-looped QOA")
-		check(audio.global_position.distance_to(Vector3(-36.165, 1.486, -.019)) < .001 and audio.max_distance <= 24, name + " positional bounded attenuation")
+		check(audio.global_position.distance_to(Vector3(-29.415, 1.486, -.019)) < .001 and audio.max_distance <= 24, name + " positional bounded attenuation")
 	cycle.state_changed.connect(func(state: int):
 		states.append(state)
 		if state == 2:
@@ -269,8 +269,8 @@ func real_time_cycle() -> void:
 	root.add_child(wing)
 	current_scene = wing
 	var camera: Camera3D = wing.get_node("Player/Camera3D")
-	camera.global_position = Vector3(-32.6, 1.75, 2.85)
-	camera.look_at(Vector3(-36.5, 1.65, -.5))
+	camera.global_position = Vector3(-25.85, 1.75, 2.85)
+	camera.look_at(Vector3(-29.75, 1.65, -.5))
 	wing.get_node("Player").set_process_unhandled_input(false)
 	var runtime = wing.get_node("ReceivingRuntime")
 	var cycle = runtime.lift_cycle
@@ -388,8 +388,8 @@ func warning_render_compare() -> void:
 	var player = wing.get_node("Player")
 	player.set_process_unhandled_input(false)
 	var camera: Camera3D = player.get_node("Camera3D")
-	camera.global_position = Vector3(-33.8, 1.85, 3.45)
-	camera.look_at(Vector3(-35.83, 2.65, 2.7))
+	camera.global_position = Vector3(-27.05, 1.85, 3.45)
+	camera.look_at(Vector3(-29.08, 2.65, 2.7))
 	var runtime = wing.get_node("ReceivingRuntime")
 	var cycle = runtime.lift_cycle
 	cycle.set_process(false)
@@ -414,7 +414,7 @@ func warning_render_compare() -> void:
 	light.visible = false
 	var green_off := await capture("warning_green_lens_only")
 	light.visible = true
-	var point := Vector3(-35.849, 2.85, 3.0) # Adjacent concrete, outside the W1 mesh.
+	var point := Vector3(-29.099, 2.85, 3.0) # Adjacent concrete, outside the W1 mesh.
 	var projected := camera.unproject_position(point)
 	var image_scale := Vector2(amber_on.get_size()) / camera.get_viewport().get_visible_rect().size
 	var pixel := Vector2i(projected * image_scale)

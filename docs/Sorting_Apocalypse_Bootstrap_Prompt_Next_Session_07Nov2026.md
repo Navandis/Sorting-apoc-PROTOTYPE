@@ -1,10 +1,10 @@
 # Sorting Apocalypse — current ChatGPT conversation bootstrap
 
-**Updated 14 November 2026 after Expedition publication. Next milestone: design and test a more compact working bunker layout.**
+**Updated 15 November 2026. Compact bunker layout — HUMAN-ACCEPTED / PUBLICATION VERIFICATION PENDING.** [Acceptance and main verification](design_history/2026-11-15-compact-bunker-layout-acceptance-and-publication.md) · [Roof-off north-up overview](design_history/media/2026-11-15-compact-bunker-layout-north-up.png)
 
 I am continuing **Sorting Apocalypse**, a solo-developed first-person collecting, hoarding and spatial-organizing game. You are taking over after the fundamental collection-goal pivot, implementation and acceptance of the continuous services, and publication of the real Expedition outcomes/provisioning system. **We are no longer designing an endless survival game.** The current goal is how quickly the player can build the required physical stockpile, not how many days they can avoid extinction.
 
-The developer reports that local and remote repositories are aligned. A read-only GitHub check during this handoff found `Navandis/Sorting-apoc-PROTOTYPE` main at **`d242de49441b410c4abb88ab4f7b61971b6424d1`**, whose commit message is “Publish promoted Expedition outcomes and provisioning.” That revision contains the real Expedition implementation and its human acceptance. Some prose still says “local; publication pending” or describes schema 10 as published: these are stale publication labels, not unfinished gameplay work. The [14 November publication and handoff alignment record](design_history/2026-11-14-publication-and-layout-handoff.md) qualifies those labels. **Current published continuation is schema 11.** Check later repository changes; this SHA is an evidence anchor, never a reset target.
+The developer accepted all nine compact-layout slices on 15 November 2026. The asset-equipped authoring checkout is `D:/Godot Projects/Sorting-apoc-PROTOTYPE`. F5 starts the continuing run and uses schema 11. The [14 November Expedition publication record](design_history/2026-11-14-publication-and-layout-handoff.md) preserves its original verification. The layout close-out carries the current main verification. Check actual repository state for later work.
 
 This updates the existing **7 November bootstrap in place**, retaining its filename so current repository links continue to work. It supersedes earlier editions of that conversation entry and the 25 October/14 October operational handoffs. The old documents remain historical evidence, not active ADR-first, engineering-review-first or publication work orders.
 
@@ -23,7 +23,7 @@ This is a **ChatGPT collaboration handoff**, not a Codex implementation brief, p
 | Real Expedition outcomes and provisioning | **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** Full active catalogue, all five effects, real injuries/recruitment, Medical-owned natural recovery and schema 11. Developer played for more than two hours without observed functional issues. |
 | Medical | Natural recovery and a read-only patient view are implemented. **Medical contributions/treatment acceleration are not.** |
 | Workshop and other progression | Still separate design/implementation work. Fuel as an additional Workshop purchase resource is only under consideration. |
-| Immediate next milestone | **Design and test a more compact working bunker layout.** No exact geometry, topology, service positions or scene edits are approved yet. Detailed economy tuning follows layout work and the remaining services. |
+| Current layout and next work | All nine slices accepted. VDD v0.12 owns the four-gallery layout. Future work has its own scope. [Acceptance and main verification](design_history/2026-11-15-compact-bunker-layout-acceptance-and-publication.md) |
 
 ## 1. Roles and working method
 
@@ -48,7 +48,7 @@ Relative links in this file are based at the repository's `docs/` directory. Whe
 | [AI working guidelines](AI_WORKING_GUIDELINES.md), [CURRENT_STATE](CURRENT_STATE.md), [README](README.md), [CODEX_BOOTSTRAP](CODEX_BOOTSTRAP.md) | Current routing, working method, implementation and preservation. Apply the later publication alignment where old labels conflict. |
 | [GDD v0.16 DOCX](Sorting_Apocalypse_Preliminary_GDD_v0.16.docx) / [generated Markdown](readable/Sorting_Apocalypse_Preliminary_GDD_v0.16.md) | **Current intended gameplay.** Consolidated successor, retained physical contracts, provisional values and open mechanics. |
 | [Systems MVP v0.5 DOCX](Sorting_Apocalypse_Systems_MVP_Foundation_Design_and_Progress_v0.5.docx) / [Markdown](Sorting_Apocalypse_Systems_MVP_Foundation_Design_and_Progress_v0.5.md) | Implemented contracts, progress, test evidence and CF-01–CF-24. Older survival-era forward statements do not override the successor design. |
-| [VDD v0.11 DOCX](Sorting_Apocalypse_Visual_Design_Direction_v0.11.docx) / [Markdown](readable/Sorting_Apocalypse_Visual_Design_Direction_v0.11.md) | World/art/material direction and authored spatial context. Existing dimensions establish a baseline, not a veto on deliberate compact-layout design. |
+| [VDD v0.12 DOCX](Sorting_Apocalypse_Visual_Design_Direction_v0.12.docx) / [Markdown](readable/Sorting_Apocalypse_Visual_Design_Direction_v0.12.md) | World, art and materials, plus the accepted current footprint and routes. |
 | [Prototype Findings v0.14](readable/Sorting_Apocalypse_Prototype_Findings_v0.14.md) | Historical experiments and evidence, not the current progress tracker. |
 | [Approved pivot record](design_history/Sorting_Apocalypse_Design_Pivot_Record_05Nov2026.md) | Why the objective changed. Its parallel team-tabs text was superseded by the single-current-team decision. |
 | [Approved ADR archive](design_history/Sorting_Apocalypse_ADR_Design_Archive_05Nov2026.md), [GDD v0.15](readable/Sorting_Apocalypse_Preliminary_GDD_v0.15.md), [survival-era index](design_history/survival-era/README.md) | Preserved survival-era reasoning, tentative settings, alternatives, frozen M4 inputs and completed evidence. Deliberate future reuse only. |
@@ -151,7 +151,7 @@ Receiving now prefers valid same-group stacking, then valid mixed top-appends, t
 
 The surgical Fedora adjustment is adopted: `loot_000172`, scale **0.897**, Footprint **3×3×1**, Bulk **2**, other properties retained. Current derivatives were reconciled; historical data remained unchanged. Mystery Meat Large remains scale 1, Footprint 13×5, Bulk 14. Its smaller trial and the assistant's 11×5 grid witness were diagnostic/proposed only, not approved edits.
 
-Two extreme cases remain **developer-deferred prototype limitations**: the 157-Bulk meat-and-mice area overrun and long-object bounded-planner failure. The current safe pre-dispatch path rejects an unpreparable exact outcome without losing the draft, supplies, personnel or random state; an unchanged retry repeats it. This is not the final universal presentation solution, but fixing every extreme is not a prerequisite for the next milestone.
+Two extreme cases remain **developer-deferred prototype limitations**. These are the 157-Bulk meat-and-mice area overrun and long-object bounded-planner failure. The safe pre-dispatch path rejects an unpreparable exact outcome while retaining the draft, supplies, personnel and random state. An unchanged retry repeats it. Universal presentation remains future work.
 
 The developer strongly rejected haul chunking as a default answer because random geometry would impose extra delivery/fuel-delay penalties disconnected from player choices. The preferred response order is Receiving-only mixed stacking; surgical scale/Footprint tuning; justified Bulk tuning; small manually authored widening; shelves only much later; split deliveries far behind those. No broad shrinking, item-ID-specific packing recipes, lift rebuilding or exhaustive stress campaign is authorized. Reassess after a significant catalogue expansion or a concrete new playtest problem, not on every handoff.
 
@@ -184,16 +184,16 @@ The observed reinforcing cycle was: long routes → slower unloading/provisionin
 
 Fuel's high-end catalogue mix and Weapons/bonus acquisition are **suspected contributors**, not a proven diagnosis. Fuel alongside Electronics for some Workshop upgrades is **under consideration**, not a newly approved sink. Do not respond by immediately lowering Fuel Utility, raising reserve consumption, reducing Kitchen requests or changing expedition durations.
 
-**The accepted next priority is compact-layout design/testing before detailed economic tuning.** A representative working layout is enough; final visual polish is not a prerequisite for later treatment/Workshop work. Sustained integrated playtesting after those systems exist will be more informative than another isolated balance model now.
+**The developer accepted the compact layout after all nine walkthroughs.** Earlier transit observations informed the geometry work. Final economy, Food/Hydration pressure, Fuel surplus and workload remain subjects for representative integrated play. [Nine-slice technical result](testing/2026-11-14-compact-bunker-layout-result.md)
 
 ## 9. Local execution, physical ownership and evidence discipline
 
 ```text
 Repository: Navandis/Sorting-apoc-PROTOTYPE
 Read-only handoff anchor: d242de49441b410c4abb88ab4f7b61971b6424d1 (14 November 2026)
-Latest implementation/retest checkout:
+Historical Expedition retest checkout:
   C:/Users/Boschetar/Documents/ChatGPT/Sorting Apocalypse - Prototype/Expedition
-Long-standing asset-equipped project:
+Current asset-equipped layout authoring checkout on main:
   D:/Godot Projects/Sorting-apoc-PROTOTYPE
 Reported engine: Godot 4.7.stable.official.5b4e0cb0f, Compatibility
 Normal F5: res://gameplay/run/run_shell.tscn
@@ -201,7 +201,7 @@ Standalone F6: res://gameplay/logistics_wing/wing_gameplay.tscn
 Current save schema: 11, existing user://saves/collection/ service
 ```
 
-The writable Expedition clone was introduced because the app-created checkout was outside the writable workspace; it uses junctions to existing assets/imports. The developer now reports local/remote alignment. **Do not infer which local copy will own the next scene edit, or that shared directories are independent.** Verify the actual authoring checkout, branch, worktrees, dirty changes and engine before local writes. GitHub verifies tracked publication, not that local inspection.
+The asset-equipped layout authoring checkout is `D:/Godot Projects/Sorting-apoc-PROTOTYPE` on `main`. The separate Expedition clone above is a historical retest location. Verify the actual branch, editor state, assets, engine and working paths for the next requested task.
 
 Use current saved scenes/builder and human overrides as the physical baseline. Relevant owners include `gameplay/logistics_wing/wing_gameplay.tscn` and its script, `gameplay/run/run_shell.tscn`, `player_controller.gd`, storage/ladder owners, and `gameplay/logistics_wing/receiving/receiving_runtime.gd`. Discover connected structural/environment owners from those references rather than inventing filenames or treating old plan pixels as current topology. CURRENT_STATE §§6–8 and VDD's later physical notes identify the accepted environment and source safeguards.
 
@@ -213,47 +213,28 @@ No reset, stash, clean, force-push, history rewrite, branch/worktree deletion, u
 
 Old-save migration/backward compatibility was explicitly waived for the recent changes. Existing save files still should not be deleted as housekeeping. Current-build saving/loading must remain correct, and incompatible saved layouts should be rejected explainably rather than silently relocated. Reconfirm only if a new task materially changes this scope.
 
-Known debt includes synchronous autosaves/large-stock costs, release crash durability, brief silent-suspension timing, Windows certificate-store and held-material diagnostics, and other CF-01–CF-24 items. An older CRT test has three formatting assertions failing on baseline and candidate (single-digit expectation versus two-digit output); relevant current CRT/native/FIFO checks passed. Do not claim universal green tests, invent a new regression, or make unrelated test cleanup a prerequisite for layout discussion.
+Known debt includes synchronous autosaves and large-stock cost, release durability, brief silent suspension, Windows certificate-store and held-material diagnostics, the historical CRT formatting checks and other CF-01–CF-24 items. The layout result records the inherited launch-UID and 46-host assertions together with the passing route and continuation evidence.
 
-## 10. Next milestone — compact working bunker layout
+## 10. Accepted compact layout and future work
 
-**Confirmed next scope:** design and test a more compact working layout that reduces excessive repetitive transit while keeping collecting, storing and organizing central. This is not authorization to implement a new layout without discussing it, nor a requirement to finish a whole-bunker art pass.
+The accepted wing runs from Receiving and Dispatch through shortened Backlog and Sorting into Main Storage. A–D remain, including the shared A/B circulation and C–D link. Medical and Kitchen have separate approaches, Workshop leads west to Salvager, Incinerator branches directly south from Main Storage, and the straight 3 m eastern link reaches Bunker Ops. The working Fuel cabinet is in Receiving.
 
-**Still open:** exact footprint, dimensions, corridor lengths, room connections, station adjacency, future service placement, storage roster/capacity and how much of the existing shell to retain. Do not invent a target percentage shrink or assume the entire bunker should be uniformly scaled. Preservation of accepted functionality does not freeze every wall in its old position.
+The actual whole-wing plan is a roof-off diagnostic. Normal player views keep ceilings, and the existing authored Receiving installation retains its scoped visual acceptance. The current layout preserves the physical storage roster and the lift-alert sightline from Sorting.
 
-The prior discussion suggests the following approach, **as a working method rather than an already-approved floor plan**:
-
-- Inspect the actual current layout and the frequent routes: Receiving↔storage, storage↔Dispatch/Kitchen, disposal/refuelling, and the future Medical-treatment/Workshop visits. Distinguish unavoidable item handling from empty transit and detours.
-- Develop a small number of compact alternatives. Preserve useful storage, readable shelf approaches, maneuvering space, departmental identity, accepted object scale and the unseen-world fantasy. Do not solve travel by turning every service into adjacent buttons or by squeezing aisles into a precision maze.
-- Include future services and a deliberate Fuel-station location in the spatial discussion. The temporary cabinet beside the lift must not silently become a permanent constraint or invalidate comparisons.
-- Compare basic route distance/time and ordinary walk-without-sprint usability. A small route table and a playable rough layout are enough; no telemetry framework, exhaustive optimization or guessed whole-game throughput model is required.
-- For an initial spatial comparison, prefer retaining the accepted provisional gameplay coefficients so the effect of layout is interpretable. Any simultaneous tuning is a separate explicit choice, not an automatic part of “compression.”
-
-The art direction remains an adapted unfinished/decommissioned underground municipal/service facility, not a passenger station, military bunker or futuristic base. Architecture should feel rational, with historically caused irregularity and competent survivor adaptation. Mineral shell, practical readable lighting and meaningful districts support the logistics fantasy. Existing Receiving spectacle, art and authored scale should be reused where appropriate; a new blanket asset pass is not needed.
-
-Do not reopen the meat/long-object extreme-haul work, rejected rigid-body/frozen-pile approaches, historical ADR, already-accepted system reviews or a complete catalogue recalibration to start this milestone. If a credible issue is actually caused or reached by the chosen layout, address that issue in a bounded scope.
-
-After an agreed playable spatial revision, proceed with the remaining service design/implementation, then integrated pacing/economy evaluation. Nothing here mandates a specific station topology, movement-speed change or new Fuel sink.
+Use the accepted scene as the baseline for later materials, lighting, furnishing and focused playtest adjustments. Starting stock, final capacity, progression, integrated economy and remaining service mechanics retain separate scope. Further work begins with an agreed brief. [Roof-off north-up overview](design_history/media/2026-11-15-compact-bunker-layout-north-up.png) · [Nine-slice technical result](testing/2026-11-14-compact-bunker-layout-result.md)
 
 ## 11. First response in the new session
 
-First verify accessible current repository state and read the entry points, this handoff, the publication-alignment record and the latest Expedition acceptance/extended-playtest sections. Read the targeted GDD/VDD spatial and interaction sections, and inspect current scene ownership before asserting dimensions or recommending concrete moves. Prior local paths are evidence locations, not proof that you have opened their contents.
+Read the current entry points and the relevant GDD v0.16 and VDD v0.12 sections. Use the layout close-out and Expedition playtest records for provenance. Verify accessible repository state before making local or published claims.
 
-Then give a concise orientation that:
-
-1. Recognizes the **completed survival→accumulation-speed pivot** and the **human-promoted, published Expedition system/schema 11**. No acceptance/publication task remains for those milestones.
-2. Distinguishes implemented natural recovery from unimplemented treatment and Workshop, and observations from suspected causes or potential tuning ideas.
-3. Identifies the concrete current layout information available versus any genuinely missing visual/local context, without asking me to repeat decisions recorded above.
-4. Proposes a small first design batch for compact-layout work and, only where useful, asks one consequential layout question whose answer is not already in the sources.
-
-Do not begin by drafting another Expedition implementation prompt, rerunning every review, changing coefficients, automatically editing scenes, or promising a complete redesign. Do not turn an outdated “publication pending” paragraph into a new blocker. If repository access is unavailable, use the supplied source material, state that limit, and ask only for the specific missing current-layout input required to continue.
+Start from the developer’s requested task. Treat schema 11, the promoted Expedition outcomes and the compact layout as established. Keep active read-only Medical recovery, later treatment and Workshop work, and provisional tuning distinct in the discussion. Ask about missing details only when they affect the requested scope.
 
 ## 12. Provenance and maintenance
 
-This revision updates the supplied `Sorting_Apocalypse_Bootstrap_Prompt_Next_Session_07Nov2026(1).md`, compares the later repository edition at `d242de4`, and carries forward the approved v0.16/pivot/ADR records, current entry points, later service/Expedition decisions, assessment/adoption history, and the developer's final publication and next-milestone statements. The repository's 14 November Expedition result already records the long playtest and reasons for prioritizing layout.
+This 15 November revision follows the 14 November Expedition handoff and the developer’s acceptance of Slice 9. The earlier approval records, playtest evidence and authority boundaries retain their original dates. [Acceptance and main verification](design_history/2026-11-15-compact-bunker-layout-acceptance-and-publication.md)
 
-The filename's 7 November date is retained for link stability; **this content is current to 14 November 2026**. That is a handoff date, not a fabricated timestamp for every earlier design decision. Earlier source dates and acceptance evidence remain unchanged.
+The filename retains its 7 November date for link stability. The content is current to 15 November 2026.
 
-The accompanying alignment record supersedes stale publication/snapshot-status labels only. It does not silently revise gameplay authority or mark release balance/durability complete. This package was prepared for provision; it is not evidence of a remote write, a Windows inspection, a Godot test, a scene edit or a new economic simulation.
+Use the acceptance and publication records for main verification and the technical result for measured outcomes. Release balance, furnishing and durability retain separate scopes.
 
-**Operating rule: keep collection and organization central; preserve current accepted systems and historical reasoning; keep known limits proportionate; design the compact working layout next; implement only the next explicitly agreed bounded task.**
+**Operating rule. Keep collection and organization central, use the accepted layout as the working baseline, and follow the developer’s next explicit scope.**

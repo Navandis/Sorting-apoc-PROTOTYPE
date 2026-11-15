@@ -1,6 +1,6 @@
 extends Node3D
 
-const OUTPUT_DIRECTORY := "res://reports/logistics_wing/storage_bridge/initial"
+const OUTPUT_DIRECTORY := "res://reports/logistics_wing/storage_bridge/compact_layout_slice_9"
 const CAPTURE_SIZE := Vector2i(1920, 1080)
 const CONTACT_COLUMNS := 4
 const CONTACT_ROWS := 3
@@ -25,17 +25,18 @@ func get_output_directory() -> String:
 
 func get_view_records() -> Array:
 	return [
-		_view("Whole continuing wing plan", "whole_wing_plan.png", Vector3(10.0, 70.0, 0.0), Vector3(10.0, 0.0, 0.0), 55.0, false),
+		_view("Roof-off compact wing plan", "whole_wing_plan.png", Vector3(0.875, 51.0, 0.1833), Vector3(0.875, 0.0, 0.1833), 55.0, false),
+		_view("Short Ops link in normal gameplay lighting", "short_ops_link.png", Vector3(24.5, 1.7162851, 2.30), Vector3(32.5, 1.4, 2.30)),
 		_view("Saved table and loose-loot coverage", "table_loot_coverage.png", Vector3(-9.6, 3.2, -1.4), Vector3(-9.6, 0.95, 2.65)),
-		_view("Gallery A metal shelf front", "gallery_a_fixture_front.png", Vector3(-2.28, 1.65, -4.2), Vector3(-2.28, 1.25, -7.2)),
-		_view("Gallery A shelf height and ceiling", "gallery_a_fixture_height.png", Vector3(-2.28, 2.45, -5.0), Vector3(-2.28, 2.65, -7.2), 60.0),
-		_view("Gallery B metal shelf front", "gallery_b_fixture_front.png", Vector3(14.0, 1.65, -10.6), Vector3(14.0, 1.25, -13.78)),
-		_view("Gallery B shelf height and ceiling", "gallery_b_fixture_height.png", Vector3(14.0, 2.45, -11.25), Vector3(14.0, 2.65, -13.78), 60.0),
-		_view("Gallery C ventilated locker front", "gallery_c_locker_front.png", Vector3(-1.35, 1.65, 5.9), Vector3(-1.35, 1.25, 9.0)),
-		_view("Gallery C locker height and ceiling", "gallery_c_locker_height.png", Vector3(-1.35, 2.45, 6.75), Vector3(-1.35, 2.55, 9.0), 60.0),
+		_view("Gallery A metal shelf front", "gallery_a_fixture_front.png", Vector3(-2.65, 1.65, -2.62), Vector3(-4.28, 1.25, -2.62)),
+		_view("Gallery A shelf height and ceiling", "gallery_a_fixture_height.png", Vector3(-2.65, 2.45, -2.62), Vector3(-4.28, 2.65, -2.62), 60.0),
+		_view("Gallery B metal shelf front", "gallery_b_fixture_front.png", Vector3(12.0, 1.65, -6.8), Vector3(12.0, 1.25, -9.98)),
+		_view("Gallery B shelf height and ceiling", "gallery_b_fixture_height.png", Vector3(12.0, 2.45, -7.45), Vector3(12.0, 2.65, -9.98), 60.0),
+		_view("Gallery C ventilated locker front", "gallery_c_locker_front.png", Vector3(0.5, 1.65, 7.8), Vector3(-1.35, 1.25, 7.8)),
+		_view("Gallery C locker height and ceiling", "gallery_c_locker_height.png", Vector3(0.5, 2.45, 7.8), Vector3(-1.35, 2.55, 7.8), 60.0),
 		_view("Carried item and HUD", "carrying_hud.png", Vector3(-9.6, 1.72, -0.8), Vector3(-9.6, 1.0, 2.65), 75.0, true, "carrying"),
-		_view("Two-item boxed-food stack in Gallery A", "stored_stack_gallery_a.png", Vector3(-2.28, 1.25, -5.0), Vector3(-2.28, 0.75, -7.2), 75.0, true, "stacked"),
-		_view("Retrieved item transferred to Gallery B", "retrieval_transfer_gallery_b.png", Vector3(14.0, 1.25, -11.45), Vector3(14.0, 0.75, -13.78), 75.0, true, "transferred"),
+		_view("Two-item boxed-food stack in Gallery A", "stored_stack_gallery_a.png", Vector3(-2.65, 1.25, -2.62), Vector3(-4.28, 0.75, -2.62), 75.0, true, "stacked"),
+		_view("Retrieved item transferred to Gallery B", "retrieval_transfer_gallery_b.png", Vector3(12.0, 1.25, -7.65), Vector3(12.0, 0.75, -9.98), 75.0, true, "transferred"),
 	]
 
 
@@ -44,7 +45,9 @@ func get_manifest_static_fields() -> Dictionary:
 		"scene": "res://gameplay/logistics_wing/review/wing_gameplay_capture.tscn",
 		"gameplay_scene": "res://gameplay/logistics_wing/wing_gameplay.tscn",
 		"evidence_kind": "continuing-wing-gameplay-foundation-initial",
+		"layout_revision": "logistics-wing-compact-layout-slice-9",
 		"source_hash_paths": PackedStringArray([
+			"res://greybox/logistics_wing/wing_geometry.tscn",
 			"res://gameplay/logistics_wing/wing_gameplay.gd",
 			"res://gameplay/logistics_wing/wing_gameplay.tscn",
 			"res://gameplay/logistics_wing/wing_environment.gd",
@@ -290,6 +293,7 @@ func _save_manifest(absolute_directory: String, records: Array) -> Error:
 		"scene": fields["scene"],
 		"gameplay_scene": fields["gameplay_scene"],
 		"evidence_kind": fields["evidence_kind"],
+		"layout_revision": fields["layout_revision"],
 		"code_revision": _git_revision(),
 		"renderer": RenderingServer.get_current_rendering_method(),
 		"capture_size": {"x": CAPTURE_SIZE.x, "y": CAPTURE_SIZE.y},

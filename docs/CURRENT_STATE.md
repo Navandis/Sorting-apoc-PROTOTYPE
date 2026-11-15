@@ -1,6 +1,6 @@
 # Sorting Apocalypse — current development state
 
-**Document update 14 November 2026. The intended game follows the developer-approved GDD v0.16 and its contribution decisions. Published main includes Expedition outcomes/provisioning, schema 11, Receiving mixed stacking and the approved Fedora revision.**
+**15 November 2026. Compact bunker layout — HUMAN-ACCEPTED / PUBLICATION VERIFICATION PENDING.** GDD v0.16 remains the intended-gameplay authority. Schema 11 is current. [Acceptance and main verification](design_history/2026-11-15-compact-bunker-layout-acceptance-and-publication.md) · [Roof-off north-up overview](design_history/media/2026-11-15-compact-bunker-layout-north-up.png)
 
 The developer promoted the Expedition iteration after more than two hours of play and subsequently published it on 14 November. The accepted scope includes full-catalogue acquisition, five provision effects, injury, recruitment, Medical-owned natural recovery and schema 11 with provisional settings. Read-only GitHub verification found `main` at `d242de49441b410c4abb88ab4f7b61971b6424d1` with the real Expedition configuration. Current continuation is schema 11. [Publication and handoff alignment](design_history/2026-11-14-publication-and-layout-handoff.md) qualifies older dated local/pending notices. [Decision record](design_history/2026-11-13-expedition-outcomes-and-provisioning-decisions.md) · [Technical result](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md)
 
@@ -12,7 +12,8 @@ The developer promoted the Expedition iteration after more than two hours of pla
 | Collection foundation | **HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** [Result and developer acceptance](testing/2026-11-07-continuous-run-collection-goal-result.md). |
 | M1 / M2 / M3 / M4 | **HUMAN-PROMOTED / PUBLISHED / CLOSED**, each in its accepted bounded scope. No acceptance, publication or re-review backlog is reopened. |
 | Expedition-to-Storage Loop | **HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** [Technical result and developer acceptance](testing/2026-11-08-expedition-to-storage-loop-result.md). M5’s former combined daily scenario is historical. |
-| Expedition outcomes and provisioning | **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** Current schema 11; all iteration values remain provisional. [Developer acceptance](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md) |
+| Expedition outcomes and provisioning | **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** Current schema 11. Iteration values remain provisional. [Developer acceptance](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md) |
+| Compact bunker layout | All nine geometry slices are human-accepted. The four-gallery layout, service access and unchanged functional storage are the working baseline. [Acceptance and main verification](design_history/2026-11-15-compact-bunker-layout-acceptance-and-publication.md) · [Nine-slice technical result](testing/2026-11-14-compact-bunker-layout-result.md) |
 | Incinerator and Deliberate Disposal | **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** [Technical result and developer acceptance](testing/2026-11-08-incinerator-deliberate-disposal-result.md) |
 | Continuous Kitchen | **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** Introduced schema 8. [Developer acceptance and close-out](testing/2026-11-09-continuous-kitchen-service-result.md) |
 | Fuel Reserve and Emergency Freight | **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** Introduced schema 9. [Fuel technical result and developer acceptance](testing/2026-11-11-fuel-reserve-emergency-freight-result.md) · [Fuel decisions](design_history/2026-11-11-fuel-reserve-and-emergency-freight-decisions.md) · [Implementation plan](superpowers/plans/2026-11-11-fuel-reserve-emergency-freight.md) |
@@ -33,7 +34,7 @@ Read [AI_WORKING_GUIDELINES](AI_WORKING_GUIDELINES.md), this record, [README](RE
 | --- | --- |
 | [GDD v0.16 DOCX](Sorting_Apocalypse_Preliminary_GDD_v0.16.docx) / [generated reading copy](readable/Sorting_Apocalypse_Preliminary_GDD_v0.16.md) | Current intended collection-and-organization game. Governs replacements and explicit open mechanics. |
 | [Systems MVP v0.5](Sorting_Apocalypse_Systems_MVP_Foundation_Design_and_Progress_v0.5.md) | Accepted implementation/contracts/progress and CF-01–CF-24 evidence. Its obsolete forward gameplay instructions are superseded where v0.16 changes them. The dated 7 November compatibility update now reconciles its current direction and future-work wording; implementation, milestones and attributed evidence are preserved. |
-| [VDD v0.11](readable/Sorting_Apocalypse_Visual_Design_Direction_v0.11.md) | Retained world/material/art and authored spatial context. Survival/night/socket gameplay assumptions cannot veto v0.16; actual layout changes still need explicit scope. The dated 7 November compatibility update reconciles presentation and spatial assumptions; no scene changes or new dimensions are authorized. |
+| [VDD v0.12](readable/Sorting_Apocalypse_Visual_Design_Direction_v0.12.md) | Visual/material authority and accepted compact layout. VDD v0.11 retains its historical compatibility record. |
 | [Findings v0.14](readable/Sorting_Apocalypse_Prototype_Findings_v0.14.md) | Historical prototype evidence, not active progress tracking. |
 | [Approved pivot record](design_history/Sorting_Apocalypse_Design_Pivot_Record_05Nov2026.md) | Rationale/provenance. Its team-tabs passage is superseded by the approved single-current-team addendum in v0.16. |
 | [Approved ADR archive](design_history/Sorting_Apocalypse_ADR_Design_Archive_05Nov2026.md) / [GDD v0.15](readable/Sorting_Apocalypse_Preliminary_GDD_v0.15.md) | Historical survival design; not parallel current requirements. |
@@ -58,7 +59,7 @@ The purpose is to restore collecting, hoarding and organizing as the main experi
 | Receiving | One exact ordinary-plus-bonus manifest moves through oldest-first admission to one active and two deposited slots. Healthy originals and recruits become Ready on admission. Injured originals enter Medical. Empty returns hand over outside the lift. |
 | Requests | Kitchen §12 specifies cumulative bounded Food and Hydration demand, active-time grace, proportional carrying relief and sprint restoration on clearance. Fuel uses the separately approved reserve and emergency freight rules in GDD §14. Victory has no service requirement. |
 | Medical | Light and Severe patients recover in 120 and 300 active seconds from handover. The Medical frontage shows natural recovery in a read-only view. Treatment remains open. |
-| Progression/layout | All storage from start is favored, not a finalized production roster. Carrying/expedition/information improvements remain candidates. Workshop/Training and spatial compression require further design. |
+| Progression/layout | Four-gallery working layout accepted. All installed storage from the beginning remains favored. Production capacity and roster, carrying/expedition/information improvements and Workshop/Training retain separate design scope. |
 | Information | Goal progress is baseline, never upgrade-gated or disabled by penalties/events. Journal/notification/overview roles survive; a daily report does not. |
 
 Read the GDD for the actual detail and source distinctions. This table is routing, not a substitute specification. No code change follows from it without an agreed task.
@@ -133,20 +134,20 @@ The curved CRT is live and read-only with STATUS, DECK and QUEUE. It shows norma
 
 ## 8. Spatial, art and source safeguards
 
-The accepted builder and saved scene govern **current** geometry, not old schematic pixels. v0.16 permits deliberate future compression; this package moves no walls, lighting, shelves or scene nodes. C1/Stage C and EAF1–EAF5 remain promoted in their recorded scopes; C1A remains parked/unpromoted, and irregular frozen piles remain rejected production research.
+The accepted builder and saved scene govern current geometry. The compact layout translated Receiving and Dispatch 6.75 m east as one installation. The table records current world coordinates and the retained room and lift contracts. C1/Stage C and EAF1–EAF5 remain promoted in their recorded scopes; C1A remains parked/unpromoted, and irregular frozen piles remain rejected production research.
 
 | Current authored reference | Value / preservation boundary |
 | --- | --- |
-| Receiving | 8.00 × 7.50 m / 60 m² nominal; clear 7.70 × 7.20 m; floor Y 0; height 4.20 m; thickness .30 m. World nominal X −36…−28.50, Z ±4. |
+| Receiving | 8.00 × 7.50 m / 60 m² nominal; clear 7.70 × 7.20 m; floor Y 0; height 4.20 m; thickness .30 m. World nominal X −29.25…−21.75, Z ±4. |
 | Dispatch | 6.50 × 3.50 m nominal, clear about 6.20 × 3.20 m; 2.40 m doorway. Furnishing not finalized. |
-| Backlog opening | X −28.50, centered Z ±1.42; 2.84 × 3.40 m. Geometry resolved; walking material remains adjacent work. |
-| Lift transforms | Installation (3,0,0); ReceivingRuntime (−37.41487,.82,0) with original nonuniform basis. Preserve manual installation nodes, cage/shaft overrides and barriers. |
+| Backlog opening | X −21.75, centered Z ±1.42; 2.84 × 3.40 m. Geometry resolved; walking material remains adjacent work. |
+| Lift transforms | ReceivingLiftInstallation root (9.75, 0, 0). ReceivingRuntime root (−30.66487, 0.82, 0) retains the authored nonuniform basis. Preserve manual installation nodes, cage/shaft overrides and barriers. |
 | Shutter | Closed Y .086, open marker 3.1416707; art collisionless, actual TAKE gated separately. |
 | MainDeck | 3.30 × 2.00 m / 33×20 cells at .10 m; revision 4, layout_version 3. Support about 3.441×2.100 m; side margins .0705 m, front/rear about .05 m. |
 | Reaches | Receiving fixture TAKE 3.4 m; loose 1.4 m; ordinary storage/manual 2.3 m. No proof-only 3.5 m override. |
 | Materials | Active P05_C02; reinforced-concrete shaft `eaf3b_1beac3a311a480af8844ea89`, 3 m/repeat. P01_C02/P05_C03 and Dirty Concrete wall/shaft directions are historical. |
 
-`wing_environment.tscn` disables ambient and hides KeyLight; `receiving_lighting.tscn` owns practicals and ceiling bounce, with saved `wing_gameplay.tscn` human overrides taking precedence. Reviewed G1/G2 values 2.60/(1,.84,.68), T1/T2 .75/.85/(1,.91,.77), bounce .45/(1,.88,.75), five shadowed sources plus non-shadowed W1 and one .30 UPDATE_ONCE reflection probe remain adjustable baselines, not immutable numerical gates. W1’s saved range 2.5 m versus coordinator 1.8 m and retained attenuation −.5 is disclosed, not automatic permission to retune.
+`wing_environment.tscn` disables ambient and hides KeyLight; `receiving_lighting.tscn` owns practicals and ceiling bounce, with saved `wing_gameplay.tscn` human overrides taking precedence. Reviewed G1/G2 values 2.60/(1,.84,.68), T1/T2 .75/.85/(1,.91,.77), bounce .45/(1,.88,.75), five shadowed sources plus non-shadowed W1 and one .30 UPDATE_ONCE reflection probe remain adjustable baselines. The probe center is now (−28.075, 2.10, 0) in world space. W1’s saved range 2.5 m versus coordinator 1.8 m and retained attenuation −.5 is disclosed, not automatic permission to retune.
 
 Preserve coalesced batch/TAKE/settled-shutter reflection refresh ownership, current emitter/lens states and authored audio. Human art at `9ede796` has eleven scalar instances plus one conventional OilStain; the original 18-layer snapshot is not a restoration quota. Removed monitors, `ReceivingInfrastructure`, seven Codex Road Dust placements and `receiving_finish_pass.tscn` remain retired. Retained hidden alternatives stay collisionless. Move/refit mapped movement proxies deliberately when authorized visuals change; visibility alone does not control collision. The independent emergency-stop plaque is retained.
 
@@ -177,9 +178,15 @@ The old Fuel/locker maintenance, EAF1 WallGrazing repair, R-01–R-03 and bounde
 
 ## 10. Execution and next-work boundary
 
-The developer selected design and testing of a more compact working bunker layout as the next milestone. Reduce excessive repeated transit without sacrificing the collecting, hoarding and sorting experience. Evaluate Food and Hydration pressure, workload and Fuel surplus after representative layout work and completion of the remaining services. Exact geometry, topology, station placement and tuning remain open. This documentation update authorizes no scene edit, uniform asset downscale or coefficient change. [Extended playtest findings](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md#extended-playtest-findings)
+The developer accepted all nine compact-layout slices on 15 November 2026. The asset-equipped authoring checkout is `D:/Godot Projects/Sorting-apoc-PROTOTYPE`. F5 starts the continuing run and uses schema 11.
 
-The latest implementation/retest used `C:/Users/Boschetar/Documents/ChatGPT/Sorting Apocalypse - Prototype/Expedition`; the long-standing asset-equipped project is `D:/Godot Projects/Sorting-apoc-PROTOTYPE`. The developer reports local/remote alignment. Verify which copy owns the next authored scene change and whether its asset/import directories are junction-linked; remote publication does not certify either local tree. The engine baseline is Godot 4.7 Compatibility. Verify actual branch/tree/worktrees/engine before writing. The prior publication report’s clean tracked state, eighteen preserved untracked sidecars and protected saves are historical local reports, not this task’s inspection.
+The accepted wing runs from Receiving and Dispatch through shortened Backlog and Sorting into Main Storage. A–D remain, including the shared A/B circulation and C–D link. Medical and Kitchen have separate approaches, Workshop leads west to Salvager, Incinerator branches directly south from Main Storage, and the straight 3 m eastern link reaches Bunker Ops. The working Fuel cabinet is in Receiving.
+
+The current roster is four qualifying units, 16 surfaces, 3,463 cells, one independent ladder, four Sorting tables and 44 seed hosts and registrations. [Nine-slice technical result](testing/2026-11-14-compact-bunker-layout-result.md) · [Roof-off north-up overview](design_history/media/2026-11-15-compact-bunker-layout-north-up.png)
+
+Use the accepted scene as the baseline for later materials, lighting, furnishing and focused playtest adjustments. Starting stock, final capacity, progression, integrated economy and remaining service mechanics retain separate scope. Further work begins with an agreed brief.
+
+The earlier Expedition retest used a separate local copy. The layout authoring and accepted scene are at the asset-equipped path above on `main`. Verify the branch, editor state, asset/import links and Godot executable before later work. The approved engine baseline is Godot 4.7 Compatibility with Jolt.
 
 No reset, stash, clean, force-push, rebase/squash, branch/worktree deletion, untracked staging sweep or ignored-asset cleanup is authorized. Preserve local evidence and human `.tres`/scene edits. A remote clone is not a runnable licensed-art backup. Git ignore is not Godot scan exclusion: keep checkpoint scenes with production UIDs and duplicate global classes outside scanned paths. Preserve startup parity checks and avoid concurrent Godot/import writers on one mutable checkout.
 

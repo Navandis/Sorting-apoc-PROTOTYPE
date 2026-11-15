@@ -1,6 +1,6 @@
 <!-- Generated from the approved v0.16 DOCX master. Do not edit independently. -->
 
-> Developer-approved successor; approval-state update 7 November 2026. Original draft compiled 6 November 2026. Local provisional/open statuses are preserved. Prepared for manual repository provision; no implementation or remote publication is claimed.
+> Approved 7 November 2026. Dated spatial alignment 15 November 2026. Provisional and open gameplay decisions retain their original status.
 
 DESIGN & EVIDENCE SERIES / SUCCESSOR EDITION
 
@@ -10,7 +10,7 @@ PRELIMINARY GAME DESIGN DOCUMENT
 
 Collection, hoarding and spatial organization
 
-Version 0.16  |  7 November 2026  |  Approved successor
+Version 0.16  |  Approved 7 November 2026  |  Layout alignment 15 November 2026
 
 > Build the hoard. Organize the space. Keep supplies moving.
 
@@ -22,8 +22,8 @@ The Quartermaster receives, sorts, stores and selectively spends physical loot i
 | --- | --- |
 | Approved input | Developer-approved ADR archive and collection-pivot record dated 5 November, plus the subsequent single-team preparation-panel addendum. |
 | Document status | Approved consolidated successor to GDD v0.15. The developer approved this edition in its entirety; local provisional, open and historical statuses remain. |
-| Implementation baseline | M1–M4 remain human-promoted, published and closed at c9f9417 in their bounded scopes. The collection pivot is not implemented by this document. |
-| Delivery scope | Approved DOCX and generated Markdown, with reconciled entry-point files for manual upload. No remote write, game, scene, save or other-master edit. |
+| Implementation baseline | M1–M4 remain human-promoted and published at c9f9417. Current schema-11 play uses the accepted four-gallery layout. See §§4.3 and 20. [LAY15] |
+| Delivery scope | Same-edition layout alignment dated 15 November 2026. The DOCX and generated reading copy carry the accepted spatial baseline and the existing gameplay authority. |
 
 The targets of 2,000 Utility per category and roughly 80% storage occupancy are illustrations, not validated balance or extra completion requirements. Undefined replacement mechanics remain explicitly open.
 
@@ -48,7 +48,7 @@ This edition is a full gameplay-design successor, not an override sheet for the 
 
 Approval of this edition and its source records preserves every local provisional, favored, open and historical distinction; it does not turn unresolved mechanics or illustrative values into final rules. The panel addendum explicitly supersedes the pivot record’s per-team preparation tabs.
 
-The developer has reviewed and approved this edition in its entirety. GDD v0.16 is now the single current intended-gameplay authority, superseding v0.15. The approved documentation package reconciles current-facing pointers for manual provision to the repository; no remote publication or gameplay implementation is claimed.
+The developer approved GDD v0.16 in its entirety on 7 November. It remains the intended-gameplay authority. The 15 November spatial alignment records the accepted working layout while retaining the approved gameplay and open design boundaries. [APP, LAY15]
 
 > An unresolved post-pivot mechanic is an unresolved mechanic—not permission to restore its survival-era predecessor.
 
@@ -59,8 +59,8 @@ The developer has reviewed and approved this edition in its entirety. GDD v0.16 
 | **Reference** | **Role** |
 | --- | --- |
 | This approved GDD v0.16 | Consolidated intended collection game, retained physical rules, local status and open design boundaries. |
-| Systems MVP v0.5 | Accepted implementation, tests, progress and carry-forward obligations. Its obsolete forward plan needs later reconciliation, not retrospective falsification. |
-| VDD v0.11 | World/material/art and current spatial baseline. Future pivot-driven spatial changes require explicit design and authoring; accepted art is not discarded. |
+| Systems MVP v0.5 | Implementation, tests, progress and carry-forward obligations. Earlier M1–M4 evidence retains its original scope. |
+| VDD v0.12 | World, materials, art direction and the accepted compact spatial baseline. Later local adjustments retain their own scope. [VDD12] |
 | Prototype Findings v0.14 | Historical experiments, rejected approaches and evidence. Not the active progress tracker. |
 | Approved pivot record / latest addendum | Decision provenance and purpose of the redesign. Addendum removes parallel preparation of prebuilt teams. |
 | Approved ADR archive / GDD v0.15 | Historical survival design. Possible later reuse, not a second current ruleset. |
@@ -71,9 +71,9 @@ The developer has reviewed and approved this edition in its entirety. GDD v0.16 
 
 Read §§1–5 for the revised product and objective; §§6–11 for item, storage, submission and expedition/Receiving rules; §§12–17 for supporting departments and presentation; §§18–21 for technical boundaries, balance, evidence and remaining work. Appendix A gives an illustrative continuous sequence, Appendix B defines terms, Appendix C maps supersession, and Appendix D identifies sources.
 
-Source labels identify project material, not outside research. [PIV] is the approved pivot record; [ADD] is the panel addendum; [ADR] is the approved parked archive; [G15], [MVP], [VDD], [H25] and [WG] identify the sources in Appendix D. [APP] records approval of this edition. The original draft was compiled 6 November 2026; this approval-state update is dated 7 November 2026.
+Source labels identify project material. [PIV] is the approved pivot record, [ADD] its panel addendum, and [ADR] the parked archive. Appendix D retains the meanings of [G15], [MVP], [VDD], [H25], [WG] and [APP]. The original draft dates to 6 November and the approval-state update to 7 November. [VDD12] and [LAY15] record the 15 November spatial alignment.
 
-This task updates document approval and current-facing entry points for the developer’s manual repository provision. It authorizes no game implementation, M5 execution, reacceptance of M4, asset audit, gameplay rerun or assistant repository write. It creates no new implementation milestone.
+The original approval-state package provided the approved successor and its routing for manual publication. This dated alignment records the accepted compact layout. Future implementation follows its own scoped briefs.
 
 <a id="s_Contents"></a>
 
@@ -218,7 +218,7 @@ Destination selection is now part of the intended expedition design; its old pos
 
 Calculate unseen activity and present its evidence. Do not build an exterior hospital, moving personnel lift, visible staffed kitchen or construction simulation to explain a resource transfer. The environment, devices and exact physical items provide the player-facing game.
 
-The pivot permits substantial design revision, including possible spatial compression. It does not authorize deletion or regeneration of human-authored scenes, new asset sourcing, engine changes or speculative implementation. Retained acceptance is evidence of a bounded foundation, not a veto on later approved redesign.
+The pivot permits deliberate spatial revision, including the compact layout accepted on 15 November. Preserve the current authored baseline and scope any further redesign with focused evidence. Earlier approvals retain their original meaning.
 
 Basis: [PIV §§1,4–9,11]; retained non-goals and production doctrine [G15 §2]; [WG].
 
@@ -299,9 +299,9 @@ Personnel reach the surface through an unseen route elsewhere. The goods lift is
 
 ### 4.3 Current layout and the pivot’s spatial freedom
 
-The accepted composition remains the implementation baseline: Receiving → Backlog → Sorting → a five-gallery storage network → the Deeper-Bunker Approach. Dispatch adjoins Receiving; Workshop and Salvager form one service branch; Medical and Kitchen retain separate approaches; Incinerator and Ops occupy distinct farther destinations. The C–D storage link, the shared A/B circulation and Kitchen’s B-east connection are existing authoring facts, not newly imposed constraints on every future redesign.
+The accepted 15 November baseline runs from Receiving and Dispatch through Backlog and Sorting into Main Storage and four galleries, A–D. A and B share circulation to Medical, B-east leads to Kitchen, and C and D retain their short connection. Workshop branches south from Sorting and Salvager turns west. Main Storage leads directly south to Incinerator and east through the short link to Bunker Ops. VDD v0.12 owns the accepted dimensions and spatial rationale. [VDD12]
 
-The developer is explicitly considering reducing bunker size, especially long corridors, to support the higher-paced collection loop. Exact topology, distances, gallery allocation and furniture changes remain OPEN. Do not silently redesign the wing in this document, but do not treat old dimensions as immovable design goals. Measure travel separately from search, reading, handling and deliberate organization.
+The compact layout reduces repeated transit and concentrates usable storage within the existing collection game. The developer accepted all nine slices, including the playable service branches. Later furnishing, lighting and playtests may motivate small deliberate room adjustments. Measure transit alongside search, reading, handling and organization. Final starting stock, capacity, progression and economy remain open. [LAY15]
 
 The old 85–90% main-storage versus satellite-capacity split is a prior spatial direction, not a validated distribution for the new collection target. Likewise, the roughly 80% winning occupancy aspiration concerns use of available storage, not the physical area of the bunker or a gallery-layout mandate.
 
@@ -323,14 +323,11 @@ Basis: [VDD §§2–16,18–25,34]; [G15 §4]; [PIV §§1,9,11].
 
 ### 5.1 Simultaneous live collection objective
 
-**CONFIRMED.** Victory occurs immediately when physically stored Utility in every one of the eight Item Categories reaches the target at the same moment. The current illustration is 2,000 Utility in each category. The equality of category end targets is intentional; the number is provisional.
+CONFIRMED. Victory occurs immediately when physically stored Utility in every one of the eight Item Categories reaches the target at the same moment. The current illustration is 2,000 Utility in each category. The equality of category end targets is intentional; the number is provisional.
 
 For category c, let S(c) be the sum of that category’s Utility on qualifying storage and T the common run target:
 
-```text
-VICTORY = S(c) >= T for every category c
-T = 2,000 only as the present placeholder
-```
+VICTORY = S(c) >= T for every category c<br>T = 2,000 only as the present placeholder
 
 Electronics, Food, Fuel, Hydration, Medical, Morale, Protection and Weapons are separate totals. Surplus Fuel does not cover missing Food. Cumulative acquired Utility, lifetime handled items and Utility previously stored but already spent do not satisfy the live condition.
 
@@ -377,7 +374,7 @@ Paused contexts should remain coherent with the established full-pause principle
 
 ### 5.4 No terminal failure and no artificial catch-up
 
-**CONFIRMED.** The design must avoid dead-end situations that make victory impossible. It does not promise quick, comfortable or automatically assisted recovery. A player who makes repeated poor decisions can face substantial work and time to restore an effective operation, and can legitimately prefer to abandon that run and restart.
+CONFIRMED. The design must avoid dead-end situations that make victory impossible. It does not promise quick, comfortable or automatically assisted recovery. A player who makes repeated poor decisions can face substantial work and time to restore an effective operation, and can legitimately prefer to abandon that run and restart.
 
 The recovery path must follow ordinary legible rules rather than concealed rescue grants, adaptive stock replenishment or compensation intended to accelerate a struggling player’s victory. The Medical preference is slow natural recovery, substantially faster with treatment; other acquisition dependencies still need definition. Fairness requires that the player’s decisions and understandable outcomes explain the setback.
 
@@ -412,7 +409,7 @@ Basis: [PIV §§2,4,7–10]; [G15 §§5.6,18.5] and [MVP §§6–9,19] for retai
 | Definition and instance identity | Stable type data versus the durable identity of each physical copy. Visual nodes do not create a second copy. |
 | Salvage Yield / conversion metadata | Potential physical output from a defined transformation. This does not reintroduce context-dependent multi-category request use. |
 
-**CONFIRMED. Each item has one primary category for first-release systems. Medical remains a collection and destination affinity category. Dispatch uses Morale for recruitment. General remains a universal storage-zone type.
+CONFIRMED. Each item has one primary category for first-release systems. Medical remains a collection and destination affinity category. Dispatch uses Morale for recruitment. General remains a universal storage-zone type.
 
 <a id="s_6_2_Stable_item_definitions"></a>
 
@@ -517,15 +514,10 @@ A label is an identification aid, not a mechanical declaration of item contents.
 Open-shelf stacks use one base two-dimensional reservation and an ordered single vertical column of individually physical items. No falling physics or post-TAKE resettling is required. Each item authors whether it can sit on another support, whether it can support another item, and at most one automatic compatibility group.
 
 - Each upper item must fit the supporting item’s final physical Footprint after orientation and packing. A stack cannot widen upward unless an approved automatic base promotion changes the base first.
-
 - Automatic placement tries canonical/front-facing placement before the permitted packing alternative. Compatible items may smart-insert at the highest valid place without reordering or rotating existing members.
-
 - A larger compatible incoming item may become the base only when expanded reservation, support and clearance remain valid. This is automatic base promotion, not permission for manual under-base insertion.
-
 - Manual placement may create broader mixed stacks on the visible top when physical rules permit. Current mixed/non-auto-coherent stacks reject later automatic insertion.
-
 - Any visible member may be retrieved. Middle removal recompresses objects above deterministically; base removal promotes the next member and shrinks the reservation. Ownership mappings change coherently.
-
 - Stacks use the accepted 95% headroom rule. A singleton instead checks full physical clearance without that stack multiplier. Closed/intermediate levels derive clearance from neighboring authored planes; open-top levels use explicit context caps.
 
 The current registry contains boxed_food, flat_media, medical_boxes, round_cans and folded_clothing. The fifth group is approved for items 152–155 only, without bypassing fit, support or clearance. Explicit None is valid. Items 163–174 retain saved None with separate group approval pending at the published baseline. These are content/evidence facts, not a permanent limit on future deliberate group authoring.
@@ -592,7 +584,7 @@ Incineration follows the same exact-item transaction boundary. Its receipt recor
 
 ### 8.3 Continuous requests with bounded escalation
 
-**AGREED HIGH-LEVEL APPROACH.** Briefly deferring a request to finish another activity is legitimate; ignoring a department indefinitely should generally be costly. The working direction is persistent requests without ordinary short expiry windows, with a possible grace/wind-up interval before adverse effects intensify and persist until addressed.
+AGREED HIGH-LEVEL APPROACH. Briefly deferring a request to finish another activity is legitimate; ignoring a department indefinitely should generally be costly. The working direction is persistent requests without ordinary short expiry windows, with a possible grace/wind-up interval before adverse effects intensify and persist until addressed.
 
 Kitchen's cumulative obligation, grace and proportional restoration are defined in §12. Fuel uses the separate persistent reserve in §14. Other services retain their own open issuance and recovery rules.
 
@@ -675,7 +667,7 @@ Draft edits reserve neither personnel nor a destination. First accepted supply l
 
 ### 9.4 Twenty-eight repeatable archetypes
 
-**PREFERRED MODEL.** Choose two different categories without ordering them. Eight categories yield 8 × 7 / 2 = 28 possible pairs, and the finite affinity catalogue has one named archetype per pair. Choosing Medical then Weapons is identical to choosing Weapons then Medical. Repeated selections and Primary/Secondary tiers are not the working model.
+PREFERRED MODEL. Choose two different categories without ordering them. Eight categories yield 8 × 7 / 2 = 28 possible pairs, and the finite affinity catalogue has one named archetype per pair. Choosing Medical then Weapons is identical to choosing Weapons then Medical. Repeated selections and Primary/Secondary tiers are not the working model.
 
 A destination name is a thin fictional wrapper around desired supplies, not a location the player must memorize. No clickable geography, individual-site exploration, finite visit count, loot depletion or bespoke ordinary danger/travel-time profile is required for each name. Repeated expeditions may visit the same archetype indefinitely.
 
@@ -733,12 +725,7 @@ Basis: [ADD] overrides [PIV §5.3]; [PIV §§4–6,8–10]; [ADR §5] only for i
 
 ### 10.1 Retained capacity relationships
 
-```text
-TEAM BASE CAPACITY = selected members × per-member base capacity
-BASE LANE TARGET = selected members × per-member lane requirement
-OUTGOING BULK = sum of Bulk of committed whole loadout items
-RETURN CAPACITY = Team Load Capacity − Outgoing Bulk
-```
+TEAM BASE CAPACITY = selected members × per-member base capacity<br>BASE LANE TARGET = selected members × per-member lane requirement<br>OUTGOING BULK = sum of Bulk of committed whole loadout items<br>RETURN CAPACITY = Team Load Capacity − Outgoing Bulk
 
 Equal-sized teams with equal applicable upgrades have equal base requirements and capacity. The new 1–4-person choice scales those values proportionally; no arbitrary heterogeneous scavenger stats or destination-specific equipment requirements are implied. Upgrades can deliberately introduce defined modifiers after their design is agreed.
 
@@ -931,7 +918,7 @@ Patients remain anonymous. The player need not individually assign medicines, ma
 
 ### 13.2 Preferred simple recovery approach
 
-**CONFIRMED FIRST ITERATION. At handover, Light recovery begins with 120 active seconds and Severe with 300. Each patient progresses independently in parallel. Pausing or closing the run suspends active time. Kitchen, Fuel and the availability of other crews leave natural recovery in progress.
+CONFIRMED FIRST ITERATION. At handover, Light recovery begins with 120 active seconds and Severe with 300. Each patient progresses independently in parallel. Pausing or closing the run suspends active time. Kitchen, Fuel and the availability of other crews leave natural recovery in progress.
 
 Recovering scavengers are unavailable for preparation until Medical completes their deadlines. Recovery returns an existing original to Ready once.
 
@@ -1004,7 +991,7 @@ Collection victory depends on live stored Utility. Future tank upgrades would ad
 
 The Administrator remains off-screen and communicates through brief practical one-way messages. The Transfer Landing is an open, dedicated onward-distribution space, with the submission interface distinct from an opaque personnel-sized door implying the wider settlement. No office interior, visible leader or new dialogue system is needed.
 
-For the first slice, F opens a live refuelling panel at the existing electrical panel to the right of the Receiving shutter. A distinct E submits the selected Fuel and ESC closes the panel before pause. The distant Transfer Landing retains its authored form. Fuel remains the category ID. Energy naming, new items, generators and other power sources remain future design.
+F opens the functioning refuelling panel at the electrical cabinet beside the Receiving shutter. A distinct E submits the selected Fuel and Escape closes the panel before pause. Bunker Ops retains its Transfer Landing placeholder at the end of the short eastern link. Fuel remains the category ID. Energy naming, generators and other power sources remain future design.
 
 Basis: [PIV §§2,7,9]; [G15 §14 and §15.10.6] for historical lane/context references; [VDD §20].
 
@@ -1039,7 +1026,7 @@ The relationship of Salvage to the unified category grammar and eight goal total
 
 ### 15.3 Incinerator and working-space release
 
-**CONFIRMED.** The Incinerator is available from the beginning of every run. It has no unlock, repair, Fuel cost, cooldown or throughput limit. It remains usable at zero reserve. It accepts any valid portable item the player is carrying, including items with zero Utility and future carried Rations or Salvage when those objects exist. The player picks up and carries the item to the machine under the ordinary carrying limits.
+CONFIRMED. The Incinerator is available from the beginning of every run. It has no unlock, repair, Fuel cost, cooldown or throughput limit. It remains usable at zero reserve. It accepts any valid portable item the player is carrying, including items with zero Utility and future carried Rations or Salvage when those objects exist. The player picks up and carries the item to the machine under the ordinary carrying limits.
 
 Aim at the machine and press F to inspect the selected item's name, category, Utility and Bulk. A distinct E press attempts to destroy one selected whole item. The red action label states that destruction is permanent and yields no output. A successful action frees the item's Bulk immediately and leaves the panel open.
 
@@ -1081,7 +1068,7 @@ The old clock-repair tutorial and additional day clocks need reinterpretation wi
 
 The predecessor’s tentative Training service was proposed to give Weapons and Protection another useful sink without theft, raids or disturbing stored possessions. It invested in permanent Team 1/Team 2 slots while daily personnel changed. One guaranteed training day and next-morning benefit were confirmed within that older tentative feature.
 
-That exact model no longer fits: teams are player-assembled for each current preparation, there is no morning roster and no day boundary. This edition does not invent persistent preparation slots, per-scavenger skills, named staff or universal bunker doctrine to replace it. **Training is OPEN / REASSESS under the pivot.** The old slot rules and timing remain historical, not implementation requirements.
+That exact model no longer fits: teams are player-assembled for each current preparation, there is no morning roster and no day boundary. This edition does not invent persistent preparation slots, per-scavenger skills, named staff or universal bunker doctrine to replace it. Training is OPEN / REASSESS under the pivot. The old slot rules and timing remain historical, not implementation requirements.
 
 Potential expedition improvements are still useful design material. Their costs, ownership, duration and opportunity cost must be chosen afresh if a Training feature is retained. A service frontage remains a presentation possibility rather than approved new geometry. Security/theft remains a parked alternative, not a source of hidden inventory loss.
 
@@ -1089,7 +1076,7 @@ Potential expedition improvements are still useful design material. Their costs,
 
 ### 15.7 Machinery and authored changes
 
-Salvager and Incinerator remain distinct front-operated, building-connected landmarks, with a Workshop-associated spur and a separate deeper-bunker spur in the current layout. Their separation can make conversion versus destruction deliberate. Exact route distances and service geometry are open to the broader spatial investigation.
+Salvager and Incinerator remain distinct front-operated landmarks. Salvager branches west from Workshop, then turns south into its machine pocket. Incinerator branches directly south from Main Storage. Their separation preserves deliberate travel between conversion and disposal. VDD v0.12 records the accepted distances and service geometry. [VDD12]
 
 Any future repair or project installation must apply an explicit persistent change to designated authored content. Removing the night transition leaves presentation timing unresolved; do not silently introduce whole-room pop-in, arbitrary furniture placement or automatic rearrangement of player stock.
 
@@ -1272,7 +1259,7 @@ Ordinary schema-4 continuation is accepted at M4, but is not continuous crash-du
 
 Outcome commitment should occur at a natural backend point after legitimate player choices are fixed, before presentation where possible. Preserve committed results through continuation. Incidental uncommitted rerolls within the tolerated loss interval are not a reason to build a general anti-cheat framework; reliable selection among already preserved outcomes remains disallowed by the inherited policy.
 
-The human-promoted local Expedition build uses schema 11 in the existing collection slot. It preserves exact cargo and Medical recovery along with service, placement, player and goal state. Continue restores the run with service panels closed. Confirmed New Run retains incompatible snapshots, including schema 10 on published main. Release durability remains open.
+Published continuation uses schema 11 in the existing collection slot. It preserves exact cargo and Medical recovery with service, placement, player and goal state. Continue restores the run with service panels closed. Confirmed New Run retains incompatible snapshots. The compact layout was verified with a save created in the relocated Ops room. Release durability and any migration of earlier layouts remain separate. [LAY15]
 
 <a id="s_18_6_Environment_and_authored_produc"></a>
 
@@ -1282,7 +1269,7 @@ Retain the promoted EAF workflow: standardized material/light review; metre-auth
 
 The current Receiving palette, human-authored light/wear state and matched movement proxies remain the implementation reference. Current saved scene values supersede old inventories and screenshots. Do not restore intentionally removed monitors or decorative alternatives, normalize protected transforms, or rebuild retired experiments to match historical counts.
 
-A later approved room compression or revised lift workload can legitimately change a bounded part of that composition. It requires targeted authoring and validation, not reopening every closed EAF/C1/Stage C milestone. Licensed originals, ignored caches, other worktrees and evidence must be preserved.
+The accepted nine-slice rebuild preserves the translated Receiving installation and its authored relationships. Later changes to room geometry or lift workload require focused evidence. Earlier EAF/C1/Stage C promotions retain their scopes. Preserve licensed originals, caches, worktrees and dated evidence. [VDD12, LAY15]
 
 <a id="s_18_7_Technical_restraint"></a>
 
@@ -1380,7 +1367,7 @@ M1–M4 are human-promoted, published and closed in their bounded scopes at c9f9
 | M3 | Kitchen Food/Hydration consumers and Meal Coverage reporting through the shared foundation. |
 | M4 | Five-lane loadout, member-scaled fixture teams, outgoing Bulk/capped Utility, dispatch ownership/timing, improved UI and schema-4 continuation. |
 
-The Continuous Run and Collection Goal Foundation is human-accepted and published in its bounded scope. It establishes continuous active time, simultaneous live stored totals and schema-5 continuation with controlled cargo. The record is [docs/testing/2026-11-07-continuous-run-collection-goal-result.md](../testing/2026-11-07-continuous-run-collection-goal-result.md). The Expedition-to-Storage Loop is also human-accepted and published in its bounded scope. Production collection balance and full-game durability remain open.
+The Continuous Run and Collection Goal Foundation is human-accepted and published in its bounded scope. It establishes continuous active time, simultaneous live stored totals and schema-5 continuation with controlled cargo. The record is docs/testing/2026-11-07-continuous-run-collection-goal-result.md. The Expedition-to-Storage Loop is also human-accepted and published in its bounded scope. Production collection balance and full-game durability remain open.
 
 <a id="s_20_2_Frozen_M4_testing_values"></a>
 
@@ -1396,15 +1383,15 @@ The Continuous Run and Collection Goal Foundation is human-accepted and publishe
 | Outcome boundary | Scripted deliveries are independent of team departures. No actual provisioning-to-return or population loop. |
 | Continuation | Schema 4 ordinary continuation; continuous release-grade preservation remains future. |
 
-These are historical M4 test values. Frozen inputs are preserved at [docs/design_history/survival-era/m4/](../design_history/survival-era/m4/README.md). They establish reproducible M4 evidence within the original scope.
+These are historical M4 test values. Frozen inputs are preserved at docs/design_history/survival-era/m4/. They establish reproducible M4 evidence within the original scope.
 
 <a id="s_20_3_Playable_entry_and_human_author"></a>
 
 ### 20.3 Playable entry and human authoring
 
-Normal F5 launch uses res://gameplay/run/run_shell.tscn. Continuous Kitchen is human-promoted and published on main. Fuel Reserve and Emergency Freight is human-promoted, published on main and closed in its bounded scope. Standalone F6 retains the authored palette in res://gameplay/logistics_wing/wing_gameplay.tscn. Legacy main.tscn and spatial review scenes retain their authoring roles.
+Normal F5 launch uses res://gameplay/run/run_shell.tscn with schema-11 continuation. The current authored wing has four galleries and the accepted service branches described in §4.3. Continuous Kitchen, Fuel Reserve and Emergency Freight and Expedition outcomes retain their published acceptances. F6 opens the authored palette in res://gameplay/logistics_wing/wing_gameplay.tscn. Legacy main.tscn and review scenes retain their roles.
 
-Current saved human content governs actual installations, poses, lighting, wear and source references. Future work must inspect actual dependencies before changes; remote documentation alone does not certify ignored commercial assets or runtime rendering. No game files are changed by this edition.
+Current saved human content governs installations, poses, lighting, wear and references. The asset-equipped authoring project is D:/Godot Projects/Sorting-apoc-PROTOTYPE. Inspect its actual dependencies before later authoring. VDD v0.12, the technical result and the dated close-out record document the accepted scene. [VDD12, LAY15]
 
 <a id="s_20_4_Future_scope_must_be_redefined_"></a>
 
@@ -1412,9 +1399,9 @@ Current saved human content governs actual installations, poses, lighting, wear 
 
 The previously planned M5 meant combined authored scenarios using Medical, Kitchen and Dispatch—not automatic real-expedition implementation. It must not proceed unchanged against obsolete survival assumptions. No new M5 scope or implementation sequence is authorized here.
 
-The expedition-to-storage loop is HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE. Appendix A of [docs/superpowers/plans/2026-11-07-continuous-run-collection-goal-foundation.md](../superpowers/plans/2026-11-07-continuous-run-collection-goal-foundation.md#appendix-a--confirmed-expedition-lifecycle-decisions-for-the-next-milestone) records the confirmed lifecycle decisions and their precise supersessions of the earlier open statements. The accepted slice uses the provisional settings in the expedition brief.
+The expedition-to-storage loop is HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE. Appendix A of docs/superpowers/plans/2026-11-07-continuous-run-collection-goal-foundation.md records the confirmed lifecycle decisions and their precise supersessions of the earlier open statements. The accepted slice uses the provisional settings in the expedition brief.
 
-Keep the distinct scopes visible: retained mechanics; new score/continuous-time requirements; actual expeditions and personnel; revised requests/treatment; production storage/layout; optional progression/information. Their eventual delivery order requires a separate agreed brief. No new room-art pass, catalogue expansion, review framework or completed-milestone audit is a prerequisite by default.
+The compact working layout is established. Further scopes include treatment, Workshop and Salvager mechanics, final storage capacity and starting stock, production materials and lighting, optional progression and information, and representative economy evaluation. Each follows separately agreed work.
 
 <a id="s_20_5_Optional_and_historical_feature"></a>
 
@@ -1429,7 +1416,7 @@ Keep the distinct scopes visible: retained mechanics; new score/continuous-time 
 | Condition / quantity / contamination / spoilage | Not newly authorized. Reassess separately; nightly contamination rules do not survive automatically. |
 | ADR cycle / survival mode | Parked history. A possible future mode is not a current release commitment. |
 | Named personnel, combat, exterior, free building | Remain outside the intended core; no promotion by omission. |
-| New code, publishing or scene remodeling | Not part of this document delivery. |
+| Future scene, art and systems work | The accepted footprint is the working baseline. Later source and design changes follow their own explicitly scoped work. |
 
 Basis: [H25 §§1–7,13–15]; [MVP §§13–17,19,21]; [PIV §11]; repository comparison at the cited reference; [WG].
 
@@ -1453,7 +1440,7 @@ Basis: [H25 §§1–7,13–15]; [MVP §§13–17,19,21]; [PIV §11]; repository 
 | Are poor states recoverable under ordinary rules? | Injuries, depleted stock, blocked output and congestion never remove every route to the goal; no adaptive rescue is needed. |
 | Does continuation preserve truth? | Ownership, live goal count, elapsed active time, pending crews and commitments survive without duplication or replay. |
 
-These are design-validation aims, not claimed test results or a new automated acceptance framework. Use the smallest meaningful experiment and preserve the difference between code checks, arithmetic, developer play and unfamiliar-player observations. Existing accepted mechanics need only relevant regression coverage when changed.
+These are design-validation aims for representative later tests. The compact-layout evidence covers paired transit, loaded circulation and same-build continuation. Assess final capacity, handling, progression and pacing through integrated play after the relevant systems are available. Existing accepted mechanics need relevant regression checks when they change. [LAY15]
 
 <a id="s_21_2_Priority_open_decisions"></a>
 
@@ -1466,13 +1453,13 @@ These are design-validation aims, not claimed test results or a new automated ac
 | O-03 · Destination lifecycle | Resolved for this slice. Exactly two distinct affinities, away-only exclusivity and explicit availability feedback. See §§9.5–9.7. |
 | O-04 · Return and personnel handover | Admission or empty return releases healthy originals and recruits and begins natural recovery for injured originals. See §§11.6 and 13. |
 | O-05 · Acquisition model | The first iteration uses the active catalogue, 23 ordinary Bulk per original and five provisional provision effects. See §§9.7 and 10. |
-| O-06 · Requests and Ops | Kitchen standing rules are in §12. The approved reserve, power tiers and freight start wait are in §14. Release tuning, final location and future upgrades remain open. |
+| O-06 · Requests and Ops | Kitchen standing rules are in §12. The reserve, power tiers and freight start wait are in §14. The working Fuel cabinet remains in Receiving. Release tuning, future upgrades and any Fuel/Energy relocation remain open. |
 | O-07 · Medical | Natural recovery and the minimal view are specified in §13. Treatment timing, cost and assignment remain open. |
 | O-08 · Population and upgrades | The iteration retains eight starting Ready and adds Morale recruitment. Release population pacing, progression, Workshop and Training remain open. |
 | O-09 · Conversion and release | Rations and Salvage category and target rules, yields, capacity and output blocking remain open, along with Salvager access and restrictions. Incinerator rules are confirmed in §15.3. |
-| O-10 · Space and handling | Review bunker scale and routes before final economy and pacing balance. Exact geometry, station locations, storage capacity and final ergonomics remain open. |
-| O-11 · Interface and time edges | The local build keeps Kitchen, preparation, the Incinerator and Fuel live. Escape closes service layers before pause. Journal scope, final interface and platform timing edges remain open. |
-| O-12 · Delivery/continuation | The developer accepted schema 11 for the local Expedition iteration. Confirmed New Run retains incompatible snapshots. Published main uses schema 10. Release durability remains open. |
+| O-10 · Space and handling | The four-gallery footprint, shortened branches and current station positions are accepted. Final storage capacity, starting stock and furnishing ergonomics remain open. Use the measured layout baseline for later economy and pacing evaluation. [VDD12, LAY15] |
+| O-11 · Interface and time edges | Kitchen, preparation, Incinerator and Fuel are live. Escape closes service layers before pause. Journal scope, final interface and platform timing edges remain open. |
+| O-12 · Delivery/continuation | Schema 11 is current. Confirmed New Run retains incompatible snapshots. The accepted layout verifies same-build Continue in the moved Ops room. Release durability and old-layout migration remain separate. [LAY15] |
 
 The register deliberately leaves unanswered mechanics open. The project already has enough direction to produce this successor; these are boundaries for later design/implementation, not reasons to recreate the old behavior or repeatedly ask the developer to approve the pivot.
 
@@ -1498,7 +1485,7 @@ The collection pivot supersedes midnight handling, mortality, next-day Medical, 
 
 The developer approved v0.16, continuous Kitchen and Fuel, and the 13 November Expedition outcomes and provisioning design. The lane, recovery, carry and Kitchen values are provisional. Treatment and later progression remain open.
 
-On 14 November 2026 the developer promoted the local Expedition iteration after more than two hours of play. The bounded acceptance covers real acquisition, affinities, provision effects, personnel outcomes, natural recovery and schema 11 with provisional settings. Publication is pending.
+On 14 November 2026 the developer promoted the schema-11 Expedition iteration after more than two hours of play. Publication and the bounded acceptance are recorded in the 14 November handoff. The 15 November compact-layout milestone adds the accepted working footprint and routes. The dated close-out record carries its source and remote verification. [LAY15]
 
 Basis: [PIV §§10–12]; [ADD]; [MVP §§16,21.4]; [H25 §§2–3,10,14]; [WG].
 
@@ -1573,7 +1560,7 @@ This map records where the substantive predecessor topics went. “Retained” p
 | **v0.15 topic** | **v0.16 treatment** |
 | --- | --- |
 | §§1–3 · Vision, pillars, loop | Rewritten around collection victory and physical hoarding; retains personal organization and unseen-world constraints. ADR rationale preserved historically. |
-| §4 · World and geography | Retains setting, safe haven, three boundaries, inferred community and current spatial context. Exact layout is open to deliberate compression. |
+| §4 · World and geography | The approval-time map retains setting, safe haven, three boundaries and inferred community. Its open compression question was resolved for the working footprint on 15 November. See current §4.3. |
 | §5 · Days, night, failure and save | Replaces day-count survival with simultaneous stock goal and active-time record. Removes daily transitions; retains coherent continuation without offline advance. |
 | §6 · Items | Retains Utility/Bulk/Footprint/identity; unifies Item Category and removes alternate uses. Optional contamination/condition remain reassessment candidates. |
 | §7 · Storage | Carries forward detailed zoning, Front, pose, deterministic stacks, clearance, input, labels and ergonomics. Fixed starting installation favored over expansion. |
@@ -1617,11 +1604,11 @@ Continuous durability, rendering/content debt, licensed-local asset boundaries a
 
 ### D.1 Primary approved conversation records
 
-**[PIV]** Sorting_Apocalypse_Design_Pivot_Record_05Nov2026.docx and its generated .md, supplied in Sorting_Apocalypse_Design_Records_05Nov2026.zip. Read as the reviewed/approved reconstructed edition, not claimed byte-identical to the earlier inaccessible files. Its internal status distinctions remain.
+[PIV] Sorting_Apocalypse_Design_Pivot_Record_05Nov2026.docx and its generated .md, supplied in Sorting_Apocalypse_Design_Records_05Nov2026.zip. Read as the reviewed/approved reconstructed edition, not claimed byte-identical to the earlier inaccessible files. Its internal status distinctions remain.
 
-**[ADR]** Sorting_Apocalypse_ADR_Design_Archive_05Nov2026.docx and generated .md in the same approved ZIP. Historical/parked survival design; retained for reasoning and deliberate future reuse.
+[ADR] Sorting_Apocalypse_ADR_Design_Archive_05Nov2026.docx and generated .md in the same approved ZIP. Historical/parked survival design; retained for reasoning and deliberate future reuse.
 
-**[ADD]** The developer’s subsequent approval message accompanying this editioning request: no team tabs, no prebuilt teams, one current 1–4-Ready-scavenger crew equipped and assigned before dispatch, with consecutive crews possible in the same panel session. This is the latest authoritative panel direction; no fabricated message timestamp is assigned.
+[ADD] The developer’s subsequent approval message accompanying this editioning request: no team tabs, no prebuilt teams, one current 1–4-Ready-scavenger crew equipped and assigned before dispatch, with consecutive crews possible in the same panel session. This is the latest authoritative panel direction; no fabricated message timestamp is assigned.
 
 The approved archive and pivot records were read from their mounted files and retain their original 5 November 2026 dates. This successor was compiled 6 November 2026. [APP] is the developer’s subsequent message approving the draft documents in their entirety and authorizing approval-state and entry-point updates for manual repository provision; that update is dated 7 November 2026. Approval is not a claim of remote publication.
 
@@ -1631,13 +1618,17 @@ The approved archive and pivot records were read from their mounted files and re
 
 Published repository reference: Navandis/Sorting-apoc-PROTOTYPE at c9f9417a97cf65ef416c58189ca1f741b6a90406. A read-only GitHub comparison of that commit to main returned identical during preparation. No Windows runtime, saves, dirty-file state or ignored assets were inspected.
 
-[[G15] Preliminary GDD v0.15 — published generated reading copy](https://github.com/Navandis/Sorting-apoc-PROTOTYPE/blob/c9f9417a97cf65ef416c58189ca1f741b6a90406/docs/readable/Sorting_Apocalypse_Preliminary_GDD_v0.15.md)
+[\[G15\] Preliminary GDD v0.15 — published generated reading copy](https://github.com/Navandis/Sorting-apoc-PROTOTYPE/blob/c9f9417a97cf65ef416c58189ca1f741b6a90406/docs/readable/Sorting_Apocalypse_Preliminary_GDD_v0.15.md)
 
-[[MVP] Systems MVP Foundation Design and Progress v0.5 — generated companion](https://github.com/Navandis/Sorting-apoc-PROTOTYPE/blob/c9f9417a97cf65ef416c58189ca1f741b6a90406/docs/Sorting_Apocalypse_Systems_MVP_Foundation_Design_and_Progress_v0.5.md)
+[\[MVP\] Systems MVP Foundation Design and Progress v0.5 — generated companion](https://github.com/Navandis/Sorting-apoc-PROTOTYPE/blob/c9f9417a97cf65ef416c58189ca1f741b6a90406/docs/Sorting_Apocalypse_Systems_MVP_Foundation_Design_and_Progress_v0.5.md)
 
-[[VDD] Visual Design Direction v0.11 — generated reading copy](https://github.com/Navandis/Sorting-apoc-PROTOTYPE/blob/c9f9417a97cf65ef416c58189ca1f741b6a90406/docs/readable/Sorting_Apocalypse_Visual_Design_Direction_v0.11.md)
+[\[VDD\] Visual Design Direction v0.11 — generated reading copy](https://github.com/Navandis/Sorting-apoc-PROTOTYPE/blob/c9f9417a97cf65ef416c58189ca1f741b6a90406/docs/readable/Sorting_Apocalypse_Visual_Design_Direction_v0.11.md)
 
-[[WG] Proportionate AI Working Guidelines](https://github.com/Navandis/Sorting-apoc-PROTOTYPE/blob/c9f9417a97cf65ef416c58189ca1f741b6a90406/docs/AI_WORKING_GUIDELINES.md)
+[VDD12] [Visual Design Direction v0.12 — current DOCX spatial master](../Sorting_Apocalypse_Visual_Design_Direction_v0.12.docx)
+
+[LAY15] [Layout acceptance and publication](../design_history/2026-11-15-compact-bunker-layout-acceptance-and-publication.md) · [Technical result](../testing/2026-11-14-compact-bunker-layout-result.md)
+
+[\[WG\] Proportionate AI Working Guidelines](https://github.com/Navandis/Sorting-apoc-PROTOTYPE/blob/c9f9417a97cf65ef416c58189ca1f741b6a90406/docs/AI_WORKING_GUIDELINES.md)
 
 [Published current-state record — historical implementation routing](https://github.com/Navandis/Sorting-apoc-PROTOTYPE/blob/c9f9417a97cf65ef416c58189ca1f741b6a90406/docs/CURRENT_STATE.md)
 
@@ -1645,9 +1636,9 @@ Published repository reference: Navandis/Sorting-apoc-PROTOTYPE at c9f9417a97cf6
 
 The v0.15 reading copy has blob SHA 8c613e9cd50c3afaeef601e03bffa2b78062faae. Its generated-master convention is retained. This task read the published companion for substantive predecessor design; it did not modify or claim to re-render the remote v0.15 DOCX.
 
-**[H25] Sorting_Apocalypse_Bootstrap_Prompt_Next_Session_25Oct2026.md is the historical attached handoff used for publication disposition, milestone boundaries, source roles, preservation and local-versus-remote distinctions. Its ADR-next instruction is superseded. The accompanying Sorting_Apocalypse_Bootstrap_Prompt_Next_Session_07Nov2026.md is the current conversation handoff.**
+[H25] Sorting_Apocalypse_Bootstrap_Prompt_Next_Session_25Oct2026.md is the historical attached handoff used for publication disposition, milestone boundaries, source roles, preservation and local-versus-remote distinctions. Its ADR-next instruction is superseded. The accompanying Sorting_Apocalypse_Bootstrap_Prompt_Next_Session_07Nov2026.md is the current conversation handoff.
 
-Historical Prototype Findings v0.14 and VDD v0.11 are also available as project DOCX files. Their dated references to earlier gameplay authority remain historical; they do not supersede the new developer decisions. No outside game-design research is used to fill missing mechanics.
+Historical Prototype Findings v0.14 and VDD v0.11 remain available as project DOCX files. Their dated statements retain their original authority. VDD v0.12 owns the accepted current layout. [VDD12]
 
 <a id="s_D_3_Source_sensitive_unresolved_word"></a>
 

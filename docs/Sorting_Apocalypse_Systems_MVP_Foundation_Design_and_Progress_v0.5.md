@@ -1,6 +1,6 @@
 # Sorting Apocalypse Systems MVP Foundation Design and Progress v0.5
 
-> Generated text/table extract from the same-stem DOCX master. DOCX is authoritative; edit it first and regenerate this companion. Content order and tables are retained; pagination, running headers/footers and visual styling are omitted. Dated compatibility update: 7 November 2026, against approved GDD v0.16. Implemented M1–M4 evidence remains distinct from target design.
+> Generated text and tables from the same-stem DOCX master. 15 November 2026 progress update. Edit the DOCX first. Pagination, running headers/footers and visual styling are omitted.
 
 SORTING APOCALYPSE
 
@@ -10,7 +10,7 @@ SYSTEMS MVP<br>FOUNDATION DESIGN<br>& PROGRESS
 
 Persistent supplies. Competing obligations.<br>One continuing storeroom.
 
-Version 0.5  \|  7 November 2026  \|  GDD v0.16 compatibility update
+Version 0.5  \|  15 November 2026  \|  Accepted compact layout progress update
 
 ACCEPTED FOUNDATION / CURRENT TARGET<br>The collection foundation uses continuous active time, live stored Utility and ordinary continuation. The M1–M4 records describe the published predecessor. [G16]
 
@@ -19,7 +19,7 @@ This is the MVP-phase counterpart to Prototype Findings: a living foundation-des
 | Authority | Role |
 | --- | --- |
 | GDD v0.16 | Approved intended collection game, retained rules and explicit open mechanics. [G16] |
-| VDD v0.11 | World/material/art and current spatial evidence; dated compatibility update preserves unresolved layout choices. [VDD-C07] |
+| VDD v0.12 | World, materials, art and the accepted spatial baseline. [VDD12] |
 | This master v0.5 | Current collection implementation, published M1–M4 evidence and future boundaries. |
 | Prototype Findings v0.14 | Preserved historical prototype record; unresolved obligations remain live here. |
 
@@ -29,13 +29,15 @@ The Continuous Run and Collection Goal Foundation is HUMAN-ACCEPTED / PUBLISHED 
 
 ORIENTATION
 
+<a id="mvp_1"></a>
+
 ## Reader’s guide & current position
 
 The Expedition-to-Storage Loop is HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE. The daily clock, timed requests, prebuilt Dispatch and midnight rules belong to the published M1–M4 evidence. [G16, §§12.3, 15]
 
 ### How to use this master
 
-Read §§1–3 for authority and the changed target; §§4–12 for retained contracts beside local pivot notes; §§13–17 for accepted stages, evidence and current boundaries. Sections 18 and 20 preserve dated M2/M3 designs. Section 19 retains continuity principles without future midnight triggers; §21 preserves M4 findings and revises their forward implications.
+Read §§1–3 for authority and the target, §§4–12 for retained contracts and §§13–17 for accepted progress and evidence. Section 15.7 records the completed layout. Sections 18 and 20 preserve dated M2/M3 designs, §19 retains continuity principles and §21 keeps M4 evidence and its forward implications.
 
 | Section | Contents | Ref |
 | --- | --- | --- |
@@ -56,13 +58,17 @@ CONFIRMED DESIGN records an approved behavior. NOT IMPLEMENTED means no implemen
 
 Source keys retain edition meaning: [GDD] refers to historical GDD v0.15; [G16] is approved current GDD v0.16. Older section numbers are not remapped silently. Dated evidence and pending statements describe their original checkpoints. An unresolved replacement stays open, rather than inheriting the survival rule. See Appendix B.
 
+The 15 November compact layout is human-accepted. The accepted scene has four galleries, the shortened branches and unchanged qualifying storage. Section 15.7 records measured evidence and publication routing. [LAY15]
+
 DOCUMENT GOVERNANCE
+
+<a id="mvp_2"></a>
 
 ## 1. Authority & prototype retirement
 
 ### 1.1 Active document set
 
-This master records implementation, progress and evidence. GDD v0.16 governs intended gameplay and VDD v0.11 carries visual and spatial direction. Historical [GDD] references mean v0.15. Section 15.6 records the local collection foundation acceptance. [D10; G16; VDD-C07]
+This master records implementation, progress and evidence. GDD v0.16 governs intended gameplay and VDD v0.12 owns current visual and spatial direction. Historical [GDD] references mean v0.15. [VDD-C07] retains the 7 November compatibility meaning. Section 15.7 records the accepted compact layout. [D10, G16, VDD12, LAY15]
 
 Prototype Findings v0.14, prior editions and dated records retain the provenance of promoted foundations, rejected experiments and known debt. An omission does not silently resolve work, but an explicit GDD v0.16 supersession can change a future gameplay obligation. Section 16 retains all CF identifiers and distinguishes those cases.
 
@@ -82,13 +88,15 @@ Basis: [D10] developer document-role decision; [H14 §§1, 3–4, 15]; [ER14 §�
 
 CURRENT CHECKPOINT
 
+<a id="mvp_3"></a>
+
 ## 2. Starting baseline & evidence
 
 ### 2.1 Published reference
 
 Initial 25 October local-closure preflight verified accepted 844d0d4adaa5a2d601f04954bb61ad7a5c316589 on codex/m4-expedition-loadout. Local main and read-only live remote query both show 3bb69a906e921f06dd12c61bd4d8f33db35d6fce, before the top-up/M4. M1–M3 remain PUBLISHED/CLOSED. These are evidence anchors, never reset targets; M4 was publish pending at that checkpoint; later publication follows PUB25. [HP25]
 
-The asset-equipped checkout is reported at D:\Godot Projects\Sorting-apoc-PROTOTYPE, repository Navandis/Sorting-apoc-PROTOTYPE. The 25 October preflight inspected its Git/documents and hashed saves; those are dated observations. This compatibility edit uses attached documents and prior published evidence, not a new Windows, Godot, save or sidecar inspection.
+The asset-equipped authoring checkout is D:/Godot Projects/Sorting-apoc-PROTOTYPE on main. The 15 November close-out checked the accepted Slice 9 postimages there. The 25 October preflight remains a dated check of the earlier Git state, documents and saves. [LAY15]
 
 Later disposition: M1–M4 were published and closed at c9f9417a97cf65ef416c58189ca1f741b6a90406. The preceding documentation pass inspected the approved GDD publication at c2540b73ffa75e0114bfe221477f666c32b99a04. These are evidence anchors, not reset targets or a fresh remote-head claim. [PUB-M4; COMP07]
 
@@ -104,11 +112,13 @@ Later disposition: M1–M4 were published and closed at c9f9417a97cf65ef416c5818
 
 The repair record preserves the initial 16 selected suites and six abort canaries, the independent REVISE for two manual-address cases, and the seven-suite/unchanged-probe follow-up with one focused review. The developer subsequently reported correct behavior in all manually tested scenarios and promoted the repairs. These are attributed prior results, not new executions or an exhaustive runtime guarantee. [CR15]
 
-M1 established the historical Medical request and continuation. M2 added the daily clock, scheduling and midnight. M3 added Kitchen and Meal Coverage. M4 added fixture loadouts and schema 4. The local continuous run now includes real Expedition outcomes. Release durability remains open.
+M1 established the historical Medical request and continuation. M2 added the daily clock, scheduling and midnight. M3 added Kitchen and Meal Coverage. M4 added fixture loadouts and schema 4. Current main uses the continuous schema-11 run with real Expedition outcomes and the accepted compact layout. Release durability remains open. [LAY15]
 
 Basis: [PF §§24–30, 34]; [CR15]; [R15].
 
 SCOPE & VALIDATION
+
+<a id="mvp_4"></a>
 
 ## 3. First integrated MVP target
 
@@ -138,6 +148,8 @@ Basis: [D01–D03]; [GDD §§3, 6, 8, 10, 20–21]; [H14 §5].
 
 DESIGN CONTRACT
 
+<a id="mvp_5"></a>
+
 ## 4. Shared foundation ownership
 
 Retain shared requirement, request-state, transaction, result and persistence owners rather than three disposable consumers. These responsibilities do not prescribe new classes, autoloads or APIs. The inherited RequestDefinition / OutcomeProfile separation survives the pivot; its actual effects now need GDD v0.16 definitions. [D02; GDD §§8.4,18.4; G16 §8.4]
@@ -163,6 +175,8 @@ A controlled requirement of 12 Medical Utility can later be replaced by patient-
 Basis: [D02]; [GDD §§6, 8.4, 18.3–18.4]; [SRC15]; [ER14 §12].
 
 IRREVERSIBLE OWNERSHIP
+
+<a id="mvp_6"></a>
 
 ## 5. Submission & request accounting
 
@@ -196,6 +210,8 @@ Basis: [GDD §§3.1, 4.8, 6.3, 7.1–7.2, 8.2–8.4]; [D01–D03]; [ER-RESULT §
 
 6.1  SINGLE RUN CONTRACT
 
+<a id="mvp_7"></a>
+
 ## 6. Persistence & continuation
 
 | Requirement | Implemented M1–M4 obligation (not a future calendar requirement) |
@@ -209,7 +225,7 @@ Basis: [GDD §§3.1, 4.8, 6.3, 7.1–7.2, 8.2–8.4]; [D01–D03]; [ER-RESULT §
 
 ### 6.1.1 Deliberately excluded resilience work
 
-The human-promoted local Expedition build uses schema 11 through the collection save service at user://saves/collection/. It stores exact ordinary and bonus cargo, personnel outcomes, handover and natural recovery. Confirmed New Run retains incompatible snapshots, including schema 10 from main. Release durability remains CF-13. [G16 §§5.5,12–14,15.3,18.5]
+Published schema 11 uses the collection save service at user://saves/collection/. It stores exact ordinary and bonus cargo, personnel outcomes, handover and natural recovery with the live service and collection state. Confirmed New Run retains incompatible snapshots. Same-build Continue in the relocated Ops room passed. Release durability remains CF-13. [G16 §§5.5, 12–14, 15.3, 18.5, LAY15]
 
 At the accepted M1/initial M2 delivery level, unsaved actions may be lost after unexpected termination. Ordinary continuation must still preserve exact ownership, credit and gameplay time. Do not use this intentionally limited implementation to assess the full-game randomness principle. Exact audiovisual-frame recovery remains unnecessary. [D03, D05, D21]
 
@@ -224,6 +240,8 @@ One slot is one active continuation, not selectable timestamped archives. The ru
 Basis: [D03–D05, D08–D09]; [GDD §§5.3–5.6, 18.5].
 
 6.2  STATE THAT MUST SURVIVE
+
+<a id="mvp_8"></a>
 
 ## 6. Persistence & continuation
 
@@ -254,6 +272,8 @@ Basis: [D02–D05]; [GDD §§7, 11, 18.5]; [PF §§25.3–25.6, 34].
 
 6.3  RESTORE WITHOUT REPLAYING GAMEPLAY
 
+<a id="mvp_9"></a>
+
 ## 6. Persistence & continuation
 
 ### 6.3.1 New Run and Continue are different paths
@@ -279,6 +299,8 @@ M1 already preserves elapsed play and live subsystem phase progress before a cal
 Basis: [D02–D05, D08–D09]; [PF §§24.2, 25.4, 34.5]; [CR15]; [GDD §11].
 
 7.1  AUTHORITY AND SYNCHRONIZATION
+
+<a id="mvp_10"></a>
 
 ## 7. Gameplay time & presentation
 
@@ -309,6 +331,8 @@ Basis: [D05–D06, D09]; [GDD §§5.2–5.3, 11].
 
 7.2  RECEIVING CONTINUATION
 
+<a id="mvp_11"></a>
+
 ## 7. Gameplay time & presentation
 
 The approved time separation extends Receiving; it does not replace its ownership and interaction rules. There is one stationary bay/deck and permanent player barrier, with a moving shutter and four-cue travel illusion. Existing committed content, private surfaces and normal TAKE remain authoritative. [PF §34; D05]
@@ -335,6 +359,8 @@ LOCAL COLLECTION: exact waiting cargo persists upstream of one active plus two d
 Basis: [PF §§27, 34.2, 34.5–34.7]; [GDD §11]; [D04–D05].
 
 SCHEDULING CONTRACT
+
+<a id="mvp_12"></a>
 
 ## 8. Day clock & midnight auto-save
 
@@ -365,6 +391,8 @@ Basis: [D04–D06, D09]; [GDD §§3.3, 5.2–5.5, 11.5]; [PF §34.5].
 
 PLAYER-FACING FOUNDATION
 
+<a id="mvp_13"></a>
+
 ## 9. Minimal menu, pause & clock HUD
 
 ### 9.1 Barebones launch and ESC menu
@@ -393,6 +421,8 @@ LOCAL COLLECTION: active time and eight live stored totals appear in the baselin
 Basis: [D06, D08–D09]; [GDD §§5.3, 16.2]; [VDD §§7, 14].
 
 CONTROLLED INPUTS, PERSISTENT RUN
+
+<a id="mvp_14"></a>
 
 ## 10. Authored multi-day scenarios
 
@@ -423,6 +453,8 @@ Basis: [D01–D03, D07]; [GDD §§6, 8, 11, 19]; [H14 §5].
 
 SHARED COLLECTION, SIMPLE RESULTS
 
+<a id="mvp_15"></a>
+
 ## 11. Medical & Kitchen consumers
 
 ### 11.1 Medical first
@@ -448,6 +480,8 @@ The reuse test is concrete: adding Kitchen should configure another destination 
 Basis: [D01–D04]; [GDD §§4.8, 8, 12–13]; [VDD §§16, 18–19].
 
 THE THIRD COMPETING DEMAND
+
+<a id="mvp_16"></a>
 
 ## 12. Expedition Loadout consumer
 
@@ -477,6 +511,8 @@ Basis: [D01–D02]; [GDD §§6.3, 8.4, 9–10, 19–21].
 
 DESIGN ORDER, NOT EXECUTION AUTHORIZATION
 
+<a id="mvp_17"></a>
+
 ## 13. Delivery stages & dependencies
 
 M1–M5 are historical tracking identifiers, not new Receiving stages or a review hierarchy. M1–M4 are published and closed in their recorded scopes. M5’s original combined-scenario purpose remains visible below, but cannot proceed unchanged against the superseded survival plan. New work requires an agreed brief. [WG; G16 §20.4]
@@ -500,6 +536,8 @@ M1–M4 and the collection foundation establish correct operation in their accep
 Basis: [D01–D09]; [CR15]; [GDD §20.2]; [WG; ER14 §§11–12].
 
 14.1  PERSISTENCE AND TRANSACTIONS
+
+<a id="mvp_18"></a>
 
 ## 14. Acceptance & evidence plan
 
@@ -526,6 +564,8 @@ Basis: [D02–D05, D08–D09]; [GDD §§7, 11, 18.5]; [ER14 §§7–8, 12].
 
 14.2  TIME, PAUSE AND COMBINED PLAY
 
+<a id="mvp_19"></a>
+
 ## 14. Acceptance & evidence plan
 
 | Check | Expected observation |
@@ -549,20 +589,22 @@ Basis: [D02–D09]; [WG]; [ER14 §§7–12]; [CR15].
 
 LIVING EVIDENCE HOME
 
+<a id="mvp_20"></a>
+
 ## 15. Active MVP progress record
 
-This section replaces Prototype Findings as the active phase tracker. Dated evidence remains external to the master when detailed, and current status is updated here. The table is populated only with established evidence; it contains no projected test result. [D10]
+This section is the active phase tracker. Dated technical records retain their original results. Section 15.7 records the accepted compact layout and ties it to the current spatial master and publication record. [D10, LAY15]
 
 | Workstream | Recorded status | Evidence / next boundary |
 | --- | --- | --- |
 | Prototype foundations | HUMAN-PROMOTED in recorded scopes | PF retained as historical evidence; no new acceptance task. |
 | Pre-MVP review + repairs | HUMAN-PROMOTED / PUBLISHED | R-01–R-03 accepted; bounded R-04 subsequently repaired within M1. |
-| MVP foundation contracts | Accepted foundations and scoped collection successor | M1–M4, the collection foundation and the prior expedition loop are published and accepted. The developer promoted and closed the schema-11 Expedition outcomes iteration locally on 14 November 2026. Publication is pending. See §15.6 for prior evidence. |
+| MVP foundation contracts | Accepted foundations and scoped collection successor | M1–M4, the collection foundation and the expedition loop are accepted and published. The 14 November Expedition outcome publication established schema 11. See §§15.6–15.7. |
 | M1 persistent Medical | HUMAN-PROMOTED / PUBLISHED / CLOSED | 6c56edf → a7b764e → 36d527d; independent ACCEPT and successful human play. |
 | M2 clock / midnight / HUD | HUMAN-PROMOTED / PUBLISHED / CLOSED | 524edf1 → c7bbf44 → 3465098; independent ACCEPT and final human PASS (§15.2). |
 | M3 Kitchen | HUMAN-PROMOTED / PUBLISHED / CLOSED | 7d3d6c7 → a0f066a; independent ACCEPT decisions, native retests and subsequent publication retained (§15.3). |
 | M4 Expedition Loadout | HUMAN-PROMOTED / PUBLISHED / CLOSED | Accepted code 844d0d4; final independent ACCEPT and human acceptance; published M4 anchor c9f9417. [PUB-M4; §15.5] |
-| Incinerator and Deliberate Disposal | HUMAN-PROMOTED / CLOSED IN ITS BOUNDED SCOPE — LOCAL; PUBLICATION PENDING. | 8 November 2026. The developer accepted single-item disposal. Technical result and developer acceptance in [docs/testing/2026-11-08-incinerator-deliberate-disposal-result.md](testing/2026-11-08-incinerator-deliberate-disposal-result.md). |
+| Incinerator and Deliberate Disposal | HUMAN-PROMOTED / PUBLISHED / CLOSED | 8 November 2026 developer acceptance of single-item disposal. The technical result retains its original checkpoints. The compact layout preserves the relocated live machine. [LAY15] |
 | M5 combined allocation | NOT RUN / NOT AUTHORIZED HERE | Historical combined-scenario proposal; future scope must be reconsidered for the collection objective. No run or new milestone. |
 
 ### 15.1 Accepted M1 implementation and publication
@@ -607,11 +649,23 @@ LATER PUBLICATION DISPOSITION: M4 is HUMAN-PROMOTED / PUBLISHED / CLOSED at c9f9
 
 ### 15.6 Continuous Run and Collection Goal Foundation
 
-7 November 2026. HUMAN-ACCEPTED / CLOSED IN ITS BOUNDED SCOPE. Local checkpoint, publication pending. The developer accepted collection, storage, Receiving and ordinary continuation. Technical and human evidence: [docs/testing/2026-11-07-continuous-run-collection-goal-result.md](testing/2026-11-07-continuous-run-collection-goal-result.md).
+7 November 2026. HUMAN-ACCEPTED / CLOSED IN ITS BOUNDED SCOPE. Local checkpoint, publication pending. The developer accepted collection, storage, Receiving and ordinary continuation. Technical and human evidence: docs/testing/2026-11-07-continuous-run-collection-goal-result.md.
 
 Basis: [D10]; [PF §1]; [CR15; R15]; [ER14 §§8, 10–12].
 
+### 15.7 Accepted compact bunker layout — 15 November 2026
+
+The developer confirmed an issue-free Slice 9 walkthrough and accepted the major rebuild after all nine slices. The working scene has four galleries, shorter Medical and Kitchen approaches, a direct south Incinerator and a straight 3 m east link to Bunker Ops. The existing Receiving Fuel cabinet, qualifying storage, run identity and live service rules are preserved.
+
+The verified candidate retained four installations, 16 surfaces, 3,463 cells, one independent ladder, four Sorting tables and 44 seed hosts and registrations. Recorded results include 13 navigation routes, seven focused controller checks, startup and capture contracts, initialized census and native schema-11 Continue. The geometry suite exited 1 for the two inherited launch-UID and 46-host assertions. The close-out verified the same accepted source files and reused those results. [LAY15]
+
+VDD v0.12 owns the footprint and rationale. The publication record carries remote verification. Final materials, lighting, furnishings, stock and balance, and remaining service mechanics retain separate scope.
+
+[VDD v0.12](Sorting_Apocalypse_Visual_Design_Direction_v0.12.docx) · [Layout acceptance and publication](design_history/2026-11-15-compact-bunker-layout-acceptance-and-publication.md) · [Technical result](testing/2026-11-14-compact-bunker-layout-result.md)
+
 16.1  DEPENDENCIES REACHED BY THIS FOUNDATION
+
+<a id="mvp_21"></a>
 
 ## 16. Carry-forward register
 
@@ -624,13 +678,15 @@ All CF-01–CF-24 identifiers and sources are retained. Ordinary restoration, ru
 | CF-03<br>CR15 R-03; D02–D03 | Process-local debug namespace uniqueness does not alone ensure new delivery identity after application restart. | Run-scoped identity and saved allocator accepted in M1 and preserved through M2–M4. Future occurrences must retain uniqueness and no replay. |
 | CF-04<br>ER-RESULT §4; CR15 | Carrying mutation signals can precede transfer success/rollback and cannot authorize irreversible credit. | M1 receipt-before-notification transaction accepted. Preserve the enclosing success boundary for all later consumers. |
 | CF-05<br>PF §34.5; GDD §11 | Retain upstream exact-content/admission fairness. The 1+2 deposited limit and midnight event describe the accepted build, not target abandonment policy. | The continuous foundation preserves exact upstream waiting cargo and oldest-first admission. The expedition test adds healthy crew release at active or deposited admission and releases the destination at return. The M2–M4 cutoff remains historical. |
-| CF-06<br>PF §§19.4, 24.3; VDD §§16, 18–19 | Playable service spaces and routes are approved, not fully furnished request interfaces or final gameplay travel balance. | M1–M4 interfaces, clock and schema-4 continuation are accepted. Target outcomes/monitoring remain future; route compression is OPEN, not scene authorization. [G16 §§4.3,20] |
+| CF-06<br>PF §§19.4, 24.3; VDD §§16, 18–19 | Playable service spaces and routes are approved, not fully furnished request interfaces or final gameplay travel balance. | The working service routes and compact four-gallery footprint are accepted. Furnishing, presentation and final travel balance retain their own evidence and scope. [G16 §§4.3, 20, VDD12, LAY15] |
 
 A dependency entering scope is not retroactive demotion of the accepted prototype. The next handoff must identify exactly which owning paths it changes and the focused evidence required. [WG; ER14 §11]
 
 Basis: [PF §§16, 19, 24–25, 34]; [GDD §§7, 11, 18.5]; [VDD §§16, 18–19]; [ER-RESULT; CR15]; [D02–D05, D10].
 
 16.2  KNOWN TECHNICAL AND CONTENT DEBT
+
+<a id="mvp_22"></a>
 
 ## 16. Carry-forward register
 
@@ -649,23 +705,27 @@ Basis: [PF §§3–4, 7, 12–14, 24–26, 33–34]; [ER-RESULT §§2–5].
 
 16.3  CONFIRMED LATER SYSTEMS AND OPEN FEATURES
 
+<a id="mvp_23"></a>
+
 ## 16. Carry-forward register
 
 | ID / source | Work retained or explicitly superseded | Relationship to this foundation |
 | --- | --- | --- |
-| CF-13<br>GDD §§5.6, 18.5; PF §§16.5, 34.7 | Full-game continuous game-state preservation, one advancing continuation per run, journal/rotating recovery and an ideal 2–3-real-second loss target. [D21] | The local candidate uses schema 11 with confirmed New Run. Published main uses schema 10. Save cadence and first-victory attempts retain their prototype roles. Release durability remains open. |
+| CF-13<br>GDD §§5.6, 18.5; PF §§16.5, 34.7 | Full-game continuous game-state preservation, one advancing continuation per run, journal/rotating recovery and an ideal 2–3-real-second loss target. [D21] | Current main uses schema 11 with confirmed New Run and retained incompatible snapshots. The compact layout passed same-build Continue in Ops. Prototype cadence and first-victory recording remain in use. Release durability remains open. [LAY15] |
 | CF-14<br>GDD §§9–10; PF §34.7 | Actual asynchronous expeditions, one player-assembled 1–4-person crew at a time, affinities, return outcomes and workforce availability. [G16 §§9–11] | The 14 November local promotion covers real acquisition, all five provision effects, injuries and recruitment. The installed settings remain provisional. |
 | CF-15<br>GDD §§12–13; PF §34.7 | Medical owns natural recovery. Light and Severe patients return to Ready after 120 and 300 active seconds from handover. Treatment remains future design. [G16 §13] | The local promotion covers natural recovery and the read-only patient view. Treatment remains future work. Daily triage, Meal Coverage rolls and fatal complications remain historical. |
 | CF-16<br>GDD §§12, 14–15, 20; PF §§19.4, 20.4 | Bounded Kitchen/Ops pressure; optional physical Rations; salvage/incineration and Workshop redesign. [G16 §§8,12,14–15] | Incinerator disposal is accepted. Continuous Kitchen is human-promoted, published on main and closed in its bounded scope. The bounded Fuel reserve slice is human-promoted, published on main and closed. Its Salvager and Workshop effects are power permissions for future systems. Rations and one-time purchases remain future work. |
 | CF-17<br>PF §§19.4–19.5, 20.4; GDD §§7.5–7.6 | Labels, specialist storage, conditional furniture movement, starting stock and production capacity remain open. All storage initially available is favored. [G16 §§7,15] | Preserve supported surface names and authored installs. No chosen shelf roster, automatic unlocking or scene changes; qualifying storage must be defined explicitly. |
 | CF-18<br>PF §§12.3, 14.5, 24–26 | Manual under-base insertion, multi-column packing, crouch and expanded display-rotation UX. | Remain separate deferred/open work. Ordinary shelves still reject automatic mixed stacking. Two-state packing stays intact. |
-| CF-19<br>GDD §§19–21; PF §§20.4, 34 | Substantial live collection, equal targets with uneven sinks, completion time, workload/travel and final cargo/fixture bounds. [G16 §§19–21] | M4 values remain frozen test inputs. The 14 November playtest prioritizes bunker scale and route review. Final economy and pacing evaluation follows layout work and the remaining services. The 2,000 Utility and roughly 80% occupancy examples remain illustrative. |
+| CF-19<br>GDD §§19–21; PF §§20.4, 34 | Substantial live collection, equal targets with uneven sinks, completion time, workload/travel and final cargo/fixture bounds. [G16 §§19–21] | M4 values remain frozen test inputs. The 14 November playtest prioritized reducing repeated transit. The nine-slice layout is accepted. Final economy, pacing, capacity and starting stock remain open. The 2,000 Utility and roughly 80% occupancy values remain illustrative. [LAY15] |
 
 Condition/quantity, contamination and spoilage require post-pivot reassessment, not automatic nightly implementation. Contextual PA and the non-mechanical dog remain optional candidates. Contamination is not added to the MVP. No general climbing, free building, exterior or combat scope is promoted. [G16 §§6.6,17,20.5]
 
 Basis: [PF §§7, 12–16, 19–20, 24–26, 34]; [GDD §§2, 5–15, 18–21]; [D01–D03, D10].
 
 16.4  AUTHORING LIMITS AND HISTORICAL SUPERSESSIONS
+
+<a id="mvp_24"></a>
 
 ## 16. Carry-forward register
 
@@ -693,7 +753,7 @@ M1–M4 remain published and closed at c9f9417. On 10 November 2026 the develope
 
 | Decision | Implemented baseline / distinct target boundary |
 | --- | --- |
-| Save foundation | Collection uses schema 8 through the existing codec, snapshot and service. Confirmed New Run retains older incompatible snapshots. Release durability remains CF-13. |
+| Save foundation | Schema 11 uses the existing save service. Confirmed New Run retains incompatible snapshots. Same-build Continue in Ops passed. [CF-13, LAY15] |
 | Player / storage recovery | M1 accepted: exact pose, ladder height, held selection and committed storage. No base fallback required. |
 | Restore / lifecycle | Continue restores exact physical identities and placement, Incinerator warning and receipts, Kitchen schedule, grace and receipts, committed cargo, active time and first victory. |
 | Menu / controls | Kitchen, Dispatch and the Incinerator stay live. The run pauses in ESC menu, launch, offline, zoning and loading contexts. Ordinary focus loss stays active. Short silent Windows suspension remains a timing limit. |
@@ -702,10 +762,12 @@ M1–M4 remain published and closed at c9f9417. On 10 November 2026 the develope
 | Clock / ordering | One active clock drives expedition returns, lift boundaries and Kitchen. Kitchen settles expiry before a scheduled addition and player input. Calendar ordering is M4 evidence. |
 | Lift / midnight | Full outbound retirement precedes FIFO promotion and oldest-first admission. Nonempty returns release personnel on admission. Empty returns release them at return. |
 | Report / auto-save | The HUD shows eight live totals and first completion. Auto-save attempts follow 60 active seconds or first victory. The night report belongs to M4. |
-| Scenario / compatibility | Player-dispatched cargo and the six-Utility goal stay provisional. Incompatible schema 7, 6 and 5 files and the separate M4 slot are preserved. |
+| Scenario / compatibility | The earlier fixture used player-dispatched cargo and a six-Utility goal. Incompatible schema 7, 6 and 5 files and the separate M4 slot are preserved. |
 | Full-game randomness | Settled principle (§19): continuous Ironman state, early natural commitment, narrow residual loss; incidental uncommitted rerolls tolerated. |
 | M3 Kitchen / meals | M4: meals 10/14/18, 3h windows, 48/40, 60/48, 60/48. No outcome effects. The separate continuous Kitchen scope follows GDD §12. |
 | M3 cargo / Utility | M3 fixture is dated history. M4: 167 locked rows; 85-item start; four 16-item deliveries/day for three days. No final-economy claim. |
+
+Schema 11 includes real Expedition acquisition, natural recovery, Continuous Kitchen, Fuel and deliberate disposal. See §15.7 for the accepted layout. [LAY15]
 
 Historical M4 test values remain player 20, per-member 28 and lanes 12/12/6/12/12. The expedition fixture retains 20 player Bulk, uses 8 Bulk per crew member and targets 6 Utility per category. These are test settings. [G16 §§9–10, 20]
 
@@ -1008,7 +1070,7 @@ Known runtime/content debt: CF-07 material-null diagnostics, Windows certificate
 
 The developer’s normal-speed M4 observations motivate separate economy, awareness and travel investigation; the detailed findings below preserve their confounders. They are not new M4 defects or closure gates. [PLAY-U1; ACCEPT-U1]
 
-Baseline awareness, live goal progress and operational overview remain required; exact layout is open. Optional information upgrades cannot gate essentials. Persistent-slot Training, one-day benefit timing and ADR are historical/reassessment material, not current work orders. Daily timekeeping and next-day reports are not target requirements. [G16 §§15.6,16,19.8; ADR]
+Baseline awareness, live goal progress and an operational overview remain required. VDD v0.12 owns the accepted layout. Optional information upgrades preserve access to essential feedback. Persistent-slot Training, day reports and ADR retain their historical scopes. [G16 §§15.6, 16, 19.8, ADR, VDD12]
 
 ### 21.4.1 Mechanical acceptance and opening workload
 
@@ -1026,7 +1088,7 @@ Local lights/audio do not reliably announce obligations across the wing: sightli
 
 After heavy provisioning and meals, nearly empty shelves left little stock worth organizing or expanding storage for. The pictured Day 1 report shows all four teams full and meals at 100%, but Medical 0/24/expired. It is not evidence that every consumer was fulfilled; separate tests keep their own scope. Stable organized zones are a reward, while insufficient resident inventory is an economy finding. [PLAY-U1]
 
-The M4 run had quiet afternoon/evening periods and long travel through a nearly empty wing. Separate travel, search, reading and handling remain useful observations, not a reason to add chores. Under continuous play, route compression remains an OPEN investigation—not an approved remodel. The former GDD §19.6 pacing response is parked. [PLAY-U1; G16 §§4.3,19; ADR]
+The M4 run recorded quiet periods and long travel in the earlier wing. Later extended Expedition playtesting motivated the accepted compact layout. Keep travel distinct from search, reading, handling and organization in future evaluations. The former GDD §19.6 pacing response remains parked. [PLAY-U1, G16 §§4.3, 19, ADR, LAY15]
 
 ### 21.4.3 Item calibration and future concepts
 
@@ -1044,7 +1106,7 @@ Stage A/B improvements are technically accepted and human-observed; residual fir
 
 HP25 — Developer request dated 25 October 2026, “Sorting Apocalypse — M4 conditional human-promotion and documentation refresh”, expressly authorizes bounded human promotion/local closure after final ACCEPT and prohibits Git publication/M5. Retained request and QA/preservation: docs/testing/m4-human-promotion-documentation-2026-10-25.md.
 
-M4 — docs/testing/m4-expedition-loadout-validation-2026-10-24.md; implementation d81d48a236e78fd40f44b27d562bcdae32d219ae; completion f5eae9b89f208033c34013a15b178ce9745c7c8a; technical record 3a57177c14f60aa3bd29508dff60bb64ab3ed3a9; frozen [docs/design_history/survival-era/m4/](design_history/survival-era/m4/README.md). Read through the dated human-promotion addendum.
+M4 — docs/testing/m4-expedition-loadout-validation-2026-10-24.md; implementation d81d48a236e78fd40f44b27d562bcdae32d219ae; completion f5eae9b89f208033c34013a15b178ce9745c7c8a; technical record 3a57177c14f60aa3bd29508dff60bb64ab3ed3a9; frozen docs/design_history/survival-era/m4/. Read through the dated human-promotion addendum.
 
 M4A — docs/testing/m4-startup-catalogue-reuse-validation-2026-10-25.md; a0d4a8adb56b907587103ec65f5edf917c04ff2a. M4B — docs/testing/m4-geometry-measurement-reuse-validation-2026-10-25.md; 7ebc571d1877dce0462424bdded5978651b6caf9. Measurements retain original attribution.
 
@@ -1059,6 +1121,8 @@ Executor tests, independent checks and human observation remain separate. The or
 15–17 OCTOBER 2026 / DATED DESIGN DECISIONS
 
 Historical register: dated M4/overfill/calibration and calendar decisions below preserve their original context. Section 21 retains M4 evidence; GDD v0.16 now governs target gameplay. The original [GDD] citations still mean v0.15.
+
+<a id="mvp_26"></a>
 
 ## Appendix A. Conversation decisions
 
@@ -1109,6 +1173,8 @@ D21’s continuity/commitment principle survives without a target midnight trigg
 
 B.1  DOCUMENT AND EVIDENCE REGISTER
 
+<a id="mvp_27"></a>
+
 ## Appendix B. Sources & maintenance
 
 References are project artifacts, not external research. Section citations identify the applicable passage within a master. Reported automated and human results remain attributed; this document does not convert them into new tests.
@@ -1143,25 +1209,21 @@ B.1 CONTINUED / SOURCE AND EDITION PROVENANCE
 
 ### Current published M1 baseline
 
-```text
 36d527d9333a7fedafb803a262ab4a84059381db
-```
 
 ### Accepted final M1 code checkpoint
 
-```text
 a7b764ed4a8eddca25a409fa48646f1056abb9dc
-```
 
 ### Original M1 implementation
 
-```text
 6c56edff05b5e803ad9f17fc5f3b8467e7800f4e
-```
 
 Original v0.5 derives from v0.4 DOCX. This same-edition compatibility pass edits the attached original, then regenerates Markdown. QA: docs/testing/m4-human-promotion-documentation-2026-10-25.md. Gameplay evidence is attributed; no developer save access.
 
 B.2  PINNED STATE AND FUTURE EDITING
+
+<a id="mvp_28"></a>
 
 ## Appendix B. Sources & maintenance
 
@@ -1169,33 +1231,23 @@ B.2  PINNED STATE AND FUTURE EDITING
 
 Earlier pre-MVP publication checkpoint (historical)
 
-```text
 800fd41a3073208c146af93dc2b9c84118c5f6f5
-```
 
 Earlier storage manual-target follow-up (historical)
 
-```text
 7005de7385f155dc0235bfdc685d858a5d7421c6
-```
 
 Initial R-02 / R-01 / R-03 correction
 
-```text
 a2afab1519448864146c5f0d1f8c03dc4a21856c
-```
 
 Earlier three-master / pre-review base
 
-```text
 bf26b5320653cd452e99592ed176d0163d9e286f
-```
 
 Receiving Stage C published closure
 
-```text
 bb6683d28539ff743bc480a9d5d68c4ef3d0ce87
-```
 
 ### Relevant dated records retained through PF
 
@@ -1207,11 +1259,11 @@ The established storage, ladder, Receiving and EAF validation records remain ref
 
 Future MVP progress updates modify this master and regenerate its readable extract. Do not append MVP milestones to Prototype Findings. Keep the old master and its mirrors unchanged unless a separately authorized historical correction is needed; any such correction must not rewrite the original evidence state. [D10]
 
-v0.2–v0.4 preserve earlier checkpoints; original v0.5 records M4 local closure. M4 subsequently published at c9f9417. This dated v0.5 update reconciles future direction to approved GDD v0.16 without changing runtime or past evidence. Manual provision remains with the developer; no PR, push or M5 is performed. [PUB-M4; COMP07]
+v0.2–v0.4 preserve earlier checkpoints. Original v0.5 records M4 local closure, and M4 subsequently published at c9f9417. The 7 November compatibility update aligned future direction to approved GDD v0.16 and left that task's runtime and publication state unchanged. [PUB-M4; COMP07]
 
 ### Edition 0.5 acceptance boundary
 
-v0.5 retains M1–M4 implementation/evidence, dated M2/M3 designs and CF-01–CF-24. GDD v0.16 owns the collection target and explicit open replacements. No new goal, team lifecycle, request/recovery mechanic, layout, content balance or durable-save implementation is claimed. Old survival targets are historical, not unfinished launch requirements. [G16; COMP07]
+The 7 November compatibility update retained M1–M4 implementation and evidence, dated M2/M3 designs and CF-01–CF-24. GDD v0.16 governs the collection target and open replacements. This earlier record covers document alignment. See §15.7 for the later accepted physical layout. [G16; COMP07; LAY15]
 
 B.3  7 NOVEMBER 2026 / COMPATIBILITY SOURCES
 
@@ -1232,3 +1284,11 @@ COMP07 — Developer request for targeted Systems MVP/VDD updates, followed by t
 Focused completion record: docs/testing/2026-11-07-mvp-vdd-compatibility-consistency.md. It records retained evidence, open mechanics, exact-content/Word–Markdown checks and their limits. The earlier VDD-only package remains a dated partial delivery; its missing-source limitation is resolved by this attachment.
 
 This update edits documents only. It does not inspect the asset-equipped checkout, run Godot, alter saves/scenes/catalogue data, repeat completed gameplay reviews or publish to the repository. Human approval of the GDD is not a fabricated approval of new implementation.
+
+### B.4 Current spatial sources — 15 November 2026
+
+VDD12 — [Visual Design Direction v0.12 — current spatial master](Sorting_Apocalypse_Visual_Design_Direction_v0.12.docx)
+
+LAY15 — [Layout acceptance and publication](design_history/2026-11-15-compact-bunker-layout-acceptance-and-publication.md) · [Technical result](testing/2026-11-14-compact-bunker-layout-result.md)
+
+The [VDD] and [VDD-C07] labels above describe their original October and 7 November material. Earlier M1–M4 and CF sources retain their dated scopes. The accepted nine-slice layout is the working baseline for later work.

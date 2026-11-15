@@ -456,7 +456,7 @@ disabled = true
 disabled = true
 
 [node name="ReceivingStructuralShell" parent="Environment" index="1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.25, 0, 0)
 
 [node name="Fixture" parent="Environment/ReceivingLighting/GeneralFixtures/G1" index="0"]
 transform = Transform3D(1.65, 0, 0, 0, 1.65, 0, 0, 0, 1.65, -34.4, 4.137, -1.2)
@@ -507,7 +507,7 @@ transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, -32.
 transform = Transform3D(0.8480481, 0.44939703, -0.28081444, 0, 0.52991927, 0.8480481, 0.52991927, -0.7191856, 0.44939703, 0, 0, 0)
 
 [node name="West" parent="Environment/FillLights" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33, 2.7, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.25, 2.7, 0)
 
 [node name="Sorting" parent="Environment/FillLights" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 2.7, -1)
@@ -519,37 +519,31 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 2.8, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 2.8, 1)
 
 [node name="MedicalKitchen" parent="Environment/FillLights" index="4"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 2.7, -20)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 2.7, -21)
 
 [node name="MedicalTuning" parent="Environment/FillLights" index="5"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.3, 2.7, -26.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.3, 2.7, -18)
 
 [node name="Workshop" parent="Environment/FillLights" index="6"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 2.7, 21)
-
-[node name="Deeper" parent="Environment/FillLights" index="7"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 2.7, 0)
-
-[node name="East" parent="Environment/FillLights" index="8"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56, 2.7, -5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 2.7, 14.1833)
 
 [node name="FunctionalFixtures" parent="." unique_id=1215529146 instance=ExtResource("5_fixtures")]
 collection_storage_units = [NodePath("SM_MetalShelves_GalleryA_West"), NodePath("SM_MetalShelves_GalleryB_North"), NodePath("SM_ventilated_locker_GalleryC_West"), NodePath("ModularRack_GalleryB_Initial")]
 
 [node name="SM_MetalShelves_GalleryA_West" parent="FunctionalFixtures" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.28, 0, -3.816217)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.28, 0, -2.616217)
 
 [node name="StorageUnitOrientation" parent="FunctionalFixtures/SM_MetalShelves_GalleryA_West" index="2"]
 storage_orientation_quarter_turns = 1
 
 [node name="SM_MetalShelves_GalleryB_North" parent="FunctionalFixtures" index="1"]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 14, 0, -13.78)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 12, 0, -9.98)
 
 [node name="SM_ventilated_locker_GalleryC_West" parent="FunctionalFixtures" index="2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.35, 0, 9)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.35, 0, 7.8)
 
 [node name="ModularRack_GalleryB_Initial" parent="FunctionalFixtures" unique_id=887284394 instance=ExtResource("41_modular_rack")]
-transform = Transform3D(-4.3711385e-08, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, -4.3711385e-08, 0.6007464, 0, -8.520063)
+transform = Transform3D(-4.3711385e-08, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, -4.3711385e-08, -1.3992536, 0, -5.91605)
 rack_length_m = 4.04
 rack_depth_m = 0.82
 frame_height_m = 3.0
@@ -589,7 +583,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 shape = SubResource("BoxShape3D_du0t1")
 
 [node name="FixedLadder_GalleryB_Initial" parent="FunctionalFixtures" unique_id=806369216 instance=ExtResource("42_ladder")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 1.043639, 0, -8.665108)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -0.956361, 0, -6.061095)
 ladder_height_m = 2.92
 
 [node name="DevelopmentSetup" parent="." unique_id=1793037051 instance=ExtResource("6_development")]
@@ -598,52 +592,52 @@ ladder_height_m = 2.92
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.418461, 0, 3.8245745)
 
 [node name="SM_Table_SeedEast" parent="DevelopmentSetup/Tables" index="1"]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -6.0698276, 0, -3.3858976)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -7, 0, -0.65)
 
 [node name="SM_Table_Palette_Food" parent="DevelopmentSetup/Tables" index="2" unique_id=1187290099 instance=ExtResource("40_table")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.632651, 0, 3.9566329)
 
 [node name="SM_Table_Palette_Hydration" parent="DevelopmentSetup/Tables" index="3" unique_id=1322002631 instance=ExtResource("40_table")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.467356, 0, -3.9499993)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.48, 0, -1.28)
 
 [node name="CerealBox_A" parent="DevelopmentSetup/SeedItems" index="0"]
-transform = Transform3D(0.9848077, 0, 0.17364825, 0, 1, 0, -0.17364825, 0, 0.9848077, -12.459201, 0.96, 3.9438574)
+transform = Transform3D(0.9848077, 0, 0.17364825, 0, 1, 0, -0.17364825, 0, 0.9848077, -12.459201, 0.88390252, 3.9438574)
 
 [node name="CerealBox_B" parent="DevelopmentSetup/SeedItems" index="1"]
-transform = Transform3D(0.99254614, 0, -0.121869296, 0, 1, 0, 0.121869296, 0, 0.99254614, -12.2562895, 0.96, 3.7036588)
+transform = Transform3D(0.99254614, 0, -0.121869296, 0, 1, 0, 0.121869296, 0, 0.99254614, -12.2562895, 0.88390252, 3.7036588)
 
 [node name="CerealBox_2" parent="DevelopmentSetup/SeedItems" index="2"]
-transform = Transform3D(0.9961947, 0, 0.087155774, 0, 1, 0, -0.087155774, 0, 0.9961947, -12.369822, 0.96, 3.4810789)
+transform = Transform3D(0.9961947, 0, 0.087155774, 0, 1, 0, -0.087155774, 0, 0.9961947, -12.369822, 0.88390252, 3.4810789)
 
 [node name="SodaCan_A" parent="DevelopmentSetup/SeedItems" index="3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.233696, 0.96, 4.2606974)
 
 [node name="SodaCan_B" parent="DevelopmentSetup/SeedItems" index="4"]
-transform = Transform3D(0.9902681, 0, 0.13917276, 0, 1, 0, -0.13917276, 0, 0.9902681, -12.268541, 0.9747175, 4.0972023)
+transform = Transform3D(0.9902681, 0, 0.13917276, 0, 1, 0, -0.13917276, 0, 0.9902681, -12.268541, 0.95314041, 4.0972023)
 
 [node name="SodaCan_Classic" parent="DevelopmentSetup/SeedItems" index="5"]
 transform = Transform3D(0.99452186, 0, -0.1045287, 0, 1, 0, 0.1045287, 0, 0.99452186, -12.379867, 0.96, 4.2833576)
 
 [node name="MedKit_A" parent="DevelopmentSetup/SeedItems" index="6"]
-transform = Transform3D(0.9961947, 0, -0.087155774, 0, 1, 0, 0.087155774, 0, 0.9961947, -6.2618937, 0.96, -2.5071163)
+transform = Transform3D(0.9961947, 0, -0.087155774, 0, 1, 0, 0.087155774, 0, 0.9961947, -7.19206619, 0.93750706, 0.22878132)
 
 [node name="Visual" parent="DevelopmentSetup/SeedItems/MedKit_A" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15095615, 0, 0.1597426)
 
 [node name="MedKit_B" parent="DevelopmentSetup/SeedItems" index="7"]
-transform = Transform3D(0.99452186, 0, 0.1045287, 0, 1, 0, -0.1045287, 0, 0.99452186, -7.8864574, 0.96, 0.5578277)
+transform = Transform3D(0.99452186, 0, 0.1045287, 0, 1, 0, -0.1045287, 0, 0.99452186, -8.81662989, 0.93750706, 3.29372535)
 
 [node name="Visual" parent="DevelopmentSetup/SeedItems/MedKit_B" index="0"]
 transform = Transform3D(1.0000007, 0, -2.9802322e-08, 0, 1, 0, 2.9802322e-08, 0, 1.0000007, 1.8671675, 0, -4.6859646)
 
 [node name="Book" parent="DevelopmentSetup/SeedItems" index="8"]
-transform = Transform3D(0.9986295, 0, 0.05233598, 0, 1, 0, -0.05233598, 0, 0.9986295, -7.05, 0.96, 0.6990626)
+transform = Transform3D(0.9986295, 0, 0.05233598, 0, 1, 0, -0.05233598, 0, 0.9986295, -7.98017263, 0.90198055, 3.43496022)
 
 [node name="Visual" parent="DevelopmentSetup/SeedItems/Book" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6110072, 0, -3.525773)
 
 [node name="Book2" type="Node3D" parent="DevelopmentSetup/SeedItems" index="9" unique_id=1871088161]
-transform = Transform3D(0.9986295, 0, 0.05233598, 0, 1, 0, -0.05233598, 0, 0.9986295, -6.755756, 0.96, -2.5328867)
+transform = Transform3D(0.9986295, 0, 0.05233598, 0, 1, 0, -0.05233598, 0, 0.9986295, -7.68592834, 0.90198055, 0.20301089)
 script = ExtResource("5_8pqnk")
 item_id = &"loot_000030"
 
@@ -651,19 +645,19 @@ item_id = &"loot_000030"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.103542805, 0, -0.030592084)
 
 [node name="CDStack_A" parent="DevelopmentSetup/SeedItems" index="10"]
-transform = Transform3D(0.9781475, 0, 0.20791216, 0, 1, 0, -0.20791216, 0, 0.9781475, -8.93017, 0.96, 0.38125467)
+transform = Transform3D(0.9781475, 0, 0.20791216, 0, 1, 0, -0.20791216, 0, 0.9781475, -9.8603425, 0.88330003, 3.11715231)
 
 [node name="Visual" parent="DevelopmentSetup/SeedItems/CDStack_A" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9768715, 0, -3.018014)
 
 [node name="CDStack_B" parent="DevelopmentSetup/SeedItems" index="11"]
-transform = Transform3D(0.9876883, 0, -0.15643482, 0, 1, 0, 0.15643482, 0, 0.9876883, -7.8, 0.96, 0.7579181)
+transform = Transform3D(0.9876883, 0, -0.15643482, 0, 1, 0, 0.15643482, 0, 0.9876883, -8.73017263, 0.88330003, 3.49381576)
 
 [node name="Visual" parent="DevelopmentSetup/SeedItems/CDStack_B" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8207202, 0, -4.026299)
 
 [node name="CDStack_B2" type="Node3D" parent="DevelopmentSetup/SeedItems" index="12" unique_id=156528063]
-transform = Transform3D(0.9876883, 0, -0.15643482, 0, 1, 0, 0.15643482, 0, 0.9876883, -7.429105, 0.96, 0.79155064)
+transform = Transform3D(0.9876883, 0, -0.15643482, 0, 1, 0, 0.15643482, 0, 0.9876883, -8.35927725, 0.88330003, 3.52744827)
 script = ExtResource("5_8pqnk")
 item_id = &"loot_000031"
 
@@ -671,7 +665,7 @@ item_id = &"loot_000031"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49883223, 0, -3.770858)
 
 [node name="Hammer" parent="DevelopmentSetup/SeedItems" index="13"]
-transform = Transform3D(0.17364822, 0, 0.9848077, 0, 1, 0, -0.9848077, 0, 0.17364822, -7.1, 0.98, 0.95109963)
+transform = Transform3D(0.17364822, 0, 0.9848077, 0, 1, 0, -0.9848077, 0, 0.17364822, -8.03017235, 0.88086745, 3.68699727)
 
 [node name="Visual" parent="DevelopmentSetup/SeedItems/Hammer" index="0"]
 transform = Transform3D(1.0000006, 0, -4.4703484e-08, 0, 1, 0, 4.4703484e-08, 0, 1.0000006, 4.000502, 0, 0.39388704)
@@ -775,14 +769,14 @@ item_id = &"loot_000016"
 [node name="Visual" parent="DevelopmentSetup/SeedItems/Fuel_GasCanister" unique_id=474377810 instance=ExtResource("21_gas_canister")]
 
 [node name="Fuel_GasCylinder" type="Node3D" parent="DevelopmentSetup/SeedItems" index="28" unique_id=224695008]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.819045, 0.884, -3.946465)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.74921751, 0.884, -1.21056738)
 script = ExtResource("5_8pqnk")
 item_id = &"loot_000017"
 
 [node name="Visual" parent="DevelopmentSetup/SeedItems/Fuel_GasCylinder" unique_id=1229911730 instance=ExtResource("22_gas_cylinder")]
 
 [node name="Fuel_PropaneTank" type="Node3D" parent="DevelopmentSetup/SeedItems" index="29" unique_id=880024568]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.8072324, 0.884, -4.394009)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.73740482, 0.884, -1.65811148)
 script = ExtResource("5_8pqnk")
 item_id = &"loot_000018"
 
@@ -831,7 +825,7 @@ item_id = &"loot_000027"
 [node name="Visual" parent="DevelopmentSetup/SeedItems/Medical_CoughSyrup" unique_id=1325798666 instance=ExtResource("30_cough_syrup")]
 
 [node name="Morale_Ball" type="Node3D" parent="DevelopmentSetup/SeedItems" index="37" unique_id=1753027981]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.555429, 0.966, -3.957336)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.48560143, 0.966, -1.22143831)
 script = ExtResource("5_8pqnk")
 item_id = &"loot_000029"
 
@@ -845,52 +839,52 @@ item_id = &"loot_000032"
 [node name="Visual" parent="DevelopmentSetup/SeedItems/Protection_Armor" unique_id=1619344183 instance=ExtResource("32_armor")]
 
 [node name="Protection_Boots" type="Node3D" parent="DevelopmentSetup/SeedItems" index="39" unique_id=223773383]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.2271843, 0.906, -3.5450072)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.15735674, 0.906, -0.80910959)
 script = ExtResource("5_8pqnk")
 item_id = &"loot_000033"
 
 [node name="Visual" parent="DevelopmentSetup/SeedItems/Protection_Boots" unique_id=424500004 instance=ExtResource("33_boots")]
 
 [node name="Protection_HardHat" type="Node3D" parent="DevelopmentSetup/SeedItems" index="40" unique_id=325258629]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.6383324, 0.884, -3.7829018)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.56850481, 0.884, -1.04700413)
 script = ExtResource("5_8pqnk")
 item_id = &"loot_000035"
 
 [node name="Visual" parent="DevelopmentSetup/SeedItems/Protection_HardHat" unique_id=1276742245 instance=ExtResource("34_hardhat")]
 
 [node name="Weapons_AssaultRifle" type="Node3D" parent="DevelopmentSetup/SeedItems" index="41" unique_id=1289689092]
-transform = Transform3D(1.9106855e-15, 4.371139e-08, 1, 1, -4.371139e-08, 0, 4.371139e-08, 1, -4.371139e-08, -13.731061, 0.88505614, -3.4737303)
+transform = Transform3D(1.9106855e-15, 4.371139e-08, 1, 1, -4.371139e-08, 0, 4.371139e-08, 1, -4.371139e-08, -12.74370525, 0.92949214, -0.80373099)
 script = ExtResource("5_8pqnk")
 item_id = &"loot_000038"
 
 [node name="Visual" parent="DevelopmentSetup/SeedItems/Weapons_AssaultRifle" unique_id=1094076674 instance=ExtResource("35_rifle")]
 
 [node name="Weapons_Pistol" type="Node3D" parent="DevelopmentSetup/SeedItems" index="42" unique_id=292585516]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, -14.303766, 0.9029069, -3.3547742)
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, -13.31641052, 0.9029069, -0.6847749)
 script = ExtResource("5_8pqnk")
 item_id = &"loot_000039"
 
 [node name="Visual" parent="DevelopmentSetup/SeedItems/Weapons_Pistol" unique_id=36752917 instance=ExtResource("36_pistol")]
 
 [node name="Weapons_Shotgun" type="Node3D" parent="DevelopmentSetup/SeedItems" index="43" unique_id=166743235]
-transform = Transform3D(1.9106855e-15, 4.371139e-08, 1, 1, -4.371139e-08, 0, 4.371139e-08, 1, -4.371139e-08, -12.709701, 0.8782283, -3.6002066)
+transform = Transform3D(1.9106855e-15, 4.371139e-08, 1, 1, -4.371139e-08, 0, 4.371139e-08, 1, -4.371139e-08, -11.72234486, 0.90833357, -0.93020728)
 script = ExtResource("5_8pqnk")
 item_id = &"loot_000040"
 
 [node name="Visual" parent="DevelopmentSetup/SeedItems/Weapons_Shotgun" unique_id=17234926 instance=ExtResource("37_shotgun")]
 
 [node name="Weapons_Hammer3" type="Node3D" parent="DevelopmentSetup/SeedItems" index="44" unique_id=796654421]
-transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -12.475077, 0.91948134, -3.4409707)
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -11.48772095, 0.92970207, -0.77097133)
 script = ExtResource("5_8pqnk")
 item_id = &"loot_000041"
 
 [node name="Visual" parent="DevelopmentSetup/SeedItems/Weapons_Hammer3" unique_id=213957802 instance=ExtResource("38_hammer_3")]
 
 [node name="ReceivingRuntime" parent="." unique_id=1625899199 instance=ExtResource("44_receiving")]
-transform = Transform3D(-4.851964e-08, 0, 1, 0, 1.225, 0, -1.11, 0, -4.371139e-08, -37.41487, 0.82, 0)
+transform = Transform3D(-4.851964e-08, 0, 1, 0, 1.225, 0, -1.11, 0, -4.371139e-08, -30.66487, 0.82, 0)
 
 [node name="Player" parent="." unique_id=551360273 instance=ExtResource("3_player")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0.05, -2.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0.05, 1)
 receiving_interaction_distance = 3.4
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=836250621]
@@ -899,9 +893,9 @@ layer = 10
 [node name="CarriedItemsHUD" parent="HUD" unique_id=626635065 instance=ExtResource("4_hud")]
 
 [node name="ReceivingLiftInstallation" type="Node3D" parent="." unique_id=138998562]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.75, 0, 0)
 metadata/active_shutter = NodePath("SM_KB3D_NWD_ReuGarageDoorBlue_B")
-metadata/purpose = "Manual lift ensemble; +3 m X retrofit with authored descendant transforms preserved"
+metadata/purpose = "Manual lift ensemble; authored descendant transforms preserved"
 
 [node name="SM_KB3D_LAB_Electronics_G_Main" parent="ReceivingLiftInstallation" unique_id=532674465 instance=ExtResource("95_ti4b2")]
 transform = Transform3D(1.74, 0, 0, 0, 1.74, 0, 0, 0, 1.74, -38.861774, 1.8545858, -2.1938906)
@@ -1067,6 +1061,7 @@ material_override = SubResource("shaft_StandardMaterial3D_ub82l")
 mesh = SubResource("shaft_ArrayMesh_pw0i7")
 
 [node name="ReceivingSetDressing" type="Node3D" parent="." unique_id=71069160]
+position = Vector3(6.75, 0, 0)
 metadata/purpose = "Human-authored Receiving art; identity organization, editable in this scene"
 
 [node name="ReceivingDecals" type="Node3D" parent="ReceivingSetDressing" unique_id=1970938110]
@@ -1584,6 +1579,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00096345274, 0.43501136, 0
 shape = SubResource("Receiving_BlueBarrelMovement_Body")
 
 [node name="ReceivingLiftMonitor" type="Node3D" parent="." unique_id=1786126556]
+position = Vector3(6.75, 0, 0)
 
 [node name="SM_KB3D_CPP_PropTV_A" parent="ReceivingLiftMonitor" unique_id=1847863322 instance=ExtResource("151_kr55y")]
 transform = Transform3D(1.235, 0, 0, 0, 1.22, 0, 0, 0, 1.665, -36.277256, 2.0607827, -3.2622252)
@@ -1595,21 +1591,22 @@ surface_material_override/1 = SubResource("StandardMaterial3D_e78ty")
 [node name="PhosphorDisplay" parent="ReceivingLiftMonitor" unique_id=352976086 instance=ExtResource("154_crt_display")]
 
 [node name="SM_ChainLink_01" parent="." unique_id=28053962 instance=ExtResource("64_p6c26")]
-transform = Transform3D(1.12, 0, 0, 0, 1.12, 0, 0, 0, 1.12, -34.39905, 4.212658, -1.1961862)
+transform = Transform3D(1.12, 0, 0, 0, 1.12, 0, 0, 0, 1.12, -27.64905, 4.212658, -1.1961862)
 
 [node name="SM_ChainLink_02" parent="." unique_id=126623278 instance=ExtResource("64_p6c26")]
-transform = Transform3D(1.12, 0, 0, 0, 1.12, 0, 0, 0, 1.12, -30.30089, 4.210858, 1.1987157)
+transform = Transform3D(1.12, 0, 0, 0, 1.12, 0, 0, 0, 1.12, -23.55089, 4.210858, 1.1987157)
 
 [node name="SM_KB3D_WDC_PropLight_H_Glass" parent="." unique_id=635042247 instance=ExtResource("65_p6c26")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.628525, 3.6945462, -1.2137502)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.878525, 3.6945462, -1.2137502)
 
 [node name="SM_KB3D_WDC_PropLight_H_Glass2" parent="." unique_id=517906581 instance=ExtResource("65_p6c26")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.53431, 3.7066905, 1.165712)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.78431, 3.7066905, 1.165712)
 
 [node name="AuthoredWear" type="Node3D" parent="." unique_id=112169679]
 metadata/purpose = "Visual-only user wear; drag approved presets here and edit their instance roots"
 
 [node name="Receiving" type="Node3D" parent="AuthoredWear" unique_id=547755799]
+position = Vector3(6.75, 0, 0)
 
 [node name="OilStainSemlsbi" parent="AuthoredWear/Receiving" unique_id=1221535767 instance=ExtResource("158_5uhxw")]
 transform = Transform3D(0.4970189, -0.86773974, -3.7930107e-08, 0, -4.371139e-08, 1, -0.86773974, -0.4970189, -2.1725386e-08, -34.50549, 0, 3.103183)
@@ -1631,7 +1628,7 @@ _appearance_initialized = true
 metadata/purpose = "EXPERIMENTAL / NOT APPROVED: visual-only scalar mask auditions; hide this group independently"
 
 [node name="ExperimentalWipeMarksUh4Scioc" parent="ImperfectionExperiments" unique_id=1699741298 instance=ExtResource("163_uww01")]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -32.269, 0, 0)
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -25.519, 0, 0)
 preview_mode = 1
 width_m = 7.241
 height_m = 8.0
@@ -1640,7 +1637,7 @@ albedo_tint = Color(0, 0, 0, 1)
 mask_rotation_degrees = -79.38799999999998
 
 [node name="ExperimentalScratchedMetalVdekebbc" parent="ImperfectionExperiments" unique_id=880073489 instance=ExtResource("165_jn6lb")]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -32.351, 4.196, 0)
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -25.601, 4.196, 0)
 preview_mode = 1
 width_m = 7.371
 height_m = 8.0
@@ -1649,7 +1646,7 @@ albedo_tint = Color(0.14117648, 0.13725491, 0.10980392, 1)
 mask_rotation_degrees = -145.062
 
 [node name="ExperimentalScratchedMetalVdekebbc3" parent="ImperfectionExperiments" unique_id=1519673995 instance=ExtResource("165_jn6lb")]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -31.716, -0.001, 0)
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -24.966, -0.001, 0)
 visible = false
 preview_mode = 1
 width_m = 8.0
@@ -1659,7 +1656,7 @@ albedo_tint = Color(0, 0, 0, 1)
 mask_rotation_degrees = -330.389
 
 [node name="ExperimentalScratchedMetalVdekebbc2" parent="ImperfectionExperiments" unique_id=1082122763 instance=ExtResource("165_jn6lb")]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -31.716, -0.001, 0)
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -24.966, -0.001, 0)
 visible = false
 preview_mode = 1
 width_m = 8.0
@@ -1669,7 +1666,7 @@ albedo_tint = Color(0, 0, 0, 1)
 mask_rotation_degrees = -43.636000000000024
 
 [node name="ExperimentalGrungySurfaceSlnnecvc" parent="ImperfectionExperiments" unique_id=355911330 instance=ExtResource("166_du0t1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.4, 0.736, -3.851)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.65, 0.736, -3.851)
 preview_mode = 1
 width_m = 2.941
 height_m = 1.4509999999999998
@@ -1680,7 +1677,7 @@ scalar_contrast = 3.851
 scalar_bias = -0.33099999999999996
 
 [node name="ExperimentalGrungeTedwdiic2" parent="ImperfectionExperiments" unique_id=355078315 instance=ExtResource("163_vi167")]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -32.346817, -0.001, 0.04)
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -25.596817, -0.001, 0.04)
 preview_mode = 1
 width_m = 7.381
 height_m = 8.0
@@ -1691,7 +1688,7 @@ scalar_contrast = 0.74
 scalar_bias = -0.251
 
 [node name="ExperimentalGrungeTedwdiic" parent="ImperfectionExperiments" unique_id=2139516478 instance=ExtResource("163_vi167")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.4036, 2.2662299, -3.8515189)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.6536, 2.2662299, -3.8515189)
 preview_mode = 1
 width_m = 2.951
 height_m = 1.4509999999999998
@@ -1702,7 +1699,7 @@ scalar_contrast = 0.8119999999999999
 scalar_bias = -0.43899999999999995
 
 [node name="ExperimentalDustUh4Rdfvc" parent="ImperfectionExperiments" unique_id=1630362063 instance=ExtResource("165_5kgru")]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -32.334, -0.001, 0.086)
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -25.584, -0.001, 0.086)
 preview_mode = 1
 width_m = 7.301
 height_m = 8.0
@@ -1711,7 +1708,7 @@ albedo_tint = Color(0.06892107, 0.06719954, 0.028370675, 1)
 mask_rotation_degrees = -50.60500000000002
 
 [node name="ExperimentalDustUh4Qbeic" parent="ImperfectionExperiments" unique_id=545813966 instance=ExtResource("166_5uhxw")]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -32.282085, -0.0014449283, 0.13710093)
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -25.532085, -0.0014449283, 0.13710093)
 preview_mode = 1
 width_m = 7.2010000000000005
 height_m = 8.0
@@ -1722,7 +1719,7 @@ scalar_contrast = 1.147
 scalar_bias = 0.4870000000000001
 
 [node name="ExperimentalStainsUltwabqc" parent="ImperfectionExperiments" unique_id=596583891 instance=ExtResource("167_yjnqw")]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -29.706356, -0.0014449283, 2.516941)
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -22.956356, -0.0014449283, 2.516941)
 preview_mode = 1
 opacity_multiplier = 0.729
 albedo_tint = Color(0.0125709735, 0.02220979, 0.00045543347, 1)
@@ -1731,7 +1728,7 @@ scalar_contrast = 1.3210000000000002
 scalar_bias = -0.113
 
 [node name="ExperimentalDustUh4Qbflc" parent="ImperfectionExperiments" unique_id=1489149067 instance=ExtResource("168_y27sh")]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -32.29818, -0.001, 0)
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -25.54818, -0.001, 0)
 preview_mode = 1
 width_m = 7.231000000000001
 height_m = 8.0

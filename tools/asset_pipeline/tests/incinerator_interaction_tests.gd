@@ -19,8 +19,17 @@ func _run() -> void:
 		return
 
 	var station: StaticBody3D = wing.get_node(MachinePath)
-	player.global_position = Vector3(32.6, 0.02, 13.3)
-	player.camera.look_at(Vector3(station.global_position.x, player.camera.global_position.y, 13.3))
+	var west_wall: StaticBody3D = wing.get_node("Environment/Greybox/Districts/Incinerator/IncineratorPocketWest/StaticBody3D")
+	player.global_position = Vector3(west_wall.global_position.x - 0.40, 0.02, station.global_position.z - 0.20)
+	player.camera.look_at(Vector3(station.global_position.x, player.camera.global_position.y, player.global_position.z))
+	await physics_frame
+	var eye: Vector3 = player.camera.global_position
+	var reach: Vector3 = eye - player.camera.global_basis.z.normalized() * player.storage_interaction_distance
+	var space: PhysicsDirectSpaceState3D = player.get_world_3d().direct_space_state
+	var ray := PhysicsRayQueryParameters3D.create(eye, reach, station.collision_layer, [player.get_rid()])
+	check(space.intersect_ray(ray).get("collider") == west_wall, "the in-range Incinerator ray first hits the pocket west wall")
+	ray.exclude = [player.get_rid(), west_wall.get_rid()]
+	check(space.intersect_ray(ray).get("collider") == station, "the same ray reaches the machine when only the intended wall is excluded")
 	await open_station()
 	check(not panel.is_open(), "the authored west wall blocks Incinerator access")
 	var front: Marker3D = wing.get_node("Environment/Greybox/Anchors/IncineratorFront")
