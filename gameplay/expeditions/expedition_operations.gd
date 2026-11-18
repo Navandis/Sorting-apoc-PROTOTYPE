@@ -32,6 +32,8 @@ var _away_by_destination: Dictionary = {}
 var _active: Dictionary = {}
 var _away_cargo: Dictionary = {}
 var _spent_ids: Dictionary = {}
+var _medical_receipts: Array = []
+var _treatment_active := false
 var _recent_handovers: Array[String] = []
 
 func has_spent_item(item_id: String) -> bool:
@@ -263,20 +265,70 @@ func _on_admitted(id: String, batch_id: String) -> void:
 func _complete(id: String, at: float) -> void:
 	var journey: Dictionary = journeys[id]
 	var totals := Outcomes.summarize(journey.originals)
-	for index in journey.originals.size():
-		var health: String = journey.originals[index].health
-		if health != Outcomes.HEALTHY:
-			medical.admit(id, index, health, at)
+	medical.admit_injured(id, journey.originals, at)
 	ready_count += totals.healthy + totals.recruits
 	journey.status = COMPLETE
 	journey.handover_at = at
 	_active.erase(id)
 	_remember_handover(id)
 
-func settle_recovery() -> bool:
-	var recovered := medical.settle_due(_clock.elapsed)
+func settle_recovery(at: float) -> bool:
+	var recovered := medical.settle_due(at)
 	ready_count += recovered
 	return recovered > 0
+
+func preview_treatment(item: ItemInstance) -> Dictionary:
+	return _preview_treatment(item, _clock.elapsed)
+
+func _preview_treatment(item: ItemInstance, at: float) -> Dictionary:
+	if medical.active_count() == 0:
+		return {"ok": false, "reason": "No patients need treatment."}
+	if item == null:
+		return {"ok": false, "reason": "Select a carried item."}
+	var raw := Medical.treatment_utility(item)
+	if raw <= 0:
+		return {"ok": false, "reason": "Select a Medical item with Utility."}
+	if item.definition.item_id.is_empty() or item.instance_id.is_empty() or _item_is_spent(item.instance_id):
+		return {"ok": false, "reason": "This item is unavailable."}
+	var plan := medical.treatment_plan(at, raw * Medical.SECONDS_PER_UTILITY)
+	if plan.applied <= 0.0:
+		return {"ok": false, "reason": "No patients need treatment."}
+	plan.ok = true
+	plan.raw = raw
+	return plan
+
+func treat_selected(carry: CarriedItems, expected: ItemInstance, has_access: Callable, at: float) -> Dictionary:
+	if _treatment_active or not is_instance_valid(carry):
+		return {"ok": false, "reason": "Treatment is unavailable."}
+	_treatment_active = true
+	var quote := {}
+	var accepted := carry.commit_selected_consumption(expected,
+		func(): _commit_treatment(expected, quote, at),
+		func():
+			if not has_access.is_valid() or not bool(has_access.call()):
+				return false
+			var matches := 0
+			for item: RefCounted in carry.get_items():
+				if item is ItemInstance and item.instance_id == expected.instance_id:
+					matches += 1
+			if matches != 1:
+				return false
+			quote.assign(_preview_treatment(expected, at))
+			return quote.ok)
+	if accepted:
+		changed.emit()
+	_treatment_active = false
+	if not accepted:
+		return {"ok": false, "reason": quote.get("reason", "The original selection or Medical frontage is unavailable.")}
+	return quote
+
+func _commit_treatment(item: ItemInstance, quote: Dictionary, at: float) -> void:
+	_medical_receipts.append({"item_id": item.instance_id, "definition_id": String(item.definition.item_id),
+		"contaminated": item.contaminated, "raw": quote.raw, "applied": quote.applied,
+		"wasted": quote.wasted, "at": at})
+	_spent_ids[item.instance_id] = true
+	medical.apply_treatment(quote)
+	settle_recovery(at)
 
 func _on_invalidated(id: String, batch_id: String, reason: String) -> void:
 	if error.is_empty() and _active.has(id):
@@ -297,6 +349,7 @@ func _remember_handover(id: String) -> void:
 static func config_signature() -> Dictionary:
 	var signature := Config.signature()
 	signature.natural_recovery = [Medical.LIGHT_SECONDS, Medical.SEVERE_SECONDS]
+	signature.treatment_seconds_per_utility = Medical.SECONDS_PER_UTILITY
 	return signature
 
 func _edited() -> void:
@@ -308,7 +361,7 @@ func capture_state() -> Dictionary:
 	for id: String in _away_cargo:
 		cargo[id] = _away_cargo[id].to_snapshot()
 	return {"config": config_signature(), "ready": ready_count, "rng_state": rng.state,
-		"medical": medical.capture_state(),
+		"medical": medical.capture_state(), "medical_receipts": _medical_receipts.duplicate(true),
 		"draft": {"members": members, "affinities": affinities.duplicate(), "loadout": loadout.capture_state()},
 		"journeys": journeys.duplicate(true), "away_cargo": cargo}
 
@@ -316,6 +369,8 @@ func restore_state(state: Dictionary) -> void:
 	ready_count = state.ready
 	rng.state = state.rng_state
 	medical.restore_state(state.medical)
+	_medical_receipts = state.medical_receipts.duplicate(true)
+	_index_receipts(_medical_receipts)
 	members = state.draft.members
 	affinities.assign(state.draft.affinities)
 	loadout = Loadout.new(members)

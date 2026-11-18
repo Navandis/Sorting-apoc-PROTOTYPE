@@ -1,6 +1,6 @@
 # Sorting Apocalypse Systems MVP Foundation Design and Progress v0.5
 
-> Generated text and tables from the same-stem DOCX master. 15 November 2026 progress update. Edit the DOCX first. Pagination, running headers/footers and visual styling are omitted.
+> Generated text and tables from the same-stem DOCX master. 18 November 2026 Medical acceptance update. Edit the DOCX first. Pagination, running headers/footers and visual styling are omitted.
 
 SORTING APOCALYPSE
 
@@ -37,7 +37,7 @@ The Expedition-to-Storage Loop is HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOU
 
 ### How to use this master
 
-Read §§1–3 for authority and the target, §§4–12 for retained contracts and §§13–17 for accepted progress and evidence. Section 15.7 records the completed layout. Sections 18 and 20 preserve dated M2/M3 designs, §19 retains continuity principles and §21 keeps M4 evidence and its forward implications.
+Read §§1–3 for authority and the target, §§4–12 for retained contracts and §§13–17 for accepted progress and evidence. Sections 15.7–15.8 record acceptance of the layout and reactive Medical treatment. Sections 18 and 20 preserve dated M2/M3 designs, §19 retains continuity principles and §21 keeps M4 evidence and its forward implications.
 
 | Section | Contents | Ref |
 | --- | --- | --- |
@@ -112,7 +112,7 @@ Later disposition: M1–M4 were published and closed at c9f9417a97cf65ef416c5818
 
 The repair record preserves the initial 16 selected suites and six abort canaries, the independent REVISE for two manual-address cases, and the seven-suite/unchanged-probe follow-up with one focused review. The developer subsequently reported correct behavior in all manually tested scenarios and promoted the repairs. These are attributed prior results, not new executions or an exhaustive runtime guarantee. [CR15]
 
-M1 established the historical Medical request and continuation. M2 added the daily clock, scheduling and midnight. M3 added Kitchen and Meal Coverage. M4 added fixture loadouts and schema 4. Current main uses the continuous schema-11 run with real Expedition outcomes and the accepted compact layout. Release durability remains open. [LAY15]
+M1 established the historical Medical request and continuation. M2 added the daily clock, scheduling and midnight. M3 added Kitchen and Meal Coverage. M4 added fixture loadouts and schema 4. The accepted schema-12 Medical build uses real Expedition outcomes and the accepted compact layout. Release durability remains open. [LAY15]
 
 Basis: [PF §§24–30, 34]; [CR15]; [R15].
 
@@ -126,7 +126,7 @@ FOUNDATION PURPOSE (M1–M4): operate the same storeroom across repeated days an
 
 | Consumer | Utility lanes | Competition introduced |
 | --- | --- | --- |
-| Medical | Medical | Medical owns natural recovery of Light and Severe patients at handover. Medical goods retain their collection and affinity roles. Treatment remains future design. |
+| Medical | Medical | Light and Severe patients recover from handover. Each accepted Medical item reduces current deadlines at 10 seconds per Utility, provisionally. Collection and affinity uses remain available. [MED18] |
 | Kitchen | Food, Hydration | The local candidate uses cumulative Food and Hydration demand capped at 105 Utility. The maximum carry loss is 35% of 22 Bulk. Partial credit restores capacity proportionally and clearing both lanes restores sprint. |
 | Expedition Loadout | Food, Hydration, Protection, Weapons, Morale | The 13 November Expedition design uses Food, Hydration, Protection, Weapons and Morale. Food adds bonus cargo outside 23 ordinary Bulk per original. The other lanes affect journey time, injury risk, Utility/Bulk preference and recruitment respectively. |
 
@@ -225,7 +225,7 @@ Basis: [GDD §§3.1, 4.8, 6.3, 7.1–7.2, 8.2–8.4]; [D01–D03]; [ER-RESULT §
 
 ### 6.1.1 Deliberately excluded resilience work
 
-Published schema 11 uses the collection save service at user://saves/collection/. It stores exact ordinary and bonus cargo, personnel outcomes, handover and natural recovery with the live service and collection state. Confirmed New Run retains incompatible snapshots. Same-build Continue in the relocated Ops room passed. Release durability remains CF-13. [G16 §§5.5, 12–14, 15.3, 18.5, LAY15]
+Medical establishes schema 12 at user://saves/collection/. Ordered treatment receipts preserve spent items and allow Continue to reconstruct Medical deadlines and Ready availability from handover. Confirmed New Run keeps incompatible snapshots. Release durability remains CF-13. [G16 §§5.5, 12–14, 15.3, 18.5, MED18]
 
 At the accepted M1/initial M2 delivery level, unsaved actions may be lost after unexpected termination. Ordinary continuation must still preserve exact ownership, credit and gameplay time. Do not use this intentionally limited implementation to assess the full-game randomness principle. Exact audiovisual-frame recovery remains unnecessary. [D03, D05, D21]
 
@@ -461,7 +461,7 @@ SHARED COLLECTION, SIMPLE RESULTS
 
 Accepted M1 uses MedicalInterface with one initially open target-12 request and no deadline. F opens/closes the centered panel; distinct E submits one selected item, using contextual Medical Utility. Full fulfillment closes the panel and hides both action cues; the result remains saved but cannot be reopened at the station. M2 replaces indefinite activation with timed occurrences and report history. [M1; D16; M2 §4]
 
-No patients, treatment stages, Meal-related treatment rolls or mortality were implemented by M1–M4. GDD v0.16 now favors slower natural recovery, accelerated by treatment, without a terminal dead end. Injury states, allocation and timings remain open; old nightly triage, Severe-death formulas and Meal Coverage failure rolls are not pending requirements. [D01; G16 §13]
+No patients, treatment stages, Meal-related treatment rolls or mortality were implemented by M1–M4. GDD v0.16 §13 defines Light and Severe recovery with shortest-first treatment. The developer accepted the implementation on 18 November. Balance remains provisional. Nightly triage, Severe-death formulas and Meal Coverage failure rolls belong to the historical design. [D01, G16 §13, MED18]
 
 M1’s test data add Medical-context Utility to antibiotics (5), bandages (3) and medkits (8). They are provisional fixture values, not P01’s proposed scale formula or a catalogue rebalance. New Run seeds once; Continue retains spent stock and request state. M2 uses the same collector for scheduled openings and expiry. [M1; M2 §5]
 
@@ -663,6 +663,12 @@ VDD v0.12 owns the footprint and rationale. The publication record carries remot
 
 [VDD v0.12](Sorting_Apocalypse_Visual_Design_Direction_v0.12.docx) · [Layout acceptance and publication](design_history/2026-11-15-compact-bunker-layout-acceptance-and-publication.md) · [Technical result](testing/2026-11-14-compact-bunker-layout-result.md)
 
+### 15.8 Reactive Medical treatment — 18 November 2026
+
+The developer accepted reactive treatment on 18 November 2026. F opens Medical, the wheel or number keys choose a carried item and a fresh E treats current patients. The provisional rate is 10 seconds per Medical Utility. Treatment applies shortest-first, spills over and discards excess. Natural recovery runs in parallel.
+
+Schema 12 reconstructs effective recovery and Ready from ordered physical receipts. The focused checks cover fractional allocation, exact item ownership, native reach and input, and Continue after treatment. [\[MED18\] Commands, results and walkthrough](testing/2026-11-18-reactive-medical-treatment-result.md)
+
 16.1  DEPENDENCIES REACHED BY THIS FOUNDATION
 
 <a id="mvp_21"></a>
@@ -711,9 +717,9 @@ Basis: [PF §§3–4, 7, 12–14, 24–26, 33–34]; [ER-RESULT §§2–5].
 
 | ID / source | Work retained or explicitly superseded | Relationship to this foundation |
 | --- | --- | --- |
-| CF-13<br>GDD §§5.6, 18.5; PF §§16.5, 34.7 | Full-game continuous game-state preservation, one advancing continuation per run, journal/rotating recovery and an ideal 2–3-real-second loss target. [D21] | Current main uses schema 11 with confirmed New Run and retained incompatible snapshots. The compact layout passed same-build Continue in Ops. Prototype cadence and first-victory recording remain in use. Release durability remains open. [LAY15] |
+| CF-13<br>GDD §§5.6, 18.5; PF §§16.5, 34.7 | Full-game continuous game-state preservation, one advancing continuation per run, journal/rotating recovery and an ideal 2–3-real-second loss target. [D21] | Schema 12 keeps incompatible saves through confirmed New Run. The earlier Ops Continue remains accepted. The prototype cadence and first-victory recording continue. Release durability remains open. [LAY15, MED18] |
 | CF-14<br>GDD §§9–10; PF §34.7 | Actual asynchronous expeditions, one player-assembled 1–4-person crew at a time, affinities, return outcomes and workforce availability. [G16 §§9–11] | The 14 November local promotion covers real acquisition, all five provision effects, injuries and recruitment. The installed settings remain provisional. |
-| CF-15<br>GDD §§12–13; PF §34.7 | Medical owns natural recovery. Light and Severe patients return to Ready after 120 and 300 active seconds from handover. Treatment remains future design. [G16 §13] | The local promotion covers natural recovery and the read-only patient view. Treatment remains future work. Daily triage, Meal Coverage rolls and fatal complications remain historical. |
+| CF-15<br>GDD §§12–13; PF §34.7 | Light and Severe patients recover independently after 120 and 300 active seconds. Whole Medical goods reduce current deadlines shortest-first at a provisional 10 seconds per Utility. [G16 §13] | The developer accepted reactive treatment and continuation on 18 November. Daily triage, Meal Coverage rolls and fatal complications remain historical. [MED18] |
 | CF-16<br>GDD §§12, 14–15, 20; PF §§19.4, 20.4 | Bounded Kitchen/Ops pressure; optional physical Rations; salvage/incineration and Workshop redesign. [G16 §§8,12,14–15] | Incinerator disposal is accepted. Continuous Kitchen is human-promoted, published on main and closed in its bounded scope. The bounded Fuel reserve slice is human-promoted, published on main and closed. Its Salvager and Workshop effects are power permissions for future systems. Rations and one-time purchases remain future work. |
 | CF-17<br>PF §§19.4–19.5, 20.4; GDD §§7.5–7.6 | Labels, specialist storage, conditional furniture movement, starting stock and production capacity remain open. All storage initially available is favored. [G16 §§7,15] | Preserve supported surface names and authored installs. No chosen shelf roster, automatic unlocking or scene changes; qualifying storage must be defined explicitly. |
 | CF-18<br>PF §§12.3, 14.5, 24–26 | Manual under-base insertion, multi-column packing, crouch and expanded display-rotation UX. | Remain separate deferred/open work. Ordinary shelves still reject automatic mixed stacking. Two-state packing stays intact. |
@@ -753,11 +759,11 @@ M1–M4 remain published and closed at c9f9417. On 10 November 2026 the develope
 
 | Decision | Implemented baseline / distinct target boundary |
 | --- | --- |
-| Save foundation | Schema 11 uses the existing save service. Confirmed New Run retains incompatible snapshots. Same-build Continue in Ops passed. [CF-13, LAY15] |
+| Save foundation | Schema 12 uses the existing save service and retains incompatible snapshots on confirmed New Run. [CF-13, MED18] |
 | Player / storage recovery | M1 accepted: exact pose, ladder height, held selection and committed storage. No base fallback required. |
 | Restore / lifecycle | Continue restores exact physical identities and placement, Incinerator warning and receipts, Kitchen schedule, grace and receipts, committed cargo, active time and first victory. |
 | Menu / controls | Kitchen, Dispatch and the Incinerator stay live. The run pauses in ESC menu, launch, offline, zoning and loading contexts. Ordinary focus loss stays active. Short silent Windows suspension remains a timing limit. |
-| Timed Medical | M4 timed Medical accepted. Target recovery/Medical requests follow GDD v0.16 §13; old deadlines and nightly mortality are not defaults. |
+| Medical recovery | The accepted build supports reactive treatment alongside parallel recovery. See GDD §13 and the walkthrough evidence. [MED18] |
 | Cap / Utility policy | Retain selected-item cap-and-waste and full loadout Bulk. Target unified category differs from existing contextual fields; no data migration here. [G16 §§6,8] |
 | Clock / ordering | One active clock drives expedition returns, lift boundaries and Kitchen. Kitchen settles expiry before a scheduled addition and player input. Calendar ordering is M4 evidence. |
 | Lift / midnight | Full outbound retirement precedes FIFO promotion and oldest-first admission. Nonempty returns release personnel on admission. Empty returns release them at return. |
@@ -767,7 +773,7 @@ M1–M4 remain published and closed at c9f9417. On 10 November 2026 the develope
 | M3 Kitchen / meals | M4: meals 10/14/18, 3h windows, 48/40, 60/48, 60/48. No outcome effects. The separate continuous Kitchen scope follows GDD §12. |
 | M3 cargo / Utility | M3 fixture is dated history. M4: 167 locked rows; 85-item start; four 16-item deliveries/day for three days. No final-economy claim. |
 
-Schema 11 includes real Expedition acquisition, natural recovery, Continuous Kitchen, Fuel and deliberate disposal. See §15.7 for the accepted layout. [LAY15]
+Schema 12 includes Medical treatment and its receipts alongside Expedition outcomes, Continuous Kitchen, Fuel and disposal. See §15.7 for the accepted layout and §15.8 for treatment evidence.
 
 Historical M4 test values remain player 20, per-member 28 and lanes 12/12/6/12/12. The expedition fixture retains 20 player Bulk, uses 8 Bulk per crew member and targets 6 Utility per category. These are test settings. [G16 §§9–10, 20]
 
@@ -1288,6 +1294,8 @@ This update edits documents only. It does not inspect the asset-equipped checkou
 ### B.4 Current spatial sources — 15 November 2026
 
 VDD12 — [Visual Design Direction v0.12 — current spatial master](Sorting_Apocalypse_Visual_Design_Direction_v0.12.docx)
+
+MED18 — [Reactive Medical treatment result](testing/2026-11-18-reactive-medical-treatment-result.md)
 
 LAY15 — [Layout acceptance and publication](design_history/2026-11-15-compact-bunker-layout-acceptance-and-publication.md) · [Technical result](testing/2026-11-14-compact-bunker-layout-result.md)
 

@@ -4,7 +4,7 @@
 
 I am continuing **Sorting Apocalypse**, a solo-developed first-person collecting, hoarding and spatial-organizing game. You are taking over after the fundamental collection-goal pivot, implementation and acceptance of the continuous services, and publication of the real Expedition outcomes/provisioning system. **We are no longer designing an endless survival game.** The current goal is how quickly the player can build the required physical stockpile, not how many days they can avoid extinction.
 
-The developer accepted all nine compact-layout slices on 15 November 2026. The asset-equipped authoring checkout is `D:/Godot Projects/Sorting-apoc-PROTOTYPE`. F5 starts the continuing run and uses schema 11. The [14 November Expedition publication record](design_history/2026-11-14-publication-and-layout-handoff.md) preserves its original verification. The layout close-out carries the current main verification. Check actual repository state for later work.
+The developer accepted all nine compact-layout slices on 15 November and reactive Medical treatment on 18 November 2026. F5 launches schema 12 in the asset-equipped checkout at `D:/Godot Projects/Sorting-apoc-PROTOTYPE`. Verify the actual branch before later work. [Reactive Medical treatment result](testing/2026-11-18-reactive-medical-treatment-result.md)
 
 This updates the existing **7 November bootstrap in place**, retaining its filename so current repository links continue to work. It supersedes earlier editions of that conversation entry and the 25 October/14 October operational handoffs. The old documents remain historical evidence, not active ADR-first, engineering-review-first or publication work orders.
 
@@ -21,7 +21,7 @@ This is a **ChatGPT collaboration handoff**, not a Codex implementation brief, p
 | Furniture collision and zero-Ready Dispatch repairs | Human-accepted, published and closed. Do not reopen them as pending tasks. |
 | Receiving mixed stacking and Fedora adoption | Human-approved, published and closed in bounded scopes. Same-group-first, Receiving-only mixed stacking; Fedora scale **0.897**, Footprint **3×3×1**, Bulk **2**. |
 | Real Expedition outcomes and provisioning | **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** Full active catalogue, all five effects, real injuries/recruitment, Medical-owned natural recovery and schema 11. Developer played for more than two hours without observed functional issues. |
-| Medical | Natural recovery and a read-only patient view are implemented. **Medical contributions/treatment acceleration are not.** |
+| Medical | **HUMAN-ACCEPTED.** Independent natural recovery, whole-item reactive treatment and schema-12 continuation. The 10-seconds-per-Utility rate is provisional. [Reactive Medical treatment result](testing/2026-11-18-reactive-medical-treatment-result.md) |
 | Workshop and other progression | Still separate design/implementation work. Fuel as an additional Workshop purchase resource is only under consideration. |
 | Current layout and next work | All nine slices accepted. VDD v0.12 owns the four-gallery layout. Future work has its own scope. [Acceptance and main verification](design_history/2026-11-15-compact-bunker-layout-acceptance-and-publication.md) |
 
@@ -85,7 +85,7 @@ Bulk measures carrying burden; Footprint, shape and support/stacking govern spac
 
 ## 5. Continuous time, service pressure and fairness
 
-Active real-world completion time replaces days survived. No day/night cycle, preparation window, mandatory daily return, midnight abandonment, completion deadline or designed terminal failure. ESC/main menu/offline/zoning pause the run. Dispatch, Kitchen, Fuel, Incinerator and the read-only Medical view remain live. Time acceleration is set aside. Preserve the actual shared timeline and pause ownership rather than introducing new timers or unapproved focus/suspension behavior.
+Active real-world completion time replaces days survived. No day/night cycle, preparation window, mandatory daily return, midnight abandonment, completion deadline or designed terminal failure. ESC/main menu/offline/zoning pause the run. Dispatch, Kitchen, Fuel, Incinerator and Medical remain live. Time acceleration is set aside. Preserve the actual shared timeline and pause ownership rather than introducing new timers or unapproved focus/suspension behavior.
 
 No dead end means an ordinary route back to progress remains, not guaranteed quick recovery, hidden grants, adaptive loot or a protected stock floor. A player may voluntarily restart an inefficient run. The player controls dispatch timing and can create more workload than they comfortably handle; that does not absolve us from providing time for sorting.
 
@@ -139,7 +139,7 @@ Injury and recruitment are **independent**. An injured original can recruit; inj
 
 Receiving accepts one active plus **two deposited FIFO** batches, with upstream Awaiting Lift beyond that capacity. A nonempty expedition releases its destination at return, but personnel stay unavailable until the exact cargo is admitted to an active/deposited slot. Admission completes handover even if emergency freight has not begun descending. Healthy originals and recruits become Ready; injured originals enter Medical as patients. Empty combined manifests hand over at return without using a slot or starting an empty lift trip.
 
-Medical owns **120-second Light / 300-second Severe natural recovery**, starting at handover, progressing in active time and returning each patient to Ready once. Waiting for cargo admission is not healing time. The existing frontage has a read-only patient panel. **Medical contributions, treatment acceleration/costs and their interface remain undefined/unimplemented**; do not import old daily treatment, fatality or injury-on-injury mechanics.
+Medical owns **120-second Light / 300-second Severe natural recovery**. Independent timers start at handover and advance in active time. At the frontage, F opens the panel. Use the wheel or number keys to select a carried item, then press a fresh E to treat. The provisional rate is **10 seconds per Medical Utility**. The same budget shortens the shortest timer first, spills over to subsequent patients and discards final excess. Each completion releases one scavenger immediately to Ready. Schema 12 replays treatment receipts to restore exact recovery and personnel availability. Confirmed New Run preserves incompatible snapshots.
 
 Workshop remains a one-time upgrade-purchase direction, with work taking time and power permission able to pause progress rather than erase it. Electronics is no longer a recurring Ops demand. Adding Fuel to some Workshop costs is a new option under consideration, not approved. Rations, Salvager conversion, Training and final progression are separate work. These must not be implemented merely to begin layout design.
 
@@ -198,7 +198,7 @@ Current asset-equipped layout authoring checkout on main:
 Reported engine: Godot 4.7.stable.official.5b4e0cb0f, Compatibility
 Normal F5: res://gameplay/run/run_shell.tscn
 Standalone F6: res://gameplay/logistics_wing/wing_gameplay.tscn
-Current save schema: 11, existing user://saves/collection/ service
+Current save schema: 12, existing user://saves/collection/ service
 ```
 
 The asset-equipped layout authoring checkout is `D:/Godot Projects/Sorting-apoc-PROTOTYPE` on `main`. The separate Expedition clone above is a historical retest location. Verify the actual branch, editor state, assets, engine and working paths for the next requested task.
@@ -227,13 +227,13 @@ Use the accepted scene as the baseline for later materials, lighting, furnishing
 
 Read the current entry points and the relevant GDD v0.16 and VDD v0.12 sections. Use the layout close-out and Expedition playtest records for provenance. Verify accessible repository state before making local or published claims.
 
-Start from the developer’s requested task. Treat schema 11, the promoted Expedition outcomes and the compact layout as established. Keep active read-only Medical recovery, later treatment and Workshop work, and provisional tuning distinct in the discussion. Ask about missing details only when they affect the requested scope.
+Start from the developer’s requested task. Treat schema 12, the accepted Medical implementation, the promoted Expedition outcomes and the compact layout as established. Workshop remains the next separate service scope. Medical release tuning and save performance remain deferred. Ask about missing details only when they affect the requested scope.
 
 ## 12. Provenance and maintenance
 
-This 15 November revision follows the 14 November Expedition handoff and the developer’s acceptance of Slice 9. The earlier approval records, playtest evidence and authority boundaries retain their original dates. [Acceptance and main verification](design_history/2026-11-15-compact-bunker-layout-acceptance-and-publication.md)
+The 15 November revision followed the 14 November Expedition handoff and the developer’s acceptance of Slice 9. The earlier approval records, playtest evidence and authority boundaries retain their original dates. [Acceptance and main verification](design_history/2026-11-15-compact-bunker-layout-acceptance-and-publication.md)
 
-The filename retains its 7 November date for link stability. The content is current to 15 November 2026.
+The filename retains its 7 November date for link stability. The current edition includes the 18 November 2026 Medical acceptance.
 
 Use the acceptance and publication records for main verification and the technical result for measured outcomes. Release balance, furnishing and durability retain separate scopes.
 

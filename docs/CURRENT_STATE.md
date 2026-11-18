@@ -1,8 +1,10 @@
 # Sorting Apocalypse — current development state
 
-**15 November 2026. Compact bunker layout — HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** GDD v0.16 remains the intended-gameplay authority. Schema 11 is current. [Acceptance and main verification](design_history/2026-11-15-compact-bunker-layout-acceptance-and-publication.md) · [Roof-off north-up overview](design_history/media/2026-11-15-compact-bunker-layout-north-up.png)
+**15 November 2026. Compact bunker layout — HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** GDD v0.16 remains the intended-gameplay authority. [Acceptance and main verification](design_history/2026-11-15-compact-bunker-layout-acceptance-and-publication.md) · [Roof-off north-up overview](design_history/media/2026-11-15-compact-bunker-layout-north-up.png)
 
-The developer promoted the Expedition iteration after more than two hours of play and subsequently published it on 14 November. The accepted scope includes full-catalogue acquisition, five provision effects, injury, recruitment, Medical-owned natural recovery and schema 11 with provisional settings. Read-only GitHub verification found `main` at `d242de49441b410c4abb88ab4f7b61971b6424d1` with the real Expedition configuration. Current continuation is schema 11. [Publication and handoff alignment](design_history/2026-11-14-publication-and-layout-handoff.md) qualifies older dated local/pending notices. [Decision record](design_history/2026-11-13-expedition-outcomes-and-provisioning-decisions.md) · [Technical result](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md)
+The developer promoted the Expedition iteration after more than two hours of play and subsequently published it on 14 November. The accepted scope includes full-catalogue acquisition, five provision effects, injury, recruitment, Medical-owned natural recovery and schema 11 with provisional settings. Read-only GitHub verification found `main` at `d242de49441b410c4abb88ab4f7b61971b6424d1` with the real Expedition configuration. [Publication and handoff alignment](design_history/2026-11-14-publication-and-layout-handoff.md) qualifies older dated local/pending notices. [Decision record](design_history/2026-11-13-expedition-outcomes-and-provisioning-decisions.md) · [Technical result](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md)
+
+**18 November 2026. Reactive Medical treatment is human-accepted.** The current continuation uses schema 12. [Reactive Medical treatment result](testing/2026-11-18-reactive-medical-treatment-result.md)
 
 ## 1. At a glance: approval is not implementation
 
@@ -12,12 +14,13 @@ The developer promoted the Expedition iteration after more than two hours of pla
 | Collection foundation | **HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** [Result and developer acceptance](testing/2026-11-07-continuous-run-collection-goal-result.md). |
 | M1 / M2 / M3 / M4 | **HUMAN-PROMOTED / PUBLISHED / CLOSED**, each in its accepted bounded scope. No acceptance, publication or re-review backlog is reopened. |
 | Expedition-to-Storage Loop | **HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** [Technical result and developer acceptance](testing/2026-11-08-expedition-to-storage-loop-result.md). M5’s former combined daily scenario is historical. |
-| Expedition outcomes and provisioning | **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** Current schema 11. Iteration values remain provisional. [Developer acceptance](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md) |
+| Expedition outcomes and provisioning | **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** Established schema 11. Iteration values remain provisional. [Developer acceptance](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md) |
+| Reactive Medical treatment | Human-accepted on 18 November. Whole-item treatment and receipt-backed continuation established schema 12. The rate remains provisional. [Reactive Medical treatment result](testing/2026-11-18-reactive-medical-treatment-result.md) |
 | Compact bunker layout | All nine geometry slices are human-accepted. The four-gallery layout, service access and unchanged functional storage are the working baseline. [Acceptance and main verification](design_history/2026-11-15-compact-bunker-layout-acceptance-and-publication.md) · [Nine-slice technical result](testing/2026-11-14-compact-bunker-layout-result.md) |
 | Incinerator and Deliberate Disposal | **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** [Technical result and developer acceptance](testing/2026-11-08-incinerator-deliberate-disposal-result.md) |
 | Continuous Kitchen | **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** Introduced schema 8. [Developer acceptance and close-out](testing/2026-11-09-continuous-kitchen-service-result.md) |
 | Fuel Reserve and Emergency Freight | **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** Introduced schema 9. [Fuel technical result and developer acceptance](testing/2026-11-11-fuel-reserve-emergency-freight-result.md) · [Fuel decisions](design_history/2026-11-11-fuel-reserve-and-emergency-freight-decisions.md) · [Implementation plan](superpowers/plans/2026-11-11-fuel-reserve-emergency-freight.md) |
-| Receiving mixed stacking | **HUMAN-APPROVED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** Introduced schema 10. Includes the approved Fedora revision; current run schema is 11. [Technical result, acceptance and publication](testing/2026-11-13-receiving-mixed-stacking-result.md). |
+| Receiving mixed stacking | **HUMAN-APPROVED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** Introduced schema 10. Includes the approved Fedora revision. [Technical result, acceptance and publication](testing/2026-11-13-receiving-mixed-stacking-result.md). |
 | ADR cycle | Parked historical design, preserved for deliberate reuse or a possible survival mode. Not the current economy or immediate design priority. |
 | Implementation checkpoints | Foundation `a1d1db4494347e0dfb4dfb653ed71b2abaf76ce5`, expedition implementation `66a7f863e5cf6f2f2c9e8f7f34de99885fa76612` and technical verification `11f95354119058fe2ec90796d09e2c28c046a885`. [Foundation closure](testing/2026-11-07-continuous-run-collection-goal-closure.md). |
 | Publication | M4 acceptance is pinned at `c9f9417a97cf65ef416c58189ca1f741b6a90406`. The collection foundation, expedition loop, furniture collision repair, Incinerator and Continuous Kitchen are published on main. On 8 November 2026, `git ls-remote` verified `origin/main` at the repair acceptance commit `de6b9bd7102e555b46a45f6733d9e7669db5d3b5`. On 11 November 2026, GitHub main was verified at `a19636df5df5169cd4c2e41b80f0986c78f7a83b` for Fuel and the Dispatch repair. On 13 November 2026, `git ls-remote` verified the Receiving and Fedora code publication at `ed521a2a0cea5ba829430bf04c8046eed1e79f0a`. On 14 November, ChatGPT read-only GitHub verification found Expedition publication at `d242de49441b410c4abb88ab4f7b61971b6424d1`; the developer separately reports local/remote alignment. |
@@ -58,7 +61,7 @@ The purpose is to restore collecting, hoarding and organizing as the main experi
 | Destinations | Twenty-eight unordered pairs. Dispatch requires two affinities and an available pair. A destination is occupied only while its expedition is away. |
 | Receiving | One exact ordinary-plus-bonus manifest moves through oldest-first admission to one active and two deposited slots. Healthy originals and recruits become Ready on admission. Injured originals enter Medical. Empty returns hand over outside the lift. |
 | Requests | Kitchen §12 specifies cumulative bounded Food and Hydration demand, active-time grace, proportional carrying relief and sprint restoration on clearance. Fuel uses the separately approved reserve and emergency freight rules in GDD §14. Victory has no service requirement. |
-| Medical | Light and Severe patients recover in 120 and 300 active seconds from handover. The Medical frontage shows natural recovery in a read-only view. Treatment remains open. |
+| Medical | Light and Severe patients recover independently in 120 and 300 active seconds from handover. A selected Medical item shortens current deadlines shortest-first, with spillover and terminal waste. The starting conversion is 10 active seconds per Medical Utility. |
 | Progression/layout | Four-gallery working layout accepted. All installed storage from the beginning remains favored. Production capacity and roster, carrying/expedition/information improvements and Workshop/Training retain separate design scope. |
 | Information | Goal progress is baseline, never upgrade-gated or disabled by penalties/events. Journal/notification/overview roles survive; a daily report does not. |
 
@@ -68,7 +71,7 @@ Read the GDD for the actual detail and source distinctions. This table is routin
 
 Normal F5 entry is `res://gameplay/run/run_shell.tscn`. New Run starts with the authored loose stock and eight Ready scavengers. Aim at Dispatch and press F to prepare a crew with 23 ordinary Bulk per member. Food, Hydration, Protection, Weapons and Morale change that crew's outcome. The HUD tracks six authored primary Utility per category and records the first simultaneous completion. The run continues afterward.
 
-Open the read-only patient view with F at the Medical frontage. Light and Severe patients progress in parallel for 120 and 300 active seconds from handover.
+Open Medical with F at the Supply Anteroom frontage. Select a carried item with the wheel or number keys and press a fresh E to spend it. The preview shows applied seconds, waste and how many patients would become Ready. The result stays visible when the Ward empties. ESC closes Medical first.
 
 In the local build, aim at the Incinerator at the end of the utility spur and press F to inspect the selected carried item. Press E to attempt destruction. On first valid use, choose Back or Continue in the live warning.
 
@@ -76,7 +79,7 @@ Aim at the Kitchen frontage off Gallery B and press F. Use the wheel or number k
 
 Aim at the existing electrical cabinet right of the Receiving shutter. F inspects and a distinct E supplies the selected carried Fuel. The reserve starts at 55/60 and consumes one Utility per 30 active seconds. Below 15, each eligible delivery waits 60 active seconds before ARRIVAL. [Fuel technical result and developer acceptance](testing/2026-11-11-fuel-reserve-emergency-freight-result.md)
 
-The human-promoted, published build uses schema 11 under `user://saves/collection/`. It adds committed ordinary and bonus cargo, personnel, handover and Medical recovery to the existing Kitchen, Fuel, Receiving, disposal, physical and goal state. Continue starts with service panels closed. Confirmed New Run repoints the slot and retains incompatible snapshots, including schema 10 from the preceding Receiving/Fedora build. Save & Exit, 60-active-second attempts and first victory use the same service.
+The current Medical build uses schema 12 under `user://saves/collection/`. Ordered treatment receipts preserve consumed items and reconstruct effective recovery and Ready availability from handover. Continue starts with service panels closed. Confirmed New Run repoints the slot and keeps incompatible snapshots, including schema 11. Save & Exit, 60-active-second attempts and first victory use the existing service. [Reactive Medical treatment result](testing/2026-11-18-reactive-medical-treatment-result.md)
 
 Standalone F6 retains the authoring palette and canonical UID `uid://bljf1nlhijej`. The [original expedition result](testing/2026-11-08-expedition-to-storage-loop-result.md) preserves the superseded mechanical pool and its original acceptance; the [current outcome result](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md) records full-catalogue behavior and the later human acceptance. The [accepted foundation result](testing/2026-11-07-continuous-run-collection-goal-result.md) preserves the exact two-haul fixture evidence.
 
@@ -122,7 +125,7 @@ OPEN waits for every active item to be successfully removed. Last TAKE starts cl
 
 Exact outcome content belongs upstream. Receiving may arrange/present but may not add filler, omit awkward items, replace, reroll or bias a haul. Content and accepted placement commitment remain distinct. Repeated seeds do not reuse item identity. Private surfaces are TAKE-only: no PUT, zoning, labels, manual placement, ordinary storage registration, grid or fixture prompt. Front crates/rear pallets and legal stack TAKE/compression remain; no fixture starts empty and emptied fixtures remain through retirement.
 
-The published implementation uses the exact BARE production route. Receiving tries legal same-group appends first, then legal mixed top-appends, then empty placement within the applicable surface routing. The saved commitment records which removed items served as bases so Continue can restore the same compacted position. Schema 10 introduced this removal history and the revised physical-content fingerprint. Current schema 11 retains these contracts and prior incompatible save files.
+The published implementation uses the exact BARE production route. Receiving tries legal same-group appends first, then legal mixed top-appends, then empty placement within the applicable surface routing. The saved commitment records which removed items served as bases so Continue can restore the same compacted position. Schema 10 introduced this removal history and the revised physical-content fingerprint. Schema 12 retains these contracts and prior incompatible save files.
 
 The developer deferred the canonical 157-Bulk meat-and-mice area overrun and the long-object failure at the planner's attempt limit. The exact witnesses remain available for later targeted work. Keep exact cargo and safe rejection when preparation fails. Any player-facing fallback needs its own decision.
 
@@ -165,7 +168,7 @@ Systems MVP §16 remains the full CF-01–CF-24 register. This entry-point updat
 | CF-05 | Admission/fairness/ownership survive. The archived M4 evidence includes the old midnight rule. |
 | CF-06–CF-12 | Retain current interfaces/art evidence and renderer/content/ergonomics debt. No fresh fixes or approvals are claimed. |
 | CF-13 | Continuous durability remains future and must use coherent existing ownership. |
-| CF-14–CF-15 | Real Expedition outcomes and Medical-owned natural recovery are human-promoted, published and closed in their bounded scope. Treatment, release tuning and long-run population pacing remain open. |
+| CF-14–CF-15 | Real Expedition outcomes and Medical-owned natural recovery are human-promoted, published and closed in their bounded scope. The developer accepted reactive treatment on 18 November. Release tuning and long-run population pacing remain open. |
 | CF-16–CF-17 | Single-item Incinerator disposal is accepted. Continuous Kitchen is human-promoted, published and closed. GDD §14 governs the Fuel slice. Other conversions, Workshop, labels and progression require separate scopes. [Developer acceptance and close-out](testing/2026-11-09-continuous-kitchen-service-result.md) |
 | CF-18–CF-19 | Preserve explicit interaction deferrals; economy, loot bounds and routes now serve the collection objective. |
 | CF-20–CF-24 | Retain adjacent art work, measured limitations, saved/runtime distinctions, authoring and source/license safeguards. |
@@ -178,7 +181,7 @@ The old Fuel/locker maintenance, EAF1 WallGrazing repair, R-01–R-03 and bounde
 
 ## 10. Execution and next-work boundary
 
-The developer accepted all nine compact-layout slices on 15 November 2026. The asset-equipped authoring checkout is `D:/Godot Projects/Sorting-apoc-PROTOTYPE`. F5 starts the continuing run and uses schema 11.
+The developer accepted all nine compact-layout slices on 15 November 2026. The asset-equipped authoring checkout is `D:/Godot Projects/Sorting-apoc-PROTOTYPE`. F5 starts the continuing run with schema 12.
 
 The accepted wing runs from Receiving and Dispatch through shortened Backlog and Sorting into Main Storage. A–D remain, including the shared A/B circulation and C–D link. Medical and Kitchen have separate approaches, Workshop leads west to Salvager, Incinerator branches directly south from Main Storage, and the straight 3 m eastern link reaches Bunker Ops. The working Fuel cabinet is in Receiving.
 
@@ -190,7 +193,7 @@ The earlier Expedition retest used a separate local copy. The layout authoring a
 
 No reset, stash, clean, force-push, rebase/squash, branch/worktree deletion, untracked staging sweep or ignored-asset cleanup is authorized. Preserve local evidence and human `.tres`/scene edits. A remote clone is not a runnable licensed-art backup. Git ignore is not Godot scan exclusion: keep checkpoint scenes with production UIDs and duplicate global classes outside scanned paths. Preserve startup parity checks and avoid concurrent Godot/import writers on one mutable checkout.
 
-The developer accepted the [expedition loop](testing/2026-11-08-expedition-to-storage-loop-result.md) in its bounded scope. The [furniture movement collision repair](testing/2026-11-08-furniture-collision-repair-result.md) was accepted by the developer after an in-game retest on 8 November 2026 and is closed in its bounded scope. GDD §14 resolves first-slice Fuel rules under O-06. GDD §13 specifies natural recovery. Treatment remains open under O-07.
+The developer accepted the [expedition loop](testing/2026-11-08-expedition-to-storage-loop-result.md) in its bounded scope. The [furniture movement collision repair](testing/2026-11-08-furniture-collision-repair-result.md) was accepted by the developer after an in-game retest on 8 November 2026 and is closed in its bounded scope. GDD §14 resolves first-slice Fuel rules under O-06. GDD §13 and O-07 record independent natural recovery and the accepted treatment rule. Treatment balance remains provisional.
 
 ## 11. Focused evidence navigation
 

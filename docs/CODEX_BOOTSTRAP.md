@@ -1,10 +1,12 @@
 # Sorting Apocalypse — Codex bootstrap
 
-**15 November 2026. Compact bunker layout — HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** GDD v0.16 is approved. Current continuation is schema 11. [Acceptance and main verification](design_history/2026-11-15-compact-bunker-layout-acceptance-and-publication.md) · [Roof-off north-up overview](design_history/media/2026-11-15-compact-bunker-layout-north-up.png)
+**15 November 2026. Compact bunker layout — HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** GDD v0.16 is approved. [Acceptance and main verification](design_history/2026-11-15-compact-bunker-layout-acceptance-and-publication.md) · [Roof-off north-up overview](design_history/media/2026-11-15-compact-bunker-layout-north-up.png)
 
 The current intended game is collection, hoarding and spatial organization. The [Expedition-to-Storage Loop](superpowers/plans/2026-11-07-expedition-to-storage-loop.md) is **HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE**. See its [technical result and developer acceptance](testing/2026-11-08-expedition-to-storage-loop-result.md) and the [accepted foundation checkpoint](testing/2026-11-07-continuous-run-collection-goal-closure.md).
 
 The [13 November Expedition decisions](design_history/2026-11-13-expedition-outcomes-and-provisioning-decisions.md) supersede the fixture acquisition and healthy-only outcomes. The developer promoted and published the schema-11 iteration on 14 November. Read-only GitHub verification found `main` at `d242de49441b410c4abb88ab4f7b61971b6424d1`. [Publication and layout handoff](design_history/2026-11-14-publication-and-layout-handoff.md) qualifies older dated local/pending notices; no acceptance or publication task remains for this iteration. [Acceptance and technical evidence](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md)
+
+**18 November 2026. Reactive Medical treatment is human-accepted.** The current continuation uses schema 12. [Reactive Medical treatment result](testing/2026-11-18-reactive-medical-treatment-result.md)
 
 ## Read first
 
@@ -42,13 +44,13 @@ Kitchen §12 defines bounded cumulative demand and carrying/sprint consequences.
 
 Fuel §14 specifies continuous reserve consumption and a 60-active-second wait before each eligible emergency delivery. Crew handover remains on admission and ongoing cycles finish normally. [Fuel decisions](design_history/2026-11-11-fuel-reserve-and-emergency-freight-decisions.md) · [Implementation plan](superpowers/plans/2026-11-11-fuel-reserve-emergency-freight.md)
 
-Medical's natural recovery begins at handover and uses 120 or 300 active seconds. Treatment remains future design. Fixed full storage remains favored. Use the accepted scene as the baseline for later materials, lighting, furnishing and focused playtest adjustments. Starting stock, final capacity, progression, integrated economy and remaining service mechanics retain separate scope. Further work begins with an agreed brief.
+Medical recovery begins at handover and runs in parallel for 120 or 300 active seconds. A selected whole Medical item supplies 10 seconds per Utility provisionally, treating the shortest remaining timer first and spilling over. Excess after the final patient is wasted. See GDD §13. Fixed full storage remains favored. Use the accepted scene as the baseline for later materials, lighting, furnishing and focused playtest adjustments. Starting stock, final capacity, progression, integrated economy and remaining service mechanics retain separate scope. Further work begins with an agreed brief.
 
 ## Known open boundaries before affected implementation
 
 Use GDD §21.2 rather than asking for reapproval of the whole pivot. In particular:
 
-- O-02–O-07 cover preparation, destination, handover, catalogue acquisition, bounded requests and natural recovery. Medical treatment remains open.
+- O-02–O-07 cover preparation, destination, handover, catalogue acquisition, bounded requests and Medical. O-07 records the decided treatment rule and provisional tuning.
 - O-08–O-12: population/progression, conversions, storage/layout, UI/time edges, compatibility and successor test scope.
 
 Do not invent automatic refunds, lost loadouts, saved parallel prepared-team storage, new technical frameworks or old daily defaults to bypass these boundaries. Resolve only what an agreed task actually reaches.
@@ -58,7 +60,7 @@ Do not invent automatic refunds, lost loadouts, saved parallel prepared-team sto
 ```text
 Current layout authoring checkout: D:/Godot Projects/Sorting-apoc-PROTOTYPE
 Current branch: main
-Run schema: 11
+Run schema: 12
 Repository: Navandis/Sorting-apoc-PROTOTYPE
 Reported engine: Godot 4.7 / Compatibility (verify installed executable)
 F5 entry: res://gameplay/run/run_shell.tscn
@@ -74,9 +76,9 @@ Continuous Kitchen is **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE
 
 Fuel Reserve and Emergency Freight is **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE**. It introduced schema 9 through the existing save service. Refuel at the cabinet right of the Receiving shutter with F and a distinct E. [Fuel technical result and developer acceptance](testing/2026-11-11-fuel-reserve-emergency-freight-result.md)
 
-Receiving mixed stacking is **HUMAN-APPROVED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE** with the approved Fedora revision. That milestone introduced schema 10; published main now uses schema 11. Confirmed New Run retains incompatible saves without migration. The 157-Bulk meat-and-mice area overrun and the long-object planner failure remain developer-deferred. [Receiving and Fedora result](testing/2026-11-13-receiving-mixed-stacking-result.md)
+Receiving mixed stacking is **HUMAN-APPROVED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE** with the approved Fedora revision. That milestone introduced schema 10. The published Expedition checkpoint then established schema 11. Confirmed New Run retains incompatible saves without migration. The 157-Bulk meat-and-mice area overrun and the long-object planner failure remain developer-deferred. [Receiving and Fedora result](testing/2026-11-13-receiving-mixed-stacking-result.md)
 
-The human-promoted, published Expedition build uses schema 11 and the same collection slot. Confirmed New Run retains incompatible snapshots. Its provisions, recovery and freight chronology are exercised in the [Expedition technical result](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md).
+Schema 12 uses the same slot and validates treatment receipts with the shared item ownership rules. Confirmed New Run retains incompatible snapshots. [Reactive Medical treatment result](testing/2026-11-18-reactive-medical-treatment-result.md)
 
 The zero-Ready Dispatch repair is **HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE**. [Dispatch repair result](testing/2026-11-11-dispatch-no-ready-repair-result.md)
 

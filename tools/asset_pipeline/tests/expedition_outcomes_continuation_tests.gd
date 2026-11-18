@@ -15,10 +15,10 @@ func _initialize() -> void:
 	call_deferred("run")
 
 func run() -> void:
-	check(Snapshot.SCHEMA == 11 and Snapshot.new().validate({"schema": 10}).contains("New Run"),
-		"schema 10 is preserved behind the confirmed New Run boundary")
-	if Snapshot.SCHEMA == 11:
-		test_live_continuation()
+	check(Snapshot.SCHEMA == 12 and Snapshot.new().validate({"schema": 11}).contains("snapshot is preserved"),
+		"schema 11 is preserved behind the confirmed New Run boundary")
+	test_live_continuation()
+	test_reactive_treatment()
 	if is_instance_valid(shell):
 		shell.free()
 	print("expedition_outcomes_continuation_tests: ", "PASS" if failures == 0 else "FAIL", " failures=", failures)
@@ -95,8 +95,17 @@ func test_live_continuation() -> void:
 	timeline.advance(30)
 	paused = false
 	check(timeline.clock.elapsed == trip.return_at and ops.medical.next_boundary_at() == deadline, "pause cannot advance recovery")
-	timeline.advance(deadline - timeline.clock.elapsed)
-	check(ops.ready_count == 9 and ops.medical.active_patients().is_empty(), "natural recovery restores original exactly once")
+	timeline.advance(deadline - timeline.clock.elapsed - 0.25)
+	# Sample the due tick before the normal timeline loop processes the boundary.
+	timeline.clock.elapsed = deadline
+	carry = wing.get_node("Player/CarriedItems")
+	var medical_world: WorldItem = wing.get_node("DevelopmentSetup/SeedItems/Medical_CoughSyrup/WorldItem")
+	var syrup := medical_world.get_item_instance()
+	if not check(medical_world.pickup_into(carry), "carry Medical at the natural deadline"):
+		return
+	var rejected: Dictionary = timeline.contribute_medical(carry, syrup, func(): return true)
+	check(not rejected.ok and rejected.reason == "No patients need treatment." and carry.get_selected_item() == syrup
+		and ops.ready_count == 9 and not ops.settle_recovery(deadline), "natural recovery due at commit releases Ready once before evaluating medicine")
 	saved = Snapshot.new().capture(wing)
 	invalid(saved, func(s): s.expeditions.ready += 1, "duplicate recruit or recovery release")
 	var patient_id: String = saved.expeditions.medical.keys()[0]
@@ -116,6 +125,103 @@ func roundtrip(label: String) -> bool:
 	var after := Snapshot.new().capture(shell.wing)
 	var codec := Codec.new()
 	return check(codec.stringify(before.expeditions) == codec.stringify(after.expeditions), "exact Expedition state: " + label)
+
+func test_reactive_treatment() -> void:
+	if not check(shell.start_new_run(), "start a separate treatment continuation"):
+		return
+	var wing: Node = shell.wing
+	wing.set_process(false)
+	var ops: RefCounted = wing.expeditions
+	var timeline: RefCounted = wing.run_timeline
+	if not check(timeline.has_method("contribute_medical"), "the live timeline accepts Medical contributions"):
+		return
+	var runtime: ReceivingRuntime = wing.get_node("ReceivingRuntime")
+	var carry: CarriedItems = wing.get_node("Player/CarriedItems")
+	ops.set_members(2)
+	ops.toggle_affinity("Medical")
+	ops.toggle_affinity("Food")
+	var seed_value := TestSeeds.find_seed(ops, runtime, func(outcome: Dictionary) -> bool:
+		return outcome.originals.all(func(member: Dictionary): return member.health == "severe" and not member.recruited) \
+			and outcome.manifest.has("loot_000025"))
+	if not check(seed_value >= 0, "find ordinary expedition cargo with Antibiotics and two Severe patients"):
+		return
+	ops.rng.seed = seed_value
+	var sent: Dictionary = ops.dispatch(ops.revision)
+	if not check(sent.ok, "dispatch the Medical cargo fixture"):
+		return
+	var trip: Dictionary = ops.journeys[sent.id]
+	timeline.advance(trip.return_at + 50.25)
+	var cargo: ItemInstance
+	for world: WorldItem in runtime.deck_presenter.get_materialized_world_items():
+		if world.get_item_instance().definition.item_id == &"loot_000025" and world.pickup_into(carry):
+			cargo = world.get_item_instance()
+			break
+	if not check(cargo != null and carry.get_selected_item() == cargo, "pick up exact expedition-origin Antibiotics from Receiving"):
+		return
+	var allowed := func(): return true
+	var natural_deadline: float = trip.handover_at + 300.0
+	var partial: Dictionary = timeline.contribute_medical(carry, cargo, allowed)
+	if not check(partial.ok and partial.applied == 80.0 and partial.recovered == 0 \
+			and ops.medical.next_boundary_at() == natural_deadline - 80.0 and carry.get_item_count() == 0,
+			"expedition-origin medicine shortens one deadline and leaves the other independent"):
+		return
+	var save := Snapshot.new().capture(wing)
+	check(save.expeditions.medical_receipts[0].item_id == cargo.instance_id
+		and not save.items.has(cargo.instance_id), "the consumed cargo has one terminal owner")
+	if not roundtrip("partial treatment and consumed expedition cargo"):
+		return
+	wing = shell.wing
+	ops = wing.expeditions
+	timeline = wing.run_timeline
+	carry = wing.get_node("Player/CarriedItems")
+	check(ops.medical.next_boundary_at() == natural_deadline - 80.0 and ops.ready_count == 6
+		and carry.get_item_count() == 0, "Continue retains exact shortened deadlines, Ready and carry")
+	timeline.advance(natural_deadline - 120.0 - timeline.clock.elapsed)
+	ops.set_members(4)
+	ops.toggle_affinity("Protection")
+	ops.toggle_affinity("Weapons")
+	if not check(ops.dispatch(ops.revision).ok and ops.ready_count == 2 and not ops.set_members(3),
+			"three-person dispatch is unavailable before treatment releases a patient"):
+		return
+	timeline.advance(1.25)
+	var world: WorldItem = wing.get_node("DevelopmentSetup/SeedItems/Medical_Antibiotics/WorldItem")
+	var medicine := world.get_item_instance()
+	if not check(world.pickup_into(carry), "take the authored second Medical contribution"):
+		return
+	var result: Dictionary = timeline.contribute_medical(carry, medicine, allowed)
+	check(result.ok and result.recovered == 1 and ops.ready_count == 3
+		and not ops.settle_recovery(timeline.clock.elapsed), "Ready increases immediately and settles exactly once")
+	ops.set_members(3)
+	ops.toggle_affinity("Fuel")
+	ops.toggle_affinity("Morale")
+	var early: Dictionary = ops.dispatch(ops.revision)
+	if not check(early.ok and timeline.clock.elapsed < natural_deadline, "dispatch a treatment-released scavenger early"):
+		return
+	var valid := Snapshot.new().capture(wing)
+	invalid(valid, func(s): s.expeditions.medical_receipts[0].applied -= 0.5, "incorrect treatment arithmetic")
+	invalid(valid, func(s): s.expeditions.medical_receipts.append(s.expeditions.medical_receipts.back()), "duplicate Medical spend")
+	invalid(valid, func(s):
+		s.incinerator.warning_shown = true
+		s.incinerator.receipts.append({"item_id": cargo.instance_id, "definition_id": "loot_000025",
+			"at": s.expeditions.medical_receipts[0].at}), "Medical and Incinerator cannot consume the same cargo")
+	invalid(valid, func(s): s.expeditions.medical_receipts[0].at = trip.handover_at - 1.0, "receipt cannot precede cargo or patient handover")
+	invalid(valid, func(s): s.expeditions.medical.values().back().recovery_at -= 1.0, "unsupported reduction of a saved deadline")
+	invalid(valid, func(s):
+		var too_early: Dictionary = s.expeditions.journeys[early.id]
+		too_early.departed_at -= 0.5
+		too_early.return_at = too_early.departed_at + too_early.duration, "crew cannot form before effective recovery")
+	if not roundtrip("completed patient, spillover and early dispatch"):
+		return
+	var loaded: Dictionary = shell.save_service.load_snapshot()
+	var corrupt := valid.duplicate(true)
+	corrupt.expeditions.medical_receipts[1].wasted += 1.0
+	var file := FileAccess.open(loaded.path, FileAccess.WRITE)
+	file.store_string(Codec.new().stringify(corrupt))
+	file.close()
+	var retained: Node = shell.wing
+	var hash_before := FileAccess.get_sha256(loaded.path)
+	check(not shell.continue_run() and shell.wing == retained and FileAccess.get_sha256(loaded.path) == hash_before,
+		"invalid Medical history cannot Continue, replace the live run, or alter the bad save")
 
 func test_waiting_personnel() -> void:
 	var wing: Node = shell.wing
@@ -266,7 +372,7 @@ func test_mixed_cargo() -> void:
 			invalid(saved, func(s): s.receiving.manager.batches[0].entries[index].released_as_base = false,
 				"corrupted mixed-stack base removal")
 	var exact := roundtrip("partially unloaded mixed stack")
-	check(exact and Snapshot.new().capture(shell.wing) == saved, "schema 11 restores live, stored and released cargo identities together")
+	check(exact and Snapshot.new().capture(shell.wing) == saved, "current schema restores live, stored and released cargo identities together")
 	print("EXPEDITION_MIXED_CONTINUE seed=", seed_value, " base=", mixed[0], " cap=", mixed[1], " exact=", exact)
 
 func mixed_stack(batch: LootBatch) -> Array[String]:

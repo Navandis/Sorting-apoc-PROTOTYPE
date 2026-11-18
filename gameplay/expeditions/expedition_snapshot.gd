@@ -19,7 +19,8 @@ var _pool: Dictionary
 
 func validate(state: Dictionary, run: Dictionary, elapsed: float, items: Dictionary, seed_definition: Callable) -> String:
 	if not _shape(state, {"config": TYPE_DICTIONARY, "ready": TYPE_INT, "rng_state": TYPE_INT,
-			"draft": TYPE_DICTIONARY, "journeys": TYPE_DICTIONARY, "away_cargo": TYPE_DICTIONARY, "medical": TYPE_DICTIONARY}):
+			"draft": TYPE_DICTIONARY, "journeys": TYPE_DICTIONARY, "away_cargo": TYPE_DICTIONARY,
+			"medical": TYPE_DICTIONARY, "medical_receipts": TYPE_ARRAY}):
 		return "Invalid expedition state"
 	if state.config != Ops.config_signature():
 		return "Incompatible expedition configuration"
@@ -78,7 +79,7 @@ func validate(state: Dictionary, run: Dictionary, elapsed: float, items: Diction
 	if not draft_id.is_empty() and not ids.is_empty():
 		if Ops.sequence(draft_id) <= Ops.sequence(ids.back()) or draft.loadout.spent[0].at < previous_departure:
 			return "Formed preparation predates a later departure"
-	var personnel_error := _validate_personnel(state, ids, draft_id)
+	var personnel_error := _validate_personnel(state, ids, draft_id, items)
 	if not personnel_error.is_empty():
 		return personnel_error
 	_waiting.sort_custom(_earlier_return)
@@ -133,27 +134,23 @@ func _valid_outcome(trip: Dictionary, id: String, capacity: int) -> bool:
 func _formed_at(trip: Dictionary) -> float:
 	return trip.departed_at if trip.loadout.spent.is_empty() else trip.loadout.spent[0].at
 
-func _validate_personnel(state: Dictionary, ids: Array[String], draft_id: String) -> String:
-	var patients := {}
+func _validate_personnel(state: Dictionary, ids: Array[String], draft_id: String, items: Dictionary) -> String:
 	var changes: Array[Array] = []
+	var handovers: Array[String] = []
 	for id: String in ids:
 		var trip: Dictionary = _journeys[id]
 		changes.append([_formed_at(trip), -trip.members])
 		if trip.status != Ops.COMPLETE:
 			continue
+		handovers.append(id)
 		var totals := Outcomes.summarize(trip.originals)
 		changes.append([trip.handover_at, totals.healthy + totals.recruits])
-		for index in trip.members:
-			var health: String = trip.originals[index].health
-			if health == Outcomes.HEALTHY:
-				continue
-			var patient := Medical.patient_record(health, trip.handover_at)
-			if patient.recovery_at <= _elapsed:
-				patient.recovered = true
-				changes.append([patient.recovery_at, 1])
-			patients[Medical.patient_id(id, index)] = patient
-	if state.medical != patients:
-		return "Medical history disagrees with expedition handover or active recovery deadlines"
+	var medical_error := _validate_medical(state, handovers, items)
+	if not medical_error.is_empty():
+		return medical_error
+	for patient: Dictionary in state.medical.values():
+		if patient.recovered:
+			changes.append([patient.recovery_at, 1])
 	if not draft_id.is_empty():
 		changes.append([state.draft.loadout.spent[0].at, -state.draft.members])
 	# A boundary settles handover and recovery before the next player input.
@@ -164,6 +161,53 @@ func _validate_personnel(state: Dictionary, ids: Array[String], draft_id: String
 		if ready < 0:
 			return "Expedition formed without enough Ready scavengers"
 	return "" if state.ready == ready else "Expedition personnel disagree with handover and recovery history"
+
+func _validate_medical(state: Dictionary, handovers: Array[String], items: Dictionary) -> String:
+	handovers.sort_custom(func(a: String, b: String): return _journeys[a].handover_at < _journeys[b].handover_at)
+	var medical := Medical.new()
+	var next_handover := 0
+	var previous := 0.0
+	for receipt: Variant in state.medical_receipts:
+		if not _shape(receipt, {"item_id": TYPE_STRING, "definition_id": TYPE_STRING, "contaminated": TYPE_BOOL,
+				"raw": TYPE_INT, "applied": TYPE_FLOAT, "wasted": TYPE_FLOAT, "at": TYPE_FLOAT}):
+			return "Invalid Medical receipt"
+		var id: String = receipt.item_id
+		if id.is_empty() or items.has(id) or spent.has(id):
+			return "Medical receipt duplicates a live item or terminal disposition: " + id
+		var at: float = receipt.at
+		if not _in_range(at, previous, _elapsed):
+			return "Invalid Medical receipt time: " + id
+		var definition := PrototypeItemCatalog.get_definition_by_id(StringName(receipt.definition_id))
+		var seed_prefix: String = _run.id + ":wing_seed_v1:"
+		if id.begins_with(seed_prefix) and receipt.definition_id != _seed_definition.call(id.trim_prefix(seed_prefix)):
+			return "Medical receipt differs from its authored seed: " + id
+		var item := ItemInstance.new(definition, id)
+		item.contaminated = receipt.contaminated
+		var raw := Medical.treatment_utility(item)
+		if raw <= 0 or raw != receipt.raw:
+			return "Invalid Medical receipt Utility: " + id
+		while next_handover < handovers.size() and _journeys[handovers[next_handover]].handover_at <= at:
+			_admit_patients(medical, handovers[next_handover])
+			next_handover += 1
+		# The contribution first settles due recoveries. Receipts in the same tick
+		# replay in saved array order, including each prior treatment's releases.
+		medical.settle_due(at)
+		var plan := medical.treatment_plan(at, raw * Medical.SECONDS_PER_UTILITY)
+		if plan.applied <= 0.0 or receipt.applied != plan.applied or receipt.wasted != plan.wasted:
+			return "Medical receipt does not match applied and wasted treatment time: " + id
+		medical.apply_treatment(plan)
+		medical.settle_due(at)
+		spent[id] = receipt
+		previous = at
+	for index in range(next_handover, handovers.size()):
+		_admit_patients(medical, handovers[index])
+	medical.settle_due(_elapsed)
+	return "" if state.medical == medical.capture_state() else \
+		"Medical history disagrees with handover and treatment deadlines"
+
+func _admit_patients(medical: RefCounted, id: String) -> void:
+	var trip: Dictionary = _journeys[id]
+	medical.admit_injured(id, trip.originals, trip.handover_at)
 
 func _validate_loadout(loadout: Dictionary, id: String, members: int, until: float, items: Dictionary) -> int:
 	if not _shape(loadout, {"id": TYPE_STRING, "destination": TYPE_STRING, "targets": TYPE_DICTIONARY,

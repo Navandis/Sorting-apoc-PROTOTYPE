@@ -36,6 +36,7 @@ var kitchen_panel: CanvasLayer
 var fuel: RefCounted
 var fuel_panel: CanvasLayer
 var medical_panel: CanvasLayer
+var _medical_sign: Label3D
 var _fuel_lighting: RefCounted
 var _collection_error := ""
 
@@ -103,7 +104,8 @@ func _ready() -> void:
 			elif station[1] == "Kitchen" and $Player.kitchen_station != null:
 				label.text = "Kitchen\n[F] Open service"
 			elif station[1] == "Medical" and $Player.medical_station != null:
-				label.text = "Medical\n[F] View patients"
+				label.text = "Medical\n[F] Open treatment"
+				_medical_sign = label
 			label.font_size = 36
 			label.pixel_size = 0.003
 			label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
@@ -253,13 +255,18 @@ func _attach_service_panels() -> void:
 
 	medical_panel = MedicalPanel.new()
 	medical_panel.name = "MedicalRecoveryPanel"
-	medical_panel.medical = expeditions.medical
-	medical_panel.clock = run_timeline.clock
+	medical_panel.operations = expeditions
+	medical_panel.timeline = run_timeline
+	medical_panel.carry = player.carried_items
+	medical_panel.station_reachable = player.can_reach_medical
 	add_child(medical_panel)
 	player.medical_requested.connect(func():
 		if _can_open_service_panel() and player.can_reach_medical():
 			medical_panel.open_panel())
-	medical_panel.panel_toggled.connect(_on_service_panel_toggled)
+	medical_panel.panel_toggled.connect(func():
+		if is_instance_valid(_medical_sign):
+			_medical_sign.visible = not medical_panel.is_open()
+		_on_service_panel_toggled())
 
 func _can_open_service_panel() -> bool:
 	return not get_tree().paused and not $Player.world_input_blocked and not $Player._zone_editor_open
@@ -284,6 +291,8 @@ func sync_player_input(paused: bool) -> void:
 		kitchen_panel.refresh_key_guards()
 	if fuel_panel != null and fuel_panel.is_open():
 		fuel_panel.refresh_key_guards()
+	if medical_panel != null and medical_panel.is_open():
+		medical_panel.refresh_key_guards()
 	$Player.set_world_input_blocked(blocked)
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if blocked else Input.MOUSE_MODE_CAPTURED
 

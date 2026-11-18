@@ -1,6 +1,6 @@
 <!-- Generated from the approved v0.16 DOCX master. Do not edit independently. -->
 
-> Approved 7 November 2026. Dated spatial alignment 15 November 2026. Provisional and open gameplay decisions retain their original status.
+> Approved 7 November 2026. Spatial alignment 15 November 2026. Medical decision and acceptance 18 November 2026. Provisional and open gameplay decisions retain their original status.
 
 DESIGN & EVIDENCE SERIES / SUCCESSOR EDITION
 
@@ -10,7 +10,7 @@ PRELIMINARY GAME DESIGN DOCUMENT
 
 Collection, hoarding and spatial organization
 
-Version 0.16  |  Approved 7 November 2026  |  Layout alignment 15 November 2026
+Version 0.16  |  Approved 7 November 2026  |  Medical decision 18 November 2026
 
 > Build the hoard. Organize the space. Keep supplies moving.
 
@@ -22,7 +22,7 @@ The Quartermaster receives, sorts, stores and selectively spends physical loot i
 | --- | --- |
 | Approved input | Developer-approved ADR archive and collection-pivot record dated 5 November, plus the subsequent single-team preparation-panel addendum. |
 | Document status | Approved consolidated successor to GDD v0.15. The developer approved this edition in its entirety; local provisional, open and historical statuses remain. |
-| Implementation baseline | M1–M4 remain human-promoted and published at c9f9417. Current schema-11 play uses the accepted four-gallery layout. See §§4.3 and 20. [LAY15] |
+| Implementation baseline | M1–M4 remain human-promoted and published at c9f9417. The accepted schema-12 Medical build uses the four-gallery layout. [LAY15, MED18] |
 | Delivery scope | Same-edition layout alignment dated 15 November 2026. The DOCX and generated reading copy carry the accepted spatial baseline and the existing gameplay authority. |
 
 The targets of 2,000 Utility per category and roughly 80% storage occupancy are illustrations, not validated balance or extra completion requirements. Undefined replacement mechanics remain explicitly open.
@@ -560,7 +560,7 @@ Basis: [G15 §§7,18.3]; [MVP §§5–6,16] for transfer/continuation; [VDD §§
 | --- | --- | --- |
 | Expedition loadout | Food, Hydration, Protection, Weapons, Morale | Proactive cargo, travel, quality and personnel effects for an individual expedition. |
 | Kitchen | Food and Hydration; potential physical Rations | Food and Hydration relieve a shared player carrying and sprint penalty. Rations remain an optional future conversion. |
-| Medical | Medical | Medical owns natural recovery. Spending Medical goods to accelerate recovery remains future design. |
+| Medical | Medical | Medical goods shorten the recovery of admitted patients under §13. The selected whole item is consumed and any excess is wasted. |
 | Bunker Ops | Fuel (possible future Energy framing) | Physical Fuel sustains an active-time reserve. Reserve tiers govern environmental lighting and machinery power. |
 | Workshop | Electronics for one-time purchases. Other materials and Salvage remain open. | Optional lasting improvement purchased with goods that might otherwise support the hoard. |
 | Salvager | Item → physical Salvage | Spatially useful conversion; output grammar and yields remain to revalidate. |
@@ -910,9 +910,9 @@ Basis: [PIV §§7,9–10]; retained concepts [G15 §12], with daily demand/outco
 
 ### 13.1 Purpose under the collection objective
 
-Medical owns the natural recovery of injured originals and releases each recovered scavenger to Ready. A future treatment slice may use physical Medical goods to accelerate recovery.
+Medical releases recovered scavengers to Ready. Spending a Medical good trades collectible stock for earlier workforce availability. Treating the shortest remaining recovery first helps the player free a scavenger quickly.
 
-Patients remain anonymous. The player need not individually assign medicines, manage named characters or operate a treatment minigame. Aggregate state and clear recovery information can remain sufficient; exact patient/cohort bookkeeping should be only as detailed as the agreed mechanics need.
+Patients remain anonymous. The player selects the Medical item. Medical assigns its treatment across the current patients.
 
 <a id="s_13_2_Preferred_simple_recovery_appro"></a>
 
@@ -920,26 +920,26 @@ Patients remain anonymous. The player need not individually assign medicines, ma
 
 CONFIRMED FIRST ITERATION. At handover, Light recovery begins with 120 active seconds and Severe with 300. Each patient progresses independently in parallel. Pausing or closing the run suspends active time. Kitchen, Fuel and the availability of other crews leave natural recovery in progress.
 
-Recovering scavengers are unavailable for preparation until Medical completes their deadlines. Recovery returns an existing original to Ready once.
+Recovering scavengers are unavailable for preparation until natural recovery or treatment completes their timers. Recovery returns an existing original to Ready once.
 
 Poor management can mean a prolonged slow operation or substantial corrective work. Natural recovery is not a promise of a short wait, automatic full stock replenishment or guaranteed parity with an efficiently played run. The no-dead-end requirement and the speed of recovery are different design concerns.
 
 <a id="s_13_3_Decisions_needed_before_impleme"></a>
 
-### 13.3 Decisions needed before implementation
+### 13.3 Reactive treatment
 
-| **Open point** | **Boundary already known** |
+| **Concern** | **Rule** |
 | --- | --- |
 | Injury states and durations | Light and Severe rates are set in §10.2. Natural deadlines begin at handover. Release values remain subject to playtest. |
-| Treatment cost and application | Future treatment may accelerate recovery. Individual versus pooled treatment, cost, credit, timing and limits remain open. |
-| Natural recovery and supplies | The basic recovery path must not depend on supplies obtainable only from the people who cannot leave. |
-| Return admission | Injured originals enter Medical at admission or empty return under §11.6. |
-| Other departmental effects | Healing belongs to the Ward. Keep untreated recovery available without Kitchen or other service supply. |
-| Communication | The live read-only view lists patient severity and remaining natural recovery time. The treatment interface remains future design. |
+| Treatment budget | Spend one selected whole item in the Medical category with positive Medical Utility. The provisional conversion is 10 active seconds per Medical Utility. |
+| Allocation | Settle due recoveries first. Shorten the earliest remaining deadline, breaking ties by stable patient ID. Use exact seconds and apply any remainder to the next shortest timer. |
+| Return admission | Injured originals become eligible at handover or empty return under §11.6. An empty Ward rejects the item and leaves it carried. |
+| Completion and excess | Each completed patient returns to Ready immediately and once. Discard any unused seconds after the last current patient recovers. |
+| Communication | List anonymous patients by remaining time with severity, show selected Utility and preview the contribution. Keep the actual result visible when the last patient recovers. |
 
 The old first-treatment-next-day restriction, oldest-Severe daily triage, retained one-of-two-unit stage progress, midnight treatment-success rolls and escalating fatal complications are superseded as active rules. They remain in the predecessor for historical reference. Choosing any corresponding continuous mechanic later requires its own design justification.
 
-Light injuries worsening is an independent candidate to assess on gameplay merits, not a workaround required to force a terminal failure. This collection design does not need all injured people eventually to die.
+Every admitted, unrecovered patient is eligible immediately. Light and Severe follow the same allocation rule.
 
 <a id="s_13_4_Presentation_and_protected_serv"></a>
 
@@ -947,9 +947,9 @@ Light injuries worsening is an independent candidate to assess on gameplay merit
 
 Medical’s fixed red identity is retained, with redundant text/icon/audio rather than color alone. The Supply Anteroom stays a usable support space rather than a treatment ward or empty hospital set. Patients and staff are unseen. The protected approach is not default overflow storage.
 
-The existing Supply Anteroom frontage opens the live read-only patient view using F. ESC closes the view first. The accepted route, equipment and art remain the presentation baseline.
+At the Supply Anteroom frontage, F opens or closes Medical. Choose a carried item with the wheel or number keys and press E once to treat. ESC closes Medical first. Timers and the treatment preview update during play. The panel reports how much treatment was applied, how much was wasted and how many scavengers became Ready.
 
-Basis: [PIV §§5,7–8]; [G15 §13] for retained anonymous/service-space context and explicitly superseded daily rules; [VDD §18].
+Basis: [PIV §§5,7–8]; [G15 §13] for retained anonymous/service-space context and explicitly superseded daily rules; [VDD §18]. [\[MED18\]](../testing/2026-11-18-reactive-medical-treatment-result.md)
 
 <a id="s_14_Bunker_Ops"></a>
 
@@ -1252,14 +1252,14 @@ Ordinary schema-4 continuation is accepted at M4, but is not continuous crash-du
 | --- | --- |
 | Physical ownership | Items in storage/carrying, exact spent receipts, pending and deposited cargo; no duplication or lost transfer halves. |
 | Organization | Zones, disabled cells, names, stacks, reserved cells, transforms and placed orientation—not fresh automatic packing. |
-| Current operations | Exact draft, away and waiting crews, committed cargo and personnel outcomes, handover, Medical deadlines and recovery history. Kitchen and Fuel state remain part of continuation. |
+| Current operations | Exact draft, away and waiting crews, committed cargo, personnel outcomes, handovers, Medical deadlines and ordered treatment receipts. Kitchen and Fuel state remain part of continuation. |
 | Time and completion | Active elapsed time, pause-independent logical progress, recorded first victory and exact pending transitions. |
 | Committed outcomes | Previously selected cargo and any already-resolved random facts; reopening a report or continuing cannot reroll them. |
 | Identity allocation | Run-scoped allocator state so new items/requests/expeditions remain unique after restart. |
 
 Outcome commitment should occur at a natural backend point after legitimate player choices are fixed, before presentation where possible. Preserve committed results through continuation. Incidental uncommitted rerolls within the tolerated loss interval are not a reason to build a general anti-cheat framework; reliable selection among already preserved outcomes remains disallowed by the inherited policy.
 
-Published continuation uses schema 11 in the existing collection slot. It preserves exact cargo and Medical recovery with service, placement, player and goal state. Continue restores the run with service panels closed. Confirmed New Run retains incompatible snapshots. The compact layout was verified with a save created in the relocated Ops room. Release durability and any migration of earlier layouts remain separate. [LAY15]
+Medical establishes schema 12 in the existing collection slot. It saves ordered treatment receipts and validates the effective deadlines and Ready population from handovers and treatment. Continue opens with service panels closed. Confirmed New Run keeps incompatible snapshots. The earlier compact-layout Continue in Ops remains recorded in [LAY15]. Release durability remains open.
 
 <a id="s_18_6_Environment_and_authored_produc"></a>
 
@@ -1389,7 +1389,7 @@ These are historical M4 test values. Frozen inputs are preserved at docs/design_
 
 ### 20.3 Playable entry and human authoring
 
-Normal F5 launch uses res://gameplay/run/run_shell.tscn with schema-11 continuation. The current authored wing has four galleries and the accepted service branches described in §4.3. Continuous Kitchen, Fuel Reserve and Emergency Freight and Expedition outcomes retain their published acceptances. F6 opens the authored palette in res://gameplay/logistics_wing/wing_gameplay.tscn. Legacy main.tscn and review scenes retain their roles.
+Normal F5 launch uses res://gameplay/run/run_shell.tscn with schema-12 continuation. The current authored wing has four galleries and the accepted service branches described in §4.3. Continuous Kitchen, Fuel Reserve and Emergency Freight and Expedition outcomes retain their published acceptances. F6 opens the authored palette in res://gameplay/logistics_wing/wing_gameplay.tscn. Legacy main.tscn and review scenes retain their roles.
 
 Current saved human content governs installations, poses, lighting, wear and references. The asset-equipped authoring project is D:/Godot Projects/Sorting-apoc-PROTOTYPE. Inspect its actual dependencies before later authoring. VDD v0.12, the technical result and the dated close-out record document the accepted scene. [VDD12, LAY15]
 
@@ -1401,7 +1401,7 @@ The previously planned M5 meant combined authored scenarios using Medical, Kitch
 
 The expedition-to-storage loop is HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE. Appendix A of docs/superpowers/plans/2026-11-07-continuous-run-collection-goal-foundation.md records the confirmed lifecycle decisions and their precise supersessions of the earlier open statements. The accepted slice uses the provisional settings in the expedition brief.
 
-The compact working layout is established. Further scopes include treatment, Workshop and Salvager mechanics, final storage capacity and starting stock, production materials and lighting, optional progression and information, and representative economy evaluation. Each follows separately agreed work.
+The compact working layout is established. Further scopes include Workshop and Salvager mechanics, final storage capacity and starting stock, production materials and lighting, optional progression and information, and representative economy evaluation. Each follows separately agreed work.
 
 <a id="s_20_5_Optional_and_historical_feature"></a>
 
@@ -1454,12 +1454,12 @@ These are design-validation aims for representative later tests. The compact-lay
 | O-04 · Return and personnel handover | Admission or empty return releases healthy originals and recruits and begins natural recovery for injured originals. See §§11.6 and 13. |
 | O-05 · Acquisition model | The first iteration uses the active catalogue, 23 ordinary Bulk per original and five provisional provision effects. See §§9.7 and 10. |
 | O-06 · Requests and Ops | Kitchen standing rules are in §12. The reserve, power tiers and freight start wait are in §14. The working Fuel cabinet remains in Receiving. Release tuning, future upgrades and any Fuel/Energy relocation remain open. |
-| O-07 · Medical | Natural recovery and the minimal view are specified in §13. Treatment timing, cost and assignment remain open. |
+| O-07 · Medical | Reactive whole-item treatment, shortest-first allocation, spillover and final waste are decided in §13. The starting 10 seconds per Utility remains provisional for balance testing. |
 | O-08 · Population and upgrades | The iteration retains eight starting Ready and adds Morale recruitment. Release population pacing, progression, Workshop and Training remain open. |
 | O-09 · Conversion and release | Rations and Salvage category and target rules, yields, capacity and output blocking remain open, along with Salvager access and restrictions. Incinerator rules are confirmed in §15.3. |
 | O-10 · Space and handling | The four-gallery footprint, shortened branches and current station positions are accepted. Final storage capacity, starting stock and furnishing ergonomics remain open. Use the measured layout baseline for later economy and pacing evaluation. [VDD12, LAY15] |
 | O-11 · Interface and time edges | Kitchen, preparation, Incinerator and Fuel are live. Escape closes service layers before pause. Journal scope, final interface and platform timing edges remain open. |
-| O-12 · Delivery/continuation | Schema 11 is current. Confirmed New Run retains incompatible snapshots. The accepted layout verifies same-build Continue in the moved Ops room. Release durability and old-layout migration remain separate. [LAY15] |
+| O-12 · Delivery/continuation | Medical continuation uses schema 12. Confirmed New Run retains incompatible snapshots. Release durability and old-layout migration remain separate. [LAY15, MED18] |
 
 The register deliberately leaves unanswered mechanics open. The project already has enough direction to produce this successor; these are boundaries for later design/implementation, not reasons to recreate the old behavior or repeatedly ask the developer to approve the pivot.
 
@@ -1483,7 +1483,7 @@ The collection pivot supersedes midnight handling, mortality, next-day Medical, 
 
 ### 21.5 Document adoption and stopping point
 
-The developer approved v0.16, continuous Kitchen and Fuel, and the 13 November Expedition outcomes and provisioning design. The lane, recovery, carry and Kitchen values are provisional. Treatment and later progression remain open.
+The developer approved v0.16, continuous Kitchen and Fuel, the 13 November Expedition design and the 18 November reactive Medical treatment rule. The developer also accepted its implementation. [MED18] The treatment conversion, natural recovery durations, carry, provision and Kitchen values remain provisional. Later progression remains open.
 
 On 14 November 2026 the developer promoted the schema-11 Expedition iteration after more than two hours of play. Publication and the bounded acceptance are recorded in the 14 November handoff. The 15 November compact-layout milestone adds the accepted working footprint and routes. The dated close-out record carries its source and remote verification. [LAY15]
 
@@ -1503,7 +1503,7 @@ ILLUSTRATIVE ONLY. This sequence applies agreed concepts without selecting reque
 | A request competes with sorting work. | Finish a short organization task before responding. Its defined bounded cost remains visible; the example does not specify a new grace duration. |
 | A category already exceeds the target. | Choose whether surplus items are worth the space. Consuming some may keep the category above target or make its indicator unsatisfied again. |
 | Several returns are waiting. | The crews remain occupied with their intact cargo. Clear Receiving and move items into useful storage to restore throughput under the defined handover rule. |
-| A scavenger is recovering. | Under the favored Medical model, spend Medical to bring availability forward or accept the slower natural recovery; no injured-departure rules are required. |
+| A scavenger is recovering. | Spend a Medical good to bring Ready availability forward or let the independent recovery timer finish. |
 | The last lagging category reaches target in storage. | All eight totals now satisfy the condition simultaneously. Record victory and active time immediately, even if a request, carried item or cargo backlog remains. |
 | After completion. | Continue organizing for its own sake, or start a separate new run to improve time. Spending afterward does not erase the recorded first completion. |
 
@@ -1569,7 +1569,7 @@ This map records where the substantive predecessor topics went. “Retained” p
 | §10 · Provisioning/loot | Retains proportional capacity and outgoing Bulk; reclassifies old outcome curves/numbers as redesign material. Adds equal unranked affinities without changing definitions. |
 | §11 · Receiving | Retains exact content, identity, private TAKE-only deck, cycle and FIFO. Replaces midnight loss with waiting crews and intact cargo; exact handover open. |
 | §12 · Kitchen | Retains Food/Hydration sink and ration concept; removes fixed meals/daily coverage/night output. Continuous effects and conversion details open. |
-| §13 · Medical | Retains anonymous patients/service identity; favors slower natural and faster treated recovery. Daily stages, complication/death formulas no longer active. |
+| §13 · Medical | Retains anonymous patients/service identity; defines independent natural recovery and reactive treatment. Daily stages, complication/death formulas no longer active. |
 | §14 · Ops | The reserve and emergency freight rules supersede daily and episode-based power. The Administrator and Transfer Landing remain authored context. |
 | §15 · Machines/progression | Retains disposal/conversion and optional capability investment; daily project mechanics and capacity progression not inherited. Training slots explicitly under redesign. |
 | §16 · Presentation | Retains core data/input/feedback and bounded freight cues. Adds protected baseline goal visibility and no-tab preparation; removes day/night report requirements. |
@@ -1628,6 +1628,8 @@ Published repository reference: Navandis/Sorting-apoc-PROTOTYPE at c9f9417a97cf6
 
 [LAY15] [Layout acceptance and publication](../design_history/2026-11-15-compact-bunker-layout-acceptance-and-publication.md) · [Technical result](../testing/2026-11-14-compact-bunker-layout-result.md)
 
+[MED18] [Reactive Medical treatment result](../testing/2026-11-18-reactive-medical-treatment-result.md)
+
 [\[WG\] Proportionate AI Working Guidelines](https://github.com/Navandis/Sorting-apoc-PROTOTYPE/blob/c9f9417a97cf65ef416c58189ca1f741b6a90406/docs/AI_WORKING_GUIDELINES.md)
 
 [Published current-state record — historical implementation routing](https://github.com/Navandis/Sorting-apoc-PROTOTYPE/blob/c9f9417a97cf65ef416c58189ca1f741b6a90406/docs/CURRENT_STATE.md)
@@ -1646,7 +1648,7 @@ Historical Prototype Findings v0.14 and VDD v0.11 remain available as project DO
 
 The approved pivot record describes loadout goods as consumed on dispatch and also retains irreversible physical submission. The expedition brief fixes the boundary for this slice. The first accepted whole-item contribution spends the item and forms the crew. Dispatch uses the recorded receipt. See §8.5.
 
-Similarly, an uncapped waiting queue is not an uncapped visible deck, one concurrent expedition is not a daily limit, and a simple natural-recovery preference is not a complete Medical specification. These distinctions must survive future condensed handoffs.
+Preserve the distinct meanings of the upstream waiting queue, the visible lift deck, the single current Expedition draft and the current Medical patients when condensing these rules into a handoff.
 
 <a id="s_D_4_Maintenance_and_adoption"></a>
 

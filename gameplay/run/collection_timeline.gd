@@ -29,12 +29,7 @@ func advance(delta: float) -> void:
 		return
 	var endpoint := clock.elapsed + delta
 	var cycle: ReceivingLiftCycle = _runtime.lift_cycle
-	var recovered: bool = _expeditions.settle_recovery()
-	if _fuel != null:
-		_fuel.settle_power()
-	_settle_boundary()
-	if recovered:
-		_expeditions.changed.emit()
+	_settle_current_boundary(clock.elapsed)
 	while clock.elapsed < endpoint and error.is_empty():
 		var return_at: float = _expeditions.next_return_at()
 		var kitchen_at := _next_kitchen_boundary()
@@ -50,7 +45,7 @@ func advance(delta: float) -> void:
 		var was_waiting := cycle.is_waiting_to_start()
 		var batch_id := _runtime.receiving_manager.get_active_batch_id()
 		clock.elapsed = minf(boundary, phase_at)
-		recovered = _expeditions.settle_recovery()
+		var recovered: bool = _expeditions.settle_recovery(clock.elapsed)
 		# At equal timestamps, evaluate power before promotion or new return admission.
 		if _fuel != null:
 			_fuel.settle_power()
@@ -64,6 +59,26 @@ func advance(delta: float) -> void:
 				and _expeditions.medical.next_boundary_at() == recovery_at:
 			error = "An active-time boundary could not settle"
 			push_error(error)
+
+func contribute_medical(carry: CarriedItems, expected: ItemInstance, has_access: Callable) -> Dictionary:
+	if not error.is_empty() or not is_instance_valid(_runtime) or not _runtime.is_inside_tree() or _runtime.get_tree().paused:
+		return {"ok": false, "reason": "Treatment is unavailable."}
+	var at := clock.elapsed
+	_settle_current_boundary(at)
+	if not error.is_empty():
+		return {"ok": false, "reason": "Treatment is unavailable."}
+	return _expeditions.treat_selected(carry, expected, has_access, at)
+
+func _settle_current_boundary(at: float) -> void:
+	var recovered: bool = _expeditions.settle_recovery(at)
+	if _fuel != null:
+		_fuel.settle_power()
+	var cycle: ReceivingLiftCycle = _runtime.lift_cycle
+	if cycle.seconds_to_boundary() <= 0.0:
+		cycle.advance_time(0.0)
+	_settle_boundary()
+	if recovered:
+		_expeditions.changed.emit()
 
 func _update_freight_power() -> void:
 	_runtime.lift_cycle.set_emergency_mode(_fuel.lift_emergency())

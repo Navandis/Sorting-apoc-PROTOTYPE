@@ -600,7 +600,7 @@ func _update_interaction_target() -> void:
 		return
 	if can_reach_medical():
 		_set_aim_dot_color(DOT_PLACE)
-		_interaction_prompt.text = "[F] VIEW MEDICAL RECOVERY"
+		_interaction_prompt.text = "[F] OPEN MEDICAL"
 		_interaction_prompt.visible = true
 		return
 	if not has_loot_target and can_reach_fuel():
