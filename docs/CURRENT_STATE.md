@@ -4,7 +4,7 @@
 
 The developer promoted the Expedition iteration after more than two hours of play and subsequently published it on 14 November. The accepted scope includes full-catalogue acquisition, five provision effects, injury, recruitment, Medical-owned natural recovery and schema 11 with provisional settings. Read-only GitHub verification found `main` at `d242de49441b410c4abb88ab4f7b61971b6424d1` with the real Expedition configuration. [Publication and handoff alignment](design_history/2026-11-14-publication-and-layout-handoff.md) qualifies older dated local/pending notices. [Decision record](design_history/2026-11-13-expedition-outcomes-and-provisioning-decisions.md) · [Technical result](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md)
 
-**18 November 2026. Reactive Medical treatment is human-accepted.** The current continuation uses schema 12. [Reactive Medical treatment result](testing/2026-11-18-reactive-medical-treatment-result.md)
+**18 November 2026. Reactive Medical treatment — HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** The current continuation uses schema 12. [Reactive Medical treatment result](testing/2026-11-18-reactive-medical-treatment-result.md)
 
 ## 1. At a glance: approval is not implementation
 
@@ -15,7 +15,7 @@ The developer promoted the Expedition iteration after more than two hours of pla
 | M1 / M2 / M3 / M4 | **HUMAN-PROMOTED / PUBLISHED / CLOSED**, each in its accepted bounded scope. No acceptance, publication or re-review backlog is reopened. |
 | Expedition-to-Storage Loop | **HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** [Technical result and developer acceptance](testing/2026-11-08-expedition-to-storage-loop-result.md). M5’s former combined daily scenario is historical. |
 | Expedition outcomes and provisioning | **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** Established schema 11. Iteration values remain provisional. [Developer acceptance](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md) |
-| Reactive Medical treatment | Human-accepted on 18 November. Whole-item treatment and receipt-backed continuation established schema 12. The rate remains provisional. [Reactive Medical treatment result](testing/2026-11-18-reactive-medical-treatment-result.md) |
+| Reactive Medical treatment | Promoted and published on 18 November. Whole-item treatment and receipt-backed continuation established schema 12. The rate remains provisional. [Reactive Medical treatment result](testing/2026-11-18-reactive-medical-treatment-result.md) |
 | Compact bunker layout | All nine geometry slices are human-accepted. The four-gallery layout, service access and unchanged functional storage are the working baseline. [Acceptance and main verification](design_history/2026-11-15-compact-bunker-layout-acceptance-and-publication.md) · [Nine-slice technical result](testing/2026-11-14-compact-bunker-layout-result.md) |
 | Incinerator and Deliberate Disposal | **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** [Technical result and developer acceptance](testing/2026-11-08-incinerator-deliberate-disposal-result.md) |
 | Continuous Kitchen | **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** Introduced schema 8. [Developer acceptance and close-out](testing/2026-11-09-continuous-kitchen-service-result.md) |

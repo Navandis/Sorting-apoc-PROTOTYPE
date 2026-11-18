@@ -67,3 +67,8 @@ $projectPath = 'C:/Users/Boschetar/Documents/ChatGPT/Sorting Apocalypse - Protot
 ```
 
 All three exited 0. Native Medical input, spillover and Save & Continue passed on the committed scene, along with startup parity and Expedition continuation. The inherited certificate-store and null-material messages recurred. [Smoke logs](<C:/Users/Boschetar/.codex/attachments/Sorting_Apocalypse_Assessments/2026-11-18-reactive-medical/logs/publication-checks.txt>)
+
+
+## Publication — 18 November 2026
+
+**HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** The accepted implementation and schema-12 documentation were committed directly to local main and fast-forwarded GitHub main. After the push, `git ls-remote origin refs/heads/main` returned `a82fcf43ee407fb4af4bfa7c79e5f4151e28d266`. The published tree uses the previously committed compact layout and temporary racks. [Verified promotion commit](https://github.com/Navandis/Sorting-apoc-PROTOTYPE/commit/a82fcf43ee407fb4af4bfa7c79e5f4151e28d266)

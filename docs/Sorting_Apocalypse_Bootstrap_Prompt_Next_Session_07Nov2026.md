@@ -21,7 +21,7 @@ This is a **ChatGPT collaboration handoff**, not a Codex implementation brief, p
 | Furniture collision and zero-Ready Dispatch repairs | Human-accepted, published and closed. Do not reopen them as pending tasks. |
 | Receiving mixed stacking and Fedora adoption | Human-approved, published and closed in bounded scopes. Same-group-first, Receiving-only mixed stacking; Fedora scale **0.897**, Footprint **3×3×1**, Bulk **2**. |
 | Real Expedition outcomes and provisioning | **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** Full active catalogue, all five effects, real injuries/recruitment, Medical-owned natural recovery and schema 11. Developer played for more than two hours without observed functional issues. |
-| Medical | **HUMAN-ACCEPTED.** Independent natural recovery, whole-item reactive treatment and schema-12 continuation. The 10-seconds-per-Utility rate is provisional. [Reactive Medical treatment result](testing/2026-11-18-reactive-medical-treatment-result.md) |
+| Medical | **HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** Independent natural recovery, whole-item reactive treatment and schema-12 continuation. The 10-seconds-per-Utility rate is provisional. [Reactive Medical treatment result](testing/2026-11-18-reactive-medical-treatment-result.md) |
 | Workshop and other progression | Still separate design/implementation work. Fuel as an additional Workshop purchase resource is only under consideration. |
 | Current layout and next work | All nine slices accepted. VDD v0.12 owns the four-gallery layout. Future work has its own scope. [Acceptance and main verification](design_history/2026-11-15-compact-bunker-layout-acceptance-and-publication.md) |
 
@@ -227,7 +227,7 @@ Use the accepted scene as the baseline for later materials, lighting, furnishing
 
 Read the current entry points and the relevant GDD v0.16 and VDD v0.12 sections. Use the layout close-out and Expedition playtest records for provenance. Verify accessible repository state before making local or published claims.
 
-Start from the developer’s requested task. Treat schema 12, the accepted Medical implementation, the promoted Expedition outcomes and the compact layout as established. Workshop remains the next separate service scope. Medical release tuning and save performance remain deferred. Ask about missing details only when they affect the requested scope.
+Start from the developer’s requested task. Treat schema 12, the published Medical implementation, the promoted Expedition outcomes and the compact layout as established. Workshop remains the next separate service scope. Medical release tuning and save performance remain deferred. Ask about missing details only when they affect the requested scope.
 
 ## 12. Provenance and maintenance
 

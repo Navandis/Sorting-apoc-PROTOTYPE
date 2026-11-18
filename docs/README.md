@@ -3,7 +3,7 @@
 **Current intended game: GDD v0.16, approved by the developer in its entirety.**
 **Compact bunker layout — HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** [Acceptance and main verification](design_history/2026-11-15-compact-bunker-layout-acceptance-and-publication.md) · [Roof-off north-up overview](design_history/media/2026-11-15-compact-bunker-layout-north-up.png)
 **14 November 2026: Expedition outcomes and provisioning is HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE. That publication established schema 11.**
-**18 November 2026. Reactive Medical treatment is human-accepted.** The current continuation uses schema 12. [Reactive Medical treatment result](testing/2026-11-18-reactive-medical-treatment-result.md)
+**18 November 2026. Reactive Medical treatment — HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** The current continuation uses schema 12. [Reactive Medical treatment result](testing/2026-11-18-reactive-medical-treatment-result.md)
 **Continuous Run and Collection Goal Foundation: HUMAN-ACCEPTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.**
 **Expedition-to-Storage Loop · HUMAN-ACCEPTED / CLOSED IN ITS BOUNDED SCOPE.** [Technical result and developer acceptance](testing/2026-11-08-expedition-to-storage-loop-result.md).
 

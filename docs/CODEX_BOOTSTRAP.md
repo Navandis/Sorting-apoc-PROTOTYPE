@@ -6,7 +6,7 @@ The current intended game is collection, hoarding and spatial organization. The 
 
 The [13 November Expedition decisions](design_history/2026-11-13-expedition-outcomes-and-provisioning-decisions.md) supersede the fixture acquisition and healthy-only outcomes. The developer promoted and published the schema-11 iteration on 14 November. Read-only GitHub verification found `main` at `d242de49441b410c4abb88ab4f7b61971b6424d1`. [Publication and layout handoff](design_history/2026-11-14-publication-and-layout-handoff.md) qualifies older dated local/pending notices; no acceptance or publication task remains for this iteration. [Acceptance and technical evidence](testing/2026-11-13-expedition-outcomes-and-provisioning-result.md)
 
-**18 November 2026. Reactive Medical treatment is human-accepted.** The current continuation uses schema 12. [Reactive Medical treatment result](testing/2026-11-18-reactive-medical-treatment-result.md)
+**18 November 2026. Reactive Medical treatment — HUMAN-PROMOTED / PUBLISHED / CLOSED IN ITS BOUNDED SCOPE.** The current continuation uses schema 12. [Reactive Medical treatment result](testing/2026-11-18-reactive-medical-treatment-result.md)
 
 ## Read first
 
